@@ -154,7 +154,7 @@ struct LargeTitleHeader<Toolbar: View, Below: View>: View {
             }
             Spacer().frame(height: 12)
             SearchField(
-                text: Binding(get: { model.query(section) }, set: { model.setQuery(section, $0) }),
+                text: Binding(get: { model.liveQuery(section) }, set: { model.setQuery(section, $0) }),
                 placeholder: placeholder,
                 focus: $searchFocused
             )

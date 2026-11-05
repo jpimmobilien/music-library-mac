@@ -310,7 +310,14 @@ final class FrameClock {
 
 /// Reduzierte Bewegung (Systemeinstellung „Bewegung reduzieren“).
 @MainActor
-var reduceMotion: Bool { NSWorkspace.shared.accessibilityDisplayShouldReduceMotion }
+var reduceMotion: Bool { SystemMotion.reduce }
+
+/// Systemeinstellung „Bewegung reduzieren“. Im Messlauf lässt sie sich übergehen (`ML_IGNORE_REDUCE_MOTION=1`),
+/// damit die Kosten der Animationen auch auf Testrechnern gemessen werden, auf denen sie eingeschaltet ist.
+enum SystemMotion {
+    static let ignoreSystemSetting = ProcessInfo.processInfo.environment["ML_IGNORE_REDUCE_MOTION"] == "1"
+    static var reduce: Bool { !ignoreSystemSetting && NSWorkspace.shared.accessibilityDisplayShouldReduceMotion }
+}
 
 // MARK: - v2: Designs, Bewegung, Farben
 

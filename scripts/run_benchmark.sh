@@ -15,7 +15,7 @@ RUNNER=()
 if [ -n "${SNAPSHOT_ARCH:-}" ]; then RUNNER=(arch "-$SNAPSHOT_ARCH"); fi
 echo "▸ Messlauf mit $COUNT Titeln → $OUT_ABS (Rechner $(uname -m), App-Architektur ${SNAPSHOT_ARCH:-nativ})"
 set +e
-perl -e 'alarm shift; exec @ARGV' "$LIMIT" ${RUNNER[@]+"${RUNNER[@]}"} "$BIN" --benchmark "$OUT_ABS" --tracks "$COUNT" > "$OUT_ABS/run.log" 2>&1
+ML_IGNORE_REDUCE_MOTION="${ML_IGNORE_REDUCE_MOTION:-1}" perl -e 'alarm shift; exec @ARGV' "$LIMIT" ${RUNNER[@]+"${RUNNER[@]}"} "$BIN" --benchmark "$OUT_ABS" --tracks "$COUNT" > "$OUT_ABS/run.log" 2>&1
 STATUS=$?
 set -e
 cat "$OUT_ABS/benchmark.txt" 2>/dev/null || tail -n 40 "$OUT_ABS/run.log"

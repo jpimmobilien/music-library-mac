@@ -305,15 +305,26 @@ enum Benchmark {
         await settle(window, seconds: 0.8)
         var typing: [Double] = []
         var text = ""
+        let countBefore = model.trackList.count
+        var lastKey = CACurrentMediaTime()
         for ch in "nacht licht" {
             text.append(ch)
             let q = text
+            lastKey = CACurrentMediaTime()
             typing.append(await measureChange { model.setQuery(.tracks, q) })
             try? await Task.sleep(nanoseconds: 60_000_000)
         }
-        try? await Task.sleep(nanoseconds: 600_000_000)
-        typing.append(await measureChange { })
         record("Suche tippen (je Taste, Hauptthread)", typing)
+        // Ergebnis sichtbar: 0,12 s Bündelung + Berechnung im Hintergrund + Anzeigen
+        while model.trackList.count == countBefore && CACurrentMediaTime() - lastKey < 5 {
+            try? await Task.sleep(nanoseconds: 5_000_000)
+        }
+        let applyStart = CACurrentMediaTime()
+        window.contentView?.layoutSubtreeIfNeeded()
+        window.displayIfNeeded()
+        let applyMs: Double = (CACurrentMediaTime() - applyStart) * 1000
+        record("Suche: Ergebnis sichtbar nach letzter Taste", [(CACurrentMediaTime() - lastKey) * 1000])
+        record("Suche: Ergebnis zeichnen (Hauptthread)", [applyMs])
         model.setQuery(.tracks, "")
         await settle(window, seconds: 0.8)
 
@@ -426,13 +437,17 @@ enum Benchmark {
             "cpu": cpuName(),
             "tracks": trackCount,
             "liquidGlass": LiquidGlass.isAvailable,
+            "systemReduceMotion": NSWorkspace.shared.accessibilityDisplayShouldReduceMotion,
+            "reduceMotionIgnored": SystemMotion.ignoreSystemSetting,
             "notes": notes,
             "results": results.map { ["name": $0.name, "mean_ms": round2($0.mean), "p95_ms": round2($0.p95), "max_ms": round2($0.max), "n": $0.samples.count] as [String: Any] },
         ]
         if let data = try? JSONSerialization.data(withJSONObject: info, options: [.prettyPrinted, .sortedKeys]) {
             try? data.write(to: dir.appendingPathComponent("benchmark.json"))
         }
-        var text = "Music Library – Messlauf mit \(trackCount) Titeln\n\(ProcessInfo.processInfo.operatingSystemVersionString) · \(AboutArchitecture.current) · \(cpuName())\n\n"
+        var text = "Music Library – Messlauf mit \(trackCount) Titeln\n\(ProcessInfo.processInfo.operatingSystemVersionString) · \(AboutArchitecture.current) · \(cpuName())\n"
+        text += "Systemeinstellung „Bewegung reduzieren“: \(NSWorkspace.shared.accessibilityDisplayShouldReduceMotion ? "an" : "aus")"
+        text += SystemMotion.ignoreSystemSetting ? " (für die Messung übergangen – Animationen laufen)\n\n" : "\n\n"
         text += "Messung".padding(toLength: 58, withPad: " ", startingAt: 0) + "  Mittel     p95     Max   (ms bzw. %)\n"
         for r in results {
             text += r.name.padding(toLength: 58, withPad: " ", startingAt: 0)

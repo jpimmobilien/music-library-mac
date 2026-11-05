@@ -37,7 +37,7 @@ jobs:
           mkdir -p profil
           for SC in 02-titel 03-alben 10-vinyl 30-modern-glass 31-aurora 21-alben-coverflow 34-mini-gross; do
             mkdir -p "profil/$SC"
-            ML_SNAPSHOT_ONLY="$SC" ML_SNAPSHOT_HOLD=9 "$BIN" --snapshot "$PWD/profil/$SC" > "profil/$SC/run.log" 2>&1 &
+            ML_IGNORE_REDUCE_MOTION=1 ML_SNAPSHOT_ONLY="$SC" ML_SNAPSHOT_HOLD=9 "$BIN" --snapshot "$PWD/profil/$SC" > "profil/$SC/run.log" 2>&1 &
             PID=$!
             sleep 5
             sample "$PID" 3 -mayDie -file "profil/$SC/sample.txt" > /dev/null 2>&1 || true
@@ -49,7 +49,7 @@ jobs:
         run: |
           BIN="build/Music Library.app/Contents/MacOS/MusicLibrary"
           mkdir -p profil/messlauf
-          "$BIN" --benchmark "$PWD/profil/messlauf" --tracks 10000 > profil/messlauf/run.log 2>&1 &
+          ML_IGNORE_REDUCE_MOTION=1 "$BIN" --benchmark "$PWD/profil/messlauf" --tracks 10000 > profil/messlauf/run.log 2>&1 &
           PID=$!
           for i in 1 2 3 4 5 6 7 8; do
             sleep 20

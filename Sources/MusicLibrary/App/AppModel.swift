@@ -247,20 +247,38 @@ final class AppModel: ObservableObject {
 
     // MARK: - Abgeleitete Listen
 
+    /// Angewendete Suche eines Bereichs (passt zu den angezeigten Ergebnissen).
     func query(_ section: LibrarySection) -> String { queries[section] ?? "" }
 
+    /// Text im Suchfeld, auch während noch getippt wird.
+    func liveQuery(_ section: LibrarySection) -> String { typedQueries[section] ?? queries[section] ?? "" }
+
+    /// Noch nicht übernommene Eingaben – bewusst nicht veröffentlicht: Ein Tastendruck zeichnet nur das
+    /// Suchfeld neu, nicht das ganze Fenster mit Tausenden Zeilen.
+    private var typedQueries: [LibrarySection: String] = [:]
+
     func setQuery(_ section: LibrarySection, _ value: String) {
-        queries[section] = value
-        // Beim Tippen gebündelt neu berechnen (spürbar flüssiger bei großen Bibliotheken)
+        typedQueries[section] = value
+        // Beim Tippen gebündelt übernehmen und neu berechnen (spürbar flüssiger bei großen Bibliotheken)
         pendingRecompute?.cancel()
-        let work = DispatchWorkItem { [weak self] in self?.recomputeLists() }
+        let work = DispatchWorkItem { [weak self] in self?.applyTypedQueries() }
         pendingRecompute = work
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.12, execute: work)
+    }
+
+    private func applyTypedQueries() {
+        recomputeLists()   // übernimmt die getippten Suchen
     }
 
     func recomputeLists() {
         pendingRecompute?.cancel()
         pendingRecompute = nil
+        if !typedQueries.isEmpty {
+            var q = queries
+            for (section, text) in typedQueries { q[section] = text }
+            typedQueries = [:]
+            if q != queries { queries = q }
+        }
         let idx = index
         let s = settings
         let st = stats

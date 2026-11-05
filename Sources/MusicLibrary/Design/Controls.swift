@@ -365,18 +365,30 @@ struct ChoiceChip: View {
 }
 
 /// Suchfeld (Android `SearchField`): zarte Fläche, Lupe, „×“ zum Leeren; filtert während der Eingabe.
+/// Der getippte Text wird lokal gehalten (nur das Feld zeichnet sich neu); die Bindung bekommt jede Änderung,
+/// das Modell übernimmt sie gebündelt.
 struct SearchField: View {
     @Environment(\.musicColors) private var colors
     @Binding var text: String
     let placeholder: String
     var focus: FocusState<Bool>.Binding? = nil
     @FocusState private var ownFocus: Bool
+    @State private var local: String?
+
+    private var shown: String { local ?? text }
+
+    private var editing: Binding<String> {
+        Binding(get: { shown }, set: { value in
+            local = value
+            text = value
+        })
+    }
 
     var body: some View {
         HStack(spacing: 7) {
             Icon(Icons.search, size: 16, color: colors.textSecondary)
             ZStack(alignment: .leading) {
-                if text.isEmpty {
+                if shown.isEmpty {
                     Text(placeholder)
                         .textStyle(Typo.bodyLarge)
                         .foregroundColor(colors.textTertiary)
@@ -385,26 +397,33 @@ struct SearchField: View {
                 }
                 field
             }
-            if !text.isEmpty {
-                IconTap(icon: Icons.clear, label: "Suche löschen", tint: colors.textSecondary, iconSize: 14, touch: 24) { text = "" }
+            if !shown.isEmpty {
+                IconTap(icon: Icons.clear, label: "Suche löschen", tint: colors.textSecondary, iconSize: 14, touch: 24) {
+                    local = ""
+                    text = ""
+                }
             }
         }
         .padding(.leading, 10)
         .padding(.trailing, 4)
         .frame(height: Metrics.searchFieldHeight)
         .background(RoundedRectangle(cornerRadius: Radius.control - 2, style: .continuous).fill(colors.fieldFill))
+        // Von außen geändert (z. B. Bereich gewechselt, Suche zurückgesetzt) → lokale Kopie verwerfen
+        .onChange(of: text) { value in
+            if let local, local != value { self.local = nil }
+        }
     }
 
     @ViewBuilder private var field: some View {
         if let focus {
-            TextField("", text: $text)
+            TextField("", text: editing)
                 .textFieldStyle(.plain)
                 .textStyle(Typo.bodyLarge)
                 .foregroundColor(colors.textPrimary)
                 .focused(focus)
                 .accessibilityLabel(placeholder)
         } else {
-            TextField("", text: $text)
+            TextField("", text: editing)
                 .textFieldStyle(.plain)
                 .textStyle(Typo.bodyLarge)
                 .foregroundColor(colors.textPrimary)

@@ -74,7 +74,7 @@ struct ThemedRoot<Content: View>: View {
             .environmentObject(model.metadata)
             .musicTheme(glass: model.settings.glassEffects)
             .environment(\.performanceMode, model.settings.reduceTransparency)
-            .environment(\.continuousMotion, model.settings.animationLevel != .off && !NSWorkspace.shared.accessibilityDisplayShouldReduceMotion)
+            .environment(\.continuousMotion, model.settings.animationLevel != .off && !SystemMotion.reduce)
             .transaction { t in
                 // Einstellung „Animationen: Aus“ – alle Übergänge sofort
                 if model.settings.animationLevel == .off {

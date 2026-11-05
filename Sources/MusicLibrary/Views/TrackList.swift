@@ -203,16 +203,22 @@ struct TrackListView: View {
         .padding(.top, 8)
     }
 
-    /// Klick, Kontextmenü, Ziehen und Ablegen – gleich für alle Anordnungen.
+    /// Klick, Kontextmenü, Ziehen und Ablegen – gleich für alle Anordnungen. Ablegen nur in Playlists
+    /// (jedes Ablageziel kostet beim Scrollen; in anderen Listen hätte es keine Wirkung).
+    @ViewBuilder
     private func interactive<V: View>(_ view: V, position: Int, item: TrackListItem) -> some View {
-        view
+        let base = view
             .contentShape(Rectangle())
             .onTapGesture { click(position, item) }
             .contextMenu { contextMenu(for: item) }
             .onDrag { dragProvider(for: item) }
-            .onDrop(of: [UTType.plainText], isTargeted: dropBinding(item.id)) { providers in
+        if config.playlistID != nil {
+            base.onDrop(of: [UTType.plainText], isTargeted: dropBinding(item.id)) { providers in
                 handleDrop(providers, before: position)
             }
+        } else {
+            base
+        }
     }
 
     private func dropBinding(_ id: Int64) -> Binding<Bool> {
