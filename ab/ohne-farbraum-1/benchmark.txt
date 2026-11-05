@@ -1,0 +1,34 @@
+Music Library – Messlauf mit 10000 Titeln
+Version 14.8.9 (Build 23J631) · arm64 · Apple M1 (Virtual)
+Systemeinstellung „Bewegung reduzieren“: an (für die Messung übergangen – Animationen laufen)
+
+Messung                                                     Mittel     p95     Max   (ms bzw. %)
+Index aufbauen (10000 Titel)                                 154.0    154.0    154.0
+Alle Listen berechnen (Hintergrund)                          553.6    553.6    553.6
+Suche berechnen (Hintergrund)                                420.1    480.2    480.2
+Bereich wechseln                                             209.6    366.5    366.5
+Titel: Ansicht „Raster“ öffnen                               156.2    156.2    156.2
+Titel · Raster: Scrollschritt                                 15.7     26.5     38.9
+Titel: Ansicht „Kompaktes Raster“ öffnen                     406.6    406.6    406.6
+Titel · Kompaktes Raster: Scrollschritt                      148.9    280.7    316.8
+Titel: Ansicht „Liste“ öffnen                                538.5    538.5    538.5
+Titel · Liste: Scrollschritt                                  27.5     50.7     82.7
+Titel: Ansicht „Detailliste“ öffnen                          452.3    452.3    452.3
+Titel · Detailliste: Scrollschritt                            98.8    167.9    194.1
+Alben: Ansicht „Raster“ öffnen                                 0.2      0.2      0.2
+Alben · Raster: Scrollschritt                                 22.5     70.5     89.9
+Alben: Ansicht „Kompaktes Raster“ öffnen                     302.1    302.1    302.1
+Alben · Kompaktes Raster: Scrollschritt                      123.8    207.8    356.7
+Alben: Ansicht „Liste“ öffnen                                814.1    814.1    814.1
+Alben · Liste: Scrollschritt                                 147.7    243.0    283.7
+Alben: Ansicht „Detailliste“ öffnen                          567.6    567.6    567.6
+Alben · Detailliste: Scrollschritt                            56.2     85.1     95.5
+Suche tippen (je Taste, Hauptthread)                          22.8     71.3     71.3
+Suche: Ergebnis sichtbar nach letzter Taste                  122.0    122.0    122.0
+Suche: Ergebnis zeichnen (Hauptthread)                         0.1      0.1      0.1
+Player öffnen/schließen (alle Designs)                       162.4    239.8    239.8
+Leerlauf mit Wiedergabe: Verspätung je Bild                  107.6    126.2    127.7
+Leerlauf mit Wiedergabe: Hauptthread belegt [%]                3.2      3.2      3.2
+Leerlauf mit Wiedergabe: Prozess-CPU [%]                       3.3      3.3      3.3
+Großer Player (Vinyl) läuft: Hauptthread belegt [%]            3.8      3.8      3.8
+Großer Player (Vinyl) läuft: Prozess-CPU [%]                   3.9      3.9      3.9
