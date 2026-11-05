@@ -1,0 +1,59 @@
+# Vergleichsmessung (A/B) auf demselben Rechner: dieselbe App, abwechselnd mit verschiedenen Schaltern,
+# jede Variante zweimal. Ergebnisse im Zweig „ci-ab-<os>“.
+name: AB
+
+on:
+  push:
+    branches: [abtest]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ab:
+    name: A/B (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-14]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Xcode 16 wählen
+        run: |
+          X=$(ls -d /Applications/Xcode_16*.app 2>/dev/null | sort -V | tail -1)
+          if [ -n "$X" ]; then sudo xcode-select -s "$X"; fi
+          swift --version
+      - name: App bauen
+        run: scripts/build_app.sh > build.log 2>&1 || (tail -40 build.log; exit 1)
+      - name: Messläufe
+        continue-on-error: true
+        run: |
+          BIN="build/Music Library.app/Contents/MacOS/MusicLibrary"
+          mkdir -p ab
+          run() {
+            local name="$1"; shift
+            mkdir -p "ab/$name"
+            env ML_IGNORE_REDUCE_MOTION=1 ML_BENCH_QUICK=1 "$@" perl -e 'alarm shift; exec @ARGV' 600 "$BIN" --benchmark "$PWD/ab/$name" --tracks 10000 > "ab/$name/run.log" 2>&1 || true
+            echo "== $name"; grep -E "Scrollschritt|Leerlauf.*%|Großer" "ab/$name/benchmark.txt" || tail -5 "ab/$name/run.log"
+          }
+          for round in 1 2; do
+            run "neu-$round"
+            run "geometry-$round" ML_AB_ARTWORK_GEOMETRY=1
+            run "ohne-farbraum-$round" ML_AB_NO_DISPLAY_READY=1
+          done
+      - name: Ergebnisse in Zweig „ci-ab-${{ matrix.os }}“
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p out && cp -R ab out/ 2>/dev/null || true
+          cd out
+          git init -q -b "ci-ab-${{ matrix.os }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "A/B" || true
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "ci-ab-${{ matrix.os }}"

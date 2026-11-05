@@ -177,7 +177,7 @@ enum SnapshotRunner {
             }
         }
         var genreFilter = LibraryFilter()
-        genreFilter.decades = [1990, 2000]
+        genreFilter.decades = [2010, 2020]
         let settingsSize = CGSize(width: 860, height: 680)
         var list: [Scenario] = [
             Scenario(name: "20-titel-raster", size: big, prepare: view(.tracks, .tracks, .grid), view: main),
@@ -220,6 +220,7 @@ enum SnapshotRunner {
         }
         let userPresets: @MainActor (AppModel) -> Void = { m in
             var s = m.settings
+            s.eqUserPresets = []   // Szenario läuft mehrfach (hell/dunkel, zwei Ansichten)
             s.effects = AudioEffectsSettings().withPreset(EqPresets.rock).withBass(3)
             _ = s.saveEqPreset(name: "Abend")
             s.effects = AudioEffectsSettings().withPreset(EqPresets.jazz)

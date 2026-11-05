@@ -276,12 +276,17 @@ enum Benchmark {
         record("Bereich wechseln", sectionSamples)
 
         // 4. Ansichten wechseln und scrollen (Titel, Alben, Interpreten)
-        let contexts: [(LibrarySection, LibraryViewContext)] = [(.tracks, .tracks), (.albums, .albums), (.artists, .artists), (.genres, .genres)]
+        // ML_BENCH_QUICK=1: nur Titel und Alben, ohne Cover Flow (für Vergleichsmessungen A/B)
+        let quick = ProcessInfo.processInfo.environment["ML_BENCH_QUICK"] == "1"
+        let contexts: [(LibrarySection, LibraryViewContext)] = quick
+            ? [(.tracks, .tracks), (.albums, .albums)]
+            : [(.tracks, .tracks), (.albums, .albums), (.artists, .artists), (.genres, .genres)]
+        let modes: [LibraryViewMode] = quick ? [.grid, .compactGrid, .list, .detailedList] : LibraryViewMode.allCases
         for (section, ctx) in contexts {
             model.select(section)
             await settle(window, seconds: 0.8)
             let original = model.viewOptions(ctx)
-            for mode in LibraryViewMode.allCases {
+            for mode in modes {
                 var o = original
                 o.mode = mode
                 let switchMs = await measureChange { model.setViewOptions(o, for: ctx) }

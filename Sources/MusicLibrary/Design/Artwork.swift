@@ -25,6 +25,14 @@ enum ArtworkSize: Int, CaseIterable {
     var pixels: Int { rawValue * 2 }
 }
 
+/// Schalter für Vergleichsmessungen im Messlauf (A/B auf demselben Rechner); im normalen Betrieb aus.
+enum ArtworkExperiment {
+    /// Cover-Fläche mit GeometryReader (Version 1) statt ohne.
+    static let geometryLayout = ProcessInfo.processInfo.environment["ML_AB_ARTWORK_GEOMETRY"] == "1"
+    /// Cover nicht vorab in den Bildschirmfarbraum umrechnen.
+    static let skipDisplayReady = ProcessInfo.processInfo.environment["ML_AB_NO_DISPLAY_READY"] == "1"
+}
+
 /// Lädt Cover im Hintergrund, verkleinert sie (ImageIO) und hält sie im Arbeitsspeicher und auf der Platte vor.
 final class ArtworkStore: @unchecked Sendable {
     static let shared = ArtworkStore()
@@ -156,6 +164,7 @@ final class ArtworkStore: @unchecked Sendable {
     /// Bild im Format, das Core Animation direkt übernimmt (BGRA, vormultipliert, Farbraum des Bildschirms) –
     /// die Umrechnung geschieht hier im Hintergrund statt beim Zeichnen auf dem Hauptthread.
     static func displayReady(_ image: CGImage, space: CGColorSpace?) -> CGImage {
+        if ArtworkExperiment.skipDisplayReady { return image }
         guard let space = space ?? CGColorSpace(name: CGColorSpace.sRGB) else { return image }
         let info: UInt32 = CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue
         if image.colorSpace == space && image.bitmapInfo.rawValue == info && image.bitsPerComponent == 8 { return image }
@@ -391,6 +400,41 @@ struct ArtworkBox: View {
     // Ohne GeometryReader für den häufigen Fall „Cover vorhanden“: Kacheln und Zeilen werden beim Scrollen
     // laufend neu angelegt, jeder GeometryReader kostet dabei einen zusätzlichen Layout-Durchgang.
     var body: some View {
+        if ArtworkExperiment.geometryLayout { geometryBody } else { directBody }
+    }
+
+    /// Bisherige Form (Version 1): alles in einem GeometryReader.
+    private var geometryBody: some View {
+        GeometryReader { geo in
+            let side = min(geo.size.width, geo.size.height)
+            ZStack {
+                if let image {
+                    Image(nsImage: image)
+                        .resizable()
+                        .interpolation(.high)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: geo.size.width, height: geo.size.height)
+                        .clipped()
+                } else if !loading, let art = GenreStyle.artwork(category) {
+                    Image(nsImage: art)
+                        .resizable()
+                        .interpolation(.high)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: geo.size.width, height: geo.size.height)
+                        .clipped()
+                } else if loading {
+                    colors.dark ? Color.white.opacity(0.06) : Color.black.opacity(0.05)
+                } else {
+                    GenreStyle.gradient(GenreStyle.tint(category))
+                    Icon(GenreStyle.icon(category), size: side * iconFraction, color: Color.white.opacity(0.92))
+                }
+            }
+        }
+        .clipShape(shape)
+        .overlay(shape.strokeBorder(colors.artworkStroke, lineWidth: 0.6))
+    }
+
+    private var directBody: some View {
         ZStack {
             if let image {
                 Color.clear.overlay(
