@@ -328,9 +328,9 @@ struct AppCommands: Commands {
                     .keyboardShortcut(.rightArrow, modifiers: .command)
                 Button("Vorheriger Titel") { model.player.previous() }
                     .keyboardShortcut(.leftArrow, modifiers: .command)
-                Button("10 Sekunden vor") { model.player.skip(by: 10) }
+                Button("\(model.settings.skipSeconds) Sekunden vor") { model.player.skipForward() }
                     .keyboardShortcut(.rightArrow, modifiers: [.command, .option])
-                Button("10 Sekunden zurück") { model.player.skip(by: -10) }
+                Button("\(model.settings.skipSeconds) Sekunden zurück") { model.player.skipBackward() }
                     .keyboardShortcut(.leftArrow, modifiers: [.command, .option])
             }
             Divider()
