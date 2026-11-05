@@ -119,7 +119,7 @@ jobs:
         run: |
           sw_vers
           uname -m
-          cd dist && shasum -a 256 -c "Music Library.dmg.sha256" && cd ..
+          (cd dist && shasum -a 256 -c "Music Library.dmg.sha256")
           MNT="$(mktemp -d)"
           hdiutil attach "dist/Music Library.dmg" -nobrowse -readonly -mountpoint "$MNT"
           mkdir -p "$HOME/Applications"

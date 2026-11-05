@@ -38,5 +38,6 @@ test -d "$MNT/Music Library.app"
 test -L "$MNT/Programme" || test -L "$MNT/Applications"
 codesign --verify --deep --strict "$MNT/Music Library.app"
 hdiutil detach "$MNT" >/dev/null
-shasum -a 256 "$OUT" | tee "$OUT.sha256"
+# Prüfsumme mit reinem Dateinamen (prüfbar im selben Ordner: shasum -a 256 -c "Music Library.dmg.sha256")
+(cd "$(dirname "$OUT")" && shasum -a 256 "$(basename "$OUT")" | tee "$(basename "$OUT").sha256")
 echo "✓ $OUT"
