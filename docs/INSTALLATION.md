@@ -60,4 +60,6 @@ beiden Ordner oben. **Deine Musikdateien liegen nie in diesen Ordnern** und blei
 Auf einem Mac mit macOS 14.5 oder neuer und Xcode 16+ oder den Befehlszeilenwerkzeugen
 (`xcode-select --install`):
 `Build.command` im Projektordner doppelklicken – erzeugt `dist/Music Library.dmg`.
+Blockiert macOS das Skript (heruntergeladene Datei), im Terminal ausführen: `bash ` eingeben, ein
+Leerzeichen, `Build.command` aus dem Finder ins Terminalfenster ziehen und Eingabetaste drücken.
 Oder im Terminal: `scripts/build_app.sh && scripts/make_dmg.sh`.
