@@ -168,6 +168,8 @@ jobs:
       - name: App im Vorschaumodus starten
         env:
           SNAPSHOT_ARCH: ${{ matrix.arch }}
+          # Starttest: eine Auswahl typischer Ansichten (alle Ansichten entstehen im Build-Job auf macOS 26)
+          ML_SNAPSHOT_ONLY: "01-bibliothek,03-alben,03-album-detail,10-vinyl,12-kassette,13-equalizer,14-metadaten,17-einstellungen,21-alben-coverflow,21-alben-detailliste,30-modern-glass,31-aurora,32-studio-reel,34-mini-gross,35-popover-tonhoehe"
         run: |
           mkdir -p "snapshots/${{ matrix.name }}"
           scripts/run_snapshots.sh "$HOME/Applications/Music Library.app" "snapshots/${{ matrix.name }}"

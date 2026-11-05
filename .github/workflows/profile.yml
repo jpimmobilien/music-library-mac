@@ -16,11 +16,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-15, macos-26]
+        os: [macos-14, macos-15, macos-26]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+      - name: Xcode 16 wählen (macOS 14)
+        if: matrix.os == 'macos-14'
+        run: |
+          X=$(ls -d /Applications/Xcode_16*.app 2>/dev/null | sort -V | tail -1)
+          echo "Xcode: $X"
+          sudo xcode-select -s "$X"
+          swift --version
       - name: App bauen
         run: scripts/build_app.sh > build.log 2>&1 || (tail -40 build.log; exit 1)
       - name: Ansichten einzeln aufnehmen
