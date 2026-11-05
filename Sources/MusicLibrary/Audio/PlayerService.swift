@@ -647,7 +647,9 @@ final class PlayerService: ObservableObject {
         let now = Self.monotonicMs()
         let remaining = SleepTimerLogic.remainingMs(state, nowElapsed: now)
         // nur volle Sekunden melden (weniger Neuzeichnen)
-        if clock.sleepRemainingMs.map({ $0 / 1000 }) != remaining / 1000 { clock.sleepRemainingMs = remaining }
+        let shownSeconds: Int64? = clock.sleepRemainingMs.map { $0 / 1000 }
+        let newSeconds: Int64? = remaining.map { $0 / 1000 }
+        if shownSeconds != newSeconds { clock.sleepRemainingMs = remaining }
         if SleepTimerLogic.isExpired(state, nowElapsed: now) {
             pause()
             cancelSleepTimer()
