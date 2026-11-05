@@ -1,0 +1,82 @@
+{
+  "architecture" : "arm64",
+  "cpu" : "Apple M1 (Virtual)",
+  "liquidGlass" : true,
+  "macOS" : "Version 26.6.2 (Build 25G83)",
+  "notes" : [
+    "Genres: keine Scrollfläche gefunden"
+  ],
+  "results" : [
+    {
+      "max_ms" : 241.09999999999999,
+      "mean_ms" : 241.09999999999999,
+      "n" : 1,
+      "name" : "Index aufbauen (10000 Titel)",
+      "p95_ms" : 241.09999999999999
+    },
+    {
+      "max_ms" : 596.28999999999996,
+      "mean_ms" : 596.28999999999996,
+      "n" : 1,
+      "name" : "Alle Listen berechnen (Hintergrund)",
+      "p95_ms" : 596.28999999999996
+    },
+    {
+      "max_ms" : 241.11000000000001,
+      "mean_ms" : 233.61000000000001,
+      "n" : 5,
+      "name" : "Suche berechnen (Hintergrund)",
+      "p95_ms" : 241.11000000000001
+    },
+    {
+      "max_ms" : 325.49000000000001,
+      "mean_ms" : 175.61000000000001,
+      "n" : 12,
+      "name" : "Bereich wechseln",
+      "p95_ms" : 325.49000000000001
+    },
+    {
+      "max_ms" : 58.43,
+      "mean_ms" : 36.07,
+      "n" : 60,
+      "name" : "Titel: Scrollschritt",
+      "p95_ms" : 57.329999999999998
+    },
+    {
+      "max_ms" : 73.560000000000002,
+      "mean_ms" : 32.090000000000003,
+      "n" : 60,
+      "name" : "Alben: Scrollschritt",
+      "p95_ms" : 63.32
+    },
+    {
+      "max_ms" : 187.77000000000001,
+      "mean_ms" : 69.829999999999998,
+      "n" : 60,
+      "name" : "Interpreten: Scrollschritt",
+      "p95_ms" : 152.25
+    },
+    {
+      "max_ms" : 108.14,
+      "mean_ms" : 63.280000000000001,
+      "n" : 12,
+      "name" : "Suche tippen (je Taste, Hauptthread)",
+      "p95_ms" : 108.14
+    },
+    {
+      "max_ms" : 137.41999999999999,
+      "mean_ms" : 97.439999999999998,
+      "n" : 8,
+      "name" : "Player öffnen\/schließen (alle Designs)",
+      "p95_ms" : 137.41999999999999
+    },
+    {
+      "max_ms" : 131.09,
+      "mean_ms" : 67.969999999999999,
+      "n" : 37,
+      "name" : "Leerlauf mit Wiedergabe: Zeit je Bild",
+      "p95_ms" : 124.91
+    }
+  ],
+  "tracks" : 10000
+}
