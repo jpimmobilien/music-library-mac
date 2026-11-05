@@ -100,39 +100,39 @@ final class LayerCache<Layers>: @unchecked Sendable {
     }
 
     func cached(_ size: Int) -> Layers? {
+        locked { cache[size] }
+    }
+
+    /// Kurzer kritischer Abschnitt (synchron, nie über ein `await` hinweg).
+    private func locked<T>(_ body: () -> T) -> T {
         lock.lock()
         defer { lock.unlock() }
-        return cache[size]
+        return body()
     }
 
     func layers(_ size: Int) async -> Layers? {
-        lock.lock()
-        if let c = cache[size] {
-            lock.unlock()
-            return c
-        }
-        let task: Task<Layers?, Never>
-        if let t = running[size] {
-            task = t
-        } else {
+        let task: Task<Layers?, Never>? = locked {
+            if cache[size] != nil { return nil }
+            if let t = running[size] { return t }
             let render = self.render
-            task = Task.detached(priority: .userInitiated) { render(size) }
-            running[size] = task
+            let t = Task.detached(priority: .userInitiated) { render(size) }
+            running[size] = t
+            return t
         }
-        lock.unlock()
+        guard let task else { return cached(size) }
         let result = await task.value
-        lock.lock()
-        running[size] = nil
-        if let result {
-            cache[size] = result
-            order.removeAll { $0 == size }
-            order.append(size)
-            while order.count > 3 {
-                let old = order.removeFirst()
-                cache[old] = nil
+        locked {
+            running[size] = nil
+            if let result {
+                cache[size] = result
+                order.removeAll { $0 == size }
+                order.append(size)
+                while order.count > 3 {
+                    let old = order.removeFirst()
+                    cache[old] = nil
+                }
             }
         }
-        lock.unlock()
         return result
     }
 }

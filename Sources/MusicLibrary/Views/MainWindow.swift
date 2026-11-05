@@ -204,7 +204,7 @@ private struct NavItem: View {
         }
         .buttonStyle(PressScaleStyle(scale: 0.94))
         .onHover { hover = $0 }
-        .help("\(section.label) (⌘\(section.shortcutDigit))")
+        .help(String("\(section.label) (⌘\(section.shortcutDigit))"))
         .accessibilityAddTraits(selected ? [.isSelected, .isButton] : .isButton)
         .animation(Motion.easeOut(Motion.short), value: selected)
     }
