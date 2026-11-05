@@ -146,10 +146,56 @@ enum Benchmark {
 
     @MainActor
     static func run(model: AppModel) {
+        // Wie eine App im Vordergrund messen: ohne App Nap (sonst bündelt macOS Zeitgeber und alle Wartezeiten
+        // werden künstlich länger)
+        activity = ProcessInfo.processInfo.beginActivity(options: [.userInitiated, .latencyCritical], reason: "Messlauf")
         Task { @MainActor in
+            NSApp.setActivationPolicy(.regular)
+            NSApp.activate(ignoringOtherApps: true)
             await runAll(model)
             NSApp.terminate(nil)
         }
+    }
+
+    private static var activity: NSObjectProtocol?
+
+    /// Rechenzeit des aufrufenden Threads (Hauptthread) in Sekunden.
+    static func threadCPUSeconds() -> Double {
+        var info = thread_basic_info()
+        var count = mach_msg_type_number_t(MemoryLayout<thread_basic_info_data_t>.size / MemoryLayout<integer_t>.size)
+        let port = mach_thread_self()
+        defer { mach_port_deallocate(mach_task_self_, port) }
+        let kr: kern_return_t = withUnsafeMutablePointer(to: &info) { ptr in
+            ptr.withMemoryRebound(to: integer_t.self, capacity: Int(count)) { thread_info(port, thread_flavor_t(THREAD_BASIC_INFO), $0, &count) }
+        }
+        guard kr == KERN_SUCCESS else { return 0 }
+        let user: Double = Double(info.user_time.seconds) + Double(info.user_time.microseconds) / 1e6
+        let system: Double = Double(info.system_time.seconds) + Double(info.system_time.microseconds) / 1e6
+        return user + system
+    }
+
+    /// Rechenzeit des ganzen Prozesses (alle Threads) in Sekunden.
+    static func processCPUSeconds() -> Double {
+        var usage = rusage()
+        getrusage(RUSAGE_SELF, &usage)
+        let user: Double = Double(usage.ru_utime.tv_sec) + Double(usage.ru_utime.tv_usec) / 1e6
+        let system: Double = Double(usage.ru_stime.tv_sec) + Double(usage.ru_stime.tv_usec) / 1e6
+        return user + system
+    }
+
+    /// Auslastung im Leerlauf: Anteil der Zeit, die der Hauptthread bzw. der ganze Prozess rechnet (Prozent).
+    @MainActor
+    static func idleLoad(window: NSWindow, seconds: Double) async -> (main: Double, process: Double) {
+        let wall0 = CACurrentMediaTime()
+        let main0 = threadCPUSeconds()
+        let proc0 = processCPUSeconds()
+        while CACurrentMediaTime() - wall0 < seconds {
+            try? await Task.sleep(nanoseconds: 100_000_000)
+        }
+        let wall: Double = CACurrentMediaTime() - wall0
+        let main: Double = (threadCPUSeconds() - main0) / wall * 100
+        let process: Double = (processCPUSeconds() - proc0) / wall * 100
+        return (main, process)
     }
 
     @MainActor
@@ -284,9 +330,23 @@ enum Benchmark {
         }
         record("Player öffnen/schließen (alle Designs)", playerSamples)
 
-        // 7. Bildwiederholung bei laufender Wiedergabe (Mini-Player + Liste sichtbar)
+        // 7. Leerlauf bei laufender Wiedergabe (Mini-Player mit drehender Platte + Liste sichtbar)
+        model.settings.playerTheme = .vinylStudio
+        model.playerOpen = false
+        await settle(window, seconds: 1.0)
         let idle = await frameSamples(window: window, seconds: 3)
-        record("Leerlauf mit Wiedergabe: Zeit je Bild", idle)
+        record("Leerlauf mit Wiedergabe: Verspätung je Bild", idle)
+        let load = await idleLoad(window: window, seconds: 4)
+        record("Leerlauf mit Wiedergabe: Hauptthread belegt [%]", [load.main])
+        record("Leerlauf mit Wiedergabe: Prozess-CPU [%]", [load.process])
+        // 8. Großer Player offen (Vinyl dreht sich)
+        model.playerOpen = true
+        await settle(window, seconds: 1.5)
+        let playerLoad = await idleLoad(window: window, seconds: 4)
+        record("Großer Player (Vinyl) läuft: Hauptthread belegt [%]", [playerLoad.main])
+        record("Großer Player (Vinyl) läuft: Prozess-CPU [%]", [playerLoad.process])
+        model.playerOpen = false
+        await settle(window, seconds: 0.8)
 
         window.orderOut(nil)
         write(results, notes: notes, to: out)
@@ -373,7 +433,7 @@ enum Benchmark {
             try? data.write(to: dir.appendingPathComponent("benchmark.json"))
         }
         var text = "Music Library – Messlauf mit \(trackCount) Titeln\n\(ProcessInfo.processInfo.operatingSystemVersionString) · \(AboutArchitecture.current) · \(cpuName())\n\n"
-        text += "Messung".padding(toLength: 58, withPad: " ", startingAt: 0) + "  Mittel     p95     Max   (ms)\n"
+        text += "Messung".padding(toLength: 58, withPad: " ", startingAt: 0) + "  Mittel     p95     Max   (ms bzw. %)\n"
         for r in results {
             text += r.name.padding(toLength: 58, withPad: " ", startingAt: 0)
             text += String(format: "%8.1f %8.1f %8.1f\n", r.mean, r.p95, r.max)

@@ -67,11 +67,15 @@ enum SnapshotRunner {
 
     @MainActor
     static func run(model: AppModel) {
+        // ohne App Nap (Zeitgeber werden sonst gebündelt, die gemessene Hauptthread-Verzögerung wäre verfälscht)
+        activity = ProcessInfo.processInfo.beginActivity(options: [.userInitiated, .latencyCritical], reason: "Vorschaubilder")
         Task { @MainActor in
             await runAll(model)
             NSApp.terminate(nil)
         }
     }
+
+    private static var activity: NSObjectProtocol?
 
     @MainActor
     private static func scenarios(_ model: AppModel) -> [Scenario] {
@@ -288,17 +292,25 @@ enum SnapshotRunner {
                 let started = CACurrentMediaTime()
                 var lag: [Double] = []
                 let hold = Double(ProcessInfo.processInfo.environment["ML_SNAPSHOT_HOLD"] ?? "") ?? 2.2
+                var cpuStart: (wall: Double, cpu: Double)?
                 while CACurrentMediaTime() - started < hold {
                     let t0 = CACurrentMediaTime()
                     try? await Task.sleep(nanoseconds: 50_000_000)
                     let late = (CACurrentMediaTime() - t0 - 0.05) * 1000
-                    if CACurrentMediaTime() - started > 1.2 { lag.append(max(0, late)) }   // nach dem Aufbau
+                    if CACurrentMediaTime() - started > 1.2 {   // nach dem Aufbau
+                        lag.append(max(0, late))
+                        if cpuStart == nil { cpuStart = (CACurrentMediaTime(), Benchmark.threadCPUSeconds()) }
+                    }
                 }
                 let meanLag = lag.isEmpty ? 0 : lag.reduce(0, +) / Double(lag.count)
                 let maxLag = lag.max() ?? 0
                 let elapsed = (CACurrentMediaTime() - started) * 1000
-                print(String(format: "[Snapshot] %@ %@: Aufbau+Warten %.0f ms, Hauptthread-Verzögerung Ø %.1f ms, max %.1f ms",
-                             scenario.name, dark ? "dunkel" : "hell", elapsed, meanLag, maxLag))
+                var mainLoad: Double = 0
+                if let c = cpuStart, CACurrentMediaTime() - c.wall > 0.2 {
+                    mainLoad = (Benchmark.threadCPUSeconds() - c.cpu) / (CACurrentMediaTime() - c.wall) * 100
+                }
+                print(String(format: "[Snapshot] %@ %@: Aufbau+Warten %.0f ms, Hauptthread-Verzögerung Ø %.1f ms, max %.1f ms, Hauptthread belegt %.0f %%",
+                             scenario.name, dark ? "dunkel" : "hell", elapsed, meanLag, maxLag, mainLoad))
                 fflush(stdout)
                 if window.contentRect(forFrameRect: window.frame).size != scenario.size {
                     window.setContentSize(scenario.size)
@@ -308,8 +320,8 @@ enum SnapshotRunner {
                 let method = capture(window, to: file)
                 manifest.append(["file": file.lastPathComponent, "method": method, "glass": LiquidGlass.isAvailable ? "liquid-glass" : "fallback",
                                  "mainThreadLagMeanMs": String(format: "%.1f", meanLag), "mainThreadLagMaxMs": String(format: "%.1f", maxLag),
-                                 "elapsedMs": String(format: "%.0f", elapsed)])
-                try? (manifest.map { "\($0["file"] ?? "") \($0["mainThreadLagMeanMs"] ?? "") \($0["elapsedMs"] ?? "")" }.joined(separator: "\n"))
+                                 "elapsedMs": String(format: "%.0f", elapsed), "mainThreadBusyPercent": String(format: "%.0f", mainLoad)])
+                try? (manifest.map { "\($0["file"] ?? "") \($0["mainThreadLagMeanMs"] ?? "") \($0["mainThreadBusyPercent"] ?? "")% \($0["elapsedMs"] ?? "")" }.joined(separator: "\n"))
                     .write(to: out.appendingPathComponent("progress.txt"), atomically: true, encoding: .utf8)
                 window.orderOut(nil)
                 window.contentView = nil

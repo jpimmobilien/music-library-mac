@@ -112,10 +112,11 @@ final class ArtworkStore: @unchecked Sendable {
 
     private func load(_ track: Track, _ size: ArtworkSize) -> NSImage? {
         let disk = diskURL(track, size)
-        // Sofort im Hintergrund dekodieren – sonst würde das Bild erst beim Zeichnen auf dem Hauptthread
-        // entpackt (Ruckeln beim Scrollen großer Raster).
+        // Sofort im Hintergrund dekodieren und in den Farbraum des Bildschirms umrechnen – sonst würde das Bild
+        // beim Anzeigen auf dem Hauptthread entpackt und farbkonvertiert (gemessen: bis zu 12 % der
+        // Hauptthread-Zeit beim Scrollen großer Raster, `CA::Render::copy_image`).
         if let cg = Self.decodeFile(disk) {
-            return NSImage(cgImage: cg, size: NSSize(width: CGFloat(cg.width) / 2, height: CGFloat(cg.height) / 2))
+            return Self.nsImage(Self.displayReady(cg, space: displayColorSpace()))
         }
         guard let data = Self.sourceImageData(for: track, overrides: currentOverrides()) else { return nil }
         guard let cg = Self.downsample(data: data, maxPixels: size.pixels) else { return nil }
@@ -123,7 +124,47 @@ final class ArtworkStore: @unchecked Sendable {
             try? jpeg.write(to: disk, options: .atomic)
             noteDiskWrite()
         }
-        return NSImage(cgImage: cg, size: NSSize(width: CGFloat(cg.width) / 2, height: CGFloat(cg.height) / 2))
+        return Self.nsImage(Self.displayReady(cg, space: displayColorSpace()))
+    }
+
+    private static func nsImage(_ cg: CGImage) -> NSImage {
+        NSImage(cgImage: cg, size: NSSize(width: CGFloat(cg.width) / 2, height: CGFloat(cg.height) / 2))
+    }
+
+    // MARK: Farbraum des Bildschirms
+
+    private var screenSpace: CGColorSpace?
+
+    /// Farbraum des Hauptbildschirms merken (auf dem Hauptthread aufrufen: beim Start und wenn sich die
+    /// Bildschirme ändern). Bereits geladene Cover bleiben gültig, werden aber ggf. noch einmal umgerechnet.
+    @MainActor
+    func updateDisplayColorSpace() {
+        let space = NSScreen.main?.colorSpace?.cgColorSpace ?? CGColorSpace(name: CGColorSpace.sRGB)
+        lock.lock()
+        let changed = screenSpace != space
+        screenSpace = space
+        lock.unlock()
+        if changed { memory.removeAllObjects() }
+    }
+
+    private func displayColorSpace() -> CGColorSpace? {
+        lock.lock()
+        defer { lock.unlock() }
+        return screenSpace
+    }
+
+    /// Bild im Format, das Core Animation direkt übernimmt (BGRA, vormultipliert, Farbraum des Bildschirms) –
+    /// die Umrechnung geschieht hier im Hintergrund statt beim Zeichnen auf dem Hauptthread.
+    static func displayReady(_ image: CGImage, space: CGColorSpace?) -> CGImage {
+        guard let space = space ?? CGColorSpace(name: CGColorSpace.sRGB) else { return image }
+        let info: UInt32 = CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue
+        if image.colorSpace == space && image.bitmapInfo.rawValue == info && image.bitsPerComponent == 8 { return image }
+        guard image.width > 0, image.height > 0,
+              let ctx = CGContext(data: nil, width: image.width, height: image.height, bitsPerComponent: 8, bytesPerRow: 0,
+                                  space: space, bitmapInfo: info) else { return image }
+        ctx.interpolationQuality = .high
+        ctx.draw(image, in: CGRect(x: 0, y: 0, width: image.width, height: image.height))
+        return ctx.makeImage() ?? image
     }
 
     /// Datei lesen und sofort dekodieren (kein verzögertes Entpacken beim Zeichnen).
@@ -324,7 +365,13 @@ enum GenreStyle {
         guard let name = artworkName(category) else { return nil }
         if let img = artCache[name] { return img }
         guard let url = Bundle.main.url(forResource: name, withExtension: "webp", subdirectory: "GenreArt"),
-              let img = NSImage(contentsOf: url) else { return nil }
+              let loaded = NSImage(contentsOf: url) else { return nil }
+        // einmal in den Bildschirmfarbraum umrechnen (nicht bei jedem Anzeigen)
+        var img = loaded
+        if let cg = loaded.cgImage(forProposedRect: nil, context: nil, hints: nil) {
+            let ready = ArtworkStore.displayReady(cg, space: NSScreen.main?.colorSpace?.cgColorSpace)
+            img = NSImage(cgImage: ready, size: loaded.size)
+        }
         artCache[name] = img
         return img
     }

@@ -143,6 +143,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         Task { @MainActor in
+            // Cover im Farbraum des Bildschirms vorbereiten (spart Umrechnungen beim Zeichnen)
+            ArtworkStore.shared.updateDisplayColorSpace()
+            NotificationCenter.default.addObserver(forName: NSApplication.didChangeScreenParametersNotification, object: nil, queue: .main) { _ in
+                Task { @MainActor in ArtworkStore.shared.updateDisplayColorSpace() }
+            }
             let model = AppDelegate.makeModel()
             if SnapshotRunner.isRequested {
                 SnapshotRunner.run(model: model)
