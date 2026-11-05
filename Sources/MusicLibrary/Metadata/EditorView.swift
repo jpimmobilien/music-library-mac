@@ -198,20 +198,24 @@ struct EditorView: View {
                     }
                 }
                 Spacer()
-                Menu {
-                    Button("Metadaten kopieren") {
+                // Glas-Menü statt `Menu`: dessen Beschriftung mit eigenem Symbol bliebe unter macOS 13 unsichtbar
+                GlassMenuButton(icon: Icons.moreHoriz, help: "Kopieren, Einfügen, Verwerfen", touch: 30, width: 240) { menu in
+                    GlassMenuItem(title: "Metadaten kopieren", icon: Icons.copy) {
                         let (v, f) = session.copyableValues()
                         model.metadata.clipboard = (v, f)
+                        menu.close()
                     }
-                    Button("Metadaten einfügen") {
+                    GlassMenuItem(title: "Metadaten einfügen", icon: Icons.paste) {
                         if let c = model.metadata.clipboard { session.paste(c.0, fields: c.1) }
+                        menu.close()
                     }
                     .disabled(model.metadata.clipboard == nil)
-                    Divider()
-                    Button("Alle Änderungen verwerfen") { session.revertAll() }
-                        .disabled(!session.hasChanges)
-                } label: {
-                    Icon(Icons.moreHoriz, size: 17, color: colors.textPrimary).frame(width: 30, height: 30)
+                    GlassMenuDivider()
+                    GlassMenuItem(title: "Alle Änderungen verwerfen", icon: Icons.undo, destructive: true) {
+                        session.revertAll()
+                        menu.close()
+                    }
+                    .disabled(!session.hasChanges)
                 }
                 .menuStyle(.borderlessButton)
                 .menuIndicator(.hidden)
@@ -356,19 +360,23 @@ private struct DetailsTab: View {
                 row("Genre", .genres) {
                     HStack(spacing: 6) {
                         TagTextField(session: session, field: .genres)
-                        Menu {
-                            ForEach(model.index.genres.filter { !$0.isUnknown }.map(\.name).sorted(), id: \.self) { g in
-                                Button(g) { session.set(.genres, g) }
-                            }
-                        } label: {
+                        GlassMenuButton(help: "Vorhandenes Genre wählen", width: 240, label: {
                             Icon(Icons.expandMore, size: 16, color: colors.onAccent)
                                 .frame(width: 22, height: 22)
                                 .background(RoundedRectangle(cornerRadius: 6, style: .continuous).fill(colors.accent))
+                        }) { menu in
+                            let names = model.index.genres.filter { !$0.isUnknown }.map(\.name).sorted()
+                            // feste Höhe: das Menü passt sich sonst nicht an eine Scrollfläche an
+                            ScrollView {
+                                LazyVStack(alignment: .leading, spacing: 1) {
+                                    ForEach(names, id: \.self) { g in
+                                        GlassMenuItem(title: g) { session.set(.genres, g); menu.close() }
+                                    }
+                                }
+                            }
+                            .frame(height: min(340, CGFloat(max(names.count, 1)) * 29))
                         }
-                        .menuStyle(.borderlessButton)
-                        .menuIndicator(.hidden)
                         .fixedSize()
-                        .help("Vorhandenes Genre wählen")
                     }
                 }
                 row("Jahr", .year) { TagTextField(session: session, field: .year, width: 80); Spacer() }

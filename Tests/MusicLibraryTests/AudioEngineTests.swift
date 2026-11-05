@@ -1,5 +1,6 @@
 import XCTest
 import AVFoundation
+import MLCore
 @testable import MusicLibrary
 
 /// Prüft die echte Klangkette (AVAudioEngine mit TimePitch, Varispeed, EQ, Limiter) im Offline-Modus:
@@ -146,6 +147,28 @@ final class AudioEngineTests: XCTestCase {
         let f = frequency(out)
         print("[Audio] Tonhöhe +12 Halbtöne: \(f) Hz")
         XCTAssertEqual(f, 880, accuracy: 880 * 0.05)
+    }
+
+    /// v2: Feinregler und ±-Tasten (Mini-Player, großer Player) – die Werte aus `PitchSettings` kommen
+    /// tatsächlich im Klang an (Weg wie im `PlayerService`: Halbtöne → Cent → AVAudioUnitTimePitch).
+    func testPitchHalfSemitoneFromSettingsIsAudible() throws {
+        let settings = PitchSettings().withSemitones(PitchSettings.fineStep * 5)   // 5 Feinschritte = +0,5 Halbtöne
+        let out = steady(try render(sine(440, amplitude: 0.4, seconds: 2.0)) { $0.pitchCents = settings.pitchCents })
+        let f = frequency(out)
+        let expected = 440 * pow(2, 0.5 / 12)   // 452,9 Hz
+        print("[Audio] Tonhöhe +0,5 Halbtöne: \(f) Hz (erwartet \(expected))")
+        XCTAssertEqual(f, expected, accuracy: 3)
+    }
+
+    func testPitchOneFineStepDownIsAudible() throws {
+        let settings = PitchSettings().withSemitones(-PitchSettings.fineStep)   // −0,1 Halbtöne = −10 Cent
+        XCTAssertEqual(settings.pitchCents, -10, accuracy: 0.001)
+        let out = steady(try render(sine(440, amplitude: 0.4, seconds: 4.0)) { $0.pitchCents = settings.pitchCents })
+        let f = frequency(out)
+        let expected = 440 * pow(2, -0.1 / 12)   // 437,5 Hz
+        print("[Audio] Tonhöhe −0,1 Halbtöne: \(f) Hz (erwartet \(expected))")
+        XCTAssertEqual(f, expected, accuracy: 1.2)
+        XCTAssertLessThan(f, 439.3, "ein Feinschritt muss hörbar tiefer sein als das Original")
     }
 
     func testTempoChangeKeepsPitch() throws {
