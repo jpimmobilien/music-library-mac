@@ -22,6 +22,8 @@ struct MainWindow: View {
         ZStack {
             Color.black.ignoresSafeArea()
             LibraryLayer()
+                // Inhalt bis an den oberen Fensterrand (unter die Ampel), keine Leiste für die Titelzeile
+                .ignoresSafeArea(.container, edges: .top)
                 .scaleEffect(open ? 0.94 : 1)
                 .clipShape(RoundedRectangle(cornerRadius: open ? 30 : 0, style: .continuous))
                 .overlay(
@@ -33,6 +35,7 @@ struct MainWindow: View {
                 .accessibilityHidden(open)
             if open {
                 FullPlayerView()
+                    .ignoresSafeArea(.container, edges: .top)
                     .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
                     .transition(.move(edge: .bottom))
                     .zIndex(2)

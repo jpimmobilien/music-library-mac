@@ -286,7 +286,7 @@ struct TagTextField: View {
         let dirty = session.dirty.contains(field)
         let unsupported = !session.loading && !session.supportedFields.contains(field)
         let disabled = disabledReason != nil || unsupported
-        TextField("", text: session.binding(field), prompt: Text(disabledReason ?? (unsupported ? "Vom Dateiformat nicht unterstützt" : (mixed ? "Gemischt" : placeholder))).foregroundColor(colors.textTertiary))
+        TextField("", text: session.binding(field), prompt: Text(disabledReason ?? (unsupported ? "Vom Dateiformat nicht unterstützt" : (mixed ? ((width ?? .infinity) < 80 ? "–" : "Gemischt") : placeholder))).foregroundColor(colors.textTertiary))
             .textFieldStyle(.plain)
             .font(Typo.inter(13, .regular))
             .foregroundColor(colors.textPrimary)

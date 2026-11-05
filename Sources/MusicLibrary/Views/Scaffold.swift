@@ -84,6 +84,8 @@ struct LibraryScaffold<Content: View, Actions: View>: View {
             }
             .frame(height: Metrics.navBarHeight)
             .padding(.top, Chrome.topPadding)
+            // Leere Stellen dieser Zeile (und darüber) verschieben das Fenster
+            .background(WindowDragArea())
         }
     }
 }

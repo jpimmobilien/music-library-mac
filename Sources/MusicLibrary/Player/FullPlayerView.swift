@@ -83,7 +83,13 @@ struct FullPlayerView: View {
                     }
                 }
             }
+            // Oberer Rand: Fenster verschieben (der Inhalt beginnt erst darunter)
+            .overlay(alignment: .top) {
+                WindowDragArea().frame(height: 26)
+            }
             .environment(\.musicColors, colors)
+            // Classic und Cassette sind immer dunkel: auch Glas und Systemelemente dunkel darstellen
+            .environment(\.colorScheme, colors.dark ? .dark : .light)
             .offset(y: max(0, dragOffset))
         }
         .task(id: player.current?.coverKey) { await artwork.update(for: player.current) }

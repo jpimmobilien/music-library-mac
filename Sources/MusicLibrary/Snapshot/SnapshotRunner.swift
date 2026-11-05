@@ -137,13 +137,15 @@ enum SnapshotRunner {
         let out = outputDirectory
         try? FileManager.default.createDirectory(at: out, withIntermediateDirectories: true)
         var manifest: [[String: String]] = []
-        // Hauptfenster der Szene ausblenden
+        // Hauptfenster der Szene ausblenden; App aktivieren, damit Bedienelemente im aktiven Zustand erscheinen
         for w in NSApp.windows { w.orderOut(nil) }
+        NSApp.setActivationPolicy(.regular)
+        NSApp.activate(ignoringOtherApps: true)
         for scenario in scenarios(model) {
             for dark in [false, true] {
                 model.settings.themeMode = dark ? .dark : .light
                 scenario.prepare(model)
-                let window = NSWindow(contentRect: NSRect(origin: .zero, size: scenario.size),
+                let window = SnapshotWindow(contentRect: NSRect(origin: .zero, size: scenario.size),
                                       styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
                                       backing: .buffered, defer: false)
                 window.titlebarAppearsTransparent = true
@@ -152,11 +154,21 @@ enum SnapshotRunner {
                 window.isReleasedWhenClosed = false
                 let root = ThemedRoot(model: model) { scenario.view() }
                     .frame(width: scenario.size.width, height: scenario.size.height)
-                window.contentView = NSHostingView(rootView: root)
+                let host = NSHostingView(rootView: root)
+                // Fenstergröße nicht vom Inhalt verändern lassen (sonst schwankende Bildgrößen)
+                host.sizingOptions = []
+                window.contentView = host
                 window.setContentSize(scenario.size)
-                window.center()
+                if let screen = NSScreen.main {
+                    let v = screen.visibleFrame
+                    window.setFrameTopLeftPoint(NSPoint(x: v.minX + 20, y: v.maxY - 20))
+                }
                 window.makeKeyAndOrderFront(nil)
                 try? await Task.sleep(nanoseconds: 2_200_000_000)
+                if window.contentRect(forFrameRect: window.frame).size != scenario.size {
+                    window.setContentSize(scenario.size)
+                    try? await Task.sleep(nanoseconds: 600_000_000)
+                }
                 let file = out.appendingPathComponent("\(scenario.name)-\(dark ? "dunkel" : "hell")-\(Int(scenario.size.width))x\(Int(scenario.size.height)).png")
                 let method = capture(window, to: file)
                 manifest.append(["file": file.lastPathComponent, "method": method, "glass": LiquidGlass.isAvailable ? "liquid-glass" : "fallback"])
@@ -171,6 +183,7 @@ enum SnapshotRunner {
             "architecture": AboutArchitecture.current,
             "liquidGlass": LiquidGlass.isAvailable,
             "interFont": Typo.interAvailable,
+            "screen": NSScreen.main.map { "\(Int($0.frame.width))x\(Int($0.frame.height)) @\($0.backingScaleFactor)x, sichtbar \(Int($0.visibleFrame.width))x\(Int($0.visibleFrame.height))" } ?? "?",
             "images": manifest,
         ]
         if let data = try? JSONSerialization.data(withJSONObject: info, options: [.prettyPrinted, .sortedKeys]) {
@@ -214,4 +227,9 @@ enum AboutArchitecture {
         return "x86_64"
         #endif
     }
+}
+
+/// Fenster für Vorschaubilder: wird nicht an den Bildschirm angepasst (feste, vergleichbare Größen).
+private final class SnapshotWindow: NSWindow {
+    override func constrainFrameRect(_ frameRect: NSRect, to screen: NSScreen?) -> NSRect { frameRect }
 }

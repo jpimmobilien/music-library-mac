@@ -105,12 +105,27 @@ struct CoverTab: View {
                     model.metadata.loadDroppedImages(providers) { pics in for p in pics { session.addPicture(p) } }
                     return true
                 }
-                HStack(spacing: 8) {
-                    PillButton(title: "Hinzufügen …", icon: Icons.add) { addFromPanel() }
-                    PillButton(title: "Ersetzen …") { replaceFromPanel() }.disabled(selected == nil)
-                    PillButton(title: "Entfernen", style: .plain) { session.removeSelectedPicture() }.disabled(selected == nil)
-                    PillButton(title: "Exportieren …", icon: Icons.fileExport) { if let selected { model.metadata.export(selected, suggestedName: session.files.first?.track.album ?? "Cover") } }
-                        .disabled(selected == nil)
+                // In einer Zeile, wenn Platz ist – sonst zwei Zeilen (keine abgeschnittenen Beschriftungen)
+                ViewThatFits(in: .horizontal) {
+                    HStack(spacing: 8) {
+                        addButton
+                        replaceButton(selected)
+                        removeButton(selected)
+                        exportButton(selected)
+                    }
+                    .fixedSize()
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack(spacing: 8) {
+                            addButton
+                            replaceButton(selected)
+                        }
+                        .fixedSize()
+                        HStack(spacing: 8) {
+                            removeButton(selected)
+                            exportButton(selected)
+                        }
+                        .fixedSize()
+                    }
                 }
                 PillButton(title: "Aus Zwischenablage einfügen", icon: Icons.paste, style: .plain) {
                     if let pic = model.metadata.pictureFromPasteboard(downscale: session.downscaleLargeImages) { session.addPicture(pic) }
@@ -136,6 +151,25 @@ struct CoverTab: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
+    }
+
+    private var addButton: some View {
+        PillButton(title: "Hinzufügen …", icon: Icons.add) { addFromPanel() }
+    }
+
+    private func replaceButton(_ selected: EmbeddedPicture?) -> some View {
+        PillButton(title: "Ersetzen …") { replaceFromPanel() }.disabled(selected == nil)
+    }
+
+    private func removeButton(_ selected: EmbeddedPicture?) -> some View {
+        PillButton(title: "Entfernen", style: .plain) { session.removeSelectedPicture() }.disabled(selected == nil)
+    }
+
+    private func exportButton(_ selected: EmbeddedPicture?) -> some View {
+        PillButton(title: "Exportieren …", icon: Icons.fileExport) {
+            if let selected { model.metadata.export(selected, suggestedName: session.files.first?.track.album ?? "Cover") }
+        }
+        .disabled(selected == nil)
     }
 
     private func addFromPanel() {
