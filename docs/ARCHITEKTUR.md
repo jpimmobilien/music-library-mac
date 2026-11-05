@@ -43,5 +43,5 @@ Datei neu einlesen → `LibraryStore`.
 `scripts/build_app.sh` baut arm64 und x86_64 getrennt (`--triple …-apple-macosx13.0`), fügt sie mit
 `lipo` zusammen, erstellt das App-Bundle (Info.plist, Icon, Schriften, Genre-Bilder, Lizenzen) und signiert
 ad-hoc. `scripts/make_dmg.sh` erzeugt die DMG (dmgbuild, Hintergrund, Verknüpfung „Programme“).
-`.github/workflows/build.yml` führt Tests, Build, Vorschaubilder, DMG und Starttests auf
-Apple Silicon (macOS 26, macOS 14) und Intel (macOS 15) aus.
+`.github/workflows/build.yml` führt Build, Vorschaubilder, DMG und Tests auf macOS 26 (Apple Silicon)
+sowie Starttests der DMG auf Intel (macOS 15) und Apple Silicon (macOS 14) aus.

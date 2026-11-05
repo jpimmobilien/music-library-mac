@@ -37,10 +37,11 @@ scripts/run_snapshots.sh "build/Music Library.app" snapshots   # Vorschaubilder 
 scripts/make_dmg.sh              # dist/Music Library.dmg
 ```
 
-**Automatisch (GitHub Actions):** `.github/workflows/build.yml` führt bei jedem Push die Tests auf
-Apple Silicon (macOS 26) und Intel (macOS 15) aus, baut die App, erzeugt Vorschaubilder (mit und ohne
-Liquid Glass) und die DMG und startet sie zur Probe auf Intel (macOS 15) und Apple Silicon (macOS 14).
-Bei einem Tag `v*` entsteht ein GitHub-Release mit der DMG.
+**Automatisch (GitHub Actions):** `.github/workflows/build.yml` baut bei jedem Push auf `main` die App
+auf macOS 26 (Xcode 26), erzeugt Vorschaubilder aller Ansichten (mit und ohne Liquid Glass) und die DMG,
+führt alle Tests aus und startet die DMG zur Probe auf Intel (macOS 15) und Apple Silicon (macOS 14).
+DMG, Bilder und Protokolle landen als Artefakte und im Zweig `ci-ergebnisse`; bei einem Tag `v*`
+entsteht ein GitHub-Release mit der DMG.
 
 ## Fremdbestandteile
 
