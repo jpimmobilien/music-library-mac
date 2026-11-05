@@ -3,8 +3,9 @@
 # Ablauf (sparsam mit macOS-Minuten):
 #   1. build    macOS 26 (Apple Silicon, Xcode 26): alle Swift-Tests → Universal Binary (arm64 + x86_64)
 #               → App-Bundle (ad-hoc signiert) → Vorschaubilder mit und ohne Liquid Glass → DMG
-#   2. smoke    Die fertige DMG wird auf Intel (macOS 15) und Apple Silicon (macOS 14) eingehängt,
-#               die App installiert und im Vorschaumodus gestartet
+#   2. smoke    Die fertige DMG wird auf Apple Silicon (macOS 14) eingehängt, die App installiert und im
+#               Vorschaumodus gestartet – nativ (arm64) und als Intel-Code über Rosetta (x86_64)
+#      intel    Echter Intel-Mac (macOS 15): alle Tests in x86_64
 #   3. release  Nur bei Tags „v*“: GitHub-Release mit DMG und Prüfsumme
 name: Build
 
@@ -94,6 +95,8 @@ jobs:
           path: logs/
           if-no-files-found: ignore
 
+  # Die fertige DMG installieren und die App starten (Vorschaumodus zeichnet alle Ansichten):
+  # Apple Silicon nativ und der Intel-Teil des Universal Binary über Rosetta.
   smoke:
     name: Starttest (${{ matrix.label }})
     needs: build
@@ -103,10 +106,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: macos-15-intel
-            label: Intel · macOS 15
           - os: macos-14
             label: Apple Silicon · macOS 14
+            arch: ""
+            name: macos-14
+          - os: macos-14
+            label: Intel-Code über Rosetta · macOS 14
+            arch: x86_64
+            name: macos-14-rosetta-x86_64
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     steps:
@@ -115,6 +122,9 @@ jobs:
         with:
           name: Music-Library-dmg
           path: dist
+      - name: Rosetta bereitstellen
+        if: matrix.arch == 'x86_64'
+        run: /usr/sbin/softwareupdate --install-rosetta --agree-to-license || true
       - name: DMG einhängen und App installieren
         run: |
           sw_vers
@@ -128,14 +138,56 @@ jobs:
           lipo -archs "$HOME/Applications/Music Library.app/Contents/MacOS/MusicLibrary"
           codesign --verify --deep --strict --verbose=2 "$HOME/Applications/Music Library.app"
       - name: App im Vorschaumodus starten
+        env:
+          SNAPSHOT_ARCH: ${{ matrix.arch }}
         run: |
-          mkdir -p "snapshots/${{ matrix.os }}"
-          scripts/run_snapshots.sh "$HOME/Applications/Music Library.app" "snapshots/${{ matrix.os }}"
+          mkdir -p "snapshots/${{ matrix.name }}"
+          scripts/run_snapshots.sh "$HOME/Applications/Music Library.app" "snapshots/${{ matrix.name }}"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: snapshots-${{ matrix.os }}
+          name: snapshots-${{ matrix.name }}
           path: snapshots/
+          if-no-files-found: ignore
+
+  # Echter Intel-Mac (macOS 15): alle Tests nativ in x86_64. Der Vorschaumodus wird nur versucht –
+  # die virtuellen Intel-Maschinen von GitHub haben keine Metal-Grafik, SwiftUI kann dort abbrechen.
+  intel:
+    name: Intel · macOS 15 (Tests)
+    runs-on: macos-15-intel
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Werkzeuge
+        run: |
+          sw_vers
+          uname -m
+          xcodebuild -version
+          swift --version
+      - name: ffmpeg für den Audio-Unversehrtheitstest
+        continue-on-error: true
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: "1"
+          HOMEBREW_NO_INSTALL_CLEANUP: "1"
+        run: brew install ffmpeg >/dev/null 2>&1 || true
+      - name: Swift-Tests (x86_64)
+        run: |
+          set -o pipefail
+          mkdir -p logs
+          swift test 2>&1 | tee logs/test-output-intel.txt
+      - name: Vorschaumodus versuchen (ohne Metal-Grafik, nur zur Information)
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p snapshots/macos-15-intel
+          scripts/run_snapshots.sh .build/debug/MusicLibrary snapshots/macos-15-intel
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: intel-macos-15
+          path: |
+            logs/
+            snapshots/
           if-no-files-found: ignore
 
   # Alle Ergebnisse (DMG, Vorschaubilder, Protokolle) zusätzlich in den Zweig „ci-ergebnisse“ legen –
@@ -143,7 +195,7 @@ jobs:
   results:
     name: Ergebnisse sichern
     if: always()
-    needs: [build, smoke]
+    needs: [build, smoke, intel]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -170,6 +222,7 @@ jobs:
             echo "Lauf: ${GITHUB_RUN_NUMBER} (${GITHUB_SHA})"
             echo "build: ${{ needs.build.result }}"
             echo "smoke: ${{ needs.smoke.result }}"
+            echo "intel: ${{ needs.intel.result }}"
             date -u
           } > ERGEBNIS.txt
           git init -q -b ci-ergebnisse
@@ -182,7 +235,7 @@ jobs:
   release:
     name: GitHub-Release
     if: startsWith(github.ref, 'refs/tags/v')
-    needs: [build, smoke]
+    needs: [build, smoke, intel]
     runs-on: ubuntu-latest
     permissions:
       contents: write

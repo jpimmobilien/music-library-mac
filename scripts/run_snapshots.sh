@@ -10,18 +10,27 @@ OUT="$2"
 LIMIT="${SNAPSHOT_TIMEOUT:-900}"
 mkdir -p "$OUT"
 OUT_ABS="$(cd "$OUT" && pwd)"
-BIN="$APP/Contents/MacOS/MusicLibrary"
+# Pfad zur App (…/Music Library.app) oder direkt zur Programmdatei
+if [ -f "$APP" ]; then BIN="$APP"; else BIN="$APP/Contents/MacOS/MusicLibrary"; fi
 test -x "$BIN" || { echo "Programmdatei fehlt: $BIN"; exit 1; }
 
-echo "▸ Vorschaubilder → $OUT_ABS (Zeitlimit ${LIMIT}s, Architektur $(uname -m))"
+# SNAPSHOT_ARCH=x86_64 startet den Intel-Teil des Universal Binary (auf Apple Silicon über Rosetta)
+RUNNER=()
+if [ -n "${SNAPSHOT_ARCH:-}" ]; then RUNNER=(arch "-$SNAPSHOT_ARCH"); fi
+echo "▸ Vorschaubilder → $OUT_ABS (Zeitlimit ${LIMIT}s, Rechner $(uname -m), App-Architektur ${SNAPSHOT_ARCH:-nativ})"
 # perl-alarm als portables Zeitlimit (macOS hat kein timeout)
 set +e
-perl -e 'alarm shift; exec @ARGV' "$LIMIT" "$BIN" --snapshot "$OUT_ABS" > "$OUT_ABS/run.log" 2>&1
+perl -e 'alarm shift; exec @ARGV' "$LIMIT" ${RUNNER[@]+"${RUNNER[@]}"} "$BIN" --snapshot "$OUT_ABS" > "$OUT_ABS/run.log" 2>&1
 STATUS=$?
 set -e
 tail -n 40 "$OUT_ABS/run.log" || true
 if [ $STATUS -ne 0 ]; then
     echo "✗ App beendet mit Status $STATUS"
+    # Absturzbericht zur Auswertung mitnehmen
+    sleep 8
+    for f in "$HOME"/Library/Logs/DiagnosticReports/MusicLibrary*; do
+        [ -e "$f" ] && cp "$f" "$OUT_ABS/" && echo "  Absturzbericht: $(basename "$f")"
+    done
     exit $STATUS
 fi
 test -f "$OUT_ABS/manifest.json" || { echo "✗ manifest.json fehlt"; exit 1; }
