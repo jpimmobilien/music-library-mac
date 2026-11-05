@@ -41,7 +41,7 @@ jobs:
           }
           for round in 1 2; do
             run "neu-$round"
-            run "geometry-$round" ML_AB_ARTWORK_GEOMETRY=1
+            run "ohne-geometry-$round" ML_AB_ARTWORK_DIRECT=1
             run "ohne-farbraum-$round" ML_AB_NO_DISPLAY_READY=1
           done
       - name: Ergebnisse in Zweig „ci-ab-${{ matrix.os }}“

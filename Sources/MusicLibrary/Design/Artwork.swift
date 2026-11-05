@@ -27,8 +27,10 @@ enum ArtworkSize: Int, CaseIterable {
 
 /// Schalter für Vergleichsmessungen im Messlauf (A/B auf demselben Rechner); im normalen Betrieb aus.
 enum ArtworkExperiment {
-    /// Cover-Fläche mit GeometryReader (Version 1) statt ohne.
-    static let geometryLayout = ProcessInfo.processInfo.environment["ML_AB_ARTWORK_GEOMETRY"] == "1"
+    /// Cover-Fläche mit GeometryReader (Standard). Die Variante ohne GeometryReader war im Vergleich auf demselben
+    /// Rechner beim Scrollen von Detailliste und kompaktem Raster langsamer (siehe docs/PERFORMANCE.md) und
+    /// lässt sich nur noch zum Nachmessen einschalten (`ML_AB_ARTWORK_DIRECT=1`).
+    static let geometryLayout = ProcessInfo.processInfo.environment["ML_AB_ARTWORK_DIRECT"] != "1"
     /// Cover nicht vorab in den Bildschirmfarbraum umrechnen.
     static let skipDisplayReady = ProcessInfo.processInfo.environment["ML_AB_NO_DISPLAY_READY"] == "1"
 }
@@ -397,13 +399,11 @@ struct ArtworkBox: View {
     var loading: Bool = false
     var circle: Bool = false
 
-    // Ohne GeometryReader für den häufigen Fall „Cover vorhanden“: Kacheln und Zeilen werden beim Scrollen
-    // laufend neu angelegt, jeder GeometryReader kostet dabei einen zusätzlichen Layout-Durchgang.
     var body: some View {
         if ArtworkExperiment.geometryLayout { geometryBody } else { directBody }
     }
 
-    /// Bisherige Form (Version 1): alles in einem GeometryReader.
+    /// Standard: Cover in einem GeometryReader mit fester Bildgröße (gemessen am schnellsten).
     private var geometryBody: some View {
         GeometryReader { geo in
             let side = min(geo.size.width, geo.size.height)
@@ -434,6 +434,7 @@ struct ArtworkBox: View {
         .overlay(shape.strokeBorder(colors.artworkStroke, lineWidth: 0.6))
     }
 
+    /// Vergleichsvariante ohne GeometryReader (nur für Messungen).
     private var directBody: some View {
         ZStack {
             if let image {
