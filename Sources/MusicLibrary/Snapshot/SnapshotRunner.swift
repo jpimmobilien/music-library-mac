@@ -260,6 +260,8 @@ enum SnapshotRunner {
         let selected = scenarios(model).filter { sc in only.isEmpty || only.contains { sc.name.contains($0) } }
         for scenario in selected {
             for dark in [false, true] {
+                print("[Snapshot] ▸ \(scenario.name) \(dark ? "dunkel" : "hell")")
+                fflush(stdout)
                 model.settings.themeMode = dark ? .dark : .light
                 scenario.prepare(model)
                 let window = SnapshotWindow(contentRect: NSRect(origin: .zero, size: scenario.size),
@@ -297,6 +299,7 @@ enum SnapshotRunner {
                 let elapsed = (CACurrentMediaTime() - started) * 1000
                 print(String(format: "[Snapshot] %@ %@: Aufbau+Warten %.0f ms, Hauptthread-Verzögerung Ø %.1f ms, max %.1f ms",
                              scenario.name, dark ? "dunkel" : "hell", elapsed, meanLag, maxLag))
+                fflush(stdout)
                 if window.contentRect(forFrameRect: window.frame).size != scenario.size {
                     window.setContentSize(scenario.size)
                     try? await Task.sleep(nanoseconds: 600_000_000)

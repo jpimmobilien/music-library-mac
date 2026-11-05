@@ -8,6 +8,12 @@ struct MusicLibraryApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var delegate
     @StateObject private var model: AppModel = AppDelegate.makeModel()
 
+    init() {
+        // Vorschau- und Messmodus (Build-Pipeline): Hänger des Hauptthreads aufzeichnen
+        if SnapshotRunner.isRequested { HangWatchdog.start(outputDirectory: SnapshotRunner.outputDirectory) }
+        if Benchmark.isRequested { HangWatchdog.start(outputDirectory: Benchmark.outputDirectory) }
+    }
+
     var body: some Scene {
         WindowGroup("Music Library", id: "main") {
             ThemedRoot(model: model) {
@@ -46,7 +52,8 @@ struct MusicLibraryApp: App {
         .windowStyle(.hiddenTitleBar)
         .defaultSize(width: 860, height: 680)
 
-        MenuBarExtra(isInserted: Binding(get: { model.settings.showMenuBarPlayer }, set: { model.settings.showMenuBarPlayer = $0 })) {
+        MenuBarExtra(isInserted: Binding(get: { model.settings.showMenuBarPlayer },
+                                         set: { v in if model.settings.showMenuBarPlayer != v { model.settings.showMenuBarPlayer = v } })) {
             ThemedRoot(model: model) { MenuBarPlayer() }
         } label: {
             Image(nsImage: NSImage.icon("vinyl", size: 16))

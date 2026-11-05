@@ -64,21 +64,33 @@ final class AppModel: ObservableObject {
     @Published var editorUids: [Int64] = []
 
     // MARK: Einstellungen
-    @Published var settings: AppSettings {
-        didSet {
-            guard settings != oldValue else { return }
-            scheduleSave()
-            if settings.effects != oldValue.effects || settings.pitch != oldValue.pitch {
-                player.applyAudioSettings(effects: settings.effects, pitch: settings.pitch)
-            }
-            if settings.skipSeconds != oldValue.skipSeconds && !demo { player.updateSkipInterval() }
-            if sortsChanged(oldValue) { recomputeLists() }
-            if settings.watchFolders != oldValue.watchFolders { library.setWatching(settings.watchFolders) }
-            if settings.mediaKeysEnabled != oldValue.mediaKeysEnabled { player.setMediaKeysEnabled(settings.mediaKeysEnabled) }
-            if settings.coverCacheLimitMB != oldValue.coverCacheLimitMB { ArtworkStore.shared.setDiskLimit(megabytes: settings.coverCacheLimitMB) }
-            if settings.dynamicCoverColors != oldValue.dynamicCoverColors {
-                CoverAmbience.shared.update(for: player.current, enabled: settings.dynamicCoverColors)
-            }
+    /// Gespeicherte Einstellungen. Bewusst kein `@Published`: Eine Zuweisung mit unverändertem Wert (z. B. aus
+    /// einer Bindung, die beim Aufbau zurückschreibt) löst **keine** Aktualisierung aller Fenster aus –
+    /// sonst können sich Ansichten und Bindungen gegenseitig endlos neu auslösen.
+    private var storedSettings: AppSettings
+    var settings: AppSettings {
+        get { storedSettings }
+        set {
+            guard newValue != storedSettings else { return }
+            objectWillChange.send()
+            let oldValue = storedSettings
+            storedSettings = newValue
+            settingsDidChange(from: oldValue)
+        }
+    }
+
+    private func settingsDidChange(from oldValue: AppSettings) {
+        scheduleSave()
+        if settings.effects != oldValue.effects || settings.pitch != oldValue.pitch {
+            player.applyAudioSettings(effects: settings.effects, pitch: settings.pitch)
+        }
+        if settings.skipSeconds != oldValue.skipSeconds && !demo { player.updateSkipInterval() }
+        if sortsChanged(oldValue) { recomputeLists() }
+        if settings.watchFolders != oldValue.watchFolders { library.setWatching(settings.watchFolders) }
+        if settings.mediaKeysEnabled != oldValue.mediaKeysEnabled { player.setMediaKeysEnabled(settings.mediaKeysEnabled) }
+        if settings.coverCacheLimitMB != oldValue.coverCacheLimitMB { ArtworkStore.shared.setDiskLimit(megabytes: settings.coverCacheLimitMB) }
+        if settings.dynamicCoverColors != oldValue.dynamicCoverColors {
+            CoverAmbience.shared.update(for: player.current, enabled: settings.dynamicCoverColors)
         }
     }
 
@@ -89,7 +101,7 @@ final class AppModel: ObservableObject {
     init(store: LibraryStore, demo: Bool = false) {
         self.store = store
         self.demo = demo
-        self.settings = AppModel.loadSettings()
+        self.storedSettings = AppModel.loadSettings()
         self.player = PlayerService(store: store, demo: demo)
         self.library = LibraryService(store: store)
         self.metadata = MetadataService(store: store)
