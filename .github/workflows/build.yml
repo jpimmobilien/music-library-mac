@@ -61,16 +61,20 @@ jobs:
           scripts/build_app.sh 2>&1 | tee logs/build-output.txt
       - name: Vorschaubilder (Liquid Glass)
         id: snap_glass
+        # Nur auf Apple Silicon: die Intel-Maschinen von GitHub haben keine Metal-Grafik (Ausweich-Build)
+        if: runner.arch == 'ARM64'
         continue-on-error: true
         run: scripts/run_snapshots.sh "build/Music Library.app" snapshots/macos26-liquid-glass
       - name: Vorschaubilder (Rückfall ohne Liquid Glass)
         id: snap_fallback
+        if: runner.arch == 'ARM64'
         continue-on-error: true
         env:
           ML_FORCE_GLASS_FALLBACK: "1"
         run: scripts/run_snapshots.sh "build/Music Library.app" snapshots/macos26-fallback
       - name: Messlauf mit 10.000 Titeln
         id: bench
+        if: runner.arch == 'ARM64'
         continue-on-error: true
         run: scripts/run_benchmark.sh "build/Music Library.app" benchmark/macos26 10000
       - name: DMG erstellen
@@ -176,8 +180,8 @@ jobs:
       - name: App im Vorschaumodus starten
         env:
           SNAPSHOT_ARCH: ${{ matrix.arch }}
-          # Starttest: eine Auswahl typischer Ansichten (alle Ansichten entstehen im Build-Job auf macOS 26)
-          ML_SNAPSHOT_ONLY: "01-bibliothek,03-alben,03-album-detail,10-vinyl,12-kassette,13-equalizer,14-metadaten,17-einstellungen,21-alben-coverflow,21-alben-detailliste,30-modern-glass,31-aurora,32-studio-reel,34-mini-gross,35-popover-tonhoehe"
+          # arm64: alle Ansichten; Intel-Code über Rosetta: eine Auswahl typischer Ansichten
+          ML_SNAPSHOT_ONLY: ${{ matrix.arch == 'x86_64' && '01-bibliothek,03-alben,03-album-detail,10-vinyl,12-kassette,13-equalizer,14-metadaten,17-einstellungen,21-alben-coverflow,21-alben-detailliste,30-modern-glass,31-aurora,32-studio-reel,34-mini-gross,35-popover-tonhoehe,40-einstellungen-equalizer' || '' }}
         run: |
           mkdir -p "snapshots/${{ matrix.name }}"
           scripts/run_snapshots.sh "$HOME/Applications/Music Library.app" "snapshots/${{ matrix.name }}"
