@@ -7,7 +7,7 @@
 set -euo pipefail
 APP="$1"
 OUT="$2"
-LIMIT="${SNAPSHOT_TIMEOUT:-900}"
+LIMIT="${SNAPSHOT_TIMEOUT:-1800}"
 mkdir -p "$OUT"
 OUT_ABS="$(cd "$OUT" && pwd)"
 # Pfad zur App (…/Music Library.app) oder direkt zur Programmdatei

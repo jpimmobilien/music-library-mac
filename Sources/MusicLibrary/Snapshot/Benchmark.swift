@@ -158,7 +158,15 @@ enum Benchmark {
         try? FileManager.default.createDirectory(at: out, withIntermediateDirectories: true)
         var results: [Measurement] = []
         var notes: [String] = []
-        func record(_ name: String, _ samples: [Double]) { results.append(Measurement(name: name, samples: samples)) }
+        let runStart = CACurrentMediaTime()
+        func record(_ name: String, _ samples: [Double]) {
+            let m = Measurement(name: name, samples: samples)
+            results.append(m)
+            // Zwischenstand (Fortschritt und Zeitpunkt – für Profilaufnahmen und abgebrochene Läufe)
+            print(String(format: "[Messlauf] %6.1f s  %@: Ø %.1f ms, p95 %.1f ms", CACurrentMediaTime() - runStart, name, m.mean, m.p95))
+            fflush(stdout)
+            write(results, notes: notes + ["(Zwischenstand)"], to: out, quiet: true)
+        }
 
         // 1. Reine Logik (Hintergrund, nicht im Hauptthread – hier zur Einordnung)
         let tracks = model.index.tracks
@@ -351,7 +359,7 @@ enum Benchmark {
         return samples.map { max(0, $0) }
     }
 
-    private static func write(_ results: [Measurement], notes: [String], to dir: URL) {
+    private static func write(_ results: [Measurement], notes: [String], to dir: URL, quiet: Bool = false) {
         let info: [String: Any] = [
             "macOS": ProcessInfo.processInfo.operatingSystemVersionString,
             "architecture": AboutArchitecture.current,
@@ -372,7 +380,7 @@ enum Benchmark {
         }
         if !notes.isEmpty { text += "\nHinweise:\n" + notes.map { "- " + $0 }.joined(separator: "\n") + "\n" }
         try? text.write(to: dir.appendingPathComponent("benchmark.txt"), atomically: true, encoding: .utf8)
-        print(text)
+        if !quiet { print(text) }
     }
 
     private static func round2(_ v: Double) -> Double { (v * 100).rounded() / 100 }

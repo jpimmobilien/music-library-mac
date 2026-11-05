@@ -255,7 +255,10 @@ enum SnapshotRunner {
         for w in NSApp.windows { w.orderOut(nil) }
         NSApp.setActivationPolicy(.regular)
         NSApp.activate(ignoringOtherApps: true)
-        for scenario in scenarios(model) {
+        // ML_SNAPSHOT_ONLY="03-alben,30-modern" → nur Szenarien, deren Name einen der Teile enthält (Fehlersuche)
+        let only = (ProcessInfo.processInfo.environment["ML_SNAPSHOT_ONLY"] ?? "").split(separator: ",").map(String.init).filter { !$0.isEmpty }
+        let selected = scenarios(model).filter { sc in only.isEmpty || only.contains { sc.name.contains($0) } }
+        for scenario in selected {
             for dark in [false, true] {
                 model.settings.themeMode = dark ? .dark : .light
                 scenario.prepare(model)
@@ -278,14 +281,33 @@ enum SnapshotRunner {
                     window.setFrameTopLeftPoint(NSPoint(x: v.minX + 20, y: v.maxY - 20))
                 }
                 window.makeKeyAndOrderFront(nil)
-                try? await Task.sleep(nanoseconds: 2_200_000_000)
+                // Warten und dabei die Auslastung des Hauptthreads messen: Verspätung kurzer Schlafphasen
+                // (bei ruhender Ansicht ≈ 0; hoch, wenn die Ansicht ständig neu berechnet/gezeichnet wird).
+                let started = CACurrentMediaTime()
+                var lag: [Double] = []
+                let hold = Double(ProcessInfo.processInfo.environment["ML_SNAPSHOT_HOLD"] ?? "") ?? 2.2
+                while CACurrentMediaTime() - started < hold {
+                    let t0 = CACurrentMediaTime()
+                    try? await Task.sleep(nanoseconds: 50_000_000)
+                    let late = (CACurrentMediaTime() - t0 - 0.05) * 1000
+                    if CACurrentMediaTime() - started > 1.2 { lag.append(max(0, late)) }   // nach dem Aufbau
+                }
+                let meanLag = lag.isEmpty ? 0 : lag.reduce(0, +) / Double(lag.count)
+                let maxLag = lag.max() ?? 0
+                let elapsed = (CACurrentMediaTime() - started) * 1000
+                print(String(format: "[Snapshot] %@ %@: Aufbau+Warten %.0f ms, Hauptthread-Verzögerung Ø %.1f ms, max %.1f ms",
+                             scenario.name, dark ? "dunkel" : "hell", elapsed, meanLag, maxLag))
                 if window.contentRect(forFrameRect: window.frame).size != scenario.size {
                     window.setContentSize(scenario.size)
                     try? await Task.sleep(nanoseconds: 600_000_000)
                 }
                 let file = out.appendingPathComponent("\(scenario.name)-\(dark ? "dunkel" : "hell")-\(Int(scenario.size.width))x\(Int(scenario.size.height)).png")
                 let method = capture(window, to: file)
-                manifest.append(["file": file.lastPathComponent, "method": method, "glass": LiquidGlass.isAvailable ? "liquid-glass" : "fallback"])
+                manifest.append(["file": file.lastPathComponent, "method": method, "glass": LiquidGlass.isAvailable ? "liquid-glass" : "fallback",
+                                 "mainThreadLagMeanMs": String(format: "%.1f", meanLag), "mainThreadLagMaxMs": String(format: "%.1f", maxLag),
+                                 "elapsedMs": String(format: "%.0f", elapsed)])
+                try? (manifest.map { "\($0["file"] ?? "") \($0["mainThreadLagMeanMs"] ?? "") \($0["elapsedMs"] ?? "")" }.joined(separator: "\n"))
+                    .write(to: out.appendingPathComponent("progress.txt"), atomically: true, encoding: .utf8)
                 window.orderOut(nil)
                 window.contentView = nil
                 window.close()

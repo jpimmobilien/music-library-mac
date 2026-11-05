@@ -1,0 +1,65 @@
+# Profilaufnahme (Fehlersuche Performance): baut die App, startet einzelne Ansichten und den Messlauf und
+# nimmt dabei mit `sample` den Hauptthread auf. Ergebnisse im Zweig „ci-profil“.
+name: Profile
+
+on:
+  push:
+    branches: [profile]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  profile:
+    name: Profil (macos-26)
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: App bauen
+        run: scripts/build_app.sh > build.log 2>&1 || (tail -40 build.log; exit 1)
+      - name: Ansichten einzeln aufnehmen
+        continue-on-error: true
+        run: |
+          BIN="build/Music Library.app/Contents/MacOS/MusicLibrary"
+          mkdir -p profil
+          for SC in 02-titel 03-alben 10-vinyl 30-modern-glass 31-aurora 21-alben-coverflow 34-mini-gross; do
+            mkdir -p "profil/$SC"
+            ML_SNAPSHOT_ONLY="$SC" ML_SNAPSHOT_HOLD=9 "$BIN" --snapshot "$PWD/profil/$SC" > "profil/$SC/run.log" 2>&1 &
+            PID=$!
+            sleep 5
+            sample "$PID" 3 -mayDie -file "profil/$SC/sample.txt" > /dev/null 2>&1 || true
+            wait "$PID" || true
+            grep "\[Snapshot\]" "profil/$SC/run.log" || tail -5 "profil/$SC/run.log"
+          done
+      - name: Messlauf mit Profil
+        continue-on-error: true
+        run: |
+          BIN="build/Music Library.app/Contents/MacOS/MusicLibrary"
+          mkdir -p profil/messlauf
+          "$BIN" --benchmark "$PWD/profil/messlauf" --tracks 10000 > profil/messlauf/run.log 2>&1 &
+          PID=$!
+          for i in 1 2 3 4 5 6 7 8; do
+            sleep 20
+            kill -0 "$PID" 2>/dev/null || break
+            sample "$PID" 4 -mayDie -file "profil/messlauf/sample-$i.txt" > /dev/null 2>&1 || true
+            tail -2 profil/messlauf/run.log
+          done
+          ( sleep 900; kill "$PID" 2>/dev/null ) &
+          wait "$PID" || true
+          cat profil/messlauf/run.log | grep "\[Messlauf\]" || true
+      - name: Ergebnisse in Zweig „ci-profil“
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p out && cp -R profil out/ 2>/dev/null || true
+          find out -name "*.png" -delete
+          cd out
+          git init -q -b ci-profil
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Profil" || true
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" ci-profil
