@@ -3,7 +3,8 @@ import os
 
 application = defines.get("app", "build/Music Library.app")  # noqa: F821 (von dmgbuild bereitgestellt)
 appname = os.path.basename(application)
-here = os.path.dirname(os.path.abspath(__file__))
+# dmgbuild führt diese Datei per exec aus (ohne __file__); make_dmg.sh startet im Projektordner.
+here = os.path.join(os.getcwd(), "scripts")
 
 format = "UDZO"
 filesystem = "HFS+"

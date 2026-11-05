@@ -63,6 +63,13 @@ jobs:
             dist/Music Library.dmg
             dist/Music Library.dmg.sha256
           if-no-files-found: error
+      - name: ffmpeg für den Audio-Unversehrtheitstest
+        if: always()
+        continue-on-error: true
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: "1"
+          HOMEBREW_NO_INSTALL_CLEANUP: "1"
+        run: brew install ffmpeg >/dev/null 2>&1 || true
       - name: Swift-Tests
         if: always()
         run: |
