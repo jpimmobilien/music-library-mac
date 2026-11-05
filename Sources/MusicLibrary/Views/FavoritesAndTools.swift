@@ -99,7 +99,7 @@ struct DuplicatesView: View {
     var body: some View {
         let status: String = computing ? "Bibliothek wird verglichen …" :
             groups.isEmpty ? "Keine wahrscheinlichen Duplikate gefunden." :
-            "\(groups.count) Gruppen · Vorschlag zum Behalten ist markiert (verlustfrei vor hoher Bitrate, mit Cover, mehr Angaben, früher hinzugefügt)."
+            "\(groups.count == 1 ? "1 Gruppe" : "\(groups.count) Gruppen") · Vorschlag zum Behalten ist markiert (verlustfrei vor hoher Bitrate, mit Cover, mehr Angaben, früher hinzugefügt)."
         LibraryScaffold(title: "Duplikate", onBack: { model.back() }) {
             VStack(alignment: .leading, spacing: 0) {
                 Text("Duplikate")
