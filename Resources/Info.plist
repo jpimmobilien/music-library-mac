@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>de</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>de</string>
+	</array>
+	<key>CFBundleExecutable</key>
+	<string>MusicLibrary</string>
+	<key>CFBundleIdentifier</key>
+	<string>de.privateapp.musiclibrary</string>
+	<key>CFBundleName</key>
+	<string>Music Library</string>
+	<key>CFBundleDisplayName</key>
+	<string>Music Library</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>__VERSION__</string>
+	<key>CFBundleVersion</key>
+	<string>__BUILD__</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>13.0</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.music</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>ATSApplicationFontsPath</key>
+	<string>Fonts</string>
+	<key>NSSupportsAutomaticTermination</key>
+	<false/>
+	<key>NSSupportsSuddenTermination</key>
+	<false/>
+	<key>NSHumanReadableCopyright</key>
+	<string>Music Library – private, lokale Musikbibliothek. Inter (OFL 1.1), Material Symbols (Apache 2.0), TagLib (MPL 1.1), stb_vorbis (MIT/Public Domain).</string>
+	<key>NSRemovableVolumesUsageDescription</key>
+	<string>Music Library liest Musik von externen Laufwerken, die du als Musikordner gewählt hast.</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>Music Library liest Musik aus Ordnern, die du als Musikordner gewählt hast.</string>
+	<key>NSDownloadsFolderUsageDescription</key>
+	<string>Music Library liest Musik aus Ordnern, die du als Musikordner gewählt hast.</string>
+	<key>NSDesktopFolderUsageDescription</key>
+	<string>Music Library liest Musik aus Ordnern, die du als Musikordner gewählt hast.</string>
+	<key>NSNetworkVolumesUsageDescription</key>
+	<string>Music Library liest Musik von Netzlaufwerken, die du als Musikordner gewählt hast.</string>
+</dict>
+</plist>
