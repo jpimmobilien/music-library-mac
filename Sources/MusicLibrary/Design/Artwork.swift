@@ -388,29 +388,33 @@ struct ArtworkBox: View {
     var loading: Bool = false
     var circle: Bool = false
 
+    // Ohne GeometryReader für den häufigen Fall „Cover vorhanden“: Kacheln und Zeilen werden beim Scrollen
+    // laufend neu angelegt, jeder GeometryReader kostet dabei einen zusätzlichen Layout-Durchgang.
     var body: some View {
-        GeometryReader { geo in
-            let side = min(geo.size.width, geo.size.height)
-            ZStack {
-                if let image {
+        ZStack {
+            if let image {
+                Color.clear.overlay(
                     Image(nsImage: image)
                         .resizable()
                         .interpolation(.high)
                         .aspectRatio(contentMode: .fill)
-                        .frame(width: geo.size.width, height: geo.size.height)
-                        .clipped()
-                } else if !loading, let art = GenreStyle.artwork(category) {
+                )
+                .clipped()
+            } else if !loading, let art = GenreStyle.artwork(category) {
+                Color.clear.overlay(
                     Image(nsImage: art)
                         .resizable()
                         .interpolation(.high)
                         .aspectRatio(contentMode: .fill)
+                )
+                .clipped()
+            } else if loading {
+                colors.dark ? Color.white.opacity(0.06) : Color.black.opacity(0.05)
+            } else {
+                GenreStyle.gradient(GenreStyle.tint(category))
+                GeometryReader { geo in
+                    Icon(GenreStyle.icon(category), size: min(geo.size.width, geo.size.height) * iconFraction, color: Color.white.opacity(0.92))
                         .frame(width: geo.size.width, height: geo.size.height)
-                        .clipped()
-                } else if loading {
-                    (colors.dark ? Color.white.opacity(0.06) : Color.black.opacity(0.05))
-                } else {
-                    GenreStyle.gradient(GenreStyle.tint(category))
-                    Icon(GenreStyle.icon(category), size: side * iconFraction, color: Color.white.opacity(0.92))
                 }
             }
         }

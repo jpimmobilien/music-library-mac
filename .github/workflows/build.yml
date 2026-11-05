@@ -14,6 +14,10 @@ on:
     branches: [main]
     tags: ["v*"]
   workflow_dispatch:
+    inputs:
+      build_runner:
+        description: "Rechner für den Build-Job (Ausweichmöglichkeit, falls macos-26 nicht verfügbar ist)"
+        default: macos-26
 
 concurrency:
   group: build-${{ github.ref }}
@@ -25,12 +29,16 @@ permissions:
 jobs:
   build:
     name: Tests, Universal-Build, DMG (macOS 26)
-    runs-on: macos-26
+    runs-on: ${{ inputs.build_runner || 'macos-26' }}
     timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
       - name: Werkzeuge
         run: |
+          # Neuestes Xcode 26 wählen, falls vorhanden (Liquid Glass braucht das macOS-26-SDK)
+          MAJOR=$(xcodebuild -version | head -1 | sed -E 's/Xcode ([0-9]+).*/\1/')
+          X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | grep -vi beta | sort -V | tail -1)
+          if [ "${MAJOR:-0}" -lt 26 ] && [ -n "$X" ]; then sudo xcode-select -s "$X"; fi
           sw_vers
           uname -m
           xcodebuild -version
