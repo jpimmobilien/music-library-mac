@@ -88,17 +88,26 @@ enum Benchmark {
             let n = count / albumCount + (album < count % albumCount ? 1 : 0)
             let cover = coverPaths[album % coverCount]
             for t in 0..<n {
-                let duration = Int64(120_000 + ((album * 31 + t * 17) % 300) * 1000)
-                let kbps = album % 4 == 0 ? 900 : 256
+                let seconds: Int = (album * 31 + t * 17) % 300
+                let duration: Int64 = Int64(120_000 + seconds * 1000)
+                let kbps: Int = album % 4 == 0 ? 900 : 256
+                let bpm: Int = 80 + (t * 9 + album) % 90
+                let rating: Int? = (album + t) % 5 == 0 ? 80 : nil
+                let bytes: Int64 = duration * Int64(kbps) / 8 + uid
+                let modified: Int64 = now - Int64(album * 3600)
+                let added: Int64 = now - Int64(album * 7200 + t)
+                let codec: String = album % 4 == 0 ? "ALAC" : "AAC"
+                let fileName: String = "\(t + 1) \(words[(album + t) % words.count]).m4a"
+                let trackTitle: String = "\(words[(album + t * 3) % words.count]) \(words[(t * 7 + album) % words.count])"
                 let track = Track(
                     uid: uid, folderID: 1, path: "/Benchmark/\(artist)/\(title)/\(t + 1).m4a", relativePath: "\(artist)/\(title)/",
-                    fileName: "\(t + 1) \(words[(album + t) % words.count]).m4a",
-                    title: "\(words[(album + t * 3) % words.count]) \(words[(t * 7 + album) % words.count])",
+                    fileName: fileName,
+                    title: trackTitle,
                     artists: [artist], album: title, albumArtists: [artist], genres: [genre], year: year,
-                    trackNumber: t + 1, trackTotal: n, discNumber: 1, discTotal: 1, bpm: 80 + (t * 9 + album) % 90,
-                    rating: (album + t) % 5 == 0 ? 80 : nil, durationMs: duration, sizeBytes: duration * Int64(kbps) / 8 + Int64(uid),
-                    dateModified: now - Int64(album * 3600), dateAdded: now - Int64(album * 7200 + t),
-                    codec: album % 4 == 0 ? "ALAC" : "AAC", sampleRate: 44_100, bitrate: kbps, channels: 2,
+                    trackNumber: t + 1, trackTotal: n, discNumber: 1, discTotal: 1, bpm: bpm,
+                    rating: rating, durationMs: duration, sizeBytes: bytes,
+                    dateModified: modified, dateAdded: added,
+                    codec: codec, sampleRate: 44_100, bitrate: kbps, channels: 2,
                     hasPicture: true, hasLyrics: t == 0, available: true)
                 tracks.append(track)
                 covers[uid] = cover
@@ -110,17 +119,25 @@ enum Benchmark {
         for t in tracks {
             if t.uid % 9 == 0 { favorites[t.uid] = (now - t.uid) * 1000 }
             if t.uid % 3 != 0 {
-                stats[t.uid] = PlayStats(trackUid: t.uid, playCount: Int(t.uid % 29) + 1, lastPlayedAt: (now - t.uid * 60) * 1000,
-                                         firstPlayedAt: (now - 9_000_000) * 1000, totalListenedMs: 300_000)
+                let plays: Int = Int(t.uid % 29) + 1
+                let last: Int64 = (now - t.uid * 60) * 1000
+                let first: Int64 = (now - 9_000_000) * 1000
+                stats[t.uid] = PlayStats(trackUid: t.uid, playCount: plays, lastPlayedAt: last, firstPlayedAt: first, totalListenedMs: 300_000)
             }
         }
         var playlists: [Playlist] = []
         for p in 0..<40 {
-            let entries = (0..<60).map { i in
-                PlaylistEntry(entryId: Int64(p * 100 + i + 1), trackUid: Int64((p * 53 + i * 17) % tracks.count + 1), position: i, addedAt: now * 1000)
+            var entries: [PlaylistEntry] = []
+            for i in 0..<60 {
+                let entryId: Int64 = Int64(p * 100 + i + 1)
+                let slot: Int = (p * 53 + i * 17) % tracks.count
+                let addedAt: Int64 = now * 1000
+                entries.append(PlaylistEntry(entryId: entryId, trackUid: Int64(slot + 1), position: i, addedAt: addedAt))
             }
-            playlists.append(Playlist(id: Int64(p + 1), name: "Playlist \(words[p % words.count]) \(p + 1)", createdAt: (now - Int64(p) * 86_400) * 1000,
-                                      updatedAt: (now - Int64(p) * 3_600) * 1000, entries: entries))
+            let created: Int64 = (now - Int64(p) * 86_400) * 1000
+            let updated: Int64 = (now - Int64(p) * 3_600) * 1000
+            let name: String = "Playlist \(words[p % words.count]) \(p + 1)"
+            playlists.append(Playlist(id: Int64(p + 1), name: name, createdAt: created, updatedAt: updated, entries: entries))
         }
         return (tracks, covers, favorites, stats, playlists)
     }
