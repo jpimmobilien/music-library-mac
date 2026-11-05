@@ -4,7 +4,9 @@ Grundlage: Android-App *Musikbibliothek 1.3.0* (unverändert) und der Master-Pro
 Spalte **Prüfung**:
 
 - **T** – automatischer Test in der Build-Pipeline (Unit-, Audio- oder Listen-Test, macOS 26 arm64 und macOS 15 Intel)
-- **B** – Vorschaubild aus der laufenden App (hell/dunkel; macOS 26 mit Liquid Glass und Rückfall, macOS 14, Intel-Code über Rosetta)
+- **B** – Vorschaubild aus der laufenden App, hell und dunkel: alle 65 Ansichten auf macOS 14 (Apple Silicon),
+  eine Auswahl mit dem Intel-Teil über Rosetta. Bilder mit echtem Liquid Glass (macOS 26) konnten in dieser Runde
+  nicht erzeugt werden, weil GitHub keine macOS-26-Apple-Silicon-Rechner zuteilte (siehe STATUS.md).
 - **M** – im Messlauf mit 10.000 Titeln ausgeführt
 - **–** – gebaut, aber ohne Bildschirm/Trackpad/Lautsprecher nicht automatisch prüfbar (bitte beim ersten Start ausprobieren)
 

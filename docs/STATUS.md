@@ -26,21 +26,28 @@ die Rückfall-Glasdarstellung zu sehen.
 | Stufe | Ergebnis |
 |---|---|
 | **App gebaut** | ✅ Universal Binary (`x86_64 arm64`), Mindestversion in beiden Teilen macOS 13.0 (`minos 13.0`), ad-hoc signiert, `codesign --verify --deep --strict` ohne Befund |
-| **DMG** | ✅ `Music Library.dmg` mit App, Verknüpfung „Programme“ und Hintergrund; `hdiutil verify` gültig; SHA-256 in `Music Library.dmg.sha256` |
+| **DMG** | ✅ `Music Library.dmg` (≈ 13,0 MB) mit App, Verknüpfung „Programme“ und Hintergrund; `hdiutil verify` gültig; SHA-256 `72e0738af2559ce616d32839d2406b3a3ea748d37c2088e84c087d449790d13c` (Lauf 15, Commit `d9fdaf2`) |
 | **Tests macOS 26, Intel (Xcode 26.6)** | ✅ **426 von 426 bestanden** |
 | **Tests macOS 15, Intel (Xcode 16.4)** | ✅ **426 von 426 bestanden** |
 | davon neu in Version 2 | 57 Logik-Tests (Sortierungen, Filter, Facetten, intelligente Playlists, Ansichtsoptionen, eigene EQ-Voreinstellungen, Tonhöhe, Einstellungen) · 6 Listen-Tests mit großer Bibliothek · 2 Klangtests der Feinstimmung |
 | Klangkette (offline gemessen) | ✅ Tonhöhe **−0,1 Halbton → 437,5 Hz** (erwartet 437,47), **+0,5 Halbton → 453,3 Hz** (erwartet 452,9), +12 → 880 Hz; Tempo 1,5× hält 440 Hz; EQ 1 kHz +12 dB → +12,0 dB; Bass +6 dB → +5,6 dB bei 50 Hz; 300 % Lautstärke → Spitze 0,95 (Limiter greift) |
-| **Starttest der DMG** | _siehe unten (wird nach dem Lauf ergänzt)_ |
-| **Vorschaubilder** | _siehe unten_ |
-| **Messlauf 10.000 Titel** | _siehe PERFORMANCE.md_ |
+| **Starttest der DMG** | ✅ auf macOS 14.8 installiert (Prüfsumme, `codesign --verify`) und gestartet – nativ (arm64) und mit dem Intel-Teil über Rosetta (x86_64) |
+| **Vorschaubilder** | ✅ **alle 65 Ansichten × hell/dunkel = 130 Bilder** auf macOS 14 (arm64), 22 Ansichten × 2 über Rosetta (fehlerfrei erzeugt); die arm64-Bilder wurden angesehen. Liquid Glass (macOS 26) in dieser Runde nicht abgebildet (s. o.) |
+| **Messlauf 10.000 Titel** | ✅ auf macOS 14 nativ und über Rosetta, Vergleich mit Version 1.0 und A/B-Vergleiche – siehe [PERFORMANCE.md](PERFORMANCE.md) |
 
 ## Fehler, die bei der Prüfung gefunden und behoben wurden
 
+- **Langsamere Cover-Darstellung** (zwischenzeitliche Umstellung ohne `GeometryReader`): per A/B-Messung auf
+  demselben Rechner erkannt (Detailliste und kompaktes Raster bis zu 2× langsamer) und zurückgenommen.
+- **Vorschau-Szenarien**: eigene EQ-Voreinstellungen wurden bei jedem Durchlauf erneut angelegt („Abend (2)“ …),
+  das Filter-Szenario zeigte keine Treffer – Testdaten korrigiert (kein Fehler der App).
 - **Hänger beim Start (erster Build von Version 2):** Vorschau- und Messmodus lieferten nach 15 bzw.
-  20 Minuten kein einziges Bild. Ursache: Einstellungen wurden auch bei unverändertem Wert veröffentlicht;
-  zusammen mit der Bindung des Menüleisten-Symbols entstand eine Endlosschleife. Behoben; seitdem laufen
-  alle Ansichten durch, und ein eingebauter Wächter würde einen erneuten Hänger mit Profil aufzeichnen.
+  20 Minuten kein einziges Bild. Wahrscheinliche Ursache (aus dem Code, nicht per Profil belegt, weil zu
+  diesem Zeitpunkt noch kein Wächter eingebaut war): Einstellungen wurden auch bei unverändertem Wert
+  veröffentlicht; zusammen mit der Bindung des Menüleisten-Symbols konnte eine Endlosschleife entstehen.
+  Behoben (nur echte Änderungen werden veröffentlicht, Bindung mit Gleichheitsprüfung); seitdem laufen alle
+  Ansichten und der Messlauf in jedem Lauf durch, und ein eingebauter Wächter würde einen erneuten Hänger
+  mit Profil aufzeichnen.
 - **Unsichtbare Menüs im Metadaten-Fenster** („Kopieren/Einfügen/Verwerfen“ und Genre-Auswahl nutzten `Menu`
   mit eigenem Symbol, das unter macOS 13 unsichtbar bleibt) → Glas-Popover.
 - **Sprungweite** im Menü und im Kontrollzentrum war fest 10 s → folgt jetzt der Einstellung.
