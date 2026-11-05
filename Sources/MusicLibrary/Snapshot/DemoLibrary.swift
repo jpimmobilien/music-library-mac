@@ -68,20 +68,33 @@ enum DemoLibrary {
             for (ti, title) in a.tracks.enumerated() {
                 let various = a.artist == "Verschiedene Interpreten"
                 let artist = various ? ["Marvin Day", "The Soulettes", "Ruby Shaw", "Otis Bell", "June Carter-Lee"][ti % 5] : a.artist
+                let durationMs = Int64(150_000 + (ti * 37_000 + ai * 11_000) % 160_000)
+                let kbps = ai % 3 == 0 ? 900 : 256
                 let t = Track(
                     uid: uid, folderID: 1, path: "/Demo/\(a.artist)/\(a.title)/\(ti + 1) \(title).m4a",
                     relativePath: "\(a.artist)/\(a.title)/", fileName: "\(ti + 1) \(title).m4a",
                     title: title, artists: [artist], album: a.title, albumArtists: [a.artist], genres: [a.genre],
                     composers: ai == 4 ? ["Antonia Lind"] : [], year: a.year, trackNumber: ti + 1, trackTotal: a.tracks.count,
                     discNumber: 1, discTotal: 1, compilation: various, bpm: 90 + (ti * 7) % 60, rating: (ti % 6) * 20 == 0 ? nil : (ti % 6) * 20,
-                    durationMs: Int64(150_000 + (ti * 37_000 + ai * 11_000) % 160_000), sizeBytes: 8_400_000, dateModified: now - Int64(ai * 86_400),
-                    dateAdded: now - Int64(ai * 86_400 * 3 + ti * 600), codec: ai % 3 == 0 ? "ALAC" : "AAC", sampleRate: 44_100, bitrate: ai % 3 == 0 ? 900 : 256,
+                    durationMs: durationMs, sizeBytes: durationMs * Int64(kbps) / 8 + 48_000 + Int64(uid * 97), dateModified: now - Int64(ai * 86_400),
+                    dateAdded: now - Int64(ai * 86_400 * 3 + ti * 600), codec: ai % 3 == 0 ? "ALAC" : "AAC", sampleRate: 44_100, bitrate: kbps,
                     channels: 2, bitsPerSample: ai % 3 == 0 ? 16 : 0, hasPicture: hasCover, hasLyrics: ai == 0 && ti == 0, available: true
                 )
                 tracks.append(t)
                 if hasCover { covers[uid] = coverPath }
                 uid += 1
             }
+        }
+        // Ein echtes Duplikat für die Duplikat-Ansicht: derselbe Titel noch einmal in einem zweiten Ordner
+        if let original = tracks.first(where: { $0.uid == 2 }) {
+            var copy = original
+            copy.uid = uid
+            copy.path = "/Demo/Import/\(original.fileName)"
+            copy.relativePath = "Import/"
+            copy.dateAdded = now - 3_600
+            tracks.append(copy)
+            if let c = covers[original.uid] { covers[uid] = c }
+            uid += 1
         }
         var favorites: [Int64: Int64] = [:]
         for u in [1, 3, 9, 12, 17, 25, 31, 40] where u < uid { favorites[Int64(u)] = (now - Int64(u) * 3600) * 1000 }

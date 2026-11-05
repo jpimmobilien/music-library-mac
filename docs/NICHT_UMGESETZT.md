@@ -1,11 +1,10 @@
 # Noch nicht umgesetzt bzw. noch nicht geprüft
 
-## Noch nicht geprüft (wichtigster Punkt)
+## Noch nicht geprüft
 
-Die **App selbst** (Oberfläche, Wiedergabe, Fenster, Menüs) ist noch nie auf einem Mac gelaufen – siehe
-[STATUS.md](STATUS.md). Alles in diesem Projekt, was SwiftUI, AppKit oder AVFoundation braucht, ist
-geschrieben und durchgesehen, aber **nicht gebaut und nicht ausprobiert**. Das betrifft auch die
-Darstellung der 17 Ansichten in Hell/Dunkel, Liquid Glass, die Animationen der Player-Designs und die DMG.
+Gebaut, automatisch getestet und auf macOS 26 und 14 gestartet ist die App (siehe [STATUS.md](STATUS.md)).
+**Nicht** geprüft sind die Bedienung von Hand, die Wiedergabe über Lautsprecher, das Einlesen einer echten
+Sammlung, macOS 13 Ventura und die Oberfläche auf echter Intel-Hardware.
 
 ## Nicht umgesetzt
 

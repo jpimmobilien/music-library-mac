@@ -5,9 +5,10 @@ Inter, eigene Symbole), gleiche Regeln, vier Player-Designs (Vinyl Studio, Class
 Portable CD), dazu Mac-typische Ergänzungen und vollständige Metadaten-Bearbeitung. Keine iTunes-Kopie:
 keine Seitenleiste, keine Tabellen.
 
-> **Stand:** Die Fachlogik, die Datenbank, das Lesen/Schreiben der Tags, die Player-Grafiken und der
-> Ogg-Decoder sind gebaut und mit 337 Tests geprüft. Die **App selbst ist noch nicht auf einem Mac gebaut
-> worden** – es gibt daher noch **keine DMG**. Details: [docs/STATUS.md](docs/STATUS.md).
+> **Stand:** gebaut und geprüft auf echten Macs (GitHub Actions): Universal-DMG, 361 von 361 Tests auf
+> Apple Silicon (macOS 26) und Intel (macOS 15), Starttest der DMG auf macOS 14 (arm64 und Intel-Code über
+> Rosetta), alle Ansichten in Hell und Dunkel angesehen. Noch nicht von Hand bedient und nicht auf macOS 13
+> gestartet – Details: [docs/STATUS.md](docs/STATUS.md).
 
 | | |
 |---|---|
@@ -39,7 +40,8 @@ scripts/make_dmg.sh              # dist/Music Library.dmg
 
 **Automatisch (GitHub Actions):** `.github/workflows/build.yml` baut bei jedem Push auf `main` die App
 auf macOS 26 (Xcode 26), erzeugt Vorschaubilder aller Ansichten (mit und ohne Liquid Glass) und die DMG,
-führt alle Tests aus und startet die DMG zur Probe auf Intel (macOS 15) und Apple Silicon (macOS 14).
+führt alle Tests aus (auch nativ auf Intel, macOS 15) und startet die DMG zur Probe auf macOS 14 –
+nativ und mit dem Intel-Teil über Rosetta.
 DMG, Bilder und Protokolle landen als Artefakte und im Zweig `ci-ergebnisse`; bei einem Tag `v*`
 entsteht ein GitHub-Release mit der DMG.
 

@@ -4,31 +4,43 @@ Stand: 05.11.2026 · Version 1.0.0 (erste macOS-Fassung)
 
 ## Umgebung
 
-Entwickelt in einer Linux-Umgebung **ohne macOS und ohne Xcode**. Verfügbar war ein Swift-5.9.2-Compiler
-für Linux (mit Foundation und XCTest, ohne SwiftUI/AppKit/AVFoundation). Ein GitHub-Konto war nicht
-verbunden, deshalb konnte die vorbereitete macOS-CI (GitHub Actions) **nicht laufen**.
+Entwickelt unter Linux, gebaut und geprüft mit GitHub Actions auf echten macOS-Rechnern
+(Workflow `.github/workflows/build.yml`, Ergebnisse jedes Laufs im Zweig `ci-ergebnisse`):
+
+| Rechner | System | Werkzeuge | Aufgabe |
+|---|---|---|---|
+| Apple Silicon | macOS 26.6 | Xcode 26.6, Swift 6.3.3 | Build, Tests, Vorschaubilder (Liquid Glass + Rückfall), DMG |
+| Intel (x86_64) | macOS 15.7 | Xcode 16.4, Swift 6.1.2 | alle Tests nativ in x86_64 |
+| Apple Silicon | macOS 14.8 | – | DMG installieren, App starten (arm64 und Intel-Teil über Rosetta) |
 
 ## Übersicht
 
 | Stufe | Ergebnis |
 |---|---|
-| **Reine Module kompiliert** (MLCore, MLStore, MLTags + TagLib 2.3.2, MLRender, OggVorbis + stb_vorbis) | ✅ fehlerfrei (Swift 5.9.2, Linux) |
-| **Unit-Tests der reinen Module** | ✅ **337 von 337 bestanden** – MLCore 199, MLTags 76, MLRender 46, MLStore 11, OggVorbis 5 |
-| davon Abgleich mit Android | ✅ Sortierreihenfolge, Hashwerte, EQ-Kurven, Coverfarben, Zahlenformate mit dem Kotlin-Code auf der JVM berechnet; Bildebenen der vier Player-Grafiken mit den Kotlin-Renderern verglichen |
-| **Tags schreiben – Unversehrtheit der Musik** | ✅ 16 Formate: Audiodaten nach Bearbeiten, Leeren und erneutem Bearbeiten bit-identisch (ffmpeg-MD5); dazu 37-MB-ALAC, 6-MB-MP3, 3-MB-FLAC |
-| **App (SwiftUI/AppKit) kompiliert** | ❌ **nicht möglich** (kein macOS) |
-| Ersatzprüfung der App | ⚠️ zwei unabhängige Durchsichten aller ≈ 12 300 Zeilen gegen die echten Schnittstellen und macOS 13 als Mindestversion. Gefunden und behoben: ein nicht aufrufbarer Initialisierer, verlorene Tupel-Bezeichner, `[weak self]` in verschachtelten nebenläufigen Closures (rund ein Dutzend Stellen), viermal mehr als 10 Elemente in einem ViewBuilder (unter macOS 13 ein Fehler) sowie vier Absturz-/Darstellungsfehler (Pegelanzeige bei niedriger Abtastrate, Umschalt-Klick nach Filtern, Sternbewertung > 100, verzerrte Cover-Labels). Syntaxprüfung (`swiftc -parse`) aller Dateien fehlerfrei; Suchskripte für Elementgrenzen, unbekannte Namen und private Typen ohne Befund. **Kein Ersatz für einen echten Build** – der erste Build kann noch einzelne Fehler melden. |
-| **App-Tests** (`Tests/MusicLibraryTests`, 24 Tests: Klangkette offline gemessen – Lautstärke, Limiter, EQ, Bass, Tonhöhe, Tempo, Drehzahl –, Pegelanzeige, Mehrfachbearbeitung, Symbole, Ogg-Wiedergabe) | ⚠️ geschrieben, **nicht ausgeführt** |
-| **Vorschaubilder der 17 Ansichten** (hell/dunkel, mehrere Fenstergrößen, mit und ohne Liquid Glass) | ❌ nicht erzeugt – braucht macOS; die CI erzeugt sie automatisch (`--snapshot`) |
-| **Universal Binary, Ad-hoc-Signatur, DMG** | ❌ **nicht erstellt** – Skripte fertig (`scripts/build_app.sh`, `scripts/make_dmg.sh`, `Build.command`), aber nicht ausgeführt |
-| App-Icon, DMG-Hintergrund | ✅ gerendert und angesehen |
-| Installationsanleitung | ✅ geschrieben; Erststart-Schritte nach Apples dokumentiertem Gatekeeper-Verhalten, hier nicht ausprobiert |
+| **App gebaut** | ✅ Universal Binary (arm64 + x86_64), Mindestversion in beiden Teilen macOS 13.0 (`minos 13.0`), ad-hoc signiert, `codesign --verify --deep --strict` ohne Befund |
+| **DMG** | ✅ `Music Library.dmg` (≈ 10,6 MB): App, Verknüpfung „Programme“, Hintergrund, Volume-Icon; `hdiutil verify` gültig; SHA-256 in `Music Library.dmg.sha256` |
+| **Tests macOS 26, Apple Silicon** | ✅ **361 von 361 bestanden** |
+| **Tests macOS 15, Intel** | ✅ **361 von 361 bestanden** (nativ x86_64) |
+| davon | MLCore 199 · MLTags 76 (inkl. Audio-Unversehrtheit mit ffmpeg) · MLRender 46 · MLStore 11 · OggVorbis 5 · App 24 |
+| Klangkette (gemessen in den App-Tests, offline) | ✅ neutral bit-nah (Spitze 0,49999 bei 0,5), 50 % → 0,25, EQ 1 kHz +12 dB → +12,0 dB, 16-kHz-Band bei 125 Hz → 0,0 dB, Aussteuerung −12 dB gleicht aus, Bass +6 dB → +5,6 dB bei 50 Hz und 0,0 dB bei 5 kHz, Tonhöhe +12 HT → 880 Hz, Tempo 1,5× → Tonhöhe bleibt 440 Hz, Drehzahl 2× → 880 Hz, **300 % Lautstärke → Spitze 0,95 (Limiter greift)** |
+| **Starttest der DMG** | ✅ auf macOS 14 installiert und gestartet – nativ (arm64) und der Intel-Teil über Rosetta (x86_64): jeweils alle 58 Ansichten gezeichnet |
+| **Vorschaubilder** | ✅ 29 Ansichten × hell/dunkel, auf macOS 26 mit Liquid Glass und mit Rückfall-Glas, auf macOS 14 (arm64 und x86_64) – angesehen; gefundene Fehler behoben (schwarzer Streifen oben, weißes Glas in Classic/Cassette bei hellem Design, abgeschnittene Schaltflächen und Platzhalter, Jahreszahl mit Tausenderpunkt) |
+| Tags schreiben – Unversehrtheit der Musik | ✅ 16 Formate: Audiodaten nach Bearbeiten, Leeren und erneutem Bearbeiten bit-identisch (ffmpeg-MD5), auf Linux und macOS |
 
-## Was als Nächstes geprüft werden muss (in dieser Reihenfolge)
+## Bekannte Einschränkung der Prüfung
 
-1. Erster Build auf macOS (CI oder `Build.command`) – Übersetzungsfehler beheben.
-2. `swift test` auf macOS: 337 + 24 Tests (Klangkette, Ogg, Metadaten-Sitzung, Symbole).
-3. Vorschaubilder aller Ansichten hell/dunkel ansehen; Liquid Glass (macOS 26) und Rückfall (macOS 13–15).
-4. Starttest der fertigen DMG auf Intel und Apple Silicon.
-5. Von Hand: Wiedergabe mit echter Musik, Medientasten, Tags schreiben + Rückgängig an Kopien, Ordner auf
-   externem Laufwerk, große Bibliothek (Geschwindigkeit).
+- Die **Intel-Maschinen von GitHub sind virtuelle Rechner ohne Metal-Grafik**. Dort bricht die Oberfläche
+  beim Zeichnen mit einer Metal-Meldung des Systems ab (`Target device architecture is nil`). Echte
+  Intel-Macs haben eine Grafikkarte; der Intel-Teil der App wurde deshalb über Rosetta auf Apple Silicon
+  gezeichnet und alle Tests nativ auf Intel ausgeführt. **Auf echter Intel-Hardware ist die Oberfläche
+  nicht gesehen.**
+
+## Nicht geprüft
+
+- **macOS 13 Ventura**: kein Testrechner verfügbar (GitHub bietet macOS 13 nicht mehr an). Die App ist
+  dafür gebaut (Mindestversion 13.0, keine neueren Schnittstellen ohne Abfrage), aber dort nicht gestartet.
+- **Bedienung von Hand**: Klicken, Ziehen & Ablegen, Tastenkürzel, Menüs, Kontextmenüs, Fenster verschieben.
+- **Tatsächliche Wiedergabe über Lautsprecher**, Medientasten, Kontrollzentrum, Sleep-Timer in Echtzeit.
+- **Einlesen einer echten Musiksammlung** (Geschwindigkeit großer Bibliotheken, externe Laufwerke,
+  Dateiüberwachung) und **Tags schreiben über die Oberfläche** an echten Dateien (die Schreiblogik selbst ist getestet).
+- **Erster Start nach dem Herunterladen** (Gatekeeper): Schritte nach Apples Dokumentation beschrieben, nicht ausprobiert.

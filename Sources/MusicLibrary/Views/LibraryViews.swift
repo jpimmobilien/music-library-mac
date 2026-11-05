@@ -306,7 +306,7 @@ struct AlbumDetailView: View {
                                           config: TrackListConfig(showArtwork: false, showAlbum: false, numbering: .trackNumber, source: source))
                         }
                         if let year = album.year {
-                            Text("\(year) · \(Formatting.tracks(album.trackCount)) · \(Formatting.longDuration(album.totalDurationMs))")
+                            Text(verbatim: "\(year) · \(Formatting.tracks(album.trackCount)) · \(Formatting.longDuration(album.totalDurationMs))")
                                 .textStyle(Typo.bodySmall)
                                 .foregroundColor(colors.textTertiary)
                                 .frame(maxWidth: .infinity, alignment: .leading)
