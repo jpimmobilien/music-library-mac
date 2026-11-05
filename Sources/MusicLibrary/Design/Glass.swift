@@ -1,5 +1,6 @@
 import SwiftUI
 import AppKit
+import MLCore
 
 // =============================================================================================
 // Glasflächen („Liquid Glass“) – Übertragung von ui/components/Glass.kt.
@@ -50,6 +51,7 @@ struct BackdropBlur: NSViewRepresentable {
 struct GlassBackground<S: InsettableShape>: ViewModifier {
     @Environment(\.musicColors) private var colors
     @Environment(\.glassEnabled) private var glass
+    @Environment(\.performanceMode) private var performance
 
     let shape: S
     var strong: Bool = false
@@ -60,12 +62,14 @@ struct GlassBackground<S: InsettableShape>: ViewModifier {
     private var fill: Color {
         if let tint { return tint }
         if !glass { return colors.surface }
+        // Leistungsmodus: keine Echtzeit-Unschärfe dahinter – dafür etwas dichtere Tönung
+        if performance { return colors.surface.opacity(strong ? 0.94 : 0.86) }
         return strong ? colors.glassTintStrong : colors.glassTint
     }
 
     func body(content: Content) -> some View {
         Group {
-            if glass && LiquidGlass.isAvailable {
+            if glass && !performance && LiquidGlass.isAvailable {
                 modernGlass(content)
             } else {
                 fallbackGlass(content)
@@ -95,7 +99,7 @@ struct GlassBackground<S: InsettableShape>: ViewModifier {
         content
             .background(
                 ZStack {
-                    if glass {
+                    if glass && !performance {
                         BackdropBlur(material: colors.dark ? .hudWindow : .popover)
                     }
                     shape.fill(fill)
@@ -160,10 +164,13 @@ struct GlassGroup<Content: View>: View {
 }
 
 /// Atmosphärischer App-Hintergrund: warmes Weiß bzw. warmes Schwarz mit sehr weichen Rosé-, Pfirsich- und
-/// Fliedertönen (radiale Verläufe – Android `AmbientBackground`).
+/// Fliedertönen (radiale Verläufe – Android `AmbientBackground`). Mit „Farben des Covers“ nimmt eine der
+/// Farbinseln dezent den Ton des gerade gespielten Albums an (sanfte Überblendung bei Titelwechsel).
+/// Nur Verläufe, keine Echtzeit-Unschärfe – auch auf älteren Macs ohne Last.
 struct AmbientBackground: View {
     @Environment(\.musicColors) private var colors
     @Environment(\.glassEnabled) private var glass
+    @ObservedObject private var ambience = CoverAmbience.shared
 
     var body: some View {
         GeometryReader { geo in
@@ -179,10 +186,75 @@ struct AmbientBackground: View {
                         let center = centers[i % centers.count]
                         RadialGradient(colors: [c, c.opacity(0)], center: UnitPoint(x: center.x / w, y: center.y / h), startRadius: 0, endRadius: radius)
                     }
+                    if let glow = ambience.glow {
+                        let c = Color(argb: glow).opacity(colors.dark ? 0.30 : 0.22)
+                        RadialGradient(colors: [c, c.opacity(0)], center: UnitPoint(x: 0.82, y: 0.08), startRadius: 0, endRadius: radius * 1.1)
+                            .transition(.opacity)
+                        let c2 = Color(argb: glow).opacity(colors.dark ? 0.16 : 0.10)
+                        RadialGradient(colors: [c2, c2.opacity(0)], center: UnitPoint(x: 0.1, y: 0.9), startRadius: 0, endRadius: radius)
+                            .transition(.opacity)
+                    }
                 }
             }
+            .animation(.easeInOut(duration: 1.2), value: ambience.glow)
         }
         .ignoresSafeArea()
+    }
+}
+
+/// Leuchtfarbe des gerade gespielten Covers für den App-Hintergrund (eigenes, kleines Beobachtungsobjekt –
+/// ein Titelwechsel zeichnet nur die Hintergründe neu).
+@MainActor
+final class CoverAmbience: ObservableObject {
+    static let shared = CoverAmbience()
+    @Published private(set) var glow: UInt32?
+    private var key: String?
+
+    /// Aus dem Cover eines Titels berechnen (im Hintergrund); `nil` oder ausgeschaltet → neutral.
+    func update(for track: Track?, enabled: Bool) {
+        guard enabled, let track else {
+            key = nil
+            if glow != nil { glow = nil }
+            return
+        }
+        guard track.coverKey != key else { return }
+        key = track.coverKey
+        let k = track.coverKey
+        Task { @MainActor [weak self] in
+            let image = await ArtworkStore.shared.image(for: track, size: .small)
+            guard let self, self.key == k else { return }
+            guard let image, let px = ArtworkStore.pixels(of: image) else {
+                self.glow = nil
+                return
+            }
+            let palette = CoverPalette.from(pixels: px.pixels, width: px.width, height: px.height)
+            self.glow = palette == CoverPalette.neutral ? nil : palette.glow
+        }
+    }
+}
+
+// MARK: - Leistungsmodus
+
+private struct PerformanceModeKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
+private struct ContinuousMotionKey: EnvironmentKey {
+    static let defaultValue = true
+}
+
+extension EnvironmentValues {
+    /// „Leistungsmodus“: Glas ohne Echtzeit-Unschärfe (Einstellung „weniger Transparenz“).
+    var performanceMode: Bool {
+        get { self[PerformanceModeKey.self] }
+        set { self[PerformanceModeKey.self] = newValue }
+    }
+
+    /// Dauerbewegungen (Pegelbalken, drehende Cover …) erlaubt? `false` bei Einstellung „Animationen: Aus“
+    /// oder der Systemeinstellung „Bewegung reduzieren“.
+    var continuousMotion: Bool {
+        get { self[ContinuousMotionKey.self] }
+        set { self[ContinuousMotionKey.self] = newValue }
     }
 }
 

@@ -12,6 +12,8 @@ public struct ArtistInfo: Hashable, Sendable, Identifiable {
     public var albumKeys: [String]
 
     public var trackCount: Int { trackUids.count }
+    /// Anzahl der Alben (= `albumKeys.count`).
+    public var albumCount: Int { albumKeys.count }
     public var id: String { key }
 
     public init(key: String, name: String, sortName: String, trackUids: [Int64], albumKeys: [String]) {

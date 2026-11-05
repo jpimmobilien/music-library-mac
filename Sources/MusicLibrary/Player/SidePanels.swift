@@ -159,13 +159,15 @@ enum LyricsSource {
     /// Nur für Vorschaubilder.
     static var demo: [Int64: String] = [:]
 
-    static func load(_ track: Track) async -> String? {
+    /// - Parameter useLrc: auch eine `.lrc`-Datei neben der Musikdatei verwenden (Einstellung).
+    static func load(_ track: Track, useLrc: Bool = true) async -> String? {
         if let text = demo[track.uid] { return text }
         return await Task.detached(priority: .userInitiated) {
             let url = URL(fileURLWithPath: track.path)
             if let tags = try? TagFile.read(url: url), let text = tags.values.lyrics, !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 return text
             }
+            guard useLrc else { return nil }
             let lrc = url.deletingPathExtension().appendingPathExtension("lrc")
             if let data = try? Data(contentsOf: lrc) {
                 return String(data: data, encoding: .utf8) ?? String(data: data, encoding: .isoLatin1)
@@ -180,6 +182,10 @@ struct LyricsPanel: View {
     @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var player: PlayerService
     @Environment(\.musicColors) private var colors
+    /// Schriftgröße (`nil` = Einstellung „Liedtext-Schriftgröße“).
+    var fontSize: CGFloat? = nil
+    /// Zentriert (großer Player).
+    var center: Bool = false
     @State private var lyrics: Lyrics?
     @State private var loadedFor: Int64?
     @State private var loading = false
@@ -191,7 +197,9 @@ struct LyricsPanel: View {
             } else if loading {
                 ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity)
             } else if let lyrics, lyrics.isSynced || !(lyrics.plainText ?? "").isEmpty {
-                LyricsContent(lyrics: lyrics, clock: player.clock, fontSize: 17, color: colors.textPrimary, dim: colors.textTertiary) { ms in
+                LyricsContent(lyrics: lyrics, clock: player.clock, fontSize: fontSize ?? CGFloat(model.settings.lyricsFontSize),
+                              color: colors.textPrimary, dim: colors.textTertiary, center: center,
+                              autoScroll: model.settings.lyricsAutoScroll) { ms in
                     player.seek(to: ms)
                 }
             } else {
@@ -212,7 +220,7 @@ struct LyricsPanel: View {
     private func load() async {
         guard let t = player.current else { lyrics = nil; return }
         if loadedFor != t.uid { loading = true }
-        let text = await LyricsSource.load(t)
+        let text = await LyricsSource.load(t, useLrc: model.settings.lyricsUseLrcFiles)
         lyrics = text.map { LyricsParser.parse($0) }
         loadedFor = t.uid
         loading = false
@@ -231,6 +239,8 @@ struct LyricsContent: View {
     var color: Color
     var dim: Color
     var center: Bool = false
+    /// Der aktuellen Zeile automatisch folgen.
+    var autoScroll: Bool = true
     let seek: (Int64) -> Void
 
     var body: some View {
@@ -262,7 +272,7 @@ struct LyricsContent: View {
                     .padding(.vertical, 40)
                 }
                 .onChange(of: currentIndex) { idx in
-                    guard let idx else { return }
+                    guard autoScroll, let idx else { return }
                     withAnimation(Motion.easeOut(0.45)) { proxy.scrollTo(idx, anchor: UnitPoint(x: 0.5, y: 0.35)) }
                 }
             }

@@ -3,59 +3,14 @@ import AppKit
 import MLCore
 
 // Bereiche „Titel“, „Alben“, „Interpreten“, „Genres“ mit Detailansichten (Android: TracksScreen, AlbumsScreens,
-// ArtistsGenresScreens). Auf dem Mac mit breiteren Rastern, Mehrfachauswahl und Kontextmenüs.
+// ArtistsGenresScreens). v2: jede Übersicht in fünf Ansichten (Raster, kompaktes Raster, Liste, Detailliste,
+// Cover Flow), sichtbare Sortierung, Filter und Darstellungsoptionen in der Werkzeugkapsel.
 
-/// Gemeinsame Aktionen in der Titelkapsel: Sortierung und Einstellungen.
-struct SortMenu<F: SortField>: View {
-    @Environment(\.musicColors) private var colors
-    let sort: Sort<F>
-    let onChange: (Sort<F>) -> Void
-
-    var body: some View {
-        Menu {
-            Text("SORTIEREN NACH")
-            ForEach(Array(F.allCases), id: \.self) { field in
-                Button {
-                    onChange(field == sort.field ? Sort(field, descending: !sort.descending) : Sort(field, descending: field.defaultDescending))
-                } label: {
-                    if field == sort.field {
-                        Label(field.label, systemImage: sort.descending ? "arrow.down" : "arrow.up")
-                    } else {
-                        Text(field.label)
-                    }
-                }
-            }
-            Divider()
-            Button {
-                onChange(Sort(sort.field, descending: false))
-            } label: {
-                if !sort.descending { Label("Aufsteigend · " + sort.field.ascendingLabel, systemImage: "checkmark") } else { Text("Aufsteigend · " + sort.field.ascendingLabel) }
-            }
-            Button {
-                onChange(Sort(sort.field, descending: true))
-            } label: {
-                if sort.descending { Label("Absteigend · " + sort.field.descendingLabel, systemImage: "checkmark") } else { Text("Absteigend · " + sort.field.descendingLabel) }
-            }
-        } label: {
-            Icon(Icons.sort, size: 17, color: colors.textPrimary)
-                .frame(width: 32, height: 32)
-                .contentShape(Circle())
-        }
-        .menuStyle(.borderlessButton)
-        .menuIndicator(.hidden)
-        .fixedSize()
-        .help("Sortierung: \(sort.label)")
-    }
-}
-
+/// Zahnrad in den Werkzeugkapseln.
 struct SettingsAction: View {
     var body: some View {
         BarAction(icon: Icons.settings, label: "Einstellungen (⌘,)") {
-            if #available(macOS 14.0, *) {
-                NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-            } else {
-                NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
-            }
+            WindowRouter.shared.openSettings()
         }
     }
 }
@@ -68,35 +23,41 @@ struct TracksView: View {
 
     var body: some View {
         let tracks = model.trackList
-        let q = model.query(.tracks)
-        let source = PlaybackSource(kind: .list, label: q.trimmingCharacters(in: .whitespaces).isEmpty ? "Alle Titel" : "Suche „\(q.trimmingCharacters(in: .whitespaces))“")
-        LibraryScaffold(title: "Titel", actions: { actions(tracks) }) {
+        let q = model.query(.tracks).trimmingCharacters(in: .whitespaces)
+        let filtered = !model.filter(.tracks).isEmpty
+        let total = model.unfilteredCount[.tracks] ?? model.index.tracks.count
+        let summary: String? = model.index.tracks.isEmpty ? nil
+            : librarySummary(tracks.count, total, narrowed: !q.isEmpty || filtered, Formatting.tracks)
+        let label: String = !q.isEmpty ? "Suche „\(q)“" : (filtered ? "Gefilterte Titel" : "Alle Titel")
+        let source = PlaybackSource(kind: .list, label: label)
+        LibraryScaffold(title: "Titel", actions: { toolbar(tracks, .collapsed) }) {
             VStack(spacing: 0) {
                 LargeTitleHeader(title: "Titel", section: .tracks, placeholder: "Titel, Interpret, Album oder Genre",
-                                 summary: model.index.tracks.isEmpty ? nil : librarySummary(tracks.count, model.index.tracks.filter(\.available).count, searching: !q.isEmpty, Formatting.tracks),
-                                 actions: { actions(tracks) })
+                                 summary: summary, filterContext: .tracks, toolbar: { toolbar(tracks, .full) })
                 if model.index.tracks.isEmpty {
                     LibraryEmptyState()
                 } else if tracks.isEmpty {
-                    EmptyStateView(icon: Icons.search, title: "Keine Treffer", text: "Kein Titel passt zu „\(q)“. Gesucht wird in Titel, Interpret, Album und Genre.")
+                    NoMatchesView(context: .tracks, query: q, noun: "Kein Titel")
                 } else {
-                    TrackListView(items: TrackListItem.plain(tracks), config: TrackListConfig(source: source))
+                    TrackCollection(context: .tracks, tracks: tracks, source: source, sort: sortSpec)
                 }
             }
             .padding(.horizontal, Spacing.gutter)
         }
     }
 
-    @ViewBuilder
-    private func actions(_ tracks: [Track]) -> some View {
-        if !tracks.isEmpty {
-            BarAction(icon: Icons.shuffle, label: "Alle angezeigten Titel gemischt abspielen") {
-                player.play(uids: tracks.map(\.uid), startIndex: nil, shuffle: .on, source: PlaybackSource(kind: .list, label: "Alle Titel (gemischt)"))
-            }
+    private var sortSpec: TableSortSpec {
+        ColumnSorts.spec(ColumnSorts.track, sort: model.settings.trackSort) { model.settings.trackSort = $0 }
+    }
+
+    private func toolbar(_ tracks: [Track], _ style: LibraryToolbarStyle) -> some View {
+        let shuffle: (() -> Void)? = tracks.isEmpty ? nil : {
+            player.play(uids: tracks.map(\.uid), startIndex: nil, shuffle: .on, source: PlaybackSource(kind: .list, label: "Alle Titel (gemischt)"))
         }
-        SortMenu(sort: model.settings.trackSort) { model.settings.trackSort = $0 }
-        BarAction(icon: Icons.difference, label: "Duplikate finden") { model.open(.duplicates) }
-        SettingsAction()
+        return LibraryToolbar(context: .tracks, style: style, sort: model.settings.trackSort, setSort: { model.settings.trackSort = $0 },
+                              shuffleLabel: "Alle angezeigten Titel gemischt abspielen", shuffle: shuffle) {
+            BarAction(icon: Icons.difference, label: "Duplikate finden") { model.open(.duplicates) }
+        }
     }
 }
 
@@ -132,125 +93,36 @@ struct AlbumsView: View {
 
     var body: some View {
         let albums = model.albumList
-        let q = model.query(.albums)
-        LibraryScaffold(title: "Alben", actions: { actions(albums) }) {
+        let q = model.query(.albums).trimmingCharacters(in: .whitespaces)
+        let narrowed = !q.isEmpty || !model.filter(.albums).isEmpty
+        let total = model.unfilteredCount[.albums] ?? model.index.albums.count
+        let summary: String? = model.index.albums.isEmpty ? nil : librarySummary(albums.count, total, narrowed: narrowed, Formatting.albums)
+        LibraryScaffold(title: "Alben", actions: { toolbar(albums, .collapsed) }) {
             VStack(spacing: 0) {
                 LargeTitleHeader(title: "Alben", section: .albums, placeholder: "Album, Album-Interpret, Interpret oder Genre",
-                                 summary: model.index.albums.isEmpty ? nil : librarySummary(albums.count, model.index.albums.count, searching: !q.isEmpty, Formatting.albums),
-                                 actions: { actions(albums) })
+                                 summary: summary, filterContext: .albums, toolbar: { toolbar(albums, .full) })
                 if model.index.albums.isEmpty {
                     EmptyStateView(icon: Icons.album, title: "Keine Alben", text: "Sobald Musik gefunden wurde, erscheinen hier die Alben.")
                 } else if albums.isEmpty {
-                    EmptyStateView(icon: Icons.search, title: "Keine Treffer", text: "Kein Album passt zu „\(q)“.")
+                    NoMatchesView(context: .albums, query: q, noun: "Kein Album")
                 } else {
-                    AlbumGrid(albums: albums)
+                    AlbumCollection(context: .albums, albums: albums, sort: sortSpec)
                 }
             }
             .padding(.horizontal, Spacing.gutter)
         }
     }
 
-    @ViewBuilder
-    private func actions(_ albums: [AlbumInfo]) -> some View {
-        if !albums.isEmpty {
-            BarAction(icon: Icons.shuffle, label: "Alben gemischt abspielen") {
-                let uids = albums.flatMap(\.trackUids)
-                player.play(uids: uids, startIndex: nil, shuffle: .on, source: PlaybackSource(kind: .list, label: "Alle Alben (gemischt)"))
-            }
-        }
-        SortMenu(sort: model.settings.albumSort) { model.settings.albumSort = $0 }
-        SettingsAction()
+    private var sortSpec: TableSortSpec {
+        ColumnSorts.spec(ColumnSorts.album, sort: model.settings.albumSort) { model.settings.albumSort = $0 }
     }
-}
 
-/// Raster der Alben (Android: GridCells.Adaptive) – auf dem Mac mehr Spalten.
-struct AlbumGrid: View {
-    let albums: [AlbumInfo]
-
-    var body: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: Metrics.gridMinCell, maximum: 260), spacing: 22, alignment: .top)], spacing: 24) {
-            ForEach(albums) { album in
-                AlbumTile(album: album)
-            }
+    private func toolbar(_ albums: [AlbumInfo], _ style: LibraryToolbarStyle) -> some View {
+        let shuffle: (() -> Void)? = albums.isEmpty ? nil : {
+            player.play(uids: albums.flatMap(\.trackUids), startIndex: nil, shuffle: .on, source: PlaybackSource(kind: .list, label: "Alle Alben (gemischt)"))
         }
-        .padding(.top, 8)
-    }
-}
-
-struct AlbumTile: View {
-    @EnvironmentObject private var model: AppModel
-    @EnvironmentObject private var player: PlayerService
-    @Environment(\.musicColors) private var colors
-    let album: AlbumInfo
-    @State private var hover = false
-
-    var body: some View {
-        let cover = model.index.coverTrackOf(album)
-        VStack(alignment: .leading, spacing: 0) {
-            ZStack(alignment: .bottomTrailing) {
-                TrackArtwork(track: cover, size: .medium, cornerRadius: Radius.artwork, iconFraction: 0.42)
-                    .aspectRatio(1, contentMode: .fit)
-                    .shadow(color: Color.black.opacity(hover ? 0.22 : 0.10), radius: hover ? 12 : 6, y: hover ? 6 : 3)
-                if model.isAlbumFavorite(album.key) {
-                    Circle()
-                        .fill(Color.black.opacity(0.45))
-                        .frame(width: 24, height: 24)
-                        .overlay(Icon(Icons.favorite, size: 13, color: Color(argb: 0xFFFF8FA6)))
-                        .padding(8)
-                }
-                if hover {
-                    Button {
-                        player.play(uids: album.trackUids, startIndex: 0, shuffle: .off, source: PlaybackSource(kind: .album, label: album.title ?? "Album", id: album.key))
-                    } label: {
-                        Icon(Icons.play, size: 18, color: colors.onAccent)
-                            .frame(width: 38, height: 38)
-                            .background(Circle().fill(colors.accent))
-                            .shadow(color: Color.black.opacity(0.25), radius: 6, y: 3)
-                    }
-                    .buttonStyle(PressScaleStyle())
-                    .padding(10)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
-                    .transition(.opacity)
-                    .help("Album abspielen")
-                }
-            }
-            .scaleEffect(hover ? 1.015 : 1)
-            .animation(Motion.easeOut(Motion.short), value: hover)
-            Text(album.title ?? "Unbekanntes Album")
-                .textStyle(Typo.titleSmall)
-                .foregroundColor(colors.textPrimary)
-                .lineLimit(1)
-                .padding(.top, 8)
-            Text(album.isVarious ? "Verschiedene Interpreten" : (album.artist ?? "Unbekannter Interpret"))
-                .textStyle(Typo.bodySmall)
-                .foregroundColor(colors.textSecondary)
-                .lineLimit(1)
-        }
-        .contentShape(Rectangle())
-        .onHover { hover = $0 }
-        .onTapGesture { model.open(.album(album.key)) }
-        .onDrag { TrackDrag.provider(uids: album.trackUids, entryIds: []) }
-        .contextMenu {
-            Button("Album abspielen") {
-                player.play(uids: album.trackUids, startIndex: 0, shuffle: .off, source: PlaybackSource(kind: .album, label: album.title ?? "Album", id: album.key))
-            }
-            Button("Album mischen") {
-                player.play(uids: album.trackUids, startIndex: nil, shuffle: .on, source: PlaybackSource(kind: .album, label: album.title ?? "Album", id: album.key))
-            }
-            Button("Als Nächstes spielen") { player.playNext(uids: album.trackUids) }
-            Button("Zur Warteschlange hinzufügen") { player.addToQueue(uids: album.trackUids) }
-            Divider()
-            Button(model.isAlbumFavorite(album.key) ? "Album aus Favoriten entfernen" : "Album zu Favoriten hinzufügen") { model.toggleAlbumFavorite(album) }
-            Menu("Zu Playlist hinzufügen") {
-                Button("Neue Playlist …") { NewPlaylistDialog.present(model: model, trackUids: album.trackUids, suggestedName: album.title) }
-                ForEach(model.playlists) { p in Button(p.name) { model.addToPlaylist(p.id, trackUids: album.trackUids) } }
-            }
-            Divider()
-            Button("Album öffnen") { model.open(.album(album.key)) }
-            Button("Informationen zum Album …") { model.showInfo(album.trackUids) }
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityAddTraits(.isButton)
+        return LibraryToolbar(context: .albums, style: style, sort: model.settings.albumSort, setSort: { model.settings.albumSort = $0 },
+                              shuffleLabel: "Angezeigte Alben gemischt abspielen", shuffle: shuffle)
     }
 }
 
@@ -293,16 +165,15 @@ struct AlbumDetailView: View {
                             GlassIconButton(icon: Icons.edit, label: "Informationen zum Album bearbeiten") { model.showInfo(album.trackUids) }
                         }
                     )
-                    VStack(spacing: 0) {
-                        let ordered = tracks
+                    VStack(alignment: .leading, spacing: 0) {
                         if album.isMultiDisc {
                             ForEach(album.discNumbers, id: \.self) { disc in
                                 ListLabel("Disc \(disc)")
-                                TrackListView(items: TrackListItem.plain(ordered.filter { ($0.discNumber ?? 1) == disc }),
+                                TrackListView(items: TrackListItem.plain(tracks.filter { ($0.discNumber ?? 1) == disc }),
                                               config: TrackListConfig(showArtwork: false, showAlbum: false, numbering: .trackNumber, source: source))
                             }
                         } else {
-                            TrackListView(items: TrackListItem.plain(ordered),
+                            TrackListView(items: TrackListItem.plain(tracks),
                                           config: TrackListConfig(showArtwork: false, showAlbum: false, numbering: .trackNumber, source: source))
                         }
                         if let year = album.year {
@@ -313,6 +184,7 @@ struct AlbumDetailView: View {
                                 .padding(.top, 14)
                                 .padding(.leading, 6)
                         }
+                        MoreAlbumsRow(album: album)
                     }
                     .padding(.horizontal, Spacing.gutter)
                 }
@@ -328,6 +200,46 @@ struct AlbumDetailView: View {
     }
 }
 
+/// „Mehr von …“: weitere Alben des Album-Interpreten als Kachelreihe.
+private struct MoreAlbumsRow: View {
+    @EnvironmentObject private var model: AppModel
+    let album: AlbumInfo
+
+    var body: some View {
+        let others = otherAlbums()
+        if let artist = album.artist, !album.isVarious, !others.isEmpty {
+            SectionTitle(text: "Mehr von \(artist)")
+            AlbumShelf(albums: others)
+        }
+    }
+
+    private func otherAlbums() -> [AlbumInfo] {
+        guard let artist = album.artist, !album.isVarious else { return [] }
+        let key = ArtistNames.key(ArtistNames.split(artist).primary)
+        guard let info = model.index.artistByKey[key] else { return [] }
+        let albums = info.albumKeys.filter { $0 != album.key }.compactMap { model.index.albumByKey[$0] }
+        return Array(albums.sorted { ($0.year ?? 0) > ($1.year ?? 0) }.prefix(24))
+    }
+}
+
+/// Waagerechte Reihe von Albumkacheln (Detailansichten).
+struct AlbumShelf: View {
+    let albums: [AlbumInfo]
+    var tileWidth: CGFloat = 168
+
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            LazyHStack(alignment: .top, spacing: 20) {
+                ForEach(albums) { album in
+                    AlbumTile(album: album).frame(width: tileWidth)
+                }
+            }
+            .padding(.vertical, 8)
+            .padding(.horizontal, 4)
+        }
+    }
+}
+
 // MARK: - Interpreten
 
 struct ArtistsView: View {
@@ -336,78 +248,47 @@ struct ArtistsView: View {
 
     var body: some View {
         let artists = model.artistList
-        let q = model.query(.artists)
-        LibraryScaffold(title: "Interpreten", actions: { actions }) {
+        let q = model.query(.artists).trimmingCharacters(in: .whitespaces)
+        let narrowed = !q.isEmpty || !model.filter(.artists).isEmpty
+        let total = model.unfilteredCount[.artists] ?? model.index.artists.count
+        let summary: String? = model.index.artists.isEmpty ? nil : librarySummary(artists.count, total, narrowed: narrowed, Formatting.artists)
+        LibraryScaffold(title: "Interpreten", actions: { toolbar(artists, .collapsed) }) {
             VStack(spacing: 0) {
                 LargeTitleHeader(title: "Interpreten", section: .artists, placeholder: "Interpret suchen",
-                                 summary: model.index.artists.isEmpty ? nil : librarySummary(artists.count, model.index.artists.count, searching: !q.isEmpty, Formatting.artists),
-                                 actions: { actions })
+                                 summary: summary, filterContext: .artists, toolbar: { toolbar(artists, .full) })
                 if model.index.artists.isEmpty {
                     EmptyStateView(icon: "mic", title: "Keine Interpreten", text: "Titel ohne Interpret-Angabe erscheinen nur unter „Titel“ und „Alben“.")
                 } else if artists.isEmpty {
-                    EmptyStateView(icon: Icons.search, title: "Keine Treffer", text: "Kein Interpret passt zu „\(q)“.")
+                    NoMatchesView(context: .artists, query: q, noun: "Kein Interpret")
                 } else {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 300), spacing: 18, alignment: .top)], spacing: 0) {
-                        ForEach(artists) { artist in ArtistRow(artist: artist) }
-                    }
+                    ArtistCollection(artists: artists, sort: sortSpec)
                 }
             }
             .padding(.horizontal, Spacing.gutter)
         }
     }
 
-    @ViewBuilder private var actions: some View {
-        SortMenu(sort: model.settings.artistSort) { model.settings.artistSort = $0 }
-        SettingsAction()
+    private var sortSpec: TableSortSpec {
+        ColumnSorts.spec(ColumnSorts.artist, sort: model.settings.artistSort) { model.settings.artistSort = $0 }
     }
-}
 
-struct ArtistRow: View {
-    @EnvironmentObject private var model: AppModel
-    @EnvironmentObject private var player: PlayerService
-    @Environment(\.musicColors) private var colors
-    let artist: ArtistInfo
-    @State private var hover = false
+    private func toolbar(_ artists: [ArtistInfo], _ style: LibraryToolbarStyle) -> some View {
+        let shuffle: (() -> Void)? = artists.isEmpty ? nil : {
+            player.play(uids: Self.union(artists.map(\.trackUids)), startIndex: nil, shuffle: .on,
+                        source: PlaybackSource(kind: .list, label: "Interpreten (gemischt)"))
+        }
+        return LibraryToolbar(context: .artists, style: style, sort: model.settings.artistSort, setSort: { model.settings.artistSort = $0 },
+                              shuffleLabel: "Titel der angezeigten Interpreten gemischt abspielen", shuffle: shuffle)
+    }
 
-    var body: some View {
-        let cover = artist.trackUids.lazy.compactMap { model.index.trackByUid[$0] }.first { $0.hasPicture }
-        let infoParts: [String?] = [Formatting.tracks(artist.trackCount), artist.albumKeys.isEmpty ? nil : Formatting.albums(artist.albumKeys.count)]
-        let info: String = infoParts.compactMap { $0 }.joined(separator: " · ")
-        HStack(spacing: 12) {
-            if let cover {
-                TrackArtwork(track: cover, size: .small, circle: true).frame(width: 46, height: 46)
-            } else {
-                Monogram(name: artist.name, size: 46)
-            }
-            VStack(alignment: .leading, spacing: 1) {
-                Text(artist.name)
-                    .textStyle(Typo.bodyLarge)
-                    .fontWeight(.medium)
-                    .foregroundColor(colors.textPrimary)
-                    .lineLimit(1)
-                Text(info)
-                    .textStyle(Typo.bodySmall)
-                    .foregroundColor(colors.textSecondary)
-                    .lineLimit(1)
-            }
-            Spacer(minLength: 0)
-            Icon(Icons.chevronRight, size: 17, color: colors.textTertiary.opacity(0.7))
-                .padding(.trailing, 6)
+    /// Titel mehrerer Gruppen ohne Doppelte.
+    static func union(_ groups: [[Int64]]) -> [Int64] {
+        var seen = Set<Int64>()
+        var out: [Int64] = []
+        for group in groups {
+            for uid in group where seen.insert(uid).inserted { out.append(uid) }
         }
-        .padding(.horizontal, 8)
-        .frame(height: 62)
-        .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(hover ? colors.textPrimary.opacity(0.04) : .clear))
-        .overlay(alignment: .bottom) { Hairline(leading: 66) }
-        .contentShape(Rectangle())
-        .onHover { hover = $0 }
-        .onTapGesture { model.open(.artist(artist.key)) }
-        .contextMenu {
-            Button("Alle Titel abspielen") { player.play(uids: artist.trackUids, startIndex: 0, shuffle: .off, source: PlaybackSource(kind: .artist, label: artist.name, id: artist.key)) }
-            Button("Mischen") { player.play(uids: artist.trackUids, startIndex: nil, shuffle: .on, source: PlaybackSource(kind: .artist, label: artist.name, id: artist.key)) }
-            Button("Als Nächstes spielen") { player.playNext(uids: artist.trackUids) }
-            Button("Zur Warteschlange hinzufügen") { player.addToQueue(uids: artist.trackUids) }
-        }
-        .onDrag { TrackDrag.provider(uids: artist.trackUids, entryIds: []) }
+        return out
     }
 }
 
@@ -421,7 +302,7 @@ struct ArtistDetailView: View {
     var body: some View {
         if let artist = model.index.artistByKey[artistKey] {
             let tracks = Sorting.tracks(model.index.tracksOf(artist.trackUids), sort: Sort(.title, descending: false), stats: model.stats)
-            let albums = artist.albumKeys.compactMap { model.index.albumByKey[$0] }
+            let albums = artist.albumKeys.compactMap { model.index.albumByKey[$0] }.sorted { ($0.year ?? 0) > ($1.year ?? 0) }
             let cover = tracks.first { $0.hasPicture }
             let source = PlaybackSource(kind: .artist, label: artist.name, id: artist.key)
             let metaParts: [String?] = [Formatting.tracks(tracks.count), albums.isEmpty ? nil : Formatting.albums(albums.count)]
@@ -455,14 +336,11 @@ struct ArtistDetailView: View {
                     )
                     VStack(alignment: .leading, spacing: 0) {
                         if !albums.isEmpty {
-                            SectionTitle(text: "Alben")
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                LazyHStack(alignment: .top, spacing: 20) {
-                                    ForEach(albums) { album in AlbumTile(album: album).frame(width: 176) }
-                                }
-                                .padding(.vertical, 6)
-                                .padding(.horizontal, 2)
+                            SectionTitle(text: albums.count == 1 ? "Album" : "Alben")
+                            LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 210), spacing: 20, alignment: .top)], alignment: .leading, spacing: 22) {
+                                ForEach(albums) { album in AlbumTile(album: album) }
                             }
+                            .padding(.vertical, 6)
                         }
                         SectionTitle(text: "Titel")
                         TrackListView(items: TrackListItem.plain(tracks), config: TrackListConfig(source: source))
@@ -483,70 +361,41 @@ struct ArtistDetailView: View {
 
 struct GenresView: View {
     @EnvironmentObject private var model: AppModel
-    @Environment(\.musicColors) private var colors
+    @EnvironmentObject private var player: PlayerService
 
     var body: some View {
         let genres = model.genreList
-        let q = model.query(.genres)
-        LibraryScaffold(title: "Genres", actions: { actions }) {
+        let q = model.query(.genres).trimmingCharacters(in: .whitespaces)
+        let narrowed = !q.isEmpty || !model.filter(.genres).isEmpty
+        let total = model.unfilteredCount[.genres] ?? model.index.genres.count
+        let summary: String? = model.index.genres.isEmpty ? nil : librarySummary(genres.count, total, narrowed: narrowed, Formatting.genres)
+        LibraryScaffold(title: "Genres", actions: { toolbar(genres, .collapsed) }) {
             VStack(spacing: 0) {
                 LargeTitleHeader(title: "Genres", section: .genres, placeholder: "Genre suchen",
-                                 summary: model.index.genres.isEmpty ? nil : librarySummary(genres.count, model.index.genres.count, searching: !q.isEmpty, Formatting.genres),
-                                 actions: { actions })
+                                 summary: summary, filterContext: .genres, toolbar: { toolbar(genres, .full) })
                 if model.index.genres.isEmpty {
                     EmptyStateView(icon: "genres_nav", title: "Keine Genres", text: "Sobald Musik gefunden wurde, erscheinen hier die Genres aus den Tags.")
                 } else if genres.isEmpty {
-                    EmptyStateView(icon: Icons.search, title: "Keine Treffer", text: "Kein Genre passt zu „\(q)“.")
+                    NoMatchesView(context: .genres, query: q, noun: "Kein Genre")
                 } else {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 190, maximum: 300), spacing: 16, alignment: .top)], spacing: 16) {
-                        ForEach(genres) { genre in GenreTile(genre: genre) }
-                    }
-                    .padding(.top, 8)
+                    GenreCollection(genres: genres, sort: sortSpec)
                 }
             }
             .padding(.horizontal, Spacing.gutter)
         }
     }
 
-    @ViewBuilder private var actions: some View {
-        SortMenu(sort: model.settings.genreSort) { model.settings.genreSort = $0 }
-        SettingsAction()
+    private var sortSpec: TableSortSpec {
+        ColumnSorts.spec(ColumnSorts.genre, sort: model.settings.genreSort) { model.settings.genreSort = $0 }
     }
-}
 
-/// Genre-Kachel (Android: Kachel mit Verlauf/Titelbild, Name und Anzahl).
-struct GenreTile: View {
-    @EnvironmentObject private var model: AppModel
-    @EnvironmentObject private var player: PlayerService
-    @Environment(\.musicColors) private var colors
-    let genre: GenreInfo
-    @State private var hover = false
-
-    var body: some View {
-        HStack(spacing: 12) {
-            GenreArtTile(category: genre.category, cornerRadius: 12, iconFraction: 0.56)
-                .frame(width: 46, height: 46)
-            VStack(alignment: .leading, spacing: 1) {
-                Text(genre.name)
-                    .textStyle(Typo.titleSmall)
-                    .foregroundColor(colors.textPrimary)
-                    .lineLimit(1)
-                Text(Formatting.tracks(genre.trackCount))
-                    .textStyle(Typo.bodySmall)
-                    .foregroundColor(colors.textSecondary)
-            }
-            Spacer(minLength: 0)
+    private func toolbar(_ genres: [GenreInfo], _ style: LibraryToolbarStyle) -> some View {
+        let shuffle: (() -> Void)? = genres.isEmpty ? nil : {
+            player.play(uids: ArtistsView.union(genres.map(\.trackUids)), startIndex: nil, shuffle: .on,
+                        source: PlaybackSource(kind: .list, label: "Genres (gemischt)"))
         }
-        .padding(10)
-        .glassSurface(RoundedRectangle(cornerRadius: Radius.card, style: .continuous), tint: hover ? colors.accentSoft : nil)
-        .contentShape(Rectangle())
-        .onHover { hover = $0 }
-        .onTapGesture { model.open(.genre(genre.key)) }
-        .contextMenu {
-            Button("Abspielen") { player.play(uids: genre.trackUids, startIndex: 0, shuffle: .off, source: PlaybackSource(kind: .genre, label: genre.name, id: genre.key)) }
-            Button("Mischen") { player.play(uids: genre.trackUids, startIndex: nil, shuffle: .on, source: PlaybackSource(kind: .genre, label: genre.name, id: genre.key)) }
-        }
-        .onDrag { TrackDrag.provider(uids: genre.trackUids, entryIds: []) }
+        return LibraryToolbar(context: .genres, style: style, sort: model.settings.genreSort, setSort: { model.settings.genreSort = $0 },
+                              shuffleLabel: "Titel der angezeigten Genres gemischt abspielen", shuffle: shuffle)
     }
 }
 
@@ -562,6 +411,7 @@ struct GenreDetailView: View {
             let totalMs: Int64 = tracks.reduce(Int64(0)) { $0 + $1.durationMs }
             let prefix: String = genre.isUnknown ? "Titel ohne Genre-Angabe in den Tags · " : ""
             let meta: String = prefix + Formatting.tracks(tracks.count) + " · " + Formatting.longDuration(totalMs)
+            let albums = genreAlbums(genre)
             LibraryScaffold(title: genre.name, onBack: { model.back() }, edgeToEdgeTop: true, actions: {
                 BarAction(icon: Icons.play, label: "Abspielen") { player.play(uids: tracks.map(\.uid), startIndex: 0, shuffle: .off, source: source) }
                 BarAction(icon: Icons.shuffle, label: "Mischen") { player.play(uids: tracks.map(\.uid), startIndex: nil, shuffle: .on, source: source) }
@@ -583,8 +433,15 @@ struct GenreDetailView: View {
                             PillButton(title: "Mischen", icon: Icons.shuffle, minWidth: 130) { player.play(uids: tracks.map(\.uid), startIndex: nil, shuffle: .on, source: source) }
                         }
                     )
-                    TrackListView(items: TrackListItem.plain(tracks), config: TrackListConfig(source: source))
-                        .padding(.horizontal, Spacing.gutter)
+                    VStack(alignment: .leading, spacing: 0) {
+                        if !albums.isEmpty {
+                            SectionTitle(text: "Alben")
+                            AlbumShelf(albums: albums)
+                            SectionTitle(text: "Titel")
+                        }
+                        TrackListView(items: TrackListItem.plain(tracks), config: TrackListConfig(source: source))
+                    }
+                    .padding(.horizontal, Spacing.gutter)
                 }
             }
         } else {
@@ -592,5 +449,12 @@ struct GenreDetailView: View {
                 EmptyStateView(icon: "genres_nav", title: "Nicht verfügbar", text: "Zu diesem Genre gibt es derzeit keine Titel.")
             }
         }
+    }
+
+    /// Alben, deren häufigstes Genre dieses ist (höchstens 30, neueste zuerst).
+    private func genreAlbums(_ genre: GenreInfo) -> [AlbumInfo] {
+        guard !genre.isUnknown else { return [] }
+        let matching = model.index.albums.filter { TextNorm.key($0.genre) == genre.key }
+        return Array(matching.sorted { ($0.year ?? 0) > ($1.year ?? 0) }.prefix(30))
     }
 }

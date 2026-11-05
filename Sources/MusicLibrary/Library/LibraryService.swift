@@ -24,6 +24,7 @@ final class LibraryService {
     private let store: LibraryStore
     private var scanTask: Task<Void, Never>?
     private var pendingRescan = false
+    private var lastProgressReport: TimeInterval = 0
     private var watcher: FolderWatcher?
     private var observers: [NSObjectProtocol] = []
 
@@ -36,14 +37,19 @@ final class LibraryService {
     func start() {
         resolveBookmarks()
         model?.reloadFolders()
-        startWatching()
+        if model?.settings.watchFolders ?? true { startWatching() }
         let center = NSWorkspace.shared.notificationCenter
         for name in [NSWorkspace.didMountNotification, NSWorkspace.didUnmountNotification, NSWorkspace.didRenameVolumeNotification] {
             observers.append(center.addObserver(forName: name, object: nil, queue: .main) { [weak self] _ in
                 Task { @MainActor [weak self] in self?.rescan(reason: "Laufwerk") }
             })
         }
-        rescan(reason: "Start")
+        if model?.settings.scanOnLaunch ?? true { rescan(reason: "Start") }
+    }
+
+    /// Ordnerüberwachung ein- oder ausschalten (Einstellung „Ordner überwachen“).
+    func setWatching(_ on: Bool) {
+        if on { startWatching() } else { watcher = nil }
     }
 
     /// Ordner anhand gespeicherter Lesezeichen wiederfinden (z. B. umbenanntes externes Laufwerk).
@@ -92,7 +98,7 @@ final class LibraryService {
             added += 1
         }
         model?.reloadFolders()
-        startWatching()
+        if model?.settings.watchFolders ?? true { startWatching() }
         if added > 0 { rescan(reason: "Neuer Ordner") }
     }
 
@@ -100,7 +106,7 @@ final class LibraryService {
         try? store.removeFolder(id: folder.id, deleteTracks: deleteTracks)
         model?.reloadFolders()
         model?.reloadLibrary()
-        startWatching()
+        if model?.settings.watchFolders ?? true { startWatching() }
     }
 
     func reveal(_ folder: LibraryFolder) {
@@ -138,7 +144,7 @@ final class LibraryService {
         model.scanState = .running(done: 0, total: 0, folder: "")
         scanTask = Task.detached(priority: .utility) { [weak self] in
             let result = await LibraryService.performScan(store: store, folders: folders, tagReaderVersion: version) { [weak self] done, total, folder in
-                Task { @MainActor [weak self] in self?.model?.scanState = .running(done: done, total: total, folder: folder) }
+                Task { @MainActor [weak self] in self?.reportProgress(done: done, total: total, folder: folder) }
             }
             await MainActor.run { [weak self] in
                 guard let self else { return }
@@ -162,6 +168,16 @@ final class LibraryService {
                 }
             }
         }
+    }
+
+    /// Fortschritt höchstens 4× pro Sekunde veröffentlichen – jede Änderung von `scanState` lässt das ganze
+    /// Fenster neu auswerten (bei großen Bibliotheken sonst Hunderte Aktualisierungen während des Einlesens).
+    private func reportProgress(done: Int, total: Int, folder: String) {
+        let now = ProcessInfo.processInfo.systemUptime
+        guard total == 0 || done >= total || now - lastProgressReport >= 0.25 else { return }
+        lastProgressReport = now
+        guard case .running = model?.scanState else { return }
+        model?.scanState = .running(done: done, total: total, folder: folder)
     }
 
     struct ScanSummary {

@@ -34,7 +34,8 @@ struct CassetteHero: View {
                     .fill(LinearGradient(colors: [Color(argb: 0xFF1F1A1C), Color(argb: 0xFF0C0A0B)], startPoint: .top, endPoint: .bottom))
                 RadialGradient(colors: [Color(argb: 0x33FF9DB2), .clear], center: UnitPoint(x: 0.5, y: 0), startRadius: 0, endRadius: 0.75 * bayW)
                     .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
-                CassetteBody(width: bayW * 0.94, artwork: artwork, still: still)
+                CassetteBody(width: bayW * 0.94, artwork: artwork, still: still,
+                             shell: CassetteShell.tint(model.settings.cassetteColor, palette: artwork.palette))
                 // Glasscheibe
                 ZStack(alignment: .topLeading) {
                     LinearGradient(stops: [
@@ -72,6 +73,8 @@ private struct CassetteBody: View {
     let width: CGFloat
     @ObservedObject var artwork: NowPlayingArtwork
     var still: Bool
+    /// Gehäusefarbe (`nil` = Original).
+    var shell: Color?
     @State private var layers: CassetteLayers?
     @State private var fade: Double = 0
     @State private var idleTick = 0
@@ -88,10 +91,11 @@ private struct CassetteBody: View {
                     let progress: Float = still ? 0.3 : (hasMedia && dur > 0 ? Float(min(1, max(0, Double(pos) / Double(dur)))) : 0)
                     let radii = CassetteGeometry.packRadii(progress)
                     let playing = !still && player.isPlaying
-                    let moving = !still && (playing || motion.reels.motor != 0)
+                    let animate = !still && PlayerMotionPolicy.continuous(model.settings)
+                    let moving = animate && (playing || motion.reels.motor != 0)
                     TimelineView(.animation(minimumInterval: nil, paused: !moving)) { ctx in
                         let _ = idleTick
-                        let active = still ? false : motion.step(now: ctx.date, playing: playing, speed: model.settings.pitch.speed, left: radii.left, right: radii.right)
+                        let active = animate ? motion.step(now: ctx.date, playing: playing, speed: model.settings.pitch.speed, left: radii.left, right: radii.right) : false
                         cassette(L, k: CGFloat(L.width) / width, radii: radii)
                             .onChange(of: active) { a in if !a { DispatchQueue.main.async { idleTick &+= 1 } } }
                     }
@@ -165,11 +169,50 @@ private struct CassetteBody: View {
                 .frame(width: hubPt, height: hubPt)
                 .rotationEffect(.degrees(Double(motion.reels.angleRight)))
                 .offset(x: pt(CGFloat(Int(hubR.x - CGFloat(L.hubPx) / 2))), y: pt(CGFloat(Int(hubR.y - CGFloat(L.hubPx) / 2))))
+            // Gehäusefarbe (unter der Vorderschale: Glanz, Kanten, Schrauben und Etikett bleiben darüber)
+            if let shell {
+                CassetteShellTint(kmm: kmm, scale: scale, color: shell)
+                    .frame(width: pt(CGFloat(L.width)), height: pt(CGFloat(L.height)))
+                    .transition(.opacity)
+            }
             // Vorderschale + Etikett
             Image(decorative: L.front, scale: scale)
             CassetteLabel(kmm: kmm, scale: scale, X: X, artwork: artwork)
         }
         .frame(width: pt(CGFloat(L.width)), height: pt(CGFloat(L.height)), alignment: .topLeading)
+        .animation(.easeInOut(duration: 0.45), value: shell)
+    }
+}
+
+/// Farbiges Kassettengehäuse: Schale ohne Fenster, leicht durchscheinend (Wickel schimmern durch),
+/// mit Lichtverlauf von links oben. Liegt unter der Vorderschale des Renderers.
+private struct CassetteShellTint: View {
+    /// Pixel je Millimeter und Pixel je Punkt.
+    let kmm: CGFloat
+    let scale: CGFloat
+    let color: Color
+
+    var body: some View {
+        Canvas { ctx, _ in
+            let m = CGFloat(CassetteRenderer.MARGIN_MM)
+            let k = kmm / scale
+            let shellRect = CGRect(x: m * k, y: m * k, width: CGFloat(CassetteGeometry.WIDTH_MM) * k, height: CGFloat(CassetteGeometry.HEIGHT_MM) * k)
+            let windowRect = CGRect(x: (19.6 + m) * k, y: (18.3 + m) * k, width: 61.2 * k, height: 24.4 * k)
+            let window = Path(roundedRect: windowRect, cornerRadius: 2.2 * k, style: .continuous)
+            var body = Path(roundedRect: shellRect, cornerRadius: 3.2 * k, style: .continuous)
+            body.addPath(window)
+            let eo = FillStyle(eoFill: true)
+            ctx.fill(body, with: .color(color.opacity(0.82)), style: eo)
+            ctx.fill(body, with: .linearGradient(Gradient(stops: [
+                .init(color: Color.white.opacity(0.22), location: 0),
+                .init(color: Color.white.opacity(0.0), location: 0.42),
+                .init(color: Color.black.opacity(0.28), location: 1),
+            ]), startPoint: CGPoint(x: shellRect.minX, y: shellRect.minY), endPoint: CGPoint(x: shellRect.maxX * 0.7, y: shellRect.maxY)), style: eo)
+            // Fenster: leicht getönter, klarer Kunststoff
+            ctx.fill(window, with: .color(color.opacity(0.12)))
+        }
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
     }
 }
 
@@ -237,7 +280,7 @@ private struct DeckStatus: View {
                 Lamp(label: "PLAY", on: player.isPlaying, color: warm)
                 Lamp(label: "PAUSE", on: hasMedia && !player.isPlaying, color: Color(argb: 0xFFF3B37A))
             }
-            if model.settings.visualizer && !reduceMotion {
+            if model.settings.visualizer && PlayerMotionPolicy.continuous(model.settings) {
                 VuMeters()
                     .frame(height: 22)
                     .frame(maxWidth: .infinity)
@@ -277,22 +320,28 @@ private struct Lamp: View {
     }
 }
 
-/// Laufwerkstasten (Spec 4.6): vorheriger · −10 s · Play/Pause · +10 s · nächster.
+/// Laufwerkstasten (Spec 4.6): vorheriger · zurück · Play/Pause · vor · nächster (Sprungweite aus den Einstellungen).
 struct DeckKeys: View {
+    @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var player: PlayerService
 
     var body: some View {
+        let skip = model.settings.skipSeconds
         HStack(spacing: 8) {
             DeckKey(icon: Icons.previous, size: 22, label: "Vorheriger Titel") { player.previous() }
-            DeckKey(icon: Icons.replay10, size: 22, label: "10 Sekunden zurück") { player.skip(by: -10) }
+                .frame(width: 58)
+            DeckKey(icon: Icons.replay10, size: 22, label: SkipText.label(skip, forward: false), skip: (skip, false)) { player.skipBackward() }
+                .frame(width: 58)
             DeckKey(icon: player.isPlaying ? Icons.pause : Icons.play, size: 30, label: player.isPlaying ? "Pause" : "Abspielen", lamp: player.isPlaying) { player.togglePlay() }
-                .frame(maxWidth: .infinity)
-                .layoutPriority(1.5)
-            DeckKey(icon: Icons.forward10, size: 22, label: "10 Sekunden vor") { player.skip(by: 10) }
+                .frame(minWidth: 96, maxWidth: 176)
+            DeckKey(icon: Icons.forward10, size: 22, label: SkipText.label(skip, forward: true), skip: (skip, true)) { player.skipForward() }
+                .frame(width: 58)
             DeckKey(icon: Icons.next, size: 22, label: "Nächster Titel") { player.next() }
+                .frame(width: 58)
                 .disabled(!player.queue.hasNext)
         }
         .frame(height: 62)
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -328,11 +377,18 @@ private struct DeckKey: View {
     let size: CGFloat
     let label: String
     var lamp: Bool? = nil
+    /// Sprungtaste: Sekunden und Richtung (zeigt die eingestellte Sprungweite).
+    var skip: (seconds: Int, forward: Bool)? = nil
     let action: () -> Void
 
     var body: some View {
+        let tint = Color.white.opacity(enabled ? 0.92 : 0.3)
         Button(action: action) {
-            Icon(icon, size: size, color: Color.white.opacity(enabled ? 0.92 : 0.3))
+            if let skip {
+                SkipGlyph(seconds: skip.seconds, forward: skip.forward, size: size, color: tint)
+            } else {
+                Icon(icon, size: size, color: tint)
+            }
         }
         .buttonStyle(DeckKeyStyle(lamp: lamp))
         .help(label)
@@ -381,14 +437,21 @@ struct CDHero: View {
         let state: String = player.current == nil ? "keine Wiedergabe" : (player.isPlaying ? "CD dreht sich" : "angehalten")
         let a11y: String = "CD-Player: \(player.current?.displayTitle ?? "–"), \(state)"
         ZStack {
+            // Widerschein in der Coverfarbe hinter dem Gerät (statisch)
+            RadialGradient(colors: [Color(argb: artwork.palette.glow).opacity(still ? 0 : 0.22), .clear],
+                           center: .center, startRadius: wPt * 0.25, endRadius: wPt * 0.72)
+                .frame(width: wPt * 1.4, height: hPt * 1.3)
+                .allowsHitTesting(false)
+                .animation(.easeInOut(duration: 0.8), value: artwork.palette)
             if fade < 1 { placeholder(W: W, scale: scale) }
             if let L = layers {
                 ProgressObserver(clock: player.clock) { pos, _ in
                     let playing = !still && player.isPlaying
-                    let moving = !still && (playing || motion.velocity != 0)
+                    let animate = !still && PlayerMotionPolicy.continuous(model.settings)
+                    let moving = animate && (playing || motion.velocity != 0)
                     TimelineView(.animation(minimumInterval: nil, paused: !moving)) { ctx in
                         let _ = idleTick
-                        let active = still ? false : motion.step(now: ctx.date, playing: playing, speed: min(2, max(0.5, model.settings.pitch.speed)))
+                        let active = animate ? motion.step(now: ctx.date, playing: playing, speed: min(2, max(0.5, model.settings.pitch.speed))) : false
                         device(L, scale: CGFloat(L.width) / wPt, positionMs: still ? 83_000 : pos)
                             .onChange(of: active) { a in if !a { DispatchQueue.main.async { idleTick &+= 1 } } }
                     }
@@ -602,14 +665,16 @@ private struct CDLed: View {
 
 /// CD-Tasten (Spec 5.6): runde Tasten, Play mit rosé Ring.
 struct CDButtons: View {
+    @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var player: PlayerService
 
     var body: some View {
+        let skip = model.settings.skipSeconds
         HStack {
             // Group: höchstens 10 direkte Elemente je ViewBuilder unter macOS 13
             Group {
                 Spacer()
-                CDButton(icon: Icons.replay10, diameter: 48, iconSize: 21, label: "10 Sekunden zurück") { player.skip(by: -10) }
+                CDButton(icon: Icons.replay10, diameter: 48, iconSize: 21, label: SkipText.label(skip, forward: false), skip: (skip, false)) { player.skipBackward() }
                 Spacer()
             }
             CDButton(icon: Icons.previous, diameter: 56, iconSize: 26, label: "Vorheriger Titel") { player.previous() }
@@ -619,7 +684,7 @@ struct CDButtons: View {
             CDButton(icon: Icons.next, diameter: 56, iconSize: 26, label: "Nächster Titel") { player.next() }
                 .disabled(!player.queue.hasNext)
             Spacer()
-            CDButton(icon: Icons.forward10, diameter: 48, iconSize: 21, label: "10 Sekunden vor") { player.skip(by: 10) }
+            CDButton(icon: Icons.forward10, diameter: 48, iconSize: 21, label: SkipText.label(skip, forward: true), skip: (skip, true)) { player.skipForward() }
             Spacer()
         }
         .frame(height: 76)
@@ -667,11 +732,18 @@ private struct CDButton: View {
     let label: String
     var play = false
     var glowing = false
+    /// Sprungtaste: Sekunden und Richtung.
+    var skip: (seconds: Int, forward: Bool)? = nil
     let action: () -> Void
 
     var body: some View {
+        let tint = Color.white.opacity(enabled ? 0.93 : 0.3)
         Button(action: action) {
-            Icon(icon, size: iconSize, color: Color.white.opacity(enabled ? 0.93 : 0.3))
+            if let skip {
+                SkipGlyph(seconds: skip.seconds, forward: skip.forward, size: iconSize, color: tint)
+            } else {
+                Icon(icon, size: iconSize, color: tint)
+            }
         }
         .buttonStyle(CDButtonStyle(diameter: diameter, play: play, glowing: glowing))
         .help(label)

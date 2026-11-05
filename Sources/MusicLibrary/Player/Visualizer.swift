@@ -11,17 +11,41 @@ final class VisualizerState: ObservableObject {
         lastStep = now
         _ = smoothing.step(raw: meter.take())
     }
+
+    /// Ist noch etwas zu sehen (Pegel klingen nach der Pause aus)?
+    var hasEnergy: Bool {
+        smoothing.left > 0.01 || smoothing.right > 0.01 || smoothing.bands.contains { $0 > 0.01 }
+    }
+}
+
+/// Fortlaufende Zeit für ruhige Animationen (Lichtfelder, „Atmen“): läuft nur, solange `running` gilt,
+/// und springt beim Fortsetzen nicht.
+final class PhaseClock: ObservableObject {
+    private(set) var t: Double = 0
+    private var last: Date?
+
+    func advance(_ now: Date, running: Bool) -> Double {
+        if running, let last {
+            t += min(0.1, max(0, now.timeIntervalSince(last)))
+        }
+        last = running ? now : nil
+        return t
+    }
 }
 
 /// Frequenzbalken unter dem Mittelstück (Spec 6, `SpectrumBars`).
 struct SpectrumBars: View {
     @EnvironmentObject private var player: PlayerService
     @StateObject private var state = VisualizerState()
+    @State private var idleTick = 0
     let color: Color
 
     var body: some View {
-        TimelineView(.animation(minimumInterval: 1.0 / 30, paused: !player.isPlaying && state.smoothing.bands.allSatisfy { $0 < 0.01 })) { ctx in
+        let running = player.isPlaying || state.hasEnergy
+        TimelineView(.animation(minimumInterval: 1.0 / 30, paused: !running)) { ctx in
+            let _ = idleTick
             let _ = state.step(ctx.date, meter: player.engine.levels)
+            let active = player.isPlaying || state.hasEnergy
             Canvas { g, size in
                 let n = 16
                 let gap = 0.012 * size.width
@@ -34,6 +58,7 @@ struct SpectrumBars: View {
                     g.fill(Path(roundedRect: CGRect(x: x, y: size.height - h, width: bw, height: h), cornerRadius: bw / 2), with: .color(color.opacity(0.35 + 0.55 * Double(v))))
                 }
             }
+            .onChange(of: active) { a in if !a { DispatchQueue.main.async { idleTick &+= 1 } } }
         }
         .accessibilityHidden(true)
     }
@@ -43,10 +68,14 @@ struct SpectrumBars: View {
 struct VuMeters: View {
     @EnvironmentObject private var player: PlayerService
     @StateObject private var state = VisualizerState()
+    @State private var idleTick = 0
 
     var body: some View {
-        TimelineView(.animation(minimumInterval: 1.0 / 30, paused: !player.isPlaying && state.smoothing.left < 0.01 && state.smoothing.right < 0.01)) { ctx in
+        let running = player.isPlaying || state.hasEnergy
+        TimelineView(.animation(minimumInterval: 1.0 / 30, paused: !running)) { ctx in
+            let _ = idleTick
             let _ = state.step(ctx.date, meter: player.engine.levels)
+            let active = player.isPlaying || state.hasEnergy
             Canvas { g, size in
                 let segments = 14
                 let rh = 0.36 * size.height
@@ -62,6 +91,7 @@ struct VuMeters: View {
                     }
                 }
             }
+            .onChange(of: active) { a in if !a { DispatchQueue.main.async { idleTick &+= 1 } } }
         }
         .accessibilityHidden(true)
     }

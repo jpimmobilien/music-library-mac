@@ -75,7 +75,10 @@ def main():
             continue  # das Android-Symbol hat Vorrang
         names.append(key)
         root = ET.parse(os.path.join(extra, name)).getroot()
-        vb = [float(v) for v in root.get("viewBox").split()]
+        if root.get("viewBox"):
+            vb = [float(v) for v in root.get("viewBox").split()]
+        else:  # ältere Symbole ohne viewBox: Koordinaten in width × height
+            vb = [0.0, 0.0, float(root.get("width", "24")), float(root.get("height", "24"))]
         paths = []
         for el in root.iter("{http://www.w3.org/2000/svg}path"):
             paths.append(f"IconPath(d: {swift_str(el.get('d'))}, fill: 1.000, evenOdd: false, stroke: 0.000, lineWidth: 0.0, cap: .butt, join: .miter)")

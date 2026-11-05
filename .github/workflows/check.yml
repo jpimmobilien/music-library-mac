@@ -1,0 +1,57 @@
+# Schnelle Kompilierprüfung für Entwicklungsstände (Zweig „dev“): baut nur die App (Debug) mit Xcode 26
+# (Apple Silicon) und Xcode 16.4 (Intel) und listet Fehler übersichtlich auf.
+name: Check
+
+on:
+  push:
+    branches: [dev]
+  workflow_dispatch:
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  compile:
+    name: Kompilieren (${{ matrix.label }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-26
+            label: Xcode 26 · Apple Silicon
+          - os: macos-15-intel
+            label: Xcode 16 · Intel
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Werkzeuge
+        run: |
+          xcodebuild -version
+          swift --version
+      - name: App bauen (Debug)
+        run: |
+          set +e
+          swift build --product MusicLibrary > build.log 2>&1
+          STATUS=$?
+          echo "::group::Fehler"
+          grep -n "error:" build.log | sed 's|/Users/runner/work/music-library-mac/music-library-mac/||' | sort -u | head -300
+          echo "::endgroup::"
+          echo "::group::Warnungen (App-Code)"
+          grep -n "warning:" build.log | grep "Sources/" | sed 's|/Users/runner/work/music-library-mac/music-library-mac/||' | sort -u | head -150
+          echo "::endgroup::"
+          tail -5 build.log
+          exit $STATUS
+      - name: Tests bauen
+        if: success() && matrix.os == 'macos-26'
+        run: |
+          set +e
+          swift build --build-tests > tests.log 2>&1
+          STATUS=$?
+          grep -n "error:" tests.log | sed 's|/Users/runner/work/music-library-mac/music-library-mac/||' | sort -u | head -200
+          tail -3 tests.log
+          exit $STATUS

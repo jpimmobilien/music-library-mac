@@ -7,7 +7,11 @@ enum Chrome {
     static let topPadding: CGFloat = 10
     static let contentTop: CGFloat = topPadding + Metrics.navBarHeight + 14
     static let trafficLightsWidth: CGFloat = 78
-    static func contentBottom(miniPlayer: Bool) -> CGFloat { miniPlayer ? Metrics.miniPlayerHeight + 34 : 24 }
+    /// Höhe des Mini-Players laut Einstellung (Kompakt/Standard/Groß).
+    @MainActor static var miniPlayerHeight: CGFloat {
+        CGFloat(AppModel.shared?.settings.miniPlayerSize.height ?? Double(Metrics.miniPlayerHeight))
+    }
+    @MainActor static func contentBottom(miniPlayer: Bool) -> CGFloat { miniPlayer ? miniPlayerHeight + 34 : 24 }
 }
 
 /// Hauptfenster: Bibliothek mit schwebender Glas-Navigation oben, Mini-Player-Kapsel unten und – darüber –
@@ -87,7 +91,7 @@ private struct LibraryLayer: View {
             VStack(spacing: 0) {
                 Spacer(minLength: 0)
                 EdgeFade(top: false, strength: 0.72)
-                    .frame(height: showMini ? Metrics.miniPlayerHeight + 56 : 36)
+                    .frame(height: showMini ? Chrome.miniPlayerHeight + 56 : 36)
             }
             .allowsHitTesting(false)
 
@@ -96,7 +100,7 @@ private struct LibraryLayer: View {
                 ToastStack()
                 if showMini {
                     MiniPlayerBar()
-                        .frame(maxWidth: 940)
+                        .frame(maxWidth: 1080)
                         .padding(.horizontal, 18)
                         .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
@@ -296,11 +300,18 @@ struct ScanBanner: View {
 }
 
 /// Fensterkonfiguration: transparente Titelleiste, Inhalt bis unter die Ampel, Mindestgröße.
+/// Das Hauptfenster (für Gesten und Tastatur, die nur dort gelten sollen).
+@MainActor
+enum MainWindowRef {
+    static weak var window: NSWindow?
+}
+
 struct WindowConfigurator: NSViewRepresentable {
     func makeNSView(context: Context) -> NSView {
         let view = NSView()
         DispatchQueue.main.async {
             guard let window = view.window else { return }
+            MainWindowRef.window = window
             window.titlebarAppearsTransparent = true
             window.titleVisibility = .hidden
             window.styleMask.insert(.fullSizeContentView)

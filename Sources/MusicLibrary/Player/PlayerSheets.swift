@@ -13,6 +13,13 @@ struct PlayerSheetHost: View {
     @ObservedObject var artwork: NowPlayingArtwork
 
     var body: some View {
+        let width: CGFloat = {
+            switch sheet {
+            case .equalizer: return 640
+            case .design: return 600
+            case .pitch, .sleep, .queue, .info: return 520
+            }
+        }()
         VStack(spacing: 0) {
             ScrollView {
                 Group {
@@ -37,8 +44,8 @@ struct PlayerSheetHost: View {
             .padding(.horizontal, 22)
             .padding(.bottom, 16)
         }
-        .frame(width: sheet == .equalizer ? 640 : 520)
-        .frame(minHeight: 360, maxHeight: 720)
+        .frame(width: width)
+        .frame(minHeight: 360, maxHeight: 760)
         .background(colors.backgroundGrouped)
         .foregroundColor(colors.textPrimary)
     }
@@ -82,117 +89,468 @@ private struct Hint: View {
     }
 }
 
-// MARK: - Equalizer (Spec 8.2)
+/// Zeilenumbrechende Anordnung (Preset-Chips).
+struct PlayerFlowLayout: Layout {
+    var spacing: CGFloat = 8
+    var lineSpacing: CGFloat = 8
+
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        let maxWidth = proposal.width ?? .infinity
+        var x: CGFloat = 0
+        var y: CGFloat = 0
+        var lineHeight: CGFloat = 0
+        var widest: CGFloat = 0
+        for s in subviews {
+            let size = s.sizeThatFits(.unspecified)
+            if x > 0 && x + size.width > maxWidth {
+                y += lineHeight + lineSpacing
+                x = 0
+                lineHeight = 0
+            }
+            x += size.width + spacing
+            lineHeight = max(lineHeight, size.height)
+            widest = max(widest, x - spacing)
+        }
+        return CGSize(width: proposal.width ?? widest, height: y + lineHeight)
+    }
+
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        var x = bounds.minX
+        var y = bounds.minY
+        var lineHeight: CGFloat = 0
+        for s in subviews {
+            let size = s.sizeThatFits(.unspecified)
+            if x > bounds.minX && x + size.width > bounds.maxX {
+                y += lineHeight + lineSpacing
+                x = bounds.minX
+                lineHeight = 0
+            }
+            s.place(at: CGPoint(x: x, y: y), anchor: .topLeading, proposal: ProposedViewSize(size))
+            x += size.width + spacing
+            lineHeight = max(lineHeight, size.height)
+        }
+    }
+}
+
+// MARK: - Equalizer (Spec 8.2, v2: eigene Presets, Vorhören beim Ziehen)
+
+/// Zugriff auf den Entwurf während des Ziehens: hörbar über `previewEffects`, gespeichert beim Loslassen.
+struct EqEditor {
+    let current: () -> AudioEffectsSettings
+    let preview: (AudioEffectsSettings) -> Void
+    let commit: () -> Void
+}
+
+/// Texte zum Equalizer (Werkzeugleiste, Hilfen).
+enum EqualizerText {
+    static func summary(_ fx: AudioEffectsSettings, userPresets: [EqUserPreset]) -> String {
+        let bass: String = fx.bassDb != 0 ? " · Bass \(Formatting.decibel(fx.bassDb))" : ""
+        if !fx.eqEnabled { return "aus" + bass }
+        if let u = fx.activeUserPreset(in: userPresets) { return u.name + bass }
+        if let p = fx.activePreset { return (fx.isEqNeutral ? "neutral" : p.name) + bass }
+        return "Eigene Einstellung" + bass
+    }
+
+    /// Kurzbeschriftung für die Werkzeugleiste.
+    static func short(_ fx: AudioEffectsSettings, userPresets: [EqUserPreset]) -> String {
+        if fx.eqEnabled && !fx.isEqNeutral {
+            if let u = fx.activeUserPreset(in: userPresets) { return u.name }
+            return fx.activePreset?.name ?? "Eigen"
+        }
+        if fx.bassDb != 0 { return "Bass " + PitchText.shortDb(fx.bassDb) }
+        return "Equalizer"
+    }
+}
 
 struct EqualizerPanel: View {
     @EnvironmentObject private var model: AppModel
     @Environment(\.musicColors) private var colors
+    @State private var draft: AudioEffectsSettings?
+    @State private var confirmDelete: EqUserPreset?
 
     var body: some View {
-        let fx = model.settings.effects
+        let fx = draft ?? model.settings.effects
+        let editor = EqEditor(
+            current: { draft ?? model.settings.effects },
+            preview: { e in
+                draft = e
+                model.previewEffects(e)
+            },
+            commit: {
+                if let d = draft { model.settings.effects = d }
+                draft = nil
+            }
+        )
         VStack(alignment: .leading, spacing: 0) {
             SheetTitle(title: "Equalizer") {
                 MusicToggle(isOn: Binding(get: { fx.eqEnabled }, set: { model.settings.effects.eqEnabled = $0 }), label: "Equalizer ein/aus")
             }
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 8) {
-                    ForEach(EqPresets.all) { p in
-                        ChoiceChip(title: p.name, selected: fx.eqEnabled && fx.activePreset?.id == p.id) {
-                            model.settings.effects = fx.withPreset(p)
-                        }
-                    }
-                    if fx.activePreset == nil {
-                        ChoiceChip(title: "Eigene Einstellung", selected: fx.eqEnabled) {}.disabled(true)
-                    }
-                }
-                .padding(.vertical, 2)
-            }
+            EqPresetChips(fx: fx, confirmDelete: $confirmDelete, manage: true)
             Spacer().frame(height: 14)
-            SheetCard {
-                HStack {
-                    Text("Bass").textStyle(Typo.titleMedium)
-                    Spacer()
-                    Text(fx.bassDb == 0 ? "0 dB" : Formatting.decibel(fx.bassDb))
-                        .font(Typo.inter(15 * 0.875, .medium))
-                        .monospacedDigit()
-                        .foregroundColor(fx.bassDb != 0 ? colors.accentText : colors.textSecondary)
-                    if fx.bassDb != 0 {
-                        IconTap(icon: Icons.clear, label: "Bass auf 0 dB", tint: colors.textSecondary, iconSize: 16, touch: 30) { model.settings.effects = fx.withBass(0) }
-                    }
-                }
-                MusicSlider(value: Binding(get: { Double(fx.bassDb) }, set: { v in
-                    let snapped: Float = abs(v) < 0.6 ? 0 : Float((v * 2).rounded() / 2)
-                    model.settings.effects = model.settings.effects.withBass(snapped)
-                }), range: -12...12, marker: 0, bipolar: true, activeColor: colors.accent, label: "Bass", valueText: Formatting.decibel(fx.bassDb))
-                HStack {
-                    Text("weniger").textStyle(Typo.labelSmall).foregroundColor(colors.textTertiary)
-                    Spacer()
-                    Text("mehr").textStyle(Typo.labelSmall).foregroundColor(colors.textTertiary)
-                }
-                Hint(fx.bassLimited ? "Wirksam: \(Formatting.decibel(fx.effectiveBassDb)) – der Equalizer hebt die Bässe bereits an (zusammen höchstens +12 dB)." : "Tiefen unter ≈ 150 Hz · Mitten und Höhen bleiben unverändert.")
-            }
+            EqBassCard(fx: fx, editor: editor)
             Spacer().frame(height: 12)
-            SheetCard {
-                HStack(alignment: .bottom, spacing: 4) {
-                    ForEach(0..<EqBands.count, id: \.self) { i in
-                        VStack(spacing: 6) {
-                            let g = fx.bandGains[i]
-                            Text(g == 0 ? "0" : Formatting.decibel(g).replacingOccurrences(of: " dB", with: ""))
-                                .font(Typo.inter(10.5, .medium))
-                                .monospacedDigit()
-                                .foregroundColor(g == 0 ? colors.textTertiary : colors.accentText)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.7)
-                            VerticalBandSlider(value: g, enabled: fx.eqEnabled) { v in
-                                model.settings.effects = model.settings.effects.withBand(i, v)
-                            }
-                            .frame(height: 188)
-                            Text(EqBands.labels[i])
-                                .textStyle(Typo.labelSmall)
-                                .foregroundColor(colors.textSecondary)
+            EqBandsCard(fx: fx, editor: editor)
+            Spacer().frame(height: 12)
+            EqUserPresetsCard(fx: fx, confirmDelete: $confirmDelete)
+            Group {
+                Spacer().frame(height: 12)
+                SheetCard {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Automatische Aussteuerung").textStyle(Typo.bodyLarge)
+                            Hint("Senkt den Pegel bei angehobenen Bändern etwas ab, damit nichts verzerrt.")
                         }
-                        .frame(maxWidth: .infinity)
+                        Spacer()
+                        MusicToggle(isOn: Binding(get: { fx.autoHeadroom }, set: { model.settings.effects.autoHeadroom = $0 }), label: "Automatische Aussteuerung")
                     }
                 }
+                Spacer().frame(height: 12)
                 HStack {
-                    Text("Bass").frame(maxWidth: .infinity, alignment: .leading)
-                    Text("Mitten").frame(maxWidth: .infinity)
-                    Text("Höhen").frame(maxWidth: .infinity, alignment: .trailing)
-                }
-                .textStyle(Typo.labelSmall)
-                .foregroundColor(colors.textTertiary)
-                .padding(.top, 6)
-                EqualizerCurve(settings: fx)
-                    .frame(height: 54)
-                    .padding(.top, 8)
-            }
-            Spacer().frame(height: 12)
-            SheetCard {
-                HStack {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Automatische Aussteuerung").textStyle(Typo.bodyLarge)
-                        Hint("Senkt den Pegel bei angehobenen Bändern etwas ab, damit nichts verzerrt.")
-                    }
+                    Hint("Wirkt nur auf die Musik dieser App · ±12 dB je Band · beim Ziehen sofort hörbar.")
                     Spacer()
-                    MusicToggle(isOn: Binding(get: { fx.autoHeadroom }, set: { model.settings.effects.autoHeadroom = $0 }), label: "Automatische Aussteuerung")
+                    PillButton(title: "Zurücksetzen", style: .plain) { model.settings.effects = model.settings.effects.withPreset(EqPresets.flat).withBass(0) }
+                        .help("Alle Bänder und Bass auf 0 dB")
                 }
             }
-            Spacer().frame(height: 12)
-            HStack {
-                Hint("Wirkt nur auf die Musik dieser App · ±12 dB je Band.")
-                Spacer()
-                PillButton(title: "Zurücksetzen", style: .plain) { model.settings.effects = fx.withPreset(EqPresets.flat) }
+        }
+        .onDisappear { editor.commit() }
+        .alert("Preset löschen?", isPresented: Binding(get: { confirmDelete != nil }, set: { if !$0 { confirmDelete = nil } }), presenting: confirmDelete) { p in
+            Button("Löschen", role: .destructive) {
+                model.settings.deleteEqPreset(id: p.id)
+                model.toast("Preset „\(p.name)“ gelöscht")
+            }
+            Button("Abbrechen", role: .cancel) {}
+        } message: { p in
+            Text("„\(p.name)“ wird endgültig entfernt. Die aktuelle Klangeinstellung bleibt erhalten.")
+        }
+    }
+}
+
+/// Auswahl-Kapsel für Presets (eigene Presets mit Personensymbol).
+private struct PresetChip: View {
+    @Environment(\.musicColors) private var colors
+    @Environment(\.isEnabled) private var enabled
+    let title: String
+    let icon: String?
+    let selected: Bool
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 4) {
+                if let icon { Icon(icon, size: 12, color: selected ? colors.accentText : colors.textSecondary) }
+                Text(title)
+                    .textStyle(Typo.labelMedium)
+                    .foregroundColor(!enabled ? colors.textTertiary : selected ? colors.accentText : colors.textPrimary)
+                    .lineLimit(1)
+            }
+            .padding(.horizontal, 11)
+            .frame(minHeight: 28)
+            .background(Capsule().fill(selected ? colors.accentSoft : (colors.dark ? Color.white.opacity(0.07) : colors.surface)))
+            .overlay(Capsule().strokeBorder(!selected && !colors.dark ? colors.hairline : .clear, lineWidth: 0.8))
+            .contentShape(Capsule())
+        }
+        .buttonStyle(PressScaleStyle(scale: 0.95))
+        .animation(Motion.easeOut(), value: selected)
+        .accessibilityLabel(icon == nil ? "Preset \(title)" : "Eigenes Preset \(title)")
+        .accessibilityAddTraits(selected ? .isSelected : [])
+    }
+}
+
+/// Eingebaute und eigene Presets als umbrechende Chips (eigene mit Kontextmenü).
+struct EqPresetChips: View {
+    @EnvironmentObject private var model: AppModel
+    let fx: AudioEffectsSettings
+    @Binding var confirmDelete: EqUserPreset?
+    /// Kontextmenü (Überschreiben, Löschen) anbieten.
+    var manage: Bool = false
+
+    var body: some View {
+        let users = model.settings.eqUserPresets
+        let activeUser = fx.activeUserPreset(in: users)
+        let builtIn = fx.activePreset
+        PlayerFlowLayout(spacing: 6, lineSpacing: 6) {
+            ForEach(EqPresets.all) { p in
+                PresetChip(title: p.name, icon: nil, selected: fx.eqEnabled && activeUser == nil && builtIn?.id == p.id) {
+                    model.settings.effects = model.settings.effects.withPreset(p)
+                }
+                .help("Preset „\(p.name)“")
+            }
+            ForEach(users) { p in
+                PresetChip(title: p.name, icon: PlayerIcons.person, selected: fx.eqEnabled && activeUser?.id == p.id) {
+                    model.settings.effects = model.settings.effects.withUserPreset(p)
+                }
+                .help("Eigenes Preset „\(p.name)“\(manage ? " – Rechtsklick für weitere Aktionen" : "")")
+                .contextMenu {
+                    if manage {
+                        Button("Mit aktueller Einstellung überschreiben") {
+                            model.settings.updateEqPreset(id: p.id)
+                            model.toast("„\(p.name)“ überschrieben")
+                        }
+                        Button("Löschen …") { confirmDelete = p }
+                    }
+                }
+            }
+            if builtIn == nil && activeUser == nil {
+                PresetChip(title: "Eigene Einstellung", icon: nil, selected: fx.eqEnabled) {}
+                    .disabled(true)
             }
         }
     }
 }
 
+/// Bassregler (live hörbar beim Ziehen).
+private struct EqBassCard: View {
+    @EnvironmentObject private var model: AppModel
+    @Environment(\.musicColors) private var colors
+    let fx: AudioEffectsSettings
+    let editor: EqEditor
+
+    var body: some View {
+        SheetCard {
+            HStack {
+                Text("Bass").textStyle(Typo.titleMedium)
+                Spacer()
+                Text(fx.bassDb == 0 ? "0 dB" : Formatting.decibel(fx.bassDb))
+                    .font(Typo.inter(15 * 0.875, .medium))
+                    .monospacedDigit()
+                    .foregroundColor(fx.bassDb != 0 ? colors.accentText : colors.textSecondary)
+                if fx.bassDb != 0 {
+                    IconTap(icon: Icons.clear, label: "Bass auf 0 dB", tint: colors.textSecondary, iconSize: 16, touch: 30) {
+                        model.settings.effects = model.settings.effects.withBass(0)
+                    }
+                }
+            }
+            MusicSlider(value: Binding(get: { Double(fx.bassDb) }, set: { v in
+                let snapped: Float = abs(v) < 0.6 ? 0 : Float((v * 2).rounded() / 2)
+                editor.preview(editor.current().withBass(snapped))
+            }), range: -12...12, marker: 0, bipolar: true, activeColor: colors.accent, label: "Bass", valueText: Formatting.decibel(fx.bassDb)) { editing in
+                if !editing { editor.commit() }
+            }
+            HStack {
+                Text("weniger").textStyle(Typo.labelSmall).foregroundColor(colors.textTertiary)
+                Spacer()
+                Text("mehr").textStyle(Typo.labelSmall).foregroundColor(colors.textTertiary)
+            }
+            Hint(fx.bassLimited ? "Wirksam: \(Formatting.decibel(fx.effectiveBassDb)) – der Equalizer hebt die Bässe bereits an (zusammen höchstens +12 dB)." : "Tiefen unter ≈ 150 Hz · Mitten und Höhen bleiben unverändert.")
+        }
+    }
+}
+
+/// Zehn Bänder mit Kurve (live hörbar beim Ziehen).
+private struct EqBandsCard: View {
+    @Environment(\.musicColors) private var colors
+    let fx: AudioEffectsSettings
+    let editor: EqEditor
+
+    var body: some View {
+        SheetCard {
+            HStack(alignment: .bottom, spacing: 4) {
+                ForEach(0..<EqBands.count, id: \.self) { i in
+                    VStack(spacing: 6) {
+                        let g = fx.bandGains[i]
+                        Text(g == 0 ? "0" : Formatting.decibel(g).replacingOccurrences(of: " dB", with: ""))
+                            .font(Typo.inter(10.5, .medium))
+                            .monospacedDigit()
+                            .foregroundColor(g == 0 ? colors.textTertiary : colors.accentText)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
+                        VerticalBandSlider(value: g, enabled: fx.eqEnabled, label: "\(EqBands.labels[i]) Hz", onChange: { v in
+                            editor.preview(editor.current().withBand(i, v))
+                        }, onEnded: editor.commit)
+                        .frame(height: 188)
+                        Text(EqBands.labels[i])
+                            .textStyle(Typo.labelSmall)
+                            .foregroundColor(colors.textSecondary)
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+            }
+            HStack {
+                Text("Bass").frame(maxWidth: .infinity, alignment: .leading)
+                Text("Mitten").frame(maxWidth: .infinity)
+                Text("Höhen").frame(maxWidth: .infinity, alignment: .trailing)
+            }
+            .textStyle(Typo.labelSmall)
+            .foregroundColor(colors.textTertiary)
+            .padding(.top, 6)
+            EqualizerCurve(settings: fx)
+                .frame(height: 54)
+                .padding(.top, 8)
+        }
+    }
+}
+
+/// Eigene Presets: aktuelle Einstellung sichern, anwenden, umbenennen, überschreiben, löschen (mit Rückfrage).
+private struct EqUserPresetsCard: View {
+    @EnvironmentObject private var model: AppModel
+    @Environment(\.musicColors) private var colors
+    let fx: AudioEffectsSettings
+    @Binding var confirmDelete: EqUserPreset?
+    @State private var adding = false
+    @State private var newName = ""
+    @State private var renamingID: String?
+    @State private var renameText = ""
+
+    var body: some View {
+        let presets = model.settings.eqUserPresets
+        let active = fx.activeUserPreset(in: presets)
+        SheetCard {
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Eigene Presets").textStyle(Typo.titleMedium)
+                    Hint("Aktuelle Einstellung (Bänder und Bass) als Preset sichern.")
+                }
+                Spacer()
+                if !adding {
+                    PillButton(title: "Sichern …", icon: PlayerIcons.save) {
+                        newName = "Mein Preset \(presets.count + 1)"
+                        renamingID = nil
+                        adding = true
+                    }
+                    .help("Aktuelle Einstellung als eigenes Preset sichern")
+                }
+            }
+            if adding {
+                PresetNameField(text: $newName, placeholder: "Name des Presets", confirmTitle: "Sichern", onConfirm: save, onCancel: { adding = false })
+            }
+            if presets.isEmpty && !adding {
+                Hint("Noch keine eigenen Presets. Sie erscheinen danach neben den eingebauten – auch im Mini-Player.")
+            }
+            ForEach(presets) { p in
+                EqUserPresetRow(preset: p, active: active?.id == p.id, renaming: renamingID == p.id, renameText: $renameText,
+                                apply: { model.settings.effects = model.settings.effects.withUserPreset(p) },
+                                startRename: {
+                                    adding = false
+                                    renameText = p.name
+                                    renamingID = p.id
+                                },
+                                commitRename: {
+                                    let n = renameText.trimmingCharacters(in: .whitespacesAndNewlines)
+                                    if !n.isEmpty { model.settings.renameEqPreset(id: p.id, to: n) }
+                                    renamingID = nil
+                                },
+                                cancelRename: { renamingID = nil },
+                                overwrite: {
+                                    model.settings.updateEqPreset(id: p.id)
+                                    model.toast("„\(p.name)“ mit der aktuellen Einstellung überschrieben")
+                                },
+                                delete: { confirmDelete = p })
+            }
+        }
+    }
+
+    private func save() {
+        let name = newName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !name.isEmpty else { return }
+        let preset = model.settings.saveEqPreset(name: name)
+        adding = false
+        model.toast("Preset „\(preset.name)“ gesichert")
+    }
+}
+
+/// Namensfeld mit Bestätigen/Abbrechen (Eingabe bestätigt, Esc bricht ab).
+private struct PresetNameField: View {
+    @Environment(\.musicColors) private var colors
+    @Binding var text: String
+    let placeholder: String
+    let confirmTitle: String
+    let onConfirm: () -> Void
+    let onCancel: () -> Void
+    @FocusState private var focused: Bool
+
+    var body: some View {
+        HStack(spacing: 8) {
+            TextField(placeholder, text: $text)
+                .textFieldStyle(.plain)
+                .focused($focused)
+                .onSubmit(onConfirm)
+                .padding(.horizontal, 10)
+                .frame(height: 30)
+                .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(colors.fieldFill))
+                .accessibilityLabel(placeholder)
+            PillButton(title: confirmTitle, style: .filled, action: onConfirm)
+                .disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+            IconTap(icon: Icons.close, label: "Abbrechen (Esc)", tint: colors.textSecondary, iconSize: 14, touch: 28, action: onCancel)
+        }
+        .onExitCommand(perform: onCancel)
+        .onAppear { DispatchQueue.main.async { focused = true } }
+    }
+}
+
+/// Zeile eines eigenen Presets.
+private struct EqUserPresetRow: View {
+    @Environment(\.musicColors) private var colors
+    let preset: EqUserPreset
+    let active: Bool
+    let renaming: Bool
+    @Binding var renameText: String
+    let apply: () -> Void
+    let startRename: () -> Void
+    let commitRename: () -> Void
+    let cancelRename: () -> Void
+    let overwrite: () -> Void
+    let delete: () -> Void
+
+    var body: some View {
+        HStack(spacing: 6) {
+            if renaming {
+                PresetNameField(text: $renameText, placeholder: "Neuer Name", confirmTitle: "Umbenennen", onConfirm: commitRename, onCancel: cancelRename)
+            } else {
+                Button(action: apply) {
+                    HStack(spacing: 8) {
+                        Icon(active ? Icons.check : PlayerIcons.person, size: 15, color: active ? colors.accentText : colors.textSecondary)
+                        Text(preset.name)
+                            .font(Typo.inter(13.5, active ? .semibold : .medium))
+                            .foregroundColor(active ? colors.accentText : colors.textPrimary)
+                            .lineLimit(1)
+                        Spacer(minLength: 6)
+                        GainsLine(gains: preset.gains)
+                            .stroke(active ? colors.accent : colors.textSecondary.opacity(0.7), style: StrokeStyle(lineWidth: 1.4, lineCap: .round, lineJoin: .round))
+                            .frame(width: 64, height: 18)
+                            .accessibilityHidden(true)
+                    }
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .help("„\(preset.name)“ anwenden")
+                .accessibilityLabel("Eigenes Preset \(preset.name) anwenden")
+                IconTap(icon: Icons.edit, label: "„\(preset.name)“ umbenennen", tint: colors.textSecondary, iconSize: 15, touch: 28, action: startRename)
+                IconTap(icon: PlayerIcons.save, label: "„\(preset.name)“ mit der aktuellen Einstellung überschreiben", tint: colors.textSecondary, iconSize: 15, touch: 28, action: overwrite)
+                IconTap(icon: Icons.delete, label: "„\(preset.name)“ löschen …", tint: colors.danger.opacity(0.85), iconSize: 15, touch: 28, action: delete)
+            }
+        }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(active && !renaming ? colors.accentSoft : colors.textPrimary.opacity(0.03)))
+    }
+}
+
+/// Kleine Kurve der zehn Bänder (Vorschau eines Presets).
+struct GainsLine: Shape {
+    let gains: [Float]
+
+    func path(in rect: CGRect) -> Path {
+        var p = Path()
+        let n = max(gains.count, 2)
+        for (i, g) in gains.enumerated() {
+            let x = rect.minX + rect.width * CGFloat(i) / CGFloat(n - 1)
+            let y = rect.midY - CGFloat(max(-12, min(12, g)) / 12) * rect.height / 2
+            if i == 0 { p.move(to: CGPoint(x: x, y: y)) } else { p.addLine(to: CGPoint(x: x, y: y)) }
+        }
+        return p
+    }
+}
+
 /// Senkrechter Regler eines Bands (Spec 8.2): Klick setzt (0,5-dB-Raster), Doppelklick = 0 dB.
+/// Während des Ziehens `onChange` (Vorhören), beim Loslassen `onEnded` (Speichern).
 struct VerticalBandSlider: View {
     @Environment(\.musicColors) private var colors
     let value: Float
     let enabled: Bool
+    var label: String = "Band"
     let onChange: (Float) -> Void
+    var onEnded: () -> Void = {}
 
     var body: some View {
         GeometryReader { geo in
@@ -211,20 +569,30 @@ struct VerticalBandSlider: View {
                 Circle().fill(colors.accent.opacity(a)).frame(width: 6, height: 6).position(x: cx, y: yv)
             }
             .contentShape(Rectangle())
-            .gesture(DragGesture(minimumDistance: 0).onChanged { g in
+            .gesture(DragGesture(minimumDistance: 0)
+                .onChanged { g in
+                    guard enabled else { return }
+                    let f = Float((bottom - min(max(g.location.y, top), bottom)) / (bottom - top))
+                    let db = ((f * 24 - 12) * 2).rounded() / 2
+                    if db != value { onChange(db) }
+                }
+                .onEnded { _ in
+                    guard enabled else { return }
+                    onEnded()
+                })
+            .simultaneousGesture(TapGesture(count: 2).onEnded {
                 guard enabled else { return }
-                let f = Float((bottom - min(max(g.location.y, top), bottom)) / (bottom - top))
-                let db = ((f * 24 - 12) * 2).rounded() / 2
-                if db != value { onChange(db) }
+                onChange(0)
+                onEnded()
             })
-            .simultaneousGesture(TapGesture(count: 2).onEnded { if enabled { onChange(0) } })
         }
         .accessibilityElement()
-        .accessibilityLabel("Band")
+        .accessibilityLabel(label)
         .accessibilityValue(Formatting.decibel(value))
         .accessibilityAdjustableAction { dir in
             guard enabled else { return }
             onChange(EqBands.clamp(value + (dir == .increment ? 0.5 : -0.5)))
+            onEnded()
         }
     }
 }
@@ -235,9 +603,11 @@ struct EqualizerCurve: View {
     let settings: AudioEffectsSettings
 
     var body: some View {
+        let bands = settings.effectiveBands
+        let bass = Double(settings.effectiveBassDb)
+        let accent = colors.accent
+        let hairline = colors.hairline
         Canvas { ctx, size in
-            let bands = settings.effectiveBands
-            let bass = Double(settings.effectiveBassDb)
             var path = Path()
             let n = 120
             for i in 0...n {
@@ -248,8 +618,8 @@ struct EqualizerCurve: View {
                 let y = size.height / 2 - CGFloat(db / 15) * size.height / 2
                 if i == 0 { path.move(to: CGPoint(x: x, y: y)) } else { path.addLine(to: CGPoint(x: x, y: y)) }
             }
-            ctx.stroke(Path(CGRect(x: 0, y: size.height / 2, width: size.width, height: 0.5)), with: .color(colors.hairline))
-            ctx.stroke(path, with: .color(colors.accent), style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
+            ctx.stroke(Path(CGRect(x: 0, y: size.height / 2, width: size.width, height: 0.5)), with: .color(hairline))
+            ctx.stroke(path, with: .color(accent), style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
         }
         .accessibilityHidden(true)
     }
@@ -271,99 +641,282 @@ struct EqualizerWindow: View {
     }
 }
 
-// MARK: - Tonhöhe und Tempo (Spec 8.3, ergänzt um Tempo)
+/// Kurzform für das Mini-Player-Popover: Ein/Aus, Presets (auch eigene), Kurve, Weg zu allen Einstellungen.
+struct EqualizerQuickPanel: View {
+    @EnvironmentObject private var model: AppModel
+    @Environment(\.musicColors) private var colors
+    let close: () -> Void
+
+    var body: some View {
+        let fx = model.settings.effects
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Text("Equalizer").textStyle(Typo.titleSmall).foregroundColor(colors.textPrimary)
+                Spacer()
+                MusicToggle(isOn: Binding(get: { fx.eqEnabled }, set: { model.settings.effects.eqEnabled = $0 }), label: "Equalizer ein/aus")
+            }
+            EqPresetChips(fx: fx, confirmDelete: .constant(nil), manage: false)
+            EqualizerCurve(settings: fx)
+                .frame(height: 44)
+                .padding(.horizontal, 2)
+                .opacity(fx.eqEnabled || fx.bassDb != 0 ? 1 : 0.45)
+            Text(EqualizerText.summary(fx, userPresets: model.settings.eqUserPresets))
+                .textStyle(Typo.bodySmall)
+                .foregroundColor(colors.textSecondary)
+                .lineLimit(1)
+            HStack {
+                PillButton(title: "Neutral", style: .plain) { model.settings.effects = model.settings.effects.withPreset(EqPresets.flat) }
+                    .help("Alle Bänder auf 0 dB")
+                Spacer()
+                PillButton(title: "Alle Einstellungen …", icon: Icons.tune, style: .tonal) {
+                    close()
+                    WindowRouter.shared.openEqualizer()
+                }
+                .help("Equalizer-Fenster mit allen Bändern, Bass und eigenen Presets öffnen (⌥⌘E)")
+            }
+        }
+    }
+}
+
+// MARK: - Tonhöhe und Tempo (Spec 8.3, v2: Feinstufen 0,1, Cent, Vorhören beim Ziehen)
 
 struct PitchPanel: View {
     @EnvironmentObject private var model: AppModel
-    @Environment(\.musicColors) private var colors
-    @State private var drag: Double?
 
     var body: some View {
         let pitch = model.settings.pitch
-        let shown = drag.map { Float($0) } ?? pitch.semitones
-        let factor = Float(pow(2.0, Double(shown) / 12))
-        let tempoText: String = pitch.tempo == 1 ? "unverändert" : Formatting.percent(pitch.tempo)
-        let detail: String = pitch.mode == .key
-            ? "Tonhöhe \(Formatting.factor(factor)) · Tempo \(tempoText)"
-            : "Tonhöhe und Tempo \(Formatting.factor(factor)) (\(Formatting.percent(factor)))"
         VStack(alignment: .leading, spacing: 0) {
             SheetTitle(title: "Tonhöhe") {
                 PillButton(title: "Original") { model.settings.pitch = PitchSettings(mode: pitch.mode) }
                     .disabled(pitch.isOriginal)
+                    .help("Tonhöhe und Tempo zurücksetzen")
             }
-            SegmentedControl(options: PitchMode.allCases, selection: Binding(get: { pitch.mode }, set: { model.settings.pitch = pitch.withMode($0) }),
-                             label: { $0.label }, icon: { $0 == .key ? Icons.musicNote : Icons.vinyl })
-            Hint(pitch.mode.description).padding(.top, 6)
-            Spacer().frame(height: 14)
-            SheetCard {
-                Text(Formatting.semitones(shown))
-                    .textStyle(Typo.displaySmall)
-                    .foregroundColor(shown != 0 ? colors.accentText : colors.textPrimary)
-                    .frame(maxWidth: .infinity)
-                Text(detail)
-                    .textStyle(Typo.bodyMedium)
-                    .foregroundColor(colors.textSecondary)
-                    .frame(maxWidth: .infinity)
-                HStack(spacing: 10) {
-                    GlassIconButton(icon: "arrow_downward", label: "Einen Halbton tiefer", size: 34, iconSize: 16) {
-                        model.settings.pitch = pitch.withSemitones(pitch.semitones - 1)
-                    }
-                    .disabled(pitch.semitones <= PitchSettings.minSemitones)
-                    MusicSlider(value: Binding(get: { Double(shown) }, set: { drag = ($0 * 10).rounded() / 10 }), range: -12...12, marker: 0, bipolar: true,
-                                activeColor: colors.accent, label: "Halbtöne", valueText: Formatting.semitones(shown)) { editing in
-                        if !editing, let d = drag {
-                            model.settings.pitch = pitch.withSemitones(Float(d))
-                            drag = nil
-                        }
-                    }
-                    GlassIconButton(icon: "arrow_upward", label: "Einen Halbton höher", size: 34, iconSize: 16) {
-                        model.settings.pitch = pitch.withSemitones(pitch.semitones + 1)
-                    }
-                    .disabled(pitch.semitones >= PitchSettings.maxSemitones)
-                }
-                .padding(.top, 10)
+            PitchControls(compact: false)
+        }
+    }
+}
+
+/// Zugriff auf den Entwurf während des Ziehens: hörbar über `previewPitch`, gespeichert beim Loslassen.
+struct PitchEditor {
+    let current: () -> PitchSettings
+    let preview: (PitchSettings) -> Void
+    let commit: () -> Void
+    /// Sofort setzen und speichern (Tasten).
+    let set: (PitchSettings) -> Void
+}
+
+/// Tonhöhe und Tempo – gemeinsam für das Blatt im Player (`compact == false`) und das Popover im Mini-Player.
+struct PitchControls: View {
+    @EnvironmentObject private var model: AppModel
+    @Environment(\.musicColors) private var colors
+    var compact: Bool = false
+    @State private var draft: PitchSettings?
+
+    var body: some View {
+        let saved = model.settings.pitch
+        let pitch = draft ?? saved
+        let editor = PitchEditor(
+            current: { draft ?? model.settings.pitch },
+            preview: { p in
+                draft = p
+                model.previewPitch(p)
+            },
+            commit: {
+                if let d = draft { model.settings.pitch = d }
+                draft = nil
+            },
+            set: { p in
+                draft = nil
+                model.settings.pitch = p
+            }
+        )
+        VStack(alignment: .leading, spacing: compact ? 10 : 0) {
+            if compact {
                 HStack {
-                    Text("−12").frame(maxWidth: .infinity, alignment: .leading)
-                    Text("0").frame(maxWidth: .infinity)
-                    Text("+12").frame(maxWidth: .infinity, alignment: .trailing)
+                    Text("Tonhöhe").textStyle(Typo.titleSmall).foregroundColor(colors.textPrimary)
+                    Spacer()
+                    PillButton(title: "Original", icon: PlayerIcons.restart, style: .plain) { editor.set(PitchSettings(mode: saved.mode)) }
+                        .disabled(saved.isOriginal)
+                        .help("Tonhöhe und Tempo zurücksetzen")
                 }
-                .textStyle(Typo.labelSmall)
-                .foregroundColor(colors.textTertiary)
-                .padding(.horizontal, 48)
             }
-            if pitch.mode == .key {
-                Spacer().frame(height: 12)
-                SheetCard {
-                    HStack {
-                        Text("Tempo").textStyle(Typo.titleMedium)
-                        Spacer()
-                        Text(Formatting.percent(pitch.tempo)).font(Typo.inter(13, .medium)).monospacedDigit()
-                            .foregroundColor(pitch.tempo != 1 ? colors.accentText : colors.textSecondary)
-                    }
-                    MusicSlider(value: Binding(get: { Double(pitch.tempo) }, set: { v in
-                        let snapped = abs(v - 1) < 0.03 ? 1 : (v * 20).rounded() / 20
-                        model.settings.pitch = pitch.withTempo(Float(snapped))
-                    }), range: Double(PitchSettings.minTempo)...Double(PitchSettings.maxTempo), marker: 1, bipolar: true, activeColor: colors.accent,
-                                label: "Tempo", valueText: Formatting.percent(pitch.tempo))
-                    Hint(PitchSettings.tempoDescription + " · 50 % bis 200 %")
-                }
+            SegmentedControl(options: PitchMode.allCases, selection: Binding(get: { saved.mode }, set: { editor.set(model.settings.pitch.withMode($0)) }),
+                             label: { $0.label }, icon: { $0 == .key ? Icons.musicNote : Icons.vinyl }, height: compact ? 28 : 30)
+            Hint(saved.mode.description).padding(.top, compact ? 0 : 6)
+            if compact {
+                PitchValueBlock(pitch: pitch, compact: true, editor: editor)
             } else {
-                Spacer().frame(height: 14)
-                Text("Plattenspieler-Drehzahl").textStyle(Typo.titleSmall)
-                HStack(spacing: 8) {
-                    ChoiceChip(title: "33⅓ → 45 U/min", selected: abs(pitch.semitones - PitchSettings.rpm33To45) < 0.06) {
-                        model.settings.pitch = pitch.withSemitones((PitchSettings.rpm33To45 * 10).rounded() / 10)
+                SheetCard { PitchValueBlock(pitch: pitch, compact: false, editor: editor) }
+                    .padding(.top, 14)
+            }
+            Group {
+                if pitch.mode == .key {
+                    if compact {
+                        PitchTempoBlock(pitch: pitch, compact: true, editor: editor)
+                    } else {
+                        SheetCard { PitchTempoBlock(pitch: pitch, compact: false, editor: editor) }
+                            .padding(.top, 12)
                     }
-                    ChoiceChip(title: "45 → 33⅓ U/min", selected: abs(pitch.semitones - PitchSettings.rpm45To33) < 0.06) {
-                        model.settings.pitch = pitch.withSemitones((PitchSettings.rpm45To33 * 10).rounded() / 10)
+                } else {
+                    PitchSpeedChips(pitch: pitch, compact: compact, editor: editor)
+                        .padding(.top, compact ? 0 : 14)
+                }
+            }
+            if !compact {
+                Hint(saved.mode == .key
+                     ? "Tonhöhe und Tempo werden getrennt verändert (Zeitstreckung von macOS). Bei starken Änderungen sind leichte Klangveränderungen möglich. Änderungen sind sofort hörbar; der Titel startet nicht neu."
+                     : "Wie eine Schallplatte mit anderer Drehzahl: Tonhöhe und Tempo ändern sich gemeinsam (reines Resampling). Plattenteller, Naben und CD drehen entsprechend schneller oder langsamer.")
+                    .padding(.top, 14)
+            }
+        }
+        .onDisappear { editor.commit() }
+    }
+}
+
+/// Wert (Halbtöne mit Zehnteln, Cent), Regler in 0,1-Schritten und Tasten −1 · −0,1 · +0,1 · +1.
+private struct PitchValueBlock: View {
+    @Environment(\.musicColors) private var colors
+    let pitch: PitchSettings
+    let compact: Bool
+    let editor: PitchEditor
+
+    var body: some View {
+        let shown = pitch.semitones
+        let factor = pitch.factor
+        let tempoText: String = pitch.tempo == 1 ? "unverändert" : Formatting.percent(pitch.tempo)
+        let detail: String = pitch.mode == .key
+            ? "Tonhöhe \(Formatting.factor(factor)) · Tempo \(tempoText)"
+            : "Tonhöhe und Tempo \(Formatting.factor(factor)) (\(Formatting.percent(factor)))"
+        let align: HorizontalAlignment = compact ? .leading : .center
+        VStack(alignment: align, spacing: compact ? 6 : 8) {
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
+                Text(Formatting.semitones(shown))
+                    .textStyle(compact ? Typo.titleLarge : Typo.displaySmall)
+                    .monospacedDigit()
+                    .foregroundColor(shown != 0 ? colors.accentText : colors.textPrimary)
+                Text(Formatting.cents(shown))
+                    .textStyle(Typo.labelMedium)
+                    .monospacedDigit()
+                    .foregroundColor(colors.textSecondary)
+            }
+            .frame(maxWidth: .infinity, alignment: compact ? .leading : .center)
+            Text(detail)
+                .textStyle(compact ? Typo.bodySmall : Typo.bodyMedium)
+                .foregroundColor(colors.textSecondary)
+                .frame(maxWidth: .infinity, alignment: compact ? .leading : .center)
+            MusicSlider(value: Binding(get: { Double(shown) }, set: { v in
+                editor.preview(editor.current().withSemitones(Float((v * 10).rounded() / 10)))
+            }), range: -12...12, marker: 0, bipolar: true, activeColor: colors.accent, step: Double(PitchSettings.fineStep),
+                        label: "Halbtöne", valueText: Formatting.semitones(shown)) { editing in
+                if !editing { editor.commit() }
+            }
+            .padding(.top, 4)
+            HStack {
+                Text("−12").frame(maxWidth: .infinity, alignment: .leading)
+                Text("0").frame(maxWidth: .infinity)
+                Text("+12").frame(maxWidth: .infinity, alignment: .trailing)
+            }
+            .textStyle(Typo.labelSmall)
+            .foregroundColor(colors.textTertiary)
+            HStack(spacing: 6) {
+                StepChip(title: "−1", help: "Einen Halbton tiefer", enabled: shown > PitchSettings.minSemitones) { step(-PitchSettings.coarseStep) }
+                StepChip(title: "−0,1", help: "Einen Zehntel-Halbton tiefer (−10 Cent)", enabled: shown > PitchSettings.minSemitones) { step(-PitchSettings.fineStep) }
+                StepChip(title: "+0,1", help: "Einen Zehntel-Halbton höher (+10 Cent)", enabled: shown < PitchSettings.maxSemitones) { step(PitchSettings.fineStep) }
+                StepChip(title: "+1", help: "Einen Halbton höher", enabled: shown < PitchSettings.maxSemitones) { step(PitchSettings.coarseStep) }
+            }
+            .frame(maxWidth: .infinity, alignment: compact ? .leading : .center)
+        }
+    }
+
+    private func step(_ delta: Float) {
+        let cur = editor.current()
+        let next = ((cur.semitones + delta) * 10).rounded() / 10
+        editor.set(cur.withSemitones(next))
+    }
+}
+
+/// Kleine Stufentaste.
+private struct StepChip: View {
+    @Environment(\.musicColors) private var colors
+    let title: String
+    let help: String
+    let enabled: Bool
+    let action: () -> Void
+    @State private var hover = false
+
+    var body: some View {
+        Button(action: action) {
+            Text(title)
+                .font(Typo.inter(12, .semibold))
+                .monospacedDigit()
+                .foregroundColor(enabled ? colors.textPrimary : colors.textTertiary)
+                .frame(minWidth: 46, minHeight: 28)
+                .background(Capsule().fill(colors.textPrimary.opacity(hover && enabled ? 0.11 : 0.06)))
+                .contentShape(Capsule())
+        }
+        .buttonStyle(PressScaleStyle(scale: 0.94))
+        .disabled(!enabled)
+        .onHover { hover = $0 }
+        .help(help)
+        .accessibilityLabel(help)
+    }
+}
+
+/// Tempo (Modus „Tonhöhe“): 50–200 %, beim Ziehen hörbar.
+private struct PitchTempoBlock: View {
+    @Environment(\.musicColors) private var colors
+    let pitch: PitchSettings
+    let compact: Bool
+    let editor: PitchEditor
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Text("Tempo").textStyle(compact ? Typo.titleSmall : Typo.titleMedium)
+                Spacer()
+                Text(Formatting.percent(pitch.tempo))
+                    .font(Typo.inter(13, .medium))
+                    .monospacedDigit()
+                    .foregroundColor(pitch.tempo != 1 ? colors.accentText : colors.textSecondary)
+                if pitch.tempo != 1 {
+                    IconTap(icon: PlayerIcons.restart, label: "Tempo auf 100 %", tint: colors.textSecondary, iconSize: 14, touch: 26) {
+                        editor.set(editor.current().withTempo(1))
                     }
                 }
-                .padding(.top, 8)
             }
-            Spacer().frame(height: 14)
-            Hint(pitch.mode == .key
-                 ? "Tonhöhe und Tempo werden getrennt verändert (Zeitstreckung von macOS). Bei starken Änderungen sind leichte Klangveränderungen möglich. Änderungen sind sofort hörbar; der Titel startet nicht neu."
-                 : "Wie eine Schallplatte mit anderer Drehzahl: Tonhöhe und Tempo ändern sich gemeinsam (reines Resampling). Plattenteller, Naben und CD drehen entsprechend schneller oder langsamer.")
+            MusicSlider(value: Binding(get: { Double(pitch.tempo) }, set: { v in
+                let snapped: Double = abs(v - 1) < 0.03 ? 1 : (v * 20).rounded() / 20
+                editor.preview(editor.current().withTempo(Float(snapped)))
+            }), range: Double(PitchSettings.minTempo)...Double(PitchSettings.maxTempo), marker: 1, bipolar: true, activeColor: colors.accent,
+                        step: 0.05, label: "Tempo", valueText: Formatting.percent(pitch.tempo)) { editing in
+                if !editing { editor.commit() }
+            }
+            if !compact {
+                Hint(PitchSettings.tempoDescription + " · 50 % bis 200 %")
+            }
+        }
+    }
+}
+
+/// Plattenspieler-Drehzahl (Modus „Schallplatte“): 33⅓ ↔ 45 U/min.
+private struct PitchSpeedChips: View {
+    let pitch: PitchSettings
+    let compact: Bool
+    let editor: PitchEditor
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Plattenspieler-Drehzahl").textStyle(compact ? Typo.labelLarge : Typo.titleSmall)
+            HStack(spacing: 8) {
+                ChoiceChip(title: "33⅓ → 45 U/min", selected: abs(pitch.semitones - PitchSettings.rpm33To45) < 0.06) {
+                    editor.set(editor.current().withSemitones((PitchSettings.rpm33To45 * 10).rounded() / 10))
+                }
+                .help("Eine 33er-Platte mit 45 U/min abspielen (+5,2 Halbtöne)")
+                ChoiceChip(title: "45 → 33⅓ U/min", selected: abs(pitch.semitones - PitchSettings.rpm45To33) < 0.06) {
+                    editor.set(editor.current().withSemitones((PitchSettings.rpm45To33 * 10).rounded() / 10))
+                }
+                .help("Eine 45er-Platte mit 33⅓ U/min abspielen (−5,2 Halbtöne)")
+            }
         }
     }
 }
@@ -385,7 +938,7 @@ struct SleepTimerPanel: View {
                         Hint("Die Wiedergabe hält nach dem laufenden Titel an.")
                         PillButton(title: "Beenden", icon: Icons.clear) { player.cancelSleepTimer() }
                     } else {
-                        Text(Formatting.countdown(player.sleepRemainingMs ?? 0))
+                        SleepCountdownText(clock: player.clock)
                             .textStyle(Typo.displayMedium)
                             .monospacedDigit()
                             .foregroundColor(colors.accentText)
@@ -393,7 +946,7 @@ struct SleepTimerPanel: View {
                         Hint("Danach wird die Musik sanft ausgeblendet und angehalten.")
                         HStack(spacing: 10) {
                             PillButton(title: "+15 Minuten", icon: Icons.add) {
-                                let rest = Int(((player.sleepRemainingMs ?? 0) + 59_999) / 60_000)
+                                let rest = Int(((player.clock.sleepRemainingMs ?? 0) + 59_999) / 60_000)
                                 player.startSleepTimer(minutes: min(SleepTimerLogic.maxMinutes, rest + 15))
                             }
                             PillButton(title: "Beenden", icon: Icons.clear) { player.cancelSleepTimer() }
@@ -605,76 +1158,190 @@ struct SongInfoPanel: View {
     }
 }
 
-// MARK: - Player-Design (Spec 8.7)
+// MARK: - Player-Design (Spec 8.7, v2: sieben Designs, Kassettenfarbe, Mini-Player)
 
 struct DesignPanel: View {
     @EnvironmentObject private var model: AppModel
+    @EnvironmentObject private var player: PlayerService
     @Environment(\.musicColors) private var colors
+    @StateObject private var artwork = NowPlayingArtwork(size: .medium)
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text("Player-Design").textStyle(Typo.headlineSmall)
-            Hint("Gleiche Bedienung in allen Designs – der Wechsel unterbricht die Wiedergabe nicht.").padding(.top, 4)
+            Hint("Gleiche Bedienung in allen Designs – der Wechsel unterbricht die Wiedergabe nicht und wird gespeichert.").padding(.top, 4)
             Spacer().frame(height: 14)
-            PlayerThemePicker()
-            Spacer().frame(height: 14)
+            PlayerThemePicker(columns: 4)
+            if model.settings.playerTheme == .cassette {
+                SheetCard { CassetteColorPicker(palette: artwork.palette) }
+                    .padding(.top, 14)
+                    .transition(.opacity)
+            }
+            Spacer().frame(height: 12)
             SheetCard {
                 HStack {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Klangvisualisierung").textStyle(Typo.bodyLarge)
-                        Hint("Dezente Frequenzbalken bzw. Pegelanzeigen. Nur aktiv, solange der Player sichtbar ist; aus bei „Bewegung reduzieren“.")
+                        Hint("Frequenzbalken, Lichtring (Aurora) bzw. Pegelanzeigen (Kassette, Studio Reel) folgen der Musik. Nur aktiv, solange der Player sichtbar ist; aus bei reduzierter Bewegung.")
                     }
                     Spacer()
                     MusicToggle(isOn: Binding(get: { model.settings.visualizer }, set: { model.settings.visualizer = $0 }), label: "Klangvisualisierung")
+                }
+            }
+            Spacer().frame(height: 12)
+            SheetCard { MiniPlayerOptions() }
+        }
+        .animation(Motion.easeOut(), value: model.settings.playerTheme)
+        .task(id: player.current?.coverKey) { await artwork.update(for: player.current) }
+    }
+}
+
+/// Mini-Player: Größe und Design-Anzeige.
+private struct MiniPlayerOptions: View {
+    @EnvironmentObject private var model: AppModel
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Mini-Player").textStyle(Typo.titleMedium)
+            SegmentedControl(options: MiniPlayerSize.allCases, selection: Binding(get: { model.settings.miniPlayerSize }, set: { model.settings.miniPlayerSize = $0 }),
+                             label: { $0.label })
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Player-Design im Mini-Player").textStyle(Typo.bodyLarge)
+                    Hint("Platte, Kassette, CD, Spulen oder Lichtring im Kleinen – bewegt sich nur während der Wiedergabe.")
+                }
+                Spacer()
+                MusicToggle(isOn: Binding(get: { model.settings.miniPlayerShowsDesign }, set: { model.settings.miniPlayerShowsDesign = $0 }),
+                            label: "Player-Design im Mini-Player")
+            }
+        }
+    }
+}
+
+/// Gehäusefarben der Kassette (inkl. „Cover“ = aus den Farben des Covers).
+struct CassetteColorPicker: View {
+    @EnvironmentObject private var model: AppModel
+    @Environment(\.musicColors) private var colors
+    let palette: CoverPalette
+    var compact: Bool = false
+
+    var body: some View {
+        let current = model.settings.cassetteColor
+        VStack(alignment: .leading, spacing: compact ? 6 : 10) {
+            HStack {
+                Text("Kassettenfarbe").textStyle(compact ? Typo.labelLarge : Typo.titleMedium)
+                Spacer()
+                Text(current.label).textStyle(Typo.bodySmall).foregroundColor(colors.textSecondary)
+            }
+            HStack(spacing: compact ? 6 : 10) {
+                ForEach(CassetteColor.allCases, id: \.self) { c in
+                    CassetteSwatch(color: CassetteShell.swatch(c, palette: palette), isCover: c == .cover, selected: c == current,
+                                   label: c.label, diameter: compact ? 22 : 28) {
+                        model.settings.cassetteColor = c
+                    }
                 }
             }
         }
     }
 }
 
-/// Auswahl der vier Designs mit ruhenden Vorschauen (auch in den Einstellungen).
+private struct CassetteSwatch: View {
+    @Environment(\.musicColors) private var colors
+    let color: Color
+    let isCover: Bool
+    let selected: Bool
+    let label: String
+    let diameter: CGFloat
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            ZStack {
+                Circle().fill(LinearGradient(colors: [color.opacity(0.85), color], startPoint: .top, endPoint: .bottom))
+                Circle().fill(LinearGradient(colors: [Color.white.opacity(0.3), .clear], startPoint: .topLeading, endPoint: .center))
+                if isCover {
+                    Icon(PlayerIcons.image, size: diameter * 0.46, color: Color.white.opacity(0.92))
+                }
+                Circle().strokeBorder(Color.white.opacity(0.28), lineWidth: 0.8)
+            }
+            .frame(width: diameter, height: diameter)
+            .padding(3)
+            .overlay(Circle().strokeBorder(selected ? colors.accent : .clear, lineWidth: 2))
+            .contentShape(Circle())
+        }
+        .buttonStyle(PressScaleStyle(scale: 0.9))
+        .help(isCover ? "Kassettenfarbe aus dem Cover" : "Kassettenfarbe \(label)")
+        .accessibilityLabel("Kassettenfarbe \(label)")
+        .accessibilityAddTraits(selected ? .isSelected : [])
+    }
+}
+
+/// Auswahl der Designs mit ruhenden Vorschauen (Blatt, Popover und Einstellungen).
 struct PlayerThemePicker: View {
     @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var player: PlayerService
     @Environment(\.musicColors) private var appColors
-    @StateObject private var artwork = NowPlayingArtwork()
+    @StateObject private var artwork = NowPlayingArtwork(size: .medium)
     var columns = 2
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: columns), spacing: 10) {
                 ForEach(PlayerTheme.allCases, id: \.self) { theme in
-                    let selected = model.settings.playerTheme == theme
-                    Button {
-                        model.settings.playerTheme = theme
-                    } label: {
-                        VStack(spacing: 8) {
-                            ThemePreview(theme: theme, artwork: artwork)
-                                .aspectRatio(0.8, contentMode: .fit)
-                                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                                .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous).strokeBorder(selected ? appColors.accent : appColors.hairline, lineWidth: selected ? 2.5 : 1))
-                            HStack(spacing: 3) {
-                                if selected { Icon(Icons.check, size: 15, color: appColors.accentText) }
-                                Text(theme.label)
-                                    .font(Typo.inter(Typo.labelLarge.size, selected ? .semibold : .medium))
-                                    .foregroundColor(selected ? appColors.accentText : appColors.textPrimary)
-                                    .lineLimit(1)
-                            }
-                        }
-                        .padding(4)
-                        .contentShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                    ThemeTile(theme: theme, selected: model.settings.playerTheme == theme, artwork: artwork, compact: columns >= 4) {
+                        withAnimation(PlayerMotionPolicy.transition(model.settings)) { model.settings.playerTheme = theme }
                     }
-                    .buttonStyle(PressScaleStyle(scale: 0.97))
-                    .accessibilityAddTraits(selected ? .isSelected : [])
                 }
             }
             Text(model.settings.playerTheme.description).textStyle(Typo.bodySmall).foregroundColor(appColors.textSecondary)
+                .fixedSize(horizontal: false, vertical: true)
         }
         .task(id: player.current?.coverKey) { await artwork.update(for: player.current) }
     }
 }
 
-/// Ruhende Vorschau eines Designs.
+/// Kachel eines Designs mit Vorschau und Namen.
+struct ThemeTile: View {
+    @Environment(\.musicColors) private var appColors
+    let theme: PlayerTheme
+    let selected: Bool
+    @ObservedObject var artwork: NowPlayingArtwork
+    var compact: Bool = false
+    let action: () -> Void
+    @State private var hover = false
+
+    var body: some View {
+        let radius: CGFloat = compact ? 12 : 16
+        Button(action: action) {
+            VStack(spacing: compact ? 5 : 8) {
+                ThemePreview(theme: theme, artwork: artwork)
+                    .aspectRatio(0.8, contentMode: .fit)
+                    .clipShape(RoundedRectangle(cornerRadius: radius, style: .continuous))
+                    .overlay(RoundedRectangle(cornerRadius: radius, style: .continuous)
+                        .strokeBorder(selected ? appColors.accent : appColors.hairline, lineWidth: selected ? 2.5 : 1))
+                    .scaleEffect(hover && !selected ? 1.025 : 1)
+                HStack(spacing: 3) {
+                    if selected { Icon(Icons.check, size: compact ? 12 : 15, color: appColors.accentText) }
+                    Text(theme.label)
+                        .font(Typo.inter(compact ? 11 : Typo.labelLarge.size, selected ? .semibold : .medium))
+                        .foregroundColor(selected ? appColors.accentText : appColors.textPrimary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                }
+            }
+            .padding(compact ? 2 : 4)
+            .contentShape(RoundedRectangle(cornerRadius: radius + 2, style: .continuous))
+        }
+        .buttonStyle(PressScaleStyle(scale: 0.97))
+        .onHover { hover = $0 }
+        .animation(Motion.easeOut(), value: hover)
+        .help(theme.description)
+        .accessibilityLabel("Player-Design \(theme.label)")
+        .accessibilityAddTraits(selected ? .isSelected : [])
+    }
+}
+
+/// Ruhende Vorschau eines Designs (mit dem aktuellen Cover).
 struct ThemePreview: View {
     @Environment(\.musicColors) private var appColors
     let theme: PlayerTheme
@@ -691,19 +1358,8 @@ struct ThemePreview: View {
                 }
                 VStack(spacing: 8) {
                     let side = max(40, min(geo.size.width - 20, geo.size.height - 50))
-                    Group {
-                        switch theme {
-                        case .vinylStudio: VinylHero(side: side, artwork: artwork, still: true)
-                        case .classic:
-                            ArtworkBox(image: artwork.image, category: .unknown, cornerRadius: 8)
-                                .frame(width: side * 0.86, height: side * 0.86)
-                                .shadow(color: .black.opacity(0.3), radius: 6, y: 4)
-                                .frame(width: side, height: side)
-                        case .cassette: CassetteHero(side: side, artwork: artwork, showStatus: false, still: true)
-                        case .portableCD: CDHero(side: side, artwork: artwork, still: true)
-                        }
-                    }
-                    .frame(width: side, height: side)
+                    ThemePreviewHero(theme: theme, side: side, artwork: artwork)
+                        .frame(width: side, height: side)
                     ZStack(alignment: .leading) {
                         Capsule().fill(colors.textPrimary.opacity(0.18))
                         Capsule().fill(colors.accent).frame(width: geo.size.width * 0.78 * 0.35)
@@ -718,7 +1374,72 @@ struct ThemePreview: View {
                 .padding(10)
             }
             .environment(\.musicColors, colors)
+            .environment(\.colorScheme, colors.dark ? .dark : .light)
         }
         .allowsHitTesting(false)
+        .accessibilityHidden(true)
+    }
+}
+
+/// Ruhendes Mittelstück für Vorschauen.
+private struct ThemePreviewHero: View {
+    let theme: PlayerTheme
+    let side: CGFloat
+    @ObservedObject var artwork: NowPlayingArtwork
+
+    var body: some View {
+        switch theme {
+        case .vinylStudio: VinylHero(side: side, artwork: artwork, still: true)
+        case .classic:
+            ArtworkBox(image: artwork.image, category: .unknown, cornerRadius: 8)
+                .frame(width: side * 0.86, height: side * 0.86)
+                .shadow(color: .black.opacity(0.3), radius: 6, y: 4)
+                .frame(width: side, height: side)
+        case .cassette: CassetteHero(side: side, artwork: artwork, showStatus: false, still: true)
+        case .portableCD: CDHero(side: side, artwork: artwork, still: true)
+        case .modernGlass: ModernGlassHero(side: side, artwork: artwork, still: true)
+        case .aurora: AuroraHero(side: side, artwork: artwork, still: true)
+        case .reelToReel: ReelToReelHero(side: side, artwork: artwork, still: true)
+        }
+    }
+}
+
+/// Popover der Design-Schaltfläche im großen Player: alle Designs mit Vorschau, Kassettenfarbe,
+/// Klangvisualisierung und Weg zu weiteren Optionen.
+struct DesignQuickPicker: View {
+    @EnvironmentObject private var model: AppModel
+    @Environment(\.musicColors) private var colors
+    @ObservedObject var artwork: NowPlayingArtwork
+    let more: () -> Void
+
+    var body: some View {
+        let current = model.settings.playerTheme
+        VStack(alignment: .leading, spacing: 6) {
+            GlassMenuHeader(title: "Player-Design")
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 4), spacing: 8) {
+                ForEach(PlayerTheme.allCases, id: \.self) { theme in
+                    ThemeTile(theme: theme, selected: current == theme, artwork: artwork, compact: true) {
+                        withAnimation(PlayerMotionPolicy.transition(model.settings)) { model.settings.playerTheme = theme }
+                    }
+                }
+            }
+            .padding(.horizontal, 6)
+            Text(current.description)
+                .textStyle(Typo.bodySmall)
+                .foregroundColor(colors.textSecondary)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, 10)
+            if current == .cassette {
+                CassetteColorPicker(palette: artwork.palette, compact: true)
+                    .padding(.horizontal, 10)
+                    .padding(.top, 4)
+            }
+            GlassMenuDivider()
+            GlassMenuItem(title: "Klangvisualisierung", icon: Icons.equalizer, checked: model.settings.visualizer) {
+                model.settings.visualizer.toggle()
+            }
+            GlassMenuItem(title: "Weitere Optionen …", icon: Icons.settings, action: more)
+        }
+        .animation(Motion.easeOut(), value: current)
     }
 }

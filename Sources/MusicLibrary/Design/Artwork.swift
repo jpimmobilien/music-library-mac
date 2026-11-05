@@ -10,8 +10,17 @@ import MLTags
 /// Größenklassen der Cover (Punkte; gerendert wird in doppelter Auflösung).
 enum ArtworkSize: Int, CaseIterable {
     case small = 64     // Listen, Mini-Player
+    case thumb = 150    // kompaktes Raster, kleine Kacheln, Cover Flow am Rand
     case medium = 260   // Raster, Kopf von Detailansichten
     case large = 720    // Player, Bearbeitungsfenster
+
+    /// Passende Größe für eine Kachel/Fläche der angegebenen Breite in Punkten.
+    static func fitting(_ points: CGFloat) -> ArtworkSize {
+        if points <= 64 { return .small }
+        if points <= 150 { return .thumb }
+        if points <= 300 { return .medium }
+        return .large
+    }
 
     var pixels: Int { rawValue * 2 }
 }
@@ -34,7 +43,7 @@ final class ArtworkStore: @unchecked Sendable {
     let cacheDirectory: URL
 
     init() {
-        memory.totalCostLimit = 160 * 1024 * 1024
+        memory.totalCostLimit = 320 * 1024 * 1024
         let caches = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first ?? FileManager.default.temporaryDirectory
         cacheDirectory = caches.appendingPathComponent("Music Library/Covers", isDirectory: true)
         try? FileManager.default.createDirectory(at: cacheDirectory, withIntermediateDirectories: true)
@@ -103,11 +112,73 @@ final class ArtworkStore: @unchecked Sendable {
 
     private func load(_ track: Track, _ size: ArtworkSize) -> NSImage? {
         let disk = diskURL(track, size)
-        if let img = NSImage(contentsOf: disk) { return img }
+        // Sofort im Hintergrund dekodieren – sonst würde das Bild erst beim Zeichnen auf dem Hauptthread
+        // entpackt (Ruckeln beim Scrollen großer Raster).
+        if let cg = Self.decodeFile(disk) {
+            return NSImage(cgImage: cg, size: NSSize(width: CGFloat(cg.width) / 2, height: CGFloat(cg.height) / 2))
+        }
         guard let data = Self.sourceImageData(for: track, overrides: currentOverrides()) else { return nil }
         guard let cg = Self.downsample(data: data, maxPixels: size.pixels) else { return nil }
-        if let jpeg = Self.jpegData(cg, quality: 0.86) { try? jpeg.write(to: disk, options: .atomic) }
+        if let jpeg = Self.jpegData(cg, quality: 0.86) {
+            try? jpeg.write(to: disk, options: .atomic)
+            noteDiskWrite()
+        }
         return NSImage(cgImage: cg, size: NSSize(width: CGFloat(cg.width) / 2, height: CGFloat(cg.height) / 2))
+    }
+
+    /// Datei lesen und sofort dekodieren (kein verzögertes Entpacken beim Zeichnen).
+    static func decodeFile(_ url: URL) -> CGImage? {
+        guard let src = CGImageSourceCreateWithURL(url as CFURL, [kCGImageSourceShouldCache: false] as CFDictionary) else { return nil }
+        return CGImageSourceCreateImageAtIndex(src, 0, [kCGImageSourceShouldCacheImmediately: true] as CFDictionary)
+    }
+
+    // MARK: Größe des Zwischenspeichers auf der Platte
+
+    private var diskLimitBytes: Int64 = 500 * 1024 * 1024
+    private var writesSincePrune = 0
+
+    /// Obergrenze des Cover-Zwischenspeichers (Einstellung „Speicher & Cache“); ältere Bilder werden entfernt.
+    func setDiskLimit(megabytes: Int) {
+        lock.lock()
+        diskLimitBytes = Int64(max(50, megabytes)) * 1024 * 1024
+        lock.unlock()
+        queue.addOperation { [weak self] in self?.pruneDisk() }
+    }
+
+    private func noteDiskWrite() {
+        lock.lock()
+        writesSincePrune += 1
+        let due = writesSincePrune >= 300
+        if due { writesSincePrune = 0 }
+        lock.unlock()
+        if due { pruneDisk() }
+    }
+
+    /// Belegter Platz des Cover-Zwischenspeichers in Bytes.
+    func diskUsage() -> Int64 {
+        let keys: [URLResourceKey] = [.fileSizeKey]
+        let files = (try? FileManager.default.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: keys)) ?? []
+        return files.reduce(Int64(0)) { $0 + Int64((try? $1.resourceValues(forKeys: Set(keys)).fileSize) ?? 0) }
+    }
+
+    private func pruneDisk() {
+        lock.lock()
+        let limit = diskLimitBytes
+        lock.unlock()
+        let keys: [URLResourceKey] = [.fileSizeKey, .contentModificationDateKey]
+        guard let files = try? FileManager.default.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: keys) else { return }
+        var entries = files.compactMap { url -> (URL, Int64, Date)? in
+            guard let v = try? url.resourceValues(forKeys: Set(keys)) else { return nil }
+            return (url, Int64(v.fileSize ?? 0), v.contentModificationDate ?? .distantPast)
+        }
+        var total = entries.reduce(Int64(0)) { $0 + $1.1 }
+        guard total > limit else { return }
+        entries.sort { $0.2 < $1.2 }
+        for (url, size, _) in entries {
+            if total <= limit * 9 / 10 { break }
+            try? FileManager.default.removeItem(at: url)
+            total -= size
+        }
     }
 
     private func currentOverrides() -> [Int64: String] {

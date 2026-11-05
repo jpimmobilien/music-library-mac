@@ -23,6 +23,41 @@ struct TrackListConfig {
     var source: PlaybackSource
     /// Zusätzlicher Text rechts (z. B. „12×“ bei „Meistgespielt“).
     var trailingText: ((Track) -> String?)? = nil
+    /// Breites Fenster: Album als eigene Spalte (Zeile zeigt dann nur den Interpreten).
+    var albumColumnWidth: CGFloat? = nil
+    /// Jahr und Genre leise rechts („Zusatzinfos anzeigen“).
+    var showDetails = false
+}
+
+/// Anordnung einer Titelliste: Zeilen, Detailliste mit Spalten oder Kacheln (Raster).
+enum TrackLayout {
+    case rows
+    case table(TrackTableSpec)
+    case tiles(TileMetrics)
+}
+
+/// Spalten und Sortierung der Detailliste von Titeln.
+struct TrackTableSpec {
+    var context: LibraryViewContext
+    var columns: [DetailColumn]
+    var sort: TableSortSpec
+}
+
+/// Vergleichbare Darstellungsangaben einer Zeile (für `Equatable`-Zeilen).
+struct TrackRowStyle: Equatable {
+    var showArtwork: Bool
+    var showAlbum: Bool
+    var numbering: TrackListConfig.Numbering
+    var albumColumnWidth: CGFloat?
+    var showDetails: Bool
+
+    init(_ config: TrackListConfig) {
+        showArtwork = config.showArtwork
+        showAlbum = config.showAlbum
+        numbering = config.numbering
+        albumColumnWidth = config.albumColumnWidth
+        showDetails = config.showDetails
+    }
 }
 
 /// Gemeinsame Tastaturbedienung: Die zuletzt angeklickte Liste reagiert auf Pfeiltasten, Eingabe, Löschen, ⌘A.
@@ -66,7 +101,9 @@ enum TrackDrag {
     }
 }
 
-/// Titelliste mit Mehrfachauswahl (⌘/⇧-Klick), Doppelklick zum Abspielen, Kontextmenü, Drag & Drop.
+/// Titelliste mit Mehrfachauswahl (⌘/⇧-Klick), Doppelklick zum Abspielen, Kontextmenü, Drag & Drop –
+/// als Zeilen, Detailliste (Spalten, Klick auf den Kopf sortiert) oder Kacheln. Zeilen und Kacheln sind
+/// `Equatable`-Werte ohne Umgebungsobjekte (flüssiges Scrollen mit 10.000 Titeln).
 struct TrackListView: View {
     @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var player: PlayerService
@@ -74,35 +111,115 @@ struct TrackListView: View {
 
     let items: [TrackListItem]
     let config: TrackListConfig
+    var layout: TrackLayout = .rows
     @State private var selection: Set<Int64> = []
     @State private var anchor: Int?
     @State private var dropTarget: Int64?
 
     var body: some View {
-        LazyVStack(spacing: 0) {
-            ForEach(Array(items.enumerated()), id: \.element.id) { position, item in
-                TrackRowView(
-                    track: item.track,
-                    position: position,
-                    config: config,
-                    selected: selection.contains(item.id),
-                    current: player.current?.uid == item.track.uid,
-                    playing: player.isPlaying,
-                    favorite: model.isFavorite(item.track.uid),
-                    dropAbove: dropTarget == item.id
-                )
-                .contentShape(Rectangle())
-                .onTapGesture { click(position, item) }
-                .contextMenu { contextMenu(for: item) }
-                .onDrag { dragProvider(for: item) }
-                .onDrop(of: [UTType.plainText], isTargeted: Binding(get: { dropTarget == item.id }, set: { dropTarget = $0 ? item.id : (dropTarget == item.id ? nil : dropTarget) })) { providers in
-                    handleDrop(providers, before: position)
-                }
+        Group {
+            switch layout {
+            case .rows: rows
+            case .table(let spec): table(spec)
+            case .tiles(let metrics): tiles(metrics)
             }
         }
         .onChange(of: items.map(\.id)) { ids in
             selection = selection.intersection(ids)
         }
+    }
+
+    // MARK: Anordnungen
+
+    private var rows: some View {
+        let style = TrackRowStyle(config)
+        let currentUid = player.current?.uid
+        return LazyVStack(spacing: 0) {
+            ForEach(Array(items.enumerated()), id: \.element.id) { position, item in
+                let uid = item.track.uid
+                let current = currentUid == uid
+                let row = TrackRowView(
+                    track: item.track,
+                    position: position,
+                    style: style,
+                    trailing: config.trailingText?(item.track),
+                    selected: selection.contains(item.id),
+                    current: current,
+                    playing: current && player.isPlaying,
+                    favorite: model.isFavorite(uid),
+                    dropAbove: dropTarget == item.id,
+                    toggleFavorite: { model.toggleFavorite([uid]) }
+                )
+                interactive(row.equatable(), position: position, item: item)
+            }
+        }
+    }
+
+    private func table(_ spec: TrackTableSpec) -> some View {
+        let widths: [CGFloat] = spec.columns.map { CGFloat($0.defaultWidth) }
+        let currentUid = player.current?.uid
+        return VStack(spacing: 0) {
+            DetailTableHeader(context: spec.context, columns: spec.columns, widths: widths, sort: spec.sort)
+            LazyVStack(spacing: 0) {
+                ForEach(Array(items.enumerated()), id: \.element.id) { position, item in
+                    let track = item.track
+                    let current = currentUid == track.uid
+                    let stats = model.stats[track.uid]
+                    let row = DetailTableRow(
+                        item: LibraryItems.track(track, favorite: model.isFavorite(track.uid), current: current),
+                        cells: spec.columns.map { TrackCells.value(track, $0, stats: stats) },
+                        columns: spec.columns,
+                        widths: widths,
+                        selected: selection.contains(item.id),
+                        unavailable: !track.available,
+                        dropAbove: dropTarget == item.id,
+                        playing: current && player.isPlaying,
+                        onFavorite: { model.toggleFavorite([track.uid]) }
+                    )
+                    interactive(row.equatable(), position: position, item: item)
+                }
+            }
+        }
+        .padding(.top, 4)
+    }
+
+    private func tiles(_ metrics: TileMetrics) -> some View {
+        let currentUid = player.current?.uid
+        return LazyVGrid(columns: metrics.columns, alignment: .leading, spacing: metrics.rowSpacing) {
+            ForEach(Array(items.enumerated()), id: \.element.id) { position, item in
+                let track = item.track
+                let current = currentUid == track.uid
+                let tile = CollectionTile(
+                    item: LibraryItems.track(track, favorite: model.isFavorite(track.uid), current: current),
+                    style: metrics.style,
+                    selected: selection.contains(item.id),
+                    playing: current && player.isPlaying,
+                    onPlay: { play(from: position) },
+                    onFavorite: { model.toggleFavorite([track.uid]) }
+                )
+                interactive(tile.equatable(), position: position, item: item)
+            }
+        }
+        .padding(.top, 8)
+    }
+
+    /// Klick, Kontextmenü, Ziehen und Ablegen – gleich für alle Anordnungen.
+    private func interactive<V: View>(_ view: V, position: Int, item: TrackListItem) -> some View {
+        view
+            .contentShape(Rectangle())
+            .onTapGesture { click(position, item) }
+            .contextMenu { contextMenu(for: item) }
+            .onDrag { dragProvider(for: item) }
+            .onDrop(of: [UTType.plainText], isTargeted: dropBinding(item.id)) { providers in
+                handleDrop(providers, before: position)
+            }
+    }
+
+    private func dropBinding(_ id: Int64) -> Binding<Bool> {
+        Binding(
+            get: { dropTarget == id },
+            set: { on in dropTarget = on ? id : (dropTarget == id ? nil : dropTarget) }
+        )
     }
 
     // MARK: Auswahl
@@ -121,7 +238,7 @@ struct TrackListView: View {
             // Anker kann nach dem Filtern/Sortieren hinter dem Listenende liegen
             let lower = min(a, position)
             let upper = min(max(a, position), items.count - 1)
-            selection = Set((lower...upper).map { items[$0].id })
+            if lower <= upper { selection = Set((lower...upper).map { items[$0].id }) }
         } else {
             selection = [item.id]
             anchor = position
@@ -274,93 +391,39 @@ struct TrackMenuItems: View {
 }
 
 /// Eine Zeile der Titelliste (Android `TrackRow`) – bewusst ohne Karte und ohne Tabellenraster:
-/// Cover, Titel, Interpret · Album, rechtsbündige Spieldauer mit gleich breiten Ziffern, zurückhaltendes Herz.
-struct TrackRowView: View {
-    @EnvironmentObject private var model: AppModel
+/// Cover, Titel, Interpret · Album (bei breitem Fenster Album als eigene Spalte), rechtsbündige Spieldauer
+/// mit gleich breiten Ziffern, zurückhaltendes Herz. Ein reiner Wert ohne Umgebungsobjekte.
+struct TrackRowView: View, Equatable {
     @Environment(\.musicColors) private var colors
     let track: Track
     let position: Int
-    let config: TrackListConfig
+    let style: TrackRowStyle
+    let trailing: String?
     let selected: Bool
     let current: Bool
     let playing: Bool
     let favorite: Bool
     var dropAbove: Bool = false
+    let toggleFavorite: () -> Void
     @State private var hover = false
 
+    static func == (a: TrackRowView, b: TrackRowView) -> Bool {
+        a.track == b.track && a.position == b.position && a.style == b.style && a.trailing == b.trailing && a.selected == b.selected
+            && a.current == b.current && a.playing == b.playing && a.favorite == b.favorite && a.dropAbove == b.dropAbove
+    }
+
     var body: some View {
-        let textStart: CGFloat = config.showArtwork ? Metrics.trackArtwork + 12 : (config.numbering != .none ? 38 : 0)
+        let textStart: CGFloat = style.showArtwork ? Metrics.trackArtwork + 12 : (style.numbering != .none ? 38 : 0)
         HStack(spacing: 0) {
-            if !config.showArtwork, config.numbering != .none {
-                ZStack {
-                    if current {
-                        NowPlayingBars(playing: playing)
-                    } else {
-                        Text(numberText)
-                            .textStyle(Typo.duration)
-                            .monospacedDigit()
-                            .foregroundColor(colors.textTertiary)
-                    }
-                }
-                .frame(width: 30)
-                Spacer().frame(width: 8)
-            }
-            if config.showArtwork {
-                ZStack {
-                    TrackArtwork(track: track, size: .small, cornerRadius: Radius.artworkSmall)
-                    if current {
-                        RoundedRectangle(cornerRadius: Radius.artworkSmall, style: .continuous)
-                            .fill(Color.black.opacity(0.38))
-                        NowPlayingBars(playing: playing, color: .white)
-                    }
-                }
-                .frame(width: Metrics.trackArtwork, height: Metrics.trackArtwork)
-                Spacer().frame(width: 12)
-            }
-            VStack(alignment: .leading, spacing: 1) {
-                Text(track.displayTitle)
-                    .font(Typo.inter(Typo.bodyLarge.size, current ? .semibold : .medium))
-                    .tracking(Typo.bodyLarge.tracking)
-                    .foregroundColor(current ? colors.accentText : (track.available ? colors.textPrimary : colors.textTertiary))
-                    .lineLimit(1)
-                Text(subtitle)
-                    .textStyle(Typo.bodySmall)
-                    .foregroundColor(colors.textSecondary)
-                    .lineLimit(1)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            if !track.available {
-                Text("nicht verfügbar")
-                    .textStyle(Typo.labelSmall)
-                    .foregroundColor(colors.textTertiary)
-                    .padding(.horizontal, 7)
-                    .padding(.vertical, 2)
-                    .background(Capsule().fill(colors.fieldFill))
-                    .padding(.trailing, 8)
-            }
-            if let extra = config.trailingText?(track) {
-                Text(extra)
-                    .textStyle(Typo.duration)
-                    .monospacedDigit()
-                    .foregroundColor(colors.accentText)
-                    .padding(.trailing, 10)
-            }
-            if track.durationMs > 0 {
-                Text(Formatting.duration(track.durationMs))
-                    .textStyle(Typo.duration)
-                    .monospacedDigit()
-                    .foregroundColor(colors.textTertiary)
-                    .frame(minWidth: 40, alignment: .trailing)
-            }
-            HeartButton(favorite: favorite, iconSize: 15, touch: 30, subject: "„\(track.displayTitle)“") {
-                model.toggleFavorite([track.uid])
-            }
-            .opacity(favorite || hover || selected ? 1 : 0.55)
-            .padding(.leading, 4)
+            leading
+            texts
+                .frame(maxWidth: .infinity, alignment: .leading)
+            columns
+            trailingItems
         }
         .padding(.leading, 6)
         .padding(.trailing, 2)
-        .frame(height: config.showArtwork ? Metrics.trackRowHeight : 44)
+        .frame(height: style.showArtwork ? Metrics.trackRowHeight : 44)
         .background(
             RoundedRectangle(cornerRadius: 10, style: .continuous)
                 .fill(selected ? colors.selectionFill : (hover ? colors.textPrimary.opacity(colors.dark ? 0.045 : 0.035) : .clear))
@@ -379,9 +442,103 @@ struct TrackRowView: View {
         .accessibilityAddTraits(selected ? .isSelected : [])
     }
 
+    @ViewBuilder
+    private var leading: some View {
+        if !style.showArtwork, style.numbering != .none {
+            ZStack {
+                if current {
+                    NowPlayingBars(playing: playing)
+                } else {
+                    Text(numberText)
+                        .textStyle(Typo.duration)
+                        .monospacedDigit()
+                        .foregroundColor(colors.textTertiary)
+                }
+            }
+            .frame(width: 30)
+            Spacer().frame(width: 8)
+        }
+        if style.showArtwork {
+            ZStack {
+                TrackArtwork(track: track, size: .small, cornerRadius: Radius.artworkSmall)
+                if current {
+                    RoundedRectangle(cornerRadius: Radius.artworkSmall, style: .continuous)
+                        .fill(Color.black.opacity(0.38))
+                    NowPlayingBars(playing: playing, color: .white)
+                }
+            }
+            .frame(width: Metrics.trackArtwork, height: Metrics.trackArtwork)
+            Spacer().frame(width: 12)
+        }
+    }
+
+    private var texts: some View {
+        VStack(alignment: .leading, spacing: 1) {
+            Text(track.displayTitle)
+                .font(Typo.inter(Typo.bodyLarge.size, current ? .semibold : .medium))
+                .tracking(Typo.bodyLarge.tracking)
+                .foregroundColor(current ? colors.accentText : (track.available ? colors.textPrimary : colors.textTertiary))
+                .lineLimit(1)
+            Text(subtitle)
+                .textStyle(Typo.bodySmall)
+                .foregroundColor(colors.textSecondary)
+                .lineLimit(1)
+        }
+    }
+
+    @ViewBuilder
+    private var columns: some View {
+        if let width = style.albumColumnWidth, style.showAlbum {
+            Text(track.album ?? "")
+                .textStyle(Typo.bodySmall)
+                .foregroundColor(colors.textSecondary)
+                .lineLimit(1)
+                .frame(width: width, alignment: .leading)
+                .padding(.leading, 12)
+        }
+        if style.showDetails, let meta = metaText {
+            Text(meta)
+                .textStyle(Typo.labelMedium)
+                .foregroundColor(colors.textTertiary)
+                .lineLimit(1)
+                .frame(width: 130, alignment: .trailing)
+                .padding(.leading, 8)
+        }
+    }
+
+    @ViewBuilder
+    private var trailingItems: some View {
+        if !track.available {
+            Text("nicht verfügbar")
+                .textStyle(Typo.labelSmall)
+                .foregroundColor(colors.textTertiary)
+                .padding(.horizontal, 7)
+                .padding(.vertical, 2)
+                .background(Capsule().fill(colors.fieldFill))
+                .padding(.leading, 8)
+        }
+        if let trailing {
+            Text(trailing)
+                .textStyle(Typo.duration)
+                .monospacedDigit()
+                .foregroundColor(colors.accentText)
+                .padding(.leading, 10)
+        }
+        if track.durationMs > 0 {
+            Text(Formatting.duration(track.durationMs))
+                .textStyle(Typo.duration)
+                .monospacedDigit()
+                .foregroundColor(colors.textTertiary)
+                .frame(minWidth: 52, alignment: .trailing)
+        }
+        HeartButton(favorite: favorite, iconSize: 15, touch: 30, subject: "„\(track.displayTitle)“", toggle: toggleFavorite)
+            .opacity(favorite || hover || selected ? 1 : 0.55)
+            .padding(.leading, 4)
+    }
+
     private var numberText: String {
-        switch config.numbering {
-        case .trackNumber: return track.trackNumber.map(String.init) ?? "–"
+        switch style.numbering {
+        case .trackNumber: return track.trackNumber.map { String($0) } ?? "–"
         case .position: return "\(position + 1)"
         case .none: return ""
         }
@@ -389,7 +546,13 @@ struct TrackRowView: View {
 
     private var subtitle: String {
         var parts: [String] = [track.artistText ?? "Unbekannter Interpret"]
-        if config.showAlbum, let album = track.album { parts.append(album) }
+        if style.showAlbum, style.albumColumnWidth == nil, let album = track.album { parts.append(album) }
         return parts.joined(separator: " · ")
+    }
+
+    private var metaText: String? {
+        let parts: [String?] = [track.year.map { String($0) }, track.genres.first]
+        let joined = parts.compactMap { $0 }.joined(separator: " · ")
+        return joined.isEmpty ? nil : joined
     }
 }

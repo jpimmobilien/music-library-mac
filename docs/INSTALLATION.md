@@ -34,6 +34,10 @@ Apple-Entwicklerkonto nötig). macOS fragt deshalb beim **ersten** Start nach. D
 xattr -dr com.apple.quarantine "/Applications/Music Library.app"
 ```
 
+**Update von Version 1:** Die neue DMG öffnen, das App-Symbol wieder auf **Programme** ziehen und
+„Ersetzen“ wählen. Bibliothek, Playlists, Favoriten, Zähler und Einstellungen bleiben erhalten. Die
+Gatekeeper-Rückfrage kommt bei einer neuen, ad-hoc signierten Version noch einmal.
+
 ## 3. Musik hinzufügen
 
 Beim ersten Start: **Ordner hinzufügen …** und den Musikordner wählen (z. B. „Musik“, einen Ordner auf
@@ -63,3 +67,30 @@ Auf einem Mac mit macOS 14.5 oder neuer und Xcode 16+ oder den Befehlszeilenwerk
 Blockiert macOS das Skript (heruntergeladene Datei), im Terminal ausführen: `bash ` eingeben, ein
 Leerzeichen, `Build.command` aus dem Finder ins Terminalfenster ziehen und Eingabetaste drücken.
 Oder im Terminal: `scripts/build_app.sh && scripts/make_dmg.sh`.
+
+## 6. Signieren und Beglaubigen (optional, für den Entwickler)
+
+Ohne Apple-Entwicklerkonto bleibt die App ad-hoc signiert (Rückfrage beim ersten Start, siehe oben).
+Die Bauanleitung ist für die Beglaubigung durch Apple vorbereitet (`scripts/notarize.sh`, Schritte in
+`.github/workflows/build.yml`); sie wird **nur** ausgeführt, wenn die Zugangsdaten als GitHub-Secrets
+hinterlegt sind. Benötigt werden:
+
+1. Mitgliedschaft im **Apple Developer Program** (99 € pro Jahr).
+2. Ein Zertifikat **„Developer ID Application“** (Xcode → Einstellungen → Accounts → Zertifikate verwalten,
+   oder developer.apple.com → Certificates), exportiert aus der Schlüsselbundverwaltung als `.p12` mit Passwort.
+3. Ein **app-spezifisches Passwort** für die Apple-ID (appleid.apple.com → Anmeldung & Sicherheit).
+4. Die **Team-ID** (developer.apple.com → Membership, 10 Zeichen).
+
+In GitHub unter *Settings → Secrets and variables → Actions* anlegen:
+
+| Secret | Inhalt |
+|---|---|
+| `MACOS_CERT_P12_BASE64` | Ausgabe von `base64 -i DeveloperID.p12` |
+| `MACOS_CERT_PASSWORD` | Passwort der .p12-Datei |
+| `NOTARY_APPLE_ID` | Apple-ID des Entwicklerkontos |
+| `NOTARY_TEAM_ID` | Team-ID |
+| `NOTARY_PASSWORD` | app-spezifisches Passwort |
+
+Danach signiert der nächste Build mit „Hardened Runtime“, reicht die DMG bei Apple ein und heftet das
+Beglaubigungsticket an – die Gatekeeper-Rückfrage entfällt. Dieser Weg ist vorbereitet, aber **ungetestet**,
+weil dafür ein echtes Entwicklerkonto nötig ist.

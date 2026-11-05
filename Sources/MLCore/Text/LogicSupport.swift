@@ -296,6 +296,15 @@ extension Sequence where Element: Hashable {
     func distinctInOrder() -> [Element] { OrderedSet(self).elements }
 }
 
+// MARK: - Tolerantes Lesen
+
+/// Listeneintrag, der beim Lesen nie scheitert (ungültig → `nil`): so verwirft ein einzelner
+/// beschädigter Eintrag nicht die ganze Liste.
+struct LenientElement<T: Decodable>: Decodable {
+    let value: T?
+    init(from decoder: Decoder) { value = try? T(from: decoder) }
+}
+
 // MARK: - Zufall
 
 /// Reproduzierbarer Zufallsgenerator (SplitMix64) – für Tests und für gespeicherte Zufallsreihenfolgen.

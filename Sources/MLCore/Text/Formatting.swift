@@ -103,14 +103,23 @@ public enum Formatting {
         return "\(sign)\(compactNumber(abs(rounded))) dB"
     }
 
-    /// Halbtöne mit Vorzeichen, z. B. „+2 Halbtöne“, „−1 Halbton“, „Original“.
+    /// Halbtöne mit Vorzeichen, auf Zehntel gerundet, z. B. „+2 Halbtöne“, „+1,5 Halbtöne“, „−0,3 Halbtöne“,
+    /// „−1 Halbton“, „Original“.
     public static func semitones(_ value: Float) -> String {
-        let rounded = Float(JvmMath.roundToInt(value * 10)) / 10
-        if rounded == 0 { return "Original" }
-        let sign = rounded > 0 ? "+" : "−"
-        let v = abs(rounded)
-        let unit = v == 1 ? "Halbton" : "Halbtöne"
-        return "\(sign)\(compactNumber(v)) \(unit)"
+        let tenths = JvmMath.roundToInt(value * 10)
+        if tenths == 0 { return "Original" }
+        let sign = tenths > 0 ? "+" : "−"
+        let v = tenths.magnitude
+        let number = v % 10 == 0 ? "\(v / 10)" : "\(v / 10),\(v % 10)"
+        let unit = v == 10 ? "Halbton" : "Halbtöne"
+        return "\(sign)\(number) \(unit)"
+    }
+
+    /// Halbtöne als Cent mit Vorzeichen (1 Halbton = 100 Cent), z. B. „+150 Cent“, „−30 Cent“, „0 Cent“.
+    public static func cents(_ semitones: Float) -> String {
+        let cents = JvmMath.roundToInt(semitones * 100)
+        if cents == 0 { return "0 Cent" }
+        return "\(cents > 0 ? "+" : "−")\(cents.magnitude) Cent"
     }
 
     /// Datum und Uhrzeit, z. B. „25.10.2026, 14:03“.

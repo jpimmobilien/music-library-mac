@@ -11,58 +11,26 @@ struct FavoritesView: View {
 
     var body: some View {
         let tracksTab = model.settings.favoritesTab == .tracks
-        let q = model.query(.favorites)
-        LibraryScaffold(title: "Favoriten", actions: { actions(tracksTab) }) {
+        let context: LibraryViewContext = tracksTab ? .favoriteTracks : .favoriteAlbums
+        let q = model.query(.favorites).trimmingCharacters(in: .whitespaces)
+        let narrowed = !q.isEmpty || !model.filter(context).isEmpty
+        let summary: String = tracksTab
+            ? librarySummary(model.favoriteTrackList.count, model.unfilteredCount[.favoriteTracks] ?? model.favoriteTracks.count, narrowed: narrowed, Formatting.tracks)
+            : librarySummary(model.favoriteAlbumList.count, model.unfilteredCount[.favoriteAlbums] ?? model.favoriteAlbums.count, narrowed: narrowed, Formatting.albums)
+        LibraryScaffold(title: "Favoriten", actions: { toolbar(tracksTab, .collapsed) }) {
             VStack(spacing: 0) {
                 LargeTitleHeader(title: "Favoriten", section: .favorites,
                                  placeholder: tracksTab ? "Favorisierte Titel durchsuchen" : "Favorisierte Alben durchsuchen",
-                                 summary: tracksTab ? Formatting.tracks(model.favoriteTracks.count) : Formatting.albums(model.favoriteAlbums.count),
-                                 actions: { actions(tracksTab) }) {
+                                 summary: summary, filterContext: context, toolbar: { toolbar(tracksTab, .full) }) {
                     SegmentedControl(options: FavoritesTab.allCases, selection: Binding(get: { model.settings.favoritesTab }, set: { model.settings.favoritesTab = $0 }),
                                      label: { $0.label }, icon: { $0 == .tracks ? Icons.musicNote : Icons.album })
                         .frame(maxWidth: 320)
                         .padding(.top, 12)
                 }
                 if tracksTab {
-                    if model.favoriteTracks.isEmpty {
-                        EmptyStateView(icon: Icons.favoriteBorder, title: "Noch keine Lieblingstitel",
-                                       text: "Klicke bei einem Titel auf das Herz – er erscheint dann hier und in der automatischen Playlist „Favoriten“.")
-                    } else if model.favoriteTrackList.isEmpty {
-                        EmptyStateView(icon: Icons.search, title: "Keine Treffer", text: "Kein favorisierter Titel passt zu „\(q)“.")
-                    } else {
-                        TrackListView(items: TrackListItem.plain(model.favoriteTrackList),
-                                      config: TrackListConfig(source: PlaybackSource(kind: .favorites, label: "Favoriten")))
-                    }
+                    tracksContent(q)
                 } else {
-                    if model.favoriteAlbums.isEmpty {
-                        EmptyStateView(icon: Icons.favoriteBorder, title: "Noch keine Lieblingsalben",
-                                       text: "Öffne ein Album und klicke auf das Herz, oder nutze im Kontextmenü „Album zu Favoriten hinzufügen“.")
-                    } else {
-                        if model.favoriteAlbumList.isEmpty && !q.isEmpty {
-                            EmptyStateView(icon: Icons.search, title: "Keine Treffer", text: "Kein favorisiertes Album passt zu „\(q)“.")
-                        } else {
-                            AlbumGrid(albums: model.favoriteAlbumList)
-                        }
-                        if !model.missingFavoriteAlbums.isEmpty && q.isEmpty {
-                            ListLabel("Derzeit nicht verfügbar")
-                            ForEach(model.missingFavoriteAlbums, id: \.albumKey) { fav in
-                                HStack(spacing: 12) {
-                                    RoundedRectangle(cornerRadius: Radius.artworkSmall, style: .continuous)
-                                        .fill(colors.accentSoft)
-                                        .frame(width: 40, height: 40)
-                                        .overlay(Icon(Icons.favorite, size: 16, color: colors.heart.opacity(0.7)))
-                                    VStack(alignment: .leading, spacing: 1) {
-                                        Text(fav.title ?? "Unbekanntes Album").textStyle(Typo.bodyLarge).foregroundColor(colors.textPrimary)
-                                        Text(fav.artist ?? "").textStyle(Typo.bodySmall).foregroundColor(colors.textSecondary)
-                                    }
-                                    Spacer()
-                                    IconTap(icon: Icons.clear, label: "Aus Favoriten entfernen", tint: colors.textSecondary) { model.removeMissingAlbumFavorite(fav.albumKey) }
-                                }
-                                .padding(.horizontal, 6)
-                                .frame(height: 54)
-                            }
-                        }
-                    }
+                    albumsContent(q)
                 }
             }
             .padding(.horizontal, Spacing.gutter)
@@ -70,18 +38,88 @@ struct FavoritesView: View {
     }
 
     @ViewBuilder
-    private func actions(_ tracksTab: Bool) -> some View {
-        if tracksTab {
-            if !model.favoriteTrackList.isEmpty {
-                BarAction(icon: Icons.shuffle, label: "Favoriten gemischt abspielen") {
-                    player.play(uids: model.favoriteTrackList.map(\.uid), startIndex: nil, shuffle: .on, source: PlaybackSource(kind: .favorites, label: "Favoriten (gemischt)"))
-                }
-            }
-            SortMenu(sort: model.settings.favoriteTrackSort) { model.settings.favoriteTrackSort = $0 }
+    private func tracksContent(_ q: String) -> some View {
+        if model.favoriteTracks.isEmpty {
+            EmptyStateView(icon: Icons.favoriteBorder, title: "Noch keine Lieblingstitel",
+                           text: "Klicke bei einem Titel auf das Herz – er erscheint dann hier und in der automatischen Playlist „Favoriten“.")
+        } else if model.favoriteTrackList.isEmpty {
+            NoMatchesView(context: .favoriteTracks, query: q, noun: "Kein favorisierter Titel")
         } else {
-            SortMenu(sort: model.settings.favoriteAlbumSort) { model.settings.favoriteAlbumSort = $0 }
+            TrackCollection(context: .favoriteTracks, tracks: model.favoriteTrackList,
+                            source: PlaybackSource(kind: .favorites, label: "Favoriten"),
+                            sort: ColumnSorts.spec(ColumnSorts.favoriteTrack, sort: model.settings.favoriteTrackSort) { model.settings.favoriteTrackSort = $0 })
         }
-        SettingsAction()
+    }
+
+    @ViewBuilder
+    private func albumsContent(_ q: String) -> some View {
+        if model.favoriteAlbums.isEmpty {
+            EmptyStateView(icon: Icons.favoriteBorder, title: "Noch keine Lieblingsalben",
+                           text: "Öffne ein Album und klicke auf das Herz, oder nutze im Kontextmenü „Album zu Favoriten hinzufügen“.")
+        } else {
+            if model.favoriteAlbumList.isEmpty {
+                if !model.missingFavoriteAlbums.isEmpty && q.isEmpty && model.filter(.favoriteAlbums).isEmpty {
+                    EmptyView()
+                } else {
+                    NoMatchesView(context: .favoriteAlbums, query: q, noun: "Kein favorisiertes Album")
+                }
+            } else {
+                AlbumCollection(context: .favoriteAlbums, albums: model.favoriteAlbumList,
+                                sort: ColumnSorts.spec(ColumnSorts.favoriteAlbum, sort: model.settings.favoriteAlbumSort) { model.settings.favoriteAlbumSort = $0 })
+            }
+            if !model.missingFavoriteAlbums.isEmpty && q.isEmpty {
+                MissingFavoriteAlbums()
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func toolbar(_ tracksTab: Bool, _ style: LibraryToolbarStyle) -> some View {
+        if tracksTab {
+            let list = model.favoriteTrackList
+            let shuffle: (() -> Void)? = list.isEmpty ? nil : {
+                player.play(uids: list.map(\.uid), startIndex: nil, shuffle: .on, source: PlaybackSource(kind: .favorites, label: "Favoriten (gemischt)"))
+            }
+            LibraryToolbar(context: .favoriteTracks, style: style, sort: model.settings.favoriteTrackSort,
+                           setSort: { model.settings.favoriteTrackSort = $0 },
+                           shuffleLabel: "Favoriten gemischt abspielen", shuffle: shuffle)
+        } else {
+            let albums = model.favoriteAlbumList
+            let shuffle: (() -> Void)? = albums.isEmpty ? nil : {
+                player.play(uids: albums.flatMap(\.trackUids), startIndex: nil, shuffle: .on, source: PlaybackSource(kind: .favorites, label: "Lieblingsalben (gemischt)"))
+            }
+            LibraryToolbar(context: .favoriteAlbums, style: style, sort: model.settings.favoriteAlbumSort,
+                           setSort: { model.settings.favoriteAlbumSort = $0 },
+                           shuffleLabel: "Lieblingsalben gemischt abspielen", shuffle: shuffle)
+        }
+    }
+}
+
+/// Favorisierte Alben, die derzeit nicht in der Bibliothek sind (z. B. Laufwerk getrennt).
+private struct MissingFavoriteAlbums: View {
+    @EnvironmentObject private var model: AppModel
+    @Environment(\.musicColors) private var colors
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            ListLabel("Derzeit nicht verfügbar")
+            ForEach(model.missingFavoriteAlbums, id: \.albumKey) { fav in
+                HStack(spacing: 12) {
+                    RoundedRectangle(cornerRadius: Radius.artworkSmall, style: .continuous)
+                        .fill(colors.accentSoft)
+                        .frame(width: 40, height: 40)
+                        .overlay(Icon(Icons.favorite, size: 16, color: colors.heart.opacity(0.7)))
+                    VStack(alignment: .leading, spacing: 1) {
+                        Text(fav.title ?? "Unbekanntes Album").textStyle(Typo.bodyLarge).foregroundColor(colors.textPrimary)
+                        Text(fav.artist ?? "").textStyle(Typo.bodySmall).foregroundColor(colors.textSecondary)
+                    }
+                    Spacer()
+                    IconTap(icon: Icons.clear, label: "Aus Favoriten entfernen", tint: colors.textSecondary) { model.removeMissingAlbumFavorite(fav.albumKey) }
+                }
+                .padding(.horizontal, 6)
+                .frame(height: 54)
+            }
+        }
     }
 }
 

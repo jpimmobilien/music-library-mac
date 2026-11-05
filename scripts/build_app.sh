@@ -1,5 +1,6 @@
 #!/bin/bash
-# Baut „Music Library.app“ als Universal Binary (arm64 + x86_64), ad-hoc signiert.
+# Baut „Music Library.app“ als Universal Binary (arm64 + x86_64), ad-hoc signiert
+# (mit SIGN_IDENTITY="Developer ID Application: …" stattdessen mit Developer-ID-Zertifikat).
 #
 #   scripts/build_app.sh                 → build/Music Library.app
 #   VERSION=1.0.0 BUILD_NUMBER=42 scripts/build_app.sh
@@ -10,7 +11,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-VERSION="${VERSION:-1.0.0}"
+VERSION="${VERSION:-2.0.0}"
 BUILD_NUMBER="${BUILD_NUMBER:-1}"
 APP="build/Music Library.app"
 
@@ -50,8 +51,15 @@ echo "▸ Mindest-macOS je Architektur:"
 otool -l "$APP/Contents/MacOS/MusicLibrary" -arch arm64 | grep -A3 LC_BUILD_VERSION | grep minos || true
 otool -l "$APP/Contents/MacOS/MusicLibrary" -arch x86_64 | grep -A3 LC_BUILD_VERSION | grep minos || true
 
-echo "▸ Ad-hoc-Signatur …"
 xattr -cr "$APP"
-codesign --force --deep --sign - --timestamp=none "$APP"
+if [ -n "${SIGN_IDENTITY:-}" ]; then
+    # Developer-ID-Signatur mit „Hardened Runtime“ (Voraussetzung für die Beglaubigung durch Apple)
+    echo "▸ Signatur mit „$SIGN_IDENTITY“ …"
+    codesign --force --options runtime --timestamp --sign "$SIGN_IDENTITY" "$APP/Contents/MacOS/MusicLibrary"
+    codesign --force --options runtime --timestamp --sign "$SIGN_IDENTITY" "$APP"
+else
+    echo "▸ Ad-hoc-Signatur …"
+    codesign --force --deep --sign - --timestamp=none "$APP"
+fi
 codesign --verify --deep --strict --verbose=2 "$APP"
 echo "✓ $APP"

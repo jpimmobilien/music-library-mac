@@ -10,6 +10,9 @@ import MLStore
 final class PlaybackClock: ObservableObject {
     @Published var positionMs: Int64 = 0
     @Published var durationMs: Int64 = 0
+    /// Restzeit des Sleep-Timers (nur bei laufendem Minuten-Timer) – hier statt im PlayerService, damit die
+    /// sekündliche Aktualisierung nur die Anzeigen neu zeichnet, die sie wirklich zeigen.
+    @Published var sleepRemainingMs: Int64?
 }
 
 /// Wiedergabe (Android: PlaybackService + PlaybackController + PlaybackHub).
@@ -25,10 +28,17 @@ final class PlayerService: ObservableObject {
     private(set) lazy var engine = AudioEngine()
 
     @Published private(set) var queue = PlayQueue()
-    @Published private(set) var current: Track?
+    @Published private(set) var current: Track? {
+        didSet {
+            if current?.coverKey != oldValue?.coverKey {
+                CoverAmbience.shared.update(for: current, enabled: model?.settings.dynamicCoverColors ?? true)
+            }
+        }
+    }
     @Published private(set) var isPlaying = false
     @Published private(set) var sleepTimer: SleepTimerState?
-    @Published private(set) var sleepRemainingMs: Int64?
+    /// Restzeit des Sleep-Timers (Anzeige über `clock.sleepRemainingMs` beobachten).
+    var sleepRemainingMs: Int64? { clock.sleepRemainingMs }
     @Published private(set) var lastError: String?
     /// Eine Ogg-Datei wird gerade für die Wiedergabe umgewandelt.
     @Published private(set) var preparing = false
@@ -94,7 +104,8 @@ final class PlayerService: ObservableObject {
 
     /// Lautstärke während des Ziehens (ohne Speichern).
     func setLiveVolume(_ v: Float) {
-        liveVolume = min(max(v, AudioEffectsSettings.minVolume), AudioEffectsSettings.maxVolume)
+        let upper = min(AudioEffectsSettings.maxVolume, max(1, model?.settings.maxVolume ?? AudioEffectsSettings.maxVolume))
+        liveVolume = min(max(v, AudioEffectsSettings.minVolume), upper)
         guard !demo else { return }
         pushEngineParameters()
     }
@@ -246,6 +257,22 @@ final class PlayerService: ObservableObject {
         seek(to: target)
     }
 
+    /// Sprungweite laut Einstellung (5, 10, 15 oder 30 Sekunden).
+    var skipSeconds: Int { model?.settings.skipSeconds ?? 10 }
+
+    func skipForward() { skip(by: Double(skipSeconds)) }
+
+    func skipBackward() { skip(by: -Double(skipSeconds)) }
+
+    /// Medientasten und Kontrollzentrum ein-/ausschalten (Einstellung „Medientasten verwenden“).
+    func setMediaKeysEnabled(_ on: Bool) {
+        let c = MPRemoteCommandCenter.shared()
+        for cmd in [c.playCommand, c.pauseCommand, c.togglePlayPauseCommand, c.nextTrackCommand, c.previousTrackCommand,
+                    c.changePlaybackPositionCommand, c.skipForwardCommand, c.skipBackwardCommand] as [MPRemoteCommand] {
+            cmd.isEnabled = on
+        }
+    }
+
     func toggleShuffle() {
         queue.setShuffle(!queue.shuffleEnabled)
         saveState()
@@ -359,7 +386,8 @@ final class PlayerService: ObservableObject {
         }
         // Lange Titel: gemerkte Position fortsetzen
         var start = position ?? 0
-        if position == nil, ResumeRule.isLongTrack(durationMs: track.durationMs), let point = resumePoints[uid] {
+        if position == nil, model?.settings.rememberLongTrackPosition ?? true,
+           ResumeRule.isLongTrack(durationMs: track.durationMs), let point = resumePoints[uid] {
             start = point.positionMs
             model?.toast("Fortgesetzt bei \(Formatting.duration(start))")
         }
@@ -533,10 +561,15 @@ final class PlayerService: ObservableObject {
         let now = Self.monotonicMs()
         let listened = s.listened(nowMonotonic: now)
         let duration = clock.durationMs
-        let addHistory = HistoryRule.shouldRecord(listenedMs: listened, durationMs: duration, counted: s.counted)
-        try? store.finishPlayback(trackUid: s.trackUid, startedAt: s.startedAt, listenedMs: listened, counted: s.counted, addToHistory: addHistory)
+        let privacyHistory = model?.settings.recordHistory ?? true
+        let privacyCounts = model?.settings.recordPlayCounts ?? true
+        let addHistory = privacyHistory && HistoryRule.shouldRecord(listenedMs: listened, durationMs: duration, counted: s.counted)
+        if privacyHistory || privacyCounts {
+            try? store.finishPlayback(trackUid: s.trackUid, startedAt: s.startedAt, listenedMs: listened,
+                                      counted: s.counted && privacyCounts, addToHistory: addHistory)
+        }
         // Gemerkte Position langer Titel
-        if ResumeRule.isLongTrack(durationMs: duration) {
+        if ResumeRule.isLongTrack(durationMs: duration), model?.settings.rememberLongTrackPosition ?? true {
             switch ResumeRule.update(positionMs: finished ? duration : positionMs, durationMs: duration, finished: finished) {
             case .save(let p):
                 try? store.setResumePoint(trackUid: s.trackUid, positionMs: p)
@@ -567,7 +600,7 @@ final class PlayerService: ObservableObject {
         if var s = session {
             let before = s.counted
             _ = s.countIfDue(nowMonotonic: Self.monotonicMs(), nowWall: Self.wallMs(), durationMs: clock.durationMs, stats: nil)
-            if s.counted && !before {
+            if s.counted && !before && (model?.settings.recordPlayCounts ?? true) {
                 try? store.countPlay(trackUid: s.trackUid, at: Self.wallMs())
                 model?.playbackRecorded()
             }
@@ -596,13 +629,13 @@ final class PlayerService: ObservableObject {
 
     func sleepAtEndOfTrack() {
         sleepTimer = SleepTimerLogic.endOfTrack()
-        sleepRemainingMs = nil
+        if clock.sleepRemainingMs != nil { clock.sleepRemainingMs = nil }
         model?.toast("Sleep-Timer: am Ende des Titels")
     }
 
     func cancelSleepTimer() {
         sleepTimer = nil
-        sleepRemainingMs = nil
+        if clock.sleepRemainingMs != nil { clock.sleepRemainingMs = nil }
         if sleepFade != 1 {
             sleepFade = 1
             if !demo { pushEngineParameters() }
@@ -612,14 +645,16 @@ final class PlayerService: ObservableObject {
     private func tickSleepTimer() {
         guard let state = sleepTimer, !state.endOfTrack else { return }
         let now = Self.monotonicMs()
-        sleepRemainingMs = SleepTimerLogic.remainingMs(state, nowElapsed: now)
+        let remaining = SleepTimerLogic.remainingMs(state, nowElapsed: now)
+        // nur volle Sekunden melden (weniger Neuzeichnen)
+        if clock.sleepRemainingMs.map({ $0 / 1000 }) != remaining / 1000 { clock.sleepRemainingMs = remaining }
         if SleepTimerLogic.isExpired(state, nowElapsed: now) {
             pause()
             cancelSleepTimer()
             model?.toast("Sleep-Timer: Wiedergabe angehalten")
             return
         }
-        let fade = SleepTimerLogic.fadeFactor(state, nowElapsed: now)
+        let fade: Float = (model?.settings.sleepTimerFadeOut ?? true) ? SleepTimerLogic.fadeFactor(state, nowElapsed: now) : 1
         if fade != sleepFade {
             sleepFade = fade
             if !demo { pushEngineParameters() }
@@ -664,10 +699,16 @@ final class PlayerService: ObservableObject {
             Task { @MainActor [weak self] in self?.seek(to: ms) }
             return .success
         }
-        c.skipForwardCommand.preferredIntervals = [10]
-        c.skipBackwardCommand.preferredIntervals = [10]
-        c.skipForwardCommand.addTarget { [weak self] _ in Task { @MainActor [weak self] in self?.skip(by: 10) }; return .success }
-        c.skipBackwardCommand.addTarget { [weak self] _ in Task { @MainActor [weak self] in self?.skip(by: -10) }; return .success }
+        updateSkipInterval()
+        c.skipForwardCommand.addTarget { [weak self] _ in Task { @MainActor [weak self] in self?.skipForward() }; return .success }
+        c.skipBackwardCommand.addTarget { [weak self] _ in Task { @MainActor [weak self] in self?.skipBackward() }; return .success }
+    }
+
+    /// Sprungweite für Kontrollzentrum/Touch Bar aus der Einstellung „Sprungweite“.
+    func updateSkipInterval() {
+        let c = MPRemoteCommandCenter.shared()
+        c.skipForwardCommand.preferredIntervals = [NSNumber(value: skipSeconds)]
+        c.skipBackwardCommand.preferredIntervals = [NSNumber(value: skipSeconds)]
     }
 
     private var nowPlayingArtworkKey: String?

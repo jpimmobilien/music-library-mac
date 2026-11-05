@@ -27,6 +27,14 @@ final class VinylMotion: ObservableObject {
         let spinning = spin.step(target: TurntableSpin.targetSpeed(playing: playing, speed: speed), dt: dt)
         return spinning || arm.isAnimating
     }
+
+    /// Ohne Bewegung (Animationen aus): Arm sofort an seinen Platz, Teller steht.
+    func settle(target: Float, playing: Bool) {
+        initialized = true
+        arm.snap(to: target, playing: playing)
+        spin.stop()
+        clock.reset()
+    }
 }
 
 /// Vinyl Studio – realistischer Plattenspieler mit Cover-Label und Tonarm (Spec 2).
@@ -69,10 +77,12 @@ struct VinylHero: View {
                     let progress: Float = still ? 0.3 : (durationMs > 0 ? Float(min(1, max(0, Double(positionMs) / Double(durationMs)))) : 0)
                     let target: Float = hasMedia || still ? progress : -1
                     let playing = !still && player.isPlaying
-                    let moving = !still && (playing || motion.spin.velocity != 0 || motion.arm.isAnimating)
+                    let animate = !still && PlayerMotionPolicy.continuous(model.settings)
+                    let moving = animate && (playing || motion.spin.velocity != 0 || motion.arm.isAnimating)
+                    let _ = animate ? () : motion.settle(target: target, playing: playing)
                     TimelineView(.animation(minimumInterval: nil, paused: !moving)) { ctx in
                         let _ = idleTick
-                        let active = still ? false : motion.step(now: ctx.date, playing: playing, speed: model.settings.pitch.speed, target: target)
+                        let active = animate ? motion.step(now: ctx.date, playing: playing, speed: model.settings.pitch.speed, target: target) : false
                         turntable(L, scale: CGFloat(L.size) / side, playing: playing)
                             .onChange(of: active) { a in if !a { DispatchQueue.main.async { idleTick &+= 1 } } }
                     }
@@ -135,6 +145,8 @@ struct VinylHero: View {
         ZStack(alignment: .topLeading) {
             // 1 Gehäuse
             Image(decorative: L.plinth, scale: k).frame(width: side, height: side)
+            // 1b Licht: weiches Oberlicht und ein Hauch Coverfarbe auf dem Gehäuse (statisch)
+            DeckLight(side: side, glow: artwork.palette.glow, dark: colors.dark)
             // 2–4 Platte, Label, Papier (drehen gemeinsam)
             ZStack {
                 Image(decorative: L.record, scale: k)
@@ -203,6 +215,32 @@ struct VinylHero: View {
     }
 }
 
+/// Statisches Licht auf dem Plattenspieler: Oberlicht von links oben und ein zarter Widerschein in der
+/// Coverfarbe rund um den Teller (aufgehellt, keine Unschärfe).
+private struct DeckLight: View {
+    let side: CGFloat
+    let glow: UInt32
+    let dark: Bool
+
+    var body: some View {
+        let shape = RoundedRectangle(cornerRadius: 0.07 * side, style: .continuous)
+        ZStack {
+            LinearGradient(stops: [
+                .init(color: Color.white.opacity(dark ? 0.06 : 0.09), location: 0),
+                .init(color: .clear, location: 0.45),
+            ], startPoint: .topLeading, endPoint: .bottomTrailing)
+            RadialGradient(colors: [.clear, Color(argb: glow).opacity(dark ? 0.16 : 0.12), .clear],
+                           center: UnitPoint(x: 0.455, y: 0.5), startRadius: 0.36 * side, endRadius: 0.62 * side)
+        }
+        .frame(width: side, height: side)
+        .clipShape(shape)
+        .blendMode(.screen)
+        .animation(.easeInOut(duration: 0.8), value: glow)
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
+    }
+}
+
 /// Randabschattung und eingepresste Ringe des Labels (Spec 2.4, Ebene 4).
 private struct PaperOverlay: View {
     let radius: CGFloat
@@ -259,13 +297,14 @@ struct ProgressObserver<Content: View>: View {
 
 /// Classic Music – großes Cover auf Farbverlauf aus den Cover-Farben (Spec 3).
 struct ClassicHero: View {
+    @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var player: PlayerService
     let side: CGFloat
     @ObservedObject var artwork: NowPlayingArtwork
     var still: Bool = false
 
     var body: some View {
-        let playing = still || player.isPlaying
+        let playing = still || player.isPlaying || model.settings.animationLevel == .off
         let inner = side * 0.94
         ZStack {
             ArtworkBox(image: artwork.image, category: GenreStyle.category(player.current?.genres.first),

@@ -113,7 +113,14 @@ enum OggTranscoder {
         }
     }
 
-    /// Zwischenspeicher leeren (Einstellungen → Bibliothek).
+    /// Belegter Platz in Bytes.
+    static func diskUsage() -> Int64 {
+        let keys: [URLResourceKey] = [.fileSizeKey]
+        let files = (try? FileManager.default.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: keys)) ?? []
+        return files.reduce(Int64(0)) { $0 + Int64((try? $1.resourceValues(forKeys: Set(keys)).fileSize) ?? 0) }
+    }
+
+    /// Zwischenspeicher leeren (Einstellungen → Speicher & Cache).
     static func clearCache() {
         try? FileManager.default.removeItem(at: cacheDirectory)
     }

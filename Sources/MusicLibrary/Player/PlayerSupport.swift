@@ -10,9 +10,9 @@ extension MusicColors {
     /// Farbsatz eines Player-Designs (Spec 1.2).
     static func forPlayer(_ theme: PlayerTheme, app: MusicColors) -> MusicColors {
         switch theme {
-        case .vinylStudio, .portableCD: return app
+        case .vinylStudio, .portableCD, .modernGlass, .aurora: return app
         case .classic: return classic
-        case .cassette: return cassette
+        case .cassette, .reelToReel: return cassette
         }
     }
 
@@ -231,6 +231,12 @@ final class NowPlayingArtwork: ObservableObject {
     @Published private(set) var palette: CoverPalette = .neutral
     @Published private(set) var key: String?
     private var paletteCache: [String: CoverPalette] = [:]
+    /// Größe des geladenen Covers (Mini-Player: `.medium`, Vollbild: `.large`).
+    private let size: ArtworkSize
+
+    init(size: ArtworkSize = .large) {
+        self.size = size
+    }
 
     func update(for track: Track?) async {
         guard let track else {
@@ -241,10 +247,10 @@ final class NowPlayingArtwork: ObservableObject {
         }
         guard key != track.coverKey else { return }
         key = track.coverKey
-        image = ArtworkStore.shared.cached(track, .large)
+        image = ArtworkStore.shared.cached(track, size) ?? (size != .large ? ArtworkStore.shared.cached(track, .large) : nil)
         loading = image == nil && track.hasPicture
         if image == nil {
-            let img = await ArtworkStore.shared.image(for: track, size: .large)
+            let img = await ArtworkStore.shared.image(for: track, size: size)
             guard key == track.coverKey else { return }
             image = img
         }
@@ -305,3 +311,258 @@ final class FrameClock {
 /// Reduzierte Bewegung (Systemeinstellung „Bewegung reduzieren“).
 @MainActor
 var reduceMotion: Bool { NSWorkspace.shared.accessibilityDisplayShouldReduceMotion }
+
+// MARK: - v2: Designs, Bewegung, Farben
+
+/// Symbolnamen, die der Player zusätzlich nutzt (Namen aus IconData). Eigene Konstanten, damit es keine
+/// Überschneidung mit Ergänzungen in Design/Icons.swift gibt.
+enum PlayerIcons {
+    static let palette = "palette"
+    static let speaker = "speaker"
+    static let volumeUp = "volume_up"
+    static let waves = "waves"
+    static let equalizerBars = "equalizer"
+    static let instantMix = "instant_mix"
+    static let save = "save"
+    static let addCircle = "add_circle"
+    static let remove = "remove"
+    static let restart = "restart_alt"
+    static let unfoldMore = "unfold_more"
+    static let expandLess = "expand_less"
+    static let fullscreen = "fullscreen"
+    static let visibility = "visibility"
+    static let blur = "blur_on"
+    static let radio = "radio"
+    static let linearScale = "linear_scale"
+    static let lyricsFill = "lyrics_fill"
+    static let queueFill = "queue_music_fill"
+    static let arrowUp = "arrow_upward"
+    static let arrowDown = "arrow_downward"
+    static let keep = "keep"
+    static let keepOff = "keep_off"
+    static let image = "image"
+    static let person = "person"
+}
+
+extension PlayerTheme {
+    /// Immer dunkle Designs: Glas, Popover und Systemelemente werden ebenfalls dunkel dargestellt.
+    var uiAlwaysDark: Bool {
+        switch self {
+        case .classic, .cassette, .reelToReel: return true
+        case .vinylStudio, .portableCD, .modernGlass, .aurora: return false
+        }
+    }
+
+    /// Symbol in Menüs.
+    var uiIcon: String {
+        switch self {
+        case .vinylStudio: return Icons.vinyl
+        case .classic: return PlayerIcons.image
+        case .cassette: return PlayerIcons.radio
+        case .portableCD: return Icons.album
+        case .modernGlass: return PlayerIcons.blur
+        case .aurora: return Icons.autoAwesome
+        case .reelToReel: return PlayerIcons.linearScale
+        }
+    }
+
+    /// Seitenverhältnis (Breite/Höhe) des kleinen Mittelstücks im Mini-Player.
+    var uiMiniAspect: CGFloat {
+        switch self {
+        case .cassette, .reelToReel: return 1.45
+        case .vinylStudio, .classic, .portableCD, .modernGlass, .aurora: return 1
+        }
+    }
+
+    /// Klangvisualisierung als Balken unter dem Mittelstück? (Aurora, Kassette und Tonband zeigen eigene Pegel.)
+    var uiShowsSpectrumBars: Bool {
+        switch self {
+        case .vinylStudio, .classic, .portableCD, .modernGlass: return true
+        case .cassette, .aurora, .reelToReel: return false
+        }
+    }
+}
+
+/// Bewegungsregeln (Einstellung „Animationen“ und Systemeinstellung „Bewegung reduzieren“).
+@MainActor
+enum PlayerMotionPolicy {
+    /// Dauerhafte Bewegung erlaubt (drehende Platten, Wickel, Lichtring, Pegel)?
+    static func continuous(_ s: AppSettings) -> Bool {
+        s.animationLevel == .full && !reduceMotion
+    }
+
+    /// Übergang beim Wechsel des Designs bzw. des Covers.
+    static func transition(_ s: AppSettings) -> Animation? {
+        switch s.animationLevel {
+        case .off: return nil
+        case .reduced: return .easeInOut(duration: 0.3)
+        case .full: return reduceMotion ? .easeInOut(duration: 0.3) : .timingCurve(0.32, 0.72, 0, 1, duration: 0.62)
+        }
+    }
+
+    /// Übergang zwischen zwei Designs: Einblenden mit leichtem Heranzoomen, Ausblenden mit leichtem Wegzoomen.
+    static func themeTransition(_ s: AppSettings) -> AnyTransition {
+        if s.animationLevel != .full || reduceMotion { return .opacity }
+        return .asymmetric(insertion: .opacity.combined(with: .scale(scale: 0.9)),
+                           removal: .opacity.combined(with: .scale(scale: 1.06)))
+    }
+}
+
+/// Farben aus der Cover-Palette (Lichtfelder, Aurora, Kassettenfarbe „Cover“).
+enum PaletteTone {
+    /// Farbe mit verschobenem Farbton (0…1 = volle Drehung), Mindestsättigung und optional fester Helligkeit.
+    static func color(_ argb: UInt32, hueShift: Double = 0, minSaturation: Double = 0, brightness: Double? = nil, opacity: Double = 1) -> Color {
+        let base = NSColor(argb: argb)
+        let ns = base.usingColorSpace(.sRGB) ?? base
+        var h: CGFloat = 0, s: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        ns.getHue(&h, saturation: &s, brightness: &b, alpha: &a)
+        var hue = Double(h) + hueShift
+        hue -= floor(hue)
+        let sat: Double = min(1, max(Double(s), minSaturation))
+        let bri: Double = min(1, max(0, brightness ?? Double(b)))
+        return Color(hue: hue, saturation: sat, brightness: bri, opacity: opacity)
+    }
+}
+
+/// Vier Lichtfarben eines Covers für Aurora, Lichtfelder und den Mini-Player.
+struct AuroraColors: Equatable {
+    let primary: Color
+    let secondary: Color
+    let tertiary: Color
+    let highlight: Color
+
+    init(palette: CoverPalette, dark: Bool) {
+        let bri: Double = dark ? 0.92 : 0.78
+        primary = PaletteTone.color(palette.glow, minSaturation: 0.5, brightness: bri)
+        secondary = PaletteTone.color(palette.glow, hueShift: 0.09, minSaturation: 0.55, brightness: bri)
+        tertiary = PaletteTone.color(palette.glow, hueShift: -0.32, minSaturation: 0.45, brightness: dark ? 0.85 : 0.72)
+        highlight = PaletteTone.color(palette.top, hueShift: -0.06, minSaturation: 0.35, brightness: dark ? 0.98 : 0.9)
+    }
+}
+
+/// Gehäusefarbe der Kassette.
+enum CassetteShell {
+    /// Tönung über dem Originalgehäuse; `nil` = Original „Rauch“ des Renderers (unverändert).
+    static func tint(_ color: CassetteColor, palette: CoverPalette) -> Color? {
+        if color == .smoke { return nil }
+        if let v = color.argb { return Color(argb: v | 0xFF000000) }
+        // „Cover“: Leuchtfarbe des Covers, in Sättigung und Helligkeit für Kunststoff angepasst
+        return PaletteTone.color(palette.glow, minSaturation: 0.35, brightness: 0.62)
+    }
+
+    /// Farbe für kleine Darstellungen (Mini-Player, Farbauswahl) – auch für „Rauch“.
+    static func swatch(_ color: CassetteColor, palette: CoverPalette) -> Color {
+        tint(color, palette: palette) ?? Color(argb: 0xFF4A4144)
+    }
+}
+
+/// Symbol „n Sekunden zurück/vor“: für 10 s das Material-Symbol, sonst ein Kreispfeil mit Zahl.
+struct SkipGlyph: View {
+    let seconds: Int
+    let forward: Bool
+    var size: CGFloat = 24
+    var color: Color
+
+    var body: some View {
+        if seconds == 10 {
+            Icon(forward ? Icons.forward10 : Icons.replay10, size: size, color: color)
+        } else {
+            ZStack {
+                SkipArrow()
+                    .stroke(color, style: StrokeStyle(lineWidth: max(1.3, size * 0.08), lineCap: .round, lineJoin: .round))
+                    .scaleEffect(x: forward ? -1 : 1, y: 1)
+                Text(verbatim: String(seconds))
+                    .font(Typo.inter(max(7, size * 0.31), .bold))
+                    .foregroundColor(color)
+                    .offset(y: size * 0.045)
+            }
+            .frame(width: size, height: size)
+            .accessibilityHidden(true)
+        }
+    }
+}
+
+/// Kreispfeil im Uhrzeigersinn mit Pfeilspitze oben (nach links zeigend).
+struct SkipArrow: Shape {
+    func path(in rect: CGRect) -> Path {
+        let r: CGFloat = min(rect.width, rect.height) * 0.37
+        let cx: CGFloat = rect.midX
+        let cy: CGFloat = rect.midY + rect.height * 0.045
+        var p = Path()
+        var first = true
+        var deg: Double = -90
+        while deg <= 205 {
+            let a = deg * Double.pi / 180
+            let pt = CGPoint(x: cx + r * CGFloat(cos(a)), y: cy + r * CGFloat(sin(a)))
+            if first { p.move(to: pt); first = false } else { p.addLine(to: pt) }
+            deg += 7.5
+        }
+        let tip = CGPoint(x: cx - r * 0.06, y: cy - r)
+        p.move(to: CGPoint(x: tip.x + r * 0.42, y: tip.y - r * 0.38))
+        p.addLine(to: tip)
+        p.addLine(to: CGPoint(x: tip.x + r * 0.42, y: tip.y + r * 0.38))
+        return p
+    }
+}
+
+/// Beschriftung der Sprungtasten („10 Sekunden zurück“).
+enum SkipText {
+    static func label(_ seconds: Int, forward: Bool) -> String {
+        "\(seconds) Sekunden \(forward ? "vor" : "zurück")"
+    }
+}
+
+/// Restzeit des Sleep-Timers – liest nur `clock` (hochfrequent, deshalb eigene kleine Ansicht).
+struct SleepCountdownText: View {
+    @ObservedObject var clock: PlaybackClock
+
+    var body: some View {
+        Text(Formatting.countdown(clock.sleepRemainingMs ?? 0))
+    }
+}
+
+/// Kurzform von Halbtönen für Chips und Werkzeugleisten („+1,5“, „−0,3“, „±0“).
+enum PitchText {
+    static func short(_ v: Float) -> String {
+        let r = (v * 10).rounded() / 10
+        if r == 0 { return "±0" }
+        let sign = r > 0 ? "+" : "−"
+        let a = abs(r)
+        let num: String = a == a.rounded() ? String(Int(a)) : String(format: "%.1f", Double(a)).replacingOccurrences(of: ".", with: ",")
+        return sign + num
+    }
+
+    /// Kurzform für Dezibel („+3“, „−1,5“).
+    static func shortDb(_ v: Float) -> String { short(v) }
+}
+
+/// Schatten nur außerhalb einer Form – für schwebende Glasflächen, deren Inhalt sich bewegt
+/// (der Schatten wird so nicht bei jedem Bild neu berechnet).
+struct OuterShadow: View {
+    let cornerRadius: CGFloat
+    var color: Color
+    var radius: CGFloat = 18
+    var y: CGFloat = 8
+
+    var body: some View {
+        RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+            .fill(Color.black)
+            .shadow(color: color, radius: radius, x: 0, y: y)
+            .mask(OutsideMask(cornerRadius: cornerRadius, outset: radius * 2 + abs(y)).fill(style: FillStyle(eoFill: true)))
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
+    }
+}
+
+/// Großes Rechteck minus abgerundetes Rechteck (für `OuterShadow`).
+struct OutsideMask: Shape {
+    let cornerRadius: CGFloat
+    let outset: CGFloat
+
+    func path(in rect: CGRect) -> Path {
+        var p = Path(rect.insetBy(dx: -outset, dy: -outset))
+        // Loch 1 pt größer als die Form: die Kante der gefüllten Form bleibt sicher verdeckt
+        p.addRoundedRect(in: rect.insetBy(dx: -1, dy: -1), cornerSize: CGSize(width: cornerRadius + 1, height: cornerRadius + 1), style: .continuous)
+        return p
+    }
+}

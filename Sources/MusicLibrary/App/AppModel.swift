@@ -30,16 +30,25 @@ final class AppModel: ObservableObject {
     @Published private(set) var libraryLoaded = false
     @Published var scanState: ScanState = .idle
 
-    // MARK: Abgeleitete Listen (je Bereich gefiltert und sortiert)
-    @Published private(set) var trackList: [Track] = []
-    @Published private(set) var albumList: [AlbumInfo] = []
-    @Published private(set) var artistList: [ArtistInfo] = []
-    @Published private(set) var genreList: [GenreInfo] = []
-    @Published private(set) var smartPlaylists: [SmartPlaylist] = []
-    @Published private(set) var playlistList: [Playlist] = []
-    @Published private(set) var favoriteTrackList: [Track] = []
-    @Published private(set) var favoriteAlbumList: [AlbumInfo] = []
-    @Published private(set) var missingFavoriteAlbums: [FavoriteAlbum] = []
+    // MARK: Abgeleitete Listen (je Bereich gesucht, gefiltert und sortiert)
+    /// Alle Listen in einem Wert: Eine Neuberechnung löst genau eine Aktualisierung der Oberfläche aus.
+    @Published private(set) var lists = Lists()
+    var trackList: [Track] { lists.tracks }
+    var albumList: [AlbumInfo] { lists.albums }
+    var artistList: [ArtistInfo] { lists.artists }
+    var genreList: [GenreInfo] { lists.genres }
+    var smartPlaylists: [SmartPlaylist] { lists.smart }
+    var playlistList: [Playlist] { lists.playlists }
+    var favoriteTrackList: [Track] { lists.favoriteTracks }
+    var favoriteAlbumList: [AlbumInfo] { lists.favoriteAlbums }
+    var missingFavoriteAlbums: [FavoriteAlbum] { lists.missingFavoriteAlbums }
+    /// Auswahlwerte der Filter (Genres, Jahrzehnte, Interpreten, Formate) aus allen verfügbaren Titeln.
+    var facets: FilterFacets { lists.facets }
+    /// Anzahl je Bereich ohne Suche und Filter (für „12 von 340“).
+    var unfilteredCount: [LibraryViewContext: Int] { lists.unfilteredCount }
+
+    /// Filter je Bereich (bewusst nicht gespeichert – beim nächsten Start ist wieder alles sichtbar).
+    @Published private(set) var filters: [LibraryViewContext: LibraryFilter] = [:]
 
     // MARK: Navigation und Oberfläche
     @Published var section: LibrarySection = .tracks
@@ -58,16 +67,24 @@ final class AppModel: ObservableObject {
     @Published var settings: AppSettings {
         didSet {
             guard settings != oldValue else { return }
-            saveSettings()
+            scheduleSave()
             if settings.effects != oldValue.effects || settings.pitch != oldValue.pitch {
                 player.applyAudioSettings(effects: settings.effects, pitch: settings.pitch)
             }
-            if settings.visualizer != oldValue.visualizer { player.setVisualizer(settings.visualizer) }
+            if settings.skipSeconds != oldValue.skipSeconds && !demo { player.updateSkipInterval() }
             if sortsChanged(oldValue) { recomputeLists() }
+            if settings.watchFolders != oldValue.watchFolders { library.setWatching(settings.watchFolders) }
+            if settings.mediaKeysEnabled != oldValue.mediaKeysEnabled { player.setMediaKeysEnabled(settings.mediaKeysEnabled) }
+            if settings.coverCacheLimitMB != oldValue.coverCacheLimitMB { ArtworkStore.shared.setDiskLimit(megabytes: settings.coverCacheLimitMB) }
+            if settings.dynamicCoverColors != oldValue.dynamicCoverColors {
+                CoverAmbience.shared.update(for: player.current, enabled: settings.dynamicCoverColors)
+            }
         }
     }
 
     private var recomputeTask: Task<Void, Never>?
+    private var pendingRecompute: DispatchWorkItem?
+    private var pendingSave: DispatchWorkItem?
 
     init(store: LibraryStore, demo: Bool = false) {
         self.store = store
@@ -76,13 +93,22 @@ final class AppModel: ObservableObject {
         self.player = PlayerService(store: store, demo: demo)
         self.library = LibraryService(store: store)
         self.metadata = MetadataService(store: store)
-        self.section = settings.lastSection
+        self.section = settings.startSection ?? settings.lastSection   // Einstellung „Bereich beim Start“
         AppModel.shared = self
         player.model = self
         library.model = self
         metadata.model = self
+        // Tonhöhe gilt bis zum Neustart (wie Android), außer „Tonhöhe beibehalten“ ist eingeschaltet
+        if !settings.keepPitchOnRelaunch && !settings.pitch.isOriginal {
+            settings.pitch = PitchSettings()
+        }
         player.applyAudioSettings(effects: settings.effects, pitch: settings.pitch)
-        player.setVisualizer(settings.visualizer)
+        // Die Pegelanalyse schaltet der Vollbild-Player selbst ein und aus (läuft nur, solange sie sichtbar ist).
+        if !demo {
+            if !settings.mediaKeysEnabled { player.setMediaKeysEnabled(false) }
+            player.updateSkipInterval()
+            ArtworkStore.shared.setDiskLimit(megabytes: settings.coverCacheLimitMB)
+        }
     }
 
     // MARK: - Einstellungen speichern
@@ -96,6 +122,52 @@ final class AppModel: ObservableObject {
     private func saveSettings() {
         guard !demo else { return }
         UserDefaults.standard.set(settings.encoded(), forKey: Self.settingsKey)
+    }
+
+    /// Speichert gebündelt (Regler und schnelle Änderungen schreiben nicht bei jedem Schritt).
+    private func scheduleSave() {
+        pendingSave?.cancel()
+        let work = DispatchWorkItem { [weak self] in self?.saveSettings() }
+        pendingSave = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4, execute: work)
+    }
+
+    /// Ausstehende Speicherung sofort ausführen (beim Beenden).
+    func flushSettings() {
+        pendingSave?.cancel()
+        pendingSave = nil
+        saveSettings()
+    }
+
+    // MARK: - Ansichten, Filter, Live-Audio (v2)
+
+    func viewOptions(_ context: LibraryViewContext) -> LibraryViewOptions {
+        settings.viewOptions(for: context)
+    }
+
+    func setViewOptions(_ options: LibraryViewOptions, for context: LibraryViewContext) {
+        guard settings.viewOptions(for: context) != options else { return }
+        settings.setViewOptions(options, for: context)
+    }
+
+    func filter(_ context: LibraryViewContext) -> LibraryFilter {
+        filters[context] ?? LibraryFilter()
+    }
+
+    func setFilter(_ filter: LibraryFilter, for context: LibraryViewContext) {
+        guard self.filter(context) != filter else { return }
+        filters[context] = filter.isEmpty ? nil : filter
+        recomputeLists()
+    }
+
+    /// Klangeinstellungen hörbar machen, ohne sie zu speichern (während ein Regler gezogen wird).
+    func previewEffects(_ effects: AudioEffectsSettings) {
+        player.applyAudioSettings(effects: effects, pitch: settings.pitch)
+    }
+
+    /// Tonhöhe hörbar machen, ohne sie zu speichern.
+    func previewPitch(_ pitch: PitchSettings) {
+        player.applyAudioSettings(effects: settings.effects, pitch: pitch)
     }
 
     private func sortsChanged(_ old: AppSettings) -> Bool {
@@ -167,10 +239,16 @@ final class AppModel: ObservableObject {
 
     func setQuery(_ section: LibrarySection, _ value: String) {
         queries[section] = value
-        recomputeLists()
+        // Beim Tippen gebündelt neu berechnen (spürbar flüssiger bei großen Bibliotheken)
+        pendingRecompute?.cancel()
+        let work = DispatchWorkItem { [weak self] in self?.recomputeLists() }
+        pendingRecompute = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.12, execute: work)
     }
 
     func recomputeLists() {
+        pendingRecompute?.cancel()
+        pendingRecompute = nil
         let idx = index
         let s = settings
         let st = stats
@@ -178,24 +256,18 @@ final class AppModel: ObservableObject {
         let favAlbums = favoriteAlbums
         let pls = playlists
         let q = queries
+        let f = filters
         recomputeTask?.cancel()
-        // Große Bibliotheken: im Hintergrund rechnen, Ergebnis gesammelt übernehmen.
+        // Große Bibliotheken: im Hintergrund rechnen, Ergebnis in einem Schritt übernehmen.
         recomputeTask = Task.detached(priority: .userInitiated) { [weak self] in
-            let lists = AppModel.computeLists(index: idx, settings: s, stats: st, favorites: favs, favoriteAlbums: favAlbums, playlists: pls, queries: q)
+            let lists = AppModel.computeLists(index: idx, settings: s, stats: st, favorites: favs, favoriteAlbums: favAlbums,
+                                              playlists: pls, queries: q, filters: f)
             if Task.isCancelled { return }
             // `[weak self]` erneut erfassen: ein schwach erfasstes `self` des äußeren (Sendable-)Closures darf
             // in Swift < 6.2 nicht in einem weiteren nebenläufigen Closure benutzt werden.
             await MainActor.run { [weak self] in
                 guard let self else { return }
-                self.trackList = lists.tracks
-                self.albumList = lists.albums
-                self.artistList = lists.artists
-                self.genreList = lists.genres
-                self.smartPlaylists = lists.smart
-                self.playlistList = lists.playlists
-                self.favoriteTrackList = lists.favoriteTracks
-                self.favoriteAlbumList = lists.favoriteAlbums
-                self.missingFavoriteAlbums = lists.missingFavoriteAlbums
+                self.lists = lists
             }
         }
     }
@@ -205,55 +277,87 @@ final class AppModel: ObservableObject {
         var albums: [AlbumInfo] = []
         var artists: [ArtistInfo] = []
         var genres: [GenreInfo] = []
+        /// Automatische Playlists passend zur Suche im Bereich Playlists.
         var smart: [SmartPlaylist] = []
+        /// Alle automatischen Playlists (ohne Suche) – für Detailansicht und Wiedergabe.
+        var smartAll: [SmartPlaylist] = []
         var playlists: [Playlist] = []
         var favoriteTracks: [Track] = []
         var favoriteAlbums: [AlbumInfo] = []
         var missingFavoriteAlbums: [FavoriteAlbum] = []
+        var facets: FilterFacets = .empty
+        var unfilteredCount: [LibraryViewContext: Int] = [:]
     }
 
     nonisolated static func computeLists(index idx: LibraryIndex, settings s: AppSettings, stats st: [Int64: PlayStats], favorites favs: [Int64: Int64],
-                                         favoriteAlbums favAlbums: [String: FavoriteAlbum], playlists pls: [Playlist], queries q: [LibrarySection: String]) -> Lists {
+                                         favoriteAlbums favAlbums: [String: FavoriteAlbum], playlists pls: [Playlist],
+                                         queries q: [LibrarySection: String], filters: [LibraryViewContext: LibraryFilter] = [:]) -> Lists {
         var out = Lists()
         func terms(_ section: LibrarySection) -> [String] { TextNorm.searchTerms(q[section] ?? "") }
+        let ctx = FilterContext(favorites: Set(favs.keys), stats: st, nowSeconds: Int64(Date().timeIntervalSince1970))
+        func active(_ c: LibraryViewContext) -> LibraryFilter? {
+            guard let f = filters[c], !f.isEmpty else { return nil }
+            return f
+        }
 
         // Titel: nur verfügbare (nicht verfügbare erscheinen nur in Playlists/Favoriten als „nicht verfügbar“)
         let available = idx.tracks.filter(\.available)
+        out.facets = LibraryFiltering.facets(available)
+        out.unfilteredCount[.tracks] = available.count
         let tt = terms(.tracks)
-        let filteredTracks = tt.isEmpty ? available : available.filter { TextNorm.matchesAll(tt, idx.trackSearchText[$0.uid] ?? "") }
+        var filteredTracks = tt.isEmpty ? available : available.filter { TextNorm.matchesAll(tt, idx.trackSearchText[$0.uid] ?? "") }
+        if let f = active(.tracks) { filteredTracks = LibraryFiltering.tracks(filteredTracks, f, ctx) }
         out.tracks = Sorting.tracks(filteredTracks, sort: s.trackSort, stats: st)
 
+        out.unfilteredCount[.albums] = idx.albums.count
         let at = terms(.albums)
-        let albums = at.isEmpty ? idx.albums : idx.albums.filter { TextNorm.matchesAll(at, idx.albumSearchText[$0.key] ?? "") }
+        var albums = at.isEmpty ? idx.albums : idx.albums.filter { TextNorm.matchesAll(at, idx.albumSearchText[$0.key] ?? "") }
+        if let f = active(.albums) { albums = LibraryFiltering.albums(albums, f, index: idx, ctx) }
         out.albums = Sorting.albums(albums, sort: s.albumSort, stats: st)
 
+        out.unfilteredCount[.artists] = idx.artists.count
         let rt = terms(.artists)
-        let artists = rt.isEmpty ? idx.artists : idx.artists.filter { TextNorm.matchesAll(rt, TextNorm.key($0.name)) }
+        var artists = rt.isEmpty ? idx.artists : idx.artists.filter { TextNorm.matchesAll(rt, TextNorm.key($0.name)) }
+        if let f = active(.artists) { artists = LibraryFiltering.artists(artists, f, index: idx, ctx) }
         out.artists = Sorting.artists(artists, sort: s.artistSort)
 
+        out.unfilteredCount[.genres] = idx.genres.count
         let gt = terms(.genres)
-        let genres = gt.isEmpty ? idx.genres : idx.genres.filter { TextNorm.matchesAll(gt, TextNorm.key($0.name)) }
+        var genres = gt.isEmpty ? idx.genres : idx.genres.filter { TextNorm.matchesAll(gt, TextNorm.key($0.name)) }
+        if let f = active(.genres) { genres = LibraryFiltering.genres(genres, f, index: idx, ctx) }
         out.genres = Sorting.genres(genres, sort: s.genreSort)
 
         // Playlists: automatische + eigene
         let availableByUid = Dictionary(available.map { ($0.uid, $0) }, uniquingKeysWith: { a, _ in a })
         let favList = favs.map { FavoriteTrack(trackUid: $0.key, addedAt: $0.value) }
         var smart = [SmartPlaylists.favorites(favList, available: availableByUid),
+                     SmartPlaylists.recentlyAdded(available),
+                     SmartPlaylists.recentlyPlayed(available, stats: st),
                      SmartPlaylists.mostPlayed(available, stats: st),
-                     SmartPlaylists.leastPlayed(available, stats: st)]
+                     SmartPlaylists.leastPlayed(available, stats: st),
+                     SmartPlaylists.neverPlayed(available, stats: st),
+                     SmartPlaylists.topRated(available)]
         smart.append(contentsOf: SmartPlaylists.decades(available))
+        smart.append(contentsOf: SmartPlaylists.byGenre(available))
+        out.smartAll = smart
+        out.unfilteredCount[.playlists] = pls.count + smart.count
         let pt = terms(.playlists)
         func matches(_ name: String) -> Bool { pt.isEmpty || TextNorm.matchesAll(pt, TextNorm.key(name)) }
         out.smart = smart.filter { matches($0.name) }
-        out.playlists = Sorting.playlists(pls.filter { matches($0.name) }, sort: s.playlistSort, name: { $0.name }, count: { $0.entries.count })
+        out.playlists = Sorting.playlists(pls.filter { matches($0.name) }, sort: s.playlistSort, name: { $0.name }, count: { $0.entries.count },
+                                          created: { $0.createdAt }, modified: { $0.updatedAt })
 
         // Favoriten
         let ft = terms(.favorites)
         let favTracks = favs.keys.compactMap { idx.trackByUid[$0] }
-        let favTracksFiltered = ft.isEmpty ? favTracks : favTracks.filter { TextNorm.matchesAll(ft, idx.trackSearchText[$0.uid] ?? "") }
+        out.unfilteredCount[.favoriteTracks] = favTracks.count
+        var favTracksFiltered = ft.isEmpty ? favTracks : favTracks.filter { TextNorm.matchesAll(ft, idx.trackSearchText[$0.uid] ?? "") }
+        if let f = active(.favoriteTracks) { favTracksFiltered = LibraryFiltering.tracks(favTracksFiltered, f, ctx) }
         out.favoriteTracks = Sorting.favoriteTracks(favTracksFiltered, sort: s.favoriteTrackSort, addedAt: favs)
         let favAlbumInfos = favAlbums.keys.compactMap { idx.albumByKey[$0] }
-        let favAlbumsFiltered = ft.isEmpty ? favAlbumInfos : favAlbumInfos.filter { TextNorm.matchesAll(ft, idx.albumSearchText[$0.key] ?? "") }
+        out.unfilteredCount[.favoriteAlbums] = favAlbumInfos.count
+        var favAlbumsFiltered = ft.isEmpty ? favAlbumInfos : favAlbumInfos.filter { TextNorm.matchesAll(ft, idx.albumSearchText[$0.key] ?? "") }
+        if let f = active(.favoriteAlbums) { favAlbumsFiltered = LibraryFiltering.albums(favAlbumsFiltered, f, index: idx, ctx) }
         out.favoriteAlbums = Sorting.favoriteAlbums(favAlbumsFiltered, sort: s.favoriteAlbumSort, favorites: favAlbums)
         out.missingFavoriteAlbums = favAlbums.values.filter { idx.albumByKey[$0.albumKey] == nil }.sorted { $0.addedAt > $1.addedAt }
         return out
@@ -262,10 +366,8 @@ final class AppModel: ObservableObject {
     var unavailableCount: Int { index.tracks.lazy.filter { !$0.available }.count }
 
     func smartPlaylist(_ id: String) -> SmartPlaylist? {
-        if let s = smartPlaylists.first(where: { $0.id == id }) { return s }
-        // auch bei aktiver Suche erreichbar
-        return AppModel.computeLists(index: index, settings: settings, stats: stats, favorites: favoriteTracks, favoriteAlbums: favoriteAlbums,
-                                     playlists: playlists, queries: [:]).smart.first { $0.id == id }
+        // aus allen automatischen Playlists – auch bei aktiver Suche erreichbar, ohne neu zu rechnen
+        lists.smartAll.first { $0.id == id }
     }
 
     func playlist(_ id: Int64) -> Playlist? { playlists.first { $0.id == id } }
@@ -525,8 +627,22 @@ final class WindowRouter {
     var openEditorAction: (() -> Void)?
     var openMiniPlayerAction: (() -> Void)?
     var openEqualizerAction: (() -> Void)?
+    var openSettingsAction: (() -> Void)?
 
     func openEditor() { openEditorAction?() }
     func openMiniPlayer() { openMiniPlayerAction?() }
     func openEqualizer() { openEqualizerAction?() }
+    /// Einstellungen öffnen (optional direkt in einer Kategorie).
+    func openSettings(_ category: String? = nil) {
+        if let category { pendingSettingsCategory = category }
+        NSApp.activate(ignoringOtherApps: true)
+        openSettingsAction?()
+        NotificationCenter.default.post(name: .openSettingsCategory, object: nil)
+    }
+    /// Kategorie, die das Einstellungsfenster beim nächsten Öffnen zeigen soll.
+    var pendingSettingsCategory: String?
+}
+
+extension Notification.Name {
+    static let openSettingsCategory = Notification.Name("MusicLibrary.openSettingsCategory")
 }

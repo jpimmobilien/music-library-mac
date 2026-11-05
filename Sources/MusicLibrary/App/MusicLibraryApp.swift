@@ -38,11 +38,15 @@ struct MusicLibraryApp: App {
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
 
-        Settings {
+        // Eigenes Fenster statt `Settings`-Szene: lässt sich auf macOS 13 bis 26 gleich zuverlässig öffnen
+        // (Zahnrad, ⌘, und Menü „Music Library → Einstellungen …“).
+        Window("Einstellungen", id: SettingsWindow.id) {
             ThemedRoot(model: model) { SettingsView() }
         }
+        .windowStyle(.hiddenTitleBar)
+        .defaultSize(width: 860, height: 680)
 
-        MenuBarExtra {
+        MenuBarExtra(isInserted: Binding(get: { model.settings.showMenuBarPlayer }, set: { model.settings.showMenuBarPlayer = $0 })) {
             ThemedRoot(model: model) { MenuBarPlayer() }
         } label: {
             Image(nsImage: NSImage.icon("vinyl", size: 16))
@@ -62,6 +66,15 @@ struct ThemedRoot<Content: View>: View {
             .environmentObject(model.player)
             .environmentObject(model.metadata)
             .musicTheme(glass: model.settings.glassEffects)
+            .environment(\.performanceMode, model.settings.reduceTransparency)
+            .environment(\.continuousMotion, model.settings.animationLevel != .off && !NSWorkspace.shared.accessibilityDisplayShouldReduceMotion)
+            .transaction { t in
+                // Einstellung „Animationen: Aus“ – alle Übergänge sofort
+                if model.settings.animationLevel == .off {
+                    t.animation = nil
+                    t.disablesAnimations = true
+                }
+            }
             .preferredColorScheme(model.settings.themeMode == .system ? nil : (model.settings.themeMode == .dark ? .dark : .light))
     }
 }
@@ -76,6 +89,7 @@ private struct WindowRegistrar: View {
                 WindowRouter.shared.openEditorAction = { openWindow(id: "editor") }
                 WindowRouter.shared.openMiniPlayerAction = { openWindow(id: "mini") }
                 WindowRouter.shared.openEqualizerAction = { openWindow(id: "equalizer") }
+                WindowRouter.shared.openSettingsAction = { openWindow(id: SettingsWindow.id) }
             }
     }
 }
@@ -85,6 +99,7 @@ private struct WindowRegistrar: View {
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private var keyMonitor: Any?
+    private var gestureMonitor: Any?
 
     /// Erzeugt den App-Zustand (Datenbank in „Application Support/Music Library“).
     @MainActor
@@ -92,6 +107,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if let existing = AppModel.shared { return existing }
         if SnapshotRunner.isRequested {
             return SnapshotRunner.makeDemoModel()
+        }
+        if Benchmark.isRequested {
+            return Benchmark.makeModel()
         }
         let fm = FileManager.default
         let support = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
@@ -123,11 +141,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 SnapshotRunner.run(model: model)
                 return
             }
+            if Benchmark.isRequested {
+                Benchmark.run(model: model)
+                return
+            }
             model.reloadLibrary()
             model.library.start()
             model.metadata.cleanupBackups(days: model.settings.backupRetentionDays)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { model.player.restoreState() }
             self.installKeyMonitor(model: model)
+            self.installGestureMonitor(model: model)
         }
     }
 
@@ -144,6 +167,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationWillTerminate(_ notification: Notification) {
+        AppModel.shared?.flushSettings()
         AppModel.shared?.player.shutdown()
     }
 
@@ -162,6 +186,30 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         return menu
     }
 
+    /// Trackpad und Maus: Wischen nach rechts (Systemeinstellung „Zwischen Seiten blättern“ mit drei Fingern)
+    /// bzw. Maustaste „Zurück“ → eine Ebene zurück (Detailansicht → Übersicht, Player → Bibliothek);
+    /// Wischen nach links öffnet den Player, Wischen nach oben/unten öffnet bzw. schließt ihn.
+    @MainActor
+    private func installGestureMonitor(model: AppModel) {
+        gestureMonitor = NSEvent.addLocalMonitorForEvents(matching: [.swipe, .otherMouseDown]) { event in
+            guard let window = event.window, window.isKeyWindow, window === MainWindowRef.window else { return event }
+            switch event.type {
+            case .otherMouseDown where event.buttonNumber == 3: // Maustaste „Zurück“
+                return model.back() ? nil : event
+            // NSEvent-Wischgesten: deltaX < 0 = nach rechts, > 0 = nach links; deltaY > 0 = nach oben, < 0 = nach unten
+            case .swipe where abs(event.deltaX) > abs(event.deltaY):
+                if event.deltaX < 0 { return model.back() ? nil : event }   // nach rechts wischen = zurück
+                if model.player.current != nil && !model.playerOpen { model.playerOpen = true; return nil }
+            case .swipe where event.deltaY != 0:
+                if event.deltaY > 0, model.player.current != nil, !model.playerOpen { model.playerOpen = true; return nil }
+                if event.deltaY < 0, model.playerOpen { model.playerOpen = false; return nil }
+            default:
+                break
+            }
+            return event
+        }
+    }
+
     /// Tastaturbedienung außerhalb von Textfeldern (Leertaste, Eingabe, Pfeile, Löschen, ⌘A, Esc).
     @MainActor
     private func installKeyMonitor(model: AppModel) {
@@ -169,7 +217,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             // In Textfeldern bleibt alles beim Alten
             if let responder = event.window?.firstResponder, responder is NSText || responder is NSTextView { return event }
             guard event.window?.isKeyWindow == true else { return event }
-            let flags = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
+            // Pfeiltasten tragen zusätzlich .numericPad/.function – für den Vergleich entfernen
+            let flags = event.modifierFlags.intersection(.deviceIndependentFlagsMask).subtracting([.numericPad, .function])
             let list = KeyboardFocus.shared.activeList
             switch event.keyCode {
             case 49 where flags.isEmpty: // Leertaste
@@ -226,6 +275,10 @@ struct AppCommands: Commands {
     @ObservedObject var model: AppModel
 
     var body: some Commands {
+        CommandGroup(replacing: .appSettings) {
+            Button("Einstellungen …") { WindowRouter.shared.openSettings() }
+                .keyboardShortcut(",", modifiers: .command)
+        }
         CommandGroup(replacing: .newItem) {
             Button("Neue Playlist …") { NewPlaylistDialog.present(model: model, trackUids: []) }
                 .keyboardShortcut("n", modifiers: .command)
@@ -322,6 +375,6 @@ struct AppCommands: Commands {
     private func adjustVolume(_ delta: Float) {
         let v = min(AudioEffectsSettings.maxVolume, max(0, model.player.liveVolume + delta))
         model.player.setLiveVolume(v)
-        model.settings.effects.volume = v
+        model.settings.effects.volume = model.player.liveVolume   // auf die Höchstlautstärke begrenzt
     }
 }

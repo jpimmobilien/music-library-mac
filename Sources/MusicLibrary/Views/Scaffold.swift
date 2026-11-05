@@ -9,7 +9,8 @@ struct ScrollOffsetKey: PreferenceKey {
 
 /// Gerüst aller Bibliotheksansichten (Android `LibraryScaffold`): Der Inhalt scrollt bis unter die Navigation;
 /// sobald der große Titel verschwindet, blenden links eine kompakte Glas-Titelkapsel und rechts die Aktionen ein.
-/// Detailansichten haben eine schwebende Zurück-Schaltfläche.
+/// Detailansichten haben eine schwebende Zurück-Schaltfläche. Gibt die sichtbare Größe als
+/// `libraryViewport` weiter (adaptive Spalten, Cover-Flow-Größe).
 struct LibraryScaffold<Content: View, Actions: View>: View {
     @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var player: PlayerService
@@ -25,68 +26,84 @@ struct LibraryScaffold<Content: View, Actions: View>: View {
     @State private var collapsed = false
 
     var body: some View {
-        ZStack(alignment: .top) {
-            ScrollView(.vertical) {
-                VStack(spacing: 0) {
-                    GeometryReader { g in
-                        Color.clear.preference(key: ScrollOffsetKey.self, value: g.frame(in: .named("scaffold")).minY)
-                    }
-                    .frame(height: 0)
-                    content()
-                }
-                .padding(.top, edgeToEdgeTop ? 0 : Chrome.contentTop)
-                .padding(.bottom, Chrome.contentBottom(miniPlayer: player.current != nil) + 12)
+        GeometryReader { outer in
+            ZStack(alignment: .top) {
+                scroller
+                topRow
             }
-            .coordinateSpace(name: "scaffold")
-            .onPreferenceChange(ScrollOffsetKey.self) { y in
-                let threshold: CGFloat = edgeToEdgeTop ? -260 : -52
-                let c = y < threshold
-                if c != collapsed { withAnimation(Motion.easeOut(0.22)) { collapsed = c } }
-            }
-
-            // Zeile der Navigation: links Zurück + kompakter Titel, rechts Aktionen (die Navigation liegt mittig darüber)
-            GeometryReader { geo in
-                let side = max(0, (geo.size.width - 560) / 2 - 10)
-                HStack(spacing: 0) {
-                    HStack(spacing: 8) {
-                        Spacer().frame(width: Chrome.trafficLightsWidth)
-                        if let onBack {
-                            GlassIconButton(icon: Icons.back, label: "Zurück (⌘[)", size: 34, iconSize: 16, action: onBack)
-                                .keyboardShortcut("[", modifiers: .command)
-                        }
-                        if collapsed {
-                            Text(title)
-                                .textStyle(Typo.titleMedium)
-                                .foregroundColor(colors.textPrimary)
-                                .lineLimit(1)
-                                .padding(.horizontal, 14)
-                                .frame(height: 34)
-                                .glassSurface(Capsule(), strong: true)
-                                .layoutPriority(-1)
-                                .transition(.opacity.combined(with: .move(edge: .top)))
-                        }
-                        Spacer(minLength: 0)
-                    }
-                    .frame(width: side, alignment: .leading)
-                    .clipped()
-                    Spacer(minLength: 0)
-                    HStack(spacing: 0) {
-                        Spacer(minLength: 0)
-                        if collapsed {
-                            ActionCapsule { actions() }
-                                .transition(.opacity.combined(with: .move(edge: .top)))
-                        }
-                        Spacer().frame(width: 14)
-                    }
-                    .frame(width: side, alignment: .trailing)
-                }
-                .frame(width: geo.size.width, height: geo.size.height)
-            }
-            .frame(height: Metrics.navBarHeight)
-            .padding(.top, Chrome.topPadding)
-            // Leere Stellen dieser Zeile (und darüber) verschieben das Fenster
-            .background(WindowDragArea())
+            .environment(\.libraryViewport, Self.quantized(outer.size))
         }
+    }
+
+    /// Größe in 20-pt-Schritten: beim Ziehen am Fensterrand nicht bei jedem Pixel neu aufbauen.
+    private static func quantized(_ size: CGSize) -> CGSize {
+        CGSize(width: (size.width / 20).rounded(.down) * 20, height: (size.height / 20).rounded(.down) * 20)
+    }
+
+    private var scroller: some View {
+        ScrollView(.vertical) {
+            VStack(spacing: 0) {
+                GeometryReader { g in
+                    Color.clear.preference(key: ScrollOffsetKey.self, value: g.frame(in: .named("scaffold")).minY)
+                }
+                .frame(height: 0)
+                content()
+            }
+            .padding(.top, edgeToEdgeTop ? 0 : Chrome.contentTop)
+            .padding(.bottom, Chrome.contentBottom(miniPlayer: player.current != nil) + 12)
+        }
+        .coordinateSpace(name: "scaffold")
+        .onPreferenceChange(ScrollOffsetKey.self) { y in
+            let threshold: CGFloat = edgeToEdgeTop ? -260 : -52
+            let c = y < threshold
+            if c != collapsed { withAnimation(Motion.easeOut(0.22)) { collapsed = c } }
+        }
+    }
+
+    /// Zeile der Navigation: links Zurück + kompakter Titel, rechts Aktionen (die Navigation liegt mittig darüber).
+    private var topRow: some View {
+        GeometryReader { geo in
+            let side = max(0, (geo.size.width - 560) / 2 - 10)
+            HStack(spacing: 0) {
+                HStack(spacing: 8) {
+                    Spacer().frame(width: Chrome.trafficLightsWidth)
+                    if let onBack {
+                        GlassIconButton(icon: Icons.back, label: "Zurück (⌘[)", size: 34, iconSize: 16, action: onBack)
+                            .keyboardShortcut("[", modifiers: .command)
+                    }
+                    if collapsed {
+                        Text(title)
+                            .textStyle(Typo.titleMedium)
+                            .foregroundColor(colors.textPrimary)
+                            .lineLimit(1)
+                            .padding(.horizontal, 14)
+                            .frame(height: 34)
+                            .glassSurface(Capsule(), strong: true)
+                            .layoutPriority(-1)
+                            .transition(.opacity.combined(with: .move(edge: .top)))
+                    }
+                    Spacer(minLength: 0)
+                }
+                .frame(width: side, alignment: .leading)
+                .clipped()
+                Spacer(minLength: 0)
+                // Rechts erhalten die Aktionen genau die verfügbare Breite – die kompakte Werkzeugleiste wählt
+                // selbst, wie viele Schaltflächen hineinpassen.
+                HStack(spacing: 0) {
+                    if collapsed {
+                        ActionCapsule { actions() }
+                            .transition(.opacity.combined(with: .move(edge: .top)))
+                    }
+                    Spacer().frame(width: 14)
+                }
+                .frame(width: side, alignment: .trailing)
+            }
+            .frame(width: geo.size.width, height: geo.size.height)
+        }
+        .frame(height: Metrics.navBarHeight)
+        .padding(.top, Chrome.topPadding)
+        // Leere Stellen dieser Zeile (und darüber) verschieben das Fenster
+        .background(WindowDragArea())
     }
 }
 
@@ -96,28 +113,44 @@ extension LibraryScaffold where Actions == EmptyView {
     }
 }
 
-/// Großer Titel eines Hauptbereichs (Android `LargeTitleHeader`): Titel, Aktionen in einer Glaskapsel,
-/// eigenes Suchfeld des Bereichs und eine leise Zusammenfassung.
-struct LargeTitleHeader<Actions: View, Below: View>: View {
+/// Großer Titel eines Hauptbereichs (Android `LargeTitleHeader`): links der Titel, rechts die Werkzeugkapsel
+/// (Ansicht, Sortierung, Filter, Darstellung …), darunter das Suchfeld des Bereichs, eine leise Zusammenfassung
+/// („12 von 340 Titel“) und die aktiven Filter als entfernbare Chips.
+struct LargeTitleHeader<Toolbar: View, Below: View>: View {
     @EnvironmentObject private var model: AppModel
     @Environment(\.musicColors) private var colors
     let title: String
     let section: LibrarySection
     let placeholder: String
-    var summary: String? = nil
-    @ViewBuilder var actions: () -> Actions
-    @ViewBuilder var below: () -> Below
+    let summary: String?
+    let filterContext: LibraryViewContext?
+    let toolbar: () -> Toolbar
+    let below: () -> Below
     @FocusState private var searchFocused: Bool
+
+    init(title: String, section: LibrarySection, placeholder: String, summary: String? = nil, filterContext: LibraryViewContext? = nil,
+         @ViewBuilder toolbar: @escaping () -> Toolbar, @ViewBuilder below: @escaping () -> Below) {
+        self.title = title
+        self.section = section
+        self.placeholder = placeholder
+        self.summary = summary
+        self.filterContext = filterContext
+        self.toolbar = toolbar
+        self.below = below
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            HStack(alignment: .center) {
+            HStack(alignment: .center, spacing: 0) {
                 Text(title)
                     .textStyle(Typo.headlineLarge)
                     .foregroundColor(colors.textPrimary)
                     .lineLimit(1)
-                Spacer()
-                ActionCapsule { actions() }
+                    .fixedSize()
+                    .layoutPriority(1)
+                Spacer(minLength: 16)
+                toolbar()
+                    .layoutPriority(2)
             }
             Spacer().frame(height: 12)
             SearchField(
@@ -126,14 +159,7 @@ struct LargeTitleHeader<Actions: View, Below: View>: View {
                 focus: $searchFocused
             )
             .frame(maxWidth: 560)
-            if let summary {
-                Text(summary)
-                    .textStyle(Typo.labelMedium)
-                    .foregroundColor(colors.textTertiary)
-                    .lineLimit(1)
-                    .padding(.top, 9)
-                    .padding(.leading, 2)
-            }
+            summaryRow
             below()
         }
         .padding(.horizontal, 4)
@@ -143,18 +169,34 @@ struct LargeTitleHeader<Actions: View, Below: View>: View {
             if model.section == section { searchFocused = true }
         }
     }
-}
 
-extension LargeTitleHeader where Below == EmptyView {
-    init(title: String, section: LibrarySection, placeholder: String, summary: String? = nil, @ViewBuilder actions: @escaping () -> Actions) {
-        self.init(title: title, section: section, placeholder: placeholder, summary: summary, actions: actions, below: { EmptyView() })
+    @ViewBuilder
+    private var summaryRow: some View {
+        if summary != nil || filterContext != nil {
+            HStack(alignment: .center, spacing: 10) {
+                if let summary {
+                    Text(summary)
+                        .textStyle(Typo.labelMedium)
+                        .foregroundColor(colors.textTertiary)
+                        .lineLimit(1)
+                        .fixedSize()
+                }
+                if let filterContext {
+                    ActiveFilterChips(context: filterContext)
+                }
+            }
+            .padding(.top, 9)
+            .padding(.leading, 2)
+        }
     }
 }
 
-/// Zusammenfassung unter dem Titel („1.234 Titel“ bzw. „12 von 1.234 Titeln“).
-func librarySummary(_ shown: Int, _ total: Int, searching: Bool, _ format: (Int) -> String) -> String {
-    if searching { return "\(Formatting.hits(shown)) von \(format(total))" }
-    return format(total)
+extension LargeTitleHeader where Below == EmptyView {
+    init(title: String, section: LibrarySection, placeholder: String, summary: String? = nil, filterContext: LibraryViewContext? = nil,
+         @ViewBuilder toolbar: @escaping () -> Toolbar) {
+        self.init(title: title, section: section, placeholder: placeholder, summary: summary, filterContext: filterContext,
+                  toolbar: toolbar, below: { EmptyView() })
+    }
 }
 
 /// Kopf einer Detailansicht mit fester Höhe (Hero liegt hinter dem Inhalt, Inhalt folgt darunter).

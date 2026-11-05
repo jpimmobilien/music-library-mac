@@ -305,11 +305,13 @@ struct SegmentedControl<T: Hashable>: View {
 /// Drei feine Pegelbalken (Android `NowPlayingBars`); bewegen sich nur bei laufender Wiedergabe.
 struct NowPlayingBars: View {
     @Environment(\.musicColors) private var colors
+    @Environment(\.continuousMotion) private var motion
     let playing: Bool
     var color: Color? = nil
     var size: CGFloat = 14
 
     var body: some View {
+        let playing = self.playing && motion   // „Animationen: Aus“ → ruhende Balken
         TimelineView(.animation(minimumInterval: 1.0 / 30, paused: !playing)) { context in
             let t = context.date.timeIntervalSinceReferenceDate
             Canvas { ctx, area in

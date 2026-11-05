@@ -124,11 +124,125 @@ enum SnapshotRunner {
             Scenario(name: "15-cover", size: CGSize(width: 780, height: 780), prepare: { m in m.metadata.requestedTab = .cover }, view: { AnyView(EditorView(uids: [1])) }),
             Scenario(name: "16-liedtext", size: big, prepare: library(.tracks, panel: .lyrics), view: main),
             Scenario(name: "16-liedtext-bearbeiten", size: CGSize(width: 780, height: 780), prepare: { m in m.metadata.requestedTab = .lyrics }, view: { AnyView(EditorView(uids: [1])) }),
-            Scenario(name: "17-einstellungen", size: CGSize(width: 680, height: 640), prepare: { _ in }, view: { AnyView(SettingsView()) }),
+            Scenario(name: "17-einstellungen", size: CGSize(width: 860, height: 680), prepare: { _ in WindowRouter.shared.pendingSettingsCategory = SettingsCategory.general.rawValue }, view: { AnyView(SettingsView()) }),
         ]
         list.append(Scenario(name: "13-player-equalizer-blatt", size: CGSize(width: 640, height: 720), prepare: { _ in }, view: {
             AnyView(PlayerSheetHost(sheet: .equalizer, theme: .vinylStudio, artwork: NowPlayingArtwork()))
         }))
+        list += v2Scenarios(library: library, main: main, big: big, small: small)
+        return list
+    }
+
+    /// Version 2: Ansichtsarten je Bereich, Filter, neue Player-Designs, Kassettenfarben, Mini-Player-Größen,
+    /// Einstellungskategorien.
+    @MainActor
+    private static func v2Scenarios(library: @escaping @MainActor (LibrarySection, Destination?, SidePanel?, Bool, PlayerTheme) -> @MainActor (AppModel) -> Void,
+                                    main: @escaping @MainActor () -> AnyView, big: CGSize, small: CGSize) -> [Scenario] {
+        /// Bereich mit einer bestimmten Ansichtsart (alle anderen Bereiche auf Standard).
+        func view(_ section: LibrarySection, _ context: LibraryViewContext, _ mode: LibraryViewMode,
+                  favoritesTab: FavoritesTab? = nil, filter: LibraryFilter? = nil) -> @MainActor (AppModel) -> Void {
+            return { m in
+                library(section, nil, nil, false, .vinylStudio)(m)
+                for c in LibraryViewContext.allCases { m.setViewOptions(.defaults(for: c), for: c) }
+                var o = LibraryViewOptions.defaults(for: context)
+                o.mode = mode
+                m.setViewOptions(o, for: context)
+                if let tab = favoritesTab { m.settings.favoritesTab = tab }
+                for c in LibraryViewContext.allCases { m.setFilter(LibraryFilter(), for: c) }
+                if let f = filter { m.setFilter(f, for: context) }
+            }
+        }
+        func player(_ theme: PlayerTheme, cassette: CassetteColor = .smoke) -> @MainActor (AppModel) -> Void {
+            return { m in
+                for c in LibraryViewContext.allCases { m.setViewOptions(.defaults(for: c), for: c) }
+                m.settings.cassetteColor = cassette
+                library(.tracks, nil, nil, true, theme)(m)
+            }
+        }
+        func mini(_ size: MiniPlayerSize) -> @MainActor (AppModel) -> Void {
+            return { m in
+                for c in LibraryViewContext.allCases { m.setViewOptions(.defaults(for: c), for: c) }
+                m.settings.miniPlayerSize = size
+                library(.albums, nil, nil, false, .vinylStudio)(m)
+            }
+        }
+        func settings(_ category: SettingsCategory) -> @MainActor (AppModel) -> Void {
+            return { m in
+                m.settings.miniPlayerSize = .standard
+                WindowRouter.shared.pendingSettingsCategory = category.rawValue
+            }
+        }
+        var genreFilter = LibraryFilter()
+        genreFilter.decades = [1990, 2000]
+        let settingsSize = CGSize(width: 860, height: 680)
+        var list: [Scenario] = [
+            Scenario(name: "20-titel-raster", size: big, prepare: view(.tracks, .tracks, .grid), view: main),
+            Scenario(name: "20-titel-detailliste", size: big, prepare: view(.tracks, .tracks, .detailedList), view: main),
+            Scenario(name: "20-titel-coverflow", size: big, prepare: view(.tracks, .tracks, .coverFlow), view: main),
+            Scenario(name: "21-alben-kompakt", size: big, prepare: view(.albums, .albums, .compactGrid), view: main),
+            Scenario(name: "21-alben-liste", size: big, prepare: view(.albums, .albums, .list), view: main),
+            Scenario(name: "21-alben-detailliste", size: big, prepare: view(.albums, .albums, .detailedList), view: main),
+            Scenario(name: "21-alben-coverflow", size: big, prepare: view(.albums, .albums, .coverFlow), view: main),
+            Scenario(name: "21-alben-coverflow-klein", size: small, prepare: view(.albums, .albums, .coverFlow), view: main),
+            Scenario(name: "21-alben-gefiltert", size: big, prepare: view(.albums, .albums, .grid, filter: genreFilter), view: main),
+            Scenario(name: "22-interpreten-liste", size: big, prepare: view(.artists, .artists, .list), view: main),
+        ]
+        list += [
+            Scenario(name: "22-interpreten-coverflow", size: big, prepare: view(.artists, .artists, .coverFlow), view: main),
+            Scenario(name: "23-genres-detailliste", size: big, prepare: view(.genres, .genres, .detailedList), view: main),
+            Scenario(name: "24-playlists-liste", size: big, prepare: view(.playlists, .playlists, .list), view: main),
+            Scenario(name: "25-favoriten-alben-raster", size: big, prepare: view(.favorites, .favoriteAlbums, .grid, favoritesTab: .albums), view: main),
+            Scenario(name: "25-favoriten-titel-detailliste", size: big, prepare: view(.favorites, .favoriteTracks, .detailedList, favoritesTab: .tracks), view: main),
+            Scenario(name: "30-modern-glass", size: big, prepare: player(.modernGlass), view: main),
+            Scenario(name: "30-modern-glass-klein", size: small, prepare: player(.modernGlass), view: main),
+            Scenario(name: "31-aurora", size: big, prepare: player(.aurora), view: main),
+            Scenario(name: "32-studio-reel", size: big, prepare: player(.reelToReel), view: main),
+            Scenario(name: "33-kassette-rose", size: big, prepare: player(.cassette, cassette: .rose), view: main),
+        ]
+        list += [
+            Scenario(name: "33-kassette-ozean", size: big, prepare: player(.cassette, cassette: .ocean), view: main),
+            Scenario(name: "34-mini-kompakt", size: big, prepare: mini(.compact), view: main),
+            Scenario(name: "34-mini-gross", size: big, prepare: mini(.large), view: main),
+            Scenario(name: "40-einstellungen-darstellung", size: settingsSize, prepare: settings(.appearance), view: { AnyView(SettingsView()) }),
+            Scenario(name: "40-einstellungen-player", size: settingsSize, prepare: settings(.playerDesigns), view: { AnyView(SettingsView()) }),
+            Scenario(name: "40-einstellungen-equalizer", size: settingsSize, prepare: settings(.equalizer), view: { AnyView(SettingsView()) }),
+            Scenario(name: "40-einstellungen-tonhoehe", size: settingsSize, prepare: settings(.pitch), view: { AnyView(SettingsView()) }),
+            Scenario(name: "40-einstellungen-speicher", size: settingsSize, prepare: settings(.storage), view: { AnyView(SettingsView()) }),
+            Scenario(name: "40-einstellungen-kurzbefehle", size: settingsSize, prepare: settings(.shortcuts), view: { AnyView(SettingsView()) }),
+        ]
+        /// Popover-Inhalte (Popover sind eigene Fenster und werden deshalb einzeln abgebildet).
+        func popover<V: View>(_ width: CGFloat, @ViewBuilder _ content: @escaping @MainActor () -> V) -> @MainActor () -> AnyView {
+            return { AnyView(ZStack { AmbientBackground(); GlassMenuPanel(width: width) { content() } }) }
+        }
+        let userPresets: @MainActor (AppModel) -> Void = { m in
+            var s = m.settings
+            s.effects = AudioEffectsSettings().withPreset(EqPresets.rock).withBass(3)
+            _ = s.saveEqPreset(name: "Abend")
+            s.effects = AudioEffectsSettings().withPreset(EqPresets.jazz)
+            _ = s.saveEqPreset(name: "Kopfhörer")
+            m.settings = s
+            m.player.setDemoState(queueUids: Array(1...12), currentIndex: 0, positionMs: 74_000, playing: true)
+        }
+        list += [
+            Scenario(name: "35-popover-tonhoehe", size: CGSize(width: 380, height: 460), prepare: { m in
+                m.settings.pitch = PitchSettings().withSemitones(1.5)
+            }, view: popover(340) { PitchControls(compact: true) }),
+            Scenario(name: "35-popover-equalizer", size: CGSize(width: 400, height: 520), prepare: userPresets,
+                     view: popover(360) { EqualizerQuickPanel(close: {}) }),
+            Scenario(name: "35-popover-designs", size: CGSize(width: 520, height: 520), prepare: { m in
+                m.player.setDemoState(queueUids: Array(1...12), currentIndex: 0, positionMs: 74_000, playing: true)
+            }, view: popover(480) { DesignQuickPicker(artwork: NowPlayingArtwork(), more: {}) }),
+            Scenario(name: "13-equalizer-eigene", size: CGSize(width: 640, height: 720), prepare: userPresets, view: { AnyView(EqualizerWindow()) }),
+            Scenario(name: "34-mini-kassette", size: big, prepare: { m in
+                for c in LibraryViewContext.allCases { m.setViewOptions(.defaults(for: c), for: c) }
+                m.settings.pitch = PitchSettings()
+                m.settings.miniPlayerSize = .large
+                m.settings.cassetteColor = .mint
+                library(.tracks, nil, nil, false, .cassette)(m)
+            }, view: main),
+            Scenario(name: "20-titel-detailliste-klein", size: small, prepare: view(.tracks, .tracks, .detailedList), view: main),
+            Scenario(name: "24-playlists-raster", size: big, prepare: view(.playlists, .playlists, .grid), view: main),
+        ]
         return list
     }
 

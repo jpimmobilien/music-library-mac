@@ -10,6 +10,7 @@ struct MiniPlayerWindow: View {
     @Environment(\.musicColors) private var colors
     @State private var expanded = false
     @State private var floating = true
+    @StateObject private var artwork = NowPlayingArtwork(size: .medium)
 
     var body: some View {
         VStack(spacing: 0) {
@@ -21,8 +22,14 @@ struct MiniPlayerWindow: View {
             VStack(spacing: 8) {
                 HStack(spacing: 12) {
                     if !expanded {
-                        TrackArtwork(track: player.current, size: .small, cornerRadius: Radius.artworkSmall)
-                            .frame(width: 52, height: 52)
+                        if model.settings.miniPlayerShowsDesign {
+                            MiniHeroView(theme: model.settings.playerTheme, showsDesign: true, side: 52, track: player.current, artwork: artwork,
+                                         playing: player.isPlaying, animate: PlayerMotionPolicy.continuous(model.settings),
+                                         speed: model.settings.pitch.speed, cassetteColor: model.settings.cassetteColor, clock: player.clock)
+                        } else {
+                            TrackArtwork(track: player.current, size: .small, cornerRadius: Radius.artworkSmall)
+                                .frame(width: 52, height: 52)
+                        }
                     }
                     VStack(alignment: .leading, spacing: 1) {
                         Text(player.current?.displayTitle ?? "Nichts wird gespielt")
@@ -44,7 +51,7 @@ struct MiniPlayerWindow: View {
                     Spacer()
                     TransportControls(compact: true)
                     Spacer()
-                    IconTap(icon: floating ? "keep" : "keep_off", label: floating ? "Nicht mehr im Vordergrund" : "Immer im Vordergrund", tint: floating ? colors.accentText : colors.textSecondary, iconSize: 15, touch: 28) {
+                    IconTap(icon: floating ? PlayerIcons.keep : PlayerIcons.keepOff, label: floating ? "Nicht mehr im Vordergrund" : "Immer im Vordergrund", tint: floating ? colors.accentText : colors.textSecondary, iconSize: 15, touch: 28) {
                         floating.toggle()
                         applyFloating()
                     }
@@ -54,6 +61,7 @@ struct MiniPlayerWindow: View {
         }
         .frame(width: 320)
         .background(AmbientBackground())
+        .task(id: player.current?.coverKey) { await artwork.update(for: player.current) }
         .onAppear { applyFloating() }
     }
 

@@ -100,6 +100,10 @@ public struct PitchSettings: Hashable, Sendable {
     public static let maxSemitones: Float = 12
     public static let minTempo: Float = 0.5
     public static let maxTempo: Float = 2.0
+    /// Feiner Schritt der Halbtöne (Pfeiltasten, Feinregler).
+    public static let fineStep: Float = 0.1
+    /// Grober Schritt der Halbtöne (− / + ein Halbton).
+    public static let coarseStep: Float = 1
     /// Beschreibung des Tempo-Reglers.
     public static let tempoDescription = "Tempo ändern, Tonhöhe bleibt"
     /// 33⅓ → 45 U/min (Faktor 1,35) bzw. umgekehrt, in Halbtönen.
@@ -131,9 +135,17 @@ public struct PitchSettings: Hashable, Sendable {
     /// Klingt der Titel wie das Original (keine Tonhöhen- und keine Tempoänderung)?
     public var isOriginal: Bool { semitones == 0 && (mode == .varispeed || tempo == 1) }
 
+    /// Halbtöne setzen: auf 0,01 gerundet und auf ±12 begrenzt (ungültige Zahl → 0). Das Runden
+    /// verhindert Rechenreste wie 0,30000001 nach mehreren Feinschritten.
     public func withSemitones(_ value: Float) -> PitchSettings {
         var copy = self
-        copy.semitones = min(max(value, PitchSettings.minSemitones), PitchSettings.maxSemitones)
+        if value.isNaN {
+            copy.semitones = 0
+        } else {
+            let clamped = min(max(value, PitchSettings.minSemitones), PitchSettings.maxSemitones)
+            let rounded = Float((Double(clamped) * 100).rounded()) / 100
+            copy.semitones = rounded == 0 ? 0 : rounded // kein „−0“
+        }
         return copy
     }
 

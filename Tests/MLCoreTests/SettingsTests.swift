@@ -50,7 +50,8 @@ final class SettingsTests: XCTestCase {
     }
 
     func testPlayerDesign_wechselLaesstAllesAndereUnveraendert() {
-        XCTAssertEqual(PlayerTheme.allCases, [.vinylStudio, .classic, .cassette, .portableCD])
+        // v2: neue Designs hinten angefügt (gespeicherte Namen bleiben gültig)
+        XCTAssertEqual(PlayerTheme.allCases, [.vinylStudio, .classic, .cassette, .portableCD, .modernGlass, .aurora, .reelToReel])
         var s = AppSettings()
         s.effects = s.effects.withPreset(EqPresets.rock).withBass(6)
         s.effects.volume = 1.4

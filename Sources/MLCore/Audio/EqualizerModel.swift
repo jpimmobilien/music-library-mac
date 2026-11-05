@@ -47,6 +47,92 @@ public enum EqPresets {
     }
 }
 
+/// Eigene, vom Nutzer gespeicherte Equalizer-Voreinstellung.
+///
+/// Die Bänder sind immer genau `EqBands.count` Werte, begrenzt auf ±12 dB (fehlende Bänder → 0,
+/// überzählige entfallen, ungültige Zahlen → 0). Der Name wird bereinigt (`cleanName`).
+/// Lesen ist tolerant: fehlende Kennung → neue, fehlender Name → „Eigenes Preset“.
+public struct EqUserPreset: Hashable, Codable, Sendable, Identifiable {
+    /// „user-…“
+    public var id: String
+    public var name: String
+    /// 10 Werte, geklemmt auf ±12.
+    public var gains: [Float]
+    /// Optional mitgespeicherter Bass (−12 … +12 dB).
+    public var bassDb: Float?
+
+    public static let idPrefix = "user-"
+    public static let defaultName = "Eigenes Preset"
+    public static let maxNameLength = 40
+
+    public init(id: String = "user-" + UUID().uuidString, name: String, gains: [Float], bassDb: Float? = nil) {
+        self.id = id
+        self.name = EqUserPreset.cleanName(name)
+        self.gains = EqUserPreset.normalizedGains(gains)
+        self.bassDb = EqUserPreset.normalizedBass(bassDb)
+    }
+
+    /// Name ohne Leerraum an den Rändern (mehrfache Leerzeichen zusammengefasst), höchstens
+    /// `maxNameLength` Zeichen; leer → „Eigenes Preset“.
+    public static func cleanName(_ raw: String) -> String {
+        let name = raw.collapsingRegexWhitespace().kotlinTrimmed()
+        if name.isEmpty { return defaultName }
+        return String(name.prefix(maxNameLength)).kotlinTrimmed()
+    }
+
+    /// Eindeutiger Name: bereits vergebene Namen (ohne Groß-/Kleinschreibung) erhalten „ (2)“, „ (3)“ …;
+    /// der Name wird dafür gekürzt, damit `maxNameLength` eingehalten wird.
+    public static func uniqueName<C: Collection>(_ raw: String, existing: C) -> String where C.Element == String {
+        let base = cleanName(raw)
+        let taken = Set(existing.map { $0.lowercased() })
+        if !taken.contains(base.lowercased()) { return base }
+        var n = 2
+        while true {
+            let suffix = " (\(n))"
+            let head = String(base.prefix(max(maxNameLength - suffix.count, 1))).kotlinTrimmed()
+            let candidate = head + suffix
+            if !taken.contains(candidate.lowercased()) { return candidate }
+            n += 1
+        }
+    }
+
+    /// Genau `EqBands.count` Werte, begrenzt; ungültige Zahlen → 0.
+    public static func normalizedGains(_ gains: [Float]) -> [Float] {
+        (0..<EqBands.count).map { i in
+            guard i < gains.count, gains[i].isFinite else { return 0 }
+            return EqBands.clamp(gains[i])
+        }
+    }
+
+    static func normalizedBass(_ db: Float?) -> Float? {
+        guard let db, db.isFinite else { return nil }
+        return min(max(db, AudioEffectsSettings.minBassDb), AudioEffectsSettings.maxBassDb)
+    }
+
+    private enum CodingKeys: String, CodingKey { case id, name, gains, bassDb }
+
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        let id = ((try? c.decodeIfPresent(String.self, forKey: .id)) ?? nil)?.kotlinTrimmed() ?? ""
+        let name = ((try? c.decodeIfPresent(String.self, forKey: .name)) ?? nil) ?? ""
+        let gains = ((try? c.decodeIfPresent([Float].self, forKey: .gains)) ?? nil) ?? []
+        let bass = (try? c.decodeIfPresent(Float.self, forKey: .bassDb)) ?? nil
+        if id.isEmpty {
+            self.init(name: name, gains: gains, bassDb: bass)
+        } else {
+            self.init(id: id, name: name, gains: gains, bassDb: bass)
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var c = encoder.container(keyedBy: CodingKeys.self)
+        try c.encode(id, forKey: .id)
+        try c.encode(name, forKey: .name)
+        try c.encode(gains, forKey: .gains)
+        try c.encodeIfPresent(bassDb, forKey: .bassDb)
+    }
+}
+
 /// Biquad-Koeffizienten nach dem „Audio EQ Cookbook“ (R. Bristow-Johnson), normiert auf a0 = 1.
 public struct BiquadCoefficients: Hashable, Sendable {
     public var b0: Double, b1: Double, b2: Double, a1: Double, a2: Double
@@ -254,6 +340,21 @@ public struct AudioEffectsSettings: Hashable, Sendable {
         var copy = self
         copy.bassDb = Float(JvmMath.roundToInt(min(max(db, Self.minBassDb), Self.maxBassDb) * 2)) / 2
         return copy
+    }
+
+    /// Eigenes Preset übernehmen: Bänder (und, falls mitgespeichert, Bass); Equalizer an.
+    public func withUserPreset(_ preset: EqUserPreset) -> AudioEffectsSettings {
+        var copy = self
+        copy.bandGains = EqUserPreset.normalizedGains(preset.gains)
+        if let bass = EqUserPreset.normalizedBass(preset.bassDb) { copy.bassDb = bass }
+        copy.eqEnabled = true
+        return copy
+    }
+
+    /// Das erste eigene Preset, dessen Bänder exakt den aktuellen entsprechen (Bass zählt nicht).
+    public func activeUserPreset(in presets: [EqUserPreset]) -> EqUserPreset? {
+        guard bandGains.count == EqBands.count else { return nil }
+        return presets.first { $0.gains == bandGains }
     }
 }
 

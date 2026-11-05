@@ -22,6 +22,8 @@ public struct AlbumInfo: Hashable, Sendable, Identifiable {
     /// Sortiername (Tag „Album sortieren“) oder Titel.
     public var sortTitle: String?
     public var sortArtist: String?
+    /// Jüngster Aufnahmezeitpunkt seiner Titel in die Bibliothek (Sekunden seit 1970; 0 = unbekannt).
+    public var dateAdded: Int64
 
     public var trackCount: Int { trackUids.count }
     public var isMultiDisc: Bool { discNumbers.count > 1 }
@@ -30,7 +32,8 @@ public struct AlbumInfo: Hashable, Sendable, Identifiable {
 
     public init(
         key: String, title: String?, artist: String?, isVarious: Bool, year: Int?, genre: String?,
-        trackUids: [Int64], discNumbers: [Int], totalDurationMs: Int64, sortTitle: String?, sortArtist: String?
+        trackUids: [Int64], discNumbers: [Int], totalDurationMs: Int64, sortTitle: String?, sortArtist: String?,
+        dateAdded: Int64 = 0
     ) {
         self.key = key
         self.title = title
@@ -43,6 +46,7 @@ public struct AlbumInfo: Hashable, Sendable, Identifiable {
         self.totalDurationMs = totalDurationMs
         self.sortTitle = sortTitle
         self.sortArtist = sortArtist
+        self.dateAdded = dateAdded
     }
 }
 
@@ -264,7 +268,8 @@ public enum AlbumGrouping {
             discNumbers: discs,
             totalDurationMs: tracks.reduce(0) { $0 + max($1.durationMs, 0) },
             sortTitle: mostCommon(tracks.compactMap(\.albumSort)) ?? title,
-            sortArtist: mostCommon(tracks.compactMap(\.albumArtistSort)) ?? artist
+            sortArtist: mostCommon(tracks.compactMap(\.albumArtistSort)) ?? artist,
+            dateAdded: tracks.reduce(0) { max($0, $1.dateAdded) }
         )
     }
 
