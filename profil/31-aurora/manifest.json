@@ -1,0 +1,27 @@
+{
+  "architecture" : "arm64",
+  "images" : [
+    {
+      "elapsedMs" : "9051",
+      "file" : "31-aurora-hell-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "16",
+      "mainThreadLagMaxMs" : "52.2",
+      "mainThreadLagMeanMs" : "13.7",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "9012",
+      "file" : "31-aurora-dunkel-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "7",
+      "mainThreadLagMaxMs" : "161.4",
+      "mainThreadLagMeanMs" : "80.9",
+      "method" : "window-server"
+    }
+  ],
+  "interFont" : true,
+  "liquidGlass" : false,
+  "macOS" : "Version 14.8.9 (Build 23J631)",
+  "screen" : "1920x1080 @1.0x, sichtbar 1920x970"
+}

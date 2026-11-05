@@ -1,0 +1,8 @@
+[Snapshot] ▸ 21-alben-coverflow hell
+[Snapshot] 21-alben-coverflow hell: Aufbau+Warten 9034 ms, Hauptthread-Verzögerung Ø 18.1 ms, max 47.3 ms, Hauptthread belegt 10 %
+[Snapshot] ▸ 21-alben-coverflow dunkel
+[Snapshot] 21-alben-coverflow dunkel: Aufbau+Warten 9005 ms, Hauptthread-Verzögerung Ø 69.2 ms, max 155.4 ms, Hauptthread belegt 5 %
+[Snapshot] ▸ 21-alben-coverflow-klein hell
+[Snapshot] 21-alben-coverflow-klein hell: Aufbau+Warten 9157 ms, Hauptthread-Verzögerung Ø 98.7 ms, max 156.4 ms, Hauptthread belegt 5 %
+[Snapshot] ▸ 21-alben-coverflow-klein dunkel
+[Snapshot] 21-alben-coverflow-klein dunkel: Aufbau+Warten 9039 ms, Hauptthread-Verzögerung Ø 88.6 ms, max 152.9 ms, Hauptthread belegt 4 %

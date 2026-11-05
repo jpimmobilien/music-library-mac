@@ -1,0 +1,4 @@
+02-titel-hell-1280x820.png 11.4 9% 9040
+02-titel-dunkel-1280x820.png 82.2 4% 9117
+02-titel-klein-hell-940x660.png 107.2 3% 9052
+02-titel-klein-dunkel-940x660.png 124.7 4% 9194

@@ -1,0 +1,4 @@
+10-vinyl-hell-1280x820.png 13.1 14% 9035
+10-vinyl-dunkel-1280x820.png 85.6 5% 9016
+10-vinyl-klein-hell-940x660.png 94.0 5% 9099
+10-vinyl-klein-dunkel-940x660.png 97.5 4% 9008

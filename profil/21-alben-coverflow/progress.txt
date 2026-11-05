@@ -1,0 +1,4 @@
+21-alben-coverflow-hell-1280x820.png 18.1 10% 9034
+21-alben-coverflow-dunkel-1280x820.png 69.2 5% 9005
+21-alben-coverflow-klein-hell-940x660.png 98.7 5% 9157
+21-alben-coverflow-klein-dunkel-940x660.png 88.6 4% 9039

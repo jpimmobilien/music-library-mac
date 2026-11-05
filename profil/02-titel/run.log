@@ -1,0 +1,8 @@
+[Snapshot] ▸ 02-titel hell
+[Snapshot] 02-titel hell: Aufbau+Warten 9040 ms, Hauptthread-Verzögerung Ø 11.4 ms, max 26.0 ms, Hauptthread belegt 9 %
+[Snapshot] ▸ 02-titel dunkel
+[Snapshot] 02-titel dunkel: Aufbau+Warten 9117 ms, Hauptthread-Verzögerung Ø 82.2 ms, max 157.3 ms, Hauptthread belegt 4 %
+[Snapshot] ▸ 02-titel-klein hell
+[Snapshot] 02-titel-klein hell: Aufbau+Warten 9052 ms, Hauptthread-Verzögerung Ø 107.2 ms, max 154.9 ms, Hauptthread belegt 3 %
+[Snapshot] ▸ 02-titel-klein dunkel
+[Snapshot] 02-titel-klein dunkel: Aufbau+Warten 9194 ms, Hauptthread-Verzögerung Ø 124.7 ms, max 153.9 ms, Hauptthread belegt 4 %

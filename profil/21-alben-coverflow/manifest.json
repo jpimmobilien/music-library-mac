@@ -1,0 +1,45 @@
+{
+  "architecture" : "arm64",
+  "images" : [
+    {
+      "elapsedMs" : "9034",
+      "file" : "21-alben-coverflow-hell-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "10",
+      "mainThreadLagMaxMs" : "47.3",
+      "mainThreadLagMeanMs" : "18.1",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "9005",
+      "file" : "21-alben-coverflow-dunkel-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "5",
+      "mainThreadLagMaxMs" : "155.4",
+      "mainThreadLagMeanMs" : "69.2",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "9157",
+      "file" : "21-alben-coverflow-klein-hell-940x660.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "5",
+      "mainThreadLagMaxMs" : "156.4",
+      "mainThreadLagMeanMs" : "98.7",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "9039",
+      "file" : "21-alben-coverflow-klein-dunkel-940x660.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "4",
+      "mainThreadLagMaxMs" : "152.9",
+      "mainThreadLagMeanMs" : "88.6",
+      "method" : "window-server"
+    }
+  ],
+  "interFont" : true,
+  "liquidGlass" : false,
+  "macOS" : "Version 14.8.9 (Build 23J631)",
+  "screen" : "1920x1080 @1.0x, sichtbar 1920x970"
+}
