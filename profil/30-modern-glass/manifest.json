@@ -1,0 +1,45 @@
+{
+  "architecture" : "arm64",
+  "images" : [
+    {
+      "elapsedMs" : "9021",
+      "file" : "30-modern-glass-hell-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "150.1",
+      "mainThreadLagMeanMs" : "9.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "9014",
+      "file" : "30-modern-glass-dunkel-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "150.4",
+      "mainThreadLagMeanMs" : "40.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "9030",
+      "file" : "30-modern-glass-klein-hell-940x660.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "150.2",
+      "mainThreadLagMeanMs" : "62.7",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "9041",
+      "file" : "30-modern-glass-klein-dunkel-940x660.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "150.3",
+      "mainThreadLagMeanMs" : "64.3",
+      "method" : "window-server"
+    }
+  ],
+  "interFont" : true,
+  "liquidGlass" : false,
+  "macOS" : "Version 15.8.2 (Build 24H232)",
+  "screen" : "1024x768 @1.0x, sichtbar 1024x684"
+}

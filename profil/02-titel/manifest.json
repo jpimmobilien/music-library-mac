@@ -1,0 +1,45 @@
+{
+  "architecture" : "arm64",
+  "images" : [
+    {
+      "elapsedMs" : "9072",
+      "file" : "02-titel-hell-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "135.8",
+      "mainThreadLagMeanMs" : "8.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "9031",
+      "file" : "02-titel-dunkel-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "153.3",
+      "mainThreadLagMeanMs" : "39.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "9074",
+      "file" : "02-titel-klein-hell-940x660.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "149.3",
+      "mainThreadLagMeanMs" : "51.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "9017",
+      "file" : "02-titel-klein-dunkel-940x660.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "138.8",
+      "mainThreadLagMeanMs" : "43.7",
+      "method" : "window-server"
+    }
+  ],
+  "interFont" : true,
+  "liquidGlass" : false,
+  "macOS" : "Version 15.8.2 (Build 24H232)",
+  "screen" : "1024x768 @1.0x, sichtbar 1024x684"
+}

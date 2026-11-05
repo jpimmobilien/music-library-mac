@@ -1,0 +1,27 @@
+{
+  "architecture" : "arm64",
+  "images" : [
+    {
+      "elapsedMs" : "9043",
+      "file" : "03-alben-hell-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "140.2",
+      "mainThreadLagMeanMs" : "8.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "9084",
+      "file" : "03-alben-dunkel-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "147.2",
+      "mainThreadLagMeanMs" : "40.5",
+      "method" : "window-server"
+    }
+  ],
+  "interFont" : true,
+  "liquidGlass" : false,
+  "macOS" : "Version 15.8.2 (Build 24H232)",
+  "screen" : "1024x768 @1.0x, sichtbar 1024x684"
+}

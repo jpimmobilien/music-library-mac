@@ -1,0 +1,45 @@
+{
+  "architecture" : "arm64",
+  "images" : [
+    {
+      "elapsedMs" : "9038",
+      "file" : "10-vinyl-hell-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "150.6",
+      "mainThreadLagMeanMs" : "8.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "9145",
+      "file" : "10-vinyl-dunkel-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "147.3",
+      "mainThreadLagMeanMs" : "53.3",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "9039",
+      "file" : "10-vinyl-klein-hell-940x660.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "150.0",
+      "mainThreadLagMeanMs" : "39.1",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "9060",
+      "file" : "10-vinyl-klein-dunkel-940x660.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "150.3",
+      "mainThreadLagMeanMs" : "46.6",
+      "method" : "window-server"
+    }
+  ],
+  "interFont" : true,
+  "liquidGlass" : false,
+  "macOS" : "Version 15.8.2 (Build 24H232)",
+  "screen" : "1024x768 @1.0x, sichtbar 1024x684"
+}
