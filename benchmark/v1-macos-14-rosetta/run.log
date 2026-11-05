@@ -1,0 +1,18 @@
+Music Library – Messlauf mit 10000 Titeln
+Version 14.8.9 (Build 23J631) · x86_64 · Apple M1 (Virtual)
+
+Messung                                                     Mittel     p95     Max   (ms)
+Index aufbauen (10000 Titel)                                 241.7    241.7    241.7
+Alle Listen berechnen (Hintergrund)                          780.9    780.9    780.9
+Suche berechnen (Hintergrund)                                547.5    589.4    589.4
+Bereich wechseln                                             467.6    803.7    803.7
+Titel: Scrollschritt                                          51.7    100.9    116.9
+Alben: Scrollschritt                                          48.2    107.1    144.5
+Interpreten: Scrollschritt                                   134.7    219.2    238.6
+Suche tippen (je Taste, Hauptthread)                         214.8    406.4    406.4
+Player öffnen/schließen (alle Designs)                       263.2    373.5    373.5
+Leerlauf mit Wiedergabe: Zeit je Bild                         32.0     64.0     78.7
+
+Hinweise:
+- Genres: keine Scrollfläche gefunden
+

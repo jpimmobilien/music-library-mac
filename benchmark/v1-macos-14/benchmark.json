@@ -1,0 +1,82 @@
+{
+  "architecture" : "arm64",
+  "cpu" : "Apple M1 (Virtual)",
+  "liquidGlass" : false,
+  "macOS" : "Version 14.8.9 (Build 23J631)",
+  "notes" : [
+    "Genres: keine Scrollfläche gefunden"
+  ],
+  "results" : [
+    {
+      "max_ms" : 169.75999999999999,
+      "mean_ms" : 169.75999999999999,
+      "n" : 1,
+      "name" : "Index aufbauen (10000 Titel)",
+      "p95_ms" : 169.75999999999999
+    },
+    {
+      "max_ms" : 448.22000000000003,
+      "mean_ms" : 448.22000000000003,
+      "n" : 1,
+      "name" : "Alle Listen berechnen (Hintergrund)",
+      "p95_ms" : 448.22000000000003
+    },
+    {
+      "max_ms" : 471.99000000000001,
+      "mean_ms" : 403.69,
+      "n" : 5,
+      "name" : "Suche berechnen (Hintergrund)",
+      "p95_ms" : 471.99000000000001
+    },
+    {
+      "max_ms" : 445.00999999999999,
+      "mean_ms" : 266.62,
+      "n" : 12,
+      "name" : "Bereich wechseln",
+      "p95_ms" : 445.00999999999999
+    },
+    {
+      "max_ms" : 79.189999999999998,
+      "mean_ms" : 23.559999999999999,
+      "n" : 60,
+      "name" : "Titel: Scrollschritt",
+      "p95_ms" : 39.039999999999999
+    },
+    {
+      "max_ms" : 365.38,
+      "mean_ms" : 64.780000000000001,
+      "n" : 60,
+      "name" : "Alben: Scrollschritt",
+      "p95_ms" : 185.86000000000001
+    },
+    {
+      "max_ms" : 113.58,
+      "mean_ms" : 52.270000000000003,
+      "n" : 60,
+      "name" : "Interpreten: Scrollschritt",
+      "p95_ms" : 99.930000000000007
+    },
+    {
+      "max_ms" : 118.5,
+      "mean_ms" : 73.890000000000001,
+      "n" : 12,
+      "name" : "Suche tippen (je Taste, Hauptthread)",
+      "p95_ms" : 118.5
+    },
+    {
+      "max_ms" : 254.87,
+      "mean_ms" : 184.16999999999999,
+      "n" : 8,
+      "name" : "Player öffnen\/schließen (alle Designs)",
+      "p95_ms" : 254.87
+    },
+    {
+      "max_ms" : 67.340000000000003,
+      "mean_ms" : 53.880000000000003,
+      "n" : 43,
+      "name" : "Leerlauf mit Wiedergabe: Zeit je Bild",
+      "p95_ms" : 63.829999999999998
+    }
+  ],
+  "tracks" : 10000
+}

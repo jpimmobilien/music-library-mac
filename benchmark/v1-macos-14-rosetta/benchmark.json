@@ -1,0 +1,82 @@
+{
+  "architecture" : "x86_64",
+  "cpu" : "Apple M1 (Virtual)",
+  "liquidGlass" : false,
+  "macOS" : "Version 14.8.9 (Build 23J631)",
+  "notes" : [
+    "Genres: keine Scrollfläche gefunden"
+  ],
+  "results" : [
+    {
+      "max_ms" : 241.71000000000001,
+      "mean_ms" : 241.71000000000001,
+      "n" : 1,
+      "name" : "Index aufbauen (10000 Titel)",
+      "p95_ms" : 241.71000000000001
+    },
+    {
+      "max_ms" : 780.87,
+      "mean_ms" : 780.87,
+      "n" : 1,
+      "name" : "Alle Listen berechnen (Hintergrund)",
+      "p95_ms" : 780.87
+    },
+    {
+      "max_ms" : 589.36000000000001,
+      "mean_ms" : 547.45000000000005,
+      "n" : 5,
+      "name" : "Suche berechnen (Hintergrund)",
+      "p95_ms" : 589.36000000000001
+    },
+    {
+      "max_ms" : 803.74000000000001,
+      "mean_ms" : 467.61000000000001,
+      "n" : 12,
+      "name" : "Bereich wechseln",
+      "p95_ms" : 803.74000000000001
+    },
+    {
+      "max_ms" : 116.93000000000001,
+      "mean_ms" : 51.740000000000002,
+      "n" : 60,
+      "name" : "Titel: Scrollschritt",
+      "p95_ms" : 100.89
+    },
+    {
+      "max_ms" : 144.50999999999999,
+      "mean_ms" : 48.240000000000002,
+      "n" : 60,
+      "name" : "Alben: Scrollschritt",
+      "p95_ms" : 107.05
+    },
+    {
+      "max_ms" : 238.63,
+      "mean_ms" : 134.71000000000001,
+      "n" : 60,
+      "name" : "Interpreten: Scrollschritt",
+      "p95_ms" : 219.25
+    },
+    {
+      "max_ms" : 406.36000000000001,
+      "mean_ms" : 214.78999999999999,
+      "n" : 12,
+      "name" : "Suche tippen (je Taste, Hauptthread)",
+      "p95_ms" : 406.36000000000001
+    },
+    {
+      "max_ms" : 373.5,
+      "mean_ms" : 263.24000000000001,
+      "n" : 8,
+      "name" : "Player öffnen\/schließen (alle Designs)",
+      "p95_ms" : 373.5
+    },
+    {
+      "max_ms" : 78.659999999999997,
+      "mean_ms" : 32.030000000000001,
+      "n" : 63,
+      "name" : "Leerlauf mit Wiedergabe: Zeit je Bild",
+      "p95_ms" : 64.010000000000005
+    }
+  ],
+  "tracks" : 10000
+}
