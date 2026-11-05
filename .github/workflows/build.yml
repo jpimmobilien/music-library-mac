@@ -1,18 +1,17 @@
 # Music Library für macOS – Tests, Universal-Build, Vorschaubilder, DMG
 #
-# Ablauf:
-#   1. tests      Swift-Tests (Logik, Datenbank, Tags, Renderer, App) auf Apple Silicon (macOS 26) und Intel (macOS 15)
-#   2. build      Universal Binary (arm64 + x86_64) mit Xcode 26 → App-Bundle → ad-hoc signiert → Vorschaubilder → DMG
-#   3. smoke      Die fertige DMG wird auf weiteren Rechnern eingehängt, die App installiert und im
-#                 Vorschaumodus gestartet (Intel/macOS 15, Apple Silicon/macOS 14)
-#   4. release    Nur bei Tags „v*“: GitHub-Release mit DMG und Prüfsumme
+# Ablauf (sparsam mit macOS-Minuten):
+#   1. build    macOS 26 (Apple Silicon, Xcode 26): alle Swift-Tests → Universal Binary (arm64 + x86_64)
+#               → App-Bundle (ad-hoc signiert) → Vorschaubilder mit und ohne Liquid Glass → DMG
+#   2. smoke    Die fertige DMG wird auf Intel (macOS 15) und Apple Silicon (macOS 14) eingehängt,
+#               die App installiert und im Vorschaumodus gestartet
+#   3. release  Nur bei Tags „v*“: GitHub-Release mit DMG und Prüfsumme
 name: Build
 
 on:
   push:
     branches: [main]
     tags: ["v*"]
-  pull_request:
   workflow_dispatch:
 
 concurrency:
@@ -23,18 +22,10 @@ permissions:
   contents: read
 
 jobs:
-  tests:
-    name: Tests (${{ matrix.label }})
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: macos-26
-            label: Apple Silicon · macOS 26
-          - os: macos-15-intel
-            label: Intel · macOS 15
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 60
+  build:
+    name: Tests, Universal-Build, DMG (macOS 26)
+    runs-on: macos-26
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
       - name: Werkzeuge
@@ -43,39 +34,28 @@ jobs:
           uname -m
           xcodebuild -version
           swift --version
-      - name: Swift-Tests
-        run: swift test 2>&1 | tee test-output.txt
-      - name: Testprotokoll sichern
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-output-${{ matrix.os }}
-          path: test-output.txt
-
-  build:
-    name: Universal-Build + DMG
-    runs-on: macos-26
-    timeout-minutes: 90
-    steps:
-      - uses: actions/checkout@v4
-      - name: Werkzeuge
-        run: |
-          sw_vers
-          xcodebuild -version
-          swift --version
       - name: App bauen (arm64 + x86_64, ad-hoc signiert)
         env:
           VERSION: "1.0.0"
           BUILD_NUMBER: ${{ github.run_number }}
-        run: scripts/build_app.sh
+        run: |
+          set -o pipefail
+          mkdir -p logs
+          scripts/build_app.sh 2>&1 | tee logs/build-output.txt
       - name: Vorschaubilder (Liquid Glass)
+        id: snap_glass
+        continue-on-error: true
         run: scripts/run_snapshots.sh "build/Music Library.app" snapshots/macos26-liquid-glass
       - name: Vorschaubilder (Rückfall ohne Liquid Glass)
+        id: snap_fallback
+        continue-on-error: true
         env:
           ML_FORCE_GLASS_FALLBACK: "1"
         run: scripts/run_snapshots.sh "build/Music Library.app" snapshots/macos26-fallback
       - name: DMG erstellen
-        run: scripts/make_dmg.sh
+        run: |
+          set -o pipefail
+          scripts/make_dmg.sh 2>&1 | tee logs/dmg-output.txt
       - uses: actions/upload-artifact@v4
         with:
           name: Music-Library-dmg
@@ -83,16 +63,35 @@ jobs:
             dist/Music Library.dmg
             dist/Music Library.dmg.sha256
           if-no-files-found: error
+      - name: Swift-Tests
+        if: always()
+        run: |
+          set -o pipefail
+          mkdir -p logs
+          swift test 2>&1 | tee logs/test-output.txt
+      - name: Vorschaubilder ohne Fehler?
+        if: steps.snap_glass.outcome == 'failure' || steps.snap_fallback.outcome == 'failure'
+        run: |
+          echo "Vorschaumodus fehlgeschlagen (Liquid Glass: ${{ steps.snap_glass.outcome }}, Rückfall: ${{ steps.snap_fallback.outcome }})"
+          exit 1
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: snapshots-macos26
           path: snapshots/
-          if-no-files-found: warn
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs-macos26
+          path: logs/
+          if-no-files-found: ignore
 
   smoke:
     name: Starttest (${{ matrix.label }})
     needs: build
+    # auch wenn nur Tests fehlschlagen: die DMG ist dann schon hochgeladen
+    if: ${{ !cancelled() }}
     strategy:
       fail-fast: false
       matrix:
@@ -102,7 +101,7 @@ jobs:
           - os: macos-14
             label: Apple Silicon · macOS 14
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 40
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
@@ -122,18 +121,61 @@ jobs:
           lipo -archs "$HOME/Applications/Music Library.app/Contents/MacOS/MusicLibrary"
           codesign --verify --deep --strict --verbose=2 "$HOME/Applications/Music Library.app"
       - name: App im Vorschaumodus starten
-        run: scripts/run_snapshots.sh "$HOME/Applications/Music Library.app" "snapshots/${{ matrix.os }}"
+        run: |
+          mkdir -p "snapshots/${{ matrix.os }}"
+          scripts/run_snapshots.sh "$HOME/Applications/Music Library.app" "snapshots/${{ matrix.os }}"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: snapshots-${{ matrix.os }}
           path: snapshots/
-          if-no-files-found: warn
+          if-no-files-found: ignore
+
+  # Alle Ergebnisse (DMG, Vorschaubilder, Protokolle) zusätzlich in den Zweig „ci-ergebnisse“ legen –
+  # so lassen sie sich auch ohne Actions-Schnittstelle mit git abholen.
+  results:
+    name: Ergebnisse sichern
+    if: always()
+    needs: [build, smoke]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: ergebnisse
+      - name: Vorschaubilder verkleinern (PNG → JPEG)
+        run: |
+          python3 -m pip install --quiet --user --break-system-packages pillow
+          python3 - <<'PY'
+          import pathlib
+          from PIL import Image
+          for p in pathlib.Path("ergebnisse").rglob("*.png"):
+              Image.open(p).convert("RGB").save(p.with_suffix(".jpg"), quality=86, optimize=True)
+              p.unlink()
+          PY
+      - name: In Zweig „ci-ergebnisse“ schreiben
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd ergebnisse
+          {
+            echo "Lauf: ${GITHUB_RUN_NUMBER} (${GITHUB_SHA})"
+            echo "build: ${{ needs.build.result }}"
+            echo "smoke: ${{ needs.smoke.result }}"
+            date -u
+          } > ERGEBNIS.txt
+          git init -q -b ci-ergebnisse
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "CI-Ergebnisse Lauf ${GITHUB_RUN_NUMBER}"
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" ci-ergebnisse
 
   release:
     name: GitHub-Release
     if: startsWith(github.ref, 'refs/tags/v')
-    needs: [tests, build, smoke]
+    needs: [build, smoke]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -148,4 +190,4 @@ jobs:
         run: |
           gh release create "${GITHUB_REF_NAME}" "dist/Music Library.dmg" "dist/Music Library.dmg.sha256" \
             --repo "${GITHUB_REPOSITORY}" --title "Music Library ${GITHUB_REF_NAME}" \
-            --notes "Universal (Apple Silicon + Intel), macOS 13 Ventura oder neuer. Ad-hoc signiert – siehe INSTALLATION.md für den ersten Start."
+            --notes "Universal (Apple Silicon + Intel), macOS 13 Ventura oder neuer. Ad-hoc signiert – siehe docs/INSTALLATION.md für den ersten Start."
