@@ -1,4 +1,6 @@
 # Messlauf der Version 1.0 (Vergleichswerte für die Performance-Arbeit an Version 2)
+# Gebaut wird wie bei Version 2 mit Xcode 26 auf macOS 26; gemessen auf macOS 26 (arm64),
+# macOS 14 (arm64) und macOS 14 mit dem Intel-Teil der App über Rosetta.
 name: Baseline
 
 on:
@@ -10,40 +12,73 @@ permissions:
   contents: write
 
 jobs:
-  bench:
-    name: Messlauf v1 (${{ matrix.os }})
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [macos-14, macos-26]
-    runs-on: ${{ matrix.os }}
+  build:
+    name: Bauen + Messlauf v1 (macos-26)
+    runs-on: macos-26
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - name: App bauen
         run: scripts/build_app.sh
+      - name: App für die anderen Läufe verpacken
+        run: ditto -c -k --keepParent "build/Music Library.app" build/app.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: baseline-app
+          path: build/app.zip
       - name: Messlauf nativ
         continue-on-error: true
-        run: scripts/run_benchmark.sh "build/Music Library.app" "benchmark/v1-${{ matrix.os }}" 10000
-      - name: Rosetta bereitstellen
-        if: matrix.os == 'macos-14'
-        run: /usr/sbin/softwareupdate --install-rosetta --agree-to-license || true
-      - name: Messlauf Intel-Code über Rosetta
-        if: matrix.os == 'macos-14'
-        continue-on-error: true
-        env:
-          SNAPSHOT_ARCH: x86_64
-        run: scripts/run_benchmark.sh "build/Music Library.app" "benchmark/v1-${{ matrix.os }}-rosetta" 10000
-      - name: Ergebnisse in Zweig „ci-baseline-${{ matrix.os }}“
+        run: scripts/run_benchmark.sh "build/Music Library.app" "benchmark/v1-macos-26" 10000
+      - name: Ergebnisse in Zweig „ci-baseline-macos-26“
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p out && cp -R benchmark out/ 2>/dev/null || true
           cd out
-          git init -q -b "ci-baseline-${{ matrix.os }}"
+          git init -q -b "ci-baseline-macos-26"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -q -m "Baseline ${{ matrix.os }}" || true
-          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "ci-baseline-${{ matrix.os }}"
+          git commit -q -m "Baseline macos-26" || true
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "ci-baseline-macos-26"
+
+  bench14:
+    name: Messlauf v1 (macos-14)
+    needs: build
+    runs-on: macos-14
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: baseline-app
+          path: dl
+      - name: App auspacken
+        run: |
+          mkdir -p build
+          ditto -x -k dl/app.zip build/
+          ls build
+      - name: Messlauf nativ (arm64)
+        continue-on-error: true
+        run: scripts/run_benchmark.sh "build/Music Library.app" "benchmark/v1-macos-14" 10000
+      - name: Rosetta bereitstellen
+        run: /usr/sbin/softwareupdate --install-rosetta --agree-to-license || true
+      - name: Messlauf Intel-Code über Rosetta
+        continue-on-error: true
+        env:
+          SNAPSHOT_ARCH: x86_64
+        run: scripts/run_benchmark.sh "build/Music Library.app" "benchmark/v1-macos-14-rosetta" 10000
+      - name: Ergebnisse in Zweig „ci-baseline-macos-14“
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p out && cp -R benchmark out/ 2>/dev/null || true
+          cd out
+          git init -q -b "ci-baseline-macos-14"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Baseline macos-14" || true
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "ci-baseline-macos-14"
