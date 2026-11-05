@@ -1,0 +1,49 @@
+# Messlauf der Version 1.0 (Vergleichswerte für die Performance-Arbeit an Version 2)
+name: Baseline
+
+on:
+  push:
+    branches: [baseline-v1]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bench:
+    name: Messlauf v1 (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-14, macos-26]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: App bauen
+        run: scripts/build_app.sh
+      - name: Messlauf nativ
+        continue-on-error: true
+        run: scripts/run_benchmark.sh "build/Music Library.app" "benchmark/v1-${{ matrix.os }}" 10000
+      - name: Rosetta bereitstellen
+        if: matrix.os == 'macos-14'
+        run: /usr/sbin/softwareupdate --install-rosetta --agree-to-license || true
+      - name: Messlauf Intel-Code über Rosetta
+        if: matrix.os == 'macos-14'
+        continue-on-error: true
+        env:
+          SNAPSHOT_ARCH: x86_64
+        run: scripts/run_benchmark.sh "build/Music Library.app" "benchmark/v1-${{ matrix.os }}-rosetta" 10000
+      - name: Ergebnisse in Zweig „ci-baseline-${{ matrix.os }}“
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p out && cp -R benchmark out/ 2>/dev/null || true
+          cd out
+          git init -q -b "ci-baseline-${{ matrix.os }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Baseline ${{ matrix.os }}" || true
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "ci-baseline-${{ matrix.os }}"

@@ -1,0 +1,358 @@
+import SwiftUI
+import AppKit
+import MLCore
+import MLStore
+
+/// Messlauf mit einer großen, erfundenen Bibliothek (Standard: 10.000 Titel, 1.600 Alben):
+/// `"Music Library.app/Contents/MacOS/MusicLibrary" --benchmark <Ordner> [--tracks 10000]`
+///
+/// Gemessen wird, was sich beim Bedienen „zäh“ anfühlen würde – jeweils die Zeit, die der Hauptthread für
+/// Aktualisierung, Layout und Zeichnen braucht (Budget bei 60 Hz: 16,7 ms je Bild):
+/// Index und Listen berechnen, Bereich wechseln, Ansicht wechseln, Suchen, Scrollen, Player öffnen.
+/// Ergebnis: `benchmark.json` und `benchmark.txt` im Ordner. Keine Benutzerdaten, keine Wiedergabe.
+enum Benchmark {
+    static var isRequested: Bool { CommandLine.arguments.contains("--benchmark") }
+
+    static var outputDirectory: URL {
+        let args = CommandLine.arguments
+        if let i = args.firstIndex(of: "--benchmark"), i + 1 < args.count {
+            return URL(fileURLWithPath: args[i + 1], isDirectory: true)
+        }
+        return URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent("benchmark", isDirectory: true)
+    }
+
+    static var trackCount: Int {
+        let args = CommandLine.arguments
+        if let i = args.firstIndex(of: "--tracks"), i + 1 < args.count, let n = Int(args[i + 1]) { return max(100, n) }
+        return 10_000
+    }
+
+    struct Measurement: Codable {
+        var name: String
+        var samples: [Double]   // Millisekunden
+        var mean: Double { samples.isEmpty ? 0 : samples.reduce(0, +) / Double(samples.count) }
+        var max: Double { samples.max() ?? 0 }
+        var p95: Double {
+            guard !samples.isEmpty else { return 0 }
+            let s = samples.sorted()
+            return s[min(s.count - 1, Int(Double(s.count) * 0.95))]
+        }
+    }
+
+    // MARK: - Bibliothek erzeugen
+
+    @MainActor
+    static func makeModel() -> AppModel {
+        let store = try! LibraryStore.inMemory()
+        let model = AppModel(store: store, demo: true)
+        let lib = makeLibrary(tracks: trackCount)
+        ArtworkStore.shared.setOverrides(lib.covers)
+        model.setDemoData(tracks: lib.tracks, favorites: lib.favorites, favoriteAlbums: [:], stats: lib.stats, playlists: lib.playlists, history: [])
+        return model
+    }
+
+    /// Erfundene Bibliothek: Titel verteilen sich auf Alben (6 Titel im Schnitt), Interpreten, Genres und Jahre.
+    /// Cover: 320 verschiedene, gezeichnete Bilder, reihum auf die Alben verteilt.
+    static func makeLibrary(tracks count: Int) -> (tracks: [Track], covers: [Int64: String], favorites: [Int64: Int64],
+                                                   stats: [Int64: PlayStats], playlists: [Playlist]) {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("MusicLibraryBenchmark-\(ProcessInfo.processInfo.processIdentifier)", isDirectory: true)
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let genres = ["Pop", "Rock", "Indie Rock", "Jazz", "Electronic", "Klassik", "Hip-Hop", "Soul", "Country", "Schlager", "Darkwave",
+                      "Metal", "Folk", "Reggae", "Soundtrack", "Ambient", "Dance", "Blues", "Latin", "Singer-Songwriter"]
+        let words = ["Licht", "Nacht", "Sommer", "Stadt", "Meer", "Herz", "Wind", "Feuer", "Glas", "Traum", "Stern", "Regen", "Morgen",
+                     "Echo", "Neon", "Gold", "Silber", "Wolke", "Fluss", "Berg", "Blue", "Night", "Fire", "Dream", "Heart", "City",
+                     "River", "Love", "Ghost", "Wild", "Velvet", "Electric", "Paper", "Summer", "Winter", "Shadow", "Light", "Ocean"]
+        let coverCount = 320
+        var coverPaths: [String] = []
+        for i in 0..<coverCount {
+            let path = dir.appendingPathComponent("c\(i).png").path
+            let a = DemoLibrary.albums[i % DemoLibrary.albums.count]
+            let hueShift = UInt32((i * 37) % 200)
+            let spec = DemoLibrary.AlbumSpec(title: "", artist: "", genre: "", year: 2000,
+                                             colors: (a.colors.0 ^ (hueShift << 8), a.colors.1 ^ (hueShift << 4)), tracks: [])
+            DemoLibrary.writeCover(spec, index: i, to: path)
+            coverPaths.append(path)
+        }
+        let albumCount = max(1, count / 6)
+        let artistCount = max(1, albumCount / 3)
+        let now = Int64(Date().timeIntervalSince1970)
+        var tracks: [Track] = []
+        tracks.reserveCapacity(count)
+        var covers: [Int64: String] = [:]
+        var uid: Int64 = 1
+        for album in 0..<albumCount {
+            let artist = "\(words[album % words.count]) \(words[(album / 7 + 3) % words.count]) \(album % artistCount)"
+            let title = "\(words[(album * 5) % words.count]) \(words[(album * 11 + 2) % words.count]) \(album)"
+            let genre = genres[album % genres.count]
+            let year = 1960 + (album * 13) % 65
+            let n = count / albumCount + (album < count % albumCount ? 1 : 0)
+            let cover = coverPaths[album % coverCount]
+            for t in 0..<n {
+                let duration = Int64(120_000 + ((album * 31 + t * 17) % 300) * 1000)
+                let kbps = album % 4 == 0 ? 900 : 256
+                let track = Track(
+                    uid: uid, folderID: 1, path: "/Benchmark/\(artist)/\(title)/\(t + 1).m4a", relativePath: "\(artist)/\(title)/",
+                    fileName: "\(t + 1) \(words[(album + t) % words.count]).m4a",
+                    title: "\(words[(album + t * 3) % words.count]) \(words[(t * 7 + album) % words.count])",
+                    artists: [artist], album: title, albumArtists: [artist], genres: [genre], year: year,
+                    trackNumber: t + 1, trackTotal: n, discNumber: 1, discTotal: 1, bpm: 80 + (t * 9 + album) % 90,
+                    rating: (album + t) % 5 == 0 ? 80 : nil, durationMs: duration, sizeBytes: duration * Int64(kbps) / 8 + Int64(uid),
+                    dateModified: now - Int64(album * 3600), dateAdded: now - Int64(album * 7200 + t),
+                    codec: album % 4 == 0 ? "ALAC" : "AAC", sampleRate: 44_100, bitrate: kbps, channels: 2,
+                    hasPicture: true, hasLyrics: t == 0, available: true)
+                tracks.append(track)
+                covers[uid] = cover
+                uid += 1
+            }
+        }
+        var favorites: [Int64: Int64] = [:]
+        var stats: [Int64: PlayStats] = [:]
+        for t in tracks {
+            if t.uid % 9 == 0 { favorites[t.uid] = (now - t.uid) * 1000 }
+            if t.uid % 3 != 0 {
+                stats[t.uid] = PlayStats(trackUid: t.uid, playCount: Int(t.uid % 29) + 1, lastPlayedAt: (now - t.uid * 60) * 1000,
+                                         firstPlayedAt: (now - 9_000_000) * 1000, totalListenedMs: 300_000)
+            }
+        }
+        var playlists: [Playlist] = []
+        for p in 0..<40 {
+            let entries = (0..<60).map { i in
+                PlaylistEntry(entryId: Int64(p * 100 + i + 1), trackUid: Int64((p * 53 + i * 17) % tracks.count + 1), position: i, addedAt: now * 1000)
+            }
+            playlists.append(Playlist(id: Int64(p + 1), name: "Playlist \(words[p % words.count]) \(p + 1)", createdAt: (now - Int64(p) * 86_400) * 1000,
+                                      updatedAt: (now - Int64(p) * 3_600) * 1000, entries: entries))
+        }
+        return (tracks, covers, favorites, stats, playlists)
+    }
+
+    // MARK: - Ablauf
+
+    @MainActor
+    static func run(model: AppModel) {
+        Task { @MainActor in
+            await runAll(model)
+            NSApp.terminate(nil)
+        }
+    }
+
+    @MainActor
+    private static func runAll(_ model: AppModel) async {
+        let out = outputDirectory
+        try? FileManager.default.createDirectory(at: out, withIntermediateDirectories: true)
+        var results: [Measurement] = []
+        var notes: [String] = []
+        func record(_ name: String, _ samples: [Double]) { results.append(Measurement(name: name, samples: samples)) }
+
+        // 1. Reine Logik (Hintergrund, nicht im Hauptthread – hier zur Einordnung)
+        let tracks = model.index.tracks
+        var t0 = CACurrentMediaTime()
+        let idx = LibraryIndex.build(tracks)
+        record("Index aufbauen (\(tracks.count) Titel)", [(CACurrentMediaTime() - t0) * 1000])
+        t0 = CACurrentMediaTime()
+        _ = AppModel.computeLists(index: idx, settings: model.settings, stats: model.stats, favorites: model.favoriteTracks,
+                                  favoriteAlbums: model.favoriteAlbums, playlists: model.playlists, queries: [:])
+        record("Alle Listen berechnen (Hintergrund)", [(CACurrentMediaTime() - t0) * 1000])
+        var searchSamples: [Double] = []
+        for q in ["licht", "nacht stadt", "blue", "a", "zzz"] {
+            t0 = CACurrentMediaTime()
+            _ = AppModel.computeLists(index: idx, settings: model.settings, stats: model.stats, favorites: model.favoriteTracks,
+                                      favoriteAlbums: model.favoriteAlbums, playlists: model.playlists, queries: [.tracks: q, .albums: q])
+            searchSamples.append((CACurrentMediaTime() - t0) * 1000)
+        }
+        record("Suche berechnen (Hintergrund)", searchSamples)
+
+        // 2. Fenster
+        for w in NSApp.windows { w.orderOut(nil) }
+        NSApp.setActivationPolicy(.regular)
+        NSApp.activate(ignoringOtherApps: true)
+        let size = CGSize(width: 1280, height: 820)
+        let window = NSWindow(contentRect: NSRect(origin: .zero, size: size),
+                              styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
+                              backing: .buffered, defer: false)
+        window.titlebarAppearsTransparent = true
+        window.titleVisibility = .hidden
+        window.isReleasedWhenClosed = false
+        let host = NSHostingView(rootView: ThemedRoot(model: model) { MainWindow() }.frame(width: size.width, height: size.height))
+        host.sizingOptions = []
+        window.contentView = host
+        window.setContentSize(size)
+        window.center()
+        window.makeKeyAndOrderFront(nil)
+        model.recomputeLists()
+        await settle(window, seconds: 2.5)
+
+        /// Zeit bis die Änderung aktualisiert, ausgelegt und gezeichnet ist (Hauptthread).
+        func measureChange(_ change: () -> Void) async -> Double {
+            let start = CACurrentMediaTime()
+            change()
+            window.contentView?.layoutSubtreeIfNeeded()
+            window.displayIfNeeded()
+            // zweiter Durchlauf: SwiftUI verteilt Aktualisierungen oft auf den nächsten Runloop-Durchgang
+            await Task.yield()
+            window.contentView?.layoutSubtreeIfNeeded()
+            window.displayIfNeeded()
+            return (CACurrentMediaTime() - start) * 1000
+        }
+
+        // 3. Bereiche wechseln (zweimal: kalt und warm)
+        var sectionSamples: [Double] = []
+        for _ in 0..<2 {
+            for s in LibrarySection.allCases {
+                sectionSamples.append(await measureChange { model.select(s) })
+                await settle(window, seconds: 0.6)
+            }
+        }
+        record("Bereich wechseln", sectionSamples)
+
+        // 4. Scrollen je Bereich (Version 1.0: nur eine Ansicht je Bereich)
+        for section in [LibrarySection.tracks, .albums, .artists, .genres] {
+            model.select(section)
+            await settle(window, seconds: 1.2)
+            let samples = await scrollSamples(window: window, steps: 60, step: 360)
+            if samples.isEmpty {
+                notes.append("\(section.label): keine Scrollfläche gefunden")
+            } else {
+                record("\(section.label): Scrollschritt", samples)
+            }
+        }
+
+        // 5. Suche eintippen (Hauptthread-Anteil inkl. Neuzeichnen)
+        model.select(.tracks)
+        await settle(window, seconds: 0.8)
+        var typing: [Double] = []
+        var text = ""
+        for ch in "nacht licht" {
+            text.append(ch)
+            let q = text
+            typing.append(await measureChange { model.setQuery(.tracks, q) })
+            try? await Task.sleep(nanoseconds: 60_000_000)
+        }
+        try? await Task.sleep(nanoseconds: 600_000_000)
+        typing.append(await measureChange { })
+        record("Suche tippen (je Taste, Hauptthread)", typing)
+        model.setQuery(.tracks, "")
+        await settle(window, seconds: 0.8)
+
+        // 6. Player öffnen/schließen
+        model.player.setDemoState(queueUids: Array(1...40), currentIndex: 0, positionMs: 30_000, playing: true)
+        await settle(window, seconds: 0.8)
+        var playerSamples: [Double] = []
+        for theme in PlayerTheme.allCases {
+            model.settings.playerTheme = theme
+            playerSamples.append(await measureChange { model.playerOpen = true })
+            await settle(window, seconds: 1.0)
+            playerSamples.append(await measureChange { model.playerOpen = false })
+            await settle(window, seconds: 0.6)
+        }
+        record("Player öffnen/schließen (alle Designs)", playerSamples)
+
+        // 7. Bildwiederholung bei laufender Wiedergabe (Mini-Player + Liste sichtbar)
+        let idle = await frameSamples(window: window, seconds: 3)
+        record("Leerlauf mit Wiedergabe: Zeit je Bild", idle)
+
+        window.orderOut(nil)
+        write(results, notes: notes, to: out)
+    }
+
+    /// Wartet, bis Hintergrundarbeit (Listen, Cover) erledigt ist und gezeichnet wurde.
+    @MainActor
+    private static func settle(_ window: NSWindow, seconds: Double) async {
+        let end = CACurrentMediaTime() + seconds
+        while CACurrentMediaTime() < end {
+            try? await Task.sleep(nanoseconds: 50_000_000)
+            window.displayIfNeeded()
+        }
+    }
+
+    /// Größte Scrollfläche des Fensters in Schritten bewegen; je Schritt die Zeit für Layout + Zeichnen.
+    @MainActor
+    private static func scrollSamples(window: NSWindow, steps: Int, step: CGFloat) async -> [Double] {
+        guard let root = window.contentView, let scroll = largestScrollView(in: root) else { return [] }
+        let clip = scroll.contentView
+        let docHeight = scroll.documentView?.frame.height ?? 0
+        var samples: [Double] = []
+        var y = clip.bounds.origin.y
+        for _ in 0..<steps {
+            y += step
+            if y > docHeight - clip.bounds.height { y = 0 }
+            let start = CACurrentMediaTime()
+            clip.scroll(to: NSPoint(x: clip.bounds.origin.x, y: y))
+            scroll.reflectScrolledClipView(clip)
+            root.layoutSubtreeIfNeeded()
+            window.displayIfNeeded()
+            samples.append((CACurrentMediaTime() - start) * 1000)
+            try? await Task.sleep(nanoseconds: 16_000_000)
+        }
+        return samples
+    }
+
+    @MainActor
+    private static func largestScrollView(in view: NSView) -> NSScrollView? {
+        var best: NSScrollView?
+        var bestArea: CGFloat = 0
+        func visit(_ v: NSView) {
+            if let s = v as? NSScrollView, !s.isHidden {
+                let area = s.frame.width * s.frame.height
+                let scrollable = (s.documentView?.frame.height ?? 0) > s.contentView.bounds.height + 50
+                if scrollable && area > bestArea {
+                    best = s
+                    bestArea = area
+                }
+            }
+            for sub in v.subviews { visit(sub) }
+        }
+        visit(view)
+        return best
+    }
+
+    /// Abstände der Hauptthread-Takte über einige Sekunden (zeigt Ruckler durch zu häufiges Neuzeichnen).
+    @MainActor
+    private static func frameSamples(window: NSWindow, seconds: Double) async -> [Double] {
+        var samples: [Double] = []
+        var last = CACurrentMediaTime()
+        let end = last + seconds
+        while CACurrentMediaTime() < end {
+            try? await Task.sleep(nanoseconds: 16_000_000)
+            window.displayIfNeeded()
+            let now = CACurrentMediaTime()
+            samples.append((now - last) * 1000 - 16)
+            last = now
+        }
+        return samples.map { max(0, $0) }
+    }
+
+    private static func write(_ results: [Measurement], notes: [String], to dir: URL) {
+        let info: [String: Any] = [
+            "macOS": ProcessInfo.processInfo.operatingSystemVersionString,
+            "architecture": AboutArchitecture.current,
+            "cpu": cpuName(),
+            "tracks": trackCount,
+            "liquidGlass": LiquidGlass.isAvailable,
+            "notes": notes,
+            "results": results.map { ["name": $0.name, "mean_ms": round2($0.mean), "p95_ms": round2($0.p95), "max_ms": round2($0.max), "n": $0.samples.count] as [String: Any] },
+        ]
+        if let data = try? JSONSerialization.data(withJSONObject: info, options: [.prettyPrinted, .sortedKeys]) {
+            try? data.write(to: dir.appendingPathComponent("benchmark.json"))
+        }
+        var text = "Music Library – Messlauf mit \(trackCount) Titeln\n\(ProcessInfo.processInfo.operatingSystemVersionString) · \(AboutArchitecture.current) · \(cpuName())\n\n"
+        text += "Messung".padding(toLength: 58, withPad: " ", startingAt: 0) + "  Mittel     p95     Max   (ms)\n"
+        for r in results {
+            text += r.name.padding(toLength: 58, withPad: " ", startingAt: 0)
+            text += String(format: "%8.1f %8.1f %8.1f\n", r.mean, r.p95, r.max)
+        }
+        if !notes.isEmpty { text += "\nHinweise:\n" + notes.map { "- " + $0 }.joined(separator: "\n") + "\n" }
+        try? text.write(to: dir.appendingPathComponent("benchmark.txt"), atomically: true, encoding: .utf8)
+        print(text)
+    }
+
+    private static func round2(_ v: Double) -> Double { (v * 100).rounded() / 100 }
+
+    private static func cpuName() -> String {
+        var size = 0
+        sysctlbyname("machdep.cpu.brand_string", nil, &size, nil, 0)
+        guard size > 0 else { return "?" }
+        var buffer = [CChar](repeating: 0, count: size)
+        sysctlbyname("machdep.cpu.brand_string", &buffer, &size, nil, 0)
+        return String(cString: buffer)
+    }
+}

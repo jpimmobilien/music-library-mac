@@ -93,6 +93,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if SnapshotRunner.isRequested {
             return SnapshotRunner.makeDemoModel()
         }
+        if Benchmark.isRequested {
+            return Benchmark.makeModel()
+        }
         let fm = FileManager.default
         let support = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
             .appendingPathComponent("Music Library", isDirectory: true)
@@ -121,6 +124,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             let model = AppDelegate.makeModel()
             if SnapshotRunner.isRequested {
                 SnapshotRunner.run(model: model)
+                return
+            }
+            if Benchmark.isRequested {
+                Benchmark.run(model: model)
                 return
             }
             model.reloadLibrary()
