@@ -15,7 +15,6 @@ struct LargeTitleWidthKey: PreferenceKey {
 
 /// Wie weit der große Titel unter die feste Werkzeugleiste gescrollt ist (0…1). Eigenes kleines
 /// Beobachtungsobjekt: Beim Scrollen zeichnet sich nur der Verlauf hinter der Leiste neu, nie der Inhalt.
-@MainActor
 final class ScrollChromeState: ObservableObject {
     @Published private(set) var progress: CGFloat = 0
 
@@ -99,7 +98,7 @@ struct LibraryScaffold<Content: View, Actions: View, Toolbar: View>: View {
             }
             .padding(.top, edgeToEdgeTop ? 0 : Chrome.contentTop)
             .padding(.bottom, Chrome.contentBottom(miniPlayer: player.current != nil) + 12)
-            .background(LibraryScrollSeedReader().frame(width: 1, height: 1), alignment: .topLeading)
+            .background(alignment: .topLeading) { LibraryScrollSeedReader().frame(width: 1, height: 1) }
         }
         .coordinateSpace(name: "scaffold")
         .onPreferenceChange(ScrollOffsetKey.self) { y in
@@ -118,12 +117,11 @@ struct LibraryScaffold<Content: View, Actions: View, Toolbar: View>: View {
     private func toolbarRow(width: CGFloat) -> some View {
         let inset = Spacing.gutter + 4
         let available = max(140, width - inset * 2 - titleWidth - 16)
-        return HStack(spacing: 0) {
-            Spacer(minLength: 0)
-            toolbar()
-                .frame(maxWidth: available, alignment: .trailing)
-        }
-        .frame(height: LargeTitleMetrics.rowHeight)
+        // Kein HStack mit Spacer: der würde die Breite aufteilen und die Leiste zu früh verkleinern.
+        return toolbar()
+            .frame(maxWidth: available, alignment: .trailing)
+            .frame(maxWidth: .infinity, alignment: .trailing)
+            .frame(height: LargeTitleMetrics.rowHeight)
         .padding(.trailing, inset)
         .padding(.top, Chrome.contentTop + LargeTitleMetrics.topPadding)
         .frame(maxWidth: .infinity, alignment: .topTrailing)

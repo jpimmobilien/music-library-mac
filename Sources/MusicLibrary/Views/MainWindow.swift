@@ -7,6 +7,8 @@ enum Chrome {
     static let topPadding: CGFloat = 10
     static let contentTop: CGFloat = topPadding + Metrics.navBarHeight + 14
     static let trafficLightsWidth: CGFloat = 78
+    /// Feste Werkzeugleiste der Übersichten unter der Navigation (Titelzeile inkl. Abstand).
+    static let toolbarRow: CGFloat = LargeTitleMetrics.topPadding + LargeTitleMetrics.rowHeight + 4
     /// Höhe des Mini-Players laut Einstellung (Kompakt/Standard/Groß).
     @MainActor static var miniPlayerHeight: CGFloat {
         CGFloat(AppModel.shared?.settings.miniPlayerSize.height ?? Double(Metrics.miniPlayerHeight))
@@ -98,6 +100,9 @@ private struct LibraryLayer: View {
             VStack(spacing: 10) {
                 Spacer(minLength: 0)
                 ToastStack()
+                // Mehrfachauswahl: Anzahl und Aktionen (v2.1)
+                SelectionBarHost()
+                    .padding(.horizontal, 18)
                 if showMini {
                     MiniPlayerBar()
                         .frame(maxWidth: 1080)

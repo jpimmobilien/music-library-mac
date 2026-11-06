@@ -2,14 +2,16 @@ import SwiftUI
 import AppKit
 import MLCore
 
-// Werkzeugkapsel im Kopf jedes Bibliotheksbereichs: Ansicht (fünf Segmente mit gleitender Rosé-Linse),
+// Werkzeugkapsel jedes Bibliotheksbereichs: Ansicht (fünf Segmente mit gleitender Rosé-Linse),
 // Sortierung (sichtbar mit Kriterium und Richtung), Filter (mit Zähler), Darstellung, Mischen, Einstellungen.
 // Jede Schaltfläche hat eine Funktion; bei wenig Platz wird die Kapsel kompakter (ViewThatFits).
+// v2.1: Die Kapsel steht fest in der Titelzeile unter der Navigation (`LibraryScaffold(toolbar:)`) und
+// bleibt beim Scrollen sichtbar.
 
 enum LibraryToolbarStyle {
-    /// Im großen Kopf: eigene Glaskapsel, passt sich der Breite an.
+    /// Feste Kopfzeile: eigene Glaskapsel, passt sich der Breite an (breit → kompakt → minimal).
     case full
-    /// In der kompakten Kopfleiste beim Scrollen (die Kapsel liefert `LibraryScaffold`).
+    /// Ohne eigene Kapsel (für eine fremde Glaskapsel, z. B. `ActionCapsule`).
     case collapsed
 }
 
@@ -40,8 +42,10 @@ struct LibraryToolbar<F: SortField, Extra: View>: View {
         switch style {
         case .full:
             ViewThatFits(in: .horizontal) {
-                capsule(wide: true, mode: mode)
-                capsule(wide: false, mode: mode)
+                capsule(wide: true, mode: mode, minimal: false)
+                capsule(wide: false, mode: mode, minimal: false)
+                // sehr schmal (z. B. mit Seitenleiste): Ansicht, Sortierung, Einstellungen
+                capsule(wide: false, mode: mode, minimal: true)
             }
         case .collapsed:
             ViewThatFits(in: .horizontal) {
@@ -51,8 +55,8 @@ struct LibraryToolbar<F: SortField, Extra: View>: View {
         }
     }
 
-    private func capsule(wide: Bool, mode: LibraryViewMode) -> some View {
-        items(wide: wide, mode: mode, minimal: false)
+    private func capsule(wide: Bool, mode: LibraryViewMode, minimal: Bool) -> some View {
+        items(wide: wide, mode: mode, minimal: minimal)
             .padding(.horizontal, 4)
             .frame(height: 40)
             .glassSurface(Capsule(), strong: true)

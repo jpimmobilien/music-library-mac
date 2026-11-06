@@ -177,7 +177,7 @@ final class AudioEngine {
     }
 
     /// Verzögerung der Tonhöhen-Unit in Sekunden (0, wenn sie nicht rechnet).
-    var pitchLatency: TimeInterval { (pitchUnit?.bypass ?? true) ? 0 : (pitchAU?.latency ?? 0) }
+    var pitchLatency: TimeInterval { usesNativePitch ? 0 : (pitchAU?.latency ?? 0) }
 
     /// Übernimmt neue Klangeinstellungen (nur geänderte Werte werden gesetzt).
     func apply(_ p: Parameters, force: Bool = false) {
@@ -211,8 +211,8 @@ final class AudioEngine {
             timePitch.bypass = cents == 0 && p.tempo == 1
             pitchAU?.setPitch(factor: 1)
         } else {
+            // Kein `bypass` an der eigenen Unit: sie reicht bei „Original“ selbst durch bzw. blendet lückenlos über
             pitchAU?.setPitch(factor: Float(pow(2, Double(cents) / 1200)))
-            pitchUnit?.bypass = cents == 0
             timePitch.pitch = 0
             timePitch.bypass = p.tempo == 1
         }

@@ -259,6 +259,8 @@ struct LibraryItem: Identifiable, Equatable {
     var trackUids: [Int64] = []
     /// Ziel für gezogene Titel (eigene Playlists, „Neue Playlist“).
     var acceptsDrop: Bool = false
+    /// Lässt sich auswählen (⌘-Klick, Auswahlrahmen)? Nicht z. B. „Neue Playlist …“.
+    var selectable: Bool = true
 }
 
 /// Darstellung eines `LibraryArt`.
@@ -326,27 +328,62 @@ struct TileStyle: Equatable {
 }
 
 /// Kachelbreite, Abstand und Stil aus den Ansichtsoptionen (Raster und kompaktes Raster).
+///
+/// v2.1 (Cover bis 560 pt): Die Spaltenzahl wird aus der verfügbaren Breite berechnet (so viele Kacheln der
+/// gewählten Größe, wie nebeneinander passen – mindestens eine). Die Spalten sind flexibel: Ist das Fenster
+/// schmaler als eine Kachel, wird sie kleiner statt abgeschnitten. Die Covergröße richtet sich nach der
+/// tatsächlichen Kachelbreite in Bildpunkten (Retina), damit große Kacheln scharf bleiben.
 struct TileMetrics: Equatable {
     var style: TileStyle
     var minWidth: CGFloat
     var spacing: CGFloat
+    var columnCount: Int
+    /// Erwartete Kachelbreite (für die Wahl der Covergröße).
+    var tileWidth: CGFloat
 
-    init(options o: LibraryViewOptions) {
+    /// - Parameters:
+    ///   - available: Breite für das Raster (Fensterbereich ohne Seitenränder).
+    ///   - scale: Bildpunkte je Punkt des Bildschirms (2 bei Retina).
+    init(options o: LibraryViewOptions, available: CGFloat, scale: CGFloat = 2) {
         let compact = o.mode == .compactGrid
         let base = CGFloat(o.coverSize)
         let width: CGFloat = compact ? max(64, base * 0.62) : base
         minWidth = width
         spacing = compact ? max(4, CGFloat(o.spacing) * 0.6) : CGFloat(o.spacing)
-        // Kleine Kacheln laden kleinere Cover (schneller, weniger Speicher auf älteren Macs).
-        let artwork: ArtworkSize = width <= 64 ? .small : (width <= 150 ? .thumb : .medium)
+        let usable = max(available, 60)
+        let count = max(1, Int(((usable + spacing) / (width + spacing)).rounded(.down)))
+        columnCount = count
+        let fill = (usable - CGFloat(count - 1) * spacing) / CGFloat(count)
+        tileWidth = max(40, min(fill, width * 1.5))
+        // Kleine Kacheln laden kleinere Cover (schneller, weniger Speicher auf älteren Macs), große ein großes.
+        let artwork = ArtworkSize.forTile(points: tileWidth, scale: scale)
         style = TileStyle(compact: compact, showSecondary: o.showSecondaryText, showDetails: o.showDetails, artworkSize: artwork)
     }
 
+    /// Genau `columnCount` flexible Spalten: füllen die tatsächliche Breite, nie breiter als 1,5 × Kachelgröße.
     var columns: [GridItem] {
-        [GridItem(.adaptive(minimum: minWidth, maximum: minWidth * 1.5), spacing: spacing, alignment: .top)]
+        let maxWidth = max(40, minWidth * 1.5)
+        return Array(repeating: GridItem(.flexible(minimum: 40, maximum: maxWidth), spacing: spacing, alignment: .top), count: columnCount)
     }
 
     var rowSpacing: CGFloat { spacing + (style.compact ? 6 : 12) }
+
+    /// Breite für Raster in einem Bereich (Fensterbereich abzüglich der Seitenränder).
+    static func available(_ viewport: CGSize) -> CGFloat {
+        viewport.width - Spacing.gutter * 2
+    }
+}
+
+extension ArtworkSize {
+    /// Kleinste Covergröße, die eine Fläche dieser Breite (Punkte) auf dem Bildschirm scharf füllt. Bis zu
+    /// 15 % Hochrechnen gelten als scharf – so springt nicht schon eine 270-pt-Kachel auf die größte Stufe.
+    static func forTile(points: CGFloat, scale: CGFloat) -> ArtworkSize {
+        let needed = points * max(scale, 1) * 0.87
+        for size in [ArtworkSize.small, .thumb, .medium, .large] where CGFloat(size.pixels) >= needed {
+            return size
+        }
+        return .large
+    }
 }
 
 // MARK: - Detailliste: Sortierung über die Spaltenköpfe
@@ -600,10 +637,30 @@ enum LibraryItems {
 
 struct CollectionActions {
     var open: (LibraryItem) -> Void
+    /// Abspielen (`false`) bzw. Mischen (`true`).
     var play: (LibraryItem, Bool) -> Void
     var toggleFavorite: ((LibraryItem) -> Void)? = nil
     var drop: ((LibraryItem, [Int64]) -> Void)? = nil
     var openLabel: String = "Öffnen"
+    /// Wiedergabequelle eines Eintrags (Auswahlleiste, Eingabetaste).
+    var source: ((LibraryItem) -> PlaybackSource)? = nil
+    /// Nur Alben: die Alben der Ansicht (gefiltert, sortiert) – damit „Zufall“ im Player später nach Alben mischt.
+    var albumContext: (() -> [[Int64]])? = nil
+}
+
+/// Ziel eines Kontextmenüs einer Sammlung: der angeklickte Eintrag bzw. – gehört er zur Auswahl – die ganze
+/// Auswahl.
+struct CollectionMenuTarget {
+    let item: LibraryItem
+    /// Alle betroffenen Titel (ohne Doppelte, in angezeigter Reihenfolge).
+    let uids: [Int64]
+    /// Je betroffenem Eintrag seine Titel.
+    let groups: [[Int64]]
+    /// Namen der betroffenen Einträge (höchstens einige).
+    let names: [String]
+
+    /// Wirkt das Menü auf mehrere gewählte Einträge?
+    var isSelection: Bool { groups.count > 1 }
 }
 
 /// Zellen der Detailliste einer Sammlung.

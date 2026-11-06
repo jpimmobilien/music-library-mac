@@ -57,7 +57,7 @@ final class PitchShiftAudioUnit: AUAudioUnit {
     override var canProcessInPlace: Bool { false }
     override var latency: TimeInterval {
         let rate = outputBus.format.sampleRate
-        guard pitchFactor != 1, rate > 0 else { return 0 }
+        guard rate > 0 else { return 0 }
         return Double(state.latencyFrames) / rate
     }
 
@@ -69,6 +69,8 @@ final class PitchShiftAudioUnit: AUAudioUnit {
         }
         state.allocate(channels: Int(format.channelCount), maxFrames: Int(maximumFramesToRender))
         state.sampleRate = format.sampleRate
+        state.post(nil, latency: 0)
+        delayedNeutral = false
         installProcessor()
     }
 
@@ -85,20 +87,38 @@ final class PitchShiftAudioUnit: AUAudioUnit {
         if renderResourcesAllocated { installProcessor() }
     }
 
-    /// Gepufferte Klänge verwerfen (nach Spulen, Titelwechsel, Stopp).
-    func flush() { state.requestReset() }
+    /// Gepufferte Klänge verwerfen (nach Spulen, Titelwechsel, Stopp). Stand die Tonhöhe zuletzt auf „Original“
+    /// mit verzögerter Überblendstufe, wird jetzt wieder verzögerungsfrei durchgereicht.
+    func flush() {
+        state.requestReset()
+        if delayedNeutral && abs(pitchFactor - 1) <= 1e-5 && renderResourcesAllocated {
+            delayedNeutral = false
+            state.post(nil, latency: 0)
+        }
+    }
+
+    /// Läuft gerade eine Verarbeitung mit Verzögerung (auch die neutrale Überblendstufe)?
+    private var delayedNeutral = false
 
     override func reset() {
         super.reset()
         state.requestReset()
     }
 
+    /// Neuen Prozessor übergeben. Zwischen zwei Tonhöhen blendet der Audio-Thread lückenlos über (gleiche Verzögerung
+    /// für alle Tonhöhen). Zurück auf „Original“ wird zuerst eine neutrale Stufe **mit** Verzögerung eingeblendet –
+    /// so entsteht weder Lücke noch Sprung; verzögerungsfrei wird erst beim nächsten Spulen/Titelwechsel (`flush`).
+    /// Nur beim ersten Einschalten aus „Original“ entsteht einmalig eine kurze Pause (≈ 0,14 s), wie bei Android.
     private func installProcessor() {
-        guard abs(pitchFactor - 1) > 1e-5 else {
+        let neutral = abs(pitchFactor - 1) <= 1e-5
+        if neutral && !state.hasProcessor && !delayedNeutral {
             state.post(nil, latency: 0)
             return
         }
-        let p = TimePitchProcessor(sampleRate: state.sampleRate, channels: state.channels, speed: 1, pitch: pitchFactor)
+        let p = TimePitchProcessor(sampleRate: state.sampleRate, channels: state.channels, speed: 1,
+                                   pitch: neutral ? 1 : pitchFactor, maxFramesPerCall: Int(maximumFramesToRender),
+                                   delaysWhenNeutral: neutral)
+        delayedNeutral = true
         state.post(p, latency: p.latencyFrames)
     }
 
@@ -123,27 +143,35 @@ private final class RenderState: @unchecked Sendable {
     private let inPointers = UnsafeMutablePointer<UnsafePointer<Float>>.allocate(capacity: 2)
     private let outPointers = UnsafeMutablePointer<UnsafeMutablePointer<Float>>.allocate(capacity: 2)
 
-    // Briefkasten: nur unter `lock` (Audio-Thread nur mit trylock)
+    // Briefkasten: `pending` nur unter `lock` (Audio-Thread nur mit trylock). `current`, `incoming` gehören dem
+    // Audio-Thread; abgelegte Prozessoren landen in `retired` (feste Plätze) und werden im Hauptthread freigegeben.
     private let lock = UnsafeMutablePointer<os_unfair_lock>.allocate(capacity: 1)
     private var current: Unmanaged<TimePitchProcessor>?
+    private var incoming: Unmanaged<TimePitchProcessor>?
+    private var incomingIsNil = false
     private var pending: Unmanaged<TimePitchProcessor>?
     private var hasPending = false
-    /// Vom Audio-Thread abgelegter alter Prozessor (Freigabe im Hauptthread beim nächsten `post`).
-    private var retired: Unmanaged<TimePitchProcessor>?
+    private static let retiredSlots = 4
+    private let retired = UnsafeMutablePointer<Unmanaged<TimePitchProcessor>?>.allocate(capacity: RenderState.retiredSlots)
     private let resetFlag = UnsafeMutablePointer<Int>.allocate(capacity: 1)
+    /// Hauptthread: Wurde zuletzt ein Prozessor (statt Durchreichen) übergeben?
+    private(set) var hasProcessor = false
 
     init() {
         lock.initialize(to: os_unfair_lock())
         resetFlag.initialize(to: 0)
+        retired.initialize(repeating: nil, count: Self.retiredSlots)
     }
 
     deinit {
         deallocate()
         os_unfair_lock_lock(lock)
         current?.release()
+        incoming?.release()
         pending?.release()
-        retired?.release()
+        for i in 0..<Self.retiredSlots { retired[i]?.release() }
         os_unfair_lock_unlock(lock)
+        retired.deallocate()
         lock.deallocate()
         resetFlag.deallocate()
         inPointers.deallocate()
@@ -179,15 +207,29 @@ private final class RenderState: @unchecked Sendable {
     /// Hauptthread: neuen Prozessor (oder `nil` = durchreichen) übergeben; Abgelegtes freigeben.
     func post(_ processor: TimePitchProcessor?, latency: Int) {
         let new = processor.map { Unmanaged.passRetained($0) }
+        var free: [Unmanaged<TimePitchProcessor>] = []
         os_unfair_lock_lock(lock)
-        pending?.release()          // noch nicht übernommen → verwerfen
+        if let p = pending { free.append(p) }    // noch nicht übernommen → verwerfen
         pending = new
         hasPending = true
-        let old = retired
-        retired = nil
+        for i in 0..<Self.retiredSlots {
+            if let r = retired[i] { free.append(r) }
+            retired[i] = nil
+        }
         os_unfair_lock_unlock(lock)
-        old?.release()
+        for r in free { r.release() }
+        hasProcessor = processor != nil
         latencyFrames = latency
+    }
+
+    /// Audio-Thread: alten Prozessor ablegen. `false`, wenn kein Platz frei ist (dann später erneut).
+    private func retire(_ p: Unmanaged<TimePitchProcessor>?) -> Bool {
+        guard let p else { return true }
+        for i in 0..<Self.retiredSlots where retired[i] == nil {
+            retired[i] = p
+            return true
+        }
+        return false
     }
 
     func requestReset() { resetFlag.pointee = 1 }
@@ -205,11 +247,11 @@ private final class RenderState: @unchecked Sendable {
         let status = pull(&pullFlags, timestamp, frameCount, 0, inputList.unsafeMutablePointer)
         if status != noErr { return status }
 
-        // Neuen Prozessor übernehmen (nie blockieren: ist die Sperre belegt, im nächsten Zyklus)
-        if os_unfair_lock_trylock(lock) {
-            if hasPending && retired == nil {
-                retired = current
-                current = pending
+        // Neuen Prozessor abholen (nie blockieren: ist die Sperre belegt, im nächsten Zyklus)
+        if incoming == nil && !incomingIsNil && os_unfair_lock_trylock(lock) {
+            if hasPending {
+                incoming = pending
+                incomingIsNil = pending == nil
                 pending = nil
                 hasPending = false
             }
@@ -223,18 +265,48 @@ private final class RenderState: @unchecked Sendable {
             if let src = inputList[c].mData?.assumingMemoryBound(to: Float.self) { inPointers[c] = UnsafePointer(src) }
             if let dst = out[c].mData?.assumingMemoryBound(to: Float.self) { outPointers[c] = dst }
         }
+
+        let reset = resetFlag.pointee != 0
+        if reset { resetFlag.pointee = 0 }
+
+        // Wechsel: ohne laufenden Prozessor bzw. zu „durchreichen“ sofort, sonst lückenlos überblenden
+        if incoming != nil || incomingIsNil {
+            if current == nil || incomingIsNil || reset {
+                if os_unfair_lock_trylock(lock) {
+                    if retire(current) {
+                        current = incoming
+                        incoming = nil
+                        incomingIsNil = false
+                    }
+                    os_unfair_lock_unlock(lock)
+                }
+            } else if let cur = current, let next = incoming {
+                var finished = false
+                cur._withUnsafeGuaranteedRef { c in
+                    next._withUnsafeGuaranteedRef { n in
+                        finished = c.process(input: UnsafePointer(inPointers), output: UnsafePointer(outPointers), frames: frames, crossfadingTo: n)
+                    }
+                }
+                if finished, os_unfair_lock_trylock(lock) {
+                    if retire(current) {
+                        current = incoming
+                        incoming = nil
+                    }
+                    os_unfair_lock_unlock(lock)
+                }
+                return noErr
+            }
+        }
+
         guard let current else {
             // Durchreichen
-            for c in 0..<min(out.count, channels) {
+            for c in 0..<min(out.count, channels) where outPointers[c] != UnsafeMutablePointer(mutating: inPointers[c]) {
                 outPointers[c].update(from: inPointers[c], count: frames)
             }
             return noErr
         }
         current._withUnsafeGuaranteedRef { p in
-            if resetFlag.pointee != 0 {
-                resetFlag.pointee = 0
-                p.reset()
-            }
+            if reset { p.reset() }
             p.process(input: UnsafePointer(inPointers), output: UnsafePointer(outPointers), frames: frames)
         }
         return noErr

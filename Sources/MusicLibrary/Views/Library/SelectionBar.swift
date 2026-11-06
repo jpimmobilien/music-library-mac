@@ -120,7 +120,8 @@ struct SelectionBarHost: View {
     @ObservedObject private var store = LibrarySelectionStore.shared
 
     var body: some View {
-        ZStack {
+        // Group statt Stapel: ohne Auswahl entsteht kein (leerer) Eintrag im umgebenden Stapel
+        Group {
             if let info = store.info {
                 SelectionBar(info: info)
                     .transition(.move(edge: .bottom).combined(with: .opacity))
