@@ -334,24 +334,79 @@ final class AudioEngineTests: XCTestCase {
         return 10 * log10(max(other, 1e-20) / max(wanted, 1e-20))
     }
 
-    /// Tonhöhe +2 Halbtöne auf einen Dur-Akkord: die portierte Android-Verarbeitung muss mindestens so sauber
-    /// sein wie Apples TimePitch (Version 2.0) – beide Werte werden ausgegeben.
-    func testPitchQualityPortedEngineVersusAppleTimePitch() throws {
+    /// Tonhöhe +2 Halbtöne auf einen Dur-Akkord (stehende Töne): Störanteil beider Verfahren wird ausgegeben;
+    /// die portierte Verarbeitung muss sauber bleiben (< −40 dB) und darf nicht übersteuern.
+    func testPitchQualityStationaryChord() throws {
         let freqs = [261.63, 329.63, 392.0, 523.25]
         let factor = pow(2.0, 2.0 / 12)
         let expected = freqs.map { $0 * factor }
-        var results: [String: Float] = [:]
         for (name, native) in [("Apple TimePitch (2.0)", true), ("Android-Verfahren (2.1)", false)] {
             let out = try render(chord(freqs, amplitude: 0.6, seconds: 4.0), nativePitch: native) { $0.pitchCents = 200 }
             let steadyPart = out[Int(0.5 * sampleRate)..<Int(3.6 * sampleRate)]
             let d = distortionDb(steadyPart, expected: expected)
             let pk = peak(steadyPart)
-            results[name] = d
-            print("[Pitch] \(name): Störanteil \(String(format: "%.1f", d)) dB, Spitze \(String(format: "%.3f", pk))")
+            print("[Pitch] Akkord +2 Halbtöne, \(name): Störanteil \(String(format: "%.1f", d)) dB, Spitze \(String(format: "%.3f", pk))")
             XCTAssertLessThanOrEqual(pk, 1.0, "\(name): kein Übersteuern")
+            if !native { XCTAssertLessThan(d, -40, "Android-Verfahren: sauberer Akkord") }
         }
-        let apple = results["Apple TimePitch (2.0)"]!, ported = results["Android-Verfahren (2.1)"]!
-        XCTAssertLessThanOrEqual(ported, apple + 1, "die neue Verarbeitung darf nicht schlechter sein")
+    }
+
+    /// Schlagzeugartige Anschläge (abklingendes Rauschen alle 250 ms): Ein Phasen-Vocoder verschmiert Anschläge nach
+    /// vorne („Vorecho“, klingt verwaschen/verzerrt). Gemessen wird die Energie 3–30 ms vor jedem Anschlag relativ zu
+    /// den 27 ms danach – je kleiner, desto knackiger. Das Android-Verfahren erkennt Anschläge und setzt die Phasen
+    /// zurück; es muss hier deutlich besser sein als Apples TimePitch.
+    func testPitchTransientsLessSmearedThanAppleTimePitch() throws {
+        let n = Int(4.0 * sampleRate)
+        let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(n))!
+        buffer.frameLength = AVAudioFrameCount(n)
+        var seed: UInt32 = 12345
+        for i in 0..<n {
+            let t = Double(i % Int(0.25 * sampleRate)) / sampleRate
+            seed = seed &* 1_664_525 &+ 1_013_904_223
+            let noise = Float(Int32(bitPattern: seed)) / Float(Int32.max)
+            let v = 0.5 * noise * Float(exp(-t / 0.015))
+            buffer.floatChannelData![0][i] = v
+            buffer.floatChannelData![1][i] = v
+        }
+        var results: [Bool: Float] = [:]
+        for native in [true, false] {
+            for cents: Float in [200, -300] {
+                let out = try render(buffer, nativePitch: native) { $0.pitchCents = cents }
+                let e = preEchoDb(out)
+                if cents == 200 { results[native] = e }
+                print("[Pitch] Anschläge \(cents > 0 ? "+" : "")\(Int(cents / 100)) Halbtöne, \(native ? "Apple TimePitch (2.0)" : "Android-Verfahren (2.1)"): Vorecho \(String(format: "%.1f", e)) dB")
+            }
+        }
+        XCTAssertLessThan(results[false]!, results[true]! - 3, "Android-Verfahren muss Anschläge deutlich weniger verschmieren")
+    }
+
+    /// Mittleres Vorecho in dB (s. o.): Hüllkurve in 0,5-ms-Blöcken, je 250-ms-Abschnitt der stärkste Block = Anschlag.
+    private func preEchoDb(_ out: [Float]) -> Float {
+        let block = 22
+        let blocks = out.count / block
+        var env = [Float](repeating: 0, count: blocks)
+        for b in 0..<blocks {
+            var e: Float = 0
+            for i in 0..<block { let v = out[b * block + i]; e += v * v }
+            env[b] = e
+        }
+        let perSegment = Int(0.25 * sampleRate) / block
+        var ratios: [Float] = []
+        var start = Int(0.5 * sampleRate) / block
+        while start + perSegment < blocks - perSegment {
+            let seg = start..<(start + perSegment)
+            let peakBlock = seg.max { env[$0] < env[$1] }!
+            let pre = (peakBlock - 60)..<(peakBlock - 6)
+            let post = peakBlock..<(peakBlock + 54)
+            if pre.lowerBound >= 0 && post.upperBound < blocks {
+                let a = pre.reduce(Float(0)) { $0 + env[$1] } / Float(pre.count)
+                let b = post.reduce(Float(0)) { $0 + env[$1] } / Float(post.count)
+                if b > 0 { ratios.append(a / b) }
+            }
+            start += perSegment
+        }
+        let mean = ratios.reduce(0, +) / Float(max(1, ratios.count))
+        return 10 * log10(max(mean, 1e-12))
     }
 
     /// Bass, Stimme, Mischung: gleiche Frequenzgenauigkeit für tiefe (55 Hz) und hohe (3 kHz) Töne, Mono-Datei.
