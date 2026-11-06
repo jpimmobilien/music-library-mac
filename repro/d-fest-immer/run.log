@@ -1,0 +1,24 @@
+[Snapshot] ▸ 03-alben hell
+[Snapshot] 03-alben hell: Aufbau+Warten 2205 ms, Hauptthread-Verzögerung Ø 15.5 ms, max 29.3 ms, Hauptthread belegt 3 %
+[Snapshot] ▸ 03-alben dunkel
+[Snapshot] 03-alben dunkel: Aufbau+Warten 2242 ms, Hauptthread-Verzögerung Ø 12.3 ms, max 25.8 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 20-titel-raster hell
+[Snapshot] 20-titel-raster hell: Aufbau+Warten 2237 ms, Hauptthread-Verzögerung Ø 11.5 ms, max 35.3 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 20-titel-raster dunkel
+[Snapshot] 20-titel-raster dunkel: Aufbau+Warten 2211 ms, Hauptthread-Verzögerung Ø 10.3 ms, max 27.5 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 21-alben-kompakt hell
+[Snapshot] 21-alben-kompakt hell: Aufbau+Warten 2298 ms, Hauptthread-Verzögerung Ø 82.0 ms, max 149.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 21-alben-kompakt dunkel
+[Snapshot] 21-alben-kompakt dunkel: Aufbau+Warten 2202 ms, Hauptthread-Verzögerung Ø 123.7 ms, max 328.2 ms, Hauptthread belegt 2 %
+[Snapshot] ▸ 21-alben-liste hell
+[Snapshot] 21-alben-liste hell: Aufbau+Warten 2231 ms, Hauptthread-Verzögerung Ø 68.5 ms, max 150.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 21-alben-liste dunkel
+[Snapshot] 21-alben-liste dunkel: Aufbau+Warten 2295 ms, Hauptthread-Verzögerung Ø 92.5 ms, max 153.8 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 26-alben-raster-max hell
+[Snapshot] 26-alben-raster-max hell: Aufbau+Warten 2216 ms, Hauptthread-Verzögerung Ø 97.2 ms, max 147.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 26-alben-raster-max dunkel
+[Snapshot] 26-alben-raster-max dunkel: Aufbau+Warten 2243 ms, Hauptthread-Verzögerung Ø 70.3 ms, max 158.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 26-alben-raster-max-breit hell
+[Snapshot] 26-alben-raster-max-breit hell: Aufbau+Warten 2213 ms, Hauptthread-Verzögerung Ø 79.0 ms, max 138.8 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 26-alben-raster-max-breit dunkel
+[Snapshot] 26-alben-raster-max-breit dunkel: Aufbau+Warten 2220 ms, Hauptthread-Verzögerung Ø 75.5 ms, max 146.3 ms, Hauptthread belegt 0 %

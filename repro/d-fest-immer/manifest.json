@@ -1,0 +1,117 @@
+{
+  "architecture" : "arm64",
+  "images" : [
+    {
+      "elapsedMs" : "2205",
+      "file" : "03-alben-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "3",
+      "mainThreadLagMaxMs" : "29.3",
+      "mainThreadLagMeanMs" : "15.5",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2242",
+      "file" : "03-alben-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "25.8",
+      "mainThreadLagMeanMs" : "12.3",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2237",
+      "file" : "20-titel-raster-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "35.3",
+      "mainThreadLagMeanMs" : "11.5",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2211",
+      "file" : "20-titel-raster-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "27.5",
+      "mainThreadLagMeanMs" : "10.3",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2298",
+      "file" : "21-alben-kompakt-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "149.0",
+      "mainThreadLagMeanMs" : "82.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2202",
+      "file" : "21-alben-kompakt-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "2",
+      "mainThreadLagMaxMs" : "328.2",
+      "mainThreadLagMeanMs" : "123.7",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2231",
+      "file" : "21-alben-liste-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "150.3",
+      "mainThreadLagMeanMs" : "68.5",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2295",
+      "file" : "21-alben-liste-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "153.8",
+      "mainThreadLagMeanMs" : "92.5",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2216",
+      "file" : "26-alben-raster-max-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "147.9",
+      "mainThreadLagMeanMs" : "97.2",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2243",
+      "file" : "26-alben-raster-max-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "158.4",
+      "mainThreadLagMeanMs" : "70.3",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2213",
+      "file" : "26-alben-raster-max-breit-hell-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "138.8",
+      "mainThreadLagMeanMs" : "79.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2220",
+      "file" : "26-alben-raster-max-breit-dunkel-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "146.3",
+      "mainThreadLagMeanMs" : "75.5",
+      "method" : "window-server"
+    }
+  ],
+  "interFont" : true,
+  "liquidGlass" : true,
+  "macOS" : "Version 26.7.2 (Build 25G332)",
+  "screen" : "1024x768 @1.0x, sichtbar 1024x677"
+}

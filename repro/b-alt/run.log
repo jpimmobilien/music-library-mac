@@ -1,0 +1,71 @@
+[Snapshot] ▸ 21-alben-kompakt hell
+*** Terminating app due to uncaught exception 'NSGenericException', reason: 'The window has been marked as needing another Layout Window pass, but it has already had more Layout Window passes than there are views in the window. 
+<SwiftUI.AppKitWindow: 0x1020a1ca0> 0x2b (43) {{0, 63}, {1024, 674}} de'
+*** First throw call stack:
+(
+	0   CoreFoundation                      0x0000000188148240 __exceptionPreprocess + 176
+	1   libobjc.A.dylib                     0x0000000187bc291c objc_exception_throw + 88
+	2   CoreFoundation                      0x0000000188148130 +[NSException exceptionWithName:reason:userInfo:] + 0
+	3   AppKit                              0x000000018d173dcc -[NSWindow(NSDisplayCycle) _postWindowNeedsLayout] + 1732
+	4   AppKit                              0x000000018d51f850 -[NSWindow(NSConstraintBasedLayoutInternal) _setViewsNeedLayout:] + 48
+	5   AppKit                              0x000000018c531114 -[NSView setNeedsLayout:] + 620
+	6   AppKit                              0x000000018c595b04 -[NSScrollView setNeedsLayout:] + 56
+	7   AppKit                              0x000000018d353db8 -[NSScrollView didChangeValueForKey:] + 92
+	8   CoreFoundation                      0x00000001880a0b30 __CFSetApplyFunction_block_invoke + 28
+	9   CoreFoundation                      0x00000001880a0960 CFBasicHashApply + 144
+	10  CoreFoundation                      0x00000001880a08a0 CFSetApplyFunction + 228
+	11  AppKit                              0x000000018d4a84b0 __reusableDependencyContextForKey_block_invoke + 140
+	12  CoreFoundation                      0x00000001880a0b30 __CFSetApplyFunction_block_invoke + 28
+	13  CoreFoundation                      0x00000001880a0960 CFBasicHashApply + 144
+	14  CoreFoundation                      0x00000001880a08a0 CFSetApplyFunction + 228
+	15  AppKit                              0x000000018c5462f4 NSDP_setPropertyValue + 2184
+	16  AppKit                              0x000000018d4ace30 __cons_NSDP_NSDPTypeEdgeInsets_block_invoke.413 + 44
+	17  SwiftUI                             0x00000001bdc91c2c $s7SwiftUI17HostingScrollViewC17PlatformContainerC14updateSafeArea_15layoutDirectionyAA10EdgeInsetsV_AA06LayoutL0OtF + 336
+	18  SwiftUI                             0x00000001be85e3f4 $s7SwiftUI24UpdatedHostingScrollView33_2827C9FDBC03BB2C61476E3A694FFF5DLLV11updateValueyyF + 5152
+	19  SwiftUI                             0x00000001bd6a10f0 $s14AttributeGraph0A0VyACyxGqd__c5ValueQyd__RszAA12StatefulRuleRd__lufcADSPyqd__GXEfU_ySv_So11AGAttributeatcyXEfU_ySv_AJtcfu_7SwiftUI17HostingScrollViewC_AK07UpdatedijK033_2827C9FDBC03BB2C61476E3	20  AttributeGraph                      0x00000001bebe5384 _ZN2AG5Graph11UpdateStack6updateEv + 496
+	21  AttributeGraph                      0x00000001bebe5aec _ZN2AG5Graph16update_attributeENS_4data3ptrINS_4NodeEEEj + 352
+	22  AttributeGraph                      0x00000001bebecf08 _ZN2AG5Graph9value_refENS_11AttributeIDEjPK15AGSwiftMetadataRh + 296
+	23  AttributeGraph                      0x00000001bec06000 AGGraphGetWeakValue + 372
+	24  SwiftUICore                         0x00000002361ea994 $s7SwiftUI9ViewGraphC13responderNodeAA09ResponderF0CSgvg + 48
+	25  SwiftUI                             0x00000001bdcfe8e4 $s7SwiftUI13NSHostingViewC13responderNodeAA09ResponderF0CSgvgAgA0D5GraphCXEfU_ + 28
+	26  SwiftUICore                         0x00000002361e4650 $s7SwiftUI16ViewRendererHostPAAE06updateC5Graph4bodyqd__qd__AA0cG0CXE_tlFqd__yXEfU_ + 108
+	27  SwiftUICore                         0x00000002361e24f8 $s7SwiftUI16ViewRendererHostPAAE06updateC5Graph4bodyqd__qd__AA0cG0CXE_tlF + 96
+	28  SwiftUI                             0x00000001bdcec98c $s7SwiftUI13NSHostingViewC13responderNodeAA09ResponderF0CSgvg + 272
+	29  SwiftUI                             0x00000001bd848e5c $s7SwiftUI14FocusNavigatorV18firstNavigableItemAA0cG0VSgvgTm + 444
+	30  SwiftUI                             0x00000001bdc505c0 $s7SwiftUI11FocusBridgeC25hostAcceptsFirstResponderSbvg + 276
+	31  SwiftUI                             0x00000001bdd0db9c $s7SwiftUI13NSHostingViewC21needsPanelToBecomeKeySbvgTm + 76
+	32  SwiftUI                             0x00000001bdd0db34 $s7SwiftUI13NSHostingViewC21acceptsFirstResponderSbvgTo + 48
+	33  AppKit                              0x000000018d246c24 -[NSView _opaqueRectForWindowMoveWhenInTitlebar] + 24
+	34  AppKit                              0x000000018c5bf4ec -[NSView _regionForOpaqueDescendants:forMove:forUnderTitlebar:] + 512
+	35  AppKit                              0x000000018c5beff8 -[NSThemeFrame _opaqueFullSizeContentViewRegionWithClipRect:] + 192
+	36  AppKit                              0x000000018c5bee08 -[NSThemeFrame _regionForOpaqueDescendants:forMove:forUnderTitlebar:] + 136
+	37  AppKit                              0x000000018d09f56c -[NSWindow(Regions) _regionForOpaqueViewsBlockingDraggableFrame:] + 52
+	38  AppKit                              0x000000018d09f3ac -[NSWindow(Regions) _resetDragMargins] + 316
+	39  AppKit                              0x000000018d09fe78 -[NSWindow(Regions) _resetDragMarginsIfNeeded] + 48
+	40  AppKit                              0x000000018c5bded8 __NSWindowGetDisplayCycleObserverForUpdateStructuralRegions_block_invoke + 368
+	41  AppKit                              0x000000018c5ba364 NSDisplayCycleObserverInvoke + 168
+	42  AppKit                              0x000000018c5b9fe0 NSDisplayCycleFlush + 656
+	43  QuartzCore                          0x000000019211fd9c _ZN2CA11Transaction19run_commit_handlersE18CATransactionPhase + 120
+	44  QuartzCore                          0x000000019211e3d8 _ZN2CA11Transaction6commitEv + 324
+	45  QuartzCore                          0x000000019231c2bc _ZN2CA11Transaction25flush_as_runloop_observerEb + 140
+	46  AppKit                              0x000000018ce510c8 stepTransactionFlush + 220
+	47  UpdateCycle                         0x000000027fde62f4 _ZN2UC10DriverCore18continueProcessingEv + 84
+	48  CoreFoundation                      0x00000001880d9394 __CFRUNLOOP_IS_CALLING_OUT_TO_AN_OBSERVER_CALLBACK_FUNCTION__ + 36
+	49  CoreFoundation                      0x00000001880d9290 __CFRunLoopDoObservers + 648
+	50  CoreFoundation                      0x00000001881ab4d8 _CFRunLoopRunSpecificWithOptions + 484
+	51  HIToolbox                           0x0000000194ed5560 RunCurrentEventLoopInMode + 320
+	52  HIToolbox                           0x0000000194ed88bc ReceiveNextEventCommon + 488
+	53  HIToolbox                           0x000000019506214c _BlockUntilNextEventMatchingListInMode + 48
+	54  AppKit                              0x000000018cbc33d0 _DPSBlockUntilNextEventMatchingListInMode + 228
+	55  AppKit                              0x000000018c517084 _DPSNextEvent + 576
+	56  AppKit                              0x000000018d0ac96c -[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:] + 688
+	57  AppKit                              0x000000018d0ac678 -[NSApplication(NSEventRouting) nextEventMatchingMask:untilDate:inMode:dequeue:] + 72
+	58  AppKit                              0x000000018c50a13c -[NSApplication run] + 368
+	59  AppKit                              0x000000018c4e27b0 NSApplicationMain + 880
+	60  SwiftUI                             0x00000001bd593af8 $s7SwiftUI6runAppys5NeverOSo21NSApplicationDelegate_So11NSResponderCXcFTf4e_nAA07TestingdG0C_Tg5Tm + 140
+	61  SwiftUI                             0x00000001bd94e8d8 $s7SwiftUI6runAppys5NeverOxAA0D0RzlF + 104
+	62  SwiftUI                             0x00000001bdc1a778 $s7SwiftUI3AppPAAE4mainyyFZ + 224
+	63  MusicLibrary                        0x0000000100afa688 MusicLibrary_main + 64
+	64  dyld                                0x0000000187c514e4 start + 6992
+)
+libc++abi: terminating due to uncaught exception of type NSException
