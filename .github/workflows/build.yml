@@ -181,7 +181,7 @@ jobs:
         env:
           SNAPSHOT_ARCH: ${{ matrix.arch }}
           # arm64: alle Ansichten; Intel-Code über Rosetta: eine Auswahl typischer Ansichten
-          ML_SNAPSHOT_ONLY: ${{ matrix.arch == 'x86_64' && '01-bibliothek,03-alben,03-album-detail,10-vinyl,12-kassette,13-equalizer,14-metadaten,17-einstellungen,21-alben-coverflow,21-alben-detailliste,30-modern-glass,31-aurora,32-studio-reel,34-mini-gross,35-popover-tonhoehe,40-einstellungen-equalizer' || '' }}
+          ML_SNAPSHOT_ONLY: ${{ matrix.arch == 'x86_64' && '01-bibliothek,03-alben,03-album-detail,10-vinyl,12-kassette,13-equalizer,14-metadaten,17-einstellungen,21-alben-coverflow,21-alben-detailliste,30-modern-glass,31-aurora,32-studio-reel,34-mini-gross,35-popover-tonhoehe,40-einstellungen-equalizer,50-mini-riesig,52-player-formatzeile,26-alben-raster-gescrollt,27-auswahl-alben,53-equalizer-fenster-pop' || '' }}
         run: |
           mkdir -p "snapshots/${{ matrix.name }}"
           scripts/run_snapshots.sh "$HOME/Applications/Music Library.app" "snapshots/${{ matrix.name }}"
