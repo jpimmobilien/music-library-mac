@@ -27,14 +27,15 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: macos-15
-            label: Apple Silicon · macOS 15
+          # macOS 14 wird nicht mehr angeboten, macOS-15-Apple-Silicon-Rechner wurden am 06.11.2026 nicht zugeteilt
+          - os: macos-26
+            label: Apple Silicon · macOS 26
             arch: ""
-            name: macos-15
-          - os: macos-15
-            label: Intel-Code über Rosetta · macOS 15
+            name: macos-26
+          - os: macos-26
+            label: Intel-Code über Rosetta · macOS 26
             arch: x86_64
-            name: macos-15-rosetta-x86_64
+            name: macos-26-rosetta-x86_64
     runs-on: ${{ matrix.os }}
     timeout-minutes: 75
     steps:
@@ -92,8 +93,8 @@ jobs:
           git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "ci-abnahme-${{ matrix.name }}"
 
   ab:
-    name: Vergleich 2.0 ↔ 2.1 (macOS 15, Apple Silicon)
-    runs-on: macos-15
+    name: Vergleich 2.0 ↔ 2.1 (macOS 26, Apple Silicon)
+    runs-on: macos-26
     timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
