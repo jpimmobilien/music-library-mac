@@ -49,10 +49,13 @@ echo "▸ Mindest-macOS je Architektur:"
 otool -l -arch arm64 "$APP/Contents/MacOS/$EXE" | grep -A3 LC_BUILD_VERSION | grep minos || true
 otool -l -arch x86_64 "$APP/Contents/MacOS/$EXE" | grep -A3 LC_BUILD_VERSION | grep minos || true
 echo "▸ Verknüpfte Bibliotheken (nur System-Frameworks erwartet):"
-otool -L "$APP/Contents/MacOS/$EXE" | tail -n +2
-if otool -L "$APP/Contents/MacOS/$EXE" | tail -n +2 | grep -v -E "^\s*(/System/Library/|/usr/lib/)"; then
-    echo "✗ Nicht-System-Bibliothek verknüpft"; exit 1
+LIBS="$(otool -L "$APP/Contents/MacOS/$EXE" | grep -E "^[[:space:]]+/" | awk '{print $1}' | sort -u)"
+echo "$LIBS"
+FOREIGN="$(echo "$LIBS" | grep -v -E "^(/System/Library/|/usr/lib/)" || true)"
+if [ -n "$FOREIGN" ]; then
+    echo "✗ Nicht-System-Bibliothek verknüpft: $FOREIGN"; exit 1
 fi
+echo "✓ Nur Systembibliotheken – nichts muss mitgeliefert werden"
 
 xattr -cr "$APP"
 if [ -n "${SIGN_IDENTITY:-}" ]; then
