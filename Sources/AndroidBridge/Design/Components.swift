@@ -24,7 +24,7 @@ struct FileGlyph: View {
 
     var body: some View {
         Image(systemName: kind.symbolName)
-            .font(.system(size: size * 0.82, weight: .medium))
+            .font(.inter(size * 0.82, .medium))
             .foregroundStyle(kind.tint)
             .frame(width: size + 4, height: size + 4)
     }
@@ -43,7 +43,7 @@ struct IconTile: View {
             RoundedRectangle(cornerRadius: size * 0.3, style: .continuous)
                 .strokeBorder(Color.white.opacity(0.25), lineWidth: 0.6)
             Image(systemName: symbol)
-                .font(.system(size: size * 0.46, weight: .semibold))
+                .font(.inter(size * 0.46, .semibold))
                 .foregroundStyle(.white)
         }
         .frame(width: size, height: size)
@@ -74,7 +74,7 @@ struct StatusPill: View {
                 Circle().fill(color).frame(width: 7, height: 7)
             }
             Text(state.title)
-                .font(.system(size: 11.5, weight: .semibold))
+                .font(.inter(11.5, .semibold))
                 .foregroundStyle(state == .disconnected ? .secondary : .primary)
         }
         .padding(.horizontal, 10)
@@ -137,16 +137,16 @@ struct StorageCard: View {
                     IconTile(symbol: storage.symbolName, tint: storage.isRemovable ? Palette.bridgeBlue : Palette.bridgeGreen, size: compact ? 30 : 38)
                     VStack(alignment: .leading, spacing: 2) {
                         Text(storage.displayName)
-                            .font(.system(size: compact ? 13 : 15, weight: .semibold))
+                            .font(.inter(compact ? 13 : 15, .semibold))
                             .lineLimit(1)
                         Text(storage.typeName + (storage.isReadOnly ? " · schreibgeschützt" : ""))
-                            .font(.system(size: 11.5))
+                            .font(.inter(11.5))
                             .foregroundStyle(.secondary)
                     }
                     Spacer(minLength: 0)
                     if action != nil {
                         Image(systemName: "chevron.right")
-                            .font(.system(size: 12, weight: .semibold))
+                            .font(.inter(12, .semibold))
                             .foregroundStyle(.tertiary)
                             .opacity(hovering ? 1 : 0.5)
                     }
@@ -158,12 +158,12 @@ struct StorageCard: View {
                         Spacer()
                         Text("\(ByteFormat.string(storage.free)) frei von \(ByteFormat.string(storage.capacity))")
                     }
-                    .font(.system(size: 11, weight: .medium))
+                    .font(.inter(11, .medium))
                     .foregroundStyle(.secondary)
                     .monospacedDigit()
                 } else {
                     Text("Kapazität nicht verfügbar")
-                        .font(.system(size: 11))
+                        .font(.inter(11))
                         .foregroundStyle(.secondary)
                 }
             }
@@ -189,13 +189,16 @@ struct EmptyStateView<Actions: View>: View {
     var body: some View {
         VStack(spacing: 14) {
             Image(systemName: symbol)
-                .font(.system(size: 40, weight: .light))
-                .foregroundStyle(.secondary)
+                .font(.inter(30, .regular))
+                .foregroundStyle(Palette.bridgeGreen)
+                .frame(width: 76, height: 76)
+                .glassSurface(Circle(), strong: true)
             Text(title)
-                .font(.system(size: 17, weight: .semibold))
+                .font(Typo.title2)
+                .foregroundStyle(Palette.textPrimary)
             Text(message)
-                .font(.system(size: 13))
-                .foregroundStyle(.secondary)
+                .font(Typo.body)
+                .foregroundStyle(Palette.textSecondary)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: 420)
             actions()
@@ -224,15 +227,15 @@ struct IssueBanner: View {
     var body: some View {
         HStack(alignment: .top, spacing: 14) {
             Image(systemName: issue.symbolName)
-                .font(.system(size: 22, weight: .semibold))
+                .font(.inter(22, .semibold))
                 .foregroundStyle(Palette.warning)
                 .frame(width: 30)
             VStack(alignment: .leading, spacing: 6) {
-                Text(issue.title).font(.system(size: 14, weight: .semibold))
-                Text(issue.message).font(.system(size: 12.5)).foregroundStyle(.secondary)
+                Text(issue.title).font(.inter(14, .semibold))
+                Text(issue.message).font(.inter(12.5)).foregroundStyle(.secondary)
                 if let r = issue.recommendation {
                     Label(r, systemImage: "lightbulb")
-                        .font(.system(size: 12.5))
+                        .font(.inter(12.5))
                         .labelStyle(.titleAndIcon)
                 }
                 HStack(spacing: 8) {
@@ -245,7 +248,7 @@ struct IssueBanner: View {
                     if issue.technical != nil {
                         Button(showDetails ? "Details ausblenden" : "Technische Details") { showDetails.toggle() }
                             .buttonStyle(.link)
-                            .font(.system(size: 11.5))
+                            .font(.inter(11.5))
                     }
                 }
                 .padding(.top, 2)
@@ -275,10 +278,9 @@ struct SectionTitle: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(title).font(.system(size: 13, weight: .semibold)).foregroundStyle(.secondary)
-                .textCase(.uppercase)
-                .tracking(0.6)
-            if let subtitle { Text(subtitle).font(.system(size: 12)).foregroundStyle(.tertiary) }
+            Text(title.uppercased()).font(Typo.sectionLabel).foregroundStyle(Palette.textSecondary)
+                .tracking(0.7)
+            if let subtitle { Text(subtitle).font(.inter(12)).foregroundStyle(.tertiary) }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }

@@ -479,6 +479,8 @@ enum TransferClipboard {
 /// Zustand des Dateimanagers (beide Spalten, aktive Spalte, Ansicht).
 @MainActor
 final class FileManagerModel: ObservableObject {
+    /// Fenster, zu dem dieser Dateimanager gehört (für Dialoge).
+    var windowOrigin = "main"
     @Published var layout: FileManagerLayout = .dual
     @Published var activePane: Pane = .device
     @Published var clipboard: TransferClipboard?
@@ -743,6 +745,14 @@ final class GalleryModel: ObservableObject {
         let byID = Dictionary(list.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
         visible = sorted.compactMap { byID[$0.id] }
         selection = selection.intersection(Set(visible.map(\.id)))
+    }
+
+    /// Nach dem Löschen: entfernte Objekte aus der Galerie nehmen (ohne neue Suche).
+    func remove(ids: Set<String>) {
+        guard !ids.isEmpty else { return }
+        items.removeAll { ids.contains($0.id) }
+        selection.subtract(ids)
+        recompute()
     }
 
     func counts() -> [MediaFilter: Int] {

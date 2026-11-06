@@ -1,0 +1,416 @@
+import SwiftUI
+import AppKit
+import ABCore
+
+// =============================================================================================
+// Wiederkehrende Bausteine aller Seiten: Seitengerüst mit großem Titel und Werkzeugkapsel, Glasknöpfe,
+// Suchfeld, Segmente, schwebende Aktionsleiste, Hinweise, Dialogkopf, Einstellungsabschnitte.
+// =============================================================================================
+
+/// Gerüst einer Seite: großer Titel (Inter Display) mit Untertitel links, Werkzeugkapsel rechts.
+/// Die Kopfzeile verschiebt das Fenster (verdeckte Titelleiste).
+struct PageScaffold<Toolbar: View, Content: View>: View {
+    let title: String
+    var subtitle: String?
+    @ViewBuilder var toolbar: () -> Toolbar
+    @ViewBuilder var content: () -> Content
+
+    var body: some View {
+        VStack(spacing: 0) {
+            PageHeader(title: title, subtitle: subtitle, toolbar: toolbar)
+            content()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+    }
+}
+
+extension PageScaffold where Toolbar == EmptyView {
+    init(title: String, subtitle: String? = nil, @ViewBuilder content: @escaping () -> Content) {
+        self.init(title: title, subtitle: subtitle, toolbar: { EmptyView() }, content: content)
+    }
+}
+
+struct PageHeader<Toolbar: View>: View {
+    let title: String
+    var subtitle: String?
+    @ViewBuilder var toolbar: () -> Toolbar
+
+    var body: some View {
+        HStack(alignment: .center, spacing: Spacing.l) {
+            VStack(alignment: .leading, spacing: 3) {
+                Text(title)
+                    .font(Typo.largeTitle)
+                    .foregroundStyle(Palette.textPrimary)
+                    .lineLimit(1)
+                if let subtitle, !subtitle.isEmpty {
+                    Text(subtitle)
+                        .font(Typo.callout)
+                        .foregroundStyle(Palette.textSecondary)
+                        .lineLimit(1)
+                        .truncationMode(.middle)
+                }
+            }
+            .layoutPriority(1)
+            Spacer(minLength: Spacing.m)
+            toolbar()
+        }
+        .padding(.horizontal, Spacing.gutter)
+        .padding(.top, Metrics.headerTop)
+        .padding(.bottom, Spacing.l)
+        .frame(minHeight: 92, alignment: .bottom)
+        .background(WindowDragArea())
+    }
+}
+
+/// Glaskapsel für Werkzeugknöpfe.
+struct ToolbarCapsule<Content: View>: View {
+    @ViewBuilder var content: () -> Content
+
+    var body: some View {
+        HStack(spacing: 2) { content() }
+            .padding(.horizontal, 4)
+            .frame(height: Metrics.toolbarHeight)
+            .glassSurface(Capsule(), strong: true)
+    }
+}
+
+/// Trennstrich innerhalb einer Werkzeugkapsel.
+struct ToolbarDivider: View {
+    var body: some View {
+        Rectangle().fill(Palette.hairline).frame(width: 1, height: 18).padding(.horizontal, 3)
+    }
+}
+
+/// Runder Symbolknopf für Werkzeugkapseln.
+struct ToolbarIconButton: View {
+    let symbol: String
+    let help: String
+    var tint: Color?
+    var isOn = false
+    let action: () -> Void
+    @State private var hovering = false
+    @Environment(\.isEnabled) private var isEnabled
+
+    var body: some View {
+        Button(action: action) {
+            Image(systemName: symbol)
+                .font(.inter(14, .medium))
+                .foregroundStyle(isOn ? Palette.bridgeGreen : (tint ?? Palette.textPrimary))
+                .frame(width: Metrics.toolbarButton, height: Metrics.toolbarButton)
+                .background(Circle().fill(isOn ? Palette.selectionFill : (hovering && isEnabled ? Palette.hoverFill : .clear)))
+                .contentShape(Circle())
+        }
+        .buttonStyle(.plain)
+        .opacity(isEnabled ? 1 : 0.35)
+        .help(help)
+        .accessibilityLabel(help)
+        .onHover { hovering = $0 }
+        .animation(.bridgeQuick, value: hovering)
+    }
+}
+
+/// Menü mit Symbol (für Werkzeugkapseln).
+struct ToolbarMenu<Items: View>: View {
+    let symbol: String
+    let help: String
+    @ViewBuilder var items: () -> Items
+
+    var body: some View {
+        Menu {
+            items()
+        } label: {
+            Image(systemName: symbol)
+                .font(.inter(14, .medium))
+                .frame(width: Metrics.toolbarButton, height: Metrics.toolbarButton)
+        }
+        .menuStyle(.borderlessButton)
+        .menuIndicator(.hidden)
+        .fixedSize()
+        .frame(width: Metrics.toolbarButton, height: Metrics.toolbarButton)
+        .help(help)
+        .accessibilityLabel(help)
+    }
+}
+
+/// Rundes Suchfeld in Glas.
+struct GlassSearchField: View {
+    @Binding var text: String
+    var prompt = "Suchen"
+    var width: CGFloat = 220
+    var focusToken: UUID?
+    var focusEnabled = true
+    @FocusState private var focused: Bool
+
+    var body: some View {
+        HStack(spacing: 7) {
+            Image(systemName: "magnifyingglass")
+                .font(.inter(12.5, .medium))
+                .foregroundStyle(Palette.textSecondary)
+            TextField(prompt, text: $text)
+                .textFieldStyle(.plain)
+                .font(Typo.body)
+                .focused($focused)
+            if !text.isEmpty {
+                Button { text = "" } label: {
+                    Image(systemName: "xmark.circle.fill").foregroundStyle(Palette.textTertiary)
+                }
+                .buttonStyle(.plain)
+                .help("Suche leeren")
+            }
+        }
+        .padding(.horizontal, 12)
+        .frame(width: width, height: Metrics.searchHeight)
+        .glassSurface(Capsule(), strong: true)
+        .overlay(Capsule().strokeBorder(Palette.bridgeGreen.opacity(focused ? 0.55 : 0), lineWidth: 1.5))
+        .animation(.bridgeQuick, value: focused)
+        .onChange(of: focusToken) { _ in if focusEnabled { focused = true } }
+    }
+}
+
+/// Eintrag eines Segmentschalters.
+struct SegmentOption<Value: Hashable>: Identifiable {
+    var id: Value { value }
+    let value: Value
+    var title: String?
+    var symbol: String?
+    var help: String?
+}
+
+/// Segmentschalter mit gleitender Auswahl.
+struct GlassSegmented<Value: Hashable>: View {
+    @Binding var selection: Value
+    let options: [SegmentOption<Value>]
+    @Namespace private var ns
+    @Environment(\.animationsEnabled) private var animations
+
+    var body: some View {
+        HStack(spacing: 2) {
+            ForEach(options) { option in
+                let selected = option.value == selection
+                Button {
+                    withAnimation(animations ? Motion.lens : nil) { selection = option.value }
+                } label: {
+                    HStack(spacing: 5) {
+                        if let symbol = option.symbol { Image(systemName: symbol).font(.inter(12.5, .medium)) }
+                        if let title = option.title { Text(title).font(.inter(12.5, selected ? .semibold : .medium)) }
+                    }
+                    .foregroundStyle(selected ? Palette.textPrimary : Palette.textSecondary)
+                    .padding(.horizontal, option.title == nil ? 9 : 12)
+                    .frame(height: 26)
+                    .background {
+                        if selected {
+                            Capsule()
+                                .fill(Palette.surface)
+                                .shadow(color: Palette.shadow, radius: 3, y: 1)
+                                .matchedGeometryEffect(id: "selection", in: ns)
+                        }
+                    }
+                    .contentShape(Capsule())
+                }
+                .buttonStyle(.plain)
+                .help(option.help ?? option.title ?? "")
+            }
+        }
+        .padding(3)
+        .background(Capsule().fill(Palette.fieldFill))
+    }
+}
+
+/// Schwebende Aktionsleiste unten (Auswahl).
+struct FloatingActionBar<Content: View>: View {
+    @ViewBuilder var content: () -> Content
+
+    var body: some View {
+        GlassGroup {
+            HStack(spacing: Spacing.m) { content() }
+                .padding(.leading, 18)
+                .padding(.trailing, 8)
+                .frame(height: 50)
+                .glassSurface(Capsule(), strong: true, elevated: true)
+        }
+        .transition(.move(edge: .bottom).combined(with: .opacity))
+    }
+}
+
+/// Zählertext in der Aktionsleiste („12 ausgewählt · 48 MB“).
+struct SelectionSummary: View {
+    let count: Int
+    let bytes: UInt64?
+
+    var body: some View {
+        HStack(spacing: 6) {
+            Text("\(count)")
+                .font(.inter(13, .bold))
+                .foregroundStyle(Palette.onAccent)
+                .padding(.horizontal, 8)
+                .frame(minWidth: 24, minHeight: 22)
+                .background(Capsule().fill(Palette.bridgeGreen))
+            Text("ausgewählt").font(Typo.bodyMedium)
+            if let bytes {
+                Text("· \(ByteFormat.string(bytes))").font(Typo.body).foregroundStyle(Palette.textSecondary).monospacedDigit()
+            }
+        }
+        .fixedSize()
+    }
+}
+
+/// Kurzer Hinweis unten (verschwindet von selbst).
+struct ToastMessage: Identifiable, Equatable {
+    let id = UUID()
+    var symbol: String
+    var tint: Color
+    var title: String
+    var detail: String?
+}
+
+struct ToastView: View {
+    let toast: ToastMessage
+
+    var body: some View {
+        HStack(spacing: 10) {
+            Image(systemName: toast.symbol)
+                .font(.inter(16, .semibold))
+                .foregroundStyle(toast.tint)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(toast.title).font(Typo.headline).foregroundStyle(Palette.textPrimary)
+                if let d = toast.detail { Text(d).font(Typo.caption).foregroundStyle(Palette.textSecondary) }
+            }
+        }
+        .padding(.horizontal, 18)
+        .padding(.vertical, 11)
+        .glassSurface(Capsule(), strong: true, elevated: true)
+    }
+}
+
+/// Kopf eines Dialogs.
+struct SheetHeader: View {
+    let symbol: String
+    var tint: Color = Palette.bridgeGreen
+    let title: String
+    var subtitle: String?
+
+    var body: some View {
+        HStack(alignment: .center, spacing: 14) {
+            IconTile(symbol: symbol, tint: tint, size: 44)
+            VStack(alignment: .leading, spacing: 3) {
+                Text(title).font(Typo.title).foregroundStyle(Palette.textPrimary)
+                if let subtitle {
+                    Text(subtitle).font(Typo.callout).foregroundStyle(Palette.textSecondary).fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            Spacer(minLength: 0)
+        }
+    }
+}
+
+/// Hintergrund eines Dialogs (Glas über der Atmosphäre).
+struct SheetChrome: ViewModifier {
+    var width: CGFloat?
+
+    func body(content: Content) -> some View {
+        content
+            .padding(Spacing.xxl)
+            .frame(width: width)
+            .background(
+                ZStack {
+                    Palette.background
+                    AmbientBackground().opacity(0.6)
+                }
+            )
+    }
+}
+
+extension View {
+    func sheetChrome(width: CGFloat? = nil) -> some View { modifier(SheetChrome(width: width)) }
+}
+
+/// Abschnitt (Einstellungen, Details): Überschrift + Glaskarte.
+struct GlassSection<Content: View>: View {
+    let title: String
+    var symbol: String?
+    var footer: String?
+    @ViewBuilder var content: () -> Content
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: Spacing.s) {
+            HStack(spacing: 6) {
+                if let symbol { Image(systemName: symbol).font(.inter(11.5, .semibold)) }
+                Text(title.uppercased()).font(Typo.sectionLabel).tracking(0.7)
+            }
+            .foregroundStyle(Palette.textSecondary)
+            .padding(.leading, 4)
+            VStack(alignment: .leading, spacing: 14) { content() }
+                .padding(18)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .glassCard(cornerRadius: Radius.card)
+            if let footer {
+                Text(footer).font(Typo.caption).foregroundStyle(Palette.textTertiary).padding(.horizontal, 4)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+    }
+}
+
+/// Zeile „Bezeichnung … Bedienelement“.
+struct LabeledRow<Control: View>: View {
+    let title: String
+    var detail: String?
+    @ViewBuilder var control: () -> Control
+
+    var body: some View {
+        HStack(alignment: .center, spacing: Spacing.l) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title).font(Typo.bodyMedium).foregroundStyle(Palette.textPrimary)
+                if let detail {
+                    Text(detail).font(Typo.caption).foregroundStyle(Palette.textSecondary).fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            Spacer(minLength: Spacing.m)
+            control()
+        }
+    }
+}
+
+/// Kennzahl-Kachel.
+struct StatTile: View {
+    let value: String
+    let label: String
+    let symbol: String
+    var tint: Color = Palette.bridgeGreen
+
+    var body: some View {
+        HStack(spacing: 12) {
+            Image(systemName: symbol)
+                .font(.inter(15, .semibold))
+                .foregroundStyle(tint)
+                .frame(width: 34, height: 34)
+                .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(tint.opacity(0.14)))
+            VStack(alignment: .leading, spacing: 1) {
+                Text(value).font(.display(19, .bold)).foregroundStyle(Palette.textPrimary).monospacedDigit().lineLimit(1)
+                Text(label).font(Typo.caption).foregroundStyle(Palette.textSecondary).lineLimit(1)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .glassCard(cornerRadius: Radius.card)
+    }
+}
+
+/// Kleines Etikett (z. B. „Identisch“, „Ähnlich“, „Vorschlag“).
+struct TagLabel: View {
+    let text: String
+    var symbol: String?
+    var tint: Color = Palette.bridgeGreen
+
+    var body: some View {
+        HStack(spacing: 4) {
+            if let symbol { Image(systemName: symbol).font(.inter(9.5, .bold)) }
+            Text(text).font(.inter(10.5, .semibold))
+        }
+        .foregroundStyle(tint)
+        .padding(.horizontal, 7)
+        .frame(height: 19)
+        .background(Capsule().fill(tint.opacity(0.13)))
+    }
+}

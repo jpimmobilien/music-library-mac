@@ -547,6 +547,51 @@ public final class MTPSession {
         try checked(.deleteObject, params: [handle, 0])
     }
 
+    /// Ergebnis von `deleteTree`.
+    public struct DeleteTreeResult: Equatable, Sendable {
+        public var deletedObjects: Int = 0
+        public var failed: [UInt32: UInt16] = [:]   // Handle → MTP-Antwortcode
+        public var succeeded: Bool { failed.isEmpty }
+    }
+
+    /// Löscht ein Objekt; bei Ordnern auch den Inhalt. Android löscht Ordner meist selbst rekursiv; lehnt ein
+    /// Gerät das ab (oder bleiben Reste), wird der Inhalt einzeln gelöscht und danach der Ordner.
+    /// Bricht bei getrennter Verbindung sofort ab (wirft). Einzelne geschützte Objekte landen in `failed`.
+    public func deleteTree(_ handle: UInt32, storage: UInt32, isFolder: Bool, cancelled: () -> Bool = { false }) throws -> DeleteTreeResult {
+        var result = DeleteTreeResult()
+        try deleteTree(handle, storage: storage, isFolder: isFolder, depth: 0, cancelled: cancelled, into: &result)
+        return result
+    }
+
+    private func deleteTree(_ handle: UInt32, storage: UInt32, isFolder: Bool, depth: Int, cancelled: () -> Bool,
+                            into result: inout DeleteTreeResult) throws {
+        if cancelled() { throw MTPError.cancelled }
+        let r = try transaction(PTPOperation.deleteObject.rawValue, params: [handle, 0])
+        if r.isOK {
+            result.deletedObjects += 1
+            return
+        }
+        if r.code == PTPResponse.invalidObjectHandle.rawValue {
+            return // schon weg
+        }
+        guard isFolder, depth < 64 else {
+            result.failed[handle] = r.code
+            return
+        }
+        // Ordner nicht (vollständig) gelöscht: Inhalt einzeln entfernen, dann erneut versuchen.
+        let children = (try? objectHandles(storage: storage, parent: handle)) ?? []
+        for child in children {
+            let childIsFolder = (try? objectInfo(child).isFolder) ?? false
+            try deleteTree(child, storage: storage, isFolder: childIsFolder, depth: depth + 1, cancelled: cancelled, into: &result)
+        }
+        let again = try transaction(PTPOperation.deleteObject.rawValue, params: [handle, 0])
+        if again.isOK || again.code == PTPResponse.invalidObjectHandle.rawValue {
+            result.deletedObjects += 1
+        } else {
+            result.failed[handle] = again.code
+        }
+    }
+
     public func rename(_ handle: UInt32, to name: String) throws {
         var w = PTPWriter()
         w.string(name)

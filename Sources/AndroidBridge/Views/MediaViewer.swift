@@ -37,12 +37,12 @@ struct MediaViewer: View {
                             Image(nsImage: thumb).resizable().aspectRatio(contentMode: .fit).frame(maxWidth: 360, maxHeight: 360).blur(radius: 6)
                         }
                         ProgressView(value: progress).frame(width: 220).tint(Palette.bridgeGreen)
-                        Text("Wird vom Telefon geladen … \(Int(progress * 100)) %").font(.system(size: 12)).foregroundStyle(.white.opacity(0.8))
+                        Text("Wird vom Telefon geladen … \(Int(progress * 100)) %").font(.inter(12)).foregroundStyle(.white.opacity(0.8))
                     }
                 } else if let loadError {
                     VStack(spacing: 10) {
-                        Image(systemName: "exclamationmark.triangle").font(.system(size: 30)).foregroundStyle(.white)
-                        Text(loadError).foregroundStyle(.white.opacity(0.85)).font(.system(size: 13))
+                        Image(systemName: "exclamationmark.triangle").font(.inter(30)).foregroundStyle(.white)
+                        Text(loadError).foregroundStyle(.white.opacity(0.85)).font(.inter(13))
                     }
                 }
                 HStack {
@@ -67,20 +67,20 @@ struct MediaViewer: View {
     private var infoBar: some View {
         HStack(spacing: 16) {
             VStack(alignment: .leading, spacing: 3) {
-                Text(entry.name).font(.system(size: 14, weight: .semibold)).lineLimit(1).truncationMode(.middle)
+                Text(entry.name).font(.inter(14, .semibold)).lineLimit(1).truncationMode(.middle)
                 HStack(spacing: 10) {
                     Text(ByteFormat.string(entry.size))
                     if let dims = dimensions { Text(dims) }
                     if let date = entry.bestDate { Text(date.formatted(date: .long, time: .shortened)) }
                     Text("\(index + 1) von \(item.items.count)")
                 }
-                .font(.system(size: 12))
+                .font(.inter(12))
                 .foregroundStyle(.secondary)
                 .monospacedDigit()
             }
             Spacer()
             if transferred.contains(entry.id) {
-                Label("Übertragung gestartet", systemImage: "checkmark.circle.fill").foregroundStyle(Palette.success).font(.system(size: 12.5, weight: .medium))
+                Label("Übertragung gestartet", systemImage: "checkmark.circle.fill").foregroundStyle(Palette.success).font(.inter(12.5, .medium))
             }
             Button {
                 let destination = model.settings.destination(for: entry.kind)
@@ -110,7 +110,7 @@ struct MediaViewer: View {
     private func navButton(_ symbol: String, enabled: Bool, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Image(systemName: symbol)
-                .font(.system(size: 18, weight: .semibold))
+                .font(.inter(18, .semibold))
                 .frame(width: 40, height: 40)
         }
         .buttonStyle(.plain)

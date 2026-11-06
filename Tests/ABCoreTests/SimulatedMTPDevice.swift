@@ -26,6 +26,11 @@ final class SimulatedMTPDevice: MTPBulkTransport {
     /// Containerkopf als eigener kurzer Transfer (ältere Android-Versionen bei Datenphasen > 4 GB).
     var sendHeaderSeparately = false
     var supportsPropList = true
+    /// Manche Geräte löschen nur leere Ordner.
+    var refuseNonEmptyFolderDelete = false
+    /// Geschützte Objekte (Löschen wird verweigert).
+    var protectedHandles = Set<UInt32>()
+    private(set) var deleteRequests = 0
     var storages: [UInt32: (desc: String, removable: Bool)] = [0x0001_0001: ("Interner gemeinsamer Speicher", false),
                                                                 0x0002_0001: ("SD-Karte", true)]
     var objects: [UInt32: Object] = [:]
@@ -241,7 +246,26 @@ final class SimulatedMTPDevice: MTPBulkTransport {
             sendData(w.data, op: code, tid: tid)
             respond(.ok, tid: tid)
         case .deleteObject:
-            guard objects.removeValue(forKey: params[0]) != nil else { respond(.invalidObjectHandle, tid: tid); return }
+            deleteRequests += 1
+            let h = params[0]
+            guard let obj = objects[h] else { respond(.invalidObjectHandle, tid: tid); return }
+            if protectedHandles.contains(h) { respond(.accessDenied, tid: tid); return }
+            if obj.isFolder {
+                let hasChildren = objects.values.contains { $0.parent == h }
+                if hasChildren && refuseNonEmptyFolderDelete { respond(.partialDeletion, tid: tid); return }
+                // Android: Ordner samt Inhalt löschen (geschützte Inhalte bleiben, dann Teil-Löschung)
+                var blocked = false
+                func remove(_ parent: UInt32) {
+                    for (ch, o) in objects where o.parent == parent {
+                        if protectedHandles.contains(ch) { blocked = true; continue }
+                        if o.isFolder { remove(ch) }
+                        if !objects.values.contains(where: { $0.parent == ch }) { objects[ch] = nil }
+                    }
+                }
+                remove(h)
+                if blocked { respond(.partialDeletion, tid: tid); return }
+            }
+            objects[h] = nil
             respond(.ok, tid: tid)
         case .sendObjectInfo, .sendObject, .setObjectPropValue:
             pendingCommand = (code, tid, params)

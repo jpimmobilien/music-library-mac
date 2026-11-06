@@ -56,12 +56,18 @@ final class PreviewBackend: DeviceBackend {
     func thumbnail(handle: UInt32) async throws -> Data? {
         let hues: [CGFloat] = [0.02, 0.08, 0.13, 0.33, 0.52, 0.58, 0.62, 0.75, 0.9]
         let h = hues[Int(handle) % hues.count]
-        let size = NSSize(width: 160, height: 160)
+        // Wie echte Android-Vorschaubilder: 160×120, Hochformat mit schwarzen Balken links/rechts.
+        let portrait = handle % 3 == 0
+        let size = NSSize(width: 160, height: 120)
         let image = NSImage(size: size)
         image.lockFocus()
+        NSColor.black.setFill()
+        NSRect(origin: .zero, size: size).fill()
+        let content = portrait ? NSRect(x: 35, y: 0, width: 90, height: 120) : NSRect(origin: .zero, size: size)
+        NSBezierPath(rect: content).setClip()
         let g = NSGradient(colors: [NSColor(hue: h, saturation: 0.55, brightness: 0.95, alpha: 1),
                                     NSColor(hue: (h + 0.08).truncatingRemainder(dividingBy: 1), saturation: 0.7, brightness: 0.55, alpha: 1)])
-        g?.draw(in: NSRect(origin: .zero, size: size), angle: CGFloat(Int(handle) % 4) * 45 + 30)
+        g?.draw(in: content, angle: CGFloat(Int(handle) % 4) * 45 + 30)
         NSColor(white: 1, alpha: 0.25).setFill()
         NSBezierPath(ovalIn: NSRect(x: 30 + CGFloat(handle % 5) * 12, y: 80, width: 46, height: 46)).fill()
         NSColor(white: 0, alpha: 0.18).setFill()
@@ -88,6 +94,7 @@ final class PreviewBackend: DeviceBackend {
 
     func createFolder(name: String, storage: UInt32, parent: UInt32) async throws -> UInt32 { throw MTPError.notSupported("Vorschau") }
     func delete(handle: UInt32) async throws { throw MTPError.notSupported("Vorschau") }
+    func deleteTree(handle: UInt32, storage: UInt32, isFolder: Bool) async throws -> MTPSession.DeleteTreeResult { throw MTPError.notSupported("Vorschau") }
     func rename(handle: UInt32, to name: String) async throws { throw MTPError.notSupported("Vorschau") }
     func close(graceful: Bool) {}
 }
@@ -102,7 +109,15 @@ enum SnapshotRunner {
     struct Scenario {
         let name: String
         let size: CGSize
+        var custom: ((AppModel) -> AnyView)? = nil
         let prepare: (AppModel) async -> Void
+
+        init(name: String, size: CGSize, custom: ((AppModel) -> AnyView)? = nil, prepare: @escaping (AppModel) async -> Void) {
+            self.name = name
+            self.size = size
+            self.custom = custom
+            self.prepare = prepare
+        }
     }
 
     static func run(model: AppModel, output: URL) async {
@@ -150,6 +165,35 @@ enum SnapshotRunner {
                 m.files.layout = .dual
                 m.selection = .files
             },
+            Scenario(name: "08-duplikate-bereich", size: CGSize(width: 1320, height: 840)) { m in
+                await installPreview(m, state: .connected)
+                m.duplicates.reset()
+                m.selection = .duplicates
+            },
+            Scenario(name: "09-duplikate-ergebnisse", size: CGSize(width: 1320, height: 840)) { m in
+                await installPreview(m, state: .connected)
+                let (identical, similar) = previewDuplicateGroups()
+                let marked = Set(identical.prefix(2).flatMap { DuplicateSelection.suggested(for: $0) })
+                m.duplicates.showPreviewResults(identical: identical, similar: similar, marked: marked)
+                m.selection = .duplicates
+            },
+            Scenario(name: "10-loeschen-bestaetigen", size: CGSize(width: 560, height: 700), custom: { m in
+                AnyView(DeleteConfirmationSheet(request: previewDeletionRequest(), onConfirm: {}, onCancel: {})
+                    .environment(\.glassEnabled, m.settings.glassEffects)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                    .background(Palette.background))
+            }) { m in
+                await installPreview(m, state: .connected)
+            },
+            Scenario(name: "11-einstellungen", size: CGSize(width: 1320, height: 840)) { m in
+                m.selection = .settings
+            },
+            Scenario(name: "12-dateimanager-eine-spalte", size: CGSize(width: 1320, height: 840)) { m in
+                await installPreview(m, state: .connected)
+                m.files.layout = .single
+                m.selection = .files
+                await m.files.device.navigate(storageID: 0x10001, path: ["Download"], recordHistory: false)
+            },
         ]
 
         for scenario in scenarios {
@@ -166,12 +210,16 @@ enum SnapshotRunner {
                     size.height = min(size.height, v.height - 40)
                 }
                 let window = SnapshotWindow(contentRect: NSRect(origin: .zero, size: size),
-                                            styleMask: [.titled, .closable, .miniaturizable, .resizable],
+                                            styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
                                             backing: .buffered, defer: false)
                 window.appearance = NSAppearance(named: dark ? .darkAqua : .aqua)
                 window.isReleasedWhenClosed = false
                 window.title = "Android Bridge"
-                let root = RootView(settings: model.settings, transfers: model.transfers)
+                window.titlebarAppearsTransparent = true
+                window.titleVisibility = .hidden
+                let content: AnyView = scenario.custom?(model)
+                    ?? AnyView(RootView(settings: model.settings, transfers: model.transfers, deletion: model.deletion))
+                let root = content
                     .environmentObject(model)
                     .frame(width: size.width, height: size.height)
                 let host = NSHostingView(rootView: root)
@@ -205,6 +253,37 @@ enum SnapshotRunner {
         if let data = try? JSONSerialization.data(withJSONObject: info, options: [.prettyPrinted, .sortedKeys]) {
             try? data.write(to: output.appendingPathComponent("manifest.json"))
         }
+    }
+
+    /// Beispielgruppen für das Bildschirmfoto (Vorschaugerät).
+    private static func previewDuplicateGroups() -> ([DuplicateGroup], [DuplicateGroup]) {
+        func e(_ h: UInt32, _ name: String, size: UInt64, storage: UInt32 = 0x10001, days: Double, w: UInt32 = 0, hgt: UInt32 = 0) -> DeviceEntry {
+            DeviceEntry(handle: h, storageID: storage, parent: 0, name: name, isFolder: false, size: size, format: MTPFormat.forFileName(name),
+                        modified: Date(timeIntervalSinceNow: -days * 86_400), imageWidth: w, imageHeight: hgt)
+        }
+        let a = [DuplicateFile(entry: e(1003, "PXL_20261103_143507.mp4", size: 207_000_000, days: 2.1), path: ["DCIM", "Camera"], storageName: "Interner Speicher"),
+                 DuplicateFile(entry: e(7001, "VID-20261103-WA0004.mp4", size: 207_000_000, days: 2.0), path: ["Android", "media", "com.whatsapp", "WhatsApp", "Media"], storageName: "Interner Speicher"),
+                 DuplicateFile(entry: e(7002, "PXL_20261103_143507.mp4", size: 207_000_000, storage: 0x20001, days: 1.2), path: ["DCIM", "Backup"], storageName: "SD-Karte")]
+        let b = [DuplicateFile(entry: e(1001, "PXL_20261101_113107.jpg", size: 2_461_000, days: 0.7, w: 4080, hgt: 3072), path: ["DCIM", "Camera"], storageName: "Interner Speicher"),
+                 DuplicateFile(entry: e(7003, "IMG-20261101-WA0012.jpg", size: 2_461_000, days: 0.6, w: 4080, hgt: 3072), path: ["Pictures", "WhatsApp"], storageName: "Interner Speicher")]
+        let c = [DuplicateFile(entry: e(300, "Rechnung_Oktober.pdf", size: 248_000, days: 3), path: ["Documents"], storageName: "Interner Speicher"),
+                 DuplicateFile(entry: e(7004, "Rechnung_Oktober(1).pdf", size: 248_000, days: 2), path: ["Download"], storageName: "Interner Speicher")]
+        let s = [DuplicateFile(entry: e(1005, "PXL_20261105_153507.jpg", size: 3_120_000, days: 3.5, w: 4080, hgt: 3072), path: ["DCIM", "Camera"], storageName: "Interner Speicher"),
+                 DuplicateFile(entry: e(7005, "Screenshot_20261105.jpg", size: 410_000, days: 3.4, w: 1080, hgt: 813), path: ["Pictures", "Screenshots"], storageName: "Interner Speicher")]
+        let identical = [DuplicateGroup(id: "sha-a", kind: .identical, files: a, checksum: "a"),
+                         DuplicateGroup(id: "sha-b", kind: .identical, files: b, checksum: "b"),
+                         DuplicateGroup(id: "sha-c", kind: .identical, files: c, checksum: "c")]
+        return (identical, [DuplicateGroup(id: "sim-1", kind: .similar, files: s, checksum: nil)])
+    }
+
+    private static func previewDeletionRequest() -> DeletionRequest {
+        let files = (0..<12).map { i in
+            DeviceEntry(handle: UInt32(1000 + i), storageID: 0x10001, parent: 100, name: "PXL_2026110\(i % 9)_1\(i % 10)3\(i % 6)07.jpg",
+                        isFolder: false, size: UInt64(2_400_000 + i * 61_000), format: MTPFormat.forFileName("a.jpg"))
+        }
+        let folder = DeviceEntry(handle: 101, storageID: 0x10001, parent: 12, name: "Screenshots", isFolder: true, size: 0, format: MTPFormat.association)
+        return DeletionRequest(deviceID: 4242, deviceName: "Pixel 6 Pro", entries: files + [folder],
+                               locations: ["Interner Speicher › DCIM › Camera", "Interner Speicher › DCIM"])
     }
 
     private static func installPreview(_ model: AppModel, state: ConnectionState) async {

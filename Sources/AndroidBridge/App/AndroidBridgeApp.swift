@@ -10,9 +10,9 @@ struct AndroidBridgeApp: App {
 
     var body: some Scene {
         WindowGroup("Android Bridge", id: "main") {
-            RootView(settings: model.settings, transfers: model.transfers)
+            RootView(settings: model.settings, transfers: model.transfers, deletion: model.deletion)
                 .environmentObject(model)
-                .frame(minWidth: 980, minHeight: 640)
+                .frame(minWidth: 1000, minHeight: 660)
                 .onAppear {
                     appDelegate.attach(model)
                 }
@@ -26,10 +26,6 @@ struct AndroidBridgeApp: App {
                 .frame(minWidth: 860, minHeight: 560)
         }
         .defaultSize(width: 1100, height: 720)
-
-        Settings {
-            SettingsView(settings: model.settings, favorites: model.favorites, recents: model.recents, history: model.history)
-        }
     }
 }
 
@@ -103,6 +99,13 @@ struct AppCommands: Commands {
     @ObservedObject var files: FileManagerModel
 
     var body: some Commands {
+        CommandGroup(replacing: .appSettings) {
+            Button("Einstellungen …") {
+                model.selection = .settings
+                NSApp.activate(ignoringOtherApps: true)
+            }
+            .keyboardShortcut(",")
+        }
         CommandGroup(replacing: .newItem) {
             Button("Neuer Ordner") {
                 model.selection = .files
@@ -125,7 +128,7 @@ struct AppCommands: Commands {
                 .keyboardShortcut("1")
             Button("Eine Spalte") { files.layout = .single; model.selection = .files }
                 .keyboardShortcut("2")
-            Button("Galerie") { files.layout = .gallery; model.selection = .files }
+            Button("Fotos & Videos") { model.selection = .media }
                 .keyboardShortcut("3")
             Divider()
         }
@@ -147,6 +150,8 @@ struct AppCommands: Commands {
                 .keyboardShortcut("2", modifiers: [.command, .option])
             Button("Übertragungen") { model.selection = .transfers }
                 .keyboardShortcut("3", modifiers: [.command, .option])
+            Button("Duplikate finden") { model.selection = .duplicates }
+                .keyboardShortcut("4", modifiers: [.command, .option])
         }
         CommandMenu("Auswahl") {
             Button("Auswahl übertragen") {
@@ -161,7 +166,7 @@ struct AppCommands: Commands {
             Divider()
             Button("Umbenennen …") { files.renamePane = files.activePane }
                 .keyboardShortcut(.return, modifiers: [.command, .shift])
-            Button("Löschen …") { files.requestDelete() }
+            Button("Löschen …") { model.requestDeleteForCurrentPage() }
                 .keyboardShortcut(.delete, modifiers: .command)
         }
         CommandGroup(after: .help) {
@@ -196,11 +201,14 @@ private struct DeviceWindowContent: View {
         self.model = model
         self.device = device
         self.settings = model.settings
-        _files = StateObject(wrappedValue: FileManagerModel(settings: model.settings, transfers: model.transfers, recents: model.recents))
+        let fm = FileManagerModel(settings: model.settings, transfers: model.transfers, recents: model.recents)
+        fm.windowOrigin = "device-\(device.id)"
+        _files = StateObject(wrappedValue: fm)
     }
 
     var body: some View {
         FileManagerView(files: files, settings: settings)
+            .deletionSheets(model: model, origin: files.windowOrigin, glass: settings.glassEffects)
             .environment(\.glassEnabled, settings.glassEffects)
             .environment(\.animationsEnabled, settings.animations)
             .tint(settings.accent.color)

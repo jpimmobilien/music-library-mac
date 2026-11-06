@@ -21,17 +21,28 @@ struct FileManagerView: View {
     @EnvironmentObject private var model: AppModel
     @ObservedObject var files: FileManagerModel
     @ObservedObject var settings: SettingsStore
-    @State private var newFolderName = "Neuer Ordner"
-    @State private var renameText = ""
+    @ObservedObject private var deviceBrowser: DeviceBrowserModel
+    @ObservedObject private var localBrowser: LocalBrowserModel
+
+    init(files: FileManagerModel, settings: SettingsStore) {
+        self.files = files
+        self.settings = settings
+        self.deviceBrowser = files.device
+        self.localBrowser = files.local
+    }
 
     var body: some View {
-        ZStack(alignment: .bottom) {
-            content
-            SelectionActionBar(files: files, local: files.local, device: files.device)
-                .padding(.bottom, 16)
+        PageScaffold(title: "Dateimanager", subtitle: subtitle) {
+            toolbar
+        } content: {
+            ZStack(alignment: .bottom) {
+                content
+                    .padding(.horizontal, Spacing.gutter - 10)
+                    .padding(.bottom, 14)
+                SelectionActionBar(files: files, local: files.local, device: files.device)
+                    .padding(.bottom, 28)
+            }
         }
-        .navigationTitle("Dateimanager")
-        .toolbar { toolbarContent }
         .sheet(item: Binding(get: { files.newFolderPane.map(PaneBox.init) }, set: { files.newFolderPane = $0?.pane })) { box in
             NameSheet(title: "Neuer Ordner", subtitle: box.pane == .device ? "Auf dem Telefon" : "Auf dem Mac",
                       initial: "Neuer Ordner", confirm: "Anlegen") { name in
@@ -51,29 +62,34 @@ struct FileManagerView: View {
                 }
             }
         }
-        .confirmationDialog(deleteTitle, isPresented: Binding(get: { files.confirmDelete != nil }, set: { if !$0 { files.confirmDelete = nil } }),
+        // Telefon: Bestätigung mit Anzahl, Größe und Ort (DeleteConfirmationSheet). Mac: Papierkorb.
+        .onChange(of: files.confirmDelete) { pane in
+            if pane == .device {
+                files.confirmDelete = nil
+                model.deleteDeviceSelection(in: files)
+            }
+        }
+        .confirmationDialog(deleteTitle, isPresented: Binding(get: { files.confirmDelete == .local }, set: { if !$0 { files.confirmDelete = nil } }),
                             titleVisibility: .visible) {
-            if files.confirmDelete == .device {
-                Button("Endgültig löschen", role: .destructive) {
-                    let list = files.device.selectedEntries
-                    Task { await files.device.delete(list) }
-                }
-            } else {
-                Button("In den Papierkorb legen", role: .destructive) {
-                    files.local.moveToTrash(files.local.selectedEntries)
-                }
+            Button("In den Papierkorb legen", role: .destructive) {
+                files.local.moveToTrash(files.local.selectedEntries)
             }
             Button("Abbrechen", role: .cancel) {}
         } message: {
-            Text(files.confirmDelete == .device
-                 ? "Objekte auf dem Telefon werden sofort gelöscht und lassen sich nicht wiederherstellen."
-                 : "Die Objekte können aus dem Papierkorb wiederhergestellt werden.")
+            Text("Die Objekte können aus dem Papierkorb wiederhergestellt werden.")
         }
     }
 
+    private var subtitle: String {
+        if let loc = deviceBrowser.location, let device = deviceBrowser.device, device.state == .connected {
+            return "\(device.displayName) · \(loc.displayPath)"
+        }
+        return "Mac und Telefon nebeneinander – ziehen, kopieren, einfügen"
+    }
+
     private var deleteTitle: String {
-        let n = files.confirmDelete == .device ? files.device.selection.count : files.local.selection.count
-        return n == 1 ? "1 Objekt löschen?" : "\(n) Objekte löschen?"
+        let n = files.local.selection.count
+        return n == 1 ? "1 Objekt in den Papierkorb legen?" : "\(n) Objekte in den Papierkorb legen?"
     }
 
     private func renameInitial(_ pane: Pane) -> String {
@@ -86,80 +102,72 @@ struct FileManagerView: View {
         case .dual:
             HSplitView {
                 LocalPaneView(browser: files.local, files: files)
+                    .glassCard(cornerRadius: Radius.panel)
+                    .padding(.trailing, 5)
                     .frame(minWidth: 300, idealWidth: 460)
                 DevicePaneView(browser: files.device, files: files)
+                    .glassCard(cornerRadius: Radius.panel)
+                    .padding(.leading, 5)
                     .frame(minWidth: 340, idealWidth: 560)
             }
-        case .single:
+        case .single, .gallery:
             DevicePaneView(browser: files.device, files: files)
-        case .gallery:
-            GalleryView(gallery: model.gallery, devices: model.devices)
+                .glassCard(cornerRadius: Radius.panel)
         }
     }
 
-    @ToolbarContentBuilder
-    private var toolbarContent: some ToolbarContent {
-        ToolbarItemGroup(placement: .navigation) {
-            Button { activeBack() } label: { Image(systemName: "chevron.left") }
-                .help("Zurück")
-                .disabled(!(files.activePane == .device ? files.device.canGoBack : files.local.canGoBack))
-            Button { activeForward() } label: { Image(systemName: "chevron.right") }
-                .help("Vor")
-                .disabled(!(files.activePane == .device ? files.device.canGoForward : files.local.canGoForward))
-        }
-        ToolbarItemGroup(placement: .primaryAction) {
-            Picker("Ansicht", selection: $files.layout) {
-                ForEach(FileManagerLayout.allCases) { l in
-                    Image(systemName: l.symbolName).tag(l).help(l.title)
+    private var deviceActive: Bool { files.activePane == .device }
+
+    @ViewBuilder
+    private var toolbar: some View {
+        HStack(spacing: 10) {
+            ToolbarCapsule {
+                ToolbarIconButton(symbol: "chevron.left", help: "Zurück (⌘[)") { activeBack() }
+                    .disabled(!(deviceActive ? deviceBrowser.canGoBack : localBrowser.canGoBack))
+                ToolbarIconButton(symbol: "chevron.right", help: "Vor (⌘])") { activeForward() }
+                    .disabled(!(deviceActive ? deviceBrowser.canGoForward : localBrowser.canGoForward))
+            }
+            GlassSegmented(selection: Binding(get: { files.layout == .gallery ? .single : files.layout }, set: { files.layout = $0 }), options: [
+                SegmentOption(value: FileManagerLayout.dual, symbol: FileManagerLayout.dual.symbolName, help: "Zwei Spalten: Mac und Telefon"),
+                SegmentOption(value: FileManagerLayout.single, symbol: FileManagerLayout.single.symbolName, help: "Eine Spalte: nur Telefon"),
+            ])
+            ToolbarCapsule {
+                ToolbarMenu(symbol: "arrow.up.arrow.down", help: "Sortieren") {
+                    Picker("Sortieren nach", selection: activeSortBinding) {
+                        ForEach(EntrySort.allCases) { s in Text(s.title).tag(s) }
+                    }
+                    .pickerStyle(.inline)
                 }
-            }
-            .pickerStyle(.segmented)
-            .help("Ansicht")
-
-            Menu {
-                Picker("Sortieren nach", selection: activeSortBinding) {
-                    ForEach(EntrySort.allCases) { s in Text(s.title).tag(s) }
+                ToolbarIconButton(symbol: "arrow.clockwise", help: "Aktualisieren (⌘R)") { files.refresh() }
+                ToolbarIconButton(symbol: "folder.badge.plus", help: "Neuer Ordner (⌘N)") { files.requestNewFolder() }
+                ToolbarDivider()
+                ToolbarIconButton(symbol: deviceActive ? "arrow.down.to.line" : "arrow.up.to.line",
+                                  help: deviceActive ? "Auswahl auf den Mac übertragen (⌘T)" : "Auswahl auf das Telefon übertragen (⌘T)") {
+                    if deviceActive { files.transferDeviceSelectionToMac() } else { files.transferLocalSelectionToDevice() }
                 }
-                .pickerStyle(.inline)
-            } label: {
-                Image(systemName: "arrow.up.arrow.down")
-            }
-            .help("Sortieren")
-
-            Button { files.refresh() } label: { Image(systemName: "arrow.clockwise") }
-                .help("Aktualisieren (⌘R)")
-
-            Button { files.requestNewFolder() } label: { Image(systemName: "folder.badge.plus") }
-                .help("Neuer Ordner (⌘N)")
-
-            Button {
-                if files.activePane == .device { files.transferDeviceSelectionToMac() } else { files.transferLocalSelectionToDevice() }
-            } label: {
-                Label(files.activePane == .device ? "Auf den Mac" : "Aufs Telefon",
-                      systemImage: files.activePane == .device ? "arrow.down.to.line" : "arrow.up.to.line")
-            }
-            .help(files.activePane == .device ? "Auswahl auf den Mac übertragen" : "Auswahl auf das Telefon übertragen")
-            .disabled(files.activePane == .device ? files.device.selection.isEmpty : (files.local.selection.isEmpty || files.device.device == nil))
-
-            Menu {
-                Button("Alles auswählen") { files.selectAll() }
-                Button("Auswahl aufheben") { files.deselectAll() }
-                Button("Auswahl umkehren") { files.invertSelection() }
-                Divider()
-                Toggle("Versteckte Mac-Dateien zeigen", isOn: Binding(get: { files.local.showHidden }, set: { files.local.showHidden = $0 }))
-                Toggle("Versteckte Android-Dateien zeigen", isOn: Binding(get: { settings.showHiddenAndroidFiles },
-                                                                          set: { settings.showHiddenAndroidFiles = $0; files.device.recompute() }))
-                Divider()
-                Button("Mac-Ordner im Finder zeigen") { NSWorkspace.shared.activateFileViewerSelecting([files.local.folder]) }
-                if let loc = files.device.location {
-                    Button(model.favorites.contains(loc) ? "Aus Favoriten entfernen" : "Zu Favoriten hinzufügen") {
-                        model.favorites.toggle(loc)
+                .disabled(deviceActive ? deviceBrowser.selection.isEmpty : (localBrowser.selection.isEmpty || deviceBrowser.device == nil))
+                ToolbarIconButton(symbol: "trash", help: deviceActive ? "Auf dem Telefon löschen … (⌘⌫)" : "In den Papierkorb legen … (⌘⌫)",
+                                  tint: Palette.danger) {
+                    model.requestDeleteForCurrentPage()
+                }
+                .disabled(deviceActive ? deviceBrowser.selection.isEmpty || deviceBrowser.device?.state != .connected : localBrowser.selection.isEmpty)
+                ToolbarMenu(symbol: "ellipsis", help: "Weitere Optionen") {
+                    Button("Alles auswählen") { files.selectAll() }
+                    Button("Auswahl aufheben") { files.deselectAll() }
+                    Button("Auswahl umkehren") { files.invertSelection() }
+                    Divider()
+                    Toggle("Versteckte Mac-Dateien zeigen", isOn: Binding(get: { files.local.showHidden }, set: { files.local.showHidden = $0 }))
+                    Toggle("Versteckte Android-Dateien zeigen", isOn: Binding(get: { settings.showHiddenAndroidFiles },
+                                                                              set: { settings.showHiddenAndroidFiles = $0; files.device.recompute() }))
+                    Divider()
+                    Button("Mac-Ordner im Finder zeigen") { NSWorkspace.shared.activateFileViewerSelecting([files.local.folder]) }
+                    if let loc = files.device.location {
+                        Button(model.favorites.contains(loc) ? "Aus Favoriten entfernen" : "Zu Favoriten hinzufügen") {
+                            model.favorites.toggle(loc)
+                        }
                     }
                 }
-            } label: {
-                Image(systemName: "ellipsis.circle")
             }
-            .help("Weitere Optionen")
         }
     }
 
@@ -194,8 +202,8 @@ struct NameSheet: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text(title).font(.system(size: 15, weight: .semibold))
-            if let subtitle { Text(subtitle).font(.system(size: 12)).foregroundStyle(.secondary) }
+            Text(title).font(.inter(15, .semibold))
+            if let subtitle { Text(subtitle).font(.inter(12)).foregroundStyle(.secondary) }
             TextField("Name", text: $text)
                 .textFieldStyle(.roundedBorder)
                 .focused($focused)
@@ -232,28 +240,13 @@ struct PaneHeader<Leading: View, Crumbs: View>: View {
     let focusToken: UUID
     @ViewBuilder var leading: () -> Leading
     @ViewBuilder var crumbs: () -> Crumbs
-    @FocusState private var searchFocused: Bool
 
     var body: some View {
         VStack(spacing: 8) {
             HStack(spacing: 10) {
                 leading()
                 Spacer(minLength: 8)
-                HStack(spacing: 6) {
-                    Image(systemName: "magnifyingglass").foregroundStyle(.secondary).font(.system(size: 12))
-                    TextField("Suchen", text: $search)
-                        .textFieldStyle(.plain)
-                        .font(.system(size: 12.5))
-                        .focused($searchFocused)
-                    if !search.isEmpty {
-                        Button { search = "" } label: { Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary) }
-                            .buttonStyle(.plain)
-                    }
-                }
-                .padding(.horizontal, 10)
-                .padding(.vertical, 6)
-                .frame(maxWidth: 220)
-                .glassSurface(Capsule())
+                GlassSearchField(text: $search, prompt: "Suchen", width: 200, focusToken: focusToken, focusEnabled: isActive)
             }
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 2) { crumbs() }
@@ -263,9 +256,9 @@ struct PaneHeader<Leading: View, Crumbs: View>: View {
         .padding(.top, 12)
         .padding(.bottom, 8)
         .overlay(alignment: .bottom) {
-            Rectangle().fill(isActive ? Palette.bridgeGreen.opacity(0.7) : Palette.hairline).frame(height: isActive ? 2 : 1)
+            Rectangle().fill(isActive ? Palette.bridgeGreen.opacity(0.75) : Palette.hairline).frame(height: isActive ? 2 : 1)
+                .padding(.horizontal, 14)
         }
-        .onChange(of: focusToken) { _ in if isActive { searchFocused = true } }
     }
 }
 
@@ -279,10 +272,10 @@ struct CrumbButton: View {
         HStack(spacing: 2) {
             Button(action: action) {
                 HStack(spacing: 4) {
-                    if let symbol { Image(systemName: symbol).font(.system(size: 11)) }
+                    if let symbol { Image(systemName: symbol).font(.inter(11)) }
                     Text(title).lineLimit(1)
                 }
-                .font(.system(size: 12, weight: isLast ? .semibold : .regular))
+                .font(.inter(12, isLast ? .semibold : .regular))
                 .padding(.horizontal, 7)
                 .padding(.vertical, 3)
                 .contentShape(Rectangle())
@@ -290,7 +283,7 @@ struct CrumbButton: View {
             .buttonStyle(.plain)
             .foregroundStyle(isLast ? .primary : .secondary)
             if !isLast {
-                Image(systemName: "chevron.right").font(.system(size: 9, weight: .semibold)).foregroundStyle(.tertiary)
+                Image(systemName: "chevron.right").font(.inter(9, .semibold)).foregroundStyle(.tertiary)
             }
         }
     }
@@ -347,9 +340,8 @@ struct DevicePaneView: View {
                 }
             }
         }
-        .background(isActive ? Color.primary.opacity(0.012) : .clear)
         .overlay(
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: Radius.panel - 3, style: .continuous)
                 .strokeBorder(Palette.bridgeGreen, lineWidth: 2.5)
                 .padding(3)
                 .opacity(dropTargeted ? 1 : 0)
@@ -372,13 +364,13 @@ struct DevicePaneView: View {
                         Button(d.displayName) { model.select(device: d) }
                     }
                 } label: {
-                    Text(browser.device?.displayName ?? "Gerät").font(.system(size: 13, weight: .semibold))
+                    Text(browser.device?.displayName ?? "Gerät").font(.inter(13, .semibold))
                 }
                 .menuStyle(.borderlessButton)
                 .fixedSize()
             } else {
                 Text(browser.device?.displayName ?? "Telefon")
-                    .font(.system(size: 13, weight: .semibold))
+                    .font(.inter(13, .semibold))
                     .lineLimit(1)
                     .fixedSize()
                     .layoutPriority(2)
@@ -438,7 +430,7 @@ struct DevicePaneView: View {
         } primaryAction: { ids in
             open(ids: ids, device: device)
         }
-        .onDeleteCommand { files.activePane = .device; files.requestDelete() }
+        .onDeleteCommand { files.activePane = .device; model.deleteDeviceSelection(in: files) }
         .onCopyCommand {
             files.activePane = .device
             files.copySelection()
@@ -477,10 +469,10 @@ struct DevicePaneView: View {
                 Button("Umbenennen …") { browser.selection = [e.id]; files.renamePane = .device }
             }
             Divider()
-            Button("Löschen …", role: .destructive) {
+            Button("Auf dem Telefon löschen …", role: .destructive) {
                 browser.selection = ids
                 files.activePane = .device
-                files.requestDelete()
+                model.deleteDeviceSelection(in: files, entries: entries)
             }
         } else {
             Button("Neuer Ordner …") { files.activePane = .device; files.requestNewFolder() }
@@ -670,7 +662,7 @@ struct LocalPaneView: View {
             }
         }
         .overlay(
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: Radius.panel - 3, style: .continuous)
                 .strokeBorder(Palette.bridgeBlue, lineWidth: 2.5)
                 .padding(3)
                 .opacity(dropTargeted ? 1 : 0)
@@ -708,7 +700,7 @@ struct LocalPaneView: View {
         } label: {
             HStack(spacing: 6) {
                 Image(systemName: "laptopcomputer").foregroundStyle(Palette.bridgeBlue)
-                Text("Mac").font(.system(size: 13, weight: .semibold))
+                Text("Mac").font(.inter(13, .semibold))
             }
         }
         .menuStyle(.borderlessButton)
@@ -794,6 +786,7 @@ struct LocalPaneView: View {
 // MARK: - Aktionsleiste unten
 
 struct SelectionActionBar: View {
+    @EnvironmentObject private var model: AppModel
     @ObservedObject var files: FileManagerModel
     @ObservedObject var local: LocalBrowserModel
     @ObservedObject var device: DeviceBrowserModel
@@ -804,41 +797,36 @@ struct SelectionActionBar: View {
 
     var body: some View {
         Group {
-            if files.layout != .gallery && (files.activePane == .device ? deviceCount > 0 : localCount > 0) {
-                GlassGroup {
-                    HStack(spacing: 14) {
-                        if files.activePane == .device {
-                            Text("\(deviceCount) ausgewählt · \(ByteFormat.string(files.deviceSelectionSize))")
-                                .font(.system(size: 12.5, weight: .medium))
-                                .monospacedDigit()
-                            Button {
-                                files.transferDeviceSelectionToMac()
-                            } label: {
-                                Label(files.layout == .dual ? "In „\(local.folder.lastPathComponent)“ übertragen" : "Auf den Mac übertragen",
-                                      systemImage: "arrow.down.to.line")
-                            }
-                            .buttonStyle(GlassButtonStyle(prominent: true))
-                        } else {
-                            Text("\(localCount) ausgewählt · \(ByteFormat.string(files.localSelectionSize))")
-                                .font(.system(size: 12.5, weight: .medium))
-                                .monospacedDigit()
-                            Button {
-                                files.transferLocalSelectionToDevice()
-                            } label: {
-                                Label("Aufs Telefon übertragen", systemImage: "arrow.up.to.line")
-                            }
-                            .buttonStyle(GlassButtonStyle(prominent: true))
-                            .disabled(device.device == nil)
+            if files.activePane == .device ? deviceCount > 0 : localCount > 0 {
+                FloatingActionBar {
+                    if files.activePane == .device {
+                        SelectionSummary(count: deviceCount, bytes: files.deviceSelectionSize)
+                        Button {
+                            files.transferDeviceSelectionToMac()
+                        } label: {
+                            Label(files.layout == .dual ? "In „\(local.folder.lastPathComponent)“ übertragen" : "Auf den Mac übertragen",
+                                  systemImage: "arrow.down.to.line")
                         }
-                        Button { files.deselectAll() } label: { Image(systemName: "xmark") }
-                            .buttonStyle(.borderless)
-                            .help("Auswahl aufheben")
+                        .buttonStyle(GlassButtonStyle(prominent: true, compact: true))
+                        Button {
+                            model.deleteDeviceSelection(in: files)
+                        } label: {
+                            Label("Löschen …", systemImage: "trash")
+                        }
+                        .buttonStyle(GlassButtonStyle(destructive: true, compact: true))
+                        .help("Auf dem Telefon endgültig löschen (⌘⌫)")
+                    } else {
+                        SelectionSummary(count: localCount, bytes: files.localSelectionSize)
+                        Button {
+                            files.transferLocalSelectionToDevice()
+                        } label: {
+                            Label("Aufs Telefon übertragen", systemImage: "arrow.up.to.line")
+                        }
+                        .buttonStyle(GlassButtonStyle(prominent: true, compact: true))
+                        .disabled(device.device == nil)
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 9)
-                    .glassSurface(Capsule(), elevated: true)
+                    ToolbarIconButton(symbol: "xmark", help: "Auswahl aufheben") { files.deselectAll() }
                 }
-                .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
         .animation(animations ? .bridgeSpring : nil, value: files.activePane == .device ? deviceCount : localCount)

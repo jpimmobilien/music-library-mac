@@ -10,26 +10,24 @@ struct TransferCenterView: View {
     @Environment(\.animationsEnabled) private var animations
 
     var body: some View {
-        VStack(spacing: 0) {
-            HStack {
-                Picker("", selection: $tab) {
-                    Text("Warteschlange").tag(0)
-                    Text("Verlauf").tag(1)
-                }
-                .pickerStyle(.segmented)
-                .labelsHidden()
-                .frame(width: 260)
-                Spacer()
-                if tab == 0 {
-                    Button("Abgeschlossene entfernen") { engine.clearFinished() }
-                        .disabled(!engine.jobs.contains { $0.status.isFinished })
-                } else {
-                    Button("Verlauf löschen") { history.clear() }
-                        .disabled(history.records.isEmpty)
+        PageScaffold(title: "Übertragungen", subtitle: subtitle) {
+            HStack(spacing: 10) {
+                GlassSegmented(selection: $tab, options: [
+                    SegmentOption(value: 0, title: "Warteschlange", symbol: "list.bullet"),
+                    SegmentOption(value: 1, title: "Verlauf", symbol: "clock.arrow.circlepath"),
+                ])
+                ToolbarCapsule {
+                    if tab == 0 {
+                        ToolbarIconButton(symbol: "checkmark.circle.badge.xmark", help: "Abgeschlossene entfernen") { engine.clearFinished() }
+                            .disabled(!engine.jobs.contains { $0.status.isFinished })
+                    } else {
+                        ToolbarIconButton(symbol: "trash.slash", help: "Verlauf löschen") { history.clear() }
+                            .disabled(history.records.isEmpty)
+                    }
                 }
             }
-            .padding(.horizontal, 22)
-            .padding(.vertical, 14)
+        } content: {
+        VStack(spacing: 0) {
 
             if tab == 0 {
                 if engine.jobs.isEmpty {
@@ -43,7 +41,7 @@ struct TransferCenterView: View {
                                     .transition(.asymmetric(insertion: .move(edge: .top).combined(with: .opacity), removal: .opacity))
                             }
                         }
-                        .padding(.horizontal, 22)
+                        .padding(.horizontal, Spacing.gutter)
                         .padding(.bottom, 22)
                         .animation(animations ? .bridgeSpring : nil, value: engine.jobs.map(\.id))
                     }
@@ -52,7 +50,13 @@ struct TransferCenterView: View {
                 historyList
             }
         }
-        .navigationTitle("Übertragungen")
+        }
+    }
+
+    private var subtitle: String {
+        let active = engine.activeCount
+        if active > 0 { return active == 1 ? "1 Übertragung läuft" : "\(active) Übertragungen laufen" }
+        return "Warteschlange und Verlauf – alles lokal per USB"
     }
 
     private var historyList: some View {
@@ -67,19 +71,22 @@ struct TransferCenterView: View {
                             .foregroundStyle(r.succeeded ? Palette.success : Palette.warning)
                             .frame(width: 22)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(r.title).font(.system(size: 13, weight: .medium)).lineLimit(1)
-                            Text(r.detail).font(.system(size: 11.5)).foregroundStyle(.secondary).lineLimit(1).truncationMode(.middle)
+                            Text(r.title).font(.inter(13, .medium)).lineLimit(1)
+                            Text(r.detail).font(.inter(11.5)).foregroundStyle(.secondary).lineLimit(1).truncationMode(.middle)
                         }
                         Spacer()
                         VStack(alignment: .trailing, spacing: 2) {
                             Text("\(r.fileCount) \(r.fileCount == 1 ? "Datei" : "Dateien") · \(ByteFormat.string(r.bytes))")
-                                .font(.system(size: 12)).monospacedDigit()
-                            Text(r.date.formatted(date: .abbreviated, time: .shortened)).font(.system(size: 11)).foregroundStyle(.secondary)
+                                .font(.inter(12)).monospacedDigit()
+                            Text(r.date.formatted(date: .abbreviated, time: .shortened)).font(.inter(11)).foregroundStyle(.secondary)
                         }
                     }
                     .padding(.vertical, 3)
                 }
                 .scrollContentBackground(.hidden)
+                .glassCard(cornerRadius: Radius.panel)
+                .padding(.horizontal, Spacing.gutter - 6)
+                .padding(.bottom, 18)
             }
         }
     }
@@ -106,21 +113,21 @@ struct TransferJobRow: View {
                 ZStack {
                     ProgressRing(fraction: job.fraction, lineWidth: 3.5, tint: tint)
                     Image(systemName: statusSymbol)
-                        .font(.system(size: 13, weight: .bold))
+                        .font(.inter(13, .bold))
                         .foregroundStyle(tint)
                 }
                 .frame(width: 38, height: 38)
 
                 VStack(alignment: .leading, spacing: 4) {
                     HStack(spacing: 6) {
-                        Text(job.title).font(.system(size: 14, weight: .semibold)).lineLimit(1).truncationMode(.middle)
+                        Text(job.title).font(.inter(14, .semibold)).lineLimit(1).truncationMode(.middle)
                         Text(job.direction.verb)
-                            .font(.system(size: 10.5, weight: .semibold))
+                            .font(.inter(10.5, .semibold))
                             .padding(.horizontal, 6).padding(.vertical, 2)
                             .background(Capsule().fill(Color.primary.opacity(0.07)))
                     }
                     Text("\(job.sourceDescription)  →  \(job.destinationDescription)")
-                        .font(.system(size: 11.5))
+                        .font(.inter(11.5))
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
                         .truncationMode(.middle)
@@ -136,12 +143,12 @@ struct TransferJobRow: View {
                             if job.bytesPerSecond > 0 { Text(ByteFormat.rate(job.bytesPerSecond)) }
                             if let r = job.remainingSeconds, r > 0 { Text("noch \(DurationFormat.string(r))") }
                         }
-                        .font(.system(size: 11.5))
+                        .font(.inter(11.5))
                         .foregroundStyle(.secondary)
                         .monospacedDigit()
                     } else {
                         Text(statusLine)
-                            .font(.system(size: 12))
+                            .font(.inter(12))
                             .foregroundStyle(job.status == .completed ? Palette.success : .secondary)
                     }
                 }
@@ -210,7 +217,7 @@ struct TransferJobRow: View {
 
     private func iconButton(_ symbol: String, help: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            Image(systemName: symbol).font(.system(size: 11, weight: .bold)).frame(width: 26, height: 26)
+            Image(systemName: symbol).font(.inter(11, .bold)).frame(width: 26, height: 26)
         }
         .buttonStyle(.plain)
         .glassSurface(Circle(), interactive: true)
@@ -232,10 +239,10 @@ struct TransferJobRow: View {
                         Text(reason).foregroundStyle(Palette.danger).lineLimit(1)
                     }
                 }
-                .font(.system(size: 11.5))
+                .font(.inter(11.5))
             }
             if job.items.count > 400 {
-                Text("… und \(job.items.count - 400) weitere").font(.system(size: 11)).foregroundStyle(.secondary)
+                Text("… und \(job.items.count - 400) weitere").font(.inter(11)).foregroundStyle(.secondary)
             }
         }
         .padding(.leading, 52)
@@ -273,10 +280,10 @@ struct ConflictSheet: View {
                 IconTile(symbol: "doc.on.doc", tint: Palette.warning, size: 44)
                 VStack(alignment: .leading, spacing: 3) {
                     Text("„\(prompt.fileName)“ ist bereits vorhanden")
-                        .font(.system(size: 15, weight: .semibold))
+                        .font(.inter(15, .semibold))
                         .lineLimit(2)
                     Text("Im Ziel „\(prompt.destination)“ gibt es bereits ein Objekt mit diesem Namen.")
-                        .font(.system(size: 12.5))
+                        .font(.inter(12.5))
                         .foregroundStyle(.secondary)
                 }
             }
@@ -287,7 +294,7 @@ struct ConflictSheet: View {
             }
             if prompt.remainingCount > 0 {
                 Toggle("Für alle weiteren Konflikte dieser Übertragung übernehmen (\(prompt.remainingCount) Dateien folgen)", isOn: $applyToAll)
-                    .font(.system(size: 12.5))
+                    .font(.inter(12.5))
             }
             HStack {
                 Button("Überspringen") { prompt.resolve(.skip, applyToAll) }
@@ -304,9 +311,9 @@ struct ConflictSheet: View {
 
     private func compareCard(title: String, size: UInt64?, date: Date?) -> some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(title).font(.system(size: 11, weight: .semibold)).foregroundStyle(.secondary).textCase(.uppercase)
-            Text(size.map { ByteFormat.string($0) } ?? "–").font(.system(size: 13, weight: .medium))
-            Text(date.map { $0.formatted(date: .abbreviated, time: .shortened) } ?? "Datum unbekannt").font(.system(size: 11.5)).foregroundStyle(.secondary)
+            Text(title).font(.inter(11, .semibold)).foregroundStyle(.secondary).textCase(.uppercase)
+            Text(size.map { ByteFormat.string($0) } ?? "–").font(.inter(13, .medium))
+            Text(date.map { $0.formatted(date: .abbreviated, time: .shortened) } ?? "Datum unbekannt").font(.inter(11.5)).foregroundStyle(.secondary)
         }
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)

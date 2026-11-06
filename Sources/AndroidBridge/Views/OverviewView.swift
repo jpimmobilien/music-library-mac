@@ -9,9 +9,17 @@ struct OverviewView: View {
     @Environment(\.animationsEnabled) private var animations
 
     var body: some View {
+        PageScaffold(title: "Übersicht", subtitle: subtitle) {
+            if let device = devices.connectedDevices.first {
+                ToolbarCapsule {
+                    ToolbarIconButton(symbol: "folder", help: "Dateimanager öffnen") { model.openFiles(device: device) }
+                    ToolbarIconButton(symbol: "photo.on.rectangle.angled", help: "Fotos & Videos") { model.selection = .media }
+                    ToolbarIconButton(symbol: "doc.on.doc", help: "Duplikate finden") { model.selection = .duplicates }
+                }
+            }
+        } content: {
         ScrollView {
             VStack(alignment: .leading, spacing: 26) {
-                header
                 if devices.devices.isEmpty {
                     NoDeviceHero()
                         .transition(.opacity.combined(with: .scale(scale: 0.98)))
@@ -24,28 +32,18 @@ struct OverviewView: View {
                 }
                 PrivacyNote()
             }
-            .padding(.horizontal, 34)
-            .padding(.vertical, 28)
-            .frame(maxWidth: 1100)
-            .frame(maxWidth: .infinity)
+            .padding(.horizontal, Spacing.gutter)
+            .padding(.bottom, 28)
+            .frame(maxWidth: 1100, alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
             .animation(animations ? .bridgeSpring : nil, value: devices.devices.map(\.id))
         }
-        .navigationTitle("Übersicht")
+        }
     }
 
-    private var header: some View {
-        HStack(alignment: .center, spacing: 14) {
-            AppMark(size: 46)
-            VStack(alignment: .leading, spacing: 3) {
-                Text("Android Bridge")
-                    .font(.system(size: 28, weight: .bold, design: .rounded))
-                Text(devices.devices.isEmpty ? "Fotos, Videos und Dateien zwischen Android und Mac – per USB, ganz ohne Cloud."
-                     : "\(devices.connectedDevices.count) von \(devices.devices.count) \(devices.devices.count == 1 ? "Gerät" : "Geräten") bereit")
-                    .font(.system(size: 13.5))
-                    .foregroundStyle(.secondary)
-            }
-            Spacer()
-        }
+    private var subtitle: String {
+        devices.devices.isEmpty ? "Fotos, Videos und Dateien zwischen Android und Mac – per USB, ganz ohne Cloud."
+            : "\(devices.connectedDevices.count) von \(devices.devices.count) \(devices.devices.count == 1 ? "Gerät" : "Geräten") bereit"
     }
 }
 
@@ -111,7 +109,7 @@ struct NoDeviceHero: View {
                     ZStack {
                         LinearGradient(colors: [Palette.bridgeGreen.opacity(0.5), Palette.bridgeBlue.opacity(0.5)], startPoint: .top, endPoint: .bottom)
                         Image(systemName: "cable.connector")
-                            .font(.system(size: 30, weight: .light))
+                            .font(.inter(30, .light))
                             .foregroundStyle(.white.opacity(0.9))
                     }
                 }
@@ -128,12 +126,12 @@ struct NoDeviceHero: View {
 
             VStack(alignment: .leading, spacing: 18) {
                 Text("Android-Telefon anschließen")
-                    .font(.system(size: 22, weight: .semibold, design: .rounded))
+                    .font(.display(22, .semibold))
                 StepRow(number: 1, title: "Mit USB-Kabel verbinden", detail: "Verwenden Sie ein Kabel, das Daten überträgt – manche Ladekabel können nur laden.")
                 StepRow(number: 2, title: "Telefon entsperren", detail: "Android gibt den Speicher erst frei, wenn das Telefon entsperrt ist.")
                 StepRow(number: 3, title: "„Dateiübertragung“ wählen", detail: "Tippen Sie auf die Mitteilung „USB-Verbindung“ und wählen Sie „Dateiübertragung / Android Auto“.")
                 Text("Android Bridge erkennt das Gerät automatisch – unabhängig vom Hersteller.")
-                    .font(.system(size: 12))
+                    .font(.inter(12))
                     .foregroundStyle(.secondary)
             }
             Spacer(minLength: 0)
@@ -151,13 +149,13 @@ struct StepRow: View {
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             Text("\(number)")
-                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .font(.display(13, .bold))
                 .foregroundStyle(.white)
                 .frame(width: 24, height: 24)
                 .background(Circle().fill(LinearGradient(colors: [Palette.bridgeGreen, Palette.bridgeTeal], startPoint: .top, endPoint: .bottom)))
             VStack(alignment: .leading, spacing: 2) {
-                Text(title).font(.system(size: 14, weight: .semibold))
-                Text(detail).font(.system(size: 12.5)).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                Text(title).font(.inter(14, .semibold))
+                Text(detail).font(.inter(12.5)).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             }
         }
     }
@@ -179,7 +177,7 @@ struct DeviceHeroCard: View {
                         ZStack {
                             LinearGradient(colors: [Palette.bridgeGreen.opacity(0.6), Palette.bridgeBlue.opacity(0.6)], startPoint: .top, endPoint: .bottom)
                             Image(systemName: device.state == .connected ? "checkmark" : device.state.symbolName)
-                                .font(.system(size: 14, weight: .bold))
+                                .font(.inter(14, .bold))
                                 .foregroundStyle(.white)
                         }
                     }
@@ -187,12 +185,12 @@ struct DeviceHeroCard: View {
                 .frame(width: 96, height: 96)
                 VStack(alignment: .leading, spacing: 6) {
                     Text(device.displayName)
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        .font(.display(20, .semibold))
                     HStack(spacing: 8) {
                         StatusPill(state: device.state)
                         if device.state == .connected {
                             Text("\(ByteFormat.string(device.totalFree)) frei")
-                                .font(.system(size: 12))
+                                .font(.inter(12))
                                 .foregroundStyle(.secondary)
                         }
                     }
@@ -261,14 +259,14 @@ struct DeviceHeroCard: View {
             if model.settings.autoConnect == false, case .fileTransfer? = device.record?.mode {
                 Button("Verbinden") { device.connect() }.buttonStyle(GlassButtonStyle(prominent: true))
             } else {
-                Text("Gerät wird erkannt …").font(.system(size: 13)).foregroundStyle(.secondary)
+                Text("Gerät wird erkannt …").font(.inter(13)).foregroundStyle(.secondary)
             }
         case .connecting, .readingStorage:
             Text(device.state == .connecting ? "Verbindung wird hergestellt …" : "Speicher werden gelesen …")
-                .font(.system(size: 13))
+                .font(.inter(13))
                 .foregroundStyle(.secondary)
         case .disconnected:
-            Text("Das Gerät wurde getrennt.").font(.system(size: 13)).foregroundStyle(.secondary)
+            Text("Das Gerät wurde getrennt.").font(.inter(13)).foregroundStyle(.secondary)
         }
     }
 }
@@ -287,10 +285,10 @@ struct ConnectionGuideView: View {
                     Color(nsColor: .windowBackgroundColor)
                     VStack(alignment: .leading, spacing: 6) {
                         Text("USB-Einstellungen")
-                            .font(.system(size: 10, weight: .semibold))
+                            .font(.inter(10, .semibold))
                             .padding(.top, 22)
                         Text("USB verwenden für")
-                            .font(.system(size: 7.5))
+                            .font(.inter(7.5))
                             .foregroundStyle(.secondary)
                         ForEach(Array(options.enumerated()), id: \.offset) { index, option in
                             HStack(spacing: 5) {
@@ -300,7 +298,7 @@ struct ConnectionGuideView: View {
                                 }
                                 .frame(width: 10, height: 10)
                                 Text(option)
-                                    .font(.system(size: 7.2, weight: index == 0 ? .semibold : .regular))
+                                    .font(.inter(7.2, index == 0 ? .semibold : .regular))
                                     .lineLimit(2)
                                     .fixedSize(horizontal: false, vertical: true)
                             }
@@ -314,16 +312,16 @@ struct ConnectionGuideView: View {
             }
             VStack(alignment: .leading, spacing: 10) {
                 Label("Dateiübertragung einschalten", systemImage: "hand.tap")
-                    .font(.system(size: 16, weight: .semibold))
+                    .font(.inter(16, .semibold))
                 Text("Entsperren Sie Ihr Android-Gerät und wählen Sie in den USB-Verbindungseinstellungen „Dateiübertragung / Android Auto“.")
-                    .font(.system(size: 13))
+                    .font(.inter(13))
                     .fixedSize(horizontal: false, vertical: true)
                 Text("Die Einstellung finden Sie in der Mitteilung „Gerät wird über USB aufgeladen“ – oder unter Einstellungen → Verbundene Geräte → USB.")
-                    .font(.system(size: 12))
+                    .font(.inter(12))
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 Text("Erscheint nichts? Dann überträgt das Kabel möglicherweise keine Daten – probieren Sie ein anderes.")
-                    .font(.system(size: 12))
+                    .font(.inter(12))
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -348,7 +346,7 @@ struct PrivacyNote: View {
             Image(systemName: "lock.shield")
                 .foregroundStyle(Palette.bridgeGreen)
             Text("Alles bleibt lokal: Übertragungen laufen direkt per USB zwischen Telefon und Mac. Kein Konto, keine Cloud, keine Telemetrie.")
-                .font(.system(size: 12))
+                .font(.inter(12))
                 .foregroundStyle(.secondary)
         }
         .padding(.horizontal, 4)
@@ -362,6 +360,17 @@ struct DeviceDetailView: View {
     @State private var customName = ""
 
     var body: some View {
+        PageScaffold(title: device.displayName, subtitle: "\(device.manufacturer) · \(device.state.title)") {
+            if device.state == .connected {
+                ToolbarCapsule {
+                    ToolbarIconButton(symbol: "folder", help: "Im Dateimanager öffnen") { model.openFiles(device: device) }
+                    ToolbarIconButton(symbol: "doc.on.doc", help: "Duplikate finden") {
+                        model.select(device: device)
+                        model.selection = .duplicates
+                    }
+                }
+            }
+        } content: {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
                 DeviceHeroCard(device: device)
@@ -380,7 +389,7 @@ struct DeviceDetailView: View {
                         }
                         infoRow("Seriennummer", maskedSerial)
                     }
-                    .font(.system(size: 13))
+                    .font(.inter(13))
                 }
                 .padding(20)
                 .glassCard(cornerRadius: 20)
@@ -395,17 +404,18 @@ struct DeviceDetailView: View {
                         Button("Übernehmen", action: saveName)
                     }
                     Text("Ordnerposition und Speicherwahl merkt sich Android Bridge je Gerät (abschaltbar in den Einstellungen).")
-                        .font(.system(size: 12))
+                        .font(.inter(12))
                         .foregroundStyle(.secondary)
                 }
                 .padding(20)
                 .glassCard(cornerRadius: 20)
             }
-            .padding(30)
-            .frame(maxWidth: 1100)
-            .frame(maxWidth: .infinity)
+            .padding(.horizontal, Spacing.gutter)
+            .padding(.bottom, 30)
+            .frame(maxWidth: 1100, alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .navigationTitle(device.displayName)
+        }
         .onAppear { customName = model.settings.preferences(forSerial: device.serial).customName ?? "" }
     }
 

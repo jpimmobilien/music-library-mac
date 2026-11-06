@@ -9,6 +9,7 @@ struct FavoritesView: View {
     @ObservedObject var devices: DeviceManager
 
     var body: some View {
+        PageScaffold(title: "Favoriten", subtitle: "Häufig genutzte Ordner auf Ihren Telefonen – mit einem Klick geöffnet") {
         Group {
             if favorites.favorites.isEmpty {
                 EmptyStateView(symbol: "star", title: "Noch keine Favoriten",
@@ -28,13 +29,13 @@ struct FavoritesView: View {
                             HStack(spacing: 12) {
                                 IconTile(symbol: "star.fill", tint: available ? Palette.warning : .gray, size: 30)
                                 VStack(alignment: .leading, spacing: 2) {
-                                    Text(fav.name).font(.system(size: 13.5, weight: .medium))
+                                    Text(fav.name).font(.inter(13.5, .medium))
                                     Text("\(fav.location.deviceName) › \(fav.location.displayPath)")
-                                        .font(.system(size: 11.5)).foregroundStyle(.secondary).lineLimit(1)
+                                        .font(.inter(11.5)).foregroundStyle(.secondary).lineLimit(1)
                                 }
                                 Spacer()
                                 if !available {
-                                    Text("Gerät nicht verbunden").font(.system(size: 11)).foregroundStyle(.secondary)
+                                    Text("Gerät nicht verbunden").font(.inter(11)).foregroundStyle(.secondary)
                                 }
                             }
                             .contentShape(Rectangle())
@@ -49,9 +50,12 @@ struct FavoritesView: View {
                     .onMove { favorites.move(from: $0, to: $1) }
                 }
                 .scrollContentBackground(.hidden)
+                .glassCard(cornerRadius: Radius.panel)
+                .padding(.horizontal, Spacing.gutter - 6)
+                .padding(.bottom, 18)
             }
         }
-        .navigationTitle("Favoriten")
+        }
     }
 
     private func addSuggestions(_ device: DeviceConnection) {
@@ -70,6 +74,12 @@ struct RecentsView: View {
     @ObservedObject var devices: DeviceManager
 
     var body: some View {
+        PageScaffold(title: "Zuletzt verwendet", subtitle: "Dateien, die Sie zuletzt angesehen oder übertragen haben") {
+            ToolbarCapsule {
+                ToolbarIconButton(symbol: "trash.slash", help: "Liste leeren (Dateien bleiben erhalten)") { recents.clear() }
+                    .disabled(recents.recents.isEmpty)
+            }
+        } content: {
         Group {
             if !model.settings.recentFilesEnabled {
                 EmptyStateView(symbol: "clock.badge.xmark", title: "Ausgeschaltet",
@@ -86,14 +96,14 @@ struct RecentsView: View {
                         HStack(spacing: 12) {
                             FileGlyph(kind: FileKind.of(name: r.name, isFolder: false), size: 22)
                             VStack(alignment: .leading, spacing: 2) {
-                                Text(r.name).font(.system(size: 13, weight: .medium)).lineLimit(1)
+                                Text(r.name).font(.inter(13, .medium)).lineLimit(1)
                                 Text("\(r.location.deviceName) › \(r.location.displayPath)")
-                                    .font(.system(size: 11.5)).foregroundStyle(.secondary).lineLimit(1)
+                                    .font(.inter(11.5)).foregroundStyle(.secondary).lineLimit(1)
                             }
                             Spacer()
                             VStack(alignment: .trailing, spacing: 2) {
-                                Text(ByteFormat.string(r.size)).font(.system(size: 11.5)).monospacedDigit()
-                                Text(r.date.formatted(date: .abbreviated, time: .shortened)).font(.system(size: 11)).foregroundStyle(.secondary)
+                                Text(ByteFormat.string(r.size)).font(.inter(11.5)).monospacedDigit()
+                                Text(r.date.formatted(date: .abbreviated, time: .shortened)).font(.inter(11)).foregroundStyle(.secondary)
                             }
                         }
                         .contentShape(Rectangle())
@@ -103,13 +113,11 @@ struct RecentsView: View {
                     .padding(.vertical, 3)
                 }
                 .scrollContentBackground(.hidden)
+                .glassCard(cornerRadius: Radius.panel)
+                .padding(.horizontal, Spacing.gutter - 6)
+                .padding(.bottom, 18)
             }
         }
-        .navigationTitle("Zuletzt verwendet")
-        .toolbar {
-            ToolbarItem {
-                Button("Liste leeren") { recents.clear() }.disabled(recents.recents.isEmpty)
-            }
         }
     }
 }
@@ -123,7 +131,7 @@ struct DiagnosticsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack {
-                Text("Diagnose").font(.system(size: 17, weight: .semibold))
+                Text("Diagnose").font(.inter(17, .semibold))
                 Spacer()
                 Button("In Zwischenablage kopieren") {
                     NSPasteboard.general.clearContents()
@@ -132,7 +140,7 @@ struct DiagnosticsView: View {
                 Button("Fertig") { dismiss() }.keyboardShortcut(.defaultAction)
             }
             Text("Enthält keine Dateinamen oder Inhalte – nur Geräte, Schnittstellen und Vorgänge.")
-                .font(.system(size: 11.5)).foregroundStyle(.secondary)
+                .font(.inter(11.5)).foregroundStyle(.secondary)
             GroupBox("USB-Geräte") {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 8) {
@@ -140,9 +148,9 @@ struct DiagnosticsView: View {
                         ForEach(devices.allUSBDevices) { r in
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("\(r.productName ?? "Unbekannt") – \(r.vendorName ?? USBDeviceClassifier.vendorName(r.vendorID) ?? "?") [\(r.idString)]")
-                                    .font(.system(size: 12, weight: .medium))
+                                    .font(.inter(12, .medium))
                                 Text("Modus: \(modeText(r.mode))\(r.speedDescription.map { " · \($0)" } ?? "")")
-                                    .font(.system(size: 11)).foregroundStyle(.secondary)
+                                    .font(.inter(11)).foregroundStyle(.secondary)
                                 ForEach(r.interfaces, id: \.self) { i in
                                     Text("  Schnittstelle \(i.number): Klasse \(hex(i.interfaceClass))/\(hex(i.subClass))/\(hex(i.interfaceProtocol)) \(i.name ?? "")")
                                         .font(.system(size: 11, design: .monospaced)).foregroundStyle(.secondary)

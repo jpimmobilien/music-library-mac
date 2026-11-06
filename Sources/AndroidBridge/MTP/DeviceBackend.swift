@@ -18,6 +18,8 @@ protocol DeviceBackend: AnyObject {
                 next: @escaping (Int) throws -> Data, progress: @escaping (UInt64) -> Bool) async throws -> UInt32
     func createFolder(name: String, storage: UInt32, parent: UInt32) async throws -> UInt32
     func delete(handle: UInt32) async throws
+    /// Löscht eine Datei bzw. einen Ordner samt Inhalt (echte MTP-Löschung, kein Papierkorb).
+    func deleteTree(handle: UInt32, storage: UInt32, isFolder: Bool) async throws -> MTPSession.DeleteTreeResult
     func rename(handle: UInt32, to name: String) async throws
     func close(graceful: Bool)
 }
@@ -100,6 +102,12 @@ final class MTPBackend: DeviceBackend {
 
     func delete(handle: UInt32) async throws {
         try await worker.withSession(priority: .high) { s, _ in try s.delete(handle) }
+    }
+
+    func deleteTree(handle: UInt32, storage: UInt32, isFolder: Bool) async throws -> MTPSession.DeleteTreeResult {
+        try await worker.withSession(priority: .high) { s, flag in
+            try s.deleteTree(handle, storage: storage, isFolder: isFolder, cancelled: { flag.isCancelled })
+        }
     }
 
     func rename(handle: UInt32, to name: String) async throws {

@@ -10,7 +10,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-VERSION="${VERSION:-1.0.0}"
+VERSION="${VERSION:-2.0.0}"
 BUILD_NUMBER="${BUILD_NUMBER:-1}"
 APP="build/Android Bridge.app"
 EXE="AndroidBridge"
@@ -34,6 +34,10 @@ rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp "build/$EXE-universal" "$APP/Contents/MacOS/$EXE"
 sed -e "s/__VERSION__/$VERSION/" -e "s/__BUILD__/$BUILD_NUMBER/" Resources/Info.plist > "$APP/Contents/Info.plist"
+# Schriften (Inter, SIL Open Font License) und Lizenztexte
+mkdir -p "$APP/Contents/Resources/Fonts" "$APP/Contents/Resources/Licenses"
+cp Resources/Fonts/*.ttf "$APP/Contents/Resources/Fonts/"
+cp Resources/Licenses/*.txt "$APP/Contents/Resources/Licenses/"
 plutil -lint "$APP/Contents/Info.plist"
 printf 'APPL????' > "$APP/Contents/PkgInfo"
 if command -v iconutil >/dev/null; then
