@@ -1,0 +1,242 @@
+import AVFoundation
+import AudioToolbox
+import MLCore
+
+/// Tonhöhenverschiebung in Android-Qualität (v2.1) als eigene Audio-Unit in der Klangkette.
+///
+/// Apples `AVAudioUnitTimePitch` (Phasen-Vocoder mit kleiner Überlappung) klang bei Tonhöhenänderungen hörbar
+/// verzerrt. Diese Unit nutzt die aus der Android-App portierte Verarbeitung `TimePitchProcessor` (MLCore):
+/// Phasen-Vocoder mit 4096er-FFT, Phasenkopplung, Anschlagerkennung und anschließender Sinc-Umrechnung.
+/// Sie verschiebt nur die Tonhöhe (Tempo bleibt 1, gleich viele Frames hinein wie heraus, feste Verzögerung);
+/// eine Tempoänderung übernimmt weiterhin Apples Einheit dahinter.
+///
+/// Echtzeit-Regeln im Render-Block: keine Speicheranforderung, keine blockierende Sperre. Neue Einstellungen
+/// werden im Hauptthread als neuer Prozessor angelegt und über einen Briefkasten übergeben (`os_unfair_lock_trylock`
+/// im Audio-Thread – blockiert nie); der alte Prozessor wird im Hauptthread freigegeben.
+final class PitchShiftAudioUnit: AUAudioUnit {
+    static let componentDescription = AudioComponentDescription(
+        componentType: kAudioUnitType_Effect,
+        componentSubType: 0x6D6C_7073,          // 'mlps'
+        componentManufacturer: 0x4D4C_6962,     // 'MLib'
+        componentFlags: 0,
+        componentFlagsMask: 0
+    )
+
+    private static var registered = false
+
+    /// Einmal je Programmlauf anmelden (danach mit `AVAudioUnitEffect(audioComponentDescription:)` erzeugbar).
+    static func register() {
+        guard !registered else { return }
+        registered = true
+        AUAudioUnit.registerSubclass(PitchShiftAudioUnit.self, as: componentDescription, name: "Music Library: Tonhöhe", version: 1)
+    }
+
+    private var inputBus: AUAudioUnitBus!
+    private var outputBus: AUAudioUnitBus!
+    private var _inputBusses: AUAudioUnitBusArray!
+    private var _outputBusses: AUAudioUnitBusArray!
+    private let state = RenderState()
+
+    /// Gewünschter Tonhöhenfaktor (2^(Halbtöne/12)); 1 = unverändert (Durchreichen ohne Verzögerung).
+    private(set) var pitchFactor: Float = 1
+
+    override init(componentDescription: AudioComponentDescription, options: AudioComponentInstantiationOptions = []) throws {
+        try super.init(componentDescription: componentDescription, options: options)
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 2)!
+        inputBus = try AUAudioUnitBus(format: format)
+        outputBus = try AUAudioUnitBus(format: format)
+        inputBus.maximumChannelCount = 2
+        outputBus.maximumChannelCount = 2
+        _inputBusses = AUAudioUnitBusArray(audioUnit: self, busType: .input, busses: [inputBus])
+        _outputBusses = AUAudioUnitBusArray(audioUnit: self, busType: .output, busses: [outputBus])
+        maximumFramesToRender = 4096
+    }
+
+    override var inputBusses: AUAudioUnitBusArray { _inputBusses }
+    override var outputBusses: AUAudioUnitBusArray { _outputBusses }
+    override var canProcessInPlace: Bool { false }
+    override var latency: TimeInterval {
+        let rate = outputBus.format.sampleRate
+        guard pitchFactor != 1, rate > 0 else { return 0 }
+        return Double(state.latencyFrames) / rate
+    }
+
+    override func allocateRenderResources() throws {
+        try super.allocateRenderResources()
+        let format = outputBus.format
+        guard format.channelCount >= 1, format.channelCount <= 2, inputBus.format.channelCount == format.channelCount else {
+            throw NSError(domain: NSOSStatusErrorDomain, code: Int(kAudioUnitErr_FormatNotSupported))
+        }
+        state.allocate(channels: Int(format.channelCount), maxFrames: Int(maximumFramesToRender))
+        state.sampleRate = format.sampleRate
+        installProcessor()
+    }
+
+    override func deallocateRenderResources() {
+        state.deallocate()
+        super.deallocateRenderResources()
+    }
+
+    /// Tonhöhe setzen (Hauptthread). Legt bei Bedarf einen neuen Prozessor an.
+    func setPitch(factor: Float) {
+        let f = max(0.25, min(4, factor))
+        guard f != pitchFactor else { return }
+        pitchFactor = f
+        if renderResourcesAllocated { installProcessor() }
+    }
+
+    /// Gepufferte Klänge verwerfen (nach Spulen, Titelwechsel, Stopp).
+    func flush() { state.requestReset() }
+
+    override func reset() {
+        super.reset()
+        state.requestReset()
+    }
+
+    private func installProcessor() {
+        guard abs(pitchFactor - 1) > 1e-5 else {
+            state.post(nil, latency: 0)
+            return
+        }
+        let p = TimePitchProcessor(sampleRate: state.sampleRate, channels: state.channels, speed: 1, pitch: pitchFactor)
+        state.post(p, latency: p.latencyFrames)
+    }
+
+    override var internalRenderBlock: AUInternalRenderBlock {
+        let state = self.state
+        return { _, timestamp, frameCount, _, outputData, _, pullInputBlock in
+            guard let pull = pullInputBlock else { return kAudioUnitErr_NoConnection }
+            return state.render(timestamp: timestamp, frames: frameCount, output: outputData, pull: pull)
+        }
+    }
+}
+
+/// Zustand des Render-Blocks (feste Puffer, Briefkasten für den Prozessor).
+private final class RenderState: @unchecked Sendable {
+    var channels = 2
+    var sampleRate: Double = 44_100
+    private(set) var latencyFrames = 0
+    private var maxFrames = 0
+    private var inputList: UnsafeMutableAudioBufferListPointer?
+    private var inputMemory: [UnsafeMutablePointer<Float>] = []
+    private var outputMemory: [UnsafeMutablePointer<Float>] = []
+    private let inPointers = UnsafeMutablePointer<UnsafePointer<Float>>.allocate(capacity: 2)
+    private let outPointers = UnsafeMutablePointer<UnsafeMutablePointer<Float>>.allocate(capacity: 2)
+
+    // Briefkasten: nur unter `lock` (Audio-Thread nur mit trylock)
+    private let lock = UnsafeMutablePointer<os_unfair_lock>.allocate(capacity: 1)
+    private var current: Unmanaged<TimePitchProcessor>?
+    private var pending: Unmanaged<TimePitchProcessor>?
+    private var hasPending = false
+    /// Vom Audio-Thread abgelegter alter Prozessor (Freigabe im Hauptthread beim nächsten `post`).
+    private var retired: Unmanaged<TimePitchProcessor>?
+    private let resetFlag = UnsafeMutablePointer<Int>.allocate(capacity: 1)
+
+    init() {
+        lock.initialize(to: os_unfair_lock())
+        resetFlag.initialize(to: 0)
+    }
+
+    deinit {
+        deallocate()
+        os_unfair_lock_lock(lock)
+        current?.release()
+        pending?.release()
+        retired?.release()
+        os_unfair_lock_unlock(lock)
+        lock.deallocate()
+        resetFlag.deallocate()
+        inPointers.deallocate()
+        outPointers.deallocate()
+    }
+
+    func allocate(channels: Int, maxFrames: Int) {
+        deallocate()
+        self.channels = channels
+        self.maxFrames = maxFrames
+        let list = AudioBufferList.allocate(maximumBuffers: channels)
+        for c in 0..<channels {
+            let mem = UnsafeMutablePointer<Float>.allocate(capacity: maxFrames)
+            mem.initialize(repeating: 0, count: maxFrames)
+            inputMemory.append(mem)
+            let out = UnsafeMutablePointer<Float>.allocate(capacity: maxFrames)
+            out.initialize(repeating: 0, count: maxFrames)
+            outputMemory.append(out)
+            list[c] = AudioBuffer(mNumberChannels: 1, mDataByteSize: UInt32(maxFrames * 4), mData: mem)
+        }
+        inputList = list
+    }
+
+    func deallocate() {
+        if let inputList { free(inputList.unsafeMutablePointer) }
+        inputList = nil
+        for m in inputMemory { m.deallocate() }
+        for m in outputMemory { m.deallocate() }
+        inputMemory = []
+        outputMemory = []
+    }
+
+    /// Hauptthread: neuen Prozessor (oder `nil` = durchreichen) übergeben; Abgelegtes freigeben.
+    func post(_ processor: TimePitchProcessor?, latency: Int) {
+        let new = processor.map { Unmanaged.passRetained($0) }
+        os_unfair_lock_lock(lock)
+        pending?.release()          // noch nicht übernommen → verwerfen
+        pending = new
+        hasPending = true
+        let old = retired
+        retired = nil
+        os_unfair_lock_unlock(lock)
+        old?.release()
+        latencyFrames = latency
+    }
+
+    func requestReset() { resetFlag.pointee = 1 }
+
+    /// Audio-Thread.
+    func render(timestamp: UnsafePointer<AudioTimeStamp>, frames frameCount: AUAudioFrameCount,
+                output: UnsafeMutablePointer<AudioBufferList>, pull: AURenderPullInputBlock) -> AUAudioUnitStatus {
+        let frames = Int(frameCount)
+        guard let inputList, frames <= maxFrames else { return kAudioUnitErr_TooManyFramesToProcess }
+        for c in 0..<channels {
+            inputList[c].mData = UnsafeMutableRawPointer(inputMemory[c])
+            inputList[c].mDataByteSize = UInt32(frames * 4)
+        }
+        var pullFlags = AudioUnitRenderActionFlags()
+        let status = pull(&pullFlags, timestamp, frameCount, 0, inputList.unsafeMutablePointer)
+        if status != noErr { return status }
+
+        // Neuen Prozessor übernehmen (nie blockieren: ist die Sperre belegt, im nächsten Zyklus)
+        if os_unfair_lock_trylock(lock) {
+            if hasPending && retired == nil {
+                retired = current
+                current = pending
+                pending = nil
+                hasPending = false
+            }
+            os_unfair_lock_unlock(lock)
+        }
+
+        let out = UnsafeMutableAudioBufferListPointer(output)
+        for c in 0..<min(out.count, channels) {
+            if out[c].mData == nil { out[c].mData = UnsafeMutableRawPointer(outputMemory[c]) }
+            out[c].mDataByteSize = UInt32(frames * 4)
+            if let src = inputList[c].mData?.assumingMemoryBound(to: Float.self) { inPointers[c] = UnsafePointer(src) }
+            if let dst = out[c].mData?.assumingMemoryBound(to: Float.self) { outPointers[c] = dst }
+        }
+        guard let current else {
+            // Durchreichen
+            for c in 0..<min(out.count, channels) {
+                outPointers[c].update(from: inPointers[c], count: frames)
+            }
+            return noErr
+        }
+        current._withUnsafeGuaranteedRef { p in
+            if resetFlag.pointee != 0 {
+                resetFlag.pointee = 0
+                p.reset()
+            }
+            p.process(input: UnsafePointer(inPointers), output: UnsafePointer(outPointers), frames: frames)
+        }
+        return noErr
+    }
+}

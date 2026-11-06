@@ -229,7 +229,7 @@ final class PlayerService: ObservableObject {
     func stop() {
         pausedPositionMs = positionMs
         generation += 1
-        engine.player.stop()
+        engine.stopPlayer()
         isPlaying = false
         session?.setPlaying(false, nowMonotonic: Self.monotonicMs())
         saveState()
@@ -268,7 +268,7 @@ final class PlayerService: ObservableObject {
         }
         let wasPlaying = isPlaying
         generation += 1
-        engine.player.stop()
+        engine.stopPlayer()
         schedule(from: ms)
         pausedPositionMs = ms
         clock.positionMs = ms
@@ -398,7 +398,7 @@ final class PlayerService: ObservableObject {
         case .emptied:
             finishSession(finished: false)
             generation += 1
-            if !demo { engine.player.stop() }
+            if !demo { engine.stopPlayer() }
             file = nil
             current = nil
             isPlaying = false
@@ -445,7 +445,7 @@ final class PlayerService: ObservableObject {
             model?.toast("Fortgesetzt bei \(Formatting.duration(start))")
         }
         generation += 1
-        engine.player.stop()
+        engine.stopPlayer()
         guard engine.hasOutputDevice else {
             file = nil
             isPlaying = false
@@ -571,7 +571,7 @@ final class PlayerService: ObservableObject {
     private func seekWithoutPlaying(_ ms: Int64) {
         guard file != nil else { return }
         generation += 1
-        engine.player.stop()
+        engine.stopPlayer()
         schedule(from: ms)
         pausedPositionMs = ms
         clock.positionMs = ms
@@ -584,7 +584,7 @@ final class PlayerService: ObservableObject {
         isPlaying = false
         guard file != nil else { return }
         generation += 1
-        engine.player.stop()
+        engine.stopPlayer()
         do {
             try engine.start()
             schedule(from: pos)

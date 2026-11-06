@@ -34,6 +34,12 @@ final class AudioEngine {
     let engine = AVAudioEngine()
     let player = AVAudioPlayerNode()
     private let timePitch = AVAudioUnitTimePitch()
+    /// v2.1: Tonhöhe in Android-Qualität (eigene Audio-Unit vor Apples TimePitch, das nur noch das Tempo übernimmt).
+    /// `nil`, wenn die Unit nicht erzeugt werden konnte – dann wie bisher alles über `timePitch`.
+    private let pitchUnit: AVAudioUnitEffect?
+    private let pitchAU: PitchShiftAudioUnit?
+    /// Für mehr als zwei Kanäle (z. B. 5.1-FLAC) bzw. ohne eigene Unit: Tonhöhe über Apples TimePitch.
+    private var usesNativePitch = false
     private let varispeed = AVAudioUnitVarispeed()
     private let eq = AVAudioUnitEQ(numberOfBands: 11)
     private let limiter: AVAudioUnitEffect
@@ -50,7 +56,19 @@ final class AudioEngine {
     private(set) var isOffline = false
 
     /// - Parameter offlineFormat: Für Tests – rendert ohne Audiogerät in diesem Format (`renderOffline`).
-    init(offlineFormat: AVAudioFormat? = nil) {
+    /// - Parameter nativePitch: Für Vergleichsmessungen – Tonhöhe wie bis Version 2.0 über Apples TimePitch
+    ///   (auch per Umgebungsvariable `ML_NATIVE_PITCH=1`).
+    init(offlineFormat: AVAudioFormat? = nil, nativePitch: Bool = ProcessInfo.processInfo.environment["ML_NATIVE_PITCH"] == "1") {
+        if nativePitch {
+            pitchUnit = nil
+            pitchAU = nil
+        } else {
+            PitchShiftAudioUnit.register()
+            let unit = AVAudioUnitEffect(audioComponentDescription: PitchShiftAudioUnit.componentDescription)
+            let au = unit.auAudioUnit as? PitchShiftAudioUnit
+            pitchUnit = au != nil ? unit : nil
+            pitchAU = au
+        }
         let desc = AudioComponentDescription(
             componentType: kAudioUnitType_Effect,
             componentSubType: kAudioUnitSubType_PeakLimiter,
@@ -77,6 +95,7 @@ final class AudioEngine {
             }
         }
         engine.attach(player)
+        if let pitchUnit { engine.attach(pitchUnit) }
         engine.attach(timePitch)
         engine.attach(varispeed)
         engine.attach(eq)
@@ -115,17 +134,28 @@ final class AudioEngine {
         let wasRunning = engine.isRunning
         if wasRunning { engine.pause() }
         engine.disconnectNodeOutput(player)
+        if let pitchUnit { engine.disconnectNodeOutput(pitchUnit) }
         engine.disconnectNodeOutput(timePitch)
         engine.disconnectNodeOutput(varispeed)
         engine.disconnectNodeOutput(eq)
         engine.disconnectNodeOutput(limiter)
-        engine.connect(player, to: timePitch, format: f)
+        // Eigene Tonhöhen-Unit für Mono/Stereo; mehr Kanäle → Apples TimePitch übernimmt auch die Tonhöhe
+        if let pitchUnit, f.channelCount <= 2 {
+            engine.connect(player, to: pitchUnit, format: f)
+            engine.connect(pitchUnit, to: timePitch, format: f)
+            usesNativePitch = false
+        } else {
+            engine.connect(player, to: timePitch, format: f)
+            usesNativePitch = true
+        }
         engine.connect(timePitch, to: varispeed, format: f)
         engine.connect(varispeed, to: eq, format: f)
         engine.connect(eq, to: limiter, format: f)
         engine.connect(limiter, to: engine.mainMixerNode, format: f)
         connectedFormat = f
         levels.sampleRate = f.sampleRate
+        // Weg der Tonhöhe kann sich geändert haben (eigene Unit ↔ Apples TimePitch)
+        apply(parameters, force: true)
         if wasRunning { try? engine.start() }
     }
 
@@ -139,6 +169,15 @@ final class AudioEngine {
     func stopEngine() {
         engine.stop()
     }
+
+    /// Player anhalten und gepufferten Klang der Tonhöhen-Unit verwerfen (Spulen, Titelwechsel).
+    func stopPlayer() {
+        player.stop()
+        pitchAU?.flush()
+    }
+
+    /// Verzögerung der Tonhöhen-Unit in Sekunden (0, wenn sie nicht rechnet).
+    var pitchLatency: TimeInterval { (pitchUnit?.bypass ?? true) ? 0 : (pitchAU?.latency ?? 0) }
 
     /// Übernimmt neue Klangeinstellungen (nur geänderte Werte werden gesetzt).
     func apply(_ p: Parameters, force: Bool = false) {
@@ -166,9 +205,18 @@ final class AudioEngine {
         limiter.bypass = false
 
         // Tonhöhe/Tempo
-        timePitch.pitch = max(-2400, min(2400, p.pitchCents))
+        let cents = max(-2400, min(2400, p.pitchCents))
+        if usesNativePitch {
+            timePitch.pitch = cents
+            timePitch.bypass = cents == 0 && p.tempo == 1
+            pitchAU?.setPitch(factor: 1)
+        } else {
+            pitchAU?.setPitch(factor: Float(pow(2, Double(cents) / 1200)))
+            pitchUnit?.bypass = cents == 0
+            timePitch.pitch = 0
+            timePitch.bypass = p.tempo == 1
+        }
         timePitch.rate = max(0.25, min(4, p.tempo))
-        timePitch.bypass = p.pitchCents == 0 && p.tempo == 1
         varispeed.rate = max(0.25, min(4, p.varispeed))
         varispeed.bypass = p.varispeed == 1
     }
@@ -212,6 +260,8 @@ final class LevelMeter: @unchecked Sendable {
 
     /// Abtastrate der Kette (gesetzt beim Verbinden).
     var sampleRate: Double = 44_100
+    /// Nur Vorschaubilder (ohne Audio): feste Werte, damit die Anzeige im Bild sichtbar ist.
+    var demoValues: [Float]?
 
     var enabled: Bool {
         get { active.pointee != 0 }
@@ -293,6 +343,7 @@ final class LevelMeter: @unchecked Sendable {
     /// Aktuelle Werte (16 Bänder + L + R). Während der Wiedergabe immer frisch; ohne neue Abtastwerte
     /// noch ≈ 0,15 s der letzte Stand (große Audiopuffer), danach Nullen. `nil`, wenn ausgeschaltet.
     func take() -> [Float]? {
+        if let demoValues { return demoValues }
         guard enabled else { return nil }
         let w = written.pointee
         OSMemoryBarrier()

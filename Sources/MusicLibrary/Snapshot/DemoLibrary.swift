@@ -80,7 +80,8 @@ enum DemoLibrary {
                     dateAdded: now - Int64(ai * 86_400 * 3 + ti * 600), codec: ai % 3 == 0 ? "ALAC" : "AAC", sampleRate: 44_100, bitrate: kbps,
                     channels: 2, bitsPerSample: ai % 3 == 0 ? 16 : 0, hasPicture: hasCover, hasLyrics: ai == 0 && ti == 0, available: true
                 )
-                tracks.append(t)
+                // v2.1: Herkunft des Hinzufügedatums (für die Anzeige im großen Player)
+                tracks.append(t.withDateAddedSource(ai % 2 == 0 ? .appleMusic : .fileCreated))
                 if hasCover { covers[uid] = coverPath }
                 uid += 1
             }

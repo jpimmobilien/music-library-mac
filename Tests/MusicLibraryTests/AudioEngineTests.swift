@@ -1,5 +1,6 @@
 import XCTest
 import AVFoundation
+import Accelerate
 import MLCore
 @testable import MusicLibrary
 
@@ -23,8 +24,8 @@ final class AudioEngineTests: XCTestCase {
     }
 
     /// Rechnet `input` durch die Kette und liefert Kanal 0 der Ausgabe.
-    private func render(_ input: AVAudioPCMBuffer, seconds: Double? = nil, _ configure: (inout AudioEngine.Parameters) -> Void = { _ in }) throws -> [Float] {
-        let audio = AudioEngine(offlineFormat: format)
+    private func render(_ input: AVAudioPCMBuffer, seconds: Double? = nil, nativePitch: Bool = false, _ configure: (inout AudioEngine.Parameters) -> Void = { _ in }) throws -> [Float] {
+        let audio = AudioEngine(offlineFormat: format, nativePitch: nativePitch)
         XCTAssertTrue(audio.isOffline)
         audio.connect(format: format)
         var p = AudioEngine.Parameters()
@@ -228,6 +229,16 @@ final class AudioEngineTests: XCTestCase {
         XCTAssertEqual(bands[8], 0.9, accuracy: 0.05, "−6 dBFS → 0,9")
         XCTAssertLessThan(bands[2], 0.45, "ferne Bänder bleiben niedrig")
         XCTAssertGreaterThan(values[LevelMeter.bandCount], 0.8)   // links ≈ −6 dBFS → 0,9
+        // Kosten der Analyse im Hauptthread (je Bild höchstens einmal, 30 Bilder/s)
+        var spent: TimeInterval = 0
+        for _ in 0..<100 {
+            _ = try audio.engine.renderOffline(512, to: out)
+            let t0 = Date()
+            _ = audio.levels.take()
+            spent += Date().timeIntervalSince(t0)
+        }
+        print("[Audio] Pegelanalyse je Bild: \(String(format: "%.3f", spent / 100 * 1000)) ms")
+        XCTAssertLessThan(spent / 100, 0.002, "Analyse muss deutlich unter 2 ms je Bild bleiben")
         // Weitere Abrufe ohne neue Abtastwerte: kurz der letzte Stand, danach Nullen (Anzeige klingt aus)
         XCTAssertNotNil(audio.levels.take())
         Thread.sleep(forTimeInterval: 0.2)
@@ -269,5 +280,110 @@ final class AudioEngineTests: XCTestCase {
         var disabled = off
         disabled.eqEnabled = false
         XCTAssertTrue(disabled.effectiveBands.allSatisfy { $0 == 0 })
+    }
+
+    // MARK: - v2.1 Klangqualität der Tonhöhe
+
+    private func chord(_ freqs: [Double], amplitude: Float, seconds: Double) -> AVAudioPCMBuffer {
+        let n = AVAudioFrameCount(seconds * sampleRate)
+        let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: n)!
+        buffer.frameLength = n
+        for c in 0..<2 {
+            let p = buffer.floatChannelData![c]
+            for i in 0..<Int(n) {
+                var v = 0.0
+                for f in freqs { v += sin(2 * Double.pi * f * Double(i) / sampleRate) }
+                p[i] = amplitude * Float(v / Double(freqs.count))
+            }
+        }
+        return buffer
+    }
+
+    /// Störanteil in dB: Energie außerhalb von ±`width` Hz um die erwarteten Teiltöne relativ zur Energie der Teiltöne
+    /// (je kleiner, desto sauberer). Hann-Fenster über 2^16 Abtastwerte des eingeschwungenen Bereichs.
+    private func distortionDb(_ s: ArraySlice<Float>, expected: [Double], width: Double = 12) -> Float {
+        let n = 1 << 16
+        precondition(s.count >= n)
+        var x = Array(s.prefix(n))
+        var w = [Float](repeating: 0, count: n)
+        vDSP_hann_window(&w, vDSP_Length(n), Int32(vDSP_HANN_DENORM))
+        vDSP_vmul(x, 1, w, 1, &x, 1, vDSP_Length(n))
+        let log2n = vDSP_Length(16)
+        let setup = vDSP_create_fftsetup(log2n, FFTRadix(kFFTRadix2))!
+        defer { vDSP_destroy_fftsetup(setup) }
+        var re = [Float](repeating: 0, count: n / 2), im = [Float](repeating: 0, count: n / 2)
+        var power = [Float](repeating: 0, count: n / 2)
+        re.withUnsafeMutableBufferPointer { rp in
+            im.withUnsafeMutableBufferPointer { ip in
+                var split = DSPSplitComplex(realp: rp.baseAddress!, imagp: ip.baseAddress!)
+                x.withUnsafeBufferPointer { xp in
+                    xp.baseAddress!.withMemoryRebound(to: DSPComplex.self, capacity: n / 2) { vDSP_ctoz($0, 2, &split, 1, vDSP_Length(n / 2)) }
+                }
+                vDSP_fft_zrip(setup, &split, 1, log2n, FFTDirection(FFT_FORWARD))
+                power.withUnsafeMutableBufferPointer { vDSP_zvmags(&split, 1, $0.baseAddress!, 1, vDSP_Length(n / 2)) }
+            }
+        }
+        power[0] = 0
+        let binHz = sampleRate / Double(n)
+        var wanted: Float = 0, other: Float = 0
+        for (i, pw) in power.enumerated() where i > 0 {
+            let f = Double(i) * binHz
+            if f < 30 { continue }
+            if expected.contains(where: { abs($0 - f) <= width }) { wanted += pw } else { other += pw }
+        }
+        return 10 * log10(max(other, 1e-20) / max(wanted, 1e-20))
+    }
+
+    /// Tonhöhe +2 Halbtöne auf einen Dur-Akkord: die portierte Android-Verarbeitung muss mindestens so sauber
+    /// sein wie Apples TimePitch (Version 2.0) – beide Werte werden ausgegeben.
+    func testPitchQualityPortedEngineVersusAppleTimePitch() throws {
+        let freqs = [261.63, 329.63, 392.0, 523.25]
+        let factor = pow(2.0, 2.0 / 12)
+        let expected = freqs.map { $0 * factor }
+        var results: [String: Float] = [:]
+        for (name, native) in [("Apple TimePitch (2.0)", true), ("Android-Verfahren (2.1)", false)] {
+            let out = try render(chord(freqs, amplitude: 0.6, seconds: 4.0), nativePitch: native) { $0.pitchCents = 200 }
+            let steadyPart = out[Int(0.5 * sampleRate)..<Int(3.6 * sampleRate)]
+            let d = distortionDb(steadyPart, expected: expected)
+            let pk = peak(steadyPart)
+            results[name] = d
+            print("[Pitch] \(name): Störanteil \(String(format: "%.1f", d)) dB, Spitze \(String(format: "%.3f", pk))")
+            XCTAssertLessThanOrEqual(pk, 1.0, "\(name): kein Übersteuern")
+        }
+        let apple = results["Apple TimePitch (2.0)"]!, ported = results["Android-Verfahren (2.1)"]!
+        XCTAssertLessThanOrEqual(ported, apple + 1, "die neue Verarbeitung darf nicht schlechter sein")
+    }
+
+    /// Bass, Stimme, Mischung: gleiche Frequenzgenauigkeit für tiefe (55 Hz) und hohe (3 kHz) Töne, Mono-Datei.
+    func testPortedPitchAccuracyLowHighAndMono() throws {
+        for f in [55.0, 3000.0] {
+            let out = steady(try render(sine(f, amplitude: 0.5, seconds: 3.0)) { $0.pitchCents = -100 })
+            let measured = frequency(out)
+            let expected = f * pow(2, -1.0 / 12)
+            print("[Pitch] \(f) Hz −1 Halbton: \(measured) Hz (erwartet \(expected))")
+            XCTAssertEqual(measured, expected, accuracy: expected * 0.01)
+        }
+        // Mono-Kette
+        let mono = AVAudioFormat(standardFormatWithSampleRate: sampleRate, channels: 1)!
+        let audio = AudioEngine(offlineFormat: format)
+        audio.connect(format: mono)
+        var p = AudioEngine.Parameters()
+        p.pitchCents = 300
+        audio.apply(p, force: true)
+        let buffer = AVAudioPCMBuffer(pcmFormat: mono, frameCapacity: 88_200)!
+        buffer.frameLength = 88_200
+        for i in 0..<88_200 { buffer.floatChannelData![0][i] = 0.4 * Float(sin(2 * Double.pi * 440 * Double(i) / sampleRate)) }
+        audio.player.scheduleBuffer(buffer, at: nil)
+        try audio.start()
+        audio.player.play()
+        let out = AVAudioPCMBuffer(pcmFormat: audio.engine.manualRenderingFormat, frameCapacity: 4096)!
+        var samples: [Float] = []
+        while samples.count < 88_200 {
+            _ = try audio.engine.renderOffline(4096, to: out)
+            samples.append(contentsOf: UnsafeBufferPointer(start: out.floatChannelData![0], count: Int(out.frameLength)))
+        }
+        let f = frequency(steady(samples))
+        print("[Pitch] Mono +3 Halbtöne: \(f) Hz (erwartet \(440 * pow(2, 3.0 / 12)))")
+        XCTAssertEqual(f, 440 * pow(2, 3.0 / 12), accuracy: 6)
     }
 }
