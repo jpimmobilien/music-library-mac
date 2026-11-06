@@ -134,10 +134,10 @@ struct PlaylistsView: View {
         let shown: Int = model.smartPlaylists.count + model.playlistList.count
         let total: Int = model.unfilteredCount[.playlists] ?? (model.playlists.count + model.smartPlaylists.count)
         let summary: String = librarySummary(shown, total, narrowed: !q.isEmpty, Formatting.playlists)
-        LibraryScaffold(title: "Playlists", actions: { toolbar(.collapsed) }) {
+        LibraryScaffold(title: "Playlists", toolbar: { toolbar() }) {
             VStack(spacing: 0) {
                 LargeTitleHeader(title: "Playlists", section: .playlists, placeholder: "Playlist suchen",
-                                 summary: summary, toolbar: { toolbar(.full) })
+                                 summary: summary)
                 if groups.isEmpty {
                     NoMatchesView(context: .playlists, query: q, noun: "Keine Playlist")
                 } else {
@@ -173,13 +173,19 @@ struct PlaylistsView: View {
         ColumnSorts.spec(ColumnSorts.playlist, sort: model.settings.playlistSort) { model.settings.playlistSort = $0 }
     }
 
-    private func toolbar(_ style: LibraryToolbarStyle) -> some View {
-        let ownUids: [Int64] = ArtistsView.union(model.playlistList.map { $0.entries.map(\.trackUid) })
+    /// „Mischen“ in der Übersicht: die gewählten Playlists, ohne Auswahl alle eigenen Playlists.
+    /// (In einer Playlist mischt „Mischen“ genau diese Playlist.)
+    private func toolbar() -> some View {
+        let ownUids: [Int64] = TrackUids.union(model.playlistList.map { $0.entries.map(\.trackUid) })
         let shuffle: (() -> Void)? = ownUids.isEmpty ? nil : {
-            player.play(uids: ownUids, startIndex: nil, shuffle: .on, source: PlaybackSource(kind: .list, label: "Alle eigenen Playlists (gemischt)"))
+            if let selected = LibrarySelectionStore.shared.groups(of: .playlists) {
+                player.play(uids: TrackUids.union(selected), startIndex: nil, shuffle: .on, source: PlaybackSource(kind: .list, label: "Gewählte Playlists (gemischt)"))
+            } else {
+                player.play(uids: ownUids, startIndex: nil, shuffle: .on, source: PlaybackSource(kind: .list, label: "Alle eigenen Playlists (gemischt)"))
+            }
         }
-        return LibraryToolbar(context: .playlists, style: style, sort: model.settings.playlistSort, setSort: { model.settings.playlistSort = $0 },
-                              shuffleLabel: "Titel aller eigenen Playlists gemischt abspielen", shuffle: shuffle) {
+        return LibraryToolbar(context: .playlists, style: .full, sort: model.settings.playlistSort, setSort: { model.settings.playlistSort = $0 },
+                              shuffleLabel: "Titel der gewählten bzw. aller eigenen Playlists gemischt abspielen", shuffle: shuffle) {
             BarAction(icon: Icons.add, label: "Neue Playlist (⌘N)") { NewPlaylistDialog.present(model: model, trackUids: []) }
         }
     }
@@ -222,7 +228,9 @@ struct PlaylistCollections: View {
             table: CollectionTable(sort: spec, cell: { (element: PlaylistElement, column: DetailColumn) -> String in
                 PlaylistItems.cell(element, column, index: index, stats: stats)
             }),
-            menu: { (item: LibraryItem, uids: [Int64]) in PlaylistMenuItems(itemID: item.id, title: item.title, uids: uids) }
+            menu: { (target: CollectionMenuTarget) in
+                PlaylistMenuItems(itemID: target.item.id, title: target.item.title, uids: target.uids)
+            }
         )
     }
 }
@@ -276,7 +284,8 @@ enum PlaylistItems {
                 title: "Neue Playlist …",
                 subtitle: "Titel hierher ziehen",
                 art: .add,
-                acceptsDrop: true
+                acceptsDrop: true,
+                selectable: false
             )
         }
     }
@@ -330,7 +339,8 @@ enum PlaylistItems {
                     NewPlaylistDialog.present(model: model, trackUids: uids)
                 }
             },
-            openLabel: "Öffnen"
+            openLabel: "Öffnen",
+            source: { item in source(item) }
         )
     }
 }

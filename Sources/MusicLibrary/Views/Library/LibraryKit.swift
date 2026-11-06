@@ -175,6 +175,19 @@ enum LibraryFormat {
     }
 }
 
+/// Titel mehrerer Gruppen (Alben, Interpreten …).
+enum TrackUids {
+    /// Vereinigung ohne Doppelte, Reihenfolge wie angegeben.
+    static func union(_ groups: [[Int64]]) -> [Int64] {
+        var seen = Set<Int64>()
+        var out: [Int64] = []
+        for group in groups {
+            for uid in group where seen.insert(uid).inserted { out.append(uid) }
+        }
+        return out
+    }
+}
+
 /// „1.234 Titel“ bzw. „12 von 1.234 Titel“, wenn gesucht oder gefiltert wird.
 func librarySummary(_ shown: Int, _ total: Int, narrowed: Bool, _ format: (Int) -> String) -> String {
     narrowed ? "\(Formatting.integer(shown)) von \(format(total))" : format(total)

@@ -79,6 +79,20 @@ enum DeleteSubject: Equatable {
     case group(label: String)
 }
 
+extension DeleteSubject {
+    /// Beschreibung für gewählte Einträge einer Sammlung.
+    static func groups(_ kind: LibrarySelectionKind, count: Int, firstName: String?) -> DeleteSubject {
+        let name = firstName ?? ""
+        switch kind {
+        case .tracks: return .tracks
+        case .albums: return count == 1 ? .album(title: name.isEmpty ? "Unbekanntes Album" : name) : .albums(count: count)
+        case .artists: return count == 1 ? .group(label: "Interpret „\(name)“") : .group(label: Formatting.artists(count))
+        case .genres: return count == 1 ? .group(label: "Genre „\(name)“") : .group(label: Formatting.genres(count))
+        case .playlists: return count == 1 ? .group(label: "Playlist „\(name)“") : .group(label: Formatting.playlists(count))
+        }
+    }
+}
+
 /// Löschen von Titeln: „Aus der Musikbibliothek entfernen“ (Datei bleibt) oder „In den Papierkorb legen“
 /// (mit zweiter Bestätigung). „Abbrechen“ ist Standard (Eingabe und Esc) – Eingabe löst nie etwas
 /// Unwiderrufliches aus.
@@ -553,7 +567,9 @@ struct MergeAlbumSheet: View {
         close()
         LibrarySelectionStore.shared.clear()
         let metadata = model.metadata
-        Task { _ = await metadata.write(requests, label: "Album „\(album)“") }
+        let batch = requests
+        let label = "Album „\(album)“"
+        Task { _ = await metadata.write(batch, label: label) }
     }
 }
 

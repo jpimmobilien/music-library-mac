@@ -17,11 +17,11 @@ struct FavoritesView: View {
         let summary: String = tracksTab
             ? librarySummary(model.favoriteTrackList.count, model.unfilteredCount[.favoriteTracks] ?? model.favoriteTracks.count, narrowed: narrowed, Formatting.tracks)
             : librarySummary(model.favoriteAlbumList.count, model.unfilteredCount[.favoriteAlbums] ?? model.favoriteAlbums.count, narrowed: narrowed, Formatting.albums)
-        LibraryScaffold(title: "Favoriten", actions: { toolbar(tracksTab, .collapsed) }) {
+        LibraryScaffold(title: "Favoriten", toolbar: { toolbar(tracksTab) }) {
             VStack(spacing: 0) {
                 LargeTitleHeader(title: "Favoriten", section: .favorites,
                                  placeholder: tracksTab ? "Favorisierte Titel durchsuchen" : "Favorisierte Alben durchsuchen",
-                                 summary: summary, filterContext: context, toolbar: { toolbar(tracksTab, .full) }) {
+                                 summary: summary, filterContext: context) {
                     SegmentedControl(options: FavoritesTab.allCases, selection: Binding(get: { model.settings.favoritesTab }, set: { model.settings.favoritesTab = $0 }),
                                      label: { $0.label }, icon: { $0 == .tracks ? Icons.musicNote : Icons.album })
                         .frame(maxWidth: 320)
@@ -73,24 +73,26 @@ struct FavoritesView: View {
         }
     }
 
+    /// „Mischen“: Titel-Favoriten = nur die (angezeigten) Lieblingstitel; Lieblingsalben = die angezeigten
+    /// Alben in Zufallsfolge, jedes in Titelreihenfolge.
     @ViewBuilder
-    private func toolbar(_ tracksTab: Bool, _ style: LibraryToolbarStyle) -> some View {
+    private func toolbar(_ tracksTab: Bool) -> some View {
         if tracksTab {
             let list = model.favoriteTrackList
             let shuffle: (() -> Void)? = list.isEmpty ? nil : {
                 player.play(uids: list.map(\.uid), startIndex: nil, shuffle: .on, source: PlaybackSource(kind: .favorites, label: "Favoriten (gemischt)"))
             }
-            LibraryToolbar(context: .favoriteTracks, style: style, sort: model.settings.favoriteTrackSort,
+            LibraryToolbar(context: .favoriteTracks, style: .full, sort: model.settings.favoriteTrackSort,
                            setSort: { model.settings.favoriteTrackSort = $0 },
-                           shuffleLabel: "Favoriten gemischt abspielen", shuffle: shuffle)
+                           shuffleLabel: "Lieblingstitel gemischt abspielen", shuffle: shuffle)
         } else {
             let albums = model.favoriteAlbumList
             let shuffle: (() -> Void)? = albums.isEmpty ? nil : {
-                player.play(uids: albums.flatMap(\.trackUids), startIndex: nil, shuffle: .on, source: PlaybackSource(kind: .favorites, label: "Lieblingsalben (gemischt)"))
+                player.shuffleAlbums(albums.map(\.trackUids), source: PlaybackSource(kind: .favorites, label: "Lieblingsalben (gemischt)"))
             }
-            LibraryToolbar(context: .favoriteAlbums, style: style, sort: model.settings.favoriteAlbumSort,
+            LibraryToolbar(context: .favoriteAlbums, style: .full, sort: model.settings.favoriteAlbumSort,
                            setSort: { model.settings.favoriteAlbumSort = $0 },
-                           shuffleLabel: "Lieblingsalben gemischt abspielen", shuffle: shuffle)
+                           shuffleLabel: "Lieblingsalben gemischt abspielen (Alben in Zufallsfolge, jedes in Titelreihenfolge)", shuffle: shuffle)
         }
     }
 }
@@ -284,26 +286,8 @@ enum DeletePlaylistDialog {
     }
 }
 
-/// „Aus der Bibliothek entfernen“: klar getrennt zwischen „nur aus der Bibliothek“ und „Datei in den Papierkorb“.
-enum RemoveTracksDialog {
-    @MainActor
-    static func present(model: AppModel, uids: [Int64]) {
-        guard !uids.isEmpty else { return }
-        let alert = NSAlert()
-        let count = Formatting.tracks(uids.count)
-        alert.messageText = uids.count == 1 ? "Titel entfernen?" : "\(count) entfernen?"
-        alert.informativeText = "„Aus Bibliothek entfernen“ blendet die Titel nur aus – die Dateien bleiben unverändert. „In den Papierkorb“ legt die Dateien in den Papierkorb des Macs (dort wiederherstellbar)."
-        alert.addButton(withTitle: "Aus Bibliothek entfernen")
-        alert.addButton(withTitle: "In den Papierkorb")
-        alert.addButton(withTitle: "Abbrechen")
-        alert.buttons[1].hasDestructiveAction = true
-        switch alert.runModal() {
-        case .alertFirstButtonReturn: model.removeTracks(uids, moveFilesToTrash: false)
-        case .alertSecondButtonReturn: model.removeTracks(uids, moveFilesToTrash: true)
-        default: break
-        }
-    }
-}
+// „Titel löschen …“ (Aus der Musikbibliothek entfernen / In den Papierkorb legen): gemeinsamer Glas-Dialog
+// `RemoveTracksDialog` in Views/Library/LibraryDialogs.swift.
 
 /// Auswahl der Playlist für „Zu Playlist hinzufügen …“ (Android `AddToPlaylistDialog`).
 struct AddToPlaylistSheet: View {

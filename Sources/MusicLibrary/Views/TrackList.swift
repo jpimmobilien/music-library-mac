@@ -27,6 +27,8 @@ struct TrackListConfig {
     var albumColumnWidth: CGFloat? = nil
     /// Jahr und Genre leise rechts („Zusatzinfos anzeigen“).
     var showDetails = false
+    /// Albumansicht: Alben der Ansicht, aus der gestartet wird (für „Zufall nach Alben“ im Player).
+    var albumContext: (() -> [[Int64]])? = nil
 }
 
 /// Anordnung einer Titelliste: Zeilen, Detailliste mit Spalten oder Kacheln (Raster).
@@ -71,7 +73,17 @@ final class KeyboardFocus {
         var selectAll: () -> Void
         var selectedUids: () -> [Int64]
     }
-    var activeList: ListHandle?
+    private var handle: ListHandle?
+
+    /// Die Liste gilt nur, solange das Hauptfenster vorne ist – in Blättern (Löschen, Zusammenfassen) und
+    /// anderen Fenstern erreichen Eingabe, Pfeile und Löschen deren eigene Schaltflächen.
+    var activeList: ListHandle? {
+        get {
+            if let key = NSApp.keyWindow, let main = MainWindowRef.window, key !== main { return nil }
+            return handle
+        }
+        set { handle = newValue }
+    }
 }
 
 /// Pasteboard-Typ für gezogene Titel (Kennungen, kommagetrennt).
@@ -101,13 +113,19 @@ enum TrackDrag {
     }
 }
 
-/// Titelliste mit Mehrfachauswahl (⌘/⇧-Klick), Doppelklick zum Abspielen, Kontextmenü, Drag & Drop –
-/// als Zeilen, Detailliste (Spalten, Klick auf den Kopf sortiert) oder Kacheln. Zeilen und Kacheln sind
-/// `Equatable`-Werte ohne Umgebungsobjekte (flüssiges Scrollen mit 10.000 Titeln).
+/// Titelliste mit Mehrfachauswahl (⌘/⇧-Klick, Auswahlrahmen), Doppelklick zum Abspielen, Kontextmenü,
+/// Drag & Drop – als Zeilen, Detailliste (Spalten, Klick auf den Kopf sortiert) oder Kacheln. Zeilen und
+/// Kacheln sind `Equatable`-Werte ohne Umgebungsobjekte (flüssiges Scrollen mit 10.000 Titeln).
+///
+/// Auswahlrahmen (v2.1): auf freier Fläche (Rand links/rechts, unter der letzten Zeile, zwischen Kacheln)
+/// sofort, auf einer Zeile nach kurzem Halten; sofortiges Ziehen einer Zeile zieht wie bisher per Drag & Drop.
 struct TrackListView: View {
     @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var player: PlayerService
     @Environment(\.musicColors) private var colors
+    @Environment(\.libraryViewport) private var viewport
+    @Environment(\.libraryTopChrome) private var topChrome
+    @Environment(\.libraryMarqueeTail) private var marqueeTail
 
     let items: [TrackListItem]
     let config: TrackListConfig
@@ -115,23 +133,32 @@ struct TrackListView: View {
     @State private var selection: Set<Int64> = []
     @State private var anchor: Int?
     @State private var dropTarget: Int64?
+    /// Bewusst gewählt (⌘/⇧-Klick, Rahmen, ⌘A) – ein einfacher Klick markiert nur die Zeile, ohne Auswahlleiste.
+    @State private var explicitSelection = false
+    @State private var owner = UUID()
+    @StateObject private var marquee = MarqueeController<Int64>()
 
     var body: some View {
+        let generation = configureMarquee(layoutGeneration())
         Group {
             switch layout {
-            case .rows: rows
-            case .table(let spec): table(spec)
-            case .tiles(let metrics): tiles(metrics)
+            case .rows: rows(generation)
+            case .table(let spec): table(spec, generation)
+            case .tiles(let metrics): tiles(metrics, generation)
             }
         }
         .onChange(of: items.map(\.id)) { ids in
-            selection = selection.intersection(ids)
+            let valid = selection.intersection(ids)
+            if valid != selection { selection = valid } else { publishSelection() }
         }
+        .onChange(of: SelectionState(ids: selection, explicit: explicitSelection)) { _ in publishSelection() }
+        .onAppear { applySeed() }
+        .onDisappear { LibrarySelectionStore.shared.withdraw(owner: owner) }
     }
 
     // MARK: Anordnungen
 
-    private var rows: some View {
+    private func rows(_ generation: Int) -> some View {
         let style = TrackRowStyle(config)
         let currentUid = player.current?.uid
         return LazyVStack(spacing: 0) {
@@ -150,12 +177,13 @@ struct TrackListView: View {
                     dropAbove: dropTarget == item.id,
                     toggleFavorite: { model.toggleFavorite([uid]) }
                 )
-                interactive(row.equatable(), position: position, item: item)
+                interactive(row.equatable(), position: position, item: item, generation: generation)
             }
         }
+        .marqueeContainer(marquee)
     }
 
-    private func table(_ spec: TrackTableSpec) -> some View {
+    private func table(_ spec: TrackTableSpec, _ generation: Int) -> some View {
         let widths: [CGFloat] = spec.columns.map { CGFloat($0.defaultWidth) }
         let currentUid = player.current?.uid
         return VStack(spacing: 0) {
@@ -176,14 +204,15 @@ struct TrackListView: View {
                         playing: current && player.isPlaying,
                         onFavorite: { model.toggleFavorite([track.uid]) }
                     )
-                    interactive(row.equatable(), position: position, item: item)
+                    interactive(row.equatable(), position: position, item: item, generation: generation)
                 }
             }
+            .marqueeContainer(marquee)
         }
         .padding(.top, 4)
     }
 
-    private func tiles(_ metrics: TileMetrics) -> some View {
+    private func tiles(_ metrics: TileMetrics, _ generation: Int) -> some View {
         let currentUid = player.current?.uid
         return LazyVGrid(columns: metrics.columns, alignment: .leading, spacing: metrics.rowSpacing) {
             ForEach(Array(items.enumerated()), id: \.element.id) { position, item in
@@ -197,17 +226,19 @@ struct TrackListView: View {
                     onPlay: { play(from: position) },
                     onFavorite: { model.toggleFavorite([track.uid]) }
                 )
-                interactive(tile.equatable(), position: position, item: item)
+                interactive(tile.equatable(), position: position, item: item, generation: generation)
             }
         }
+        .marqueeContainer(marquee)
         .padding(.top, 8)
     }
 
     /// Klick, Kontextmenü, Ziehen und Ablegen – gleich für alle Anordnungen. Ablegen nur in Playlists
     /// (jedes Ablageziel kostet beim Scrollen; in anderen Listen hätte es keine Wirkung).
     @ViewBuilder
-    private func interactive<V: View>(_ view: V, position: Int, item: TrackListItem) -> some View {
+    private func interactive<V: View>(_ view: V, position: Int, item: TrackListItem, generation: Int) -> some View {
         let base = view
+            .background(MarqueeFrameReporter(id: item.id, generation: generation, controller: marquee))
             .contentShape(Rectangle())
             .onTapGesture { click(position, item) }
             .contextMenu { contextMenu(for: item) }
@@ -231,6 +262,7 @@ struct TrackListView: View {
     // MARK: Auswahl
 
     private func click(_ position: Int, _ item: TrackListItem) {
+        if MarqueeRouter.shared.justFinishedMarquee { return }
         let flags = NSEvent.modifierFlags
         let clicks = NSApp.currentEvent?.clickCount ?? 1
         if clicks >= 2 {
@@ -240,16 +272,59 @@ struct TrackListView: View {
         if flags.contains(.command) {
             if selection.contains(item.id) { selection.remove(item.id) } else { selection.insert(item.id) }
             anchor = position
+            explicitSelection = true
         } else if flags.contains(.shift), let a = anchor {
             // Anker kann nach dem Filtern/Sortieren hinter dem Listenende liegen
             let lower = min(a, position)
             let upper = min(max(a, position), items.count - 1)
             if lower <= upper { selection = Set((lower...upper).map { items[$0].id }) }
+            explicitSelection = true
         } else {
+            LibrarySelectionStore.shared.clearOthers(than: owner)
             selection = [item.id]
             anchor = position
+            explicitSelection = false
         }
         registerKeyboard()
+    }
+
+    /// Auswahlrahmen: Auswahl lesen und setzen (bei jedem Aufbau neu, damit die Funktionen aktuell sind).
+    private func configureMarquee(_ generation: Int) -> Int {
+        marquee.prepare(generation: generation)
+        marquee.topChrome = topChrome
+        marquee.bottomSlack = marqueeTail
+        marquee.selection = { selection }
+        marquee.apply = { ids in
+            selection = ids
+            explicitSelection = true
+            registerKeyboard()
+        }
+        return generation
+    }
+
+    /// Ändert sich etwas an Einträgen, Reihenfolge oder Anordnung, werden die Zeilenrahmen neu gemeldet.
+    private func layoutGeneration() -> Int {
+        var h = Hasher()
+        h.combine(viewport.width)
+        switch layout {
+        case .rows:
+            h.combine(0)
+            h.combine(config.showArtwork)
+            h.combine(config.albumColumnWidth ?? -1)
+        case .table(let spec):
+            h.combine(1)
+            h.combine(spec.columns)
+        case .tiles(let metrics):
+            h.combine(2)
+            h.combine(metrics.columnCount)
+            h.combine(metrics.tileWidth)
+            h.combine(metrics.spacing)
+            h.combine(metrics.style.showSecondary)
+            h.combine(metrics.style.showDetails)
+        }
+        h.combine(items.count)
+        for item in items { h.combine(item.id) }
+        return h.finalize()
     }
 
     private func registerKeyboard() {
@@ -259,7 +334,10 @@ struct TrackListView: View {
                 if let first = items.firstIndex(where: { selection.contains($0.id) }) { play(from: first) }
             },
             deleteSelection: { deleteSelected() },
-            selectAll: { selection = Set(items.map(\.id)) },
+            selectAll: {
+                selection = Set(items.map(\.id))
+                explicitSelection = true
+            },
             selectedUids: { selectedTracks().map(\.uid) }
         )
     }
@@ -270,8 +348,10 @@ struct TrackListView: View {
         let next = min(max(current + delta, 0), items.count - 1)
         if extend {
             selection.insert(items[next].id)
+            explicitSelection = true
         } else {
             selection = [items[next].id]
+            explicitSelection = false
         }
         anchor = next
     }
@@ -287,7 +367,7 @@ struct TrackListView: View {
 
     private func play(from position: Int) {
         let uids = items.map(\.track.uid)
-        player.play(uids: uids, startIndex: position, shuffle: .keep, source: config.source)
+        player.play(uids: uids, startIndex: position, shuffle: .keep, source: config.source, albumContext: config.albumContext?())
     }
 
     private func deleteSelected() {
@@ -298,6 +378,38 @@ struct TrackListView: View {
         } else {
             RemoveTracksDialog.present(model: model, uids: targets.map(\.track.uid))
         }
+    }
+
+    /// Auswahl an die Auswahlleiste melden: ab zwei Titeln oder wenn bewusst gewählt.
+    private func publishSelection() {
+        let store = LibrarySelectionStore.shared
+        let picked = items.filter { selection.contains($0.id) }
+        guard picked.count >= 2 || (explicitSelection && !picked.isEmpty) else {
+            store.withdraw(owner: owner)
+            return
+        }
+        store.publish(LibrarySelectionInfo(
+            owner: owner,
+            kind: .tracks,
+            count: picked.count,
+            uids: picked.map(\.track.uid),
+            groups: [],
+            names: picked.prefix(3).map(\.track.displayTitle),
+            source: picked.count == items.count ? config.source : PlaybackSource(kind: .list, label: "Auswahl"),
+            playlistID: config.playlistID,
+            entryIds: picked.compactMap(\.entryId),
+            clear: {
+                selection = []
+                explicitSelection = false
+            }
+        ))
+    }
+
+    /// Vorschaubilder: erste Titel auswählen.
+    private func applySeed() {
+        guard let count = LibrarySelectionSeed.take(.tracks) else { return }
+        selection = Set(items.prefix(count).map(\.id))
+        explicitSelection = true
     }
 
     // MARK: Drag & Drop
@@ -333,6 +445,12 @@ struct TrackListView: View {
     }
 }
 
+/// Auswahl und ob sie bewusst getroffen wurde (für `onChange`).
+private struct SelectionState: Equatable {
+    let ids: Set<Int64>
+    let explicit: Bool
+}
+
 /// Einträge des Kontextmenüs eines oder mehrerer Titel (Android `TrackContextMenu`, ergänzt um Mac-Funktionen).
 struct TrackMenuItems: View {
     @EnvironmentObject private var model: AppModel
@@ -347,22 +465,22 @@ struct TrackMenuItems: View {
         let allFavorite = uids.allSatisfy { model.isFavorite($0) }
         // In Gruppen: höchstens 10 direkte Elemente je ViewBuilder unter macOS 13
         Group {
-            if let playAction {
-                Button(single != nil ? "Abspielen" : "\(Formatting.tracks(uids.count)) abspielen", action: playAction)
-            }
-            Button(single != nil ? "Nur diesen Titel abspielen" : "Nur diese Titel abspielen") {
-                player.play(uids: uids, startIndex: 0, shuffle: .off, source: PlaybackSource(kind: .singleTrack, label: single?.displayTitle ?? "Auswahl"))
-            }
-            Button("Als Nächstes spielen") { player.playNext(uids: uids) }
-            Button("Zur Warteschlange hinzufügen") { player.addToQueue(uids: uids) }
-            Divider()
-            Menu("Zu Playlist hinzufügen") {
-                Button("Neue Playlist …") { NewPlaylistDialog.present(model: model, trackUids: uids) }
-                if !model.playlists.isEmpty { Divider() }
-                ForEach(model.playlists) { p in
-                    Button(p.name) { model.addToPlaylist(p.id, trackUids: uids) }
+            Button(single != nil ? "Wiedergeben" : "\(Formatting.tracks(uids.count)) wiedergeben") {
+                if let playAction {
+                    playAction()
+                } else {
+                    player.play(uids: uids, startIndex: 0, shuffle: .off, source: PlaybackSource(kind: .singleTrack, label: single?.displayTitle ?? "Auswahl"))
                 }
             }
+            if playAction != nil {
+                Button(single != nil ? "Nur diesen Titel wiedergeben" : "Nur diese Titel wiedergeben") {
+                    player.play(uids: uids, startIndex: 0, shuffle: .off, source: PlaybackSource(kind: .singleTrack, label: single?.displayTitle ?? "Auswahl"))
+                }
+            }
+            Button("Als Nächstes spielen") { player.playNext(uids: uids) }
+            Button("Zur Warteschlange") { player.addToQueue(uids: uids) }
+            Divider()
+            PlaylistSubmenu(uids: uids)
             Button(allFavorite ? "Aus Favoriten entfernen" : "Zu Favoriten hinzufügen") {
                 model.setFavorite(uids, !allFavorite)
             }
@@ -377,21 +495,28 @@ struct TrackMenuItems: View {
                 }
             }
             Divider()
-            Button(single != nil ? "Informationen …" : "Informationen zu \(Formatting.tracks(uids.count)) …") { model.showInfo(uids) }
+            Button(single != nil ? "Informationen bearbeiten …" : "Informationen bearbeiten (\(Formatting.tracks(uids.count))) …") { model.showInfo(uids) }
             Button("Metadaten kopieren") { model.metadata.copyMetadata(from: uids.first) }
                 .disabled(uids.count != 1)
             Button("Metadaten einfügen …") { model.metadata.pasteMetadata(to: uids) }
                 .disabled(!model.metadata.hasClipboard)
+        }
+        Group {
             Button("Im Finder zeigen") {
                 let urls = model.tracks(uids).map { URL(fileURLWithPath: $0.path) }
                 NSWorkspace.shared.activateFileViewerSelecting(urls)
+            }
+            if uids.count > 1 {
+                Button("Als Album zusammenfassen …") { MergeAlbumDialog.present(model: model, uids: uids) }
             }
             if let pid = playlistID, !entryIds.isEmpty {
                 Divider()
                 Button("Aus dieser Playlist entfernen") { model.removeFromPlaylist(pid, entryIds: entryIds) }
             }
             Divider()
-            Button("Aus der Bibliothek entfernen …") { RemoveTracksDialog.present(model: model, uids: uids) }
+            Button(single != nil ? "Titel löschen …" : "\(Formatting.tracks(uids.count)) löschen …") {
+                RemoveTracksDialog.present(model: model, uids: uids)
+            }
         }
     }
 }

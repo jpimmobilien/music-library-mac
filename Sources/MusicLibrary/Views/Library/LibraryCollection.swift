@@ -54,43 +54,65 @@ struct LibraryModeHost<Content: View>: View {
 
 // MARK: - Sammlung
 
+/// Alben, Interpreten, Genres oder Playlists in der gewählten Ansicht.
+///
+/// Auswahl (v2.1): ⌘-Klick wählt einzeln, ⇧-Klick einen Bereich, Aufziehen eines Rahmens (auf freier Fläche
+/// sofort, auf einem Eintrag nach kurzem Halten) wählt mehrere. Kontextmenü, Ziehen & Ablegen und die
+/// Auswahlleiste wirken dann auf die ganze Auswahl. Ein einfacher Klick öffnet wie bisher.
 struct LibraryCollection<Element: Identifiable, MenuContent: View>: View where Element.ID == String {
     @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var player: PlayerService
     @Environment(\.libraryViewport) private var viewport
+    @Environment(\.libraryTopChrome) private var topChrome
+    @Environment(\.libraryMarqueeTail) private var marqueeTail
+    @Environment(\.displayScale) private var displayScale
     let context: LibraryViewContext
     let elements: [Element]
     let options: LibraryViewOptions
     let makeItem: (Element) -> LibraryItem
     let actions: CollectionActions
     var table: CollectionTable<Element>? = nil
-    @ViewBuilder let menu: (LibraryItem, [Int64]) -> MenuContent
+    @ViewBuilder let menu: (CollectionMenuTarget) -> MenuContent
     @State private var selection: Set<String> = []
     @State private var anchor: Int?
     @State private var dropTarget: String?
+    @State private var owner = UUID()
+    @StateObject private var marquee = MarqueeController<String>()
 
     var body: some View {
-        switch options.mode {
-        case .grid, .compactGrid: grid
-        case .list: list
-        case .detailedList: detailed
-        case .coverFlow: coverFlow
+        let generation = configureMarquee(layoutGeneration())
+        Group {
+            switch options.mode {
+            case .grid, .compactGrid: grid(generation)
+            case .list: list(generation)
+            case .detailedList: detailed(generation)
+            case .coverFlow: coverFlow
+            }
         }
+        .onChange(of: selection) { ids in publishSelection(ids) }
+        .onChange(of: elements.map(\.id)) { ids in
+            // nach Suche/Filter/Neueinlesen: nur noch vorhandene Einträge bleiben gewählt
+            let valid = selection.intersection(ids)
+            if valid != selection { selection = valid } else if !selection.isEmpty { publishSelection(selection) }
+        }
+        .onAppear { applySeed() }
+        .onDisappear { LibrarySelectionStore.shared.withdraw(owner: owner) }
     }
 
     // MARK: Raster
 
-    private var grid: some View {
-        let metrics = TileMetrics(options: options)
+    private func grid(_ generation: Int) -> some View {
+        let metrics = TileMetrics(options: options, available: TileMetrics.available(viewport), scale: displayScale)
         return LazyVGrid(columns: metrics.columns, alignment: .leading, spacing: metrics.rowSpacing) {
             ForEach(Array(elements.enumerated()), id: \.element.id) { index, element in
-                tile(index, element, metrics.style)
+                tile(index, element, metrics.style, generation)
             }
         }
+        .marqueeContainer(marquee)
         .padding(.top, 8)
     }
 
-    private func tile(_ index: Int, _ element: Element, _ style: TileStyle) -> some View {
+    private func tile(_ index: Int, _ element: Element, _ style: TileStyle, _ generation: Int) -> some View {
         let item = makeItem(element)
         let favoriteAction: (() -> Void)? = item.favorite == nil ? nil : { actions.toggleFavorite?(item) }
         let view = CollectionTile(
@@ -102,22 +124,23 @@ struct LibraryCollection<Element: Identifiable, MenuContent: View>: View where E
             onPlay: { actions.play(item, false) },
             onFavorite: favoriteAction
         )
-        return interactive(view.equatable(), index: index, item: item)
+        return interactive(view.equatable(), index: index, item: item, generation: generation)
     }
 
     // MARK: Liste
 
-    private var list: some View {
+    private func list(_ generation: Int) -> some View {
         let columns = [GridItem(.adaptive(minimum: 330), spacing: 18, alignment: .top)]
         return LazyVGrid(columns: columns, alignment: .leading, spacing: 0) {
             ForEach(Array(elements.enumerated()), id: \.element.id) { index, element in
-                row(index, element)
+                row(index, element, generation)
             }
         }
+        .marqueeContainer(marquee)
         .padding(.top, 4)
     }
 
-    private func row(_ index: Int, _ element: Element) -> some View {
+    private func row(_ index: Int, _ element: Element, _ generation: Int) -> some View {
         let item = makeItem(element)
         let favoriteAction: (() -> Void)? = item.favorite == nil ? nil : { actions.toggleFavorite?(item) }
         let view = CollectionRow(
@@ -129,12 +152,12 @@ struct LibraryCollection<Element: Identifiable, MenuContent: View>: View where E
             onPlay: { actions.play(item, false) },
             onFavorite: favoriteAction
         )
-        return interactive(view.equatable(), index: index, item: item)
+        return interactive(view.equatable(), index: index, item: item, generation: generation)
     }
 
     // MARK: Detailliste
 
-    private var detailed: some View {
+    private func detailed(_ generation: Int) -> some View {
         let wanted = options.columns.filter { $0 != context.primaryColumn }
         let columns = TableLayout.fit(wanted, available: TableLayout.available(viewport))
         let widths: [CGFloat] = columns.map { CGFloat($0.defaultWidth) }
@@ -142,14 +165,15 @@ struct LibraryCollection<Element: Identifiable, MenuContent: View>: View where E
             DetailTableHeader(context: context, columns: columns, widths: widths, sort: table?.sort ?? TableSortSpec.unsorted)
             LazyVStack(spacing: 0) {
                 ForEach(Array(elements.enumerated()), id: \.element.id) { index, element in
-                    tableRow(index, element, columns, widths)
+                    tableRow(index, element, columns, widths, generation)
                 }
             }
+            .marqueeContainer(marquee)
         }
         .padding(.top, 4)
     }
 
-    private func tableRow(_ index: Int, _ element: Element, _ columns: [DetailColumn], _ widths: [CGFloat]) -> some View {
+    private func tableRow(_ index: Int, _ element: Element, _ columns: [DetailColumn], _ widths: [CGFloat], _ generation: Int) -> some View {
         let item = makeItem(element)
         let cells: [String] = columns.map { column in table?.cell(element, column) ?? "–" }
         let favoriteAction: (() -> Void)? = item.favorite == nil ? nil : { actions.toggleFavorite?(item) }
@@ -163,7 +187,7 @@ struct LibraryCollection<Element: Identifiable, MenuContent: View>: View where E
             playing: item.current && player.isPlaying,
             onFavorite: favoriteAction
         )
-        return interactive(view.equatable(), index: index, item: item)
+        return interactive(view.equatable(), index: index, item: item, generation: generation)
     }
 
     // MARK: Cover Flow
@@ -186,17 +210,18 @@ struct LibraryCollection<Element: Identifiable, MenuContent: View>: View where E
     }
 
     private func menuFor(_ item: LibraryItem) -> MenuContent {
-        menu(item, item.trackUids)
+        menu(CollectionMenuTarget(item: item, uids: item.trackUids, groups: [item.trackUids], names: [item.title]))
     }
 
     // MARK: Bedienung
 
     @ViewBuilder
-    private func interactive<V: View>(_ view: V, index: Int, item: LibraryItem) -> some View {
+    private func interactive<V: View>(_ view: V, index: Int, item: LibraryItem, generation: Int) -> some View {
         let base = view
+            .background(frameReporter(item, generation))
             .contentShape(Rectangle())
             .onTapGesture { click(index, item) }
-            .contextMenu { menu(item, targetUids(item)) }
+            .contextMenu { menu(menuTarget(item)) }
             .onDrag { TrackDrag.provider(uids: targetUids(item), entryIds: []) }
         if actions.drop != nil && item.acceptsDrop {
             base.onDrop(of: [UTType.plainText], isTargeted: dropBinding(item.id)) { providers in
@@ -209,6 +234,14 @@ struct LibraryCollection<Element: Identifiable, MenuContent: View>: View where E
         }
     }
 
+    /// Rahmen für den Auswahlrahmen melden (nur auswählbare Einträge).
+    @ViewBuilder
+    private func frameReporter(_ item: LibraryItem, _ generation: Int) -> some View {
+        if item.selectable {
+            MarqueeFrameReporter(id: item.id, generation: generation, controller: marquee)
+        }
+    }
+
     private func dropBinding(_ id: String) -> Binding<Bool> {
         Binding(
             get: { dropTarget == id },
@@ -218,16 +251,19 @@ struct LibraryCollection<Element: Identifiable, MenuContent: View>: View where E
 
     /// Klick öffnet; ⌘-Klick wählt einzeln, ⇧-Klick einen Bereich (Kontextmenü und Ziehen wirken dann auf alle).
     private func click(_ index: Int, _ item: LibraryItem) {
+        if MarqueeRouter.shared.justFinishedMarquee { return }
         let flags = NSEvent.modifierFlags
-        if flags.contains(.command) {
+        if flags.contains(.command) && item.selectable {
             if selection.contains(item.id) { selection.remove(item.id) } else { selection.insert(item.id) }
             anchor = index
             registerKeyboard()
-        } else if flags.contains(.shift) {
-            let start = anchor ?? index
+        } else if flags.contains(.shift) && item.selectable {
+            let start = min(anchor ?? index, elements.count - 1)
             let lower = max(0, min(start, index))
             let upper = min(max(start, index), elements.count - 1)
-            if lower <= upper { selection = Set(elements[lower...upper].map(\.id)) }
+            if lower <= upper {
+                selection = Set(elements[lower...upper].map(makeItem).filter(\.selectable).map(\.id))
+            }
             anchor = start
             registerKeyboard()
         } else {
@@ -237,33 +273,135 @@ struct LibraryCollection<Element: Identifiable, MenuContent: View>: View where E
         }
     }
 
+    /// Auswahlrahmen: Auswahl lesen und setzen (bei jedem Aufbau neu, damit die Funktionen aktuell sind).
+    private func configureMarquee(_ generation: Int) -> Int {
+        marquee.prepare(generation: generation)
+        marquee.topChrome = topChrome
+        marquee.bottomSlack = marqueeTail
+        marquee.selection = { selection }
+        marquee.apply = { ids in
+            selection = ids
+            registerKeyboard()
+        }
+        return generation
+    }
+
+    /// Ändert sich etwas an Einträgen, Reihenfolge, Größe oder Ansicht, werden die Rahmen neu gemeldet.
+    private func layoutGeneration() -> Int {
+        var h = Hasher()
+        h.combine(options)
+        h.combine(viewport.width)
+        h.combine(elements.count)
+        for element in elements { h.combine(element.id) }
+        return h.finalize()
+    }
+
+    private var selectionKind: LibrarySelectionKind {
+        switch context {
+        case .albums, .favoriteAlbums: return .albums
+        case .artists: return .artists
+        case .genres: return .genres
+        case .playlists: return .playlists
+        case .tracks, .favoriteTracks: return .tracks
+        }
+    }
+
+    /// Gewählte Einträge in angezeigter Reihenfolge.
+    private func selectedItems() -> [LibraryItem] {
+        var out: [LibraryItem] = []
+        for element in elements where selection.contains(element.id) { out.append(makeItem(element)) }
+        return out
+    }
+
     private func targetUids(_ item: LibraryItem) -> [Int64] {
         guard selection.count > 1, selection.contains(item.id) else { return item.trackUids }
         return selectedUids()
     }
 
     private func selectedUids() -> [Int64] {
-        var seen = Set<Int64>()
-        var out: [Int64] = []
-        for element in elements where selection.contains(element.id) {
-            for uid in makeItem(element).trackUids where seen.insert(uid).inserted { out.append(uid) }
+        TrackUids.union(selectedItems().map(\.trackUids))
+    }
+
+    /// Kontextmenü: gehört der Eintrag zur Auswahl, wirkt es auf die ganze Auswahl.
+    private func menuTarget(_ item: LibraryItem) -> CollectionMenuTarget {
+        guard selection.count > 1, selection.contains(item.id) else {
+            return CollectionMenuTarget(item: item, uids: item.trackUids, groups: [item.trackUids], names: [item.title])
         }
-        return out
+        let picked = selectedItems()
+        let groups = picked.map(\.trackUids)
+        return CollectionMenuTarget(item: item, uids: TrackUids.union(groups), groups: groups, names: picked.prefix(3).map(\.title))
+    }
+
+    /// Auswahl an die Auswahlleiste melden.
+    private func publishSelection(_ ids: Set<String>) {
+        let store = LibrarySelectionStore.shared
+        guard !ids.isEmpty else {
+            store.withdraw(owner: owner)
+            return
+        }
+        let picked = elements.filter { ids.contains($0.id) }.map(makeItem)
+        guard let first = picked.first else {
+            store.withdraw(owner: owner)
+            return
+        }
+        let groups = picked.map(\.trackUids)
+        let source: PlaybackSource = picked.count == 1
+            ? (actions.source?(first) ?? PlaybackSource(kind: .list, label: first.title))
+            : PlaybackSource(kind: .list, label: "Auswahl")
+        store.publish(LibrarySelectionInfo(
+            owner: owner,
+            kind: selectionKind,
+            count: picked.count,
+            uids: TrackUids.union(groups),
+            groups: groups,
+            names: picked.prefix(3).map(\.title),
+            source: source,
+            clear: { selection = [] }
+        ))
+    }
+
+    /// Vorschaubilder: erste Einträge auswählen.
+    private func applySeed() {
+        guard let count = LibrarySelectionSeed.take(selectionKind) else { return }
+        let ids = elements.lazy.map(makeItem).filter(\.selectable).prefix(count).map(\.id)
+        selection = Set(ids)
     }
 
     private func registerKeyboard() {
         KeyboardFocus.shared.activeList = KeyboardFocus.ListHandle(
             moveSelection: { delta, extend in moveSelection(delta, extend: extend) },
-            playSelection: {
-                let uids = selectedUids()
-                if !uids.isEmpty {
-                    player.play(uids: uids, startIndex: 0, shuffle: .off, source: PlaybackSource(kind: .list, label: "Auswahl"))
-                }
-            },
-            deleteSelection: {},
-            selectAll: { selection = Set(elements.map(\.id)) },
+            playSelection: { playSelection() },
+            deleteSelection: { deleteSelection() },
+            selectAll: { selection = Set(elements.map(makeItem).filter(\.selectable).map(\.id)) },
             selectedUids: { selectedUids() }
         )
+    }
+
+    /// Eingabetaste: ein Eintrag spielt wie seine Abspielen-Schaltfläche (Alben mit den Alben der Ansicht),
+    /// mehrere nacheinander (Alben je in Titelreihenfolge).
+    private func playSelection() {
+        let picked = selectedItems()
+        guard let first = picked.first else { return }
+        if picked.count == 1 {
+            actions.play(first, false)
+            return
+        }
+        let groups = picked.map(\.trackUids)
+        let source = PlaybackSource(kind: .list, label: "Auswahl")
+        if actions.albumContext != nil {
+            player.play(uids: TrackUids.union(groups), startIndex: 0, shuffle: .off, source: source, albumContext: groups)
+        } else {
+            player.play(uids: TrackUids.union(groups), startIndex: 0, shuffle: .off, source: source)
+        }
+    }
+
+    /// Entf-Taste: Löschdialog für die Titel der Auswahl (nicht in der Playlist-Übersicht).
+    private func deleteSelection() {
+        guard context != .playlists else { return }
+        let picked = selectedItems()
+        guard let first = picked.first else { return }
+        let subject = DeleteSubject.groups(selectionKind, count: picked.count, firstName: first.title)
+        RemoveTracksDialog.present(model: model, uids: TrackUids.union(picked.map(\.trackUids)), subject: subject)
     }
 
     private func moveSelection(_ delta: Int, extend: Bool) {

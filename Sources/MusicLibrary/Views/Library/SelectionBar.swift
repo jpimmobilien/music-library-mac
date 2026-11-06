@@ -53,13 +53,7 @@ struct LibrarySelectionInfo {
 
     /// Beschreibung für den Löschdialog.
     var deleteSubject: DeleteSubject {
-        switch kind {
-        case .tracks: return .tracks
-        case .albums: return count == 1 ? .album(title: names.first ?? "Unbekanntes Album") : .albums(count: count)
-        case .artists: return count == 1 ? .group(label: "Interpret „\(names.first ?? "")“") : .group(label: Formatting.artists(count))
-        case .genres: return count == 1 ? .group(label: "Genre „\(names.first ?? "")“") : .group(label: Formatting.genres(count))
-        case .playlists: return .group(label: Formatting.playlists(count))
-        }
+        DeleteSubject.groups(kind, count: count, firstName: names.first)
     }
 }
 
@@ -79,6 +73,11 @@ final class LibrarySelectionStore: ObservableObject {
     /// Die Liste hat keine (sichtbare) Auswahl mehr.
     func withdraw(owner: UUID) {
         if info?.owner == owner { info = nil }
+    }
+
+    /// Einfacher Klick in eine andere Liste: deren bisherige Auswahl aufheben.
+    func clearOthers(than owner: UUID) {
+        if let current = info, current.owner != owner { clear() }
     }
 
     /// Auswahl aufheben (Schaltfläche, Esc).

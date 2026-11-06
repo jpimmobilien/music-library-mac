@@ -122,9 +122,9 @@ struct LibraryScaffold<Content: View, Actions: View, Toolbar: View>: View {
             .frame(maxWidth: available, alignment: .trailing)
             .frame(maxWidth: .infinity, alignment: .trailing)
             .frame(height: LargeTitleMetrics.rowHeight)
-        .padding(.trailing, inset)
-        .padding(.top, Chrome.contentTop + LargeTitleMetrics.topPadding)
-        .frame(maxWidth: .infinity, alignment: .topTrailing)
+            .padding(.trailing, inset)
+            .padding(.top, Chrome.contentTop + LargeTitleMetrics.topPadding)
+            .frame(maxWidth: .infinity, alignment: .topTrailing)
     }
 
     /// Zeile der Navigation: links Zurück + kompakter Titel, rechts Aktionen (die Navigation liegt mittig darüber).

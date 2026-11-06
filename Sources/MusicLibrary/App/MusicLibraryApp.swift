@@ -229,6 +229,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             // In Textfeldern bleibt alles beim Alten
             if let responder = event.window?.firstResponder, responder is NSText || responder is NSTextView { return event }
             guard event.window?.isKeyWindow == true else { return event }
+            // v2.1: Dialoge (Löschen, „Als Album zusammenfassen“) bekommen ihre Tasten selbst – auch Leertaste/Eingabe
+            if event.window?.isSheet == true || event.window?.attachedSheet != nil { return event }
             // Pfeiltasten tragen zusätzlich .numericPad/.function – für den Vergleich entfernen
             let flags = event.modifierFlags.intersection(.deviceIndependentFlagsMask).subtracting([.numericPad, .function])
             let list = KeyboardFocus.shared.activeList

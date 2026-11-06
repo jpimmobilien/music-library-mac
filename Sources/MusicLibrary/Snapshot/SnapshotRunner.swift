@@ -93,6 +93,8 @@ enum SnapshotRunner {
                 m.settings.visualizer = false
                 m.settings.playerBackground = .auto
                 m.player.engine.levels.demoValues = nil
+                LibrarySelectionStore.shared.clear()
+                LibraryScrollSeed.pendingOffset = nil
                 m.player.setDemoState(queueUids: Array(1...12), currentIndex: 0, positionMs: 74_000, playing: true)
                 m.playerOpen = open
             }
@@ -249,6 +251,47 @@ enum SnapshotRunner {
             }, view: main),
             Scenario(name: "20-titel-detailliste-klein", size: small, prepare: view(.tracks, .tracks, .detailedList), view: main),
             Scenario(name: "24-playlists-raster", size: big, prepare: view(.playlists, .playlists, .grid), view: main),
+        ]
+        // v2.1 Bibliothek: feste Werkzeugleiste beim Scrollen, größte Cover, Mehrfachauswahl, Dialoge
+        list += [
+            Scenario(name: "26-alben-raster-gescrollt", size: big, prepare: { m in
+                view(.albums, .albums, .grid)(m)
+                LibraryScrollSeed.pendingOffset = 760
+            }, view: main),
+            Scenario(name: "26-titel-liste-gescrollt", size: big, prepare: { m in
+                view(.tracks, .tracks, .list)(m)
+                LibraryScrollSeed.pendingOffset = 900
+            }, view: main),
+            Scenario(name: "26-alben-raster-max", size: big, prepare: { m in
+                view(.albums, .albums, .grid)(m)
+                var o = m.viewOptions(.albums)
+                o.coverSize = LibraryViewOptions.coverSizeRange.upperBound
+                m.setViewOptions(o, for: .albums)
+            }, view: main),
+            Scenario(name: "26-alben-raster-max-breit", size: CGSize(width: 1520, height: 940), prepare: { m in
+                view(.albums, .albums, .grid)(m)
+                var o = m.viewOptions(.albums)
+                o.coverSize = LibraryViewOptions.coverSizeRange.upperBound
+                m.setViewOptions(o, for: .albums)
+            }, view: main),
+            Scenario(name: "27-auswahl-alben", size: big, prepare: { m in
+                view(.albums, .albums, .grid)(m)
+                LibrarySelectionSeed.pending = (kind: .albums, count: 3)
+            }, view: main),
+            Scenario(name: "27-auswahl-titel", size: big, prepare: { m in
+                view(.tracks, .tracks, .list)(m)
+                LibrarySelectionSeed.pending = (kind: .tracks, count: 12)
+            }, view: main),
+            Scenario(name: "28-loeschen-album", size: CGSize(width: 470, height: 480), prepare: { _ in }, view: {
+                let a = AppModel.shared?.index.albums.first
+                return AnyView(DeleteTracksDialogView(uids: a?.trackUids ?? [1], subject: .album(title: a?.title ?? "Album"), close: {}))
+            }),
+            Scenario(name: "28-loeschen-papierkorb", size: CGSize(width: 470, height: 480), prepare: { _ in }, view: {
+                AnyView(DeleteTracksDialogView(uids: Array(1...12), subject: .tracks, close: {}, confirmTrash: true))
+            }),
+            Scenario(name: "29-als-album-zusammenfassen", size: CGSize(width: 500, height: 580), prepare: { _ in }, view: {
+                AnyView(MergeAlbumSheet(uids: Array(1...8), close: {}))
+            }),
         ]
         list += v21PlayerScenarios(library: library, main: main, big: big, small: small, mini: mini, settings: settings)
         return list

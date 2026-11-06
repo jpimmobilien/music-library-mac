@@ -69,6 +69,13 @@ final class MarqueeRouter {
     private var holdWork: DispatchWorkItem?
     private var scrollWork: DispatchWorkItem?
     private var scrollSpeed: CGFloat = 0
+    private var lastMarqueeEnd: TimeInterval = 0
+
+    /// Kam gerade ein Auswahlrahmen zu Ende? Dann löst das zugehörige Loslassen keinen Klick auf einen
+    /// Eintrag aus (zusätzliche Absicherung zum verlegten Loslassen-Ereignis).
+    var justFinishedMarquee: Bool {
+        ProcessInfo.processInfo.systemUptime - lastMarqueeEnd < 0.3
+    }
 
     func register(_ target: MarqueeTarget) {
         targets.removeAll { $0.target == nil || $0.target === target }
@@ -113,15 +120,13 @@ final class MarqueeRouter {
         if AppModel.shared?.playerOpen == true { return }
         let flags = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
         if flags.contains(.control) { return }   // ⌃-Klick = Kontextmenü
-        guard let hit = target(at: event.locationInWindow, in: window) else { return }
-        let target = hit.target
-        let local = hit.point
-        active = target
+        guard let hit = candidate(at: event.locationInWindow, in: window) else { return }
+        active = hit.target
         tracking = true
         startPoint = event.locationInWindow
         lastPoint = startPoint
         modifiers = flags
-        startedOnItem = target.itemHit(at: local)
+        startedOnItem = hit.target.itemHit(at: hit.point)
         if startedOnItem {
             let work = DispatchWorkItem { [weak self] in self?.arm() }
             holdWork = work
@@ -167,6 +172,7 @@ final class MarqueeRouter {
         cancel()
         if wasRunning {
             target.marqueeEnded()
+            lastMarqueeEnd = ProcessInfo.processInfo.systemUptime
             NSCursor.arrow.set()
             // Loslassen außerhalb melden: so löst der gedrückte Eintrag keinen Klick aus und keine Schaltfläche
             // bleibt gedrückt (die Ansicht hat die Ziehereignisse nicht gesehen).
@@ -199,15 +205,15 @@ final class MarqueeRouter {
 
     // MARK: Ziel unter dem Zeiger
 
-    private func target(at windowPoint: NSPoint, in window: NSWindow) -> (target: MarqueeTarget, point: CGPoint)? {
+    private func candidate(at windowPoint: NSPoint, in window: NSWindow) -> (target: MarqueeTarget, point: CGPoint)? {
         var fallback: (target: MarqueeTarget, point: CGPoint)?
         for entry in targets {
-            guard let target = entry.target, let anchor = target.anchorView, anchor.window === window,
+            guard let each = entry.target, let anchor = each.anchorView, anchor.window === window,
                   !anchor.isHiddenOrHasHiddenAncestor else { continue }
-            guard Self.inVisibleContent(windowPoint, anchor: anchor, topChrome: target.topChrome) else { continue }
+            guard Self.inVisibleContent(windowPoint, anchor: anchor, topChrome: each.topChrome) else { continue }
             let local = Self.local(windowPoint, in: anchor)
-            if anchor.bounds.contains(local) { return (target: target, point: local) }
-            if fallback == nil, target.regionContains(local) { fallback = (target: target, point: local) }
+            if anchor.bounds.contains(local) { return (target: each, point: local) }
+            if fallback == nil, each.regionContains(local) { fallback = (target: each, point: local) }
         }
         return fallback
     }
@@ -535,10 +541,21 @@ private struct LibraryTopChromeKey: EnvironmentKey {
     static let defaultValue: CGFloat = Chrome.contentTop
 }
 
+private struct LibraryMarqueeTailKey: EnvironmentKey {
+    static let defaultValue: CGFloat = 160
+}
+
 extension EnvironmentValues {
     /// Höhe der schwebenden Leisten über dem Inhalt (Navigation, ggf. feste Werkzeugleiste).
     var libraryTopChrome: CGFloat {
         get { self[LibraryTopChromeKey.self] }
         set { self[LibraryTopChromeKey.self] = newValue }
+    }
+
+    /// Wie weit unter einer Liste ein Auswahlrahmen noch beginnen darf. Klein, wenn darunter weitere
+    /// ziehbare Inhalte folgen (z. B. „Mehr von …“ in der Albumansicht).
+    var libraryMarqueeTail: CGFloat {
+        get { self[LibraryMarqueeTailKey.self] }
+        set { self[LibraryMarqueeTailKey.self] = newValue }
     }
 }
