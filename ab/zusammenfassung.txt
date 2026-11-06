@@ -1,0 +1,60 @@
+== v20 Runde 1
+Bereich wechseln                                             559.5    824.5    824.5
+Titel · Raster: Scrollschritt                                 51.1    101.7    165.5
+Titel · Kompaktes Raster: Scrollschritt                      209.9    431.5    504.5
+Titel · Liste: Scrollschritt                                  65.0    105.3    146.0
+Titel · Detailliste: Scrollschritt                            85.8    135.1    260.0
+Alben · Raster: Scrollschritt                                 72.5    183.8    266.0
+Alben · Kompaktes Raster: Scrollschritt                      102.3    174.2    210.4
+Alben · Liste: Scrollschritt                                 141.8    243.5    261.3
+Alben · Detailliste: Scrollschritt                            79.1    105.6    121.3
+Suche tippen (je Taste, Hauptthread)                          39.6    216.1    216.1
+Leerlauf mit Wiedergabe: Hauptthread belegt [%]               11.7     11.7     11.7
+Leerlauf mit Wiedergabe: Prozess-CPU [%]                      12.4     12.4     12.4
+Großer Player (Vinyl) läuft: Hauptthread belegt [%]           15.0     15.0     15.0
+Großer Player (Vinyl) läuft: Prozess-CPU [%]                  15.6     15.6     15.6
+== v21 Runde 1
+Bereich wechseln                                             539.9    795.2    795.2
+Titel · Raster: Scrollschritt                                 52.9    100.7    117.7
+Titel · Kompaktes Raster: Scrollschritt                      177.2    313.2    421.5
+Titel · Liste: Scrollschritt                                  60.4    106.2    123.0
+Titel · Detailliste: Scrollschritt                            72.7     91.4     94.3
+Alben · Raster: Scrollschritt                                 56.8    131.7    161.9
+Alben · Kompaktes Raster: Scrollschritt                      134.1    254.5    374.5
+Alben · Liste: Scrollschritt                                 137.8    192.5    248.7
+Alben · Detailliste: Scrollschritt                            78.1    114.2    179.7
+Suche tippen (je Taste, Hauptthread)                          56.1    332.1    332.1
+Leerlauf mit Wiedergabe: Hauptthread belegt [%]               13.6     13.6     13.6
+Leerlauf mit Wiedergabe: Prozess-CPU [%]                      14.3     14.3     14.3
+Großer Player (Vinyl) läuft: Hauptthread belegt [%]           24.3     24.3     24.3
+Großer Player (Vinyl) läuft: Prozess-CPU [%]                  25.1     25.1     25.1
+== v20 Runde 2
+Bereich wechseln                                             362.6    585.0    585.0
+Titel · Raster: Scrollschritt                                 65.5    157.0    181.4
+Titel · Kompaktes Raster: Scrollschritt                      224.7    504.7    691.9
+Titel · Liste: Scrollschritt                                  57.9     81.9     93.7
+Titel · Detailliste: Scrollschritt                            82.1    117.4    126.2
+Alben · Raster: Scrollschritt                                 64.0    170.9    191.4
+Alben · Kompaktes Raster: Scrollschritt                      117.8    197.4    329.9
+Alben · Liste: Scrollschritt                                 143.8    229.6    250.4
+Alben · Detailliste: Scrollschritt                            75.4     93.1     96.5
+Suche tippen (je Taste, Hauptthread)                          19.1    203.7    203.7
+Leerlauf mit Wiedergabe: Hauptthread belegt [%]               12.2     12.2     12.2
+Leerlauf mit Wiedergabe: Prozess-CPU [%]                      12.9     12.9     12.9
+Großer Player (Vinyl) läuft: Hauptthread belegt [%]           14.8     14.8     14.8
+Großer Player (Vinyl) läuft: Prozess-CPU [%]                  15.4     15.4     15.4
+== v21 Runde 2
+Bereich wechseln                                             566.2    723.2    723.2
+Titel · Raster: Scrollschritt                                 65.8    172.0    208.5
+Titel · Kompaktes Raster: Scrollschritt                      243.1    529.5    746.4
+Titel · Liste: Scrollschritt                                  65.3    116.5    124.0
+Titel · Detailliste: Scrollschritt                            85.0    109.9    125.8
+Alben · Raster: Scrollschritt                                 79.6    205.4    315.9
+Alben · Kompaktes Raster: Scrollschritt                      113.9    202.8    267.1
+Alben · Liste: Scrollschritt                                 131.6    195.1    204.5
+Alben · Detailliste: Scrollschritt                            77.1     93.6    102.1
+Suche tippen (je Taste, Hauptthread)                          54.6    207.4    207.4
+Leerlauf mit Wiedergabe: Hauptthread belegt [%]               13.3     13.3     13.3
+Leerlauf mit Wiedergabe: Prozess-CPU [%]                      14.0     14.0     14.0
+Großer Player (Vinyl) läuft: Hauptthread belegt [%]           15.8     15.8     15.8
+Großer Player (Vinyl) läuft: Prozess-CPU [%]                  16.5     16.5     16.5

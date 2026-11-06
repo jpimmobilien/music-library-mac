@@ -1,0 +1,34 @@
+Music Library – Messlauf mit 10000 Titeln
+Version 26.6.1 (Build 25G76) · x86_64 · Intel(R) Core(TM) i7-8700B CPU @ 3.20GHz
+Systemeinstellung „Bewegung reduzieren“: an (für die Messung übergangen – Animationen laufen)
+
+Messung                                                     Mittel     p95     Max   (ms bzw. %)
+Index aufbauen (10000 Titel)                                 328.5    328.5    328.5
+Alle Listen berechnen (Hintergrund)                         1143.0   1143.0   1143.0
+Suche berechnen (Hintergrund)                               1064.2   1117.0   1117.0
+Bereich wechseln                                             566.2    723.2    723.2
+Titel: Ansicht „Raster“ öffnen                               247.3    247.3    247.3
+Titel · Raster: Scrollschritt                                 65.8    172.0    208.5
+Titel: Ansicht „Kompaktes Raster“ öffnen                    2664.3   2664.3   2664.3
+Titel · Kompaktes Raster: Scrollschritt                      243.1    529.5    746.4
+Titel: Ansicht „Liste“ öffnen                                567.8    567.8    567.8
+Titel · Liste: Scrollschritt                                  65.3    116.5    124.0
+Titel: Ansicht „Detailliste“ öffnen                          733.8    733.8    733.8
+Titel · Detailliste: Scrollschritt                            85.0    109.9    125.8
+Alben: Ansicht „Raster“ öffnen                                 0.3      0.3      0.3
+Alben · Raster: Scrollschritt                                 79.6    205.4    315.9
+Alben: Ansicht „Kompaktes Raster“ öffnen                     601.3    601.3    601.3
+Alben · Kompaktes Raster: Scrollschritt                      113.9    202.8    267.1
+Alben: Ansicht „Liste“ öffnen                                656.3    656.3    656.3
+Alben · Liste: Scrollschritt                                 131.6    195.1    204.5
+Alben: Ansicht „Detailliste“ öffnen                          617.4    617.4    617.4
+Alben · Detailliste: Scrollschritt                            77.1     93.6    102.1
+Suche tippen (je Taste, Hauptthread)                          54.6    207.4    207.4
+Suche: Ergebnis sichtbar nach letzter Taste                 1478.5   1478.5   1478.5
+Suche: Ergebnis zeichnen (Hauptthread)                         0.2      0.2      0.2
+Player öffnen/schließen (alle Designs)                       395.6    734.7    734.7
+Leerlauf mit Wiedergabe: Verspätung je Bild                   38.8    116.2    128.1
+Leerlauf mit Wiedergabe: Hauptthread belegt [%]               13.3     13.3     13.3
+Leerlauf mit Wiedergabe: Prozess-CPU [%]                      14.0     14.0     14.0
+Großer Player (Vinyl) läuft: Hauptthread belegt [%]           15.8     15.8     15.8
+Großer Player (Vinyl) läuft: Prozess-CPU [%]                  16.5     16.5     16.5
