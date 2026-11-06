@@ -13,7 +13,7 @@ final class V2SettingsTests: XCTestCase {
     func testAnsichten_standardJeBereich() {
         let modes = LibraryViewContext.allCases.map { LibraryViewOptions.defaults(for: $0).mode }
         XCTAssertEqual(modes, [.list, .grid, .list, .list, .grid, .list, .grid])
-        XCTAssertEqual(LibraryViewOptions.coverSizeRange, 90...320)
+        XCTAssertEqual(LibraryViewOptions.coverSizeRange, 90...560)   // v2.1: größere Cover
         XCTAssertEqual(LibraryViewOptions.spacingRange, 6...40)
         for context in LibraryViewContext.allCases {
             let d = LibraryViewOptions.defaults(for: context)
@@ -57,7 +57,7 @@ final class V2SettingsTests: XCTestCase {
 
     func testAnsichten_begrenztUndBereinigt() {
         let big = LibraryViewOptions(coverSize: 1_000, spacing: -5, columns: [.title, .title, .artist])
-        XCTAssertEqual(big.coverSize, 320)
+        XCTAssertEqual(big.coverSize, 560)
         XCTAssertEqual(big.spacing, 6)
         XCTAssertEqual(big.columns, [.title, .artist])
         XCTAssertEqual(LibraryViewOptions(coverSize: .nan, spacing: .infinity).coverSize, 180)
@@ -76,7 +76,7 @@ final class V2SettingsTests: XCTestCase {
         let g = try JSONDecoder().decode(LibraryViewOptions.self, from: Data(garbage.utf8))
         let d = LibraryViewOptions.defaults(for: .tracks)
         XCTAssertEqual(g.mode, d.mode)
-        XCTAssertEqual(g.coverSize, 320)
+        XCTAssertEqual(g.coverSize, 560)
         XCTAssertEqual(g.spacing, d.spacing)
         XCTAssertTrue(g.showDetails)
         XCTAssertEqual(g.showSecondaryText, d.showSecondaryText)
@@ -94,7 +94,7 @@ final class V2SettingsTests: XCTestCase {
         albums.columns = [.album, .bpm, .year]
         s.setViewOptions(albums, for: .albums)
         XCTAssertEqual(s.viewOptions(for: .albums).mode, .compactGrid)
-        XCTAssertEqual(s.viewOptions(for: .albums).coverSize, 320)
+        XCTAssertEqual(s.viewOptions(for: .albums).coverSize, 560)
         XCTAssertEqual(s.viewOptions(for: .albums).columns, [.album, .year])
         XCTAssertEqual(s.viewOptions(for: .favoriteAlbums), LibraryViewOptions.defaults(for: .favoriteAlbums)) // getrennt gespeichert
         XCTAssertEqual(Array(s.viewOptions.keys), ["ALBUMS"])
@@ -437,9 +437,10 @@ final class V2SettingsTests: XCTestCase {
             XCTAssertFalse(c.label.isEmpty)
         }
         XCTAssertEqual(Set(CassetteColor.allCases.compactMap(\.argb)).count, 6)
-        XCTAssertEqual(MiniPlayerSize.allCases.map(\.height), [64, 84, 112])
-        XCTAssertEqual(MiniPlayerSize.allCases.map(\.rawValue), ["COMPACT", "STANDARD", "LARGE"])
-        XCTAssertEqual(MiniPlayerSize.allCases.map(\.label), ["Kompakt", "Standard", "Groß"])
+        // v2.1: zwei zusätzliche Größen; die drei bisherigen behalten Höhe und gespeicherten Wert
+        XCTAssertEqual(MiniPlayerSize.allCases.map(\.height), [64, 84, 112, 148, 196])
+        XCTAssertEqual(MiniPlayerSize.allCases.map(\.rawValue), ["COMPACT", "STANDARD", "LARGE", "EXTRA_LARGE", "HUGE"])
+        XCTAssertEqual(MiniPlayerSize.allCases.map(\.label), ["Klein", "Mittel", "Groß", "Sehr groß", "Riesig"])
         XCTAssertEqual(AnimationLevel.allCases.map(\.rawValue), ["FULL", "REDUCED", "OFF"])
         XCTAssertTrue(AnimationLevel.allCases.allSatisfy { !$0.label.isEmpty })
     }

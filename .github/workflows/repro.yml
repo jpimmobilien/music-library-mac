@@ -1,0 +1,74 @@
+# Nachstellen eines Absturzes mit echtem Liquid Glass (macOS 26): einzelne Vorschau-Szenarien für 2.0 und 2.1.
+name: Repro
+
+on:
+  push:
+    branches: [repro]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  repro:
+    name: Repro (${{ matrix.variant }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - variant: v21
+            ref: dev
+          - variant: v20
+            ref: release-2.0
+    runs-on: macos-26
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.ref }}
+      - name: Xcode 26
+        run: |
+          X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -n "$X" ]; then sudo xcode-select -s "$X"; fi
+          swift --version
+      - name: App bauen
+        run: scripts/build_app.sh > build.log 2>&1 || (tail -40 build.log; exit 1)
+      - name: Szenarien einzeln
+        continue-on-error: true
+        run: |
+          BIN="build/Music Library.app/Contents/MacOS/MusicLibrary"
+          mkdir -p repro
+          run() {
+            local name="$1" only="$2"
+            mkdir -p "repro/$name"
+            env ML_SNAPSHOT_ONLY="$only" perl -e 'alarm shift; exec @ARGV' 600 "$BIN" --snapshot "$PWD/repro/$name" > "repro/$name/run.log" 2>&1
+            local st=$?
+            echo "== $name ($only): Status $st, Bilder $(ls repro/$name/*.png 2>/dev/null | wc -l)" | tee -a repro/summary.txt
+            grep -m1 "reason:" "repro/$name/run.log" | cut -c1-300 | tee -a repro/summary.txt || true
+            sleep 5
+            for f in "$HOME"/Library/Logs/DiagnosticReports/MusicLibrary*; do [ -e "$f" ] && mv "$f" "repro/$name/" ; done
+          }
+          run a "21-alben-kompakt"
+          run b "20-titel-coverflow,21-alben-kompakt"
+          run c "03-alben,21-alben-kompakt,21-alben-liste,21-alben-detailliste"
+          run d "20-titel-raster,20-titel-detailliste,20-titel-coverflow,21-alben-kompakt,21-alben-liste"
+          if [ "${{ matrix.variant }}" = "v21" ]; then
+            run e "26-alben-raster-gescrollt,26-alben-raster-max,27-auswahl-alben,27-auswahl-titel"
+            run f "50-mini-sehr-gross,50-mini-riesig,51-hintergrund-blau-modern-glass,52-player-balken-cd,53-equalizer-fenster-pop"
+            run g "21-alben-kompakt,21-alben-liste,21-alben-detailliste,21-alben-coverflow,22-interpreten-liste,23-genres-detailliste,24-playlists-liste,25-favoriten-alben-raster"
+          fi
+          cat repro/summary.txt
+      - name: Ergebnisse in Zweig „ci-repro-${{ matrix.variant }}“
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p out && cp -R repro out/ 2>/dev/null || true
+          find out -name "*.png" -delete
+          cd out
+          git init -q -b "ci-repro-${{ matrix.variant }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Repro" || true
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "ci-repro-${{ matrix.variant }}"
