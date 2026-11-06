@@ -10,11 +10,16 @@ Studio in sieben Farben, Portable CD, Modern Glass, Aurora, Studio Reel), einen 
 Tonhöhe und Equalizer im Popover, eigene Equalizer-Voreinstellungen, 16 Einstellungskategorien und eine
 gründliche Überarbeitung der Geschwindigkeit.
 
-> **Stand:** gebaut und geprüft mit GitHub Actions: Universal-DMG (Xcode 26.6, macOS-26-SDK),
-> 426 von 426 Tests auf Intel (macOS 26 und macOS 15), Starttest der DMG auf macOS 14 mit allen 65 Ansichten
-> in Hell und Dunkel (arm64) und einer Auswahl mit dem Intel-Teil über Rosetta, Messlauf mit 10.000 Titeln.
-> Nicht von Hand bedient, nicht auf macOS 13 und nicht auf echter Intel-Hardware gestartet – Details:
-> [docs/STATUS.md](docs/STATUS.md).
+**Version 2.1** ist ein gezieltes Verbesserungs-Update ohne Redesign: „Hinzugefügt“ sortiert wie iTunes, Löschen
+per Kontextmenü, Visualizer und Equalizer-Fenster repariert, Tonhöhe mit dem Verfahren der Android-App, feste
+Werkzeugleiste, Zufall nach Alben, Mehrfachauswahl mit Aufziehen, größere Cover, Player-Hintergründe, Mini-Player
+„Sehr groß“ und „Riesig“, Format/Bitrate/Hinzufügedatum im großen Player – siehe
+[docs/V2_1_AENDERUNGEN.md](docs/V2_1_AENDERUNGEN.md).
+
+> **Stand 2.1:** gebaut und geprüft mit GitHub Actions: Universal-DMG (Xcode 26, macOS-26-SDK), 470 von 470 Tests
+> auf macOS 26 (Apple Silicon) und macOS 15 (Intel), alle 97 Ansichten in Hell und Dunkel mit echtem Liquid Glass,
+> Messlauf mit 10.000 Titeln. Nicht von Hand bedient, nicht auf macOS 13 und nicht auf echter Intel-Hardware mit
+> Grafikkarte gestartet – Details: [docs/STATUS.md](docs/STATUS.md).
 
 | | |
 |---|---|
@@ -25,6 +30,7 @@ gründliche Überarbeitung der Geschwindigkeit.
 ## Inhalt
 
 - [docs/INSTALLATION.md](docs/INSTALLATION.md) – Installation, Update, erster Start, Signieren/Beglaubigen
+- [docs/V2_1_AENDERUNGEN.md](docs/V2_1_AENDERUNGEN.md) – Änderungen in Version 2.1
 - [docs/V2_FUNKTIONEN.md](docs/V2_FUNKTIONEN.md) – Funktionsmatrix Android → macOS mit Prüfstand je Funktion
 - [docs/STATUS.md](docs/STATUS.md) – Testbericht: was gebaut und getestet ist
 - [docs/PERFORMANCE.md](docs/PERFORMANCE.md) – Ursachen der Ruckler in Version 1, Änderungen, Messungen

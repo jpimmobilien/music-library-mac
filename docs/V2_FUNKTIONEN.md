@@ -4,11 +4,24 @@ Grundlage: Android-App *Musikbibliothek 1.3.0* (unverändert) und der Master-Pro
 Spalte **Prüfung**:
 
 - **T** – automatischer Test in der Build-Pipeline (Unit-, Audio- oder Listen-Test, macOS 26 arm64 und macOS 15 Intel)
-- **B** – Vorschaubild aus der laufenden App, hell und dunkel: alle 65 Ansichten auf macOS 14 (Apple Silicon),
-  eine Auswahl mit dem Intel-Teil über Rosetta. Bilder mit echtem Liquid Glass (macOS 26) konnten in dieser Runde
-  nicht erzeugt werden, weil GitHub keine macOS-26-Apple-Silicon-Rechner zuteilte (siehe STATUS.md).
+- **B** – Vorschaubild aus der laufenden App, hell und dunkel: seit Version 2.1 alle 97 Ansichten auf macOS 26
+  (Apple Silicon) mit echtem Liquid Glass und in der Rückfall-Darstellung (Version 2.0: 65 Ansichten auf macOS 14)
 - **M** – im Messlauf mit 10.000 Titeln ausgeführt
 - **–** – gebaut, aber ohne Bildschirm/Trackpad/Lautsprecher nicht automatisch prüfbar (bitte beim ersten Start ausprobieren)
+
+## Version 2.1 im Überblick
+
+| Funktion | macOS Version 2.1 | Prüfung |
+|---|---|---|
+| Sortierung „Hinzugefügt“ | Datum je Datei wie iTunes: Apple Musik → Erstellungsdatum → Finder „Hinzugefügt“ → erster Import; nie überschrieben; Alben nach ihrem neuesten Titel | T (Logik, Datenbank, Neustart, Aktualisierung 2.0 → 2.1), B |
+| Löschen | Kontextmenü Titel/Album/Auswahl: aus der Bibliothek entfernen oder in den Papierkorb | B (Dialog), – (Klick) |
+| Visualizer | Analyse in jedem Audiozyklus, Balken folgen dem Pegel, klingen bei Pause aus | T (Analyse), B |
+| Tonhöhe | Verfahren der Android-App (Phasen-Vocoder) | T (Klang) |
+| Equalizer-Fenster | Schalter und Presets wirken sofort | T (jedes Preset im Klang), B |
+| Feste Werkzeugleiste | in allen Bereichen und Ansichten | B (gescrollt) |
+| Zufall je Bereich | Alben: zufällige Alben in Titelreihenfolge | T |
+| Player-Hintergrund | 9 Farben + eigene Farbe, Schrift passt sich an | T (Lesbarkeit), B |
+| Großer Player | Format, Bitrate, Abtastrate, Bittiefe, „Hinzugefügt am …“ | B |
 
 ## Bibliothek
 
@@ -16,13 +29,13 @@ Spalte **Prüfung**:
 |---|---|---|---|
 | Bereiche | Titel · Alben · Playlists · Interpreten · Genres · Favoriten | gleich, ⌘1–⌘6, Startbereich einstellbar | B |
 | Darstellung | Liste bzw. Raster je Bereich | **Raster, kompaktes Raster, Liste, Detailliste (Spalten), Cover Flow** in **allen** Bereichen (auch Favoriten-Titel/-Alben), je Bereich gespeichert | B, M |
-| Covergröße, Abstand | – | Regler (90–320 pt, 6–40 pt) und Zwei-Finger-Zoom, je Bereich gespeichert | B (Regler), – (Zoom) |
+| Covergröße, Abstand | – | Regler (**2.1: 90–560 pt**, 6–40 pt) und Zwei-Finger-Zoom, je Bereich gespeichert; Spaltenzahl folgt der Fensterbreite | T, B (Regler), – (Zoom) |
 | Zusatzinfos | – | ein-/ausblendbar (Jahr, Genre, Anzahl); Detailliste mit wählbaren Spalten, Sortieren per Klick auf die Spaltenüberschrift | B |
 | Cover Flow | – | räumlich gedrehte Nachbarcover mit Spiegelung; Ziehen, Trackpad, Mausrad, ← →, Positionsregler; Doppelklick/Eingabe spielt bzw. öffnet | B, – (Gesten) |
 | Überfahren | – | Kachel hebt sich, Abspiel- und Herz-Schaltfläche erscheinen | – |
-| Mehrfachauswahl | lange drücken | ⌘-/⇧-Klick, ⌘A, Pfeiltasten, in allen Ansichten | – |
+| Mehrfachauswahl | lange drücken | ⌘-/⇧-Klick, ⌘A, Pfeiltasten, in allen Ansichten; **2.1:** Aufziehen mit der Maus, Auswahlleiste mit Anzahl, Sammelbearbeitung („Gemischt“), „Als Album zusammenfassen …“ | B (Leiste, Dialog), – (Maus) |
 | Ziehen & Ablegen | Playlist-Reihenfolge | Titel/Alben auf Playlists, „Neue Playlist“, Reihenfolge in Playlists, aus dem Finder | – |
-| Kontextmenüs | lange drücken | Rechtsklick auf Titel, Alben, Interpreten, Genres, Playlists (auf die ganze Auswahl) | – |
+| Kontextmenüs | lange drücken | Rechtsklick auf Titel, Alben, Interpreten, Genres, Playlists (auf die ganze Auswahl); **2.1:** „Titel löschen …“ / „Album löschen …“ mit „Aus der Musikbibliothek entfernen“ oder „In den Papierkorb legen“ (doppelt bestätigt) | B (Dialog), – (Klick) |
 | Sortierung | je Bereich | je Bereich gespeichert, **neu**: Album, Album-Interpret, Hinzugefügt, Bewertung, BPM (Titel); Hinzugefügt, Titelanzahl (Alben); Albenanzahl (Interpreten); Erstellt, Geändert (Playlists); Hinzugefügt, Bewertung (Favoriten) | T, B |
 | Filter | – | **neu**: Genres, Jahrzehnte, Interpreten (durchsuchbar), Formate, Schnellfilter (Favoriten, Nie gespielt, Neu in 30 Tagen, Verlustfrei, Mit Liedtext, Ohne Cover, Gut bewertet); aktive Filter als Chips, Anzeige „x von y“ | T, B |
 | Suche | ein Begriff | mehrere Begriffe (alle müssen passen), je Bereich, verzögert und im Hintergrund | T, M |
@@ -44,7 +57,7 @@ Spalte **Prüfung**:
 
 | Funktion | macOS Version 2 | Prüfung |
 |---|---|---|
-| Aussehen | schwebende Glas-Kapsel in drei Größen (Kompakt 64 pt, Standard 84 pt, Groß 112 pt), Tönung aus der Coverfarbe | B |
+| Aussehen | schwebende Glas-Kapsel in **fünf** Größen (Klein 64 pt, Mittel 84 pt, Groß 112 pt, **2.1:** Sehr groß 148 pt, Riesig 196 pt mit eigenem Layout), Tönung aus der Coverfarbe oder dem Player-Hintergrund | T, B |
 | Design im Kleinen | drehende Platte, Kassette mit Naben, CD, Spulen, Aurora-Ring – passend zum gewählten Player-Design (abschaltbar) | B |
 | Bedienung | Wiedergabe/Pause, zurück/vor, Zufall, Wiederholen, Fortschritt (ziehbar), Zeiten, Lautstärke (breit: direkt, schmal: Popover), Favorit | B |
 | Tonhöhe | Popover mit Wert auf der Schaltfläche, ±1 und ±0,1 Halbtöne, Cent-Anzeige, „Original“, Modus Tonhöhe/Tempo bzw. 33⅓↔45 | T (Klang), B |

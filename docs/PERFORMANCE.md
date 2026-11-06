@@ -120,3 +120,25 @@ Workflow `abtest.yml`. Gemessen wurde, ob zwei Änderungen wirklich helfen:
 - Die Listenberechnung (Sortieren, Filtern, Suchen, intelligente Playlists) dauert bei 10.000 Titeln rund
   0,4–0,5 s auf Apple Silicon und läuft im Hintergrund; auf einem älteren Intel-Mac ist mit etwa dem Doppelten zu
   rechnen. Die Oberfläche bleibt dabei bedienbar, das Ergebnis erscheint entsprechend später.
+
+## 4. Version 2.1
+
+### Messlauf auf macOS 26 (Apple Silicon, Build-Lauf 18)
+
+Gleiches Messprogramm, 10.000 Titel, **macOS 26.7 mit echtem Liquid Glass** (virtueller Mac, Apple M1). Die Zahlen
+aus Abschnitt 3 stammen von macOS 14 (dort gibt es kein Liquid Glass) und sind deshalb **nicht direkt
+vergleichbar** – GitHub bietet macOS 14 nicht mehr an.
+
+| Messung (Mittel (p95) in ms bzw. %) | 2.1 auf macOS 26 |
+|---|---|
+| Alben-Raster scrollen | 33,3 (74,9) |
+| Interpreten-Raster scrollen | 46,7 (85,9) |
+| Titel-Liste scrollen | 47,0 (80,9) |
+| Titel-Detailliste scrollen | 45,0 (63,1) |
+| Bereich wechseln | 282,7 (620,0) |
+| Suche: je Tastendruck | 23,4 (107,5) |
+| Player öffnen/schließen (alle Designs) | 211,9 (558,0) |
+| Leerlauf mit Wiedergabe (Mini-Player) | 22,2 % Hauptthread, 22,7 % CPU gesamt |
+| Großer Vinyl-Player läuft | 33,1 % Hauptthread, 33,5 % CPU gesamt |
+
+<!-- A/B -->
