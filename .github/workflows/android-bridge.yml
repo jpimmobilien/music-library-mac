@@ -23,8 +23,14 @@ permissions:
 
 jobs:
   build:
-    name: Tests, Universal-Build, DMG (macOS 26)
-    runs-on: macos-26
+    name: Tests, Universal-Build, DMG (${{ matrix.os }})
+    # Zwei Build-Rechner parallel: macOS 26 (Apple Silicon, Liquid Glass) und – falls dort keine Kapazität frei
+    # ist – Intel (macOS 15). Geliefert wird bevorzugt die DMG vom macOS-26-Rechner.
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-26, macos-15-intel]
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
@@ -61,17 +67,17 @@ jobs:
         run: scripts/run_selftest.sh "build/Android Bridge.app" logs/selftest-macos26.json
       - name: Bildschirmfotos (Liquid Glass)
         continue-on-error: true
-        run: scripts/run_snapshots.sh "build/Android Bridge.app" snapshots/macos26-liquid-glass
+        run: scripts/run_snapshots.sh "build/Android Bridge.app" snapshots/${{ matrix.os }}-glass
       - name: Bildschirmfotos (Rückfall ohne Liquid Glass)
         continue-on-error: true
         env:
           AB_FORCE_GLASS_FALLBACK: "1"
-        run: scripts/run_snapshots.sh "build/Android Bridge.app" snapshots/macos26-fallback
+        run: scripts/run_snapshots.sh "build/Android Bridge.app" snapshots/${{ matrix.os }}-fallback
       - name: DMG erstellen und prüfen
         run: |
           set -o pipefail
           scripts/make_dmg.sh 2>&1 | tee logs/dmg-output.txt
-      - name: Aus der DMG installieren und starten (Apple Silicon nativ + Intel-Teil über Rosetta)
+      - name: Aus der DMG installieren und starten (nativ; auf Apple Silicon zusätzlich Intel-Teil über Rosetta)
         run: |
           set -e
           MNT="$(mktemp -d)"
@@ -81,12 +87,14 @@ jobs:
           ditto "$MNT/Android Bridge.app" "$HOME/Applications/Android Bridge.app"
           hdiutil detach "$MNT"
           codesign --verify --deep --strict --verbose=2 "$HOME/Applications/Android Bridge.app"
-          scripts/run_selftest.sh "$HOME/Applications/Android Bridge.app" logs/selftest-installiert-macos26-arm64.json
-          /usr/sbin/softwareupdate --install-rosetta --agree-to-license || true
-          SNAPSHOT_ARCH=x86_64 scripts/run_selftest.sh "$HOME/Applications/Android Bridge.app" logs/selftest-installiert-macos26-rosetta.json
+          scripts/run_selftest.sh "$HOME/Applications/Android Bridge.app" logs/selftest-installiert-${{ matrix.os }}.json
+          if [ "$(uname -m)" = "arm64" ]; then
+            /usr/sbin/softwareupdate --install-rosetta --agree-to-license || true
+            SNAPSHOT_ARCH=x86_64 scripts/run_selftest.sh "$HOME/Applications/Android Bridge.app" logs/selftest-installiert-${{ matrix.os }}-rosetta.json
+          fi
       - uses: actions/upload-artifact@v4
         with:
-          name: AndroidBridge-dmg
+          name: AndroidBridge-dmg-${{ matrix.os }}
           path: |
             dist/AndroidBridge.dmg
             dist/AndroidBridge.dmg.sha256
@@ -94,7 +102,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: logs-build
+          name: logs-build-${{ matrix.os }}
           path: |
             logs/
             snapshots/
@@ -103,6 +111,7 @@ jobs:
   smoke:
     name: Installation + Start (${{ matrix.label }})
     needs: build
+    if: ${{ !cancelled() }}
     strategy:
       fail-fast: false
       matrix:
@@ -117,8 +126,15 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
-          name: AndroidBridge-dmg
-          path: dist
+          pattern: AndroidBridge-dmg-*
+          path: dmgs
+      - name: DMG wählen (bevorzugt macOS-26-Build)
+        run: |
+          mkdir -p dist
+          SRC=dmgs/AndroidBridge-dmg-macos-26
+          [ -f "$SRC/AndroidBridge.dmg" ] || SRC=dmgs/AndroidBridge-dmg-macos-15-intel
+          cp "$SRC"/AndroidBridge.dmg* dist/
+          echo "Verwendet: $SRC"
       - name: Rosetta bereitstellen
         if: matrix.arch == 'x86_64'
         run: /usr/sbin/softwareupdate --install-rosetta --agree-to-license || true
@@ -205,6 +221,7 @@ jobs:
           {
             echo "Lauf: ${GITHUB_RUN_NUMBER} (${GITHUB_SHA})"
             echo "build: ${{ needs.build.result }}"
+          ls -d AndroidBridge-dmg-* 2>/dev/null | sed 's/^/dmg: /' 
             echo "smoke: ${{ needs.smoke.result }}"
             echo "intel: ${{ needs.intel.result }}"
             date -u
