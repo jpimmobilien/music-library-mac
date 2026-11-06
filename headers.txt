@@ -1,0 +1,332 @@
+AppleUSBDescriptorParsing.h
+IOUSBHost.h
+IOUSBHostCIControllerStateMachine.h
+IOUSBHostCIDeviceStateMachine.h
+IOUSBHostCIEndpointStateMachine.h
+IOUSBHostCIPortStateMachine.h
+IOUSBHostControllerInterface.h
+IOUSBHostControllerInterfaceDefinitions.h
+IOUSBHostControllerInterfaceHelpers.h
+IOUSBHostDefinitions.h
+IOUSBHostDevice.h
+IOUSBHostInterface.h
+IOUSBHostIOSource.h
+IOUSBHostObject.h
+IOUSBHostPipe.h
+IOUSBHostStream.h
+===== IOUSBHostPipe.h
+
+#import <IOUSBHost/IOUSBHostIOSource.h>
+
+@class IOUSBHostStream;
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface IOUSBHostPipe : IOUSBHostIOSource
+
+#pragma mark Descriptors
+
+@property(readonly) const IOUSBHostIOSourceDescriptors* originalDescriptors;
+
+@property(readonly) const IOUSBHostIOSourceDescriptors* descriptors;
+
+#pragma mark Bus Policies
+-(BOOL)adjustPipeWithDescriptors:(const IOUSBHostIOSourceDescriptors*)descriptors
+                           error:(NSError* _Nullable*)error;
+
+@property(readonly) NSTimeInterval idleTimeout;
+
+- (BOOL)setIdleTimeout:(NSTimeInterval)idleTimeout
+                 error:(NSError* _Nullable*)error;
+
+-(BOOL)clearStallWithError:(NSError* _Nullable*)error;
+
+#pragma mark Control requests
+
+- (BOOL)sendControlRequest:(IOUSBDeviceRequest)request
+                      data:(nullable NSMutableData*)data
+          bytesTransferred:(nullable NSUInteger*)bytesTransferred
+         completionTimeout:(NSTimeInterval)completionTimeout
+                     error:(NSError* _Nullable*)error NS_REFINED_FOR_SWIFT;
+
+- (BOOL)sendControlRequest:(IOUSBDeviceRequest)request
+                      data:(nullable NSMutableData*)data
+          bytesTransferred:(nullable NSUInteger*)bytesTransferred
+                     error:(NSError* _Nullable*)error NS_SWIFT_UNAVAILABLE("Please use the refined for Swift API");
+
+- (BOOL)sendControlRequest:(IOUSBDeviceRequest)request
+                     error:(NSError* _Nullable*)error NS_SWIFT_UNAVAILABLE("Please use the refined for Swift API");
+
+- (BOOL)enqueueControlRequest:(IOUSBDeviceRequest)request
+                         data:(nullable NSMutableData*)data
+            completionTimeout:(NSTimeInterval)completionTimeout
+                        error:(NSError* _Nullable*)error
+            completionHandler:(nullable IOUSBHostCompletionHandler)completionHandler NS_REFINED_FOR_SWIFT;
+
+- (BOOL)enqueueControlRequest:(IOUSBDeviceRequest)request
+                         data:(nullable NSMutableData*)data
+                        error:(NSError* _Nullable*)error
+            completionHandler:(nullable IOUSBHostCompletionHandler)completionHandler NS_SWIFT_UNAVAILABLE("Please use the refined for Swift API");
+
+- (BOOL)enqueueControlRequest:(IOUSBDeviceRequest)request
+                        error:(NSError* _Nullable*)error
+            completionHandler:(nullable IOUSBHostCompletionHandler)completionHandler NS_SWIFT_UNAVAILABLE("Please use the refined for Swift API");
+
+#pragma mark IO
+-(BOOL)abortWithOption:(IOUSBHostAbortOption)option
+                 error:(NSError* _Nullable*)error NS_REFINED_FOR_SWIFT;
+
+-(BOOL)abortWithError:(NSError* _Nullable*)error NS_SWIFT_UNAVAILABLE("Please use the refined for Swift API");
+
+- (BOOL)sendIORequestWithData:(nullable NSMutableData*)data
+             bytesTransferred:(nullable NSUInteger*)bytesTransferred
+            completionTimeout:(NSTimeInterval)completionTimeout
+                        error:(NSError* _Nullable*)error NS_REFINED_FOR_SWIFT;
+
+- (BOOL)enqueueIORequestWithData:(nullable NSMutableData*)data
+               completionTimeout:(NSTimeInterval)completionTimeout
+                           error:(NSError* _Nullable*)error
+               completionHandler:(nullable IOUSBHostCompletionHandler)completionHandler;
+
+- (BOOL)sendIORequestWithData:(NSMutableData*)data
+                    frameList:(IOUSBHostIsochronousFrame*)frameList
+               frameListCount:(NSUInteger)frameListCount
+             firstFrameNumber:(uint64_t)firstFrameNumber
+                        error:(NSError* _Nullable*)error
+        API_DEPRECATED_WITH_REPLACEMENT("sendIORequestWithData:transactionList:transactionListCount:firstFrameNumber:error",
+                                        macos(10.15, API_TO_BE_DEPRECATED));
+
+- (BOOL)enqueueIORequestWithData:(NSMutableData*)data
+                       frameList:(IOUSBHostIsochronousFrame*)frameList
+                  frameListCount:(NSUInteger)frameListCount
+                firstFrameNumber:(uint64_t)firstFrameNumber
+                           error:(NSError* _Nullable*)error
+               completionHandler:(nullable IOUSBHostIsochronousCompletionHandler)completionHandler
+        API_DEPRECATED_WITH_REPLACEMENT("enqueueIORequestWithData:transactionList:transactionListCount:firstFrameNumber:error:completionHandler",
+                                        macos(10.15, API_TO_BE_DEPRECATED));
+
+- (BOOL)sendIORequestWithData:(NSMutableData*)data
+              transactionList:(IOUSBHostIsochronousTransaction*)transactionList
+         transactionListCount:(NSUInteger)transactionListCount
+             firstFrameNumber:(uint64_t)firstFrameNumber
+                      options:(IOUSBHostIsochronousTransferOptions)options
+                        error:(NSError* _Nullable*)error
+        API_AVAILABLE(macos(12.0));
+
+- (BOOL)enqueueIORequestWithData:(NSMutableData*)data
+                 transactionList:(IOUSBHostIsochronousTransaction*)transactionList
+            transactionListCount:(NSUInteger)transactionListCount
+                firstFrameNumber:(uint64_t)firstFrameNumber
+                         options:(IOUSBHostIsochronousTransferOptions)options
+                           error:(NSError* _Nullable*)error
+               completionHandler:(nullable IOUSBHostIsochronousTransactionCompletionHandler)completionHandler
+        API_AVAILABLE(macos(12.0));
+
+#pragma mark Streams
+- (BOOL)enableStreamsWithError:(NSError* _Nullable*)error;
+
+- (BOOL)disableStreamsWithError:(NSError* _Nullable*)error;
+
+- (nullable IOUSBHostStream*)copyStreamWithStreamID:(NSUInteger)streamID
+                                              error:(NSError* _Nullable*)error;
+
+@end
+
+NS_ASSUME_NONNULL_END
+===== IOUSBHostObject.h
+
+#import <Foundation/Foundation.h>
+#import <IOUSBHost/IOUSBHostDefinitions.h>
+
+NS_ASSUME_NONNULL_BEGIN
+@interface IOUSBHostObject : NSObject
+
+    typedef void (^ IOUSBHostInterestHandler)(IOUSBHostObject* hostObject, uint32_t messageType, void* _Nullable messageArgument);
+
+#pragma mark session management and creation
+
+- (instancetype)init __attribute__((unavailable("Please use initWithIOService:queue:error:interestHandler.")));
+
+- (nullable instancetype)initWithIOService:(io_service_t)ioService
+                                   options:(IOUSBHostObjectInitOptions)options
+                                     queue:(nullable dispatch_queue_t)queue
+                                     error:(NSError* _Nullable*)error
+                           interestHandler:(nullable IOUSBHostInterestHandler)interestHandler NS_DESIGNATED_INITIALIZER NS_REFINED_FOR_SWIFT;
+
+- (nullable instancetype)initWithIOService:(io_service_t)ioService
+                                     queue:(nullable dispatch_queue_t)queue
+                                     error:(NSError* _Nullable*)error
+                           interestHandler:(nullable IOUSBHostInterestHandler)interestHandler NS_SWIFT_UNAVAILABLE("Please use the refined for Swift API");
+- (void)destroy;
+
+- (void)destroyWithOptions:(IOUSBHostObjectDestroyOptions)options;
+
+@property(readonly) io_service_t ioService;
+
+@property(readonly) dispatch_queue_t queue;
+
+#pragma mark Device Requests
+
+- (BOOL)sendDeviceRequest:(IOUSBDeviceRequest)request
+                     data:(nullable NSMutableData*)data
+         bytesTransferred:(nullable NSUInteger*)bytesTransferred
+        completionTimeout:(NSTimeInterval)completionTimeout
+                    error:(NSError* _Nullable*)error NS_REFINED_FOR_SWIFT;
+
+- (BOOL)sendDeviceRequest:(IOUSBDeviceRequest)request
+                     data:(nullable NSMutableData*)data
+         bytesTransferred:(nullable NSUInteger*)bytesTransferred
+                    error:(NSError* _Nullable*)error  NS_SWIFT_UNAVAILABLE("Please use the refined for Swift API");
+
+- (BOOL)sendDeviceRequest:(IOUSBDeviceRequest)request
+                    error:(NSError* _Nullable*)error  NS_SWIFT_UNAVAILABLE("Please use the refined for Swift API");
+
+- (BOOL)enqueueDeviceRequest:(IOUSBDeviceRequest)request
+                        data:(nullable NSMutableData*)data
+           completionTimeout:(NSTimeInterval)completionTimeout
+                       error:(NSError* _Nullable*)error
+           completionHandler:(nullable IOUSBHostCompletionHandler)completionHandler NS_REFINED_FOR_SWIFT;
+
+- (BOOL)enqueueDeviceRequest:(IOUSBDeviceRequest)request
+                        data:(nullable NSMutableData*)data
+                       error:(NSError* _Nullable*)error
+           completionHandler:(nullable IOUSBHostCompletionHandler)completionHandler  NS_SWIFT_UNAVAILABLE("Please use the refined for Swift API");
+
+- (BOOL)enqueueDeviceRequest:(IOUSBDeviceRequest)request
+                       error:(NSError* _Nullable*)error
+           completionHandler:(nullable IOUSBHostCompletionHandler)completionHandler  NS_SWIFT_UNAVAILABLE("Please use the refined for Swift API");
+
+- (BOOL)abortDeviceRequestsWithOption:(IOUSBHostAbortOption)option
+                                error:(NSError* _Nullable*)error NS_REFINED_FOR_SWIFT;
+
+- (BOOL)abortDeviceRequestsWithError:(NSError* _Nullable*)error  NS_SWIFT_UNAVAILABLE("Please use the refined for Swift API");
+
+#pragma mark Descriptors
+- (nullable const IOUSBDescriptor*)descriptorWithType:(tIOUSBDescriptorType)type
+                                               length:(NSUInteger*)length
+                                                index:(NSUInteger)index
+                                           languageID:(NSUInteger)languageID
+                                          requestType:(tIOUSBDeviceRequestTypeValue)requestType
+                                     requestRecipient:(tIOUSBDeviceRequestRecipientValue)requestRecipient
+                                                error:(NSError* _Nullable*)error NS_REFINED_FOR_SWIFT;
+
+- (nullable const IOUSBDescriptor*)descriptorWithType:(tIOUSBDescriptorType)type
+                                               length:(NSUInteger*)length
+                                                index:(NSUInteger)index
+                                           languageID:(NSUInteger)languageID
+                                                error:(NSError* _Nullable*)error  NS_SWIFT_UNAVAILABLE("Please use the refined for Swift API");
+
+- (nullable const IOUSBDescriptor*)descriptorWithType:(tIOUSBDescriptorType)type
+                                               length:(NSUInteger*)length
+                                                error:(NSError* _Nullable*)error  NS_SWIFT_UNAVAILABLE("Please use the refined for Swift API");
+
+@property(readonly, nullable) const IOUSBDeviceDescriptor* deviceDescriptor;
+
+@property(readonly, nullable) const IOUSBBOSDescriptor* capabilityDescriptors;
+
+-(nullable const IOUSBConfigurationDescriptor*)configurationDescriptorWithIndex:(NSUInteger)index
+                                                                          error:(NSError* _Nullable*)error;
+
+-(nullable const IOUSBConfigurationDescriptor*)configurationDescriptorWithConfigurationValue:(NSUInteger)configurationValue
+                                                                                       error:(NSError* _Nullable*)error;
+
+- (nullable const NSString*)stringWithIndex:(NSUInteger)index
+                                 languageID:(NSUInteger)languageID
+                                      error:(NSError* _Nullable*)error NS_REFINED_FOR_SWIFT;
+
+- (nullable const NSString*)stringWithIndex:(NSUInteger)index
+                                      error:(NSError* _Nullable*)error  NS_SWIFT_UNAVAILABLE("Please use the refined for Swift API");
+
+#pragma mark Miscellaneous
+
+@property(readonly) NSUInteger deviceAddress;
+
+- (uint64_t)frameNumberWithTime:(nullable IOUSBHostTime*)time NS_REFINED_FOR_SWIFT;
+
+- (nullable NSMutableData*)ioDataWithCapacity:(NSUInteger)capacity
+                                        error:(NSError* _Nullable*)error;
+
+@end
+
+NS_ASSUME_NONNULL_END
+===== IOUSBHostIOSource.h
+
+#import <Foundation/Foundation.h>
+#import <IOUSBHost/IOUSBHostDefinitions.h>
+#import <IOUSBHost/IOUSBHostInterface.h>
+
+NS_ASSUME_NONNULL_BEGIN
+@interface IOUSBHostIOSource : NSObject
+
+- (instancetype)init __attribute__((unavailable("Please use copyPipe or copyStream")));
+
+@property(readonly) IOUSBHostInterface* hostInterface;
+
+@property(readonly) NSUInteger deviceAddress;
+
+@property(readonly) NSUInteger endpointAddress;
+
+typedef struct IOUSBHostIOSourceDescriptors
+{
+    uint16_t                                                  bcdUSB;
+    IOUSBEndpointDescriptor                                   descriptor;
+    IOUSBSuperSpeedEndpointCompanionDescriptor                ssCompanionDescriptor;
+    IOUSBSuperSpeedPlusIsochronousEndpointCompanionDescriptor sspCompanionDescriptor;
+} IOUSBHostIOSourceDescriptors;
+
+@end
+
+NS_ASSUME_NONNULL_END
+===== IOUSBHostInterface.h
+
+#import <IOUSBHost/IOUSBHostObject.h>
+
+@class IOUSBHostPipe;
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface IOUSBHostInterface : IOUSBHostObject
+
+#pragma mark Interface Dictionary helpers
++ (CFMutableDictionaryRef)createMatchingDictionaryWithVendorID:(nullable NSNumber*)vendorID
+                                                     productID:(nullable NSNumber*)productID
+                                                     bcdDevice:(nullable NSNumber*)bcdDevice
+                                               interfaceNumber:(nullable NSNumber*)interfaceNumber
+                                            configurationValue:(nullable NSNumber*)configurationValue
+                                                interfaceClass:(nullable NSNumber*)interfaceClass
+                                             interfaceSubclass:(nullable NSNumber*)interfaceSubclass
+                                             interfaceProtocol:(nullable NSNumber*)interfaceProtocol
+                                                         speed:(nullable NSNumber*)speed
+                                                productIDArray:(nullable NSArray*)productIDArray NS_REFINED_FOR_SWIFT;
+
+#pragma mark Initialization
+- (nullable instancetype)initWithIOService:(io_service_t)ioService
+                                   options:(IOUSBHostObjectInitOptions)options
+                                     queue:(nullable dispatch_queue_t)queue
+                                     error:(NSError* _Nullable*)error
+                           interestHandler:(nullable IOUSBHostInterestHandler)interestHandler NS_DESIGNATED_INITIALIZER NS_REFINED_FOR_SWIFT;
+
+#pragma mark Power management
+
+@property(readonly) NSTimeInterval idleTimeout;
+
+- (BOOL)setIdleTimeout:(NSTimeInterval)idleTimeout
+                 error:(NSError* _Nullable*)error;
+
+#pragma mark Descriptors
+
+@property(readonly) const IOUSBConfigurationDescriptor* configurationDescriptor;
+
+@property(readonly) const IOUSBInterfaceDescriptor* interfaceDescriptor;
+
+#pragma mark Alternate setting and pipe management
+
+- (BOOL)selectAlternateSetting:(NSUInteger)alternateSetting
+                         error:(NSError* _Nullable*)error;
+
+- (nullable IOUSBHostPipe*)copyPipeWithAddress:(NSUInteger)address
+                                         error:(NSError* _Nullable*)error;
+
+@end
+
+NS_ASSUME_NONNULL_END

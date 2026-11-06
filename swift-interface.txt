@@ -1,0 +1,21 @@
+import Foundation
+import IOUSBHost.AppleUSBDescriptorParsing
+import IOUSBHost.IOUSBHostCIControllerStateMachine
+import IOUSBHost.IOUSBHostCIDeviceStateMachine
+import IOUSBHost.IOUSBHostCIEndpointStateMachine
+import IOUSBHost.IOUSBHostCIPortStateMachine
+import IOUSBHost.IOUSBHostControllerInterface
+import IOUSBHost.IOUSBHostControllerInterfaceDefinitions
+import IOUSBHost.IOUSBHostControllerInterfaceHelpers
+import IOUSBHost.IOUSBHostDefinitions
+import IOUSBHost.IOUSBHostDevice
+import IOUSBHost.IOUSBHostIOSource
+import IOUSBHost.IOUSBHostInterface
+import IOUSBHost.IOUSBHostObject
+import IOUSBHost.IOUSBHostPipe
+import IOUSBHost.IOUSBHostStream
+
+public var IOUSBHostVersionNumber: Double
+
+public let IOUSBHostVersionString: <<error type>>
+
