@@ -70,9 +70,9 @@ enum LocalFiles {
                                                          options: [.skipHiddenVolumes]) ?? []
         return urls.compactMap { url in
             let v = try? url.resourceValues(forKeys: [.volumeLocalizedNameKey, .volumeIsRemovableKey, .volumeIsInternalKey])
-            let internal = v?.volumeIsInternal ?? false
+            let isInternal = v?.volumeIsInternal ?? false
             if url.path == "/" { return LocalPlace(name: v?.volumeLocalizedName ?? "Macintosh HD", url: url, symbolName: "internaldrive") }
-            return LocalPlace(name: v?.volumeLocalizedName ?? url.lastPathComponent, url: url, symbolName: internal ? "internaldrive" : "externaldrive")
+            return LocalPlace(name: v?.volumeLocalizedName ?? url.lastPathComponent, url: url, symbolName: isInternal ? "internaldrive" : "externaldrive")
         }
     }
 

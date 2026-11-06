@@ -175,7 +175,7 @@ final class IOUSBHostTransport: MTPBulkTransport {
         let request = IOUSBDeviceRequest(bmRequestType: 0x21, bRequest: 0x64, wValue: 0, wIndex: UInt16(interfaceNumber), wLength: 6)
         var transferred = 0
         do {
-            try interface.__sendDeviceRequest(request, data: payload, bytesTransferred: &transferred, completionTimeout: 2)
+            try interface.__send(request, data: payload, bytesTransferred: &transferred, completionTimeout: 2)
         } catch {
             throw IOKitReturn.map(error)
         }

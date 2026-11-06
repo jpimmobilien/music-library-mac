@@ -315,6 +315,7 @@ struct GalleryCell: View {
 }
 
 /// Ziehen von Telefonobjekten: als interne Liste und – für den Finder – als Datei, die beim Ablegen geladen wird.
+@MainActor
 func makeDeviceDragProvider(entry: DeviceEntry, list: [DeviceEntry], device: DeviceConnection, path: [String]) -> NSItemProvider {
     let provider = NSItemProvider()
     let payload = DeviceDragPayload(deviceID: device.id, entries: list, path: path)
