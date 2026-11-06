@@ -73,8 +73,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Weiterlaufen nach dem Schließen des Fensters, damit angeschlossene Telefone erkannt werden.
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        if case .normal = LaunchMode.current { return false }
-        return true
+        // Automatikmodi beenden sich selbst, sobald sie fertig sind.
+        false
     }
 
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {

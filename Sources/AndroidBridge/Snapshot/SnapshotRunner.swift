@@ -159,7 +159,13 @@ enum SnapshotRunner {
                 model.settings.appearance = dark ? .dark : .light
                 NSApp.appearance = NSAppearance(named: dark ? .darkAqua : .aqua)
                 await scenario.prepare(model)
-                let window = SnapshotWindow(contentRect: NSRect(origin: .zero, size: scenario.size),
+                // nie größer als der sichtbare Bildschirm der Build-Maschine (sonst schneidet macOS das Fenster ab)
+                var size = scenario.size
+                if let v = NSScreen.main?.visibleFrame {
+                    size.width = min(size.width, v.width - 40)
+                    size.height = min(size.height, v.height - 40)
+                }
+                let window = SnapshotWindow(contentRect: NSRect(origin: .zero, size: size),
                                             styleMask: [.titled, .closable, .miniaturizable, .resizable],
                                             backing: .buffered, defer: false)
                 window.appearance = NSAppearance(named: dark ? .darkAqua : .aqua)
@@ -167,18 +173,18 @@ enum SnapshotRunner {
                 window.title = "Android Bridge"
                 let root = RootView(settings: model.settings, transfers: model.transfers)
                     .environmentObject(model)
-                    .frame(width: scenario.size.width, height: scenario.size.height)
+                    .frame(width: size.width, height: size.height)
                 let host = NSHostingView(rootView: root)
                 host.sizingOptions = []
                 window.contentView = host
-                window.setContentSize(scenario.size)
+                window.setContentSize(size)
                 if let screen = NSScreen.main {
                     let v = screen.visibleFrame
                     window.setFrameTopLeftPoint(NSPoint(x: v.minX + 20, y: v.maxY - 20))
                 }
                 window.makeKeyAndOrderFront(nil)
                 try? await Task.sleep(nanoseconds: 2_200_000_000)
-                let file = output.appendingPathComponent("\(scenario.name)-\(dark ? "dunkel" : "hell").png")
+                let file = output.appendingPathComponent("\(scenario.name)-\(dark ? "dunkel" : "hell")-\(Int(size.width))x\(Int(size.height)).png")
                 let method = capture(window, to: file)
                 manifest.append(["file": file.lastPathComponent, "method": method,
                                  "glass": LiquidGlass.isAvailable ? "liquid-glass" : "fallback",

@@ -2,8 +2,8 @@
 #
 #   1. build   macOS 26 (Apple Silicon, Xcode 26): Unit-Tests → arm64 + x86_64 → lipo → App-Bundle
 #              (ad-hoc signiert) → Bildschirmfotos → AndroidBridge.dmg (eingehängt und geprüft)
-#   2. smoke   Fertige DMG installieren und App starten: Apple Silicon (macOS 14, nativ und Intel-Teil über
-#              Rosetta) und echter Intel-Mac (macOS 15, x86_64 nativ)
+#   2. smoke   Fertige DMG installieren und App starten: Apple Silicon (macOS 15, nativ und Intel-Teil über
+#              Rosetta) und echter Intel-Mac (macOS 15, x86_64 nativ). (GitHub bietet keine macOS-13/14-Rechner mehr.)
 #      intel   Intel-Mac: alle Unit-Tests in x86_64
 #   3. results DMG, Protokolle, Bildschirmfotos in den Zweig „ci-ergebnisse-android-bridge“
 name: Android Bridge
@@ -93,14 +93,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: macos-14
-            label: Apple Silicon · macOS 14
+          - os: macos-15
+            label: Apple Silicon · macOS 15
             arch: ""
-            name: macos14-arm64
-          - os: macos-14
-            label: Intel-Code über Rosetta · macOS 14
+            name: macos15-arm64
+          - os: macos-15
+            label: Intel-Code über Rosetta · macOS 15
             arch: x86_64
-            name: macos14-rosetta
+            name: macos15-rosetta
           - os: macos-15-intel
             label: Intel-Mac · macOS 15
             arch: ""

@@ -49,11 +49,23 @@ struct OverviewView: View {
     }
 }
 
-/// Kleines Markenzeichen (zwei verbundene Geräte).
+/// Markenzeichen: das App-Symbol (im Bundle), sonst eine gezeichnete Rückfallform.
 struct AppMark: View {
     var size: CGFloat = 40
 
     var body: some View {
+        if Bundle.main.url(forResource: "AppIcon", withExtension: "icns") != nil {
+            Image(nsImage: NSApp.applicationIconImage)
+                .resizable()
+                .interpolation(.high)
+                .frame(width: size * 1.22, height: size * 1.22)
+                .frame(width: size, height: size)
+        } else {
+            drawnMark
+        }
+    }
+
+    private var drawnMark: some View {
         ZStack {
             RoundedRectangle(cornerRadius: size * 0.27, style: .continuous)
                 .fill(LinearGradient(colors: [Palette.bridgeGreen, Palette.bridgeTeal, Palette.bridgeBlue], startPoint: .topLeading, endPoint: .bottomTrailing))
