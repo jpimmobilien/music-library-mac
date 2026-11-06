@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>de</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>de</string>
+	</array>
+	<key>CFBundleExecutable</key>
+	<string>AndroidBridge</string>
+	<key>CFBundleIdentifier</key>
+	<string>de.androidbridge.app</string>
+	<key>CFBundleName</key>
+	<string>Android Bridge</string>
+	<key>CFBundleDisplayName</key>
+	<string>Android Bridge</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>__VERSION__</string>
+	<key>CFBundleVersion</key>
+	<string>__BUILD__</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>13.0</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>NSSupportsAutomaticTermination</key>
+	<false/>
+	<key>NSHumanReadableCopyright</key>
+	<string>Android Bridge – lokale Dateiübertragung zwischen Android und Mac.</string>
+	<key>NSDesktopFolderUsageDescription</key>
+	<string>Android Bridge zeigt Ihren Schreibtisch-Ordner im Dateimanager, damit Sie Dateien zum oder vom Telefon kopieren können.</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>Android Bridge zeigt Ihren Dokumente-Ordner im Dateimanager und kann Dokumente vom Telefon dort ablegen.</string>
+	<key>NSDownloadsFolderUsageDescription</key>
+	<string>Android Bridge legt übertragene Dateien standardmäßig unter „Downloads/Android Imports“ ab.</string>
+	<key>NSRemovableVolumesUsageDescription</key>
+	<string>Android Bridge kann Dateien vom Telefon direkt auf externe Laufwerke übertragen.</string>
+	<key>NSNetworkVolumesUsageDescription</key>
+	<string>Android Bridge kann Dateien vom Telefon auf Netzlaufwerke übertragen.</string>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeIdentifier</key>
+			<string>de.androidbridge.device-entries</string>
+			<key>UTTypeDescription</key>
+			<string>Android-Bridge-Objekte</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>
