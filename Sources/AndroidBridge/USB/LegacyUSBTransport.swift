@@ -45,13 +45,13 @@ final class LegacyUSBTransport: ClosableBulkTransport {
     func read(maxLength: Int, timeout: TimeInterval) throws -> Data {
         guard !closed else { throw MTPError.disconnected }
         let length = min(maxLength, bufferSize)
-        var transferred = 0
+        var transferred: UInt = 0
         do {
-            try usb.read(into: buffer, length: length, transferred: &transferred, timeoutMs: ms(timeout))
+            try usb.read(into: buffer, length: UInt(length), transferred: &transferred, timeoutMs: ms(timeout))
         } catch {
             throw IOKitReturn.map(error)
         }
-        return Data(bytes: buffer, count: min(transferred, length))
+        return Data(bytes: buffer, count: min(Int(transferred), length))
     }
 
     func write(_ data: Data, timeout: TimeInterval) throws {
@@ -65,7 +65,7 @@ final class LegacyUSBTransport: ClosableBulkTransport {
                 }
             }
             do {
-                try usb.write(buffer, length: n, timeoutMs: ms(timeout))
+                try usb.write(buffer, length: UInt(n), timeoutMs: ms(timeout))
             } catch {
                 throw IOKitReturn.map(error)
             }
