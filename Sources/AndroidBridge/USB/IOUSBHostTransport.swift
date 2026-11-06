@@ -16,7 +16,11 @@ enum IOKitReturn {
     static let offline = Int32(bitPattern: 0xE000_02D9)
     static let busy = Int32(bitPattern: 0xE000_02D5)
     static let notAttached = Int32(bitPattern: 0xE000_02D3)
-    static let pipeStalled = Int32(bitPattern: 0xE000_4051)
+    static let pipeStalled = Int32(bitPattern: 0xE000_404F)
+    static let usbTransactionTimeout = Int32(bitPattern: 0xE000_4051)
+    static let usbNotResponding = Int32(bitPattern: 0xE000_4050)
+    static let noResources = Int32(bitPattern: 0xE000_02BE)
+    static let internalError = Int32(bitPattern: 0xE000_02C9)
 
     static func code(of error: Error) -> Int32 {
         let ns = error as NSError
@@ -34,7 +38,7 @@ enum IOKitReturn {
         case exclusiveAccess, busy: return .busy
         case noDevice, notAttached, offline, aborted: return .disconnected
         case notPermitted, notPrivileged: return .accessDenied
-        case timeout, notResponding: return .timeout
+        case timeout, notResponding, usbTransactionTimeout, usbNotResponding: return .timeout
         default: return .transport("\((error as NSError).localizedDescription) [\(describe(c))]")
         }
     }
@@ -42,7 +46,8 @@ enum IOKitReturn {
 
 /// Bulk-Übertragung über die Android-MTP-Schnittstelle mit Apples Benutzerraum-USB-Framework IOUSBHost
 /// (keine Kernel-Erweiterung, keine Treiber, keine Fremdbibliothek).
-final class IOUSBHostTransport: MTPBulkTransport {
+final class IOUSBHostTransport: ClosableBulkTransport {
+    let kindDescription = "IOUSBHost"
     let maxPacketSize: Int
     let bufferSize: Int
     let interfaceNumber: UInt8

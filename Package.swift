@@ -16,7 +16,9 @@ var targets: [Target] = [
 
 #if os(macOS)
 // Abfangen von Objective-C-Ausnahmen aus IOUSBHost (Swift kann das nicht selbst)
-targets.append(.target(name: "ABObjC", path: "Sources/ABObjC"))
+targets.append(.target(name: "ABObjC", path: "Sources/ABObjC",
+                       cSettings: [.unsafeFlags(["-fobjc-arc"])],
+                       linkerSettings: [.linkedFramework("IOKit"), .linkedFramework("CoreFoundation")]))
 targets.append(
     .executableTarget(
         name: "AndroidBridge",

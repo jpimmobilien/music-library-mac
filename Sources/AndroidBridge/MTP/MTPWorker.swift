@@ -21,7 +21,7 @@ final class CancelFlag: @unchecked Sendable {
 final class MTPWorker: @unchecked Sendable {
     private let queue: OperationQueue
     private var session: MTPSession?
-    private var transport: IOUSBHostTransport?
+    private var transport: ClosableBulkTransport?
     /// Nach `close` laufen keine neuen Vorgänge mehr an (sie enden sofort mit „getrennt“).
     private let closing = CancelFlag()
 
@@ -36,7 +36,7 @@ final class MTPWorker: @unchecked Sendable {
     func open(interfaceService: io_service_t, timeout: TimeInterval) async throws -> MTPDeviceInfo {
         try await run(priority: .veryHigh, requiresSession: false) { [self] _, _ in
             defer { IOObjectRelease(interfaceService) }
-            let transport = try IOUSBHostTransport(interfaceService: interfaceService)
+            let transport = try Self.openTransport(interfaceService)
             let session = MTPSession(transport: transport)
             session.commandTimeout = min(timeout, 10)
             session.responseTimeout = max(timeout, 20)
@@ -53,11 +53,31 @@ final class MTPWorker: @unchecked Sendable {
                 try session.openSession()
                 self.transport = transport
                 self.session = session
-                Diagnostics.shared.log(.mtp, "Sitzung geöffnet (Paketgröße \(transport.maxPacketSize), \(info.operationsSupported.count) Operationen, Teilstücke: \(session.supportsPartialDownload ? "ja" : "nein"))")
+                Diagnostics.shared.log(.mtp, "Sitzung geöffnet über \(transport.kindDescription) (Paketgröße \(transport.maxPacketSize), \(info.operationsSupported.count) Operationen, Teilstücke: \(session.supportsPartialDownload ? "ja" : "nein"))")
                 return info
             } catch {
                 transport.close()
                 throw error
+            }
+        }
+    }
+
+    /// Öffnet die Schnittstelle: zuerst über die klassische IOKit-Schnittstelle (bewährt wie libusb),
+    /// bei Fehlschlag (außer „belegt“/„getrennt“) über IOUSBHost.
+    private static func openTransport(_ service: io_service_t) throws -> ClosableBulkTransport {
+        do {
+            return try LegacyUSBTransport(interfaceService: service)
+        } catch let e as MTPError where e == .busy || e == .disconnected {
+            throw e
+        } catch {
+            Diagnostics.shared.log(.usb, "IOKit-Schnittstelle nicht verfügbar (\(error)) – versuche IOUSBHost", error: true)
+            do {
+                return try IOUSBHostTransport(interfaceService: service)
+            } catch let second {
+                Diagnostics.shared.log(.usb, "IOUSBHost ebenfalls fehlgeschlagen: \(second)", error: true)
+                throw (error as? MTPError).map { first in
+                    MTPError.transport("IOKit: \(first) · IOUSBHost: \(second)")
+                } ?? second
             }
         }
     }
