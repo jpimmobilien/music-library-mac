@@ -62,6 +62,8 @@ final class DeviceConnection: ObservableObject, Identifiable {
     private var unlockTask: Task<Void, Never>?
     private var gracePeriodTask: Task<Void, Never>?
     private var releaseAttempted = false
+    /// Schnelle Wiederholungen nach dem Freigeben (bevor ein Dienst das Telefon erneut beansprucht).
+    private var busyRetries = 0
     /// Nur Vorschaumodus (Bildschirmfotos im Build): feste Angaben ohne USB.
     let isPreview: Bool
     private var previewIdentity: (manufacturer: String, model: String, serial: String)?
@@ -186,6 +188,7 @@ final class DeviceConnection: ObservableObject, Identifiable {
             do {
                 let info = try await worker.open(interfaceService: service, timeout: timeout, seize: seize)
                 guard let self, !Task.isCancelled else { worker.close(graceful: true); return }
+                self.busyRetries = 0
                 self.info = info
                 self.backend = MTPBackend(worker: worker, info: info)
                 self.releaseAttempted = false
@@ -205,8 +208,16 @@ final class DeviceConnection: ObservableObject, Identifiable {
         let mapped = (error as? MTPError) ?? .transport("\(error)")
         Diagnostics.shared.log(.mtp, "Verbindung fehlgeschlagen: \(mapped)", error: true)
         if mapped == .busy {
+            if busyRetries > 0 {
+                busyRetries -= 1
+                try? await Task.sleep(nanoseconds: 200_000_000)
+                connect(seize: true)
+                return
+            }
             state = .busy
-            issue = Self.busyIssue(programs: ConflictingPrograms.running().map(\.name))
+            let holders = currentHolders()
+            Diagnostics.shared.log(.usb, "Telefon belegt – gehalten von: \(holders.isEmpty ? "unbekannt" : holders.map { "\($0.processName) (pid \($0.pid))" }.joined(separator: ", "))", error: true)
+            issue = Self.busyIssue(programs: ConflictingPrograms.running().map(\.name), holders: holders)
             if settings?.releasePhotoServiceAutomatically == true && !releaseAttempted {
                 releaseAttempted = true
                 await releasePhotoServiceAndRetry()
@@ -224,13 +235,32 @@ final class DeviceConnection: ObservableObject, Identifiable {
     /// unsichtbaren Agenten) sowie den macOS-Fotodienst, und verbindet dann mit „Übernahme“ erneut.
     func releasePhotoServiceAndRetry() async {
         state = .connecting
-        let released = await ConflictingPrograms.releaseAll()
+        let holders = currentHolders().filter { !$0.isSelf }
+        let released = await ConflictingPrograms.releaseAll(holders: holders)
         if !released.isEmpty { Diagnostics.shared.log(.usb, "Beendet: \(released.joined(separator: ", "))") }
+        busyRetries = 15
         connect(seize: true)
     }
 
-    static func busyIssue(programs: [String]) -> ABIssue {
+    /// Wer hält die MTP-Schnittstelle gerade geöffnet?
+    func currentHolders() -> [InterfaceHolder] {
+        guard let record, case let .fileTransfer(number, _) = record.mode else { return [] }
+        return record.interfaceHolders(number: number)
+    }
+
+    static func busyIssue(programs: [String], holders: [InterfaceHolder] = []) -> ABIssue {
         var issue = ABIssue.from(MTPError.busy)
+        let others = holders.filter { !$0.isSelf }
+        if !others.isEmpty {
+            let list = others.map(\.displayName).joined(separator: ", ")
+            issue.message = "Das Telefon wird gerade gehalten von: \(list)."
+            issue.recommendation = "Klicken Sie auf „Freigeben und verbinden“ – Android Bridge beendet \(list) kurz und übernimmt das Telefon."
+            issue.technical = "Belegt (0xE00002C5) · " + others.map { "\($0.processName) pid \($0.pid)" }.joined(separator: ", ")
+            return issue
+        }
+        if holders.contains(where: \.isSelf) {
+            issue.technical = "Belegt durch Android Bridge selbst (ältere Verbindung) – bitte App beenden (⌘Q) und neu starten."
+        }
         if !programs.isEmpty {
             let list = programs.joined(separator: ", ")
             issue.message = "Auf diesem Mac läuft \(list) und hält das Telefon fest. Solange es läuft, kann kein anderes Programm auf das Telefon zugreifen."

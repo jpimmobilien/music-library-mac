@@ -29,8 +29,16 @@ enum ConflictingPrograms {
 
     /// Beendet die Programme (erst regulär, dann erzwungen) und den macOS-Fotodienst ptpcamerad.
     /// Gibt die Namen der beendeten Programme zurück.
-    static func releaseAll() async -> [String] {
+    static func releaseAll(holders: [InterfaceHolder] = []) async -> [String] {
         let programs = running()
+        // Prozesse, die die Schnittstelle laut IORegistry halten (nur eigene Benutzerprozesse sind beendbar)
+        for h in holders where !h.isSelf {
+            if let app = NSRunningApplication(processIdentifier: h.pid) {
+                app.terminate()
+            } else {
+                kill(h.pid, SIGTERM)
+            }
+        }
         for p in programs {
             NSRunningApplication(processIdentifier: p.pid)?.terminate()
         }
@@ -38,14 +46,18 @@ enum ConflictingPrograms {
         for p in programs {
             if let app = NSRunningApplication(processIdentifier: p.pid), !app.isTerminated { app.forceTerminate() }
         }
+        if !holders.isEmpty {
+            try? await Task.sleep(nanoseconds: 400_000_000)
+            for h in holders where !h.isSelf && kill(h.pid, 0) == 0 { kill(h.pid, SIGKILL) }
+        }
         // macOS-Fotodienst (startet bei Bedarf selbst neu)
         let process = Process()
         process.executableURL = URL(fileURLWithPath: "/usr/bin/killall")
         process.arguments = ["-q", "ptpcamerad"]
         try? process.run()
         process.waitUntilExit()
-        try? await Task.sleep(nanoseconds: 700_000_000)
-        Diagnostics.shared.log(.usb, "Freigegeben: macOS-Fotodienst\(programs.isEmpty ? "" : " und " + programs.map(\.name).joined(separator: ", "))")
-        return programs.map(\.name)
+        let names = programs.map(\.name) + holders.filter { !$0.isSelf }.map(\.displayName)
+        Diagnostics.shared.log(.usb, "Freigegeben: macOS-Fotodienst\(names.isEmpty ? "" : " und " + names.joined(separator: ", "))")
+        return names
     }
 }

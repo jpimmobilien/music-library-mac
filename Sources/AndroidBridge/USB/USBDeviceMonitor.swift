@@ -37,6 +37,24 @@ final class USBDeviceRecord: Identifiable {
 
     var idString: String { String(format: "%04X:%04X", vendorID, productID) }
 
+    /// Prozesse, die die Schnittstelle gerade geöffnet halten (laut IORegistry: „IOUserClientCreator“ = „pid N, Name“).
+    func interfaceHolders(number: Int) -> [InterfaceHolder] {
+        guard let iface = copyInterfaceService(number: number) else { return [] }
+        defer { IOObjectRelease(iface) }
+        var holders: [InterfaceHolder] = []
+        func scan(_ entry: io_registry_entry_t, depth: Int) {
+            IORegistryKit.forEachChild(of: entry) { child in
+                if let creator: String = IORegistryKit.property(child, "IOUserClientCreator"),
+                   let holder = InterfaceHolder(creator: creator), !holders.contains(holder) {
+                    holders.append(holder)
+                }
+                if depth < 3 { scan(child, depth: depth + 1) }
+            }
+        }
+        scan(iface, depth: 0)
+        return holders
+    }
+
     /// Sucht den IOService der Schnittstelle mit der angegebenen Nummer (vom Aufrufer freizugeben).
     func copyInterfaceService(number: Int) -> io_service_t? {
         var found: io_service_t?
@@ -231,5 +249,29 @@ final class USBDeviceMonitor {
             interfaces: interfaces,
             speedDescription: speedText
         )
+    }
+}
+
+/// Ein Prozess, der eine USB-Schnittstelle geöffnet hat.
+struct InterfaceHolder: Hashable {
+    let pid: pid_t
+    let processName: String
+
+    /// „pid 412, ptpcamerad“
+    init?(creator: String) {
+        let parts = creator.components(separatedBy: ",")
+        guard let first = parts.first, first.hasPrefix("pid "), let pid = Int32(first.dropFirst(4).trimmingCharacters(in: .whitespaces)) else { return nil }
+        self.pid = pid
+        self.processName = parts.dropFirst().joined(separator: ",").trimmingCharacters(in: .whitespaces)
+    }
+
+    var isSelf: Bool { pid == getpid() }
+
+    var displayName: String {
+        let lower = processName.lowercased()
+        if lower.contains("ptpcamerad") { return "macOS-Fotodienst (ptpcamerad)" }
+        if lower.contains("icdd") || lower.contains("imagecapture") { return "macOS-Digitale-Bilder-Dienst (\(processName))" }
+        if lower.contains("mtpagent") || lower.contains("android file transfer") { return "Android File Transfer Agent" }
+        return processName.isEmpty ? "Prozess \(pid)" : processName
     }
 }
