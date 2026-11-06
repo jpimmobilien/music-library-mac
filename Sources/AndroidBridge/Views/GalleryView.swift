@@ -286,6 +286,8 @@ struct GalleryCell: View {
                     Image(nsImage: image)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
+                        .frame(width: size, height: size)
+                        .clipped()
                         .transition(.opacity)
                 } else {
                     VStack(spacing: 6) {
@@ -307,6 +309,7 @@ struct GalleryCell: View {
                         .shadow(radius: 2)
                         .padding(8)
                     }
+                    .frame(width: size, height: size)
                     .background(LinearGradient(colors: [.clear, .black.opacity(0.5)], startPoint: .center, endPoint: .bottom))
                 }
                 if selected {

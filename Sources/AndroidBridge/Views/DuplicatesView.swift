@@ -452,15 +452,16 @@ private struct DuplicateFileRow: View {
             }
             .frame(minWidth: 140, maxWidth: .infinity, alignment: .leading)
 
-            HStack(spacing: 18) {
+            HStack(spacing: 16) {
                 detail(ByteFormat.string(file.entry.size), "Größe")
                 if file.entry.imageWidth > 0 && file.entry.imageHeight > 0 {
                     detail("\(file.entry.imageWidth)×\(file.entry.imageHeight)", "Pixel")
                 }
                 detail(formatName, "Format")
-                detail(file.entry.bestDate.map { $0.formatted(date: .abbreviated, time: .omitted) } ?? "–", "Datum")
+                detail(file.entry.bestDate.map { $0.formatted(date: .numeric, time: .omitted) } ?? "–", "Datum")
                 detail(file.storageName, "Speicher")
             }
+            .fixedSize()
 
             Button("Nur diese behalten") { scanner.keepOnly(file, in: group) }
                 .buttonStyle(GlassButtonStyle(compact: true))
@@ -498,6 +499,6 @@ private struct DuplicateFileRow: View {
             Text(value).font(Typo.callout).foregroundStyle(Palette.textPrimary).monospacedDigit().lineLimit(1)
             Text(label).font(.inter(10)).foregroundStyle(Palette.textTertiary)
         }
-        .frame(minWidth: 54, alignment: .trailing)
+        .frame(minWidth: 44, alignment: .trailing)
     }
 }
