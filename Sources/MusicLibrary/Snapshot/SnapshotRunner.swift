@@ -95,6 +95,7 @@ enum SnapshotRunner {
                 m.player.engine.levels.demoValues = nil
                 LibrarySelectionStore.shared.clear()
                 LibraryScrollSeed.pendingOffset = nil
+                SystemMotion.snapshotAllowsMotion = false
                 m.player.setDemoState(queueUids: Array(1...12), currentIndex: 0, positionMs: 74_000, playing: true)
                 m.playerOpen = open
             }
@@ -254,8 +255,8 @@ enum SnapshotRunner {
         ]
         // v2.1 Bibliothek: feste Werkzeugleiste beim Scrollen, größte Cover, Mehrfachauswahl, Dialoge
         list += [
-            Scenario(name: "26-alben-raster-gescrollt", size: big, prepare: { m in
-                view(.albums, .albums, .grid)(m)
+            Scenario(name: "26-titel-raster-gescrollt", size: big, prepare: { m in
+                view(.tracks, .tracks, .grid)(m)
                 LibraryScrollSeed.pendingOffset = 760
             }, view: main),
             Scenario(name: "26-titel-liste-gescrollt", size: big, prepare: { m in
@@ -339,11 +340,13 @@ enum SnapshotRunner {
             Scenario(name: "52-player-balken-cd", size: big, prepare: { m in
                 playerBackground(.auto, theme: .portableCD)(m)
                 m.settings.visualizer = true
+                SystemMotion.snapshotAllowsMotion = true
                 m.player.engine.levels.demoValues = [0.82, 0.9, 0.74, 0.66, 0.7, 0.58, 0.62, 0.5, 0.46, 0.52, 0.4, 0.36, 0.3, 0.26, 0.2, 0.14, 0.72, 0.66]
             }, view: main),
             Scenario(name: "52-player-balken-cd-klein", size: small, prepare: { m in
                 playerBackground(.auto, theme: .portableCD)(m)
                 m.settings.visualizer = true
+                SystemMotion.snapshotAllowsMotion = true
                 m.player.engine.levels.demoValues = [0.82, 0.9, 0.74, 0.66, 0.7, 0.58, 0.62, 0.5, 0.46, 0.52, 0.4, 0.36, 0.3, 0.26, 0.2, 0.14, 0.72, 0.66]
             }, view: main),
             Scenario(name: "53-equalizer-fenster-pop", size: CGSize(width: 640, height: 720), prepare: { m in

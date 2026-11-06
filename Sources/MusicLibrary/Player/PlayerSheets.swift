@@ -326,7 +326,22 @@ struct EqualizerPanel: View {
             Spacer().frame(height: 14)
             EqBassCard(fx: fx, editor: editor, draft: draft)
             Spacer().frame(height: 12)
+            // v2.1: ausgeschalteter EQ ist eindeutig erkennbar (Bänder abgeblendet, Hinweis)
             EqBandsCard(fx: fx, editor: editor)
+                .opacity(fx.eqEnabled ? 1 : 0.42)
+                .overlay(alignment: .top) {
+                    if !fx.eqEnabled {
+                        Text("Equalizer aus – die Bänder wirken nicht. Preset wählen oder einschalten.")
+                            .font(Typo.inter(11.5, .semibold))
+                            .foregroundStyle(colors.textPrimary)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .background(Capsule().fill(colors.surface.opacity(0.92)))
+                            .padding(.top, 10)
+                            .allowsHitTesting(false)
+                    }
+                }
+                .animation(Motion.easeOut(0.2), value: fx.eqEnabled)
             Spacer().frame(height: 12)
             EqUserPresetsCard(fx: fx, confirmDelete: $confirmDelete, draft: draft)
             Group {

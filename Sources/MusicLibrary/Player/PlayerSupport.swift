@@ -316,7 +316,9 @@ var reduceMotion: Bool { SystemMotion.reduce }
 /// damit die Kosten der Animationen auch auf Testrechnern gemessen werden, auf denen sie eingeschaltet ist.
 enum SystemMotion {
     static let ignoreSystemSetting = ProcessInfo.processInfo.environment["ML_IGNORE_REDUCE_MOTION"] == "1"
-    static var reduce: Bool { !ignoreSystemSetting && NSWorkspace.shared.accessibilityDisplayShouldReduceMotion }
+    /// Nur Vorschaubilder: Bewegung für ein einzelnes Szenario erzwingen (Pegelbalken sichtbar).
+    static var snapshotAllowsMotion = false
+    static var reduce: Bool { !ignoreSystemSetting && !snapshotAllowsMotion && NSWorkspace.shared.accessibilityDisplayShouldReduceMotion }
 }
 
 // MARK: - v2: Designs, Bewegung, Farben
