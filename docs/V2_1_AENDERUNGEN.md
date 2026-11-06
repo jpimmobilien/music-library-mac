@@ -49,8 +49,33 @@ Sicherung des Stands 2.0: Zweig `release-2.0` (Commit `3f7f899`).
 
 ## 3. Durchgeführte Tests
 
-Siehe [STATUS.md](STATUS.md) (Zahlen aus den Build-Läufen).
+Alle Ergebnisse stammen aus echten Build-Läufen auf GitHub-Rechnern (virtuelle Macs) – Einzelheiten in
+[STATUS.md](STATUS.md) und [PERFORMANCE.md](PERFORMANCE.md).
+
+| Prüfung | Rechner | Ergebnis |
+|---|---|---|
+| Alle automatischen Tests (470, davon 44 neu) | macOS 26 Apple Silicon · macOS 15 Intel | 470/470 · 470/470 bestanden |
+| Equalizer: jedes Preset im Klang gemessen, EQ aus = neutral | beide | bestanden (≤ 1,5 dB Abweichung) |
+| Tonhöhe: Frequenzgenauigkeit, Bass, Höhen, Mono/Stereo, Anschläge, Akkord | beide | bestanden; Vorecho −25/−32 dB statt −6/−10 dB |
+| Visualizer-Analyse (Ton im richtigen Band, Ruhe ohne Audio) | beide | bestanden |
+| Alle 97 Ansichten hell/dunkel mit echtem Liquid Glass + Rückfall-Darstellung | macOS 26 Apple Silicon | 388 Bilder fehlerfrei, neue Ansichten angesehen |
+| Absturz im kompakten Album-Raster (auch 2.0) | macOS 26 Apple Silicon | nachgestellt, behoben, erneut geprüft |
+| DMG prüfen, installieren, Signatur, Architekturen | macOS 26 Intel | bestanden |
+| Aktualisierung 2.0 → 2.1 → 2.0 im normalen Start mit echten Dateien und Nutzerdaten | macOS 26 Intel | ohne Befund: alle Daten erhalten, Hinzufügedatum je Datei, 2.0 öffnet die Datenbank weiterhin |
+| Geschwindigkeit 2.0 ↔ 2.1 auf demselben Rechner (10.000 Titel) | macOS 26 Intel | Scrollen, Bereichswechsel, Suche gleich; Leerlauf ≈ +1,5 Prozentpunkte |
 
 ## 4. Einschränkungen
 
-Siehe [NICHT_UMGESETZT.md](NICHT_UMGESETZT.md).
+- **Nicht von Hand bedient:** Klicks im Löschdialog, Aufziehen der Auswahl, Ziehen & Ablegen, Farbwähler,
+  Gesten – gebaut und als Vorschaubild geprüft, aber nicht automatisch bedienbar.
+- **Nicht angehört:** EQ und Tonhöhe sind mit Messsignalen geprüft, nicht über Lautsprecher mit echter Musik.
+- **DMG auf Apple Silicon:** GitHub teilte am 06.11.2026 keine Apple-Silicon-Rechner zu; die DMG wurde auf
+  Intel installiert und gestartet. Dasselbe App-Bundle lief im Build auf Apple Silicon (Tests, alle Ansichten).
+- **Apple-Musik-Übernahme** mit echter Mediathek, **macOS 13**, **echter Intel-Mac mit Grafikkarte** und
+  **Gatekeeper** beim ersten Start: nicht ausprobiert.
+- **Tonhöhe:** ≈ 0,14 s Verzögerung, solange die Tonhöhe verändert ist (wie Android); bei stehenden Akkorden ist
+  Apples altes Verfahren minimal sauberer.
+- **Hinzufügedatum ohne Apple Musik** = Erstellungsdatum der Datei (bei kopierten Dateien der Kopierzeitpunkt).
+- **Leerlauf** mit Wiedergabe ≈ 1,5 Prozentpunkte höher als 2.0 (Ursache nicht eingegrenzt).
+
+Vollständige Liste: [NICHT_UMGESETZT.md](NICHT_UMGESETZT.md).

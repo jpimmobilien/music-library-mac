@@ -182,7 +182,7 @@ if mode == "same":
     prev = {t[0]: t for t in json.load(open(sys.argv[4]))["tracks"]}
     for uid, p in prev.items():
         need(uid in now and now[uid][3] == p[3], "Titel %d: Hinzufügedatum beim erneuten Start verändert" % uid)
-for line in ["%-34s %s  Quelle %d  %s" % (os.path.basename(r[1] or ""), __import__("time").strftime("%d.%m.%Y %H:%M", __import__("time").localtime(r[3])), r[9], (r[6] or "?") + " " + str(r[7] // 1000 if r[7] else 0) + " kbit/s") for r in rows]:
+for line in ["%-34s %s  Quelle %d  %s" % (os.path.basename(r[1] or ""), __import__("time").strftime("%d.%m.%Y %H:%M", __import__("time").localtime(r[3])), r[9], (r[6] or "?") + " " + str(r[7] or 0) + " kbit/s") for r in rows]:
     print("    " + line)
 json.dump({"tracks": [r[:4] for r in rows]}, open(sys.argv[-1] if mode == "save" else os.devnull, "w"))
 for p in problems: print("    ✗ " + p)

@@ -141,4 +141,38 @@ vergleichbar** – GitHub bietet macOS 14 nicht mehr an.
 | Leerlauf mit Wiedergabe (Mini-Player) | 22,2 % Hauptthread, 22,7 % CPU gesamt |
 | Großer Vinyl-Player läuft | 33,1 % Hauptthread, 33,5 % CPU gesamt |
 
-<!-- A/B -->
+### Vergleichsmessung 2.0 ↔ 2.1 auf demselben Rechner (Abnahme-Lauf, 06.11.2026)
+
+Workflow `release-check.yml`: Version 2.0 (Zweig `release-2.0`, auf dem Rechner gebaut) und Version 2.1 (aus der
+ausgelieferten DMG) abwechselnd je zweimal, Messmodus `ML_BENCH_QUICK` (Titel und Alben), 10.000 Titel.
+Rechner: **Intel Core i7-8700B, macOS 26.6.1** (virtueller Mac; Apple-Silicon-Rechner wurden an diesem Tag nicht
+zugeteilt). Werte: Mittel in ms je Durchgang (Runde 1 / Runde 2).
+
+| Messung | 2.0 | 2.1 | Bewertung |
+|---|---|---|---|
+| Bereich wechseln | 559,5 / 362,6 | 539,9 / 566,2 | gleich (Streuung) |
+| Titel-Raster scrollen | 51,1 / 65,5 | 52,9 / 65,8 | gleich |
+| Titel kompakt scrollen | 209,9 / 224,7 | 177,2 / 243,1 | gleich |
+| Titel-Liste scrollen | 65,0 / 57,9 | 60,4 / 65,3 | gleich |
+| Titel-Detailliste scrollen | 85,8 / 82,1 | 72,7 / 85,0 | gleich |
+| Alben-Raster scrollen | 72,5 / 64,0 | 56,8 / 79,6 | gleich |
+| Alben kompakt scrollen | 102,3 / 117,8 | 134,1 / 113,9 | gleich bis leicht langsamer |
+| Alben-Liste scrollen | 141,8 / 143,8 | 137,8 / 131,6 | gleich |
+| Alben-Detailliste scrollen | 79,1 / 75,4 | 78,1 / 77,1 | gleich |
+| Suche im Hintergrund berechnen | 1928,7¹ / 985,0 | 993,5 / 1064,2 | gleich |
+| Suche: Ergebnis sichtbar nach letzter Taste | 1510 / 2153 | 1634 / 1478 | gleich |
+| Suche: Hauptthread je Taste | 39,6 / 19,1 | 56,1 / 54,6 | **2.1 höher** (s. u.) |
+| Leerlauf mit Wiedergabe, Hauptthread | 11,7 % / 12,2 % | 13,6 % / 13,3 % | **2.1 ≈ 1,5 Prozentpunkte höher** |
+| Großer Vinyl-Player, Hauptthread | 15,0 % / 14,8 % | 24,3 %² / 15,8 % | gleich bis leicht höher |
+
+¹ Ausreißer des Rechners (gleicher Code wie Runde 2). ² einzelner Ausreißer, Runde 2 wieder auf dem Niveau von 2.0.
+
+Bewertung: Scrollen, Bereichswechsel und Suche sind innerhalb der Messstreuung **unverändert**. Etwas höher sind
+der Leerlauf mit Wiedergabe im Hauptthread (≈ +1,5 Prozentpunkte, Ursache nicht eingegrenzt) und der Wert „Hauptthread je Taste“. Dieser Wert misst im Messprogramm vor allem, was das Fenster im Moment des
+Tastendrucks ohnehin neu zeichnet (die Eingabe selbst wird erst nach 0,12 s gebündelt übernommen); die Suche
+selbst und die Zeit bis zum sichtbaren Ergebnis sind gleich. Mit nur zwei Durchgängen je Version ist das ein
+Hinweis, kein sicherer Befund.
+
+Die höheren Leerlaufwerte im Messlauf auf macOS 26 (Apple Silicon, 22 %) gegenüber Version 2.0 auf macOS 14
+(5 %) liegen damit überwiegend am System (Liquid Glass auf einem virtuellen Mac ohne echte Grafikkarte), nicht an
+Version 2.1: auf demselben Rechner liegen 2.0 und 2.1 nahe beieinander.

@@ -12,11 +12,13 @@ geprüft mit GitHub Actions:
 | Apple Silicon | macOS 26.7 | Xcode 26, Swift 6.3.3 | Universal-Build (arm64 + x86_64), **alle Tests**, alle Vorschaubilder **mit echtem Liquid Glass** und in der Rückfall-Darstellung, Messlauf mit 10.000 Titeln, DMG |
 | Intel (x86_64) | macOS 15 | Xcode 16 | **alle Tests nativ in x86_64** |
 | Apple Silicon | macOS 26 | Xcode 26 | Nachstellen und Beheben eines Absturzes (Raster), Version 2.0 und 2.1 im Vergleich |
+| Intel (x86_64, i7-8700B) | macOS 26.6 | Xcode 26 | **Abnahme der fertigen DMG**: Prüfen, Installieren, Aktualisierungstest 2.0 → 2.1 → 2.0 im normalen Start, Geschwindigkeitsvergleich 2.0 ↔ 2.1 |
 
-**Hinweis:** GitHub bietet macOS 14 seit November 2026 nicht mehr an („configuration … is not supported“);
-Apple-Silicon-Rechner mit macOS 15 bzw. 26 wurden am 06.11.2026 zeitweise nicht zugeteilt („not acquired …
-capacity constraints“). Der Starttest der fertigen DMG (Einhängen, Installieren, alle Ansichten) lief deshalb
-nur, sofern unten ausdrücklich angegeben.
+**Hinweis:** GitHub bietet macOS 14 seit November 2026 nicht mehr an („configuration … is not supported“).
+Apple-Silicon-Rechner (macOS 15 und 26) und Intel mit macOS 15 wurden am Nachmittag des 06.11.2026 in sieben
+Versuchen nicht zugeteilt („not acquired … capacity constraints“). Die Abnahme der fertigen DMG lief deshalb auf
+einem Intel-Rechner mit macOS 26. Auf Apple Silicon wurde dasselbe App-Bundle im Build-Lauf geprüft (Tests,
+alle Vorschaubilder, Messlauf), aber **nicht aus der DMG heraus installiert**; der Rosetta-Durchlauf entfiel.
 
 ## Übersicht
 
@@ -33,12 +35,15 @@ nur, sofern unten ausdrücklich angegeben.
 | **Vorschaubilder macOS 26** | ✅ **alle 97 Ansichten × hell/dunkel = 194 Bilder mit echtem Liquid Glass** und 194 in der Rückfall-Darstellung, fehlerfrei; die neuen Ansichten wurden angesehen |
 | **Absturz macOS 26 (auch 2.0)** | ✅ nachgestellt (2.0 und 2.1 stürzen im kompakten Album-Raster ab), Ursache belegt (Rollbalken ↔ Kachelgröße), behoben und mit immer sichtbaren Rollbalken erneut geprüft |
 | **Messlauf 10.000 Titel** | ✅ auf macOS 26 (Apple Silicon) – siehe [PERFORMANCE.md](PERFORMANCE.md) |
+| **Abnahme der DMG (Intel, macOS 26)** | ✅ Prüfsumme und `hdiutil verify` gültig, Einhängen, Installieren nach „Programme“, `x86_64 arm64`, Signatur gültig, Version 2.1.0 |
+| **Aktualisierung 2.0 → 2.1 → 2.0** (normaler Start, echte Dateien) | ✅ 2.0 liest 8 Testdateien (AAC, WAV) ein, dazu Favoriten, Playlist, Bewertung, Wiedergabezahl, Wiedergabeposition. 2.1 startet damit: Datenbank ergänzt (Schemaversion bleibt 1), **alle Daten unverändert**, Hinzufügedatum je Titel = Erstellungsdatum der Datei (2018–2020 statt einheitlich „heute“). Zweiter Start von 2.1 mit einer neuen Datei: alte Daten unverändert, neue Datei mit eigenem Datum. Danach öffnet **2.0** die ergänzte Datenbank weiterhin ohne Verlust. Kein Absturz (`scripts/upgrade_test.sh`) |
+| **Geschwindigkeit 2.0 ↔ 2.1** (gleicher Rechner) | ✅ Scrollen, Bereichswechsel, Suche gleich; Leerlauf ≈ +1,5 Prozentpunkte; Details [PERFORMANCE.md](PERFORMANCE.md#4-version-21) |
 
 ## Testplan des Auftrags (§ 15)
 
 | Bereich | Prüfung |
 |---|---|
-| Sortierung Hinzugefügt (Titel/Alben, beide Richtungen, nach Neustart) | Test (Logik + Datenbank + Neustart) und Vorschaubild |
+| Sortierung Hinzugefügt (Titel/Alben, beide Richtungen, nach Neustart) | Test (Logik + Datenbank + Neustart), Aktualisierungstest mit echten Dateien und Vorschaubild |
 | Löschen (entfernen, Papierkorb, Album) | Logik vorhanden seit 2.0 (`removeTracks`); Dialog als Vorschaubild; **Klicks nicht automatisiert** |
 | Visualizer | Test der Analyse; Vorschaubild der Balken (feste Werte, klein und groß) |
 | Tonhöhe | Klangtests (s. o.); **nicht über Lautsprecher angehört** |
