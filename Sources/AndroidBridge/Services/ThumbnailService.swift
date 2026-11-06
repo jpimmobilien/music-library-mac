@@ -3,6 +3,9 @@ import AppKit
 import QuickLookThumbnailing
 import ABCore
 
+/// Hülle, damit Bilder auch unter macOS 13 (NSImage dort nicht als Sendable markiert) über Tasks gereicht werden können.
+struct ImageBox: @unchecked Sendable { let image: NSImage? }
+
 /// Vorschaubilder: vom Telefon (MTP „GetThumb“, klein und schnell) bzw. für Mac-Dateien über Quick Look.
 /// Nur im Arbeitsspeicher zwischengespeichert (mit Obergrenze) – keine Kopien auf der Festplatte.
 @MainActor
@@ -11,7 +14,7 @@ final class ThumbnailService {
 
     private let cache = NSCache<NSString, NSImage>()
     private let missing = NSCache<NSString, NSNumber>()
-    private var inflight: [String: Task<NSImage?, Never>] = [:]
+    private var inflight: [String: Task<ImageBox, Never>] = [:]
 
     init() {
         cache.countLimit = 1500
@@ -30,13 +33,13 @@ final class ThumbnailService {
         let key = Self.key(device: device, entry: entry)
         if let image = cache.object(forKey: key as NSString) { return image }
         if missing.object(forKey: key as NSString) != nil { return nil }
-        if let running = inflight[key] { return await running.value }
-        let task = Task<NSImage?, Never> {
-            guard let data = try? await backend.thumbnail(handle: entry.handle), let image = NSImage(data: data) else { return nil }
-            return image
+        if let running = inflight[key] { return await running.value.image }
+        let task = Task<ImageBox, Never> {
+            guard let data = try? await backend.thumbnail(handle: entry.handle), let image = NSImage(data: data) else { return ImageBox(image: nil) }
+            return ImageBox(image: image)
         }
         inflight[key] = task
-        let image = await task.value
+        let image = await task.value.image
         inflight[key] = nil
         if let image {
             let cost = Int(image.size.width * image.size.height * 4)
