@@ -247,6 +247,7 @@ final class SessionTests: XCTestCase {
                     dev.sendsZeroLengthPackets = zlp
                     dev.forceUnknownLengthForGetObject = unknown
                     if unknown && !zlp { continue } // unbekannte Länge erfordert ein kurzes Abschlusspaket
+                    if unknown && size == 0 { continue } // 0xFFFFFFFF kommt nur bei Daten über 4 GB vor
                     let content = pattern(size)
                     dev.objects[50] = .init(storage: 0x10001, parent: 2, name: "f.bin", isFolder: false, data: content)
                     let s = MTPSession(transport: dev)
@@ -305,6 +306,70 @@ final class SessionTests: XCTestCase {
             XCTAssertEqual(try s.storageIDs().count, 2)
         }
         XCTAssertEqual(received, content)
+    }
+
+    func testUnknownLengthWithSeparateHeaderTransfer() throws {
+        for size in [1, 512, 4084, 4096, 9000] {
+            let dev = makeDevice()
+            dev.forceUnknownLengthForGetObject = true
+            dev.sendHeaderSeparately = true
+            let content = pattern(size)
+            dev.objects[80] = .init(storage: 0x10001, parent: 2, name: "big.mkv", isFolder: false, data: content)
+            let s = MTPSession(transport: dev)
+            try s.openSession()
+            var received = Data()
+            try s.download(80, sink: { received.append($0) }, progress: nil)
+            XCTAssertEqual(received, content, "Größe \(size)")
+            XCTAssertEqual(try s.storageIDs().count, 2)
+        }
+    }
+
+    func testStaleReplyIsDiscarded() throws {
+        let dev = makeDevice()
+        let s = MTPSession(transport: dev)
+        try s.openSession()
+        dev.injectStaleReply()
+        XCTAssertEqual(try s.storageIDs(), [0x10001, 0x20001])
+        let root = try s.children(storage: 0x10001, parent: MTPHandle.root)
+        XCTAssertEqual(root.count, 2)
+    }
+
+    func testLeftoverDataIsFlushedBeforeNewSession() throws {
+        let dev = makeDevice()
+        dev.injectLeftoverBytes(50_000)
+        let s = MTPSession(transport: dev)
+        s.flushStaleData()
+        XCTAssertEqual(try s.getDeviceInfo().model, "Pixel 6 Pro")
+        try s.openSession()
+        XCTAssertEqual(try s.storageIDs().count, 2)
+    }
+
+    func testUploadSourceErrorAbortsAndKeepsSessionUsable() throws {
+        struct ReadFailure: Error {}
+        let dev = makeDevice()
+        let s = MTPSession(transport: dev)
+        try s.openSession()
+        let info = MTPObjectInfo.forUpload(name: "x.bin", size: 50_000, storageID: 0x10001, parent: 3, modified: nil)
+        _ = try s.sendObjectInfo(info, storage: 0x10001, parent: 3)
+        var calls = 0
+        XCTAssertThrowsError(try s.sendObject(length: 50_000, next: { max in
+            calls += 1
+            if calls > 2 { throw ReadFailure() }
+            return Data(repeating: 1, count: max)
+        }, progress: nil))
+        XCTAssertFalse(dev.cancelRequests.isEmpty, "Gerät muss den Abbruch erhalten")
+        XCTAssertEqual(try s.storageIDs().count, 2)
+    }
+
+    func testCancelAtVeryEndDoesNotSendCancelRequest() throws {
+        let dev = makeDevice()
+        dev.objects[90] = .init(storage: 0x10001, parent: 2, name: "a.jpg", isFolder: false, data: pattern(3000))
+        let s = MTPSession(transport: dev)
+        try s.openSession()
+        // Fortschritt meldet erst beim letzten Stück „abbrechen“: Daten sind schon vollständig.
+        XCTAssertThrowsError(try s.download(90, sink: { _ in }, progress: { $0 < 3000 }))
+        XCTAssertTrue(dev.cancelRequests.isEmpty)
+        XCTAssertEqual(try s.storageIDs().count, 2)
     }
 
     func testCreateRenameDelete() throws {

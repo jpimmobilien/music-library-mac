@@ -41,6 +41,8 @@ final class MTPWorker: @unchecked Sendable {
             session.commandTimeout = min(timeout, 10)
             session.responseTimeout = max(timeout, 20)
             do {
+                // Reste einer abgebrochenen früheren Verbindung verwerfen (sonst schlägt schon GetDeviceInfo fehl).
+                session.flushStaleData()
                 let info = try session.getDeviceInfo()
                 try session.openSession()
                 self.transport = transport

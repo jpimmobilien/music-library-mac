@@ -92,6 +92,11 @@ public final class MTPSession {
     private var transactionID: UInt32 = 0
     private var pending = Data()
     private var lastReadWasShort = false
+    /// Der Lesevorgang, der den letzten Containerkopf brachte, enthielt auch Nutzdaten.
+    private var headerReadHadPayload = false
+    /// Datenphase vollständig empfangen bzw. gesendet (auch wenn danach ein Fehler auftrat).
+    private var lastReceiveCompleted = false
+    private var lastSendCompleted = false
 
     public init(transport: MTPBulkTransport) {
         self.transport = transport
@@ -109,19 +114,46 @@ public final class MTPSession {
     @discardableResult
     public func transaction(_ op: UInt16, params: [UInt32] = [], outgoing: MTPOutgoingData? = nil,
                             incoming: ((Data) throws -> Void)? = nil, progress: MTPProgress? = nil,
-                            transactionIDOverride: UInt32? = nil) throws -> MTPResponseResult {
+                            transactionIDOverride: UInt32? = nil, dataTimeoutOverride: TimeInterval? = nil) throws -> MTPResponseResult {
         let tid = transactionIDOverride ?? nextTransactionID()
+        let dataWait = dataTimeoutOverride ?? dataTimeout
         try transport.write(Data(PTPContainers.command(op, transactionID: tid, params: params)), timeout: commandTimeout)
         if let outgoing {
-            try sendData(op: op, tid: tid, outgoing, progress: progress)
+            do {
+                try sendData(op: op, tid: tid, outgoing, progress: progress)
+            } catch MTPError.disconnected {
+                throw MTPError.disconnected
+            } catch {
+                // Lesefehler der Quelldatei, Zeitüberschreitung, Abbruch: Das Gerät wartet sonst weiter auf Daten
+                // und hielte die nächsten Befehle für Dateiinhalt.
+                if !lastSendCompleted { abort(tid: tid) }
+                throw error
+            }
         }
         var received: UInt64 = 0
+        var staleContainers = 0
         while true {
-            let header = try readHeader(timeout: incoming != nil ? dataTimeout : responseTimeout)
+            let header: PTPContainerHeader
+            do {
+                header = try readHeader(timeout: incoming != nil ? dataWait : responseTimeout)
+            } catch MTPError.timeout {
+                // Gerät hat nicht rechtzeitig geantwortet – Transaktion abbrechen, damit eine späte Antwort
+                // nicht in die nächste Anfrage läuft.
+                abort(tid: tid)
+                throw MTPError.timeout
+            }
+            if header.transactionID != tid {
+                // Rest einer früheren (abgebrochenen bzw. zu spät beantworteten) Transaktion – verwerfen.
+                staleContainers += 1
+                if staleContainers > 16 { throw MTPError.protocolError("Zu viele veraltete Antworten") }
+                try receivePayload(header, timeout: dataWait) { _ in }
+                continue
+            }
             switch header.containerType {
             case .data:
+                lastReceiveCompleted = false
                 do {
-                    try receivePayload(header, timeout: dataTimeout) { chunk in
+                    try receivePayload(header, timeout: dataWait) { chunk in
                         received += UInt64(chunk.count)
                         try incoming?(chunk)
                         if let progress, !progress(received) { throw MTPError.cancelled }
@@ -129,9 +161,14 @@ public final class MTPSession {
                 } catch MTPError.disconnected {
                     throw MTPError.disconnected
                 } catch {
-                    // Abbruch durch den Benutzer oder Fehler beim Schreiben am Ziel: Gerät sendet noch –
-                    // Transaktion sauber abbrechen, damit die nächste Anfrage nicht in Restdaten läuft.
-                    abort(tid: tid)
+                    if lastReceiveCompleted {
+                        // Alle Daten waren schon da (Fehler beim letzten Stück): nicht abbrechen – ein später
+                        // Abbruchwunsch würde sonst die nächste Übertragung treffen. Antwort normal lesen.
+                        _ = try? readResponse(tid: tid)
+                    } else {
+                        // Abbruch durch den Benutzer oder Fehler beim Schreiben am Ziel: Gerät sendet noch.
+                        abort(tid: tid)
+                    }
                     throw error
                 }
             case .response:
@@ -140,16 +177,28 @@ public final class MTPSession {
                 var r = PTPReader(payload)
                 var ps: [UInt32] = []
                 while r.remaining >= 4 && ps.count < 5 { ps.append(try r.u32()) }
-                if header.transactionID != tid && transactionIDOverride == nil && header.transactionID != 0 {
-                    // Veraltete Antwort einer früheren (abgebrochenen) Transaktion – verwerfen.
-                    continue
-                }
                 return MTPResponseResult(code: header.code, params: ps)
             case .event, .command, .none:
                 // Unerwartet auf dem Bulk-Kanal: Nutzdaten verwerfen und weiterlesen.
-                try receivePayload(header, timeout: dataTimeout) { _ in }
+                try receivePayload(header, timeout: dataWait) { _ in }
             }
         }
+    }
+
+    /// Liest die Antwort einer Transaktion (Datencontainer werden verworfen).
+    private func readResponse(tid: UInt32) throws -> MTPResponseResult {
+        for _ in 0..<8 {
+            let header = try readHeader(timeout: responseTimeout)
+            var payload = Data()
+            try receivePayload(header, timeout: responseTimeout) { payload.append($0) }
+            if header.containerType == .response && header.transactionID == tid {
+                var r = PTPReader(payload)
+                var ps: [UInt32] = []
+                while r.remaining >= 4 && ps.count < 5 { ps.append(try r.u32()) }
+                return MTPResponseResult(code: header.code, params: ps)
+            }
+        }
+        throw MTPError.protocolError("Keine Antwort")
     }
 
     /// Wie `transaction`, wirft aber bei jeder Antwort außer OK.
@@ -162,9 +211,10 @@ public final class MTPSession {
     }
 
     /// Transaktion mit eingehenden Daten, gesammelt in einem Puffer (nur für kleine Datensätze).
-    public func fetch(_ op: PTPOperation, params: [UInt32] = []) throws -> Data {
+    public func fetch(_ op: PTPOperation, params: [UInt32] = [], timeout: TimeInterval? = nil) throws -> Data {
         var data = Data()
-        try checked(op, params: params, incoming: { data.append($0) })
+        let r = try transaction(op.rawValue, params: params, incoming: { data.append($0) }, dataTimeoutOverride: timeout)
+        guard r.isOK else { throw MTPError.response(r.code) }
         return data
     }
 
@@ -196,18 +246,21 @@ public final class MTPSession {
         }
         pending.removeFirst(PTPContainerHeader.size)
         pending = Data(pending) // Startindex auf 0 setzen
+        headerReadHadPayload = !pending.isEmpty
         return header
     }
 
     private func receivePayload(_ header: PTPContainerHeader, timeout: TimeInterval, sink: (Data) throws -> Void) throws {
         if let total = header.payloadLength {
             var remaining = total
+            if remaining == 0 { lastReceiveCompleted = true }
             if !pending.isEmpty {
                 let take = Int(min(UInt64(pending.count), remaining))
                 if take > 0 {
                     let part = pending.prefix(take)
                     pending = Data(pending.dropFirst(take))
                     remaining -= UInt64(take)
+                    if remaining == 0 { lastReceiveCompleted = true }
                     try sink(Data(part))
                 }
             }
@@ -222,24 +275,28 @@ public final class MTPSession {
                 let take = Int(min(UInt64(chunk.count), remaining))
                 remaining -= UInt64(take)
                 if take < chunk.count { pending.append(chunk.subdata(in: take..<chunk.count)) }
+                if remaining == 0 { lastReceiveCompleted = true }
                 try sink(take == chunk.count ? chunk : chunk.prefix(take))
                 if remaining > 0 && chunk.count < size {
                     throw MTPError.incomplete(expected: total, received: total - remaining)
                 }
             }
         } else {
-            // Länge unbekannt (> 4 GB): bis zum kurzen Paket lesen.
+            // Länge unbekannt (> 4 GB): bis zum kurzen Paket lesen. Kam der Kopf als eigener kurzer Transfer
+            // (ohne Nutzdaten), folgen die Daten erst noch.
+            var finished = lastReadWasShort && headerReadHadPayload
             if !pending.isEmpty {
                 let part = pending
                 pending = Data()
+                if finished { lastReceiveCompleted = true }
                 try sink(part)
             }
-            var finished = lastReadWasShort
             while !finished {
                 let size = transport.bufferSize
                 let chunk = try transport.read(maxLength: size, timeout: timeout)
                 finished = chunk.count < size || chunk.count % max(1, transport.maxPacketSize) != 0
                 lastReadWasShort = finished
+                if finished { lastReceiveCompleted = true }
                 if !chunk.isEmpty { try sink(chunk) }
             }
         }
@@ -253,6 +310,7 @@ public final class MTPSession {
         buffer.reserveCapacity(bufferSize)
         var sent: UInt64 = 0
         var totalWritten: UInt64 = 0
+        lastSendCompleted = false
         while true {
             // Puffer exakt füllen (alle Transfers außer dem letzten müssen Vielfache der Paketgröße sein).
             while buffer.count < bufferSize && sent < outgoing.length {
@@ -270,15 +328,16 @@ public final class MTPSession {
                 totalWritten += UInt64(buffer.count)
             }
             buffer.removeAll(keepingCapacity: true)
-            if let progress, !progress(sent) {
-                abort(tid: tid)
+            // Nach dem letzten Stück wird nicht mehr abgebrochen (ein später Abbruchwunsch träfe sonst die nächste Übertragung).
+            if !isLast, let progress, !progress(sent) {
                 throw MTPError.cancelled
             }
-            if isLast { break }
+            if isLast { _ = progress?(sent); break }
         }
         if PTPContainers.needsZeroLengthPacket(totalBytes: totalWritten, maxPacketSize: transport.maxPacketSize) {
             try transport.write(Data(), timeout: dataTimeout)
         }
+        lastSendCompleted = true
     }
 
     /// Bricht die laufende Transaktion ab und bringt den Kanal in einen definierten Zustand.
@@ -291,7 +350,22 @@ public final class MTPSession {
         }
         pending = Data()
         lastReadWasShort = false
-        transport.clearStalls()
+        headerReadHadPayload = false
+        // Endpunkte werden nur bei tatsächlichem Stillstand zurückgesetzt (im Transport), nicht pauschal:
+        // ein unnötiges CLEAR_FEATURE kann laufende Anforderungen auf dem Telefon abbrechen.
+    }
+
+    /// Verwirft Reste einer früheren, unterbrochenen Verbindung (z. B. App während eines Downloads beendet):
+    /// Liegen noch Daten an, wird die alte Transaktion abgebrochen und der Kanal geleert.
+    public func flushStaleData() {
+        pending = Data()
+        guard let first = try? transport.read(maxLength: transport.bufferSize, timeout: 0.25), !first.isEmpty else { return }
+        try? transport.cancelTransaction(0)
+        for _ in 0..<4096 {
+            guard let chunk = try? transport.read(maxLength: transport.bufferSize, timeout: 0.5), !chunk.isEmpty else { break }
+        }
+        pending = Data()
+        lastReadWasShort = false
     }
 
     // MARK: - Sitzung
@@ -360,7 +434,8 @@ public final class MTPSession {
     }
 
     public func propertyList(handle: UInt32, depth: UInt32) throws -> [MTPPropertyEntry] {
-        try MTPPropertyList.parse(try fetch(.getObjectPropList, params: [handle, 0, 0xFFFF_FFFF, 0, depth]))
+        // Android stellt die ganze Liste zusammen, bevor das erste Byte kommt – bei großen Ordnern dauert das.
+        try MTPPropertyList.parse(try fetch(.getObjectPropList, params: [handle, 0, 0xFFFF_FFFF, 0, depth], timeout: max(dataTimeout, 120)))
     }
 
     private var propListUsable: Bool? = nil
@@ -433,8 +508,9 @@ public final class MTPSession {
         if deviceInfo?.supports(.getPartialObject64) == true {
             try checked(.getPartialObject64, params: [handle, UInt32(truncatingIfNeeded: offset), UInt32(truncatingIfNeeded: offset >> 32), length],
                         incoming: counting)
-        } else if deviceInfo?.supports(.getPartialObject) == true, offset + UInt64(length) <= 0xFFFF_FFFF {
-            try checked(.getPartialObject, params: [handle, UInt32(offset), length], incoming: counting)
+        } else if deviceInfo?.supports(.getPartialObject) == true, offset < 0xFFFF_FFFF {
+            let clamped = UInt32(min(UInt64(length), 0xFFFF_FFFF - offset))
+            try checked(.getPartialObject, params: [handle, UInt32(offset), clamped], incoming: counting)
         } else {
             throw MTPError.notSupported("Teilweises Lesen")
         }

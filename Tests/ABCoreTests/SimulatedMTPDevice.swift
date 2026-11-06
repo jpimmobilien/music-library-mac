@@ -23,6 +23,8 @@ final class SimulatedMTPDevice: MTPBulkTransport {
     let bufferSize: Int
     var sendsZeroLengthPackets = true
     var forceUnknownLengthForGetObject = false
+    /// Containerkopf als eigener kurzer Transfer (ältere Android-Versionen bei Datenphasen > 4 GB).
+    var sendHeaderSeparately = false
     var supportsPropList = true
     var storages: [UInt32: (desc: String, removable: Bool)] = [0x0001_0001: ("Interner gemeinsamer Speicher", false),
                                                                 0x0002_0001: ("SD-Karte", true)]
@@ -96,9 +98,25 @@ final class SimulatedMTPDevice: MTPBulkTransport {
     private func queueContainer(type: PTPContainerType, code: UInt16, tid: UInt32, payload: Data, unknownLength: Bool = false) {
         var header = PTPContainerHeader(length: UInt32(12 + payload.count), type: type.rawValue, code: code, transactionID: tid)
         if unknownLength { header.length = 0xFFFF_FFFF }
+        if sendHeaderSeparately && type == .data {
+            outbound.append(OutTransfer(data: Data(header.encoded())))
+            if !payload.isEmpty { outbound.append(OutTransfer(data: payload)) }
+            return
+        }
         var d = Data(header.encoded())
         d.append(payload)
         outbound.append(OutTransfer(data: d))
+    }
+
+    /// Späte Antwort einer früheren Transaktion in den Kanal legen (Daten + Antwort).
+    func injectStaleReply(tid: UInt32 = 999) {
+        queueContainer(type: .data, code: 0x9805, tid: tid, payload: Data(repeating: 0xAB, count: 700))
+        respond(.ok, tid: tid)
+    }
+
+    /// Restdaten einer abgebrochenen Übertragung (z. B. App während eines Downloads beendet).
+    func injectLeftoverBytes(_ count: Int) {
+        outbound.append(OutTransfer(data: Data(repeating: 0x55, count: count)))
     }
 
     private func respond(_ code: PTPResponse, tid: UInt32, params: [UInt32] = []) {
