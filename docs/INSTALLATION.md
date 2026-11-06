@@ -34,9 +34,19 @@ Apple-Entwicklerkonto nötig). macOS fragt deshalb beim **ersten** Start nach. D
 xattr -dr com.apple.quarantine "/Applications/Music Library.app"
 ```
 
-**Update von Version 1:** Die neue DMG öffnen, das App-Symbol wieder auf **Programme** ziehen und
-„Ersetzen“ wählen. Bibliothek, Playlists, Favoriten, Zähler und Einstellungen bleiben erhalten. Die
+**Update von Version 1, 2.0 oder 2.1:** Die neue DMG öffnen, das App-Symbol wieder auf **Programme** ziehen
+und „Ersetzen“ wählen. Bibliothek, Playlists, Favoriten, Zähler und Einstellungen bleiben erhalten. Die
 Gatekeeper-Rückfrage kommt bei einer neuen, ad-hoc signierten Version noch einmal.
+
+**Version 2.1 – Hinzufügedatum:** Beim ersten Start bestimmt die App im Hintergrund einmalig das
+Hinzufügedatum aller vorhandenen Titel neu (aus der freigegebenen Apple-Musik-Mediathek, sonst aus dem
+Erstellungsdatum der Datei). Danach sortiert „Hinzugefügt“ wie in iTunes. Die Datenbank wird dabei nur
+ergänzt – Version 2.0 kann sie bei Bedarf weiterhin öffnen.
+Wer die echten „Hinzugefügt“-Daten aus Apple Musik übernehmen möchte: **Einstellungen → Bibliothek →
+Hinzufügedatum → „Aus Apple Musik übernehmen …“**. macOS fragt dann einmal nach dem Zugriff auf
+*Medien & Apple Music* – bitte erlauben (es wird nur gelesen, nichts verändert). Alternativ in der
+Musik-App unter *Einstellungen → Erweitert* „Mediathek-XML für andere Apps freigeben“ einschalten; diese
+Datei liest Music Library ohne Rückfrage.
 
 ## 3. Musik hinzufügen
 
