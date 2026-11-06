@@ -1,0 +1,344 @@
+{
+  "architecture" : "arm64",
+  "cpu" : "Apple M1 (Virtual)",
+  "liquidGlass" : true,
+  "macOS" : "Version 26.7.2 (Build 25G332)",
+  "notes" : [
+    "Genres\/Kompaktes Raster: keine Scrollfläche gefunden",
+    "Genres\/Liste: keine Scrollfläche gefunden"
+  ],
+  "reduceMotionIgnored" : true,
+  "results" : [
+    {
+      "max_ms" : 241.47,
+      "mean_ms" : 241.47,
+      "n" : 1,
+      "name" : "Index aufbauen (10000 Titel)",
+      "p95_ms" : 241.47
+    },
+    {
+      "max_ms" : 627.99000000000001,
+      "mean_ms" : 627.99000000000001,
+      "n" : 1,
+      "name" : "Alle Listen berechnen (Hintergrund)",
+      "p95_ms" : 627.99000000000001
+    },
+    {
+      "max_ms" : 651.10000000000002,
+      "mean_ms" : 519.63,
+      "n" : 5,
+      "name" : "Suche berechnen (Hintergrund)",
+      "p95_ms" : 651.10000000000002
+    },
+    {
+      "max_ms" : 619.98000000000002,
+      "mean_ms" : 282.69,
+      "n" : 12,
+      "name" : "Bereich wechseln",
+      "p95_ms" : 619.98000000000002
+    },
+    {
+      "max_ms" : 100.61,
+      "mean_ms" : 100.61,
+      "n" : 1,
+      "name" : "Titel: Ansicht „Raster“ öffnen",
+      "p95_ms" : 100.61
+    },
+    {
+      "max_ms" : 73.739999999999995,
+      "mean_ms" : 39.549999999999997,
+      "n" : 60,
+      "name" : "Titel · Raster: Scrollschritt",
+      "p95_ms" : 68.909999999999997
+    },
+    {
+      "max_ms" : 497.57999999999998,
+      "mean_ms" : 497.57999999999998,
+      "n" : 1,
+      "name" : "Titel: Ansicht „Kompaktes Raster“ öffnen",
+      "p95_ms" : 497.57999999999998
+    },
+    {
+      "max_ms" : 172.59,
+      "mean_ms" : 107.16,
+      "n" : 60,
+      "name" : "Titel · Kompaktes Raster: Scrollschritt",
+      "p95_ms" : 163.11000000000001
+    },
+    {
+      "max_ms" : 381.05000000000001,
+      "mean_ms" : 381.05000000000001,
+      "n" : 1,
+      "name" : "Titel: Ansicht „Liste“ öffnen",
+      "p95_ms" : 381.05000000000001
+    },
+    {
+      "max_ms" : 93.400000000000006,
+      "mean_ms" : 46.979999999999997,
+      "n" : 60,
+      "name" : "Titel · Liste: Scrollschritt",
+      "p95_ms" : 80.920000000000002
+    },
+    {
+      "max_ms" : 413.91000000000003,
+      "mean_ms" : 413.91000000000003,
+      "n" : 1,
+      "name" : "Titel: Ansicht „Detailliste“ öffnen",
+      "p95_ms" : 413.91000000000003
+    },
+    {
+      "max_ms" : 82.430000000000007,
+      "mean_ms" : 44.979999999999997,
+      "n" : 60,
+      "name" : "Titel · Detailliste: Scrollschritt",
+      "p95_ms" : 63.090000000000003
+    },
+    {
+      "max_ms" : 296.85000000000002,
+      "mean_ms" : 296.85000000000002,
+      "n" : 1,
+      "name" : "Titel: Ansicht „Cover Flow“ öffnen",
+      "p95_ms" : 296.85000000000002
+    },
+    {
+      "max_ms" : 0.20000000000000001,
+      "mean_ms" : 0.20000000000000001,
+      "n" : 1,
+      "name" : "Alben: Ansicht „Raster“ öffnen",
+      "p95_ms" : 0.20000000000000001
+    },
+    {
+      "max_ms" : 87.390000000000001,
+      "mean_ms" : 33.299999999999997,
+      "n" : 60,
+      "name" : "Alben · Raster: Scrollschritt",
+      "p95_ms" : 74.920000000000002
+    },
+    {
+      "max_ms" : 214.66999999999999,
+      "mean_ms" : 214.66999999999999,
+      "n" : 1,
+      "name" : "Alben: Ansicht „Kompaktes Raster“ öffnen",
+      "p95_ms" : 214.66999999999999
+    },
+    {
+      "max_ms" : 147.88999999999999,
+      "mean_ms" : 69.540000000000006,
+      "n" : 60,
+      "name" : "Alben · Kompaktes Raster: Scrollschritt",
+      "p95_ms" : 113.65000000000001
+    },
+    {
+      "max_ms" : 349.29000000000002,
+      "mean_ms" : 349.29000000000002,
+      "n" : 1,
+      "name" : "Alben: Ansicht „Liste“ öffnen",
+      "p95_ms" : 349.29000000000002
+    },
+    {
+      "max_ms" : 137.88,
+      "mean_ms" : 72.060000000000002,
+      "n" : 60,
+      "name" : "Alben · Liste: Scrollschritt",
+      "p95_ms" : 127.39
+    },
+    {
+      "max_ms" : 293.49000000000001,
+      "mean_ms" : 293.49000000000001,
+      "n" : 1,
+      "name" : "Alben: Ansicht „Detailliste“ öffnen",
+      "p95_ms" : 293.49000000000001
+    },
+    {
+      "max_ms" : 74.849999999999994,
+      "mean_ms" : 49.280000000000001,
+      "n" : 60,
+      "name" : "Alben · Detailliste: Scrollschritt",
+      "p95_ms" : 67.079999999999998
+    },
+    {
+      "max_ms" : 336.94,
+      "mean_ms" : 336.94,
+      "n" : 1,
+      "name" : "Alben: Ansicht „Cover Flow“ öffnen",
+      "p95_ms" : 336.94
+    },
+    {
+      "max_ms" : 171.24000000000001,
+      "mean_ms" : 171.24000000000001,
+      "n" : 1,
+      "name" : "Interpreten: Ansicht „Raster“ öffnen",
+      "p95_ms" : 171.24000000000001
+    },
+    {
+      "max_ms" : 97.969999999999999,
+      "mean_ms" : 46.740000000000002,
+      "n" : 60,
+      "name" : "Interpreten · Raster: Scrollschritt",
+      "p95_ms" : 85.950000000000003
+    },
+    {
+      "max_ms" : 443.93000000000001,
+      "mean_ms" : 443.93000000000001,
+      "n" : 1,
+      "name" : "Interpreten: Ansicht „Kompaktes Raster“ öffnen",
+      "p95_ms" : 443.93000000000001
+    },
+    {
+      "max_ms" : 142.90000000000001,
+      "mean_ms" : 90.810000000000002,
+      "n" : 60,
+      "name" : "Interpreten · Kompaktes Raster: Scrollschritt",
+      "p95_ms" : 127.56
+    },
+    {
+      "max_ms" : 398.06999999999999,
+      "mean_ms" : 398.06999999999999,
+      "n" : 1,
+      "name" : "Interpreten: Ansicht „Liste“ öffnen",
+      "p95_ms" : 398.06999999999999
+    },
+    {
+      "max_ms" : 138.19999999999999,
+      "mean_ms" : 72.560000000000002,
+      "n" : 60,
+      "name" : "Interpreten · Liste: Scrollschritt",
+      "p95_ms" : 104.44
+    },
+    {
+      "max_ms" : 186.72,
+      "mean_ms" : 186.72,
+      "n" : 1,
+      "name" : "Interpreten: Ansicht „Detailliste“ öffnen",
+      "p95_ms" : 186.72
+    },
+    {
+      "max_ms" : 54.880000000000003,
+      "mean_ms" : 29.140000000000001,
+      "n" : 60,
+      "name" : "Interpreten · Detailliste: Scrollschritt",
+      "p95_ms" : 45.890000000000001
+    },
+    {
+      "max_ms" : 340.00999999999999,
+      "mean_ms" : 340.00999999999999,
+      "n" : 1,
+      "name" : "Interpreten: Ansicht „Cover Flow“ öffnen",
+      "p95_ms" : 340.00999999999999
+    },
+    {
+      "max_ms" : 0.20999999999999999,
+      "mean_ms" : 0.20999999999999999,
+      "n" : 1,
+      "name" : "Genres: Ansicht „Raster“ öffnen",
+      "p95_ms" : 0.20999999999999999
+    },
+    {
+      "max_ms" : 0.88,
+      "mean_ms" : 0.41999999999999998,
+      "n" : 60,
+      "name" : "Genres · Raster: Scrollschritt",
+      "p95_ms" : 0.70999999999999996
+    },
+    {
+      "max_ms" : 181.99000000000001,
+      "mean_ms" : 181.99000000000001,
+      "n" : 1,
+      "name" : "Genres: Ansicht „Kompaktes Raster“ öffnen",
+      "p95_ms" : 181.99000000000001
+    },
+    {
+      "max_ms" : 118.73999999999999,
+      "mean_ms" : 118.73999999999999,
+      "n" : 1,
+      "name" : "Genres: Ansicht „Liste“ öffnen",
+      "p95_ms" : 118.73999999999999
+    },
+    {
+      "max_ms" : 123.98,
+      "mean_ms" : 123.98,
+      "n" : 1,
+      "name" : "Genres: Ansicht „Detailliste“ öffnen",
+      "p95_ms" : 123.98
+    },
+    {
+      "max_ms" : 0.76000000000000001,
+      "mean_ms" : 0.40999999999999998,
+      "n" : 60,
+      "name" : "Genres · Detailliste: Scrollschritt",
+      "p95_ms" : 0.59999999999999998
+    },
+    {
+      "max_ms" : 84.200000000000003,
+      "mean_ms" : 84.200000000000003,
+      "n" : 1,
+      "name" : "Genres: Ansicht „Cover Flow“ öffnen",
+      "p95_ms" : 84.200000000000003
+    },
+    {
+      "max_ms" : 107.48999999999999,
+      "mean_ms" : 23.43,
+      "n" : 11,
+      "name" : "Suche tippen (je Taste, Hauptthread)",
+      "p95_ms" : 107.48999999999999
+    },
+    {
+      "max_ms" : 299,
+      "mean_ms" : 299,
+      "n" : 1,
+      "name" : "Suche: Ergebnis sichtbar nach letzter Taste",
+      "p95_ms" : 299
+    },
+    {
+      "max_ms" : 2.1800000000000002,
+      "mean_ms" : 2.1800000000000002,
+      "n" : 1,
+      "name" : "Suche: Ergebnis zeichnen (Hauptthread)",
+      "p95_ms" : 2.1800000000000002
+    },
+    {
+      "max_ms" : 557.99000000000001,
+      "mean_ms" : 211.87,
+      "n" : 14,
+      "name" : "Player öffnen\/schließen (alle Designs)",
+      "p95_ms" : 557.99000000000001
+    },
+    {
+      "max_ms" : 132.75,
+      "mean_ms" : 91.280000000000001,
+      "n" : 28,
+      "name" : "Leerlauf mit Wiedergabe: Verspätung je Bild",
+      "p95_ms" : 131.84999999999999
+    },
+    {
+      "max_ms" : 22.219999999999999,
+      "mean_ms" : 22.219999999999999,
+      "n" : 1,
+      "name" : "Leerlauf mit Wiedergabe: Hauptthread belegt [%]",
+      "p95_ms" : 22.219999999999999
+    },
+    {
+      "max_ms" : 22.690000000000001,
+      "mean_ms" : 22.690000000000001,
+      "n" : 1,
+      "name" : "Leerlauf mit Wiedergabe: Prozess-CPU [%]",
+      "p95_ms" : 22.690000000000001
+    },
+    {
+      "max_ms" : 33.049999999999997,
+      "mean_ms" : 33.049999999999997,
+      "n" : 1,
+      "name" : "Großer Player (Vinyl) läuft: Hauptthread belegt [%]",
+      "p95_ms" : 33.049999999999997
+    },
+    {
+      "max_ms" : 33.5,
+      "mean_ms" : 33.5,
+      "n" : 1,
+      "name" : "Großer Player (Vinyl) läuft: Prozess-CPU [%]",
+      "p95_ms" : 33.5
+    }
+  ],
+  "systemReduceMotion" : true,
+  "tracks" : 10000
+}

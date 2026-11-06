@@ -1,0 +1,370 @@
+▸ Swift: swift-driver version: 1.148.6 Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+▸ Baue arm64 (arm64-apple-macosx13.0) …
+Building for production...
+[0/158] Compiling ebmluintelement.cpp
+[0/158] Compiling ebmlstringelement.cpp
+[2/158] Compiling ebmlutils.cpp
+[3/158] Write swift-version-7974D3F7F03D5E95.txt
+[4/158] Compiling xmproperties.cpp
+[5/158] Compiling xmfile.cpp
+[6/158] Compiling wavpackproperties.cpp
+[7/158] Compiling wavpackfile.cpp
+[8/158] Compiling trueaudioproperties.cpp
+[9/158] Compiling trueaudiofile.cpp
+[10/158] Compiling tzlib.cpp
+[11/158] Compiling tversionnumber.cpp
+[12/158] Compiling tstringlist.cpp
+[13/158] Compiling tstring.cpp
+[14/158] Compiling tvariant.cpp
+[15/158] Compiling tpropertymap.cpp
+[16/158] Compiling tpicturetype.cpp
+[17/158] Compiling tiostream.cpp
+[18/158] Compiling tfilestream.cpp
+[19/158] Compiling tdebug.cpp
+[20/158] Compiling tdebuglistener.cpp
+[21/158] Compiling tfile.cpp
+[22/158] Compiling tbytevectorstream.cpp
+[23/158] Compiling tbytevectorlist.cpp
+[24/158] Compiling tagutils.cpp
+[25/158] Compiling tbytevector.cpp
+[26/158] Compiling tagunion.cpp
+[27/158] Compiling shortenproperties.cpp
+[28/158] Compiling shortentag.cpp
+[29/158] Compiling tag.cpp
+[30/158] Compiling s3mproperties.cpp
+[31/158] Compiling shortenfile.cpp
+[32/158] Compiling s3mfile.cpp
+[33/158] Compiling wavproperties.cpp
+[34/158] Compiling wavfile.cpp
+[35/158] Compiling rifffile.cpp
+[36/158] Compiling infotag.cpp
+[37/158] Compiling aiffproperties.cpp
+[38/158] Compiling aifffile.cpp
+[39/158] Compiling vorbisproperties.cpp
+[40/158] Compiling vorbisfile.cpp
+[41/158] Compiling xiphcomment.cpp
+[42/158] Compiling speexproperties.cpp
+[43/158] Compiling speexfile.cpp
+[44/158] Compiling opusproperties.cpp
+[45/158] Compiling opusfile.cpp
+[46/158] Compiling oggpageheader.cpp
+[47/158] Compiling oggpage.cpp
+[48/158] Compiling oggfile.cpp
+[49/158] Compiling oggflacfile.cpp
+[50/158] Compiling xingheader.cpp
+[51/158] Compiling mpegheader.cpp
+[51/158] Compiling mpegproperties.cpp
+[53/158] Compiling mpegfile.cpp
+[54/158] Compiling id3v2synchdata.cpp
+[55/158] Compiling id3v2header.cpp
+[56/158] Compiling id3v2framefactory.cpp
+[57/158] Compiling id3v2tag.cpp
+[58/158] Compiling id3v2frame.cpp
+[59/158] Compiling id3v2footer.cpp
+[60/158] Compiling id3v2extendedheader.cpp
+[61/158] Compiling unknownframe.cpp
+[62/158] Compiling unsynchronizedlyricsframe.cpp
+[63/158] Compiling urllinkframe.cpp
+[64/158] Compiling uniquefileidentifierframe.cpp
+[65/158] Compiling tableofcontentsframe.cpp
+[66/158] Compiling textidentificationframe.cpp
+[67/158] Compiling synchronizedlyricsframe.cpp
+[68/158] Compiling privateframe.cpp
+[69/158] Compiling relativevolumeframe.cpp
+[70/158] Compiling popularimeterframe.cpp
+[71/158] Compiling podcastframe.cpp
+[72/158] Compiling ownershipframe.cpp
+[73/158] Compiling generalencapsulatedobjectframe.cpp
+[74/158] Compiling eventtimingcodesframe.cpp
+[75/158] Compiling commentsframe.cpp
+[76/158] Compiling chapterframe.cpp
+[77/158] Compiling attachedpictureframe.cpp
+[78/158] Compiling id3v1tag.cpp
+[79/158] Compiling id3v1genres.cpp
+[80/158] Compiling mpcproperties.cpp
+[81/158] Compiling mpcfile.cpp
+[82/158] Compiling mp4stem.cpp
+[83/158] Compiling mp4properties.cpp
+[84/158] Compiling mp4tag.cpp
+[85/158] Compiling mp4qtchapterlist.cpp
+[86/158] Compiling mp4nerochapterlist.cpp
+[87/158] Compiling mp4item.cpp
+[88/158] Compiling mp4itemfactory.cpp
+[89/158] Compiling mp4coverart.cpp
+[90/158] Compiling mp4file.cpp
+[91/158] Compiling mp4chapter.cpp
+[92/158] Compiling modtag.cpp
+[93/158] Compiling modproperties.cpp
+[94/158] Compiling mp4atom.cpp
+[95/158] Compiling modfilebase.cpp
+[96/158] Compiling modfile.cpp
+[97/158] Compiling matroskasegment.cpp
+[98/158] Compiling matroskasimpletag.cpp
+[99/158] Compiling matroskatag.cpp
+[100/158] Compiling matroskaproperties.cpp
+[101/158] Compiling matroskaseekhead.cpp
+[102/158] Compiling matroskaelement.cpp
+[103/158] Compiling matroskacues.cpp
+[104/158] Compiling matroskafile.cpp
+[105/158] Compiling matroskachapteredition.cpp
+[106/158] Compiling matroskachapters.cpp
+[107/158] Compiling matroskachapter.cpp
+[108/158] Compiling matroskaattachedfile.cpp
+[109/158] Compiling matroskaattachments.cpp
+[110/158] Compiling ebmlvoidelement.cpp
+[111/158] Compiling ebmlmktracks.cpp
+[112/158] Compiling ebmlmktags.cpp
+[113/158] Compiling ebmlmkseekhead.cpp
+[114/158] Compiling ebmlmksegment.cpp
+[115/158] Compiling ebmlmkinfo.cpp
+[116/158] Compiling ebmlmkcues.cpp
+[117/158] Compiling ebmlmkchapters.cpp
+[118/158] Compiling ebmlmkattachments.cpp
+[119/158] Compiling ebmlmasterelement.cpp
+[120/158] Compiling ebmlfloatelement.cpp
+[121/158] Compiling ebmlelement.cpp
+[122/158] Compiling ebmldeferredbinaryelement.cpp
+[123/158] Compiling itproperties.cpp
+[124/158] Compiling ebmlbinaryelement.cpp
+[125/158] Compiling flacunknownmetadatablock.cpp
+[126/158] Compiling flacproperties.cpp
+[127/158] Compiling itfile.cpp
+[128/158] Compiling flacmetadatablock.cpp
+[129/158] Compiling flacpicture.cpp
+[130/158] Compiling dsfproperties.cpp
+[131/158] Compiling flacfile.cpp
+[132/158] Compiling fileref.cpp
+[133/158] Compiling dsdiffproperties.cpp
+[134/158] Compiling dsffile.cpp
+[135/158] Compiling audioproperties.cpp
+[136/158] Compiling dsdiffdiintag.cpp
+[137/158] Compiling dsdifffile.cpp
+[138/158] Compiling asfproperties.cpp
+[139/158] Compiling asfpicture.cpp
+[140/158] Compiling asftag.cpp
+[141/158] Compiling asfattribute.cpp
+[142/158] Compiling asffile.cpp
+[143/158] Compiling apeproperties.cpp
+[144/158] Compiling apeitem.cpp
+[145/158] Compiling apefooter.cpp
+[146/158] Compiling apetag.cpp
+[147/158] Write sources
+[153/159] Compiling apefile.cpp
+[154/160] Compiling TagBridge.cpp
+[155/160] Compiling CVorbis cvorbis.c
+[157/161] Compiling OggVorbis VorbisDecoder.swift
+[158/161] Compiling MLRender CassetteRenderer.swift
+[159/161] Compiling MLCore EqualizerModel.swift
+[160/163] Compiling MLStore LibraryStore.swift
+[161/163] Compiling MLTags BridgeFile.swift
+[162/164] Compiling MusicLibrary AppModel.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[162/164] Write Objects.LinkFileList
+[163/164] Linking MusicLibrary
+Build of product 'MusicLibrary' complete! (234.55s)
+▸ Baue x86_64 (x86_64-apple-macosx13.0) …
+Building for production...
+[0/158] Write swift-version-7974D3F7F03D5E95.txt
+[1/158] Compiling xmproperties.cpp
+[2/158] Compiling wavpackproperties.cpp
+[3/158] Compiling xmfile.cpp
+[4/158] Compiling trueaudioproperties.cpp
+[5/158] Compiling wavpackfile.cpp
+[6/158] Compiling trueaudiofile.cpp
+[7/158] Compiling tzlib.cpp
+[8/158] Compiling tversionnumber.cpp
+[9/158] Compiling tstringlist.cpp
+[10/158] Compiling tstring.cpp
+[11/158] Compiling tvariant.cpp
+[12/158] Compiling tpicturetype.cpp
+[13/158] Compiling tpropertymap.cpp
+[14/158] Compiling tiostream.cpp
+[15/158] Compiling tfilestream.cpp
+[16/158] Compiling tdebug.cpp
+[17/158] Compiling tfile.cpp
+[18/158] Compiling tdebuglistener.cpp
+[19/158] Compiling tbytevectorstream.cpp
+[20/158] Compiling tbytevectorlist.cpp
+[21/158] Compiling tagutils.cpp
+[22/158] Compiling tbytevector.cpp
+[23/158] Compiling tagunion.cpp
+[24/158] Compiling shortenproperties.cpp
+[25/158] Compiling shortentag.cpp
+[26/158] Compiling tag.cpp
+[27/158] Compiling s3mproperties.cpp
+[28/158] Compiling shortenfile.cpp
+[29/158] Compiling s3mfile.cpp
+[30/158] Compiling wavproperties.cpp
+[31/158] Compiling wavfile.cpp
+[32/158] Compiling rifffile.cpp
+[33/158] Compiling infotag.cpp
+[34/158] Compiling aiffproperties.cpp
+[35/158] Compiling aifffile.cpp
+[36/158] Compiling vorbisproperties.cpp
+[37/158] Compiling vorbisfile.cpp
+[38/158] Compiling xiphcomment.cpp
+[39/158] Compiling speexproperties.cpp
+[40/158] Compiling speexfile.cpp
+[41/158] Compiling opusproperties.cpp
+[42/158] Compiling opusfile.cpp
+[43/158] Compiling oggpageheader.cpp
+[44/158] Compiling oggpage.cpp
+[45/158] Compiling oggfile.cpp
+[46/158] Compiling oggflacfile.cpp
+[47/158] Compiling xingheader.cpp
+[48/158] Compiling mpegproperties.cpp
+[49/158] Compiling mpegheader.cpp
+[50/158] Compiling mpegfile.cpp
+[51/158] Compiling id3v2synchdata.cpp
+[52/158] Compiling id3v2header.cpp
+[53/158] Compiling id3v2tag.cpp
+[54/158] Compiling id3v2framefactory.cpp
+[55/158] Compiling id3v2frame.cpp
+[56/158] Compiling id3v2footer.cpp
+[57/158] Compiling id3v2extendedheader.cpp
+[58/158] Compiling urllinkframe.cpp
+[59/158] Compiling unknownframe.cpp
+[60/158] Compiling unsynchronizedlyricsframe.cpp
+[61/158] Compiling uniquefileidentifierframe.cpp
+[62/158] Compiling textidentificationframe.cpp
+[63/158] Compiling tableofcontentsframe.cpp
+[64/158] Compiling synchronizedlyricsframe.cpp
+[65/158] Compiling privateframe.cpp
+[66/158] Compiling relativevolumeframe.cpp
+[67/158] Compiling popularimeterframe.cpp
+[68/158] Compiling podcastframe.cpp
+[69/158] Compiling generalencapsulatedobjectframe.cpp
+[70/158] Compiling ownershipframe.cpp
+[71/158] Compiling eventtimingcodesframe.cpp
+[72/158] Compiling commentsframe.cpp
+[73/158] Compiling chapterframe.cpp
+[74/158] Compiling attachedpictureframe.cpp
+[75/158] Compiling id3v1tag.cpp
+[76/158] Compiling id3v1genres.cpp
+[77/158] Compiling mpcproperties.cpp
+[78/158] Compiling mpcfile.cpp
+[79/158] Compiling mp4stem.cpp
+[80/158] Compiling mp4tag.cpp
+[81/158] Compiling mp4properties.cpp
+[82/158] Compiling mp4qtchapterlist.cpp
+[83/158] Compiling mp4nerochapterlist.cpp
+[84/158] Compiling mp4item.cpp
+[85/158] Compiling mp4file.cpp
+[86/158] Compiling mp4coverart.cpp
+[87/158] Compiling mp4itemfactory.cpp
+[88/158] Compiling mp4chapter.cpp
+[89/158] Compiling modtag.cpp
+[90/158] Compiling mp4atom.cpp
+[91/158] Compiling modproperties.cpp
+[92/158] Compiling modfilebase.cpp
+[93/158] Compiling modfile.cpp
+[94/158] Compiling matroskasegment.cpp
+[95/158] Compiling matroskasimpletag.cpp
+[96/158] Compiling matroskatag.cpp
+[97/158] Compiling matroskaproperties.cpp
+[98/158] Compiling matroskaseekhead.cpp
+[99/158] Compiling matroskaelement.cpp
+[100/158] Compiling matroskacues.cpp
+[101/158] Compiling matroskafile.cpp
+[102/158] Compiling matroskachapters.cpp
+[103/158] Compiling matroskachapteredition.cpp
+[104/158] Compiling matroskachapter.cpp
+[105/158] Compiling matroskaattachedfile.cpp
+[106/158] Compiling matroskaattachments.cpp
+[107/158] Compiling ebmlvoidelement.cpp
+[108/158] Compiling ebmluintelement.cpp
+[109/158] Compiling ebmlutils.cpp
+[110/158] Compiling ebmlstringelement.cpp
+[111/158] Compiling ebmlmktracks.cpp
+[112/158] Compiling ebmlmktags.cpp
+[113/158] Compiling ebmlmksegment.cpp
+[114/158] Compiling ebmlmkseekhead.cpp
+[115/158] Compiling ebmlmkinfo.cpp
+[116/158] Compiling ebmlmkcues.cpp
+[117/158] Compiling ebmlmkchapters.cpp
+[118/158] Compiling ebmlmkattachments.cpp
+[119/158] Compiling ebmlmasterelement.cpp
+[120/158] Compiling ebmlfloatelement.cpp
+[121/158] Compiling ebmlelement.cpp
+[122/158] Compiling ebmldeferredbinaryelement.cpp
+[123/158] Compiling itproperties.cpp
+[124/158] Compiling ebmlbinaryelement.cpp
+[125/158] Compiling itfile.cpp
+[126/158] Compiling flacproperties.cpp
+[127/158] Compiling flacunknownmetadatablock.cpp
+[128/158] Compiling flacmetadatablock.cpp
+[129/158] Compiling flacpicture.cpp
+[130/158] Compiling dsfproperties.cpp
+[131/158] Compiling flacfile.cpp
+[132/158] Compiling fileref.cpp
+[133/158] Compiling dsffile.cpp
+[134/158] Compiling dsdiffproperties.cpp
+[135/158] Compiling audioproperties.cpp
+[136/158] Compiling dsdifffile.cpp
+[137/158] Compiling dsdiffdiintag.cpp
+[138/158] Compiling asfproperties.cpp
+[139/158] Compiling asfpicture.cpp
+[140/158] Compiling asftag.cpp
+[141/158] Compiling asfattribute.cpp
+[142/158] Compiling asffile.cpp
+[143/158] Compiling apeproperties.cpp
+[144/158] Compiling apeitem.cpp
+[145/158] Compiling apetag.cpp
+[146/158] Compiling apefooter.cpp
+[146/158] Write sources
+[153/159] Compiling apefile.cpp
+[154/160] Compiling TagBridge.cpp
+[155/160] Compiling CVorbis cvorbis.c
+[157/161] Compiling OggVorbis VorbisDecoder.swift
+[158/161] Compiling MLRender CassetteRenderer.swift
+[159/161] Compiling MLCore EqualizerModel.swift
+[160/163] Compiling MLStore LibraryStore.swift
+[161/163] Compiling MLTags BridgeFile.swift
+[162/164] Compiling MusicLibrary AppModel.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[162/164] Write Objects.LinkFileList
+[163/164] Linking MusicLibrary
+Build of product 'MusicLibrary' complete! (207.45s)
+▸ Erstelle App-Bundle …
+▸ Prüfe Architekturen …
+Architectures in the fat file: build/Music Library.app/Contents/MacOS/MusicLibrary are: x86_64 arm64 
+▸ Mindest-macOS je Architektur:
+    minos 13.0
+    minos 13.0
+▸ Ad-hoc-Signatur …
+build/Music Library.app: replacing existing signature
+build/Music Library.app: valid on disk
+build/Music Library.app: satisfies its Designated Requirement
+✓ build/Music Library.app

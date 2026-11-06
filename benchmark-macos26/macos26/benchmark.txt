@@ -1,0 +1,56 @@
+Music Library – Messlauf mit 10000 Titeln
+Version 26.7.2 (Build 25G332) · arm64 · Apple M1 (Virtual)
+Systemeinstellung „Bewegung reduzieren“: an (für die Messung übergangen – Animationen laufen)
+
+Messung                                                     Mittel     p95     Max   (ms bzw. %)
+Index aufbauen (10000 Titel)                                 241.5    241.5    241.5
+Alle Listen berechnen (Hintergrund)                          628.0    628.0    628.0
+Suche berechnen (Hintergrund)                                519.6    651.1    651.1
+Bereich wechseln                                             282.7    620.0    620.0
+Titel: Ansicht „Raster“ öffnen                               100.6    100.6    100.6
+Titel · Raster: Scrollschritt                                 39.5     68.9     73.7
+Titel: Ansicht „Kompaktes Raster“ öffnen                     497.6    497.6    497.6
+Titel · Kompaktes Raster: Scrollschritt                      107.2    163.1    172.6
+Titel: Ansicht „Liste“ öffnen                                381.0    381.0    381.0
+Titel · Liste: Scrollschritt                                  47.0     80.9     93.4
+Titel: Ansicht „Detailliste“ öffnen                          413.9    413.9    413.9
+Titel · Detailliste: Scrollschritt                            45.0     63.1     82.4
+Titel: Ansicht „Cover Flow“ öffnen                           296.8    296.8    296.8
+Alben: Ansicht „Raster“ öffnen                                 0.2      0.2      0.2
+Alben · Raster: Scrollschritt                                 33.3     74.9     87.4
+Alben: Ansicht „Kompaktes Raster“ öffnen                     214.7    214.7    214.7
+Alben · Kompaktes Raster: Scrollschritt                       69.5    113.7    147.9
+Alben: Ansicht „Liste“ öffnen                                349.3    349.3    349.3
+Alben · Liste: Scrollschritt                                  72.1    127.4    137.9
+Alben: Ansicht „Detailliste“ öffnen                          293.5    293.5    293.5
+Alben · Detailliste: Scrollschritt                            49.3     67.1     74.8
+Alben: Ansicht „Cover Flow“ öffnen                           336.9    336.9    336.9
+Interpreten: Ansicht „Raster“ öffnen                         171.2    171.2    171.2
+Interpreten · Raster: Scrollschritt                           46.7     85.9     98.0
+Interpreten: Ansicht „Kompaktes Raster“ öffnen               443.9    443.9    443.9
+Interpreten · Kompaktes Raster: Scrollschritt                 90.8    127.6    142.9
+Interpreten: Ansicht „Liste“ öffnen                          398.1    398.1    398.1
+Interpreten · Liste: Scrollschritt                            72.6    104.4    138.2
+Interpreten: Ansicht „Detailliste“ öffnen                    186.7    186.7    186.7
+Interpreten · Detailliste: Scrollschritt                      29.1     45.9     54.9
+Interpreten: Ansicht „Cover Flow“ öffnen                     340.0    340.0    340.0
+Genres: Ansicht „Raster“ öffnen                                0.2      0.2      0.2
+Genres · Raster: Scrollschritt                                 0.4      0.7      0.9
+Genres: Ansicht „Kompaktes Raster“ öffnen                    182.0    182.0    182.0
+Genres: Ansicht „Liste“ öffnen                               118.7    118.7    118.7
+Genres: Ansicht „Detailliste“ öffnen                         124.0    124.0    124.0
+Genres · Detailliste: Scrollschritt                            0.4      0.6      0.8
+Genres: Ansicht „Cover Flow“ öffnen                           84.2     84.2     84.2
+Suche tippen (je Taste, Hauptthread)                          23.4    107.5    107.5
+Suche: Ergebnis sichtbar nach letzter Taste                  299.0    299.0    299.0
+Suche: Ergebnis zeichnen (Hauptthread)                         2.2      2.2      2.2
+Player öffnen/schließen (alle Designs)                       211.9    558.0    558.0
+Leerlauf mit Wiedergabe: Verspätung je Bild                   91.3    131.8    132.8
+Leerlauf mit Wiedergabe: Hauptthread belegt [%]               22.2     22.2     22.2
+Leerlauf mit Wiedergabe: Prozess-CPU [%]                      22.7     22.7     22.7
+Großer Player (Vinyl) läuft: Hauptthread belegt [%]           33.1     33.1     33.1
+Großer Player (Vinyl) läuft: Prozess-CPU [%]                  33.5     33.5     33.5
+
+Hinweise:
+- Genres/Kompaktes Raster: keine Scrollfläche gefunden
+- Genres/Liste: keine Scrollfläche gefunden
