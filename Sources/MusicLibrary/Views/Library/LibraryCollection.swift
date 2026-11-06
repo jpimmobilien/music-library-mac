@@ -130,7 +130,11 @@ struct LibraryCollection<Element: Identifiable, MenuContent: View>: View where E
     // MARK: Liste
 
     private func list(_ generation: Int) -> some View {
-        let columns = [GridItem(.adaptive(minimum: 330), spacing: 18, alignment: .top)]
+        // Spaltenzahl aus der Fensterbreite (nicht aus der Inhaltsbreite – siehe `TileMetrics.columns`)
+        let count = max(1, Int((TileMetrics.available(viewport) + 18) / (330 + 18)))
+        let columns = TileMetrics.flexibleForComparison
+            ? [GridItem(.adaptive(minimum: 330), spacing: 18, alignment: .top)]
+            : Array(repeating: GridItem(.flexible(minimum: 200), spacing: 18, alignment: .top), count: count)
         return LazyVGrid(columns: columns, alignment: .leading, spacing: 0) {
             ForEach(Array(elements.enumerated()), id: \.element.id) { index, element in
                 row(index, element, generation)

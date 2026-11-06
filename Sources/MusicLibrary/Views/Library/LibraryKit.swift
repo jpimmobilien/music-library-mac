@@ -367,23 +367,38 @@ struct TileMetrics: Equatable {
         let count = max(1, Int(((usable + spacing) / (width + spacing)).rounded(.down)))
         columnCount = count
         let fill = (usable - CGFloat(count - 1) * spacing) / CGFloat(count)
-        tileWidth = max(40, min(fill, width * 1.5))
+        tileWidth = max(40, min(fill, width * 1.5)).rounded(.down)
         // Kleine Kacheln laden kleinere Cover (schneller, weniger Speicher auf älteren Macs), große ein großes.
         let artwork = ArtworkSize.forTile(points: tileWidth, scale: scale)
         style = TileStyle(compact: compact, showSecondary: o.showSecondaryText, showDetails: o.showDetails, artworkSize: artwork)
     }
 
-    /// Genau `columnCount` flexible Spalten: füllen die tatsächliche Breite, nie breiter als 1,5 × Kachelgröße.
+    /// Genau `columnCount` Spalten mit **fester** Breite (aus der Fenstergröße berechnet).
+    ///
+    /// v2.1-Fehlerbehebung (macOS 26, auch Version 2.0 betroffen): Mit flexiblen bzw. adaptiven Spalten hing die
+    /// Kachelgröße von der Inhaltsbreite der Scrollfläche ab. Bei immer sichtbaren Rollbalken (Maus statt Trackpad)
+    /// und einem Inhalt knapp so hoch wie das Fenster entstand eine Endlosschleife: Rollbalken erscheint → Kacheln
+    /// schmaler und niedriger → Inhalt passt → Rollbalken verschwindet → Kacheln größer → … – AppKit bricht dann
+    /// mit „more Layout Window passes than there are views“ ab. Feste Breiten (mit Platz für den Rollbalken)
+    /// machen die Höhe unabhängig vom Rollbalken.
     var columns: [GridItem] {
-        let maxWidth = max(40, minWidth * 1.5)
-        return Array(repeating: GridItem(.flexible(minimum: 40, maximum: maxWidth), spacing: spacing, alignment: .top), count: columnCount)
+        if Self.flexibleForComparison {
+            let maxWidth = max(40, minWidth * 1.5)
+            return Array(repeating: GridItem(.flexible(minimum: 40, maximum: maxWidth), spacing: spacing, alignment: .top), count: columnCount)
+        }
+        return Array(repeating: GridItem(.fixed(tileWidth), spacing: spacing, alignment: .top), count: columnCount)
     }
+
+    /// Nur zum Nachstellen des alten Verhaltens (`ML_AB_FLEXIBLE_GRID=1`).
+    static let flexibleForComparison = ProcessInfo.processInfo.environment["ML_AB_FLEXIBLE_GRID"] == "1"
+    /// Platz, den ein immer sichtbarer Rollbalken rechts einnimmt.
+    static let scrollerAllowance: CGFloat = 16
 
     var rowSpacing: CGFloat { spacing + (style.compact ? 6 : 12) }
 
     /// Breite für Raster in einem Bereich (Fensterbereich abzüglich der Seitenränder).
     static func available(_ viewport: CGSize) -> CGFloat {
-        viewport.width - Spacing.gutter * 2
+        viewport.width - Spacing.gutter * 2 - (flexibleForComparison ? 0 : scrollerAllowance)
     }
 }
 
