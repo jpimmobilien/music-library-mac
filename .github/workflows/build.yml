@@ -146,14 +146,15 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: macos-14
-            label: Apple Silicon · macOS 14
+          # macOS 14 bietet GitHub seit November 2026 nicht mehr an („configuration … is not supported“)
+          - os: macos-15
+            label: Apple Silicon · macOS 15
             arch: ""
-            name: macos-14
-          - os: macos-14
-            label: Intel-Code über Rosetta · macOS 14
+            name: macos-15
+          - os: macos-15
+            label: Intel-Code über Rosetta · macOS 15
             arch: x86_64
-            name: macos-14-rosetta-x86_64
+            name: macos-15-rosetta-x86_64
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     steps:
