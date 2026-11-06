@@ -377,7 +377,11 @@ struct DevicePaneView: View {
                 .menuStyle(.borderlessButton)
                 .fixedSize()
             } else {
-                Text(browser.device?.displayName ?? "Telefon").font(.system(size: 13, weight: .semibold)).lineLimit(1)
+                Text(browser.device?.displayName ?? "Telefon")
+                    .font(.system(size: 13, weight: .semibold))
+                    .lineLimit(1)
+                    .fixedSize()
+                    .layoutPriority(2)
             }
             if let device = browser.device, device.storages.count > 1 {
                 Picker("", selection: Binding(get: { browser.storageID ?? 0 }, set: { browser.selectStorage($0) })) {
@@ -385,7 +389,8 @@ struct DevicePaneView: View {
                 }
                 .labelsHidden()
                 .pickerStyle(.menu)
-                .fixedSize()
+                .frame(maxWidth: 190)
+                .layoutPriority(1)
             }
             if browser.isLoading && !browser.visible.isEmpty { ProgressView().controlSize(.mini) }
         }

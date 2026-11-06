@@ -301,8 +301,8 @@ struct ConnectionGuideView: View {
                                 .frame(width: 10, height: 10)
                                 Text(option)
                                     .font(.system(size: 7.2, weight: index == 0 ? .semibold : .regular))
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.7)
+                                    .lineLimit(2)
+                                    .fixedSize(horizontal: false, vertical: true)
                             }
                             .padding(.vertical, 3)
                             .padding(.horizontal, 4)
