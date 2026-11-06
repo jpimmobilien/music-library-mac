@@ -70,10 +70,12 @@ struct AppleMusicDates: Sendable {
 
     /// Liest alle gefundenen Mediathek-XML-Dateien (neueste Angabe gewinnt nicht: das **früheste** Datum je Titel
     /// zählt, weil ältere iTunes-Mediatheken das ursprüngliche Hinzufügedatum enthalten).
-    static func loadXML() -> AppleMusicDates? {
+    static func loadXML() -> AppleMusicDates? { loadXML(from: xmlCandidates) }
+
+    static func loadXML(from urls: [URL]) -> AppleMusicDates? {
         var result = AppleMusicDates()
         var found = false
-        for url in xmlCandidates where FileManager.default.isReadableFile(atPath: url.path) {
+        for url in urls where FileManager.default.isReadableFile(atPath: url.path) {
             guard let data = try? Data(contentsOf: url, options: .mappedIfSafe),
                   let plist = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any],
                   let tracks = plist["Tracks"] as? [String: Any] else { continue }
