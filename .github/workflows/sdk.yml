@@ -1,0 +1,31 @@
+name: SDK-Info IOUSBHost
+on:
+  push:
+    branches: [ab-sdk-info]
+jobs:
+  dump:
+    runs-on: macos-15-intel
+    steps:
+      - name: Header und Swift-Schnittstelle
+        run: |
+          mkdir -p out
+          SDK=$(xcrun --show-sdk-path)
+          H=$SDK/System/Library/Frameworks/IOUSBHost.framework/Headers
+          ls $H > out/headers.txt
+          for f in IOUSBHostPipe.h IOUSBHostObject.h IOUSBHostIOSource.h IOUSBHostInterface.h; do
+            echo "===== $f" >> out/headers.txt
+            grep -v "^\s*//\|^\s*\*\|^\s*/\*" $H/$f >> out/headers.txt || true
+          done
+          xcrun swift-synthesize-interface -module-name IOUSBHost -sdk "$SDK" -target x86_64-apple-macos13.0 > out/swift-interface.txt 2>&1 || echo "kein swift-synthesize-interface" >> out/swift-interface.txt
+          grep -n -i "abort\|sendIORequest\|func send\|ioData\|clearStall\|enqueue\|init(__" out/swift-interface.txt > out/relevant.txt || true
+      - name: Ergebnis sichern
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd out
+          git init -q -b ab-sdk-info-ergebnis
+          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A; git commit -q -m sdk
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" ab-sdk-info-ergebnis
+    permissions:
+      contents: write
