@@ -41,9 +41,15 @@ final class MTPWorker: @unchecked Sendable {
             session.commandTimeout = min(timeout, 10)
             session.responseTimeout = max(timeout, 20)
             do {
-                // Reste einer abgebrochenen früheren Verbindung verwerfen (sonst schlägt schon GetDeviceInfo fehl).
-                session.flushStaleData()
-                let info = try session.getDeviceInfo()
+                let info: MTPDeviceInfo
+                do {
+                    info = try session.getDeviceInfo()
+                } catch let e as MTPError where e != .disconnected && e != .busy && e != .accessDenied {
+                    // Reste einer abgebrochenen früheren Verbindung im Kanal? Verwerfen und einmal neu versuchen.
+                    Diagnostics.shared.log(.mtp, "GetDeviceInfo fehlgeschlagen (\(e)) – Kanal wird geleert, neuer Versuch")
+                    session.flushStaleData()
+                    info = try session.getDeviceInfo()
+                }
                 try session.openSession()
                 self.transport = transport
                 self.session = session

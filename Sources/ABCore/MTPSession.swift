@@ -359,7 +359,6 @@ public final class MTPSession {
     /// Liegen noch Daten an, wird die alte Transaktion abgebrochen und der Kanal geleert.
     public func flushStaleData() {
         pending = Data()
-        guard let first = try? transport.read(maxLength: transport.bufferSize, timeout: 0.25), !first.isEmpty else { return }
         try? transport.cancelTransaction(0)
         for _ in 0..<4096 {
             guard let chunk = try? transport.read(maxLength: transport.bufferSize, timeout: 0.5), !chunk.isEmpty else { break }

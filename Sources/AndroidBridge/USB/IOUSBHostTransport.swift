@@ -2,6 +2,7 @@ import Foundation
 import IOKit
 import IOUSBHost
 import ABCore
+import ABObjC
 
 /// IOKit-Rückgabewerte (die Makros aus IOReturn.h werden in Swift nicht importiert).
 enum IOKitReturn {
@@ -49,8 +50,8 @@ final class IOUSBHostTransport: MTPBulkTransport {
     private let interface: IOUSBHostInterface
     private let bulkIn: IOUSBHostPipe
     private let bulkOut: IOUSBHostPipe
-    private let readBuffer: NSMutableData
-    private let writeBuffer: NSMutableData
+    private var readBuffer: NSMutableData
+    private var writeBuffer: NSMutableData
     private var closed = false
 
     /// Öffnet die Schnittstelle exklusiv. Wirft `.busy`, wenn ein anderes Programm (z. B. der macOS-Fotodienst
@@ -58,7 +59,19 @@ final class IOUSBHostTransport: MTPBulkTransport {
     init(interfaceService: io_service_t) throws {
         let iface: IOUSBHostInterface
         do {
-            iface = try IOUSBHostInterface(__ioService: interfaceService, options: [], queue: nil, interestHandler: nil)
+            var made: IOUSBHostInterface?
+            var reason: NSString?
+            var initError: Error?
+            let ok = ABCatchObjCException({
+                do { made = try IOUSBHostInterface(__ioService: interfaceService, options: [], queue: nil, interestHandler: nil) }
+                catch { initError = error }
+            }, &reason)
+            if !ok { throw MTPError.transport("Ausnahme beim Öffnen: \((reason as String?) ?? "?")") }
+            if let initError { throw initError }
+            guard let made else { throw MTPError.transport("Schnittstelle konnte nicht geöffnet werden") }
+            iface = made
+        } catch let e as MTPError {
+            throw e
         } catch {
             throw IOKitReturn.map(error)
         }
@@ -121,22 +134,51 @@ final class IOUSBHostTransport: MTPBulkTransport {
     func close() {
         guard !closed else { return }
         closed = true
-        interface.destroy()
+        _ = try? guarded("Schließen") { interface.destroy() }
+    }
+
+    /// Führt einen IOUSBHost-Aufruf aus; Objective-C-Ausnahmen werden zu Fehlern (statt Absturz).
+    private func guarded<T>(_ what: String, _ body: () throws -> T) throws -> T {
+        var result: Result<T, Error>?
+        var reason: NSString?
+        let ok = ABCatchObjCException({ result = Result { try body() } }, &reason)
+        guard ok, let result else {
+            let text = (reason as String?) ?? "unbekannte Ausnahme"
+            Diagnostics.shared.log(.usb, "Ausnahme in IOUSBHost (\(what)): \(text)", error: true)
+            throw MTPError.transport("Ausnahme in IOUSBHost (\(what)): \(text)")
+        }
+        return try result.get()
+    }
+
+    /// Nach Zeitüberschreitung oder Fehler: laufende Anforderung am Endpunkt synchron abbrechen und einen frischen
+    /// Puffer verwenden – ein noch belegter Puffer darf nicht wiederverwendet werden.
+    private func recover(pipe: IOUSBHostPipe, isRead: Bool, code: Int32?) {
+        _ = try? guarded("Abbruch") { try pipe.__abort(with: .synchronous) }
+        if code == IOKitReturn.pipeStalled { _ = try? guarded("Stillstand aufheben") { try pipe.clearStall() } }
+        if let fresh = try? guarded("Puffer") { try interface.ioData(withCapacity: bufferSize) } {
+            if isRead { readBuffer = fresh } else { writeBuffer = fresh }
+        }
     }
 
     func read(maxLength: Int, timeout: TimeInterval) throws -> Data {
         guard !closed else { throw MTPError.disconnected }
         let length = min(maxLength, bufferSize)
-        readBuffer.length = length
+        let buffer = readBuffer
         var transferred = 0
         do {
-            try bulkIn.__sendIORequest(with: readBuffer, bytesTransferred: &transferred, completionTimeout: timeout)
+            try guarded("Lesen") {
+                buffer.length = length
+                try bulkIn.__sendIORequest(with: buffer, bytesTransferred: &transferred, completionTimeout: max(timeout, 1))
+            }
+        } catch let e as MTPError {
+            recover(pipe: bulkIn, isRead: true, code: nil)
+            throw e
         } catch {
-            let mapped = IOKitReturn.map(error)
-            if IOKitReturn.code(of: error) == IOKitReturn.pipeStalled { try? bulkIn.clearStall() }
-            throw mapped
+            let code = IOKitReturn.code(of: error)
+            recover(pipe: bulkIn, isRead: true, code: code)
+            throw IOKitReturn.map(error)
         }
-        return Data(bytes: readBuffer.bytes, count: transferred)
+        return try guarded("Lesepuffer") { Data(bytes: buffer.bytes, count: min(transferred, length)) }
     }
 
     func write(_ data: Data, timeout: TimeInterval) throws {
@@ -144,19 +186,26 @@ final class IOUSBHostTransport: MTPBulkTransport {
         var offset = 0
         repeat {
             let n = min(bufferSize, data.count - offset)
-            writeBuffer.length = n
-            if n > 0 {
-                data.withUnsafeBytes { (src: UnsafeRawBufferPointer) in
-                    if let base = src.baseAddress {
-                        writeBuffer.mutableBytes.copyMemory(from: base.advanced(by: offset), byteCount: n)
-                    }
-                }
-            }
+            let buffer = writeBuffer
             var transferred = 0
             do {
-                try bulkOut.__sendIORequest(with: writeBuffer, bytesTransferred: &transferred, completionTimeout: timeout)
+                try guarded("Schreiben") {
+                    buffer.length = n
+                    if n > 0 {
+                        data.withUnsafeBytes { (src: UnsafeRawBufferPointer) in
+                            if let base = src.baseAddress {
+                                buffer.mutableBytes.copyMemory(from: base.advanced(by: offset), byteCount: n)
+                            }
+                        }
+                    }
+                    try bulkOut.__sendIORequest(with: buffer, bytesTransferred: &transferred, completionTimeout: max(timeout, 1))
+                }
+            } catch let e as MTPError {
+                recover(pipe: bulkOut, isRead: false, code: nil)
+                throw e
             } catch {
-                if IOKitReturn.code(of: error) == IOKitReturn.pipeStalled { try? bulkOut.clearStall() }
+                let code = IOKitReturn.code(of: error)
+                recover(pipe: bulkOut, isRead: false, code: code)
                 throw IOKitReturn.map(error)
             }
             if transferred < n { throw MTPError.incomplete(expected: UInt64(n), received: UInt64(transferred)) }
@@ -167,15 +216,19 @@ final class IOUSBHostTransport: MTPBulkTransport {
     /// Still-Image-Klassenanforderung „Cancel Request“ (bRequest 0x64) mit Code 0x4001 und Transaktionsnummer.
     func cancelTransaction(_ transactionID: UInt32) throws {
         guard !closed else { return }
-        let payload = try interface.ioData(withCapacity: 6)
-        payload.length = 6
+        let payload = try guarded("Puffer") { try interface.ioData(withCapacity: 6) }
+        try guarded("Puffer") { payload.length = 6 }
         var bytes: [UInt8] = [0x01, 0x40]
         for i in 0..<4 { bytes.append(UInt8((transactionID >> (8 * UInt32(i))) & 0xFF)) }
         payload.replaceBytes(in: NSRange(location: 0, length: 6), withBytes: bytes)
         let request = IOUSBDeviceRequest(bmRequestType: 0x21, bRequest: 0x64, wValue: 0, wIndex: UInt16(interfaceNumber), wLength: 6)
         var transferred = 0
         do {
-            try interface.__send(request, data: payload, bytesTransferred: &transferred, completionTimeout: 2)
+            try guarded("Abbruchanforderung") {
+                try interface.__send(request, data: payload, bytesTransferred: &transferred, completionTimeout: 2)
+            }
+        } catch let e as MTPError {
+            throw e
         } catch {
             throw IOKitReturn.map(error)
         }
@@ -183,7 +236,7 @@ final class IOUSBHostTransport: MTPBulkTransport {
 
     func clearStalls() {
         guard !closed else { return }
-        try? bulkIn.clearStall()
-        try? bulkOut.clearStall()
+        _ = try? guarded("Stillstand aufheben") { try bulkIn.clearStall() }
+        _ = try? guarded("Stillstand aufheben") { try bulkOut.clearStall() }
     }
 }

@@ -15,10 +15,12 @@ var targets: [Target] = [
 ]
 
 #if os(macOS)
+// Abfangen von Objective-C-Ausnahmen aus IOUSBHost (Swift kann das nicht selbst)
+targets.append(.target(name: "ABObjC", path: "Sources/ABObjC"))
 targets.append(
     .executableTarget(
         name: "AndroidBridge",
-        dependencies: ["ABCore"],
+        dependencies: ["ABCore", "ABObjC"],
         path: "Sources/AndroidBridge",
         linkerSettings: [
             .linkedFramework("AppKit"),
