@@ -2,8 +2,9 @@
 #
 #   1. build   macOS 26 (Apple Silicon, Xcode 26): Unit-Tests → arm64 + x86_64 → lipo → App-Bundle
 #              (ad-hoc signiert) → Bildschirmfotos → AndroidBridge.dmg (eingehängt und geprüft)
-#   2. smoke   Fertige DMG installieren und App starten: Apple Silicon (macOS 15, nativ und Intel-Teil über
-#              Rosetta) und echter Intel-Mac (macOS 15, x86_64 nativ). (GitHub bietet keine macOS-13/14-Rechner mehr.)
+#              Danach auf demselben Rechner: DMG installieren und starten – nativ (arm64) und über Rosetta (x86_64)
+#   2. smoke   Fertige DMG auf einem echten Intel-Mac (macOS 15) installieren und starten
+#              (GitHub bietet keine macOS-13/14-Rechner mehr; Apple-Silicon-Rechner sind oft ausgelastet)
 #      intel   Intel-Mac: alle Unit-Tests in x86_64
 #   3. results DMG, Protokolle, Bildschirmfotos in den Zweig „ci-ergebnisse-android-bridge“
 name: Android Bridge
@@ -70,6 +71,19 @@ jobs:
         run: |
           set -o pipefail
           scripts/make_dmg.sh 2>&1 | tee logs/dmg-output.txt
+      - name: Aus der DMG installieren und starten (Apple Silicon nativ + Intel-Teil über Rosetta)
+        run: |
+          set -e
+          MNT="$(mktemp -d)"
+          hdiutil attach dist/AndroidBridge.dmg -nobrowse -readonly -mountpoint "$MNT"
+          mkdir -p "$HOME/Applications"
+          rm -rf "$HOME/Applications/Android Bridge.app"
+          ditto "$MNT/Android Bridge.app" "$HOME/Applications/Android Bridge.app"
+          hdiutil detach "$MNT"
+          codesign --verify --deep --strict --verbose=2 "$HOME/Applications/Android Bridge.app"
+          scripts/run_selftest.sh "$HOME/Applications/Android Bridge.app" logs/selftest-installiert-macos26-arm64.json
+          /usr/sbin/softwareupdate --install-rosetta --agree-to-license || true
+          SNAPSHOT_ARCH=x86_64 scripts/run_selftest.sh "$HOME/Applications/Android Bridge.app" logs/selftest-installiert-macos26-rosetta.json
       - uses: actions/upload-artifact@v4
         with:
           name: AndroidBridge-dmg
@@ -93,14 +107,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: macos-15
-            label: Apple Silicon · macOS 15
-            arch: ""
-            name: macos15-arm64
-          - os: macos-15
-            label: Intel-Code über Rosetta · macOS 15
-            arch: x86_64
-            name: macos15-rosetta
           - os: macos-15-intel
             label: Intel-Mac · macOS 15
             arch: ""
