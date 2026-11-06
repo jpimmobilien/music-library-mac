@@ -277,9 +277,12 @@ enum SnapshotRunner {
     }
 
     private static func previewDeletionRequest() -> DeletionRequest {
-        let files = (0..<12).map { i in
-            DeviceEntry(handle: UInt32(1000 + i), storageID: 0x10001, parent: 100, name: "PXL_2026110\(i % 9)_1\(i % 10)3\(i % 6)07.jpg",
-                        isFolder: false, size: UInt64(2_400_000 + i * 61_000), format: MTPFormat.forFileName("a.jpg"))
+        var files: [DeviceEntry] = []
+        for i in 0..<12 {
+            let name: String = "PXL_2026110" + String(i % 9) + "_1" + String(i % 10) + "3" + String(i % 6) + "07.jpg"
+            let size: UInt64 = 2_400_000 + UInt64(i) * 61_000
+            files.append(DeviceEntry(handle: UInt32(1000 + i), storageID: 0x10001, parent: 100, name: name,
+                                     isFolder: false, size: size, format: MTPFormat.forFileName(name)))
         }
         let folder = DeviceEntry(handle: 101, storageID: 0x10001, parent: 12, name: "Screenshots", isFolder: true, size: 0, format: MTPFormat.association)
         return DeletionRequest(deviceID: 4242, deviceName: "Pixel 6 Pro", entries: files + [folder],

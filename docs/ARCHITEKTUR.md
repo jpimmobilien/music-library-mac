@@ -64,3 +64,42 @@ Voraussetzung. Neue Modelle (z. B. Pixel 11 Pro) funktionieren ohne Anpassung, s
   vorläufigem Namen hoch und löscht das Original erst nach erfolgreicher Prüfung.
 - Prüfung: immer Dateigröße; optional SHA-256 (Ziel wird erneut gelesen und verglichen).
 - Löschen auf dem Telefon nur nach Bestätigung; auf dem Mac nur in den Papierkorb.
+
+## Version 2.0: Löschen auf dem Telefon
+
+- `MTPSession.deleteTree` (ABCore): `DeleteObject` auf das Objekt. Android löscht Ordner rekursiv selbst; Geräte,
+  die nur leere Ordner löschen, werden erkannt (Antwort ≠ OK) – dann werden die Kinder einzeln gelöscht und der
+  Ordner erneut. „Objekt existiert nicht mehr“ gilt als gelöscht. Geschützte Objekte werden mit Antwortcode gemeldet,
+  der Rest wird trotzdem gelöscht. Trennung und Abbruch beenden den Vorgang sofort.
+- `DeletionService` (App): führt eine bestätigte `DeletionRequest` aus, meldet Fortschritt, ermittelt den
+  tatsächlich frei gewordenen Speicher (Speicherinfo vor/nach) und listet nicht gelöschte Objekte mit Grund.
+- Bestätigung (`DeleteConfirmationSheet`): Anzahl Dateien/Ordner, Größe, Speicherorte, Warnung „kein Papierkorb“;
+  bei Ordnern zusätzlich ein Häkchen „Ich verstehe …“. Die Löschtaste ist nie die Standardtaste (Return löscht nicht).
+- Ohne Bestätigung führt kein Weg zu `deleteTree`: Kontextmenüs, Werkzeugleisten, ⌘⌫ und die Duplikatliste rufen
+  ausschließlich `AppModel.requestDeletion` auf, das nur die Bestätigung öffnet.
+
+## Version 2.0: Duplikate finden
+
+Eigener Dienst mit getrennten Teilen:
+
+| Teil | Ort | Aufgabe |
+|---|---|---|
+| Suche | `DuplicateScanner.collect` | Bereiche (Speicher, DCIM, Pictures, Movies, Download, Documents, aktueller Ordner) per Breitensuche erfassen – nur Name, Größe, Typ, Datum. `Android/data`, `Android/obb` und versteckte Ordner werden übersprungen. |
+| Vergleich | `ExactDuplicateFinder` (ABCore) | 1. nur gleich große Dateien; 2. Anfang + Ende (je 64 KB, kleine Dateien vollständig); 3. nur bei gleichem Fingerabdruck die ganze Datei per SHA-256 (gestreamt). Nicht lesbare Dateien werden übersprungen und nie als Duplikat gewertet; Trennung bricht ab. |
+| Ähnliche Bilder | `PerceptualHash` (ABCore) | optional: dHash 9×8 der MTP-Vorschaubilder, Abstand ≤ 5. Ergebnis immer als „ähnlich – nicht identisch“ getrennt. |
+| Vorschläge | `KeepSuggestion` (ABCore) | Kameraordner, Originalname (ohne „(1)“, „Kopie“, „-WA“), älteste Datei; bei ähnlichen Bildern höhere Auflösung. Nur Empfehlung – nichts wird automatisch markiert. |
+| Auswahl | `DuplicateScanner` | markieren, „nur diese behalten“, Vorschlag übernehmen, Gruppe überspringen. Jede Gruppe behält immer mindestens eine Datei – auch über Gruppen hinweg. |
+| Löschen | `AppModel.deleteMarkedDuplicates` → `DeletionService` | Bestätigung mit Gruppen, verbleibenden Dateien, freizugebendem Speicher und Orten; danach Gruppen aktualisieren, Fehler getrennt zeigen. |
+
+## Version 2.0: Gestaltung
+
+Eigenes Designsystem nach den Prinzipien der Musikbibliothek (nicht kopiert):
+
+- `Design/Theme.swift`: Farbtokens (Hell/Dunkel eigenständig, Akzent „Bridge-Mint“), Abstände (4-pt-Raster,
+  Seitenrand 28), Radien, Maße, Bewegung (Federn), Typografie mit Inter/Inter Display (im Paket, SIL OFL 1.1),
+  Glas (macOS 26 `glassEffect`, sonst NSVisualEffectView + Tönung + Lichtkante), verdeckte Titelleiste.
+- `Design/Chrome.swift`: Seitengerüst (großer Titel, Untertitel, Werkzeugkapsel rechts, Fenster-Ziehfläche),
+  Glasknöpfe, Suchfeld, Segmente, schwebende Aktionsleiste, Hinweise, Dialogkopf, Abschnitte.
+- Fenster: Inhalt bis an den Rand, schwebende Glas-Seitenleiste (Ampel-Knöpfe liegen darauf), Atmosphäre-Hintergrund.
+- MTP-Vorschaubilder: schwarze Balken (Android rechnet Hochformatfotos in 160×120 ein) werden symmetrisch erkannt
+  und abgeschnitten (`Letterbox`, ABCore, getestet).
