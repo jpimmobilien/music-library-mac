@@ -63,6 +63,12 @@ final class PlayerService: ObservableObject {
     private var observers: [NSObjectProtocol] = []
     private var resumePoints: [Int64: ResumePoint] = [:]
     private var visualizerOn = false
+    /// Anzahl sichtbarer Pegelanzeigen (Balken, VU-Meter, Aurora, Studio Reel). Die Analyse läuft nur, wenn
+    /// die Visualisierung eingeschaltet ist **und** mindestens eine Anzeige sichtbar ist – unabhängig von der
+    /// Reihenfolge, in der SwiftUI Ansichten ein- und ausblendet.
+    private var visualizerConsumers = 0
+    /// Alben der Ansicht, aus der die Wiedergabe gestartet wurde (für „Zufall nach Alben“; nicht gespeichert).
+    private var albumContext: [[Int64]]?
 
     init(store: LibraryStore, demo: Bool) {
         self.store = store
@@ -138,7 +144,24 @@ final class PlayerService: ObservableObject {
 
     func setVisualizer(_ on: Bool) {
         visualizerOn = on
+        updateMeter()
+    }
+
+    /// Eine Pegelanzeige wird sichtbar (paarweise mit `releaseVisualizer()` aufrufen).
+    func retainVisualizer() {
+        visualizerConsumers += 1
+        updateMeter()
+    }
+
+    func releaseVisualizer() {
+        visualizerConsumers = max(0, visualizerConsumers - 1)
+        updateMeter()
+    }
+
+    private func updateMeter() {
         guard !demo else { return }
+        let on = visualizerOn && visualizerConsumers > 0
+        guard engine.levels.enabled != on else { return }
         engine.levels.enabled = on
         if !on { engine.levels.reset() }
     }
@@ -146,7 +169,10 @@ final class PlayerService: ObservableObject {
     // MARK: - Abspielen
 
     /// Neue Warteschlange (Android `playTracks`). `startIndex == nil` + `.on` = gemischt ab zufälligem Titel.
-    func play(uids: [Int64], startIndex: Int?, shuffle: ShuffleStart, source: PlaybackSource) {
+    /// - Parameter albumContext: Alben der Ansicht, aus der gestartet wurde (Reihenfolge wie angezeigt). Wird später
+    ///   „Zufall“ eingeschaltet, mischt die Wiedergabe nach Alben über diese Alben (v2.1, wie iTunes).
+    func play(uids: [Int64], startIndex: Int?, shuffle: ShuffleStart, source: PlaybackSource, albumContext: [[Int64]]? = nil) {
+        self.albumContext = albumContext
         let available = uids.filter { model?.track($0)?.available ?? false }
         guard !available.isEmpty else {
             model?.toast("Keine verfügbaren Titel – ist das Laufwerk angeschlossen?", isError: true)
@@ -273,10 +299,37 @@ final class PlayerService: ObservableObject {
         }
     }
 
+    /// Zufall ein/aus (Mini-Player, großer Player, Menü, Kontrollzentrum – alle lesen denselben Zustand).
+    /// Wurde aus der Alben-Ansicht gestartet, wird beim Einschalten nach Alben gemischt: das laufende Album
+    /// spielt zu Ende, danach folgen die übrigen Alben der Ansicht in Zufallsfolge, jedes in Titelreihenfolge.
+    /// Die Wiedergabe wird dabei nicht neu gestartet.
     func toggleShuffle() {
-        queue.setShuffle(!queue.shuffleEnabled)
+        let enable = !queue.shuffleEnabled
+        if enable, !queue.isAlbumShuffle, let ctx = albumContext, let cur = queue.currentTrackUid, ctx.count > 1,
+           ctx.contains(where: { $0.contains(cur) }) {
+            let available = ctx.map { album in album.filter { model?.track($0)?.available ?? false } }
+            queue.replaceAlbums(available, currentTrackUid: cur, shuffle: true, source: queue.source)
+        } else {
+            queue.setShuffle(enable)
+        }
         saveState()
     }
+
+    /// „Alben mischen“: zufälliges erstes Album, danach weitere Alben in Zufallsfolge, jedes in Titelreihenfolge.
+    func shuffleAlbums(_ albums: [[Int64]], source: PlaybackSource) {
+        let available = albums.map { album in album.filter { model?.track($0)?.available ?? false } }.filter { !$0.isEmpty }
+        guard !available.isEmpty else {
+            model?.toast("Keine verfügbaren Titel – ist das Laufwerk angeschlossen?", isError: true)
+            return
+        }
+        albumContext = albums
+        finishSession(finished: false)
+        queue.replaceAlbums(available, currentTrackUid: nil, shuffle: true, source: source)
+        loadCurrent(at: nil, autoplay: true)
+    }
+
+    /// Zufall nach Alben aktiv (Anzeige „Alben gemischt“).
+    var isAlbumShuffle: Bool { queue.isAlbumShuffle }
 
     func cycleRepeat() {
         queue.cycleRepeat()

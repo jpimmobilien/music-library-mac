@@ -212,7 +212,46 @@ public struct QueuePlan: Hashable, Codable, Sendable {
 ///   „Zufall“), steht **vorn** – danach folgen alle übrigen genau einmal.
 /// - Eingefügte Titel („Als Nächstes spielen“) folgen direkt auf ihren Vorgänger in der Liste – also auf
 ///   den laufenden Titel – statt an einer zufälligen Stelle zu landen.
+/// Zufall „nach Alben“ (v2.1, wie iTunes): Alben in Zufallsfolge, jedes Album in seiner Titelreihenfolge.
+public enum AlbumShuffle {
+    /// Abspielfolge (Permutation der Listenpositionen). `groups[i]` = Album der Listenposition `i`.
+    /// - `current`: laufender Titel – sein Album kommt zuerst (davor liegende Titel des Albums gelten als gespielt).
+    /// - `avoidFirstGroup`: dieses Album soll nicht als erstes kommen (neuer Durchgang bei „Wiederholen“).
+    public static func order<R: RandomNumberGenerator>(groups: [Int], current: Int?, avoidFirstGroup: Int? = nil, using random: inout R) -> [Int] {
+        guard !groups.isEmpty else { return [] }
+        var members: [Int: [Int]] = [:]
+        var keys: [Int] = []
+        for (i, g) in groups.enumerated() {
+            if members[g] == nil {
+                keys.append(g)
+                members[g] = []
+            }
+            members[g]!.append(i)
+        }
+        var shuffled = keys
+        shuffled.shuffle(using: &random)
+        if let current, groups.indices.contains(current) {
+            let g = groups[current]
+            shuffled.removeAll { $0 == g }
+            shuffled.insert(g, at: 0)
+        } else if let avoid = avoidFirstGroup, shuffled.count > 1, shuffled.first == avoid {
+            shuffled.swapAt(0, Int.random(in: 1..<shuffled.count, using: &random))
+        }
+        return shuffled.flatMap { members[$0] ?? [] }
+    }
+}
+
 public enum ShuffleLogic {
+    /// Neuer Durchgang („Wiederholen“ mit Zufall): neue Zufallsfolge, deren erster Eintrag nicht der zuletzt
+    /// gespielte ist – keine direkte Wiederholung an der Grenze zweier Durchgänge.
+    public static func nextCycle<R: RandomNumberGenerator>(length: Int, lastPlayed: Int?, using random: inout R) -> [Int] {
+        var order = create(length: length, first: nil, using: &random)
+        if length > 1, let last = lastPlayed, order.first == last {
+            order.swapAt(0, Int.random(in: 1..<length, using: &random))
+        }
+        return order
+    }
+
 
     /// Zufällige Reihenfolge aller `length` Positionen; `first` (falls gültig) steht vorn.
     public static func create<R: RandomNumberGenerator>(length: Int, first: Int?, using random: inout R) -> [Int] {

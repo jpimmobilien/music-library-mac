@@ -43,6 +43,8 @@ public struct Track: Identifiable, Hashable, Sendable {
     public var dateModified: Int64
     /// Zeitpunkt der Aufnahme in die Bibliothek in Sekunden seit 1970.
     public var dateAdded: Int64
+    /// Herkunft von `dateAdded` (v2.1): Apple Musik, Dateisystem oder erster Import.
+    public var dateAddedSource: DateAddedSource = .unknown
     /// Codec für die Anzeige, z. B. „AAC“, „MP3“, „FLAC“, „ALAC“.
     public var codec: String?
     public var sampleRate: Int

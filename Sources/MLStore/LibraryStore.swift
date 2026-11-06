@@ -139,7 +139,7 @@ public final class LibraryStore: @unchecked Sendable {
     uid, folderId, path, relativePath, fileName, title, artists, album, albumArtists, genres, composers, grouping, \
     year, trackNumber, trackTotal, discNumber, discTotal, compilation, bpm, rating, comment, durationMs, sizeBytes, \
     dateModified, dateAdded, codec, sampleRate, bitrate, channels, bitsPerSample, titleSort, artistSort, albumSort, \
-    albumArtistSort, composerSort, hasPicture, hasLyrics, available
+    albumArtistSort, composerSort, hasPicture, hasLyrics, available, dateAddedSource
     """
 
     private static func track(_ r: SQLRow) -> Track {
@@ -156,6 +156,7 @@ public final class LibraryStore: @unchecked Sendable {
             albumArtistSort: r.optString(33), composerSort: r.optString(34), hasPicture: r.bool(35),
             hasLyrics: r.bool(36), available: r.bool(37)
         )
+        .withDateAddedSource(DateAddedSource(rawValue: r.int(38)) ?? .unknown)
     }
 
     /// Alle sichtbaren Titel (auch nicht verfügbare – die App blendet sie je nach Ansicht aus).
@@ -221,13 +222,13 @@ public final class LibraryStore: @unchecked Sendable {
 
     /// Neuer Titel. Gibt die neue `uid` zurück.
     @discardableResult
-    public func insertTrack(_ s: TrackRecord, dateAdded: Int64) throws -> Int64 {
-        try sync { db in try Self.insert(db, s, dateAdded: dateAdded) }
+    public func insertTrack(_ s: TrackRecord, dateAdded: Int64, source: DateAddedSource = .firstImport) throws -> Int64 {
+        try sync { db in try Self.insert(db, s, dateAdded: dateAdded, source: source) }
     }
 
-    private static func insert(_ db: SQLiteConnection, _ s: TrackRecord, dateAdded: Int64) throws -> Int64 {
-        let cols = tagColumnList + ", folderId, dateAdded, available"
-        let values = tagValues(s) + [.int(s.folderID), .int(dateAdded), .int(1)]
+    private static func insert(_ db: SQLiteConnection, _ s: TrackRecord, dateAdded: Int64, source: DateAddedSource = .firstImport) throws -> Int64 {
+        let cols = tagColumnList + ", folderId, dateAdded, available, dateAddedSource"
+        let values = tagValues(s) + [.int(s.folderID), .int(dateAdded), .int(1), .int(Int64(source.rawValue))]
         let marks = Array(repeating: "?", count: values.count).joined(separator: ",")
         try db.run("INSERT INTO tracks (\(cols)) VALUES (\(marks))", values)
         return db.lastInsertRowID
@@ -246,10 +247,19 @@ public final class LibraryStore: @unchecked Sendable {
 
     /// Ergebnis eines Einlesevorgangs in einer Transaktion übernehmen.
     public func applyScan(inserts: [TrackRecord], updates: [(uid: Int64, file: TrackRecord)], missing: [Int64], dateAdded: Int64) throws -> [Int64] {
-        try sync { db in
+        try applyScan(inserts: inserts, addedDates: inserts.map { _ in (dateAdded, .firstImport) }, updates: updates, missing: missing)
+    }
+
+    /// Wie oben, aber mit eigenem Hinzufügedatum je neuem Titel (v2.1). Bestehende Titel behalten ihr Datum –
+    /// ein erneutes Einlesen überschreibt `dateAdded` nie.
+    public func applyScan(inserts: [TrackRecord], addedDates: [(Int64, DateAddedSource)], updates: [(uid: Int64, file: TrackRecord)], missing: [Int64]) throws -> [Int64] {
+        precondition(addedDates.count == inserts.count)
+        return try sync { db in
             try db.transaction {
                 var newUids: [Int64] = []
-                for s in inserts { newUids.append(try Self.insert(db, s, dateAdded: dateAdded)) }
+                for (i, s) in inserts.enumerated() {
+                    newUids.append(try Self.insert(db, s, dateAdded: addedDates[i].0, source: addedDates[i].1))
+                }
                 for u in updates { try Self.update(db, uid: u.uid, u.file) }
                 let now = Self.now()
                 for uid in missing {
@@ -258,6 +268,53 @@ public final class LibraryStore: @unchecked Sendable {
                 return newUids
             }
         }
+    }
+
+    // MARK: - Hinzufügedatum (v2.1)
+
+    /// Stand des Hinzufügedatums aller Titel (auch ausgeblendeter) für die Rekonstruktion.
+    public struct DateAddedRow: Hashable, Sendable {
+        public let uid: Int64
+        public let path: String
+        public let dateAdded: Int64
+        public let source: DateAddedSource
+        public let available: Bool
+        public let title: String?
+        public let artist: String?
+        public let album: String?
+        public let durationMs: Int64
+        public let sizeBytes: Int64
+    }
+
+    public func dateAddedRows() throws -> [DateAddedRow] {
+        try sync { db in
+            try db.query("SELECT uid, path, dateAdded, dateAddedSource, available, title, artists, album, durationMs, sizeBytes FROM tracks") { r in
+                DateAddedRow(uid: r.int64(0), path: r.string(1), dateAdded: r.int64(2), source: DateAddedSource(rawValue: r.int(3)) ?? .unknown,
+                             available: r.bool(4), title: r.optString(5), artist: ListCodec.decode(r.optString(6)).first, album: r.optString(7),
+                             durationMs: r.int64(8), sizeBytes: r.int64(9))
+            }
+        }
+    }
+
+    /// Hinzufügedaten setzen (eine Transaktion).
+    public func setDateAdded(_ changes: [(uid: Int64, date: Int64, source: DateAddedSource)]) throws {
+        guard !changes.isEmpty else { return }
+        try sync { db in
+            try db.transaction {
+                for c in changes {
+                    try db.run("UPDATE tracks SET dateAdded = ?, dateAddedSource = ? WHERE uid = ?", [.int(c.date), .int(Int64(c.source.rawValue)), .int(c.uid)])
+                }
+            }
+        }
+    }
+
+    /// Kleiner Schlüssel-Wert-Speicher für einmalige Aufgaben (z. B. „Hinzufügedaten rekonstruiert“).
+    public func meta(_ key: String) throws -> String? {
+        try sync { db in try db.queryOne("SELECT value FROM app_meta WHERE key = ?", [.text(key)]) { $0.string(0) } }
+    }
+
+    public func setMeta(_ key: String, _ value: String) throws {
+        try sync { db in _ = try db.run("INSERT OR REPLACE INTO app_meta (key, value) VALUES (?, ?)", [.text(key), .text(value)]) }
     }
 
     /// Nur Dateiangaben aktualisieren (verschoben/umbenannt, Tags unverändert).

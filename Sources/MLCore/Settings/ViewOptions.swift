@@ -139,7 +139,7 @@ public struct LibraryViewOptions: Hashable, Codable, Sendable {
     /// Sichtbare Spalten der Detailliste, in Reihenfolge.
     public var columns: [DetailColumn]
 
-    public static let coverSizeRange: ClosedRange<Double> = 90...320
+    public static let coverSizeRange: ClosedRange<Double> = 90...560
     public static let spacingRange: ClosedRange<Double> = 6...40
 
     /// Werte werden begrenzt (Größen) bzw. bereinigt (doppelte Spalten entfallen).

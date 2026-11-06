@@ -140,17 +140,22 @@ public enum CassetteColor: String, CaseIterable, Codable, Hashable, Sendable {
     }
 }
 
-/// Größe des Mini-Players.
+/// Größe des Mini-Players. v2.1: zwei zusätzliche Größen mit eigenem Layout („Sehr groß“, „Riesig“);
+/// die gespeicherten Werte der drei bisherigen Größen bleiben unverändert.
 public enum MiniPlayerSize: String, CaseIterable, Codable, Hashable, Sendable {
     case compact = "COMPACT"
     case standard = "STANDARD"
     case large = "LARGE"
+    case extraLarge = "EXTRA_LARGE"
+    case huge = "HUGE"
 
     public var label: String {
         switch self {
-        case .compact: return "Kompakt"
-        case .standard: return "Standard"
+        case .compact: return "Klein"
+        case .standard: return "Mittel"
         case .large: return "Groß"
+        case .extraLarge: return "Sehr groß"
+        case .huge: return "Riesig"
         }
     }
 
@@ -160,7 +165,73 @@ public enum MiniPlayerSize: String, CaseIterable, Codable, Hashable, Sendable {
         case .compact: return 64
         case .standard: return 84
         case .large: return 112
+        case .extraLarge: return 148
+        case .huge: return 196
         }
+    }
+
+    /// Größen mit eigenem, großzügigem Layout (zweizeilige Bedienung, EQ und Tonhöhe direkt erreichbar).
+    public var isExpanded: Bool { self == .extraLarge || self == .huge }
+}
+
+/// Hintergrund des großen Players (v2.1). `auto` = wie bisher aus dem Cover bzw. dem Design.
+public enum PlayerBackgroundStyle: String, CaseIterable, Codable, Hashable, Sendable {
+    case auto = "AUTO"
+    case smokedGlass = "SMOKED_GLASS"
+    case white = "WHITE"
+    case black = "BLACK"
+    case lightGray = "LIGHT_GRAY"
+    case darkGray = "DARK_GRAY"
+    case pink = "PINK"
+    case blue = "BLUE"
+    case violet = "VIOLET"
+    case custom = "CUSTOM"
+
+    public var label: String {
+        switch self {
+        case .auto: return "Automatisch (Cover)"
+        case .smokedGlass: return "Rauchglas"
+        case .white: return "Weiß"
+        case .black: return "Schwarz"
+        case .lightGray: return "Hellgrau"
+        case .darkGray: return "Dunkelgrau"
+        case .pink: return "Rosa"
+        case .blue: return "Blau"
+        case .violet: return "Violett"
+        case .custom: return "Eigene Farbe"
+        }
+    }
+
+    /// Grundfarbe (ARGB) der festen Farben; `nil` für `auto` und `custom` (eigene Farbe aus den Einstellungen).
+    public var argb: UInt32? {
+        switch self {
+        case .auto, .custom: return nil
+        case .smokedGlass: return 0xFF2A2D33
+        case .white: return 0xFFFAFAFB
+        case .black: return 0xFF050506
+        case .lightGray: return 0xFFD9DBE0
+        case .darkGray: return 0xFF34363C
+        case .pink: return 0xFFF4B6C8
+        case .blue: return 0xFF2F5FAF
+        case .violet: return 0xFF5B3F9E
+        }
+    }
+
+    /// Ist die Fläche hell (dunkle Schrift)? Für `custom` nach Helligkeit der eigenen Farbe.
+    public func isLight(custom: UInt32) -> Bool {
+        let c = argb ?? custom
+        return ColorMath.relativeLuminance(argb: c) > 0.42
+    }
+}
+
+/// Helligkeit nach WCAG (für die automatische Schriftfarbe auf eigenen Hintergründen).
+public enum ColorMath {
+    public static func relativeLuminance(argb: UInt32) -> Double {
+        func lin(_ v: UInt32) -> Double {
+            let c = Double(v & 0xFF) / 255
+            return c <= 0.03928 ? c / 12.92 : pow((c + 0.055) / 1.055, 2.4)
+        }
+        return 0.2126 * lin(argb >> 16) + 0.7152 * lin(argb >> 8) + 0.0722 * lin(argb)
     }
 }
 
@@ -240,6 +311,12 @@ public struct AppSettings: Hashable, Sendable {
     public var miniPlayerSize: MiniPlayerSize = .standard
     /// Mini-Player zeigt Platte/Kassette/CD.
     public var miniPlayerShowsDesign = true
+    // v2.1 – Player-Hintergrund
+    public var playerBackground: PlayerBackgroundStyle = .auto
+    /// Eigene Hintergrundfarbe (ARGB) für `playerBackground == .custom`.
+    public var playerBackgroundCustom: UInt32 = 0xFF6B4FA0
+    /// Hintergrundfarbe auch im Mini-Player andeuten (Tönung).
+    public var playerBackgroundTintsMini = true
     // v2 – Bibliothek / Ansicht
     /// Gespeicherte Ansichten; Schlüssel = `LibraryViewContext.rawValue` (fehlend → Standard des Bereichs).
     public var viewOptions: [String: LibraryViewOptions] = [:]
@@ -364,6 +441,7 @@ extension AppSettings: Codable {
         case skipSeconds, rememberLongTrackPosition, sleepTimerFadeOut, eqUserPresets, keepPitchOnRelaunch
         case maxVolume, lyricsFontSize, lyricsAutoScroll, lyricsUseLrcFiles, mediaKeysEnabled, coverCacheLimitMB
         case recordHistory, recordPlayCounts
+        case playerBackground, playerBackgroundCustom, playerBackgroundTintsMini
     }
 
     public init(from decoder: Decoder) throws {
@@ -403,6 +481,9 @@ extension AppSettings: Codable {
         if let v = value(AnimationLevel.self, .animationLevel) { animationLevel = v }
         if let v = value(CassetteColor.self, .cassetteColor) { cassetteColor = v }
         if let v = value(MiniPlayerSize.self, .miniPlayerSize) { miniPlayerSize = v }
+        if let v = value(PlayerBackgroundStyle.self, .playerBackground) { playerBackground = v }
+        if let v = value(UInt32.self, .playerBackgroundCustom) { playerBackgroundCustom = v }
+        if let v = value(Bool.self, .playerBackgroundTintsMini) { playerBackgroundTintsMini = v }
         if let v = value(Bool.self, .miniPlayerShowsDesign) { miniPlayerShowsDesign = v }
         if let stored = value([String: LibraryViewOptions.StoredViewOptions].self, .viewOptions) {
             for (key, options) in stored {
@@ -467,6 +548,9 @@ extension AppSettings: Codable {
         try c.encode(animationLevel, forKey: .animationLevel)
         try c.encode(cassetteColor, forKey: .cassetteColor)
         try c.encode(miniPlayerSize, forKey: .miniPlayerSize)
+        try c.encode(playerBackground, forKey: .playerBackground)
+        try c.encode(playerBackgroundCustom, forKey: .playerBackgroundCustom)
+        try c.encode(playerBackgroundTintsMini, forKey: .playerBackgroundTintsMini)
         try c.encode(miniPlayerShowsDesign, forKey: .miniPlayerShowsDesign)
         try c.encode(viewOptions, forKey: .viewOptions)
         try c.encode(watchFolders, forKey: .watchFolders)

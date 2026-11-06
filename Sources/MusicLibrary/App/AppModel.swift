@@ -89,6 +89,9 @@ final class AppModel: ObservableObject {
         if settings.watchFolders != oldValue.watchFolders { library.setWatching(settings.watchFolders) }
         if settings.mediaKeysEnabled != oldValue.mediaKeysEnabled { player.setMediaKeysEnabled(settings.mediaKeysEnabled) }
         if settings.coverCacheLimitMB != oldValue.coverCacheLimitMB { ArtworkStore.shared.setDiskLimit(megabytes: settings.coverCacheLimitMB) }
+        if settings.visualizer != oldValue.visualizer || settings.animationLevel != oldValue.animationLevel {
+            player.setVisualizer(settings.visualizer && PlayerMotionPolicy.continuous(settings))
+        }
         if settings.dynamicCoverColors != oldValue.dynamicCoverColors {
             CoverAmbience.shared.update(for: player.current, enabled: settings.dynamicCoverColors)
         }
@@ -115,7 +118,9 @@ final class AppModel: ObservableObject {
             settings.pitch = PitchSettings()
         }
         player.applyAudioSettings(effects: settings.effects, pitch: settings.pitch)
-        // Die Pegelanalyse schaltet der Vollbild-Player selbst ein und aus (läuft nur, solange sie sichtbar ist).
+        // Pegelanalyse: erlaubt, wenn die Visualisierung eingeschaltet ist; sie rechnet nur, solange eine
+        // Pegelanzeige sichtbar ist (`retainVisualizer`/`releaseVisualizer`).
+        player.setVisualizer(settings.visualizer && PlayerMotionPolicy.continuous(settings))
         if !demo {
             if !settings.mediaKeysEnabled { player.setMediaKeysEnabled(false) }
             player.updateSkipInterval()

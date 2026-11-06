@@ -71,6 +71,12 @@ public struct PlayQueue: Hashable, Sendable {
     public private(set) var shuffleEnabled = false
     /// Zufallsreihenfolge (nur bei eingeschaltetem Zufall gepflegt, sonst leer).
     public private(set) var shuffleOrder = StartFirstShuffleOrder.empty
+    /// v2.1: Album je Listenposition, wenn die Warteschlange aus Alben gebildet wurde („Zufall nach Alben“).
+    /// Bei Änderungen der Warteschlange von Hand (Hinzufügen, Entfernen, Verschieben) entfällt die Zuordnung;
+    /// die bestehende Reihenfolge bleibt dabei erhalten.
+    public private(set) var albumGroups: [Int]?
+    /// Zufall nach Alben aktiv.
+    public var isAlbumShuffle: Bool { shuffleEnabled && albumGroups != nil }
     public var repeatMode: RepeatSetting = .off
     /// Woher die Warteschlange stammt (Anzeige).
     public var source: PlaybackSource?
@@ -157,6 +163,7 @@ public struct PlayQueue: Hashable, Sendable {
         with trackUids: [Int64], startIndex: Int?, shuffle: ShuffleStart, source: PlaybackSource? = nil, using random: inout R
     ) {
         self.source = source
+        albumGroups = nil
         switch shuffle {
         case .on: shuffleEnabled = true
         case .off: shuffleEnabled = false
@@ -196,6 +203,7 @@ public struct PlayQueue: Hashable, Sendable {
     public mutating func clear() {
         items = []
         currentIndex = nil
+        albumGroups = nil
         shuffleOrder = .empty
         source = nil
     }
@@ -228,8 +236,19 @@ public struct PlayQueue: Hashable, Sendable {
             currentIndex = order[p + 1]
             return .advanced(wrapped: false)
         }
-        if repeatMode == .all, let first = order.first {
-            currentIndex = first
+        if repeatMode == .all, order.first != nil {
+            if shuffleEnabled && items.count > 1 {
+                // Neuer Durchgang neu gemischt, ohne den gerade gespielten Titel bzw. das Album direkt zu wiederholen
+                var rng = SystemRandomNumberGenerator()
+                let next: [Int]
+                if let groups = albumGroups, groups.count == items.count {
+                    next = AlbumShuffle.order(groups: groups, current: nil, avoidFirstGroup: groups[i], using: &rng)
+                } else {
+                    next = ShuffleLogic.nextCycle(length: items.count, lastPlayed: i, using: &rng)
+                }
+                if let o = StartFirstShuffleOrder(order: next) { shuffleOrder = o }
+            }
+            currentIndex = playOrder.first
             return .advanced(wrapped: true)
         }
         return .endOfQueue
@@ -256,7 +275,49 @@ public struct PlayQueue: Hashable, Sendable {
     public mutating func setShuffle<R: RandomNumberGenerator>(_ enabled: Bool, using random: inout R) {
         guard enabled != shuffleEnabled else { return }
         shuffleEnabled = enabled
+        if enabled, let groups = albumGroups, groups.count == items.count,
+           let o = StartFirstShuffleOrder(order: AlbumShuffle.order(groups: groups, current: currentIndex, using: &random)) {
+            shuffleOrder = o
+            return
+        }
         shuffleOrder = enabled ? StartFirstShuffleOrder(length: items.count, first: currentIndex, using: &random) : .empty
+    }
+
+    /// v2.1: Warteschlange aus Alben (in der Reihenfolge der Ansicht) bilden. Mit `shuffle` werden die Alben
+    /// gemischt, jedes in seiner Titelreihenfolge; `currentTrackUid` (falls enthalten) wird der laufende Titel und
+    /// sein Album kommt zuerst. Ohne laufenden Titel beginnt die Wiedergabe mit dem ersten Titel des ersten Albums
+    /// der Abspielfolge.
+    public mutating func replaceAlbums<R: RandomNumberGenerator>(
+        _ albums: [[Int64]], currentTrackUid: Int64?, shuffle: Bool, source: PlaybackSource?, using random: inout R
+    ) {
+        let nonEmpty = albums.filter { !$0.isEmpty }
+        let flat = nonEmpty.flatMap { $0 }
+        var groups: [Int] = []
+        groups.reserveCapacity(flat.count)
+        for (g, a) in nonEmpty.enumerated() { groups.append(contentsOf: repeatElement(g, count: a.count)) }
+        self.source = source
+        items = makeItems(flat)
+        albumGroups = items.isEmpty ? nil : groups
+        shuffleEnabled = shuffle
+        guard !items.isEmpty else {
+            currentIndex = nil
+            shuffleOrder = .empty
+            return
+        }
+        let cur = currentTrackUid.flatMap { uid in flat.firstIndex(of: uid) }
+        if shuffle {
+            let order = AlbumShuffle.order(groups: groups, current: cur, using: &random)
+            shuffleOrder = StartFirstShuffleOrder(order: order) ?? .empty
+            currentIndex = cur ?? order.first
+        } else {
+            shuffleOrder = .empty
+            currentIndex = cur ?? 0
+        }
+    }
+
+    public mutating func replaceAlbums(_ albums: [[Int64]], currentTrackUid: Int64?, shuffle: Bool, source: PlaybackSource?) {
+        var rng = SystemRandomNumberGenerator()
+        replaceAlbums(albums, currentTrackUid: currentTrackUid, shuffle: shuffle, source: source, using: &rng)
     }
 
     public mutating func setShuffle(_ enabled: Bool) {
@@ -277,6 +338,7 @@ public struct PlayQueue: Hashable, Sendable {
         let new = makeItems(trackUids)
         guard let current = currentIndex else { return startWith(new) }
         let at = current + 1
+        albumGroups = nil
         items.insert(contentsOf: new, at: at)
         if shuffleEnabled { shuffleOrder = shuffleOrder.inserting(at: at, count: new.count) }
         return new
@@ -288,12 +350,14 @@ public struct PlayQueue: Hashable, Sendable {
         guard !trackUids.isEmpty else { return [] }
         let new = makeItems(trackUids)
         guard currentIndex != nil else { return startWith(new) }
+        albumGroups = nil
         items.append(contentsOf: new)
         if shuffleEnabled { shuffleOrder = shuffleOrder.appending(count: new.count) }
         return new
     }
 
     private mutating func startWith(_ new: [Item]) -> [Item] {
+        albumGroups = nil
         items = new
         currentIndex = 0
         shuffleOrder = shuffleEnabled ? StartFirstShuffleOrder(order: Array(new.indices))! : .empty
@@ -319,6 +383,10 @@ public struct PlayQueue: Hashable, Sendable {
     public mutating func removeAll(where shouldRemove: (Item) -> Bool) -> CurrentChange {
         let removed = items.map(shouldRemove)
         guard removed.contains(true) else { return .unchanged }
+        if let groups = albumGroups, groups.count == items.count {
+            // Albenzuordnung der verbleibenden Einträge behalten
+            albumGroups = groups.enumerated().filter { !removed[$0.offset] }.map(\.element)
+        }
         let oldOrder = playOrder
         let oldCurrent = currentIndex
 
@@ -332,6 +400,7 @@ public struct PlayQueue: Hashable, Sendable {
         items = kept
         if kept.isEmpty {
             currentIndex = nil
+            albumGroups = nil
             shuffleOrder = .empty
             return .emptied
         }
@@ -381,6 +450,7 @@ public struct PlayQueue: Hashable, Sendable {
     public mutating func movePlayPosition(from: Int, to: Int) -> Bool {
         guard items.indices.contains(from), items.indices.contains(to) else { return false }
         if from == to { return true }
+        albumGroups = nil
         if shuffleEnabled {
             shuffleOrder = shuffleOrder.movingPlayPosition(from: from, to: to)
         } else {
@@ -408,7 +478,7 @@ public struct PlayQueue: Hashable, Sendable {
 
 extension PlayQueue: Codable {
     private enum CodingKeys: String, CodingKey {
-        case items, currentIndex, shuffleEnabled, shuffleOrder, repeatMode, source, nextItemID
+        case items, currentIndex, shuffleEnabled, shuffleOrder, repeatMode, source, nextItemID, albumGroups
     }
 
     /// Tolerantes Lesen: fehlerhafte Angaben werden korrigiert statt die ganze Warteschlange zu verwerfen.
@@ -450,6 +520,8 @@ extension PlayQueue: Codable {
         } else {
             shuffleOrder = .empty
         }
+        let groups = (try? c.decodeIfPresent([Int].self, forKey: .albumGroups)) ?? nil
+        albumGroups = (groups?.count == items.count && !items.isEmpty) ? groups : nil
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -461,5 +533,6 @@ extension PlayQueue: Codable {
         try c.encode(repeatMode, forKey: .repeatMode)
         try c.encodeIfPresent(source, forKey: .source)
         try c.encode(nextItemID, forKey: .nextItemID)
+        try c.encodeIfPresent(albumGroups, forKey: .albumGroups)
     }
 }

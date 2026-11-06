@@ -20,6 +20,21 @@ enum Schema {
                 try db.setUserVersion(1)
             }
         }
+        try migrateAdditive(db)
+    }
+
+    /// v2.1: nur **hinzufügende** Änderungen (neue Spalte, neue Tabelle) ohne Erhöhung von `user_version`.
+    /// Version 2.0 kann die Datenbank dadurch weiterhin öffnen (sie liest die neue Spalte einfach nicht);
+    /// vorhandene Daten bleiben unverändert. Mehrfaches Ausführen ist unschädlich.
+    static func migrateAdditive(_ db: SQLiteConnection) throws {
+        let columns = Set(try db.query("PRAGMA table_info(tracks)") { $0.string(1) })
+        try db.transaction {
+            if !columns.contains("dateAddedSource") {
+                // 0 = noch nicht rekonstruiert (siehe `DateAddedSource`)
+                try db.execute("ALTER TABLE tracks ADD COLUMN dateAddedSource INTEGER NOT NULL DEFAULT 0")
+            }
+            try db.execute("CREATE TABLE IF NOT EXISTS app_meta (key TEXT PRIMARY KEY, value TEXT NOT NULL)")
+        }
     }
 
     static let v1 = """
