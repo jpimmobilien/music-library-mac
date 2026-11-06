@@ -1,0 +1,546 @@
+Building for debugging...
+[0/14] /Users/runner/work/music-library-mac/music-library-mac/.build/x86_64-apple-macosx/debug/AndroidBridgePackageTests.derived/runner.swift
+[1/14] Write AndroidBridge-entitlement.plist
+[2/14] Write sources
+[6/14] Write swift-version--79AA4F9932D1E87A.txt
+[7/24] Compiling ABObjC ABLegacyUSB.m
+[8/24] Compiling ABObjC ABObjC.m
+[10/24] Emitting module ABCore
+[11/24] Compiling ABCore Duplicates.swift
+[12/24] Compiling ABCore FileEntry.swift
+[13/24] Compiling ABCore FileKind.swift
+[14/24] Compiling ABCore FileLogic.swift
+[15/24] Compiling ABCore Letterbox.swift
+[16/24] Compiling ABCore MTPDatasets.swift
+[17/24] Compiling ABCore MTPSession.swift
+[18/24] Compiling ABCore PTPCodes.swift
+[19/24] Compiling ABCore PTPCoding.swift
+[20/27] Compiling ABCore PTPContainer.swift
+[21/27] Compiling ABCore TransferMath.swift
+[22/27] Compiling ABCore USBClassification.swift
+[23/59] Emitting module AndroidBridge
+[24/68] Compiling ABCoreTests LogicTests.swift
+[25/69] Compiling AndroidBridge MTPWorker.swift
+[26/69] Compiling AndroidBridge ConflictingPrograms.swift
+[27/69] Compiling AndroidBridge DeletionService.swift
+[28/69] Compiling AndroidBridge Diagnostics.swift
+[29/69] Compiling AndroidBridge DuplicateScanner.swift
+[30/69] Compiling AndroidBridge Issues.swift
+[31/69] Compiling AndroidBridge LocalFiles.swift
+[32/69] Compiling AndroidBridge Notifications.swift
+[33/69] Compiling AndroidBridge Settings.swift
+[34/69] Compiling AndroidBridge Stores.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/USB/IOUSBHostTransport.swift:163:47: warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning
+161 |         _ = try? guarded("Abbruch") { try pipe.__abort(with: .synchronous) }
+162 |         if code == IOKitReturn.pipeStalled { _ = try? guarded("Stillstand aufheben") { try pipe.clearStall() } }
+163 |         if let fresh = try? guarded("Puffer") { try interface.ioData(withCapacity: bufferSize) } {
+    |                                               `- warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning
+164 |             if isRead { readBuffer = fresh } else { writeBuffer = fresh }
+165 |         }
+[35/69] Compiling AndroidBridge ThumbnailService.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/USB/IOUSBHostTransport.swift:163:47: warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning
+161 |         _ = try? guarded("Abbruch") { try pipe.__abort(with: .synchronous) }
+162 |         if code == IOKitReturn.pipeStalled { _ = try? guarded("Stillstand aufheben") { try pipe.clearStall() } }
+163 |         if let fresh = try? guarded("Puffer") { try interface.ioData(withCapacity: bufferSize) } {
+    |                                               `- warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning
+164 |             if isRead { readBuffer = fresh } else { writeBuffer = fresh }
+165 |         }
+[36/69] Compiling AndroidBridge SnapshotRunner.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/USB/IOUSBHostTransport.swift:163:47: warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning
+161 |         _ = try? guarded("Abbruch") { try pipe.__abort(with: .synchronous) }
+162 |         if code == IOKitReturn.pipeStalled { _ = try? guarded("Stillstand aufheben") { try pipe.clearStall() } }
+163 |         if let fresh = try? guarded("Puffer") { try interface.ioData(withCapacity: bufferSize) } {
+    |                                               `- warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning
+164 |             if isRead { readBuffer = fresh } else { writeBuffer = fresh }
+165 |         }
+[37/69] Compiling AndroidBridge TransferEngine.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/USB/IOUSBHostTransport.swift:163:47: warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning
+161 |         _ = try? guarded("Abbruch") { try pipe.__abort(with: .synchronous) }
+162 |         if code == IOKitReturn.pipeStalled { _ = try? guarded("Stillstand aufheben") { try pipe.clearStall() } }
+163 |         if let fresh = try? guarded("Puffer") { try interface.ioData(withCapacity: bufferSize) } {
+    |                                               `- warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning
+164 |             if isRead { readBuffer = fresh } else { writeBuffer = fresh }
+165 |         }
+[38/69] Compiling AndroidBridge TransferModels.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/USB/IOUSBHostTransport.swift:163:47: warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning
+161 |         _ = try? guarded("Abbruch") { try pipe.__abort(with: .synchronous) }
+162 |         if code == IOKitReturn.pipeStalled { _ = try? guarded("Stillstand aufheben") { try pipe.clearStall() } }
+163 |         if let fresh = try? guarded("Puffer") { try interface.ioData(withCapacity: bufferSize) } {
+    |                                               `- warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning
+164 |             if isRead { readBuffer = fresh } else { writeBuffer = fresh }
+165 |         }
+[39/69] Compiling AndroidBridge IOUSBHostTransport.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/USB/IOUSBHostTransport.swift:163:47: warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning
+161 |         _ = try? guarded("Abbruch") { try pipe.__abort(with: .synchronous) }
+162 |         if code == IOKitReturn.pipeStalled { _ = try? guarded("Stillstand aufheben") { try pipe.clearStall() } }
+163 |         if let fresh = try? guarded("Puffer") { try interface.ioData(withCapacity: bufferSize) } {
+    |                                               `- warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning
+164 |             if isRead { readBuffer = fresh } else { writeBuffer = fresh }
+165 |         }
+[40/69] Compiling AndroidBridge LegacyUSBTransport.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/USB/IOUSBHostTransport.swift:163:47: warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning
+161 |         _ = try? guarded("Abbruch") { try pipe.__abort(with: .synchronous) }
+162 |         if code == IOKitReturn.pipeStalled { _ = try? guarded("Stillstand aufheben") { try pipe.clearStall() } }
+163 |         if let fresh = try? guarded("Puffer") { try interface.ioData(withCapacity: bufferSize) } {
+    |                                               `- warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning
+164 |             if isRead { readBuffer = fresh } else { writeBuffer = fresh }
+165 |         }
+[41/69] Compiling AndroidBridge USBDeviceMonitor.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/USB/IOUSBHostTransport.swift:163:47: warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning
+161 |         _ = try? guarded("Abbruch") { try pipe.__abort(with: .synchronous) }
+162 |         if code == IOKitReturn.pipeStalled { _ = try? guarded("Stillstand aufheben") { try pipe.clearStall() } }
+163 |         if let fresh = try? guarded("Puffer") { try interface.ioData(withCapacity: bufferSize) } {
+    |                                               `- warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning
+164 |             if isRead { readBuffer = fresh } else { writeBuffer = fresh }
+165 |         }
+[42/69] Compiling AndroidBridge DeletionViews.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/USB/IOUSBHostTransport.swift:163:47: warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning
+161 |         _ = try? guarded("Abbruch") { try pipe.__abort(with: .synchronous) }
+162 |         if code == IOKitReturn.pipeStalled { _ = try? guarded("Stillstand aufheben") { try pipe.clearStall() } }
+163 |         if let fresh = try? guarded("Puffer") { try interface.ioData(withCapacity: bufferSize) } {
+    |                                               `- warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning
+164 |             if isRead { readBuffer = fresh } else { writeBuffer = fresh }
+165 |         }
+[43/69] Compiling AndroidBridge AndroidBridgeApp.swift
+[44/69] Compiling AndroidBridge AppModel.swift
+[45/69] Compiling AndroidBridge BrowserModels.swift
+[46/69] Compiling AndroidBridge Chrome.swift
+[47/69] Compiling AndroidBridge Components.swift
+[48/69] Compiling AndroidBridge Theme.swift
+[49/69] Compiling AndroidBridge DeviceBackend.swift
+[50/69] Compiling AndroidBridge DeviceConnection.swift
+[51/69] Compiling AndroidBridge DeviceManager.swift
+[52/69] Compiling ABCoreTests ProtocolTests.swift
+[53/69] Emitting module ABCoreTests
+[54/69] Compiling ABCoreTests DeleteAndDuplicateTests.swift
+/Users/runner/work/music-library-mac/music-library-mac/Tests/ABCoreTests/DeleteAndDuplicateTests.swift:104:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+102 | 
+103 |     func read(_ file: DuplicateFile, offset: UInt64, length: UInt32) async throws -> Data {
+104 |         lock.lock(); rangeReads.append(file.id); lock.unlock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+105 |         if unreadable.contains(file.id) { throw UnreadableError() }
+106 |         if disconnectOn.contains(file.id) { throw LostConnectionError() }
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/ABCoreTests/DeleteAndDuplicateTests.swift:104:55: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+102 | 
+103 |     func read(_ file: DuplicateFile, offset: UInt64, length: UInt32) async throws -> Data {
+104 |         lock.lock(); rangeReads.append(file.id); lock.unlock()
+    |                                                       `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+105 |         if unreadable.contains(file.id) { throw UnreadableError() }
+106 |         if disconnectOn.contains(file.id) { throw LostConnectionError() }
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/ABCoreTests/DeleteAndDuplicateTests.swift:113:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+111 | 
+112 |     func stream(_ file: DuplicateFile, chunk: @escaping @Sendable (Data) -> Void) async throws {
+113 |         lock.lock(); fullReads.append(file.id); lock.unlock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+114 |         if unreadable.contains(file.id) { throw UnreadableError() }
+115 |         if disconnectOn.contains(file.id) { throw LostConnectionError() }
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/ABCoreTests/DeleteAndDuplicateTests.swift:113:54: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+111 | 
+112 |     func stream(_ file: DuplicateFile, chunk: @escaping @Sendable (Data) -> Void) async throws {
+113 |         lock.lock(); fullReads.append(file.id); lock.unlock()
+    |                                                      `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+114 |         if unreadable.contains(file.id) { throw UnreadableError() }
+115 |         if disconnectOn.contains(file.id) { throw LostConnectionError() }
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/ABCoreTests/DeleteAndDuplicateTests.swift:252:121: warning: mutation of captured var 'last' in concurrently-executing code; this is an error in the Swift 6 language mode
+250 |         var last = DuplicateScanProgress()
+251 |         let lock = NSLock()
+252 |         let groups = try await ExactDuplicateFinder().find(in: [a, b, c], reader: reader, progress: { p in lock.lock(); last = p; lock.unlock() }, isCancelled: { false })
+    |                                                                                                                         `- warning: mutation of captured var 'last' in concurrently-executing code; this is an error in the Swift 6 language mode
+253 |         XCTAssertEqual(groups.count, 1)
+254 |         XCTAssertEqual(Set(groups[0].files.map(\.id)), [a.id, b.id], "Nicht lesbare Datei darf nie als Duplikat gelten")
+[55/69] Compiling ABCoreTests SimulatedMTPDevice.swift
+[56/71] Compiling AndroidBridgePackageTests runner.swift
+[57/71] Emitting module AndroidBridgePackageTests
+[57/71] Write Objects.LinkFileList
+[58/71] Linking AndroidBridgePackageTests
+[60/71] Compiling AndroidBridge DuplicatesView.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/Views/GalleryView.swift:380:31: warning: capture of 'backend' with non-sendable type 'any DeviceBackend' in a '@Sendable' closure
+378 |                     FileManager.default.createFile(atPath: url.path, contents: nil)
+379 |                     let handle = try FileHandle(forWritingTo: url)
+380 |                     try await backend.download(handle: entry.handle, sink: { d in try handle.write(contentsOf: d) },
+    |                               `- warning: capture of 'backend' with non-sendable type 'any DeviceBackend' in a '@Sendable' closure
+381 |                                                progress: { bytes in progress.completedUnitCount = Int64(bytes); return !progress.isCancelled })
+382 |                     try handle.close()
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/MTP/DeviceBackend.swift:6:10: note: protocol 'DeviceBackend' does not conform to the 'Sendable' protocol
+  4 | /// Dateizugriff auf ein verbundenes Gerät. In der App immer echtes MTP über USB;
+  5 | /// die Vorschau-Implementierung existiert ausschließlich für automatische Bildschirmfotos im Build.
+  6 | protocol DeviceBackend: AnyObject {
+    |          `- note: protocol 'DeviceBackend' does not conform to the 'Sendable' protocol
+  7 |     var supportsPartialDownload: Bool { get }
+  8 |     func storages() async throws -> [DeviceStorage]
+[61/71] Compiling AndroidBridge FileManagerView.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/Views/GalleryView.swift:380:31: warning: capture of 'backend' with non-sendable type 'any DeviceBackend' in a '@Sendable' closure
+378 |                     FileManager.default.createFile(atPath: url.path, contents: nil)
+379 |                     let handle = try FileHandle(forWritingTo: url)
+380 |                     try await backend.download(handle: entry.handle, sink: { d in try handle.write(contentsOf: d) },
+    |                               `- warning: capture of 'backend' with non-sendable type 'any DeviceBackend' in a '@Sendable' closure
+381 |                                                progress: { bytes in progress.completedUnitCount = Int64(bytes); return !progress.isCancelled })
+382 |                     try handle.close()
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/MTP/DeviceBackend.swift:6:10: note: protocol 'DeviceBackend' does not conform to the 'Sendable' protocol
+  4 | /// Dateizugriff auf ein verbundenes Gerät. In der App immer echtes MTP über USB;
+  5 | /// die Vorschau-Implementierung existiert ausschließlich für automatische Bildschirmfotos im Build.
+  6 | protocol DeviceBackend: AnyObject {
+    |          `- note: protocol 'DeviceBackend' does not conform to the 'Sendable' protocol
+  7 |     var supportsPartialDownload: Bool { get }
+  8 |     func storages() async throws -> [DeviceStorage]
+[62/71] Compiling AndroidBridge GalleryView.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/Views/GalleryView.swift:380:31: warning: capture of 'backend' with non-sendable type 'any DeviceBackend' in a '@Sendable' closure
+378 |                     FileManager.default.createFile(atPath: url.path, contents: nil)
+379 |                     let handle = try FileHandle(forWritingTo: url)
+380 |                     try await backend.download(handle: entry.handle, sink: { d in try handle.write(contentsOf: d) },
+    |                               `- warning: capture of 'backend' with non-sendable type 'any DeviceBackend' in a '@Sendable' closure
+381 |                                                progress: { bytes in progress.completedUnitCount = Int64(bytes); return !progress.isCancelled })
+382 |                     try handle.close()
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/MTP/DeviceBackend.swift:6:10: note: protocol 'DeviceBackend' does not conform to the 'Sendable' protocol
+  4 | /// Dateizugriff auf ein verbundenes Gerät. In der App immer echtes MTP über USB;
+  5 | /// die Vorschau-Implementierung existiert ausschließlich für automatische Bildschirmfotos im Build.
+  6 | protocol DeviceBackend: AnyObject {
+    |          `- note: protocol 'DeviceBackend' does not conform to the 'Sendable' protocol
+  7 |     var supportsPartialDownload: Bool { get }
+  8 |     func storages() async throws -> [DeviceStorage]
+[63/71] Compiling AndroidBridge LibraryViews.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/Views/GalleryView.swift:380:31: warning: capture of 'backend' with non-sendable type 'any DeviceBackend' in a '@Sendable' closure
+378 |                     FileManager.default.createFile(atPath: url.path, contents: nil)
+379 |                     let handle = try FileHandle(forWritingTo: url)
+380 |                     try await backend.download(handle: entry.handle, sink: { d in try handle.write(contentsOf: d) },
+    |                               `- warning: capture of 'backend' with non-sendable type 'any DeviceBackend' in a '@Sendable' closure
+381 |                                                progress: { bytes in progress.completedUnitCount = Int64(bytes); return !progress.isCancelled })
+382 |                     try handle.close()
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/MTP/DeviceBackend.swift:6:10: note: protocol 'DeviceBackend' does not conform to the 'Sendable' protocol
+  4 | /// Dateizugriff auf ein verbundenes Gerät. In der App immer echtes MTP über USB;
+  5 | /// die Vorschau-Implementierung existiert ausschließlich für automatische Bildschirmfotos im Build.
+  6 | protocol DeviceBackend: AnyObject {
+    |          `- note: protocol 'DeviceBackend' does not conform to the 'Sendable' protocol
+  7 |     var supportsPartialDownload: Bool { get }
+  8 |     func storages() async throws -> [DeviceStorage]
+[64/71] Compiling AndroidBridge MediaViewer.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/Views/GalleryView.swift:380:31: warning: capture of 'backend' with non-sendable type 'any DeviceBackend' in a '@Sendable' closure
+378 |                     FileManager.default.createFile(atPath: url.path, contents: nil)
+379 |                     let handle = try FileHandle(forWritingTo: url)
+380 |                     try await backend.download(handle: entry.handle, sink: { d in try handle.write(contentsOf: d) },
+    |                               `- warning: capture of 'backend' with non-sendable type 'any DeviceBackend' in a '@Sendable' closure
+381 |                                                progress: { bytes in progress.completedUnitCount = Int64(bytes); return !progress.isCancelled })
+382 |                     try handle.close()
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/MTP/DeviceBackend.swift:6:10: note: protocol 'DeviceBackend' does not conform to the 'Sendable' protocol
+  4 | /// Dateizugriff auf ein verbundenes Gerät. In der App immer echtes MTP über USB;
+  5 | /// die Vorschau-Implementierung existiert ausschließlich für automatische Bildschirmfotos im Build.
+  6 | protocol DeviceBackend: AnyObject {
+    |          `- note: protocol 'DeviceBackend' does not conform to the 'Sendable' protocol
+  7 |     var supportsPartialDownload: Bool { get }
+  8 |     func storages() async throws -> [DeviceStorage]
+[65/71] Compiling AndroidBridge OverviewView.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/Views/GalleryView.swift:380:31: warning: capture of 'backend' with non-sendable type 'any DeviceBackend' in a '@Sendable' closure
+378 |                     FileManager.default.createFile(atPath: url.path, contents: nil)
+379 |                     let handle = try FileHandle(forWritingTo: url)
+380 |                     try await backend.download(handle: entry.handle, sink: { d in try handle.write(contentsOf: d) },
+    |                               `- warning: capture of 'backend' with non-sendable type 'any DeviceBackend' in a '@Sendable' closure
+381 |                                                progress: { bytes in progress.completedUnitCount = Int64(bytes); return !progress.isCancelled })
+382 |                     try handle.close()
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/MTP/DeviceBackend.swift:6:10: note: protocol 'DeviceBackend' does not conform to the 'Sendable' protocol
+  4 | /// Dateizugriff auf ein verbundenes Gerät. In der App immer echtes MTP über USB;
+  5 | /// die Vorschau-Implementierung existiert ausschließlich für automatische Bildschirmfotos im Build.
+  6 | protocol DeviceBackend: AnyObject {
+    |          `- note: protocol 'DeviceBackend' does not conform to the 'Sendable' protocol
+  7 |     var supportsPartialDownload: Bool { get }
+  8 |     func storages() async throws -> [DeviceStorage]
+[66/71] Compiling AndroidBridge RootView.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/Views/GalleryView.swift:380:31: warning: capture of 'backend' with non-sendable type 'any DeviceBackend' in a '@Sendable' closure
+378 |                     FileManager.default.createFile(atPath: url.path, contents: nil)
+379 |                     let handle = try FileHandle(forWritingTo: url)
+380 |                     try await backend.download(handle: entry.handle, sink: { d in try handle.write(contentsOf: d) },
+    |                               `- warning: capture of 'backend' with non-sendable type 'any DeviceBackend' in a '@Sendable' closure
+381 |                                                progress: { bytes in progress.completedUnitCount = Int64(bytes); return !progress.isCancelled })
+382 |                     try handle.close()
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/MTP/DeviceBackend.swift:6:10: note: protocol 'DeviceBackend' does not conform to the 'Sendable' protocol
+  4 | /// Dateizugriff auf ein verbundenes Gerät. In der App immer echtes MTP über USB;
+  5 | /// die Vorschau-Implementierung existiert ausschließlich für automatische Bildschirmfotos im Build.
+  6 | protocol DeviceBackend: AnyObject {
+    |          `- note: protocol 'DeviceBackend' does not conform to the 'Sendable' protocol
+  7 |     var supportsPartialDownload: Bool { get }
+  8 |     func storages() async throws -> [DeviceStorage]
+[67/71] Compiling AndroidBridge SettingsView.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/Views/GalleryView.swift:380:31: warning: capture of 'backend' with non-sendable type 'any DeviceBackend' in a '@Sendable' closure
+378 |                     FileManager.default.createFile(atPath: url.path, contents: nil)
+379 |                     let handle = try FileHandle(forWritingTo: url)
+380 |                     try await backend.download(handle: entry.handle, sink: { d in try handle.write(contentsOf: d) },
+    |                               `- warning: capture of 'backend' with non-sendable type 'any DeviceBackend' in a '@Sendable' closure
+381 |                                                progress: { bytes in progress.completedUnitCount = Int64(bytes); return !progress.isCancelled })
+382 |                     try handle.close()
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/MTP/DeviceBackend.swift:6:10: note: protocol 'DeviceBackend' does not conform to the 'Sendable' protocol
+  4 | /// Dateizugriff auf ein verbundenes Gerät. In der App immer echtes MTP über USB;
+  5 | /// die Vorschau-Implementierung existiert ausschließlich für automatische Bildschirmfotos im Build.
+  6 | protocol DeviceBackend: AnyObject {
+    |          `- note: protocol 'DeviceBackend' does not conform to the 'Sendable' protocol
+  7 |     var supportsPartialDownload: Bool { get }
+  8 |     func storages() async throws -> [DeviceStorage]
+[68/71] Compiling AndroidBridge TransferCenterView.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/Views/GalleryView.swift:380:31: warning: capture of 'backend' with non-sendable type 'any DeviceBackend' in a '@Sendable' closure
+378 |                     FileManager.default.createFile(atPath: url.path, contents: nil)
+379 |                     let handle = try FileHandle(forWritingTo: url)
+380 |                     try await backend.download(handle: entry.handle, sink: { d in try handle.write(contentsOf: d) },
+    |                               `- warning: capture of 'backend' with non-sendable type 'any DeviceBackend' in a '@Sendable' closure
+381 |                                                progress: { bytes in progress.completedUnitCount = Int64(bytes); return !progress.isCancelled })
+382 |                     try handle.close()
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/MTP/DeviceBackend.swift:6:10: note: protocol 'DeviceBackend' does not conform to the 'Sendable' protocol
+  4 | /// Dateizugriff auf ein verbundenes Gerät. In der App immer echtes MTP über USB;
+  5 | /// die Vorschau-Implementierung existiert ausschließlich für automatische Bildschirmfotos im Build.
+  6 | protocol DeviceBackend: AnyObject {
+    |          `- note: protocol 'DeviceBackend' does not conform to the 'Sendable' protocol
+  7 |     var supportsPartialDownload: Bool { get }
+  8 |     func storages() async throws -> [DeviceStorage]
+[68/71] Write Objects.LinkFileList
+[69/71] Linking AndroidBridge
+[70/71] Applying AndroidBridge
+Build complete! (156.23s)
+Test Suite 'All tests' started at 2026-11-06 18:35:30.211.
+Test Suite 'AndroidBridgePackageTests.xctest' started at 2026-11-06 18:35:30.218.
+Test Suite 'ClassificationTests' started at 2026-11-06 18:35:30.218.
+Test Case '-[ABCoreTests.ClassificationTests testChargingOnlyKnownVendorNoInterfaces]' started.
+Test Case '-[ABCoreTests.ClassificationTests testChargingOnlyKnownVendorNoInterfaces]' passed (0.009 seconds).
+Test Case '-[ABCoreTests.ClassificationTests testChargingOnlyWithADB]' started.
+Test Case '-[ABCoreTests.ClassificationTests testChargingOnlyWithADB]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.ClassificationTests testMTPWithADBPicksMTPInterface]' started.
+Test Case '-[ABCoreTests.ClassificationTests testMTPWithADBPicksMTPInterface]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.ClassificationTests testOtherDevicesIgnored]' started.
+Test Case '-[ABCoreTests.ClassificationTests testOtherDevicesIgnored]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.ClassificationTests testPixelInMTPModeWithNamedInterface]' started.
+Test Case '-[ABCoreTests.ClassificationTests testPixelInMTPModeWithNamedInterface]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.ClassificationTests testStillImageClassInterface]' started.
+Test Case '-[ABCoreTests.ClassificationTests testStillImageClassInterface]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.ClassificationTests testTetheringIsNotFileTransfer]' started.
+Test Case '-[ABCoreTests.ClassificationTests testTetheringIsNotFileTransfer]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.ClassificationTests testUnknownVendorWithNamedMTPStillWorks]' started.
+Test Case '-[ABCoreTests.ClassificationTests testUnknownVendorWithNamedMTPStillWorks]' passed (0.001 seconds).
+Test Suite 'ClassificationTests' passed at 2026-11-06 18:35:30.236.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.016 (0.018) seconds
+Test Suite 'DatasetTests' started at 2026-11-06 18:35:30.236.
+Test Case '-[ABCoreTests.DatasetTests testFolderInfo]' started.
+Test Case '-[ABCoreTests.DatasetTests testFolderInfo]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.DatasetTests testMTPDateFormatRoundTrip]' started.
+Test Case '-[ABCoreTests.DatasetTests testMTPDateFormatRoundTrip]' passed (0.014 seconds).
+Test Case '-[ABCoreTests.DatasetTests testMTPDateParsing]' started.
+Test Case '-[ABCoreTests.DatasetTests testMTPDateParsing]' passed (0.005 seconds).
+Test Case '-[ABCoreTests.DatasetTests testObjectInfoRoundTrip]' started.
+Test Case '-[ABCoreTests.DatasetTests testObjectInfoRoundTrip]' passed (0.004 seconds).
+Test Case '-[ABCoreTests.DatasetTests testPropertyListParsing]' started.
+Test Case '-[ABCoreTests.DatasetTests testPropertyListParsing]' passed (0.003 seconds).
+Test Case '-[ABCoreTests.DatasetTests testStorageDisplayNameFallback]' started.
+Test Case '-[ABCoreTests.DatasetTests testStorageDisplayNameFallback]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.DatasetTests testStorageInfoParsing]' started.
+Test Case '-[ABCoreTests.DatasetTests testStorageInfoParsing]' passed (0.002 seconds).
+Test Case '-[ABCoreTests.DatasetTests testUploadInfoFor5GBFile]' started.
+Test Case '-[ABCoreTests.DatasetTests testUploadInfoFor5GBFile]' passed (0.001 seconds).
+Test Suite 'DatasetTests' passed at 2026-11-06 18:35:30.267.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.029 (0.031) seconds
+Test Suite 'DeleteTreeTests' started at 2026-11-06 18:35:30.267.
+Test Case '-[ABCoreTests.DeleteTreeTests testCancelledBeforeDeleteThrows]' started.
+Test Case '-[ABCoreTests.DeleteTreeTests testCancelledBeforeDeleteThrows]' passed (0.009 seconds).
+Test Case '-[ABCoreTests.DeleteTreeTests testDeleteFileOnSDCard]' started.
+Test Case '-[ABCoreTests.DeleteTreeTests testDeleteFileOnSDCard]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.DeleteTreeTests testDeleteFolderOnDeviceThatOnlyDeletesEmptyFolders]' started.
+Test Case '-[ABCoreTests.DeleteTreeTests testDeleteFolderOnDeviceThatOnlyDeletesEmptyFolders]' passed (0.004 seconds).
+Test Case '-[ABCoreTests.DeleteTreeTests testDeleteFolderRecursivelyAndroidStyle]' started.
+Test Case '-[ABCoreTests.DeleteTreeTests testDeleteFolderRecursivelyAndroidStyle]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.DeleteTreeTests testDeleteMissingObjectIsNotAnError]' started.
+Test Case '-[ABCoreTests.DeleteTreeTests testDeleteMissingObjectIsNotAnError]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.DeleteTreeTests testDeleteSingleFile]' started.
+Test Case '-[ABCoreTests.DeleteTreeTests testDeleteSingleFile]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.DeleteTreeTests testDisconnectDuringDeleteThrows]' started.
+Test Case '-[ABCoreTests.DeleteTreeTests testDisconnectDuringDeleteThrows]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.DeleteTreeTests testProtectedFileIsReportedOthersDeleted]' started.
+Test Case '-[ABCoreTests.DeleteTreeTests testProtectedFileIsReportedOthersDeleted]' passed (0.004 seconds).
+Test Suite 'DeleteTreeTests' passed at 2026-11-06 18:35:30.291.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.022 (0.023) seconds
+Test Suite 'DuplicateFinderTests' started at 2026-11-06 18:35:30.291.
+Test Case '-[ABCoreTests.DuplicateFinderTests testCancellation]' started.
+Test Case '-[ABCoreTests.DuplicateFinderTests testCancellation]' passed (0.002 seconds).
+Test Case '-[ABCoreTests.DuplicateFinderTests testDifferentHeadsSkipFullHash]' started.
+Test Case '-[ABCoreTests.DuplicateFinderTests testDifferentHeadsSkipFullHash]' passed (2.432 seconds).
+Test Case '-[ABCoreTests.DuplicateFinderTests testDisconnectDuringScanAborts]' started.
+Test Case '-[ABCoreTests.DuplicateFinderTests testDisconnectDuringScanAborts]' passed (0.178 seconds).
+Test Case '-[ABCoreTests.DuplicateFinderTests testEmptyFilesAndFoldersIgnored]' started.
+Test Case '-[ABCoreTests.DuplicateFinderTests testEmptyFilesAndFoldersIgnored]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.DuplicateFinderTests testIdenticalContentDifferentNamesFoldersAndStorages]' started.
+Test Case '-[ABCoreTests.DuplicateFinderTests testIdenticalContentDifferentNamesFoldersAndStorages]' passed (0.181 seconds).
+Test Case '-[ABCoreTests.DuplicateFinderTests testKeepSuggestionPrefersHigherResolutionForSimilar]' started.
+Test Case '-[ABCoreTests.DuplicateFinderTests testKeepSuggestionPrefersHigherResolutionForSimilar]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.DuplicateFinderTests testLargeIdenticalVideosWithoutRangeSupport]' started.
+Test Case '-[ABCoreTests.DuplicateFinderTests testLargeIdenticalVideosWithoutRangeSupport]' passed (2.550 seconds).
+Test Case '-[ABCoreTests.DuplicateFinderTests testSameEdgesDifferentMiddleNeedsFullHash]' started.
+Test Case '-[ABCoreTests.DuplicateFinderTests testSameEdgesDifferentMiddleNeedsFullHash]' passed (0.613 seconds).
+Test Case '-[ABCoreTests.DuplicateFinderTests testSameNameSameContentIsDuplicate]' started.
+Test Case '-[ABCoreTests.DuplicateFinderTests testSameNameSameContentIsDuplicate]' passed (0.004 seconds).
+Test Case '-[ABCoreTests.DuplicateFinderTests testSameSizeDifferentContentIsNotDuplicate]' started.
+Test Case '-[ABCoreTests.DuplicateFinderTests testSameSizeDifferentContentIsNotDuplicate]' passed (0.014 seconds).
+Test Case '-[ABCoreTests.DuplicateFinderTests testSelectionAlwaysKeepsOne]' started.
+Test Case '-[ABCoreTests.DuplicateFinderTests testSelectionAlwaysKeepsOne]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.DuplicateFinderTests testThousandsOfFilesGrouping]' started.
+Test Case '-[ABCoreTests.DuplicateFinderTests testThousandsOfFilesGrouping]' passed (12.731 seconds).
+Test Case '-[ABCoreTests.DuplicateFinderTests testUniqueSizesAreNeverRead]' started.
+Test Case '-[ABCoreTests.DuplicateFinderTests testUniqueSizesAreNeverRead]' passed (0.005 seconds).
+Test Case '-[ABCoreTests.DuplicateFinderTests testUnreadableFileIsSkippedNotGrouped]' started.
+Test Case '-[ABCoreTests.DuplicateFinderTests testUnreadableFileIsSkippedNotGrouped]' passed (0.211 seconds).
+Test Suite 'DuplicateFinderTests' passed at 2026-11-06 18:35:49.216.
+	 Executed 14 tests, with 0 failures (0 unexpected) in 18.923 (18.925) seconds
+Test Suite 'FileLogicTests' started at 2026-11-06 18:35:49.216.
+Test Case '-[ABCoreTests.FileLogicTests testDateAndSizeSort]' started.
+Test Case '-[ABCoreTests.FileLogicTests testDateAndSizeSort]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.FileLogicTests testFileKinds]' started.
+Test Case '-[ABCoreTests.FileLogicTests testFileKinds]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.FileLogicTests testFileNameSanitizing]' started.
+Test Case '-[ABCoreTests.FileLogicTests testFileNameSanitizing]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.FileLogicTests testMacMetadataFilter]' started.
+Test Case '-[ABCoreTests.FileLogicTests testMacMetadataFilter]' passed (0.000 seconds).
+Test Case '-[ABCoreTests.FileLogicTests testMediaFilters]' started.
+Test Case '-[ABCoreTests.FileLogicTests testMediaFilters]' passed (0.000 seconds).
+Test Case '-[ABCoreTests.FileLogicTests testNaturalSortWithFoldersFirst]' started.
+Test Case '-[ABCoreTests.FileLogicTests testNaturalSortWithFoldersFirst]' passed (0.004 seconds).
+Test Case '-[ABCoreTests.FileLogicTests testSearch]' started.
+Test Case '-[ABCoreTests.FileLogicTests testSearch]' passed (0.002 seconds).
+Test Case '-[ABCoreTests.FileLogicTests testUniqueNames]' started.
+Test Case '-[ABCoreTests.FileLogicTests testUniqueNames]' passed (0.001 seconds).
+Test Suite 'FileLogicTests' passed at 2026-11-06 18:35:49.227.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.010 (0.011) seconds
+Test Suite 'LetterboxTests' started at 2026-11-06 18:35:49.227.
+Test Case '-[ABCoreTests.LetterboxTests testBlackImageIsNotCropped]' started.
+Test Case '-[ABCoreTests.LetterboxTests testBlackImageIsNotCropped]' passed (0.010 seconds).
+Test Case '-[ABCoreTests.LetterboxTests testDarkSkyIsNotCropped]' started.
+Test Case '-[ABCoreTests.LetterboxTests testDarkSkyIsNotCropped]' passed (0.012 seconds).
+Test Case '-[ABCoreTests.LetterboxTests testLetterboxIsCropped]' started.
+Test Case '-[ABCoreTests.LetterboxTests testLetterboxIsCropped]' passed (0.016 seconds).
+Test Case '-[ABCoreTests.LetterboxTests testNoBars]' started.
+Test Case '-[ABCoreTests.LetterboxTests testNoBars]' passed (0.015 seconds).
+Test Case '-[ABCoreTests.LetterboxTests testPillarboxIsCropped]' started.
+Test Case '-[ABCoreTests.LetterboxTests testPillarboxIsCropped]' passed (0.015 seconds).
+Test Suite 'LetterboxTests' passed at 2026-11-06 18:35:49.296.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.068 (0.069) seconds
+Test Suite 'PTPCodingTests' started at 2026-11-06 18:35:49.296.
+Test Case '-[ABCoreTests.PTPCodingTests testArrays]' started.
+Test Case '-[ABCoreTests.PTPCodingTests testArrays]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.PTPCodingTests testIntegersRoundTrip]' started.
+Test Case '-[ABCoreTests.PTPCodingTests testIntegersRoundTrip]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.PTPCodingTests testLittleEndianLayout]' started.
+Test Case '-[ABCoreTests.PTPCodingTests testLittleEndianLayout]' passed (0.000 seconds).
+Test Case '-[ABCoreTests.PTPCodingTests testLongStringIsTruncatedWithoutBrokenSurrogate]' started.
+Test Case '-[ABCoreTests.PTPCodingTests testLongStringIsTruncatedWithoutBrokenSurrogate]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.PTPCodingTests testStringsIncludingUnicodeAndEmpty]' started.
+Test Case '-[ABCoreTests.PTPCodingTests testStringsIncludingUnicodeAndEmpty]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.PTPCodingTests testTruncatedDataThrows]' started.
+Test Case '-[ABCoreTests.PTPCodingTests testTruncatedDataThrows]' passed (0.001 seconds).
+Test Suite 'PTPCodingTests' passed at 2026-11-06 18:35:49.301.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
+Test Suite 'PTPContainerTests' started at 2026-11-06 18:35:49.301.
+Test Case '-[ABCoreTests.PTPContainerTests testCommandContainer]' started.
+Test Case '-[ABCoreTests.PTPContainerTests testCommandContainer]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.PTPContainerTests testDataHeaderBelowAndAbove4GB]' started.
+Test Case '-[ABCoreTests.PTPContainerTests testDataHeaderBelowAndAbove4GB]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.PTPContainerTests testInvalidHeaderRejected]' started.
+Test Case '-[ABCoreTests.PTPContainerTests testInvalidHeaderRejected]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.PTPContainerTests testReadRequestSize]' started.
+Test Case '-[ABCoreTests.PTPContainerTests testReadRequestSize]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.PTPContainerTests testZeroLengthPacketRule]' started.
+Test Case '-[ABCoreTests.PTPContainerTests testZeroLengthPacketRule]' passed (0.000 seconds).
+Test Suite 'PTPContainerTests' passed at 2026-11-06 18:35:49.304.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
+Test Suite 'PerceptualHashTests' started at 2026-11-06 18:35:49.305.
+Test Case '-[ABCoreTests.PerceptualHashTests testClusteringSeparatesGroups]' started.
+Test Case '-[ABCoreTests.PerceptualHashTests testClusteringSeparatesGroups]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.PerceptualHashTests testDifferentImagesAreNotSimilar]' started.
+Test Case '-[ABCoreTests.PerceptualHashTests testDifferentImagesAreNotSimilar]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.PerceptualHashTests testInvalidInput]' started.
+Test Case '-[ABCoreTests.PerceptualHashTests testInvalidInput]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.PerceptualHashTests testSameImageDifferentResolutionIsSimilar]' started.
+Test Case '-[ABCoreTests.PerceptualHashTests testSameImageDifferentResolutionIsSimilar]' passed (0.001 seconds).
+Test Suite 'PerceptualHashTests' passed at 2026-11-06 18:35:49.309.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.004 (0.004) seconds
+Test Suite 'SessionTests' started at 2026-11-06 18:35:49.309.
+Test Case '-[ABCoreTests.SessionTests testCancelAtVeryEndDoesNotSendCancelRequest]' started.
+Test Case '-[ABCoreTests.SessionTests testCancelAtVeryEndDoesNotSendCancelRequest]' passed (0.003 seconds).
+Test Case '-[ABCoreTests.SessionTests testCancelDuringDownloadLeavesSessionUsable]' started.
+Test Case '-[ABCoreTests.SessionTests testCancelDuringDownloadLeavesSessionUsable]' passed (0.053 seconds).
+Test Case '-[ABCoreTests.SessionTests testCreateRenameDelete]' started.
+Test Case '-[ABCoreTests.SessionTests testCreateRenameDelete]' passed (0.002 seconds).
+Test Case '-[ABCoreTests.SessionTests testDownloadFramingEdgeCases]' started.
+Test Case '-[ABCoreTests.SessionTests testDownloadFramingEdgeCases]' passed (0.200 seconds).
+Test Case '-[ABCoreTests.SessionTests testLeftoverDataIsFlushedBeforeNewSession]' started.
+Test Case '-[ABCoreTests.SessionTests testLeftoverDataIsFlushedBeforeNewSession]' passed (0.002 seconds).
+Test Case '-[ABCoreTests.SessionTests testListingWithPropertyListAndFallback]' started.
+Test Case '-[ABCoreTests.SessionTests testListingWithPropertyListAndFallback]' passed (0.033 seconds).
+Test Case '-[ABCoreTests.SessionTests testOpenSessionAndDeviceInfo]' started.
+Test Case '-[ABCoreTests.SessionTests testOpenSessionAndDeviceInfo]' passed (0.002 seconds).
+Test Case '-[ABCoreTests.SessionTests testSegmentedDownload]' started.
+Test Case '-[ABCoreTests.SessionTests testSegmentedDownload]' passed (0.058 seconds).
+Test Case '-[ABCoreTests.SessionTests testSinkErrorAbortsTransaction]' started.
+Test Case '-[ABCoreTests.SessionTests testSinkErrorAbortsTransaction]' passed (0.030 seconds).
+Test Case '-[ABCoreTests.SessionTests testStaleReplyIsDiscarded]' started.
+Test Case '-[ABCoreTests.SessionTests testStaleReplyIsDiscarded]' passed (0.002 seconds).
+Test Case '-[ABCoreTests.SessionTests testStoragesAndRootListing]' started.
+Test Case '-[ABCoreTests.SessionTests testStoragesAndRootListing]' passed (0.003 seconds).
+Test Case '-[ABCoreTests.SessionTests testUnknownLengthWithSeparateHeaderTransfer]' started.
+Test Case '-[ABCoreTests.SessionTests testUnknownLengthWithSeparateHeaderTransfer]' passed (0.012 seconds).
+Test Case '-[ABCoreTests.SessionTests testUploadFramingEdgeCases]' started.
+Test Case '-[ABCoreTests.SessionTests testUploadFramingEdgeCases]' passed (0.038 seconds).
+Test Case '-[ABCoreTests.SessionTests testUploadSourceErrorAbortsAndKeepsSessionUsable]' started.
+Test Case '-[ABCoreTests.SessionTests testUploadSourceErrorAbortsAndKeepsSessionUsable]' passed (0.002 seconds).
+Test Suite 'SessionTests' passed at 2026-11-06 18:35:49.750.
+	 Executed 14 tests, with 0 failures (0 unexpected) in 0.439 (0.441) seconds
+Test Suite 'TransferMathTests' started at 2026-11-06 18:35:49.750.
+Test Case '-[ABCoreTests.TransferMathTests testByteFormatting]' started.
+Test Case '-[ABCoreTests.TransferMathTests testByteFormatting]' passed (0.001 seconds).
+Test Case '-[ABCoreTests.TransferMathTests testDurationFormatting]' started.
+Test Case '-[ABCoreTests.TransferMathTests testDurationFormatting]' passed (0.000 seconds).
+Test Case '-[ABCoreTests.TransferMathTests testRateEstimator]' started.
+Test Case '-[ABCoreTests.TransferMathTests testRateEstimator]' passed (0.000 seconds).
+Test Case '-[ABCoreTests.TransferMathTests testRemainingWithoutRate]' started.
+Test Case '-[ABCoreTests.TransferMathTests testRemainingWithoutRate]' passed (0.000 seconds).
+Test Case '-[ABCoreTests.TransferMathTests testStatusFlags]' started.
+Test Case '-[ABCoreTests.TransferMathTests testStatusFlags]' passed (0.000 seconds).
+Test Case '-[ABCoreTests.TransferMathTests testVerification]' started.
+Test Case '-[ABCoreTests.TransferMathTests testVerification]' passed (0.000 seconds).
+Test Suite 'TransferMathTests' passed at 2026-11-06 18:35:49.753.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'AndroidBridgePackageTests.xctest' passed at 2026-11-06 18:35:49.753.
+	 Executed 86 tests, with 0 failures (0 unexpected) in 19.521 (19.535) seconds
+Test Suite 'All tests' passed at 2026-11-06 18:35:49.753.
+	 Executed 86 tests, with 0 failures (0 unexpected) in 19.521 (19.542) seconds
+◇ Test run started.
+↳ Testing Library Version: 124.4
+↳ Target Platform: x86_64-apple-macos14.0
+✔ Test run with 0 tests passed after 0.001 seconds.

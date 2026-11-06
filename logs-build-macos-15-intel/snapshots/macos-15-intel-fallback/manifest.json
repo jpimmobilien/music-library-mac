@@ -1,0 +1,152 @@
+{
+  "architecture" : "Intel (x86_64)",
+  "images" : [
+    {
+      "deviceData" : "keine",
+      "file" : "01-uebersicht-ohne-geraet-hell-1320x840.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "keine",
+      "file" : "01-uebersicht-ohne-geraet-dunkel-1320x840.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "02-uebersicht-geraet-hell-1320x840.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "02-uebersicht-geraet-dunkel-1320x840.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "03-dateimanager-zwei-spalten-hell-1320x840.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "03-dateimanager-zwei-spalten-dunkel-1320x840.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "04-galerie-hell-1320x840.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "04-galerie-dunkel-1320x840.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "05-dateiuebertragung-einschalten-hell-1320x840.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "05-dateiuebertragung-einschalten-dunkel-1320x840.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "keine",
+      "file" : "06-uebertragungen-leer-hell-1320x840.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "keine",
+      "file" : "06-uebertragungen-leer-dunkel-1320x840.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "07-kleines-fenster-hell-1000x660.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "07-kleines-fenster-dunkel-1000x660.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "08-duplikate-bereich-hell-1320x840.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "08-duplikate-bereich-dunkel-1320x840.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "09-duplikate-ergebnisse-hell-1320x840.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "09-duplikate-ergebnisse-dunkel-1320x840.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "10-loeschen-bestaetigen-hell-560x700.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "10-loeschen-bestaetigen-dunkel-560x700.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "11-einstellungen-hell-1320x840.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "11-einstellungen-dunkel-1320x840.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "12-dateimanager-eine-spalte-hell-1320x840.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "12-dateimanager-eine-spalte-dunkel-1320x840.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    }
+  ],
+  "liquidGlass" : false,
+  "macOS" : "Version 15.7.9 (Build 24G830)",
+  "note" : "Gerätedarstellungen verwenden ein Vorschaugerät mit erfundenen Ordnern (kein Telefon am Build-Rechner)."
+}

@@ -1,0 +1,6 @@
+Lauf: 17 (30402af20b6be7969155dec8ff6676cbf86b0431)
+build: abandoned
+dmg: AndroidBridge-dmg-macos-15-intel
+smoke: success
+intel: success
+Fri Nov  6 18:49:16 UTC 2026

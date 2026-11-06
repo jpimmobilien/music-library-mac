@@ -1,0 +1,8 @@
+total 1480
+drwxr-xr-x@  7 runner  staff     306 Nov  6 18:42 .
+drwx------@ 99 runner  staff    3168 Nov  6 18:47 ..
+-rw-r--r--   1 runner  staff  220030 Nov  6 18:42 .background.tiff
+-rw-r--r--   1 runner  staff   16388 Nov  6 18:42 .DS_Store
+-rw-r--r--   1 runner  staff  510433 Nov  6 18:42 .VolumeIcon.icns
+drwxr-xr-x   3 runner  staff     102 Nov  6 18:39 Android Bridge.app
+lrwxr-xr-x   1 runner  staff      13 Nov  6 18:42 Programme -> /Applications
