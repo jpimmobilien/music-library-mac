@@ -1,7 +1,11 @@
-# Abnahme einer fertigen DMG aus einem Build-Lauf (Eingabe: Lauf-Nummer):
-#  1. Starttest: DMG prüfen, installieren, alle Ansichten im Vorschaumodus (Apple Silicon nativ und Intel-Code über Rosetta)
-#  2. Vergleichsmessung 2.0 ↔ 2.1 auf demselben Rechner (je zwei Durchgänge, abwechselnd)
-# Ergebnisse in Zweigen „ci-abnahme-*“. (macOS 14 wird von GitHub nicht mehr angeboten.)
+# Abnahme einer fertigen DMG aus einem Build-Lauf (Eingabe: Lauf-Nummer), je Rechner:
+#  1. DMG prüfen (Prüfsumme, hdiutil), App installieren, Architekturen und Signatur prüfen
+#  2. Aktualisierungstest im normalen Modus: 2.0 liest einen Musikordner ein, 2.1 übernimmt die Datenbank,
+#     2.1 erneut, 2.0 wieder (scripts/upgrade_test.sh)
+#  3. Vorschaubilder aller Ansichten (nur Apple Silicon – Intel-Rechner von GitHub haben kein Metal)
+#  4. Vergleichsmessung 2.0 ↔ 2.1 auf demselben Rechner (je zwei Durchgänge, abwechselnd)
+# Ergebnisse in Zweigen „ci-abnahme-*“. macOS 14 wird von GitHub nicht mehr angeboten; Apple-Silicon-Rechner
+# wurden am 06.11.2026 zeitweise nicht zugeteilt – daher zusätzlich Intel mit macOS 15 und 26.
 name: Abnahme
 
 on:
@@ -21,25 +25,49 @@ env:
   RUN_ID: ${{ inputs.run_id || '42223937971' }}
 
 jobs:
-  smoke:
-    name: Starttest (${{ matrix.label }})
+  abnahme:
+    name: Abnahme (${{ matrix.label }})
     strategy:
       fail-fast: false
       matrix:
         include:
-          # macOS 14 wird nicht mehr angeboten, macOS-15-Apple-Silicon-Rechner wurden am 06.11.2026 nicht zugeteilt
           - os: macos-26
             label: Apple Silicon · macOS 26
-            arch: ""
             name: macos-26
+            arch: ""
+            upgrade: true
+            snapshots: true
+            ab: true
           - os: macos-26
             label: Intel-Code über Rosetta · macOS 26
-            arch: x86_64
             name: macos-26-rosetta-x86_64
+            arch: x86_64
+            upgrade: false
+            snapshots: true
+            ab: false
+          - os: macos-26-intel
+            label: Intel · macOS 26
+            name: macos-26-intel
+            arch: ""
+            upgrade: true
+            snapshots: false
+            ab: true
+          - os: macos-15-intel
+            label: Intel · macOS 15
+            name: macos-15-intel
+            arch: ""
+            upgrade: true
+            snapshots: false
+            ab: false
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 75
+    timeout-minutes: 110
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        if: matrix.upgrade || matrix.ab
+        with:
+          ref: release-2.0
+          path: v20
       - uses: actions/download-artifact@v4
         with:
           name: Music-Library-dmg
@@ -51,39 +79,64 @@ jobs:
         run: /usr/sbin/softwareupdate --install-rosetta --agree-to-license || true
       - name: DMG einhängen und App installieren
         run: |
-          sw_vers
-          uname -m
-          (cd dist && shasum -a 256 -c "Music Library.dmg.sha256")
-          MNT="$(mktemp -d)"
-          hdiutil attach "dist/Music Library.dmg" -nobrowse -readonly -mountpoint "$MNT"
-          mkdir -p "$HOME/Applications"
-          ditto "$MNT/Music Library.app" "$HOME/Applications/Music Library.app"
-          hdiutil detach "$MNT"
-          lipo -archs "$HOME/Applications/Music Library.app/Contents/MacOS/MusicLibrary"
-          codesign --verify --deep --strict --verbose=2 "$HOME/Applications/Music Library.app"
-          /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$HOME/Applications/Music Library.app/Contents/Info.plist"
-      - name: App im Vorschaumodus starten
+          mkdir -p out
+          {
+            sw_vers
+            echo "Rechner: $(uname -m) · $(sysctl -n machdep.cpu.brand_string)"
+            (cd dist && shasum -a 256 -c "Music Library.dmg.sha256")
+            hdiutil verify "dist/Music Library.dmg" 2>&1 | tail -1
+            MNT="$(mktemp -d)"
+            hdiutil attach "dist/Music Library.dmg" -nobrowse -readonly -mountpoint "$MNT" | tail -1
+            ls "$MNT"
+            mkdir -p "$HOME/Applications"
+            ditto "$MNT/Music Library.app" "$HOME/Applications/Music Library.app"
+            hdiutil detach "$MNT" | tail -1
+            echo "Architekturen: $(lipo -archs "$HOME/Applications/Music Library.app/Contents/MacOS/MusicLibrary")"
+            codesign --verify --deep --strict --verbose=2 "$HOME/Applications/Music Library.app" 2>&1
+            echo "Version: $(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$HOME/Applications/Music Library.app/Contents/Info.plist")"
+          } 2>&1 | tee out/dmg.txt
+          test "${PIPESTATUS[0]}" -eq 0
+      - name: Version 2.0 bauen (zum Vergleich)
+        if: matrix.upgrade || matrix.ab
+        run: |
+          X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -n "$X" ]; then sudo xcode-select -s "$X"; fi
+          xcodebuild -version | head -1
+          (cd v20 && scripts/build_app.sh > ../build20.log 2>&1) || (tail -30 build20.log; exit 1)
+          ditto "v20/build/Music Library.app" "v20.app"
+          /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" v20.app/Contents/Info.plist
+      - name: Aktualisierungstest 2.0 → 2.1 → 2.0 (normaler Start)
+        if: matrix.upgrade
+        continue-on-error: true
+        run: scripts/upgrade_test.sh v20.app "$HOME/Applications/Music Library.app" out/aktualisierung
+      - name: Vorschaubilder aller Ansichten
+        if: matrix.snapshots
         continue-on-error: true
         env:
           SNAPSHOT_ARCH: ${{ matrix.arch }}
           ML_SNAPSHOT_ONLY: ${{ matrix.arch == 'x86_64' && '01-bibliothek,03-alben,03-album-detail,10-vinyl,12-kassette,13-equalizer,14-metadaten,17-einstellungen,21-alben-coverflow,21-alben-kompakt,21-alben-detailliste,30-modern-glass,31-aurora,32-studio-reel,34-mini-gross,35-popover-tonhoehe,40-einstellungen-equalizer,50-mini-riesig,50-mini-sehr-gross,51-hintergrund-blau,52-player-formatzeile,52-player-balken-cd,26-titel-raster-gescrollt,27-auswahl-alben,28-loeschen-album,53-equalizer-fenster-pop' || '' }}
         run: |
-          mkdir -p "snapshots/${{ matrix.name }}"
-          scripts/run_snapshots.sh "$HOME/Applications/Music Library.app" "snapshots/${{ matrix.name }}"
-      - name: Messlauf mit 10.000 Titeln
-        if: always()
+          mkdir -p out/snapshots
+          scripts/run_snapshots.sh "$HOME/Applications/Music Library.app" out/snapshots
+      - name: Vergleichsmessung 2.0 ↔ 2.1 (abwechselnd, 10.000 Titel)
+        if: matrix.ab
         continue-on-error: true
-        env:
-          SNAPSHOT_ARCH: ${{ matrix.arch }}
-        run: scripts/run_benchmark.sh "$HOME/Applications/Music Library.app" "benchmark/${{ matrix.name }}" 10000
+        run: |
+          ditto "$HOME/Applications/Music Library.app" v21.app
+          mkdir -p out/ab
+          for round in 1 2; do
+            for v in v20 v21; do
+              ML_BENCH_QUICK=1 BENCHMARK_TIMEOUT=600 scripts/run_benchmark.sh "$v.app" "out/ab/$v-$round" 10000 > "out/ab/$v-$round.out" 2>&1 || true
+              echo "== $v Runde $round"; grep -E "Scrollschritt|Bereich wechseln|Suche tippen|Leerlauf.*%|Großer" "out/ab/$v-$round/benchmark.txt" || tail -5 "out/ab/$v-$round.out"
+            done
+          done 2>&1 | tee out/ab/zusammenfassung.txt
       - name: Ergebnisse in Zweig „ci-abnahme-${{ matrix.name }}“
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          mkdir -p out && cp -R snapshots benchmark out/ 2>/dev/null || true
+          cp build20.log out/ 2>/dev/null || true
           cd out
-          # Bilder verkleinern (JPEG) wie im Build-Workflow
           find . -name "*.png" | while read -r f; do sips -s format jpeg -s formatOptions 82 "$f" --out "${f%.png}.jpg" >/dev/null 2>&1 && rm "$f"; done
           git init -q -b "ci-abnahme-${{ matrix.name }}"
           git config user.name "github-actions[bot]"
@@ -91,53 +144,3 @@ jobs:
           git add -A
           git commit -q -m "Abnahme ${{ matrix.name }}" || true
           git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "ci-abnahme-${{ matrix.name }}"
-
-  ab:
-    name: Vergleich 2.0 ↔ 2.1 (macOS 26, Apple Silicon)
-    runs-on: macos-26
-    timeout-minutes: 120
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/checkout@v4
-        with:
-          ref: release-2.0
-          path: v20
-      - uses: actions/download-artifact@v4
-        with:
-          name: Music-Library-dmg
-          path: dist
-          run-id: ${{ env.RUN_ID }}
-          github-token: ${{ github.token }}
-      - name: Version 2.1 aus der DMG, Version 2.0 bauen
-        run: |
-          MNT="$(mktemp -d)"
-          hdiutil attach "dist/Music Library.dmg" -nobrowse -readonly -mountpoint "$MNT"
-          ditto "$MNT/Music Library.app" "v21.app"
-          hdiutil detach "$MNT"
-          X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
-          if [ -n "$X" ]; then sudo xcode-select -s "$X"; fi
-          (cd v20 && scripts/build_app.sh > ../build20.log 2>&1) || (tail -30 build20.log; exit 1)
-          ditto "v20/build/Music Library.app" "v20.app"
-      - name: Messläufe (abwechselnd)
-        continue-on-error: true
-        run: |
-          mkdir -p ab
-          for round in 1 2; do
-            for v in v20 v21; do
-              ML_BENCH_QUICK=1 BENCHMARK_TIMEOUT=900 scripts/run_benchmark.sh "$v.app" "ab/$v-$round" 10000 > "ab/$v-$round.out" 2>&1 || true
-              echo "== $v Runde $round"; grep -E "Scrollschritt|Bereich wechseln|Suche tippen|Leerlauf.*%|Großer" "ab/$v-$round/benchmark.txt" || tail -5 "ab/$v-$round.out"
-            done
-          done
-      - name: Ergebnisse in Zweig „ci-abnahme-ab“
-        if: always()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          mkdir -p out && cp -R ab out/ 2>/dev/null || true
-          cd out
-          git init -q -b "ci-abnahme-ab"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git commit -q -m "Vergleich 2.0/2.1" || true
-          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "ci-abnahme-ab"
