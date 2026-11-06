@@ -646,6 +646,20 @@ final class AppModel: ObservableObject {
         }
     }
 
+    // MARK: - Hinzufügedatum (v2.1)
+
+    /// Fortschritt/Ergebnis der Bestimmung der Hinzufügedaten (Anzeige in den Einstellungen), `nil` = nichts zu melden.
+    @Published var datesAddedStatus: String?
+    /// Läuft gerade eine Bestimmung?
+    @Published var datesAddedRunning = false
+
+    /// Hinzufügedaten aller Titel neu bestimmen (Einstellungen → Bibliothek). Mit `useAppleMusic` wird zusätzlich die
+    /// Apple-Musik-Mediathek gelesen (macOS fragt dafür einmal nach der Erlaubnis). Echte Daten aus Apple Musik
+    /// werden nie durch schwächere Quellen ersetzt; ein bereits gesetztes Datum wird nie auf später verschoben.
+    func rebuildDatesAdded(useAppleMusic: Bool) {
+        library.reconstructDatesAdded(useAppleMusic: useAppleMusic, force: true)
+    }
+
     // MARK: - Metadaten
 
     func showInfo(_ uids: [Int64]) {

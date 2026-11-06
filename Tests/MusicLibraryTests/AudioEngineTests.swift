@@ -203,20 +203,71 @@ final class AudioEngineTests: XCTestCase {
         XCTAssertEqual(audio.effectiveRate, 0.75, accuracy: 0.001)
     }
 
-    func testLevelMeterFindsToneBand() {
-        let meter = LevelMeter()
-        let buffer = sine(1000, amplitude: 0.5, seconds: 0.1)
-        meter.process(buffer)
-        XCTAssertNil(meter.take(), "ausgeschaltet → keine Werte")
-        meter.enabled = true
-        meter.process(buffer)
-        guard let values = meter.take() else { return XCTFail("keine Pegelwerte") }
+    /// v2.1: Die Pegelanalyse greift jeden Renderzyklus hinter dem Limiter ab (Ringpuffer) und rechnet auf Abruf.
+    func testLevelMeterFollowsRenderedAudio() throws {
+        let audio = AudioEngine(offlineFormat: format)
+        audio.connect(format: format)
+        XCTAssertNil(audio.levels.take(), "ausgeschaltet → keine Werte")
+        audio.levels.enabled = true
+        audio.player.scheduleBuffer(sine(1000, amplitude: 0.5, seconds: 1.0), at: nil)
+        try audio.start()
+        audio.player.play()
+        let out = AVAudioPCMBuffer(pcmFormat: audio.engine.manualRenderingFormat, frameCapacity: 4096)!
+        var rendered = 0
+        while rendered < 22_050 {
+            _ = try audio.engine.renderOffline(512, to: out)   // kleine Zyklen wie bei der Ausgabe
+            rendered += 512
+        }
+        guard let values = audio.levels.take() else { return XCTFail("keine Pegelwerte") }
         XCTAssertEqual(values.count, LevelMeter.bandCount + 2)
         let bands = Array(values.prefix(LevelMeter.bandCount))
         let loudest = bands.indices.max { bands[$0] < bands[$1] }!
+        print("[Audio] Pegel 1 kHz −6 dBFS: Bänder \(bands.map { String(format: "%.2f", $0) }.joined(separator: " ")), L \(values[16]), R \(values[17])")
         // 1 kHz liegt im Band 8 (50 Hz · 280^(8/16) ≈ 837 Hz … 50 Hz · 280^(9/16) ≈ 1,2 kHz)
         XCTAssertEqual(loudest, 8)
-        XCTAssertGreaterThan(values[LevelMeter.bandCount], 0.8) // links ≈ −6 dBFS → 0,9
-        XCTAssertNil(meter.take(), "Werte werden nur einmal geliefert")
+        XCTAssertEqual(bands[8], 0.9, accuracy: 0.05, "−6 dBFS → 0,9")
+        XCTAssertLessThan(bands[2], 0.45, "ferne Bänder bleiben niedrig")
+        XCTAssertGreaterThan(values[LevelMeter.bandCount], 0.8)   // links ≈ −6 dBFS → 0,9
+        // Weitere Abrufe ohne neue Abtastwerte: kurz der letzte Stand, danach Nullen (Anzeige klingt aus)
+        XCTAssertNotNil(audio.levels.take())
+        Thread.sleep(forTimeInterval: 0.2)
+        XCTAssertEqual(audio.levels.take()?.max() ?? 1, 0, "ohne Audio → Ruhe")
+        audio.player.stop()
+        audio.stopEngine()
+    }
+
+    /// v2.1: Jedes eingebaute Preset kommt im Klang an – gemessen an fünf Bandmitten gegen die Filterformel
+    /// (`EqResponse`) inklusive automatischer Aussteuerung. Ausgeschalteter EQ ist neutral.
+    func testEveryBuiltInPresetIsAudible() throws {
+        let probes = [0, 2, 4, 6, 8]   // 31 Hz, 125 Hz, 500 Hz, 2 kHz, 8 kHz
+        var baseline: [Int: Float] = [:]
+        for b in probes {
+            baseline[b] = rms(steady(try render(sine(Double(EqBands.frequencies[b]), amplitude: 0.05, seconds: 1.0))))
+        }
+        let q = EqBands.q
+        let bandwidth = Float(2 / log(2.0) * asinh(1 / (2 * q)))
+        for preset in EqPresets.all {
+            let fx = AudioEffectsSettings(eqEnabled: false).withPreset(preset)   // Preset schaltet den EQ ein
+            XCTAssertTrue(fx.eqEnabled)
+            var line: [String] = []
+            for b in probes {
+                let f = Double(EqBands.frequencies[b])
+                let out = rms(steady(try render(sine(f, amplitude: 0.05, seconds: 1.0)) { p in
+                    p.bandGains = fx.effectiveBands
+                    p.bandwidth = bandwidth
+                    p.headroomDb = fx.headroomDb
+                }))
+                let measured = db(out / baseline[b]!)
+                let expected = Float(EqResponse.equalizerDb(f, bands: fx.effectiveBands)) + fx.headroomDb
+                line.append(String(format: "%.0f Hz %+.1f/%+.1f", f, measured, expected))
+                XCTAssertEqual(measured, expected, accuracy: 1.5, "Preset \(preset.name) bei \(f) Hz")
+            }
+            print("[Audio] Preset \(preset.name) (gemessen/erwartet dB): " + line.joined(separator: " · "))
+        }
+        // EQ aus → neutral, auch mit Preset-Bändern
+        let off = AudioEffectsSettings(eqEnabled: true).withPreset(EqPresets.rock)
+        var disabled = off
+        disabled.eqEnabled = false
+        XCTAssertTrue(disabled.effectiveBands.allSatisfy { $0 == 0 })
     }
 }

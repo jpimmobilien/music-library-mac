@@ -21,8 +21,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: macos-26
-            label: Xcode 26 · Apple Silicon
+          # Apple-Silicon-Rechner mit macOS 26 wurden von GitHub zeitweise nicht zugeteilt – Intel mit Xcode 26 prüft dasselbe SDK
+          - os: macos-26-intel
+            label: Xcode 26 · Intel
           - os: macos-15-intel
             label: Xcode 16 · Intel
     runs-on: ${{ matrix.os }}
@@ -47,11 +48,20 @@ jobs:
           tail -5 build.log
           exit $STATUS
       - name: Tests bauen
-        if: success() && matrix.os == 'macos-26'
+        if: success() && matrix.os == 'macos-26-intel'
         run: |
           set +e
           swift build --build-tests > tests.log 2>&1
           STATUS=$?
           grep -n "error:" tests.log | sed 's|/Users/runner/work/music-library-mac/music-library-mac/||' | sort -u | head -200
           tail -3 tests.log
+          exit $STATUS
+      - name: Tests ausführen (MLCore, MLStore, Klangkette)
+        if: success() && matrix.os == 'macos-26-intel'
+        run: |
+          set +e
+          swift test --skip-build --filter "V21|DateAdded|AlbumShuffle|AudioEngineTests|TimePitch|LibraryStoreTests|PlayQueue" > run.log 2>&1
+          STATUS=$?
+          grep -E "error|failed|passed|\\[Audio\\]|\\[Pitch\\]" run.log | head -150
+          tail -5 run.log
           exit $STATUS

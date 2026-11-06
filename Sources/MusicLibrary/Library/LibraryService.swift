@@ -21,7 +21,7 @@ final class LibraryService {
     nonisolated static let audioExtensions: Set<String> = ["mp3", "m4a", "m4b", "mp4", "aac", "alac", "flac", "wav", "wave", "aif", "aiff", "aifc", "caf", "ogg", "oga", "opus"]
 
     weak var model: AppModel?
-    private let store: LibraryStore
+    let store: LibraryStore
     private var scanTask: Task<Void, Never>?
     private var pendingRescan = false
     private var lastProgressReport: TimeInterval = 0
@@ -44,7 +44,11 @@ final class LibraryService {
                 Task { @MainActor [weak self] in self?.rescan(reason: "Laufwerk") }
             })
         }
-        if model?.settings.scanOnLaunch ?? true { rescan(reason: "Start") }
+        if model?.settings.scanOnLaunch ?? true {
+            rescan(reason: "Start")
+        } else {
+            reconstructDatesAdded(useAppleMusic: false, force: false)
+        }
     }
 
     /// Ordnerüberwachung ein- oder ausschalten (Einstellung „Ordner überwachen“).
@@ -152,6 +156,8 @@ final class LibraryService {
                 switch result {
                 case .success(let summary):
                     self.model?.scanState = .finished(added: summary.added, updated: summary.updated, missing: summary.missing)
+                    // Noch nicht rekonstruierte Hinzufügedaten (Import durch frühere Versionen) im Hintergrund bestimmen
+                    self.reconstructDatesAdded(useAppleMusic: false, force: false)
                     if summary.added + summary.updated + summary.missing > 0 || !(self.model?.libraryLoaded ?? false) {
                         self.model?.reloadLibrary()
                     }
@@ -244,7 +250,10 @@ final class LibraryService {
                         summary.added += 1
                     }
                 }
-                _ = try store.applyScan(inserts: inserts, updates: updates, missing: [], dateAdded: now)
+                // v2.1: eigenes Hinzufügedatum je neuer Datei (Apple Musik → Erstellungsdatum → Ordner → Import)
+                let apple = inserts.isEmpty ? nil : LibraryService.loadAppleMusicIndex()
+                let added = inserts.map { LibraryService.dateAddedForNewFile($0, apple: apple, now: now) }
+                _ = try store.applyScan(inserts: inserts, addedDates: added, updates: updates, missing: [])
                 done += chunk.count
                 progress(done, total, "")
             }

@@ -42,6 +42,8 @@
 	<false/>
 	<key>NSHumanReadableCopyright</key>
 	<string>Music Library – private, lokale Musikbibliothek. Inter (OFL 1.1), Material Symbols (Apache 2.0), TagLib (MPL 1.1), stb_vorbis (MIT/Public Domain).</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Music Library übernimmt auf Wunsch das Hinzufügedatum deiner Titel aus der Apple-Musik-Mediathek, damit „Hinzugefügt“ wie in iTunes sortiert. Es wird nichts verändert.</string>
 	<key>NSRemovableVolumesUsageDescription</key>
 	<string>Music Library liest Musik von externen Laufwerken, die du als Musikordner gewählt hast.</string>
 	<key>NSDocumentsFolderUsageDescription</key>

@@ -82,6 +82,7 @@ targets.append(
             .linkedFramework("MediaPlayer"),
             .linkedFramework("Accelerate"),
             .linkedFramework("UniformTypeIdentifiers"),
+            .linkedFramework("iTunesLibrary"),
         ]
     )
 )

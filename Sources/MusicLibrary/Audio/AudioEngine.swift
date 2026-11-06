@@ -99,7 +99,7 @@ final class AudioEngine {
         setLimiterParameter(1, 0.06)    // Decay (s)
         setLimiterParameter(2, 0)       // Pre-Gain (dB)
         connect(format: nil)
-        installTap()
+        installLevelProbe()
         apply(parameters, force: true)
     }
 
@@ -125,6 +125,7 @@ final class AudioEngine {
         engine.connect(eq, to: limiter, format: f)
         engine.connect(limiter, to: engine.mainMixerNode, format: f)
         connectedFormat = f
+        levels.sampleRate = f.sampleRate
         if wasRunning { try? engine.start() }
     }
 
@@ -177,108 +178,179 @@ final class AudioEngine {
         Double((timePitch.bypass ? 1 : timePitch.rate) * (varispeed.bypass ? 1 : varispeed.rate))
     }
 
-    private func installTap() {
-        let meter = levels
-        engine.mainMixerNode.installTap(onBus: 0, bufferSize: 2048, format: nil) { buffer, _ in
-            meter.process(buffer)
-        }
+    /// Pegelabgriff hinter dem Limiter: wird in **jedem** Renderzyklus aufgerufen (≈ 11 ms bei 512 Frames),
+    /// statt alle ≈ 100 ms wie ein Tap des Mischers – dadurch laufen die Balken flüssig und synchron.
+    private func installLevelProbe() {
+        let refCon = Unmanaged.passUnretained(levels).toOpaque()
+        AudioUnitAddRenderNotify(limiter.audioUnit, { refCon, flags, _, _, frames, ioData in
+            guard flags.pointee.contains(.unitRenderAction_PostRender),
+                  !flags.pointee.contains(.unitRenderAction_PostRenderError),
+                  let ioData else { return noErr }
+            Unmanaged<LevelMeter>.fromOpaque(refCon).takeUnretainedValue().capture(ioData, frames: Int(frames))
+            return noErr
+        }, refCon)
     }
 }
 
-/// Pegel und Spektrum für die optionale Klangvisualisierung (Android: LevelAnalyzer):
+/// Pegel und Spektrum für die Klangvisualisierung (Android: LevelAnalyzer):
 /// 16 logarithmische Bänder 50 Hz – 14 kHz und Pegel links/rechts, jeweils 0…1 über −60…0 dBFS.
-/// Rechnet nur, wenn `enabled` gesetzt ist.
+///
+/// v2.1: Der Audio-Thread kopiert nur die Abtastwerte in einen Ringpuffer (keine Speicheranforderung, keine
+/// Sperre); die FFT rechnet `take()` auf Abruf (höchstens 30-mal je Sekunde im Hauptthread, ≈ 20 µs). Kommen
+/// keine neuen Abtastwerte mehr (Pause, Stopp), liefert `take()` nach kurzer Zeit Nullen – die Anzeige klingt aus.
 final class LevelMeter: @unchecked Sendable {
     static let bandCount = 16
-    private let lock = NSLock()
-    private var latest: [Float]?
-    private var fresh = false
-    var enabled = false
-
+    private static let capacity = 8192                   // Zweierpotenz
+    private static let mask = capacity - 1
     private let fftSize = 2048
+
+    // Gemeinsam mit dem Audio-Thread (feste Speicherbereiche, nie neu angelegt)
+    private let ringL = UnsafeMutablePointer<Float>.allocate(capacity: LevelMeter.capacity)
+    private let ringR = UnsafeMutablePointer<Float>.allocate(capacity: LevelMeter.capacity)
+    private let written = UnsafeMutablePointer<Int>.allocate(capacity: 1)
+    private let active = UnsafeMutablePointer<Int>.allocate(capacity: 1)
+
+    /// Abtastrate der Kette (gesetzt beim Verbinden).
+    var sampleRate: Double = 44_100
+
+    var enabled: Bool {
+        get { active.pointee != 0 }
+        set {
+            if newValue && active.pointee == 0 { reset() }
+            active.pointee = newValue ? 1 : 0
+        }
+    }
+
+    // Nur Hauptthread (take)
+    private var lastWritten = 0
+    private var lastFresh = Date.distantPast
+    private var lastValues: [Float]?
     private lazy var log2n = vDSP_Length(log2(Float(fftSize)))
     private lazy var fftSetup: FFTSetup? = vDSP_create_fftsetup(log2n, FFTRadix(kFFTRadix2))
     private lazy var window: [Float] = {
         var w = [Float](repeating: 0, count: fftSize)
-        vDSP_hann_window(&w, vDSP_Length(fftSize), Int32(vDSP_HANN_NORM))
+        vDSP_hann_window(&w, vDSP_Length(fftSize), Int32(vDSP_HANN_DENORM))
         return w
     }()
+    private lazy var windowSum: Float = window.reduce(0, +)
+    private var mono = [Float](repeating: 0, count: 2048)
+    private var windowed = [Float](repeating: 0, count: 2048)
+    private var real = [Float](repeating: 0, count: 1024)
+    private var imag = [Float](repeating: 0, count: 1024)
+    private var power = [Float](repeating: 0, count: 1024)
+
+    init() {
+        ringL.initialize(repeating: 0, count: Self.capacity)
+        ringR.initialize(repeating: 0, count: Self.capacity)
+        written.initialize(to: 0)
+        active.initialize(to: 0)
+    }
+
+    deinit {
+        ringL.deallocate()
+        ringR.deallocate()
+        written.deallocate()
+        active.deallocate()
+        if let fftSetup { vDSP_destroy_fftsetup(fftSetup) }
+    }
 
     func reset() {
-        lock.lock()
-        latest = nil
-        fresh = false
-        lock.unlock()
+        lastValues = nil
+        lastFresh = .distantPast
+        lastWritten = written.pointee
     }
 
-    /// Frische Werte (16 Bänder + L + R) oder `nil`, wenn seit dem letzten Abruf nichts Neues kam.
-    func take() -> [Float]? {
-        lock.lock()
-        defer { lock.unlock() }
-        guard fresh else { return nil }
-        fresh = false
-        return latest
+    /// Audio-Thread: Ausgabe eines Renderzyklus übernehmen (Float32, getrennte oder verschachtelte Kanäle).
+    func capture(_ ioData: UnsafeMutablePointer<AudioBufferList>, frames: Int) {
+        guard active.pointee != 0, frames > 0 else { return }
+        let abl = UnsafeMutableAudioBufferListPointer(ioData)
+        guard abl.count > 0, let d0 = abl[0].mData?.assumingMemoryBound(to: Float.self) else { return }
+        let w = written.pointee
+        let interleaved = abl[0].mNumberChannels > 1
+        if interleaved {
+            let ch = Int(abl[0].mNumberChannels)
+            for i in 0..<frames {
+                ringL[(w + i) & Self.mask] = d0[i * ch]
+                ringR[(w + i) & Self.mask] = d0[i * ch + 1]
+            }
+        } else {
+            let d1 = abl.count > 1 ? (abl[1].mData?.assumingMemoryBound(to: Float.self) ?? d0) : d0
+            for i in 0..<frames {
+                let j = (w + i) & Self.mask
+                ringL[j] = d0[i]
+                ringR[j] = d1[i]
+            }
+        }
+        OSMemoryBarrier()
+        written.pointee = w + frames
     }
 
-    private static func level(_ rms: Float) -> Float {
-        let db = 20 * log10(max(rms, 1e-7))
+    private static func level(_ amplitude: Float) -> Float {
+        let db = 20 * log10(max(amplitude, 1e-7))
         return max(0, min(1, (db + 60) / 60))
     }
 
-    func process(_ buffer: AVAudioPCMBuffer) {
-        guard enabled, let data = buffer.floatChannelData, buffer.frameLength > 0 else { return }
-        let n = Int(buffer.frameLength)
-        let channels = Int(buffer.format.channelCount)
-        let count = min(n, fftSize)
-        var rmsL: Float = 0, rmsR: Float = 0
-        vDSP_rmsqv(data[0], 1, &rmsL, vDSP_Length(count))
-        if channels > 1 { vDSP_rmsqv(data[1], 1, &rmsR, vDSP_Length(count)) } else { rmsR = rmsL }
-        var mono = [Float](repeating: 0, count: fftSize)
-        var scale = 1 / Float(max(channels, 1))
-        mono.withUnsafeMutableBufferPointer { mp in
-            guard let m = mp.baseAddress else { return }
-            for c in 0..<channels { vDSP_vadd(m, 1, data[c], 1, m, 1, vDSP_Length(count)) }
-            vDSP_vsmul(m, 1, &scale, m, 1, vDSP_Length(count))
+    /// Aktuelle Werte (16 Bänder + L + R). Während der Wiedergabe immer frisch; ohne neue Abtastwerte
+    /// noch ≈ 0,15 s der letzte Stand (große Audiopuffer), danach Nullen. `nil`, wenn ausgeschaltet.
+    func take() -> [Float]? {
+        guard enabled else { return nil }
+        let w = written.pointee
+        OSMemoryBarrier()
+        let now = Date()
+        if w == lastWritten {
+            if now.timeIntervalSince(lastFresh) < 0.15, let lastValues { return lastValues }
+            return [Float](repeating: 0, count: Self.bandCount + 2)
         }
+        lastWritten = w
+        lastFresh = now
+        let n = fftSize
+        // Die jüngsten n Abtastwerte (Mono) und RMS der jüngsten 1024 je Kanal
+        var sumL: Float = 0, sumR: Float = 0
+        for i in 0..<n {
+            let j = (w - n + i) & Self.mask
+            let l = ringL[j], r = ringR[j]
+            mono[i] = 0.5 * (l + r)
+            if i >= n - 1024 {
+                sumL += l * l
+                sumR += r * r
+            }
+        }
+        let rmsL = (sumL / 1024).squareRoot(), rmsR = (sumR / 1024).squareRoot()
         var bands = [Float](repeating: 0, count: Self.bandCount)
-        if let setup = fftSetup, buffer.format.sampleRate > 0 {
-            var windowed = [Float](repeating: 0, count: fftSize)
-            vDSP_vmul(mono, 1, window, 1, &windowed, 1, vDSP_Length(fftSize))
-            var real = [Float](repeating: 0, count: fftSize / 2)
-            var imag = [Float](repeating: 0, count: fftSize / 2)
-            var mags = [Float](repeating: 0, count: fftSize / 2)
+        if let setup = fftSetup {
+            vDSP_vmul(mono, 1, window, 1, &windowed, 1, vDSP_Length(n))
             real.withUnsafeMutableBufferPointer { rp in
                 imag.withUnsafeMutableBufferPointer { ip in
                     var split = DSPSplitComplex(realp: rp.baseAddress!, imagp: ip.baseAddress!)
                     windowed.withUnsafeBufferPointer { wp in
-                        wp.baseAddress!.withMemoryRebound(to: DSPComplex.self, capacity: fftSize / 2) { cp in
-                            vDSP_ctoz(cp, 2, &split, 1, vDSP_Length(fftSize / 2))
+                        wp.baseAddress!.withMemoryRebound(to: DSPComplex.self, capacity: n / 2) { cp in
+                            vDSP_ctoz(cp, 2, &split, 1, vDSP_Length(n / 2))
                         }
                     }
                     vDSP_fft_zrip(setup, &split, 1, log2n, FFTDirection(FFT_FORWARD))
-                    mags.withUnsafeMutableBufferPointer { mp in
-                        vDSP_zvabs(&split, 1, mp.baseAddress!, 1, vDSP_Length(fftSize / 2))
+                    power.withUnsafeMutableBufferPointer { pp in
+                        vDSP_zvmags(&split, 1, pp.baseAddress!, 1, vDSP_Length(n / 2))
                     }
                 }
             }
-            let sr = Float(buffer.format.sampleRate)
+            power[0] = 0 // Gleichanteil (zrip legt hier zusätzlich Nyquist ab)
+            let sr = Float(sampleRate > 0 ? sampleRate : 44_100)
+            let half = n / 2
+            // vDSP_fft_zrip liefert das Zweifache der DFT; eine Sinusschwingung der Amplitude A ergibt im Maximum
+            // |X| = A · Σw. Bandwert = Energie aller Bins im Band (Hann: 1,5 Bins je Ton) → Amplitude in dBFS.
+            let norm = 1 / (windowSum * windowSum * 1.5)
             for b in 0..<Self.bandCount {
                 let f0 = 50 * pow(14000 / 50, Float(b) / Float(Self.bandCount))
                 let f1 = 50 * pow(14000 / 50, Float(b + 1) / Float(Self.bandCount))
-                // Begrenzt auf die vorhandenen Bins (bei niedriger Abtastrate, z. B. Bluetooth-Headset mit 16/24 kHz,
-                // liegen die oberen Bänder sonst jenseits von Nyquist → Index außerhalb des Bereichs)
-                let half = fftSize / 2
-                let i0 = min(half - 1, max(1, Int(f0 / sr * Float(fftSize))))
-                let i1 = min(half, max(i0 + 1, Int(f1 / sr * Float(fftSize))))
-                var peak: Float = 0
-                for i in i0..<i1 { peak = max(peak, mags[i]) }
-                bands[b] = Self.level(peak / Float(fftSize) * 4)
+                let i0 = min(half - 1, max(1, Int(f0 / sr * Float(n))))
+                let i1 = min(half, max(i0 + 1, Int(f1 / sr * Float(n))))
+                var e: Float = 0
+                for i in i0..<i1 { e += power[i] }
+                bands[b] = Self.level((e * norm).squareRoot())
             }
         }
         let values = bands + [Self.level(rmsL * 1.414), Self.level(rmsR * 1.414)]
-        lock.lock()
-        latest = values
-        fresh = true
-        lock.unlock()
+        lastValues = values
+        return values
     }
 }
