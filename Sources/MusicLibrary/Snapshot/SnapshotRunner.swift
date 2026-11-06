@@ -91,6 +91,8 @@ enum SnapshotRunner {
                 m.sidePanel = panel
                 m.settings.playerTheme = theme
                 m.settings.visualizer = false
+                m.settings.playerBackground = .auto
+                m.player.engine.levels.demoValues = nil
                 m.player.setDemoState(queueUids: Array(1...12), currentIndex: 0, positionMs: 74_000, playing: true)
                 m.playerOpen = open
             }
@@ -247,6 +249,93 @@ enum SnapshotRunner {
             }, view: main),
             Scenario(name: "20-titel-detailliste-klein", size: small, prepare: view(.tracks, .tracks, .detailedList), view: main),
             Scenario(name: "24-playlists-raster", size: big, prepare: view(.playlists, .playlists, .grid), view: main),
+        ]
+        list += v21PlayerScenarios(library: library, main: main, big: big, small: small, mini: mini, settings: settings)
+        return list
+    }
+
+    /// v2.1: alle fünf Mini-Player-Größen, Player-Hintergründe, Formatzeile, Pegelbalken, EQ-Fenster, Einstellungen.
+    @MainActor
+    private static func v21PlayerScenarios(library: @escaping @MainActor (LibrarySection, Destination?, SidePanel?, Bool, PlayerTheme) -> @MainActor (AppModel) -> Void,
+                                           main: @escaping @MainActor () -> AnyView, big: CGSize, small: CGSize,
+                                           mini: @escaping (MiniPlayerSize) -> @MainActor (AppModel) -> Void,
+                                           settings: @escaping (SettingsCategory) -> @MainActor (AppModel) -> Void) -> [Scenario] {
+        func playerBackground(_ style: PlayerBackgroundStyle, custom: UInt32 = 0xFF6B4FA0, theme: PlayerTheme = .vinylStudio, open: Bool = true) -> @MainActor (AppModel) -> Void {
+            return { m in
+                for c in LibraryViewContext.allCases { m.setViewOptions(.defaults(for: c), for: c) }
+                library(.tracks, nil, nil, open, theme)(m)
+                var s = m.settings
+                s.miniPlayerSize = .standard
+                s.playerBackground = style
+                s.playerBackgroundCustom = custom
+                s.playerBackgroundTintsMini = true
+                m.settings = s
+            }
+        }
+        var list: [Scenario] = [
+            Scenario(name: "50-mini-klein", size: big, prepare: mini(.compact), view: main),
+            Scenario(name: "50-mini-mittel", size: big, prepare: mini(.standard), view: main),
+            Scenario(name: "50-mini-gross", size: big, prepare: mini(.large), view: main),
+            Scenario(name: "50-mini-sehr-gross", size: big, prepare: mini(.extraLarge), view: main),
+            Scenario(name: "50-mini-sehr-gross-schmal", size: small, prepare: mini(.extraLarge), view: main),
+            Scenario(name: "50-mini-riesig", size: big, prepare: mini(.huge), view: main),
+            Scenario(name: "50-mini-riesig-schmal", size: small, prepare: mini(.huge), view: main),
+            Scenario(name: "51-hintergrund-rauchglas", size: big, prepare: playerBackground(.smokedGlass), view: main),
+            Scenario(name: "51-hintergrund-weiss-kassette", size: big, prepare: playerBackground(.white, theme: .cassette), view: main),
+        ]
+        list += [
+            Scenario(name: "51-hintergrund-blau-modern-glass", size: big, prepare: playerBackground(.blue, theme: .modernGlass), view: main),
+            Scenario(name: "51-hintergrund-eigene-farbe-classic", size: big, prepare: playerBackground(.custom, custom: 0xFFE8C547, theme: .classic), view: main),
+            Scenario(name: "51-hintergrund-schwarz-cd", size: big, prepare: playerBackground(.black, theme: .portableCD), view: main),
+            Scenario(name: "51-hintergrund-mini-getoent", size: big, prepare: { m in
+                playerBackground(.pink, open: false)(m)
+                m.settings.miniPlayerSize = .huge
+            }, view: main),
+            Scenario(name: "52-player-formatzeile", size: big, prepare: playerBackground(.auto), view: main),
+            Scenario(name: "52-player-formatzeile-hochkant", size: CGSize(width: 900, height: 1080), prepare: playerBackground(.auto, theme: .modernGlass), view: main),
+            Scenario(name: "52-player-balken-cd", size: big, prepare: { m in
+                playerBackground(.auto, theme: .portableCD)(m)
+                m.settings.visualizer = true
+                m.player.engine.levels.demoValues = [0.82, 0.9, 0.74, 0.66, 0.7, 0.58, 0.62, 0.5, 0.46, 0.52, 0.4, 0.36, 0.3, 0.26, 0.2, 0.14, 0.72, 0.66]
+            }, view: main),
+            Scenario(name: "52-player-balken-cd-klein", size: small, prepare: { m in
+                playerBackground(.auto, theme: .portableCD)(m)
+                m.settings.visualizer = true
+                m.player.engine.levels.demoValues = [0.82, 0.9, 0.74, 0.66, 0.7, 0.58, 0.62, 0.5, 0.46, 0.52, 0.4, 0.36, 0.3, 0.26, 0.2, 0.14, 0.72, 0.66]
+            }, view: main),
+            Scenario(name: "53-equalizer-fenster-pop", size: CGSize(width: 640, height: 720), prepare: { m in
+                m.settings.playerBackground = .auto
+                m.player.engine.levels.demoValues = nil
+                m.settings.effects = AudioEffectsSettings().withPreset(EqPresets.pop).withBass(2)
+            }, view: { AnyView(EqualizerWindow()) }),
+        ]
+        list += [
+            Scenario(name: "53-equalizer-fenster-aus", size: CGSize(width: 640, height: 720), prepare: { m in
+                var fx = AudioEffectsSettings().withPreset(EqPresets.rock)
+                fx.eqEnabled = false
+                m.settings.effects = fx
+            }, view: { AnyView(EqualizerWindow()) }),
+            Scenario(name: "54-einstellungen-hinzufuegedatum", size: CGSize(width: 860, height: 1240), prepare: { m in
+                settings(.library)(m)
+                m.datesAddedStatus = "1.284 Hinzufügedaten bestimmt (1.102 aus Apple Musik, 182 aus dem Erstellungsdatum der Datei)."
+            }, view: { AnyView(SettingsView()) }),
+            Scenario(name: "54-einstellungen-player-hintergrund", size: CGSize(width: 860, height: 1000), prepare: { m in
+                settings(.playerDesigns)(m)
+                m.settings.playerBackground = .violet
+            }, view: { AnyView(SettingsView()) }),
+            Scenario(name: "55-alben-hinzugefuegt-neueste", size: big, prepare: { m in
+                for c in LibraryViewContext.allCases { m.setViewOptions(.defaults(for: c), for: c) }
+                library(.albums, nil, nil, false, .vinylStudio)(m)
+                m.settings.playerBackground = .auto
+                m.settings.miniPlayerSize = .standard
+                m.datesAddedStatus = nil
+                m.settings.albumSort = Sort(AlbumSort.dateAdded, descending: true)
+            }, view: main),
+            Scenario(name: "55-titel-hinzugefuegt-aelteste", size: big, prepare: { m in
+                for c in LibraryViewContext.allCases { m.setViewOptions(.defaults(for: c), for: c) }
+                library(.tracks, nil, nil, false, .vinylStudio)(m)
+                m.settings.trackSort = Sort(TrackSort.dateAdded, descending: false)
+            }, view: main),
         ]
         return list
     }

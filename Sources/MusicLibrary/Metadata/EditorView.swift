@@ -229,8 +229,14 @@ struct EditorView: View {
                 .disabled(!session.hasChanges || saving || session.loading)
                 .keyboardShortcut(.defaultAction)
             }
-            .padding(.horizontal, 22)
-            .padding(.vertical, 14)
+            // Schwebende Glasleiste wie Werkzeugleiste und Mini-Player (Leistungsmodus: ohne Unschärfe)
+            .padding(.leading, 16)
+            .padding(.trailing, 10)
+            .padding(.vertical, 9)
+            .glassSurface(RoundedRectangle(cornerRadius: Radius.bar - 6, style: .continuous), strong: true)
+            .padding(.horizontal, 14)
+            .padding(.top, 8)
+            .padding(.bottom, 12)
         }
         .animation(Motion.easeOut(), value: session.hasChanges)
         .background(EdgeFade(top: false, strength: 0.9))

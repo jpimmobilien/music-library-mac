@@ -95,13 +95,13 @@ struct ReelToReelHero: View {
             ProgressObserver(clock: player.clock) { pos, dur in
                 let progress: Float = still ? 0.35 : (dur > 0 ? Float(min(1, max(0, Double(pos) / Double(dur)))) : 0)
                 let radii = ReelGeometry.packRadii(progress)
-                let moving = animate && (playing || motion.motor != 0 || (useLevels && vis.hasEnergy))
+                let moving = animate && (playing || motion.motor != 0 || (useLevels && !vis.resting))
                 ZStack(alignment: .topLeading) {
                     ReelTapeLayer(side: side, left: radii.left, right: radii.right)
                     TimelineView(.animation(minimumInterval: nil, paused: !moving)) { ctx in
                         let _ = idleTick
                         let reels = animate ? motion.step(now: ctx.date, playing: playing, speed: speed, left: radii.left, right: radii.right) : false
-                        let _ = useLevels ? vis.step(ctx.date, meter: player.engine.levels) : ()
+                        let _ = useLevels ? vis.step(ctx.date, meter: player.engine.levels, playing: playing) : ()
                         let active = reels || (useLevels && vis.hasEnergy)
                         let needles = needleLevels(useLevels: useLevels, playing: playing, animate: animate)
                         ReelMovingParts(side: side, angleLeft: motion.angleLeft, angleRight: motion.angleRight,
@@ -114,6 +114,8 @@ struct ReelToReelHero: View {
             }
         }
         .frame(width: side, height: side, alignment: .topLeading)
+        // Echte Pegel für die VU-Meter nur anfordern, solange sie sichtbar sind (v2.1)
+        .visualizerConsumer(useLevels)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(player.current == nil ? "Tonbandmaschine, keine Wiedergabe"
                             : (player.isPlaying ? "Tonbandmaschine: Spulen drehen sich" : "Tonbandmaschine: angehalten"))
@@ -121,7 +123,7 @@ struct ReelToReelHero: View {
 
     /// Zeigerstellung 0…1: echte Pegel, sonst ruhige Ruhelage während der Wiedergabe.
     private func needleLevels(useLevels: Bool, playing: Bool, animate: Bool) -> (Double, Double) {
-        if useLevels { return (Double(vis.smoothing.left), Double(vis.smoothing.right)) }
+        if useLevels { return (Double(vis.left), Double(vis.right)) }
         if still { return (0.42, 0.38) }
         guard playing else { return (0, 0) }
         let t = motion.time

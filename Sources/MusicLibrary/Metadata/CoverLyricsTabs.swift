@@ -151,6 +151,11 @@ struct CoverTab: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
+        // Glaskarte wie die Feldgruppen der übrigen Reiter
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .glassSurface(RoundedRectangle(cornerRadius: Radius.card, style: .continuous))
+        .padding(.bottom, 14)
     }
 
     private var addButton: some View {
@@ -200,22 +205,28 @@ struct LyricsTab: View {
             if !single {
                 EmptyStateView(icon: Icons.lyrics, title: "Liedtexte einzeln bearbeiten", text: "Liedtexte gehören zu genau einem Titel. Öffne die Informationen eines einzelnen Titels.")
             } else {
-                HStack(spacing: 8) {
-                    Text(parsed.isSynced ? "Synchronisiert · \(parsed.lines.count) Zeilen" : (text.isEmpty ? "Kein Liedtext" : "Nicht synchronisiert"))
-                        .textStyle(Typo.labelMedium)
-                        .foregroundColor(parsed.isSynced ? colors.accentText : colors.textSecondary)
-                    Spacer()
-                    PillButton(title: "Laden …", icon: Icons.folderOpen, style: .plain) { importLRC() }
-                    PillButton(title: "Als .lrc sichern …", icon: Icons.fileExport, style: .plain) { exportLRC(text) }
-                        .disabled(text.isEmpty)
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack(spacing: 8) {
+                        Text(parsed.isSynced ? "Synchronisiert · \(parsed.lines.count) Zeilen" : (text.isEmpty ? "Kein Liedtext" : "Nicht synchronisiert"))
+                            .textStyle(Typo.labelMedium)
+                            .foregroundColor(parsed.isSynced ? colors.accentText : colors.textSecondary)
+                        Spacer()
+                        PillButton(title: "Laden …", icon: Icons.folderOpen, style: .plain) { importLRC() }
+                        PillButton(title: "Als .lrc sichern …", icon: Icons.fileExport, style: .plain) { exportLRC(text) }
+                            .disabled(text.isEmpty)
+                    }
+                    TextEditor(text: session.binding(.lyrics))
+                        .font(Typo.inter(13.5, .regular))
+                        .scrollContentBackground(.hidden)
+                        .padding(8)
+                        .frame(minHeight: 300)
+                        .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(colors.fieldFill))
+                        .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).strokeBorder(session.dirty.contains(.lyrics) ? colors.accent : .clear, lineWidth: 1.6))
                 }
-                TextEditor(text: session.binding(.lyrics))
-                    .font(Typo.inter(13.5, .regular))
-                    .scrollContentBackground(.hidden)
-                    .padding(8)
-                    .frame(minHeight: 300)
-                    .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(colors.fieldFill))
-                    .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).strokeBorder(session.dirty.contains(.lyrics) ? colors.accent : .clear, lineWidth: 1.6))
+                // Glaskarte wie die Feldgruppen der übrigen Reiter
+                .padding(14)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .glassSurface(RoundedRectangle(cornerRadius: Radius.card, style: .continuous))
                 EditorCard(title: "Synchronisieren") {
                     Text("Spiele den Titel ab und setze bei Beginn jeder Zeile eine Zeitmarke. Vorhandene Zeitmarken werden ersetzt.")
                         .textStyle(Typo.bodySmall)

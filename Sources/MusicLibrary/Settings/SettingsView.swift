@@ -87,6 +87,10 @@ struct SettingsView: View {
                 .frame(maxWidth: .infinity)
             }
         }
+        // Verdeckte Titelleiste: oberer Rand verschiebt das Fenster (Inhalte beginnen darunter)
+        .overlay(alignment: .top) {
+            WindowDragArea().frame(height: 28)
+        }
         .frame(minWidth: 780, minHeight: 560)
         .onAppear(perform: takePendingCategory)
         .onReceive(NotificationCenter.default.publisher(for: .openSettingsCategory)) { _ in takePendingCategory() }
@@ -366,11 +370,20 @@ private struct PlayerDesignSettings: View {
                       text: "Frequenzbalken bzw. Lichtring aus der tatsächlichen Wiedergabe. Nur aktiv, solange der Player sichtbar ist; beeinflusst den Klang nicht.",
                       isOn: model.binding(\.visualizer))
         }
+        EditorCard(title: "Hintergrund") {
+            PlayerBackgroundPicker(showsTitle: false)
+        }
         EditorCard(title: "Mini-Player") {
-            SettingRow(title: "Größe", text: "Der schwebende Player am unteren Fensterrand.") {
-                SegmentedControl(options: MiniPlayerSize.allCases, selection: model.binding(\.miniPlayerSize), label: { $0.label })
-                    .frame(width: 280)
+            SettingRow(title: "Größe",
+                       text: "Der schwebende Player am unteren Fensterrand. „Sehr groß“ und „Riesig“ zeigen Lautstärke, Equalizer und Tonhöhe direkt in der Leiste.") {
+                EmptyView()
             }
+            // v2.1: fünf Größen – eigene Zeile, damit alle Beschriftungen vollständig lesbar sind
+            SegmentedControl(options: MiniPlayerSize.allCases,
+                             selection: Binding(get: { model.settings.miniPlayerSize },
+                                                set: { s in withAnimation(Motion.easeOut(Motion.medium)) { model.settings.miniPlayerSize = s } }),
+                             label: { $0.label })
+                .frame(maxWidth: 480)
             Hairline()
             ToggleRow(title: "Player-Design im Mini-Player",
                       text: "Zeigt die kleine drehende Platte, Kassette oder CD des gewählten Designs statt nur des Covers.",
@@ -430,6 +443,84 @@ private struct LibraryBehaviourSettings: View {
         }
         EditorCard(title: "Angaben") {
             ToggleRow(title: "Komponist anzeigen", text: "Komponist zusätzlich in Listen und im Player.", isOn: model.binding(\.showComposer))
+        }
+        DateAddedSettings()
+    }
+}
+
+/// Hinzufügedatum (v2.1): Quellen erklären, aus Apple Musik übernehmen oder neu bestimmen, Fortschritt zeigen.
+private struct DateAddedSettings: View {
+    @EnvironmentObject private var model: AppModel
+    @Environment(\.musicColors) private var colors
+
+    var body: some View {
+        let running = model.datesAddedRunning
+        EditorCard(title: "Hinzufügedatum") {
+            Note(text: "Wann ein Titel in deine Sammlung kam – Grundlage für „Zuletzt hinzugefügt“ und die Sortierung nach Datum. Die App verwendet die beste verfügbare Quelle:")
+            VStack(alignment: .leading, spacing: 8) {
+                DateSourceLine(icon: Icons.libraryMusic, title: "Apple Musik",
+                               text: "„Hinzugefügt“ aus deiner Apple-Musik- bzw. iTunes-Mediathek – das genaueste Datum, wenn die Titel dort bereits waren. Wird nie durch eine schwächere Quelle ersetzt.")
+                DateSourceLine(icon: Icons.description, title: "Erstellungsdatum der Datei",
+                               text: "Oder der Zeitpunkt, zu dem die Datei in ihren Ordner gelegt wurde. Das Änderungsdatum zählt nie – es ändert sich z. B. beim Bearbeiten der Tags.")
+                DateSourceLine(icon: Icons.event, title: "Import",
+                               text: "Erster Import in Music Library – nur, wenn nichts Besseres bekannt ist. Ein bekanntes Datum wird nie auf später verschoben.")
+            }
+            .padding(.vertical, 2)
+            Hairline()
+            SettingRow(title: "Aus Apple Musik übernehmen",
+                       text: "Liest die Mediathek von Apple Musik und übernimmt deren Hinzufügedaten für alle passenden Titel. macOS fragt dabei einmal nach der Erlaubnis für den Zugriff auf die Mediathek.") {
+                PillButton(title: "Aus Apple Musik übernehmen …", icon: Icons.libraryMusic, style: .filled) {
+                    model.rebuildDatesAdded(useAppleMusic: true)
+                }
+                .disabled(running)
+            }
+            Hairline()
+            SettingRow(title: "Neu bestimmen",
+                       text: "Bestimmt die Daten erneut aus Dateien und Ordnern (ohne Apple Musik). Bereits aus Apple Musik übernommene Daten bleiben erhalten.") {
+                PillButton(title: "Neu bestimmen", icon: Icons.refresh) {
+                    model.rebuildDatesAdded(useAppleMusic: false)
+                }
+                .disabled(running)
+            }
+            if running || model.datesAddedStatus != nil {
+                HStack(spacing: 8) {
+                    if running {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .controlSize(.small)
+                    } else {
+                        Icon(Icons.checkCircle, size: 15, color: colors.accentText)
+                    }
+                    Text(model.datesAddedStatus ?? "Hinzufügedaten werden bestimmt …")
+                        .textStyle(Typo.bodySmall)
+                        .foregroundColor(colors.textSecondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Spacer(minLength: 0)
+                }
+                .padding(10)
+                .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(colors.fieldFill))
+                .transition(.opacity)
+            }
+        }
+        .animation(Motion.easeOut(), value: running)
+    }
+}
+
+/// Eine Quelle des Hinzufügedatums (Symbol, Name, Erklärung).
+private struct DateSourceLine: View {
+    @Environment(\.musicColors) private var colors
+    let icon: String
+    let title: String
+    let text: String
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 10) {
+            Icon(icon, size: 16, color: colors.accentText)
+                .frame(width: 22, height: 18)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(title).textStyle(Typo.labelLarge).foregroundColor(colors.textPrimary)
+                Text(text).textStyle(Typo.bodySmall).foregroundColor(colors.textSecondary).fixedSize(horizontal: false, vertical: true)
+            }
         }
     }
 }

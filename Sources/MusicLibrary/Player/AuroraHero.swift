@@ -147,7 +147,6 @@ private struct AuroraRing: View {
     @EnvironmentObject private var player: PlayerService
     @StateObject private var vis = VisualizerState()
     @StateObject private var phase = PhaseClock()
-    @State private var idleTick = 0
     let lights: AuroraColors
     let side: CGFloat
     let inner: CGFloat
@@ -161,19 +160,18 @@ private struct AuroraRing: View {
     var body: some View {
         let palette: [RingRGB] = [RingRGB(lights.primary), RingRGB(lights.secondary), RingRGB(lights.tertiary), RingRGB(lights.highlight)]
         let style = AuroraRingPainter.Style(lights: lights, palette: palette, inner: inner, maxLength: maxLength, playing: playing, dark: dark, still: still)
-        let running = animate && (playing || (useLevels && vis.hasEnergy))
+        // v2.1: Pegel ruhen erst, wenn alles ausgeklungen ist (`resting` wird veröffentlicht – kein Hilfszähler mehr)
+        let running = animate && (playing || (useLevels && !vis.resting))
         TimelineView(.animation(minimumInterval: 1.0 / 30, paused: !running)) { ctx in
-            let _ = idleTick
             let t = phase.advance(ctx.date, running: running && playing)
-            let _ = useLevels ? vis.step(ctx.date, meter: player.engine.levels) : ()
-            let active = animate && (playing || (useLevels && vis.hasEnergy))
-            let bands: [Float]? = useLevels ? vis.smoothing.bands : nil
+            let _ = useLevels ? vis.step(ctx.date, meter: player.engine.levels, playing: playing) : ()
+            let bands: [Float]? = useLevels ? vis.bands : nil
             Canvas { g, size in
                 AuroraRingPainter.draw(g, size: size, t: t, bands: bands, style: style)
             }
             .frame(width: side, height: side)
-            .onChange(of: active) { a in if !a { DispatchQueue.main.async { idleTick &+= 1 } } }
         }
+        .visualizerConsumer(useLevels)
         .allowsHitTesting(false)
         .accessibilityHidden(true)
     }

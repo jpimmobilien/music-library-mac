@@ -51,16 +51,38 @@ struct PlayerSheetHost: View {
     }
 }
 
-/// Karte innerhalb der Blätter (`SheetCard`).
+/// Karte innerhalb der Blätter (`SheetCard`). In eigenen Fenstern mit atmosphärischem Hintergrund (Equalizer-
+/// Fenster) als Glaskarte (`\.sheetCardGlass`) – gleicher Aufbau, Glas-Vokabular der App (Leistungsmodus inklusive).
 struct SheetCard<Content: View>: View {
     @Environment(\.musicColors) private var colors
+    @Environment(\.sheetCardGlass) private var glassCard
     @ViewBuilder var content: () -> Content
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) { content() }
-            .padding(16)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(RoundedRectangle(cornerRadius: Radius.card, style: .continuous).fill(colors.surface))
+        let shape = RoundedRectangle(cornerRadius: Radius.card, style: .continuous)
+        if glassCard {
+            VStack(alignment: .leading, spacing: 8) { content() }
+                .padding(16)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .glassSurface(shape)
+        } else {
+            VStack(alignment: .leading, spacing: 8) { content() }
+                .padding(16)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(shape.fill(colors.surface))
+        }
+    }
+}
+
+private struct SheetCardGlassKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
+extension EnvironmentValues {
+    /// Karten der Player-Tafeln als Glaskarten zeichnen (eigene Fenster auf `AmbientBackground`).
+    var sheetCardGlass: Bool {
+        get { self[SheetCardGlassKey.self] }
+        set { self[SheetCardGlassKey.self] = newValue }
     }
 }
 
@@ -141,6 +163,126 @@ struct EqEditor {
     let commit: () -> Void
 }
 
+/// Entwurf des Equalizers, solange ein Regler gezogen wird (v2.1, behebt „Schalter und Presets reagieren im
+/// Equalizer-Fenster nicht“).
+///
+/// Ursache war ein liegengebliebener Entwurf: Kam das Ende einer Ziehbewegung nicht an, zeigte die Tafel weiter
+/// den Entwurf – Schalter und Presets (die die gespeicherte Einstellung schreiben) blieben unsichtbar, und beim
+/// Schließen wurde der alte Entwurf zurückgeschrieben. Regeln jetzt:
+/// - Ein Entwurf lebt nur während des Ziehens. Kommt ≈ 0,6 s keine Vorschau mehr, wird er gesichert
+///   (Sicherheitsnetz für ein verlorenes Ende der Geste).
+/// - Jede einzelne Aktion (Schalter, Preset, eigenes Preset, Zurücksetzen, Bass auf 0, Aussteuerung) verwirft
+///   zuerst den Entwurf und schreibt dann die Einstellung – sofort sichtbar und hörbar.
+/// - Ändert sich die gespeicherte Einstellung anderswo (Mini-Player, Einstellungen), während nicht gezogen wird,
+///   entfällt der Entwurf.
+/// - Beim Verschwinden der Tafel wird nur ein laufendes Ziehen gesichert.
+@MainActor
+final class EqDraft: ObservableObject {
+    @Published private(set) var value: AudioEffectsSettings?
+    /// Gespeicherter Stand, auf dem der Entwurf beruht.
+    private var base: AudioEffectsSettings?
+    private var lastPreview = Date.distantPast
+    private weak var model: AppModel?
+    private var watcher: Task<Void, Never>?
+    static let safetyDelay: TimeInterval = 0.6
+
+    /// Angezeigte Werte: Entwurf (beim Ziehen) oder gespeicherte Einstellung.
+    func shown(_ saved: AudioEffectsSettings) -> AudioEffectsSettings { value ?? saved }
+
+    /// Wird gerade gezogen (letzte Vorschau jünger als die Sicherheitsfrist)?
+    var isLive: Bool { value != nil && Date().timeIntervalSince(lastPreview) < EqDraft.safetyDelay }
+
+    /// Vorschau beim Ziehen: hörbar, noch nicht gespeichert.
+    func preview(_ e: AudioEffectsSettings, model: AppModel) {
+        self.model = model
+        if value == nil { base = model.settings.effects }
+        value = e
+        lastPreview = Date()
+        model.previewEffects(e)
+        startWatcher()
+    }
+
+    /// Ende des Ziehens: Entwurf speichern.
+    func commit(model: AppModel) {
+        guard let d = value else { return }
+        clear()
+        if model.settings.effects != d {
+            model.settings.effects = d
+        } else {
+            model.previewEffects(d)
+        }
+    }
+
+    /// Entwurf verwerfen; hörbar ist wieder die gespeicherte Einstellung.
+    func discard(model: AppModel) {
+        guard value != nil else { return }
+        clear()
+        model.previewEffects(model.settings.effects)
+    }
+
+    /// Tafel verschwindet: nur ein laufendes Ziehen sichern, einen alten Entwurf verwerfen.
+    func finish(model: AppModel) {
+        if isLive { commit(model: model) } else { discard(model: model) }
+    }
+
+    /// Gespeicherte Einstellung hat sich geändert. Von außen (nicht durch das eigene Sichern) und ohne laufendes
+    /// Ziehen → Entwurf verwerfen, damit die Tafel die neue Einstellung zeigt.
+    func savedChanged(_ saved: AudioEffectsSettings, model: AppModel) {
+        guard value != nil, saved != base, !isLive else { return }
+        discard(model: model)
+    }
+
+    private func clear() {
+        value = nil
+        base = nil
+        watcher?.cancel()
+        watcher = nil
+    }
+
+    /// Sicherheitsnetz: ohne neue Vorschau nach `safetyDelay` sichern. Eine einzige wartende Aufgabe je Entwurf
+    /// (kein Zeitgeber je Bild).
+    private func startWatcher() {
+        guard watcher == nil else { return }
+        watcher = Task { @MainActor [weak self] in
+            while !Task.isCancelled {
+                let wait = self?.remainingDelay ?? 0
+                try? await Task.sleep(nanoseconds: UInt64(max(0.05, wait) * 1_000_000_000))
+                guard let self, !Task.isCancelled else { return }
+                guard self.value != nil else {
+                    self.watcher = nil
+                    return
+                }
+                if self.remainingDelay <= 0.01 {
+                    self.watcher = nil
+                    if let model = self.model { self.commit(model: model) }
+                    return
+                }
+            }
+        }
+    }
+
+    private var remainingDelay: TimeInterval {
+        EqDraft.safetyDelay - Date().timeIntervalSince(lastPreview)
+    }
+}
+
+/// Einzelne Equalizer-Aktionen schreiben (Schalter, Presets, Zurücksetzen …): erst einen etwaigen Entwurf
+/// verwerfen, dann die gespeicherte Einstellung ändern. Gleich für Tafel, Blatt im Player, Fenster und Popover.
+@MainActor
+enum EqWrite {
+    static func apply(_ model: AppModel, draft: EqDraft?, _ change: (inout AudioEffectsSettings) -> Void) {
+        let hadDraft = draft?.value != nil
+        if let draft, hadDraft { draft.discard(model: model) }
+        var e = model.settings.effects
+        change(&e)
+        if e != model.settings.effects {
+            model.settings.effects = e          // speichert und macht hörbar (AppModel → Klangkette)
+        } else if hadDraft {
+            model.previewEffects(e)
+        }
+    }
+}
+
 /// Texte zum Equalizer (Werkzeugleiste, Hilfen).
 enum EqualizerText {
     static func summary(_ fx: AudioEffectsSettings, userPresets: [EqUserPreset]) -> String {
@@ -165,33 +307,28 @@ enum EqualizerText {
 struct EqualizerPanel: View {
     @EnvironmentObject private var model: AppModel
     @Environment(\.musicColors) private var colors
-    @State private var draft: AudioEffectsSettings?
+    @StateObject private var draft = EqDraft()
     @State private var confirmDelete: EqUserPreset?
 
     var body: some View {
-        let fx = draft ?? model.settings.effects
+        let fx = draft.shown(model.settings.effects)
         let editor = EqEditor(
-            current: { draft ?? model.settings.effects },
-            preview: { e in
-                draft = e
-                model.previewEffects(e)
-            },
-            commit: {
-                if let d = draft { model.settings.effects = d }
-                draft = nil
-            }
+            current: { draft.shown(model.settings.effects) },
+            preview: { e in draft.preview(e, model: model) },
+            commit: { draft.commit(model: model) }
         )
         VStack(alignment: .leading, spacing: 0) {
             SheetTitle(title: "Equalizer") {
-                MusicToggle(isOn: Binding(get: { fx.eqEnabled }, set: { model.settings.effects.eqEnabled = $0 }), label: "Equalizer ein/aus")
+                MusicToggle(isOn: Binding(get: { fx.eqEnabled }, set: { on in EqWrite.apply(model, draft: draft) { $0.eqEnabled = on } }),
+                            label: "Equalizer ein/aus")
             }
-            EqPresetChips(fx: fx, confirmDelete: $confirmDelete, manage: true)
+            EqPresetChips(fx: fx, confirmDelete: $confirmDelete, manage: true, draft: draft)
             Spacer().frame(height: 14)
-            EqBassCard(fx: fx, editor: editor)
+            EqBassCard(fx: fx, editor: editor, draft: draft)
             Spacer().frame(height: 12)
             EqBandsCard(fx: fx, editor: editor)
             Spacer().frame(height: 12)
-            EqUserPresetsCard(fx: fx, confirmDelete: $confirmDelete)
+            EqUserPresetsCard(fx: fx, confirmDelete: $confirmDelete, draft: draft)
             Group {
                 Spacer().frame(height: 12)
                 SheetCard {
@@ -201,19 +338,24 @@ struct EqualizerPanel: View {
                             Hint("Senkt den Pegel bei angehobenen Bändern etwas ab, damit nichts verzerrt.")
                         }
                         Spacer()
-                        MusicToggle(isOn: Binding(get: { fx.autoHeadroom }, set: { model.settings.effects.autoHeadroom = $0 }), label: "Automatische Aussteuerung")
+                        MusicToggle(isOn: Binding(get: { fx.autoHeadroom }, set: { on in EqWrite.apply(model, draft: draft) { $0.autoHeadroom = on } }),
+                                    label: "Automatische Aussteuerung")
                     }
                 }
                 Spacer().frame(height: 12)
                 HStack {
                     Hint("Wirkt nur auf die Musik dieser App · ±12 dB je Band · beim Ziehen sofort hörbar.")
                     Spacer()
-                    PillButton(title: "Zurücksetzen", style: .plain) { model.settings.effects = model.settings.effects.withPreset(EqPresets.flat).withBass(0) }
+                    PillButton(title: "Zurücksetzen", style: .plain) {
+                        EqWrite.apply(model, draft: draft) { $0 = $0.withPreset(EqPresets.flat).withBass(0) }
+                    }
                         .help("Alle Bänder und Bass auf 0 dB")
                 }
             }
         }
-        .onDisappear { editor.commit() }
+        // Nur ein laufendes Ziehen sichern; Änderungen von außen (Mini-Player, Einstellungen) verwerfen den Entwurf
+        .onDisappear { draft.finish(model: model) }
+        .onChange(of: model.settings.effects) { saved in draft.savedChanged(saved, model: model) }
         .alert("Preset löschen?", isPresented: Binding(get: { confirmDelete != nil }, set: { if !$0 { confirmDelete = nil } }), presenting: confirmDelete) { p in
             Button("Löschen", role: .destructive) {
                 model.settings.deleteEqPreset(id: p.id)
@@ -264,6 +406,8 @@ struct EqPresetChips: View {
     @Binding var confirmDelete: EqUserPreset?
     /// Kontextmenü (Überschreiben, Löschen) anbieten.
     var manage: Bool = false
+    /// Entwurf der Tafel (wird vor jeder Auswahl verworfen); `nil` im Popover ohne Regler.
+    var draft: EqDraft? = nil
 
     var body: some View {
         let users = model.settings.eqUserPresets
@@ -272,18 +416,19 @@ struct EqPresetChips: View {
         PlayerFlowLayout(spacing: 6, lineSpacing: 6) {
             ForEach(EqPresets.all) { p in
                 PresetChip(title: p.name, icon: nil, selected: fx.eqEnabled && activeUser == nil && builtIn?.id == p.id) {
-                    model.settings.effects = model.settings.effects.withPreset(p)
+                    EqWrite.apply(model, draft: draft) { $0 = $0.withPreset(p) }
                 }
                 .help("Preset „\(p.name)“")
             }
             ForEach(users) { p in
                 PresetChip(title: p.name, icon: PlayerIcons.person, selected: fx.eqEnabled && activeUser?.id == p.id) {
-                    model.settings.effects = model.settings.effects.withUserPreset(p)
+                    EqWrite.apply(model, draft: draft) { $0 = $0.withUserPreset(p) }
                 }
                 .help("Eigenes Preset „\(p.name)“\(manage ? " – Rechtsklick für weitere Aktionen" : "")")
                 .contextMenu {
                     if manage {
                         Button("Mit aktueller Einstellung überschreiben") {
+                            draft?.commit(model: model)
                             model.settings.updateEqPreset(id: p.id)
                             model.toast("„\(p.name)“ überschrieben")
                         }
@@ -305,6 +450,7 @@ private struct EqBassCard: View {
     @Environment(\.musicColors) private var colors
     let fx: AudioEffectsSettings
     let editor: EqEditor
+    let draft: EqDraft
 
     var body: some View {
         SheetCard {
@@ -317,7 +463,7 @@ private struct EqBassCard: View {
                     .foregroundColor(fx.bassDb != 0 ? colors.accentText : colors.textSecondary)
                 if fx.bassDb != 0 {
                     IconTap(icon: Icons.clear, label: "Bass auf 0 dB", tint: colors.textSecondary, iconSize: 16, touch: 30) {
-                        model.settings.effects = model.settings.effects.withBass(0)
+                        EqWrite.apply(model, draft: draft) { $0 = $0.withBass(0) }
                     }
                 }
             }
@@ -387,6 +533,7 @@ private struct EqUserPresetsCard: View {
     @Environment(\.musicColors) private var colors
     let fx: AudioEffectsSettings
     @Binding var confirmDelete: EqUserPreset?
+    let draft: EqDraft
     @State private var adding = false
     @State private var newName = ""
     @State private var renamingID: String?
@@ -419,7 +566,7 @@ private struct EqUserPresetsCard: View {
             }
             ForEach(presets) { p in
                 EqUserPresetRow(preset: p, active: active?.id == p.id, renaming: renamingID == p.id, renameText: $renameText,
-                                apply: { model.settings.effects = model.settings.effects.withUserPreset(p) },
+                                apply: { EqWrite.apply(model, draft: draft) { $0 = $0.withUserPreset(p) } },
                                 startRename: {
                                     adding = false
                                     renameText = p.name
@@ -432,6 +579,7 @@ private struct EqUserPresetsCard: View {
                                 },
                                 cancelRename: { renamingID = nil },
                                 overwrite: {
+                                    draft.commit(model: model)   // gesichert wird, was zu sehen und zu hören ist
                                     model.settings.updateEqPreset(id: p.id)
                                     model.toast("„\(p.name)“ mit der aktuellen Einstellung überschrieben")
                                 },
@@ -443,6 +591,7 @@ private struct EqUserPresetsCard: View {
     private func save() {
         let name = newName.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !name.isEmpty else { return }
+        draft.commit(model: model)
         let preset = model.settings.saveEqPreset(name: name)
         adding = false
         model.toast("Preset „\(preset.name)“ gesichert")
@@ -551,6 +700,8 @@ struct VerticalBandSlider: View {
     var label: String = "Band"
     let onChange: (Float) -> Void
     var onEnded: () -> Void = {}
+    /// Fällt beim Ende **und** beim Abbruch der Geste zurück – das Ende kommt damit sicher an (v2.1).
+    @GestureState private var pressing = false
 
     var body: some View {
         GeometryReader { geo in
@@ -570,6 +721,7 @@ struct VerticalBandSlider: View {
             }
             .contentShape(Rectangle())
             .gesture(DragGesture(minimumDistance: 0)
+                .updating($pressing) { _, state, _ in state = true }
                 .onChanged { g in
                     guard enabled else { return }
                     let f = Float((bottom - min(max(g.location.y, top), bottom)) / (bottom - top))
@@ -586,6 +738,7 @@ struct VerticalBandSlider: View {
                 onEnded()
             })
         }
+        .onChange(of: pressing) { down in if !down { onEnded() } }
         .accessibilityElement()
         .accessibilityLabel(label)
         .accessibilityValue(Formatting.decibel(value))
@@ -625,17 +778,26 @@ struct EqualizerCurve: View {
     }
 }
 
-/// Eigenes Equalizer-Fenster (⌥⌘E) – dieselbe Tafel wie im Player.
+/// Eigenes Equalizer-Fenster (⌥⌘E) – dieselbe Tafel wie im Player, hier mit Glaskarten auf dem
+/// atmosphärischen App-Hintergrund. Der Inhalt beginnt unter der (verdeckten) Titelleiste; dort lässt sich das
+/// Fenster verschieben.
 struct EqualizerWindow: View {
     @Environment(\.musicColors) private var colors
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .top) {
             AmbientBackground()
             ScrollView {
                 EqualizerPanel()
-                    .padding(24)
+                    .environment(\.sheetCardGlass, true)
+                    .padding(.horizontal, 24)
+                    .padding(.top, 40)
+                    .padding(.bottom, 24)
             }
+            EdgeFade(top: true, strength: 0.8)
+                .frame(height: 34)
+            WindowDragArea()
+                .frame(height: 28)
         }
         .frame(width: 640, height: 720)
     }
@@ -653,7 +815,8 @@ struct EqualizerQuickPanel: View {
             HStack {
                 Text("Equalizer").textStyle(Typo.titleSmall).foregroundColor(colors.textPrimary)
                 Spacer()
-                MusicToggle(isOn: Binding(get: { fx.eqEnabled }, set: { model.settings.effects.eqEnabled = $0 }), label: "Equalizer ein/aus")
+                MusicToggle(isOn: Binding(get: { fx.eqEnabled }, set: { on in EqWrite.apply(model, draft: nil) { $0.eqEnabled = on } }),
+                            label: "Equalizer ein/aus")
             }
             EqPresetChips(fx: fx, confirmDelete: .constant(nil), manage: false)
             EqualizerCurve(settings: fx)
@@ -665,7 +828,7 @@ struct EqualizerQuickPanel: View {
                 .foregroundColor(colors.textSecondary)
                 .lineLimit(1)
             HStack {
-                PillButton(title: "Neutral", style: .plain) { model.settings.effects = model.settings.effects.withPreset(EqPresets.flat) }
+                PillButton(title: "Neutral", style: .plain) { EqWrite.apply(model, draft: nil) { $0 = $0.withPreset(EqPresets.flat) } }
                     .help("Alle Bänder auf 0 dB")
                 Spacer()
                 PillButton(title: "Alle Einstellungen …", icon: Icons.tune, style: .tonal) {
@@ -1188,8 +1351,13 @@ struct DesignPanel: View {
                     MusicToggle(isOn: Binding(get: { model.settings.visualizer }, set: { model.settings.visualizer = $0 }), label: "Klangvisualisierung")
                 }
             }
-            Spacer().frame(height: 12)
-            SheetCard { MiniPlayerOptions() }
+            // Group: höchstens 10 direkte Elemente je ViewBuilder unter macOS 13
+            Group {
+                Spacer().frame(height: 12)
+                SheetCard { PlayerBackgroundPicker() }
+                Spacer().frame(height: 12)
+                SheetCard { MiniPlayerOptions() }
+            }
         }
         .animation(Motion.easeOut(), value: model.settings.playerTheme)
         .task(id: player.current?.coverKey) { await artwork.update(for: player.current) }
@@ -1203,7 +1371,9 @@ private struct MiniPlayerOptions: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Mini-Player").textStyle(Typo.titleMedium)
-            SegmentedControl(options: MiniPlayerSize.allCases, selection: Binding(get: { model.settings.miniPlayerSize }, set: { model.settings.miniPlayerSize = $0 }),
+            // v2.1: fünf Größen; „Sehr groß“ und „Riesig“ mit eigenem, großzügigem Aufbau
+            SegmentedControl(options: MiniPlayerSize.allCases, selection: Binding(get: { model.settings.miniPlayerSize },
+                                                                                  set: { s in withAnimation(Motion.easeOut(Motion.medium)) { model.settings.miniPlayerSize = s } }),
                              label: { $0.label })
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
@@ -1341,20 +1511,23 @@ struct ThemeTile: View {
     }
 }
 
-/// Ruhende Vorschau eines Designs (mit dem aktuellen Cover).
+/// Ruhende Vorschau eines Designs (mit dem aktuellen Cover und – v2.1 – dem gewählten Player-Hintergrund).
 struct ThemePreview: View {
+    @EnvironmentObject private var model: AppModel
     @Environment(\.musicColors) private var appColors
     let theme: PlayerTheme
     @ObservedObject var artwork: NowPlayingArtwork
 
     var body: some View {
-        let colors = MusicColors.forPlayer(theme, app: appColors)
+        let background = model.settings.playerBackground
+        let custom = model.settings.playerBackgroundCustom
+        let colors = MusicColors.forPlayer(theme, app: appColors, background: background, custom: custom)
         GeometryReader { geo in
             ZStack {
-                if theme == .vinylStudio && appColors.dark {
+                if theme == .vinylStudio && appColors.dark && background == .auto {
                     LinearGradient(colors: [Color(argb: 0xFF2B2427), Color(argb: 0xFF141112)], startPoint: .top, endPoint: .bottom)
                 } else {
-                    PlayerBackground(theme: theme, artwork: artwork)
+                    PlayerBackground(theme: theme, artwork: artwork, style: background, custom: custom)
                 }
                 VStack(spacing: 8) {
                     let side = max(40, min(geo.size.width - 20, geo.size.height - 50))

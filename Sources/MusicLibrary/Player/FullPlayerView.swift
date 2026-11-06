@@ -28,10 +28,13 @@ struct FullPlayerView: View {
 
     var body: some View {
         let theme = model.settings.playerTheme
-        let colors = MusicColors.forPlayer(theme, app: appColors)
+        // v2.1: Hintergrund „Automatisch“ = bisheriger Farbsatz; feste/eigene Farben mit passender Schrift
+        let background = model.settings.playerBackground
+        let custom = model.settings.playerBackgroundCustom
+        let colors = MusicColors.forPlayer(theme, app: appColors, background: background, custom: custom)
         GeometryReader { geo in
             ZStack {
-                PlayerBackground(theme: theme, artwork: artwork)
+                PlayerBackground(theme: theme, artwork: artwork, style: background, custom: custom)
                     .environment(\.musicColors, colors)
                     .id(theme)
                     .transition(.opacity)
@@ -39,6 +42,7 @@ struct FullPlayerView: View {
                 PlayerStage(size: geo.size, theme: theme, artwork: artwork, sheet: $sheet, overlay: $overlay, dragOffset: $dragOffset)
             }
             .animation(PlayerMotionPolicy.transition(model.settings), value: theme)
+            .animation(PlayerMotionPolicy.transition(model.settings), value: background)
             // Oberer Rand: Fenster verschieben (der Inhalt beginnt erst darunter)
             .overlay(alignment: .top) {
                 WindowDragArea().frame(height: 26)
@@ -56,14 +60,8 @@ struct FullPlayerView: View {
                 .environment(\.musicColors, colors)
                 .preferredColorScheme(colors.dark ? .dark : .light)
         }
-        .onAppear { player.setVisualizer(visualizerActive) }
-        .onDisappear { player.setVisualizer(false) }
-        .onChange(of: model.settings.visualizer) { _ in player.setVisualizer(visualizerActive) }
-        .onChange(of: model.settings.animationLevel) { _ in player.setVisualizer(visualizerActive) }
-    }
-
-    private var visualizerActive: Bool {
-        model.settings.visualizer && PlayerMotionPolicy.continuous(model.settings)
+        // v2.1: Die Pegelanalyse steuert AppModel aus den Einstellungen; die Anzeigen melden sich selbst an
+        // (`visualizerConsumer`) – hier kein `setVisualizer` mehr.
     }
 }
 
@@ -82,16 +80,19 @@ private struct PlayerStage: View {
     var body: some View {
         let showBars = model.settings.visualizer && theme.uiShowsSpectrumBars && PlayerMotionPolicy.continuous(model.settings) && overlay == nil
         let landscape = size.width > size.height && size.width >= 560
+        // Balken: neutrale Farbe auf farbigem Hintergrund (Rosé auf Rosa wäre kaum sichtbar), sonst Akzent
+        let barColor: Color = model.settings.playerBackground == .auto ? colors.accent : colors.textPrimary.opacity(0.8)
         if landscape {
-            let barSpace: CGFloat = showBars ? 34 : 0
+            let barSpace: CGFloat = showBars ? SpectrumLayout.height + 10 : 0
             let maxHeight: CGFloat = size.height - 64 - barSpace
             let side: CGFloat = max(200, min(maxHeight, size.width * 0.48))
             HStack(spacing: 28) {
-                VStack(spacing: 8) {
+                VStack(spacing: 10) {
                     HeroArea(theme: theme, side: side, artwork: artwork, overlay: $overlay)
                     if showBars {
-                        SpectrumBars(color: colors.accent)
-                            .frame(width: side * 0.72, height: 26)
+                        SpectrumBars(color: barColor)
+                            .frame(width: side * SpectrumLayout.widthFraction, height: SpectrumLayout.height)
+                            .transition(.opacity)
                     }
                 }
                 .gesture(closeDrag, including: overlay == nil ? .all : .subviews)
@@ -110,7 +111,8 @@ private struct PlayerStage: View {
             .padding(.top, 30)
             .padding(.bottom, 10)
         } else {
-            let reserved: CGFloat = 52 + 418 + (showBars ? 34 : 0)
+            // 436: Bedienung inkl. Zeile mit Format und Hinzufügedatum (v2.1)
+            let reserved: CGFloat = 52 + 436 + (showBars ? SpectrumLayout.height + 10 : 0)
             let side = max(200, min(size.width - 44, size.height - reserved, 520))
             let free = max(0, size.height - reserved - side)
             ScrollView(.vertical, showsIndicators: false) {
@@ -120,9 +122,10 @@ private struct PlayerStage: View {
                     Spacer().frame(height: min(28, max(4, free / 2)))
                     HeroArea(theme: theme, side: side, artwork: artwork, overlay: $overlay)
                     if showBars {
-                        SpectrumBars(color: colors.accent)
-                            .frame(width: (size.width - 44) * 0.72, height: 26)
-                            .padding(.top, 8)
+                        SpectrumBars(color: barColor)
+                            .frame(width: min(side, size.width - 44) * SpectrumLayout.widthFraction, height: SpectrumLayout.height)
+                            .padding(.top, 10)
+                            .transition(.opacity)
                     }
                     Spacer().frame(height: min(28, max(10, free / 2)))
                     PlayerControls(theme: theme, sheet: $sheet, overlay: $overlay)
@@ -147,6 +150,12 @@ private struct PlayerStage: View {
                 withAnimation(Motion.standardSpring) { dragOffset = 0 }
             }
     }
+}
+
+/// Maße der Frequenzbalken unter dem Mittelstück (beide Anordnungen rechnen damit, nichts wird abgeschnitten).
+private enum SpectrumLayout {
+    static let height: CGFloat = 32
+    static let widthFraction: CGFloat = 0.8
 }
 
 /// Mittelstück oder – auf Wunsch – Liedtext bzw. Warteschlange an seiner Stelle.
@@ -212,8 +221,22 @@ struct PlayerBackground: View {
     @Environment(\.glassEnabled) private var glass
     let theme: PlayerTheme
     @ObservedObject var artwork: NowPlayingArtwork
+    /// v2.1: gewählter Hintergrund (`auto` = bisheriges Verhalten je Design).
+    var style: PlayerBackgroundStyle = .auto
+    var custom: UInt32 = 0
 
     var body: some View {
+        if let base = style.baseARGB(custom: custom) {
+            PlayerColorBackground(style: style, base: base, light: style.isLight(custom: custom), artwork: artwork)
+                .transition(.opacity)
+        } else {
+            themeBackground
+                .transition(.opacity)
+        }
+    }
+
+    /// Bisheriger Hintergrund je Design (unverändert).
+    private var themeBackground: some View {
         GeometryReader { geo in
             let w = geo.size.width, h = geo.size.height
             ZStack {
@@ -254,6 +277,40 @@ struct PlayerBackground: View {
                 }
             }
             .animation(.easeInOut(duration: 0.6), value: artwork.key)
+        }
+    }
+}
+
+/// Farbiger Hintergrund (v2.1): Grundfarbe mit sanftem Verlauf, Glanz von oben, einem Lichtfeld im Farbton der
+/// Fläche und etwas Tiefe nach unten – dieselben Schichten wie die Glas- und App-Hintergründe. „Rauchglas“ legt
+/// das weichgezeichnete Cover gedämpft darunter (nur mit Glas-Effekten und ohne Leistungsmodus).
+private struct PlayerColorBackground: View {
+    @Environment(\.glassEnabled) private var glass
+    @Environment(\.performanceMode) private var performance
+    let style: PlayerBackgroundStyle
+    let base: UInt32
+    let light: Bool
+    @ObservedObject var artwork: NowPlayingArtwork
+
+    var body: some View {
+        GeometryReader { geo in
+            let w = geo.size.width, h = geo.size.height
+            let fill = Color(argb: base)
+            let tone = PaletteTone.color(base, hueShift: 0.05, minSaturation: 0, brightness: nil)
+            ZStack {
+                LinearGradient(colors: [ColorARGB.shade(base, light ? 0.05 : 0.08), fill, ColorARGB.shade(base, light ? -0.06 : -0.18)],
+                               startPoint: .top, endPoint: .bottom)
+                if style == .smokedGlass, glass, !performance, let img = artwork.image {
+                    BlurredCover(image: img, width: w, height: h, opacity: 0.42, key: artwork.key)
+                    fill.opacity(0.62)
+                }
+                RadialGradient(colors: [tone.opacity(light ? 0.30 : 0.40), .clear], center: UnitPoint(x: 0.86, y: 0.88), startRadius: 0, endRadius: 0.8 * w)
+                RadialGradient(colors: [Color.white.opacity(light ? 0.34 : 0.10), .clear], center: UnitPoint(x: 0.24, y: 0.06), startRadius: 0, endRadius: 0.95 * w)
+                LinearGradient(stops: [.init(color: .clear, location: 0.55), .init(color: Color.black.opacity(light ? 0.05 : 0.24), location: 1)],
+                               startPoint: .top, endPoint: .bottom)
+            }
+            .animation(.easeInOut(duration: 0.6), value: artwork.key)
+            .animation(.easeInOut(duration: 0.35), value: base)
         }
     }
 }
@@ -493,6 +550,11 @@ private struct PlayerMoreMenu: View {
             Group {
                 GlassMenuHeader(title: "Player")
                 GlassMenuItem(title: "Player-Design …", icon: PlayerIcons.palette, detail: model.settings.playerTheme.label) { open(.design, menu) }
+                // v2.1: Hintergrundfarbe direkt wählbar (Farbfelder, eigene Farbe über den Systemfarbwähler)
+                GlassMenuDisclosure(title: "Hintergrund", icon: Icons.palette) {
+                    PlayerBackgroundMenuSection(close: menu.close)
+                        .environmentObject(model)
+                }
                 GlassMenuItem(title: "Klangvisualisierung", icon: Icons.equalizer, checked: model.settings.visualizer) {
                     model.settings.visualizer.toggle()
                 }
@@ -573,6 +635,8 @@ private struct PlayerTitleRow: View {
                     .buttonStyle(.plain)
                     .disabled(model.index.albumKeyByTrack[t.uid] == nil)
                     .help("Album öffnen")
+                    PlayerMetaLine(track: t)
+                        .padding(.top, 3)
                 }
             }
             .id(player.current?.uid)
@@ -587,6 +651,87 @@ private struct PlayerTitleRow: View {
             }
         }
     }
+}
+
+/// Format und Hinzufügedatum unter Titel/Interpret/Album (v2.1), z. B. „AAC · 256 kbit/s · 44,1 kHz · 16 Bit“ und
+/// „Hinzugefügt am 12. März 2019“. Unbekannte Angaben entfallen. Passt beides nicht in eine Zeile, stehen sie
+/// untereinander. Die Hilfe nennt die Herkunft des Datums (z. B. „laut Apple Musik“).
+struct PlayerMetaLine: View {
+    @Environment(\.musicColors) private var colors
+    let track: Track
+
+    var body: some View {
+        let format = PlayerMetaText.format(track)
+        let added = PlayerMetaText.added(track)
+        if format != nil || added != nil {
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: 0) {
+                    if let format { formatText(format) }
+                    if format != nil && added != nil { separator }
+                    if let added { addedText(added) }
+                }
+                .fixedSize()
+                VStack(alignment: .leading, spacing: 1) {
+                    if let format { formatText(format) }
+                    if let added { addedText(added) }
+                }
+            }
+            .accessibilityElement(children: .combine)
+        }
+    }
+
+    private var separator: some View {
+        Text(verbatim: "  ·  ").textStyle(Typo.labelSmall).foregroundColor(colors.textTertiary)
+    }
+
+    private func formatText(_ text: String) -> some View {
+        Text(verbatim: text)
+            .textStyle(Typo.labelSmall)
+            .monospacedDigit()
+            .foregroundColor(colors.textTertiary)
+            .lineLimit(1)
+            .help("Format der Datei")
+    }
+
+    private func addedText(_ text: String) -> some View {
+        Text(verbatim: text)
+            .textStyle(Typo.labelSmall)
+            .foregroundColor(colors.textTertiary)
+            .lineLimit(1)
+            .help("\(text) – \(track.dateAddedSource.label)")
+    }
+}
+
+/// Texte der Formatzeile (rein, ohne Ansicht).
+enum PlayerMetaText {
+    /// „AAC · 256 kbit/s · 44,1 kHz · 16 Bit“ – fehlende Angaben entfallen; `nil`, wenn nichts bekannt ist.
+    static func format(_ t: Track) -> String? {
+        var parts: [String] = []
+        if let codec = t.codec?.trimmingCharacters(in: .whitespaces), !codec.isEmpty {
+            parts.append(codec)
+        } else {
+            let ext = (t.fileName as NSString).pathExtension.uppercased()
+            if !ext.isEmpty && ext.count <= 5 { parts.append(ext) }
+        }
+        if t.bitrate > 0 { parts.append(Formatting.bitrate(kbps: t.bitrate)) }
+        if t.sampleRate > 0 { parts.append(Formatting.sampleRate(t.sampleRate)) }
+        if t.bitsPerSample > 0 { parts.append("\(t.bitsPerSample) Bit") }
+        return parts.isEmpty ? nil : parts.joined(separator: " · ")
+    }
+
+    /// „Hinzugefügt am 12. März 2019“; `nil` ohne Datum.
+    static func added(_ t: Track) -> String? {
+        guard t.dateAdded > 0 else { return nil }
+        return "Hinzugefügt am " + dateFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(t.dateAdded)))
+    }
+
+    private static let dateFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.locale = Locale(identifier: "de_DE")
+        f.dateStyle = .long
+        f.timeStyle = .none
+        return f
+    }()
 }
 
 /// Endlose Laufschrift für lange Titel (Start nach 2,5 s, Pause 2,5 s, 30 pt/s, Abstand ⅓ Breite).
