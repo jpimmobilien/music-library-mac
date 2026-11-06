@@ -41,7 +41,7 @@ struct DuplicatesView: View {
                             Label("Ausgewählte Duplikate löschen", systemImage: "trash")
                         }
                         .buttonStyle(GlassButtonStyle(prominent: true, destructive: true, compact: true))
-                        .keyboardShortcut(.delete, modifiers: .command)
+                        .help("Öffnet die Bestätigung (⌘⌫)")
                     }
                     .padding(.bottom, 20)
                 }

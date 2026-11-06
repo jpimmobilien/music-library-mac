@@ -3,6 +3,10 @@
 Native macOS-App für die Dateiübertragung zwischen Android-Telefonen und dem Mac per USB (MTP) –
 mit Dateimanager in zwei Spalten, Foto- und Videogalerie, Übertragungszentrale und Liquid-Glass-Gestaltung.
 
+**Neu in 2.0:** Dateien und Ordner direkt auf dem Telefon löschen (immer mit Bestätigung – das Telefon hat über USB
+keinen Papierkorb), **Duplikate finden** (byte-genauer Inhaltsvergleich per SHA-256, ähnliche Bilder getrennt) und eine
+vollständig neue Gestaltung.
+
 - **Universal-App:** Apple Silicon (M1 und neuer) und Intel, ohne Rosetta
 - **macOS 13 Ventura oder neuer** – auf macOS 26 mit nativem Liquid Glass, darunter mit Systemmaterialien
 - **Keine Treiber, keine Kernel-Erweiterung, keine Fremdbibliotheken** – eigene MTP-Implementierung auf Apples
