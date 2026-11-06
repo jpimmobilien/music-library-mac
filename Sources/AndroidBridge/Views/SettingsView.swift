@@ -166,7 +166,7 @@ struct DeviceSettings: View {
                 }
             }
             Section("Andere Programme") {
-                Toggle("macOS-Fotodienst bei Belegung automatisch freigeben", isOn: $settings.releasePhotoServiceAutomatically)
+                Toggle("Bei Belegung automatisch freigeben (Android File Transfer, macOS-Fotodienst …)", isOn: $settings.releasePhotoServiceAutomatically)
                 Text("macOS beansprucht angeschlossene Telefone manchmal für „Digitale Bilder“ bzw. „Fotos“. Android Bridge kann diesen Dienst (ptpcamerad) kurz beenden; macOS startet ihn bei Bedarf selbst wieder.")
                     .font(.caption).foregroundStyle(.secondary)
             }

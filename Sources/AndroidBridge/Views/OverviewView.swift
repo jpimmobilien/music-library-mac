@@ -246,7 +246,7 @@ struct DeviceHeroCard: View {
         case .busy:
             if let issue = device.issue {
                 IssueBanner(issue: issue,
-                            primaryTitle: "macOS-Fotodienst freigeben",
+                            primaryTitle: "Freigeben und verbinden",
                             primaryAction: { Task { await device.releasePhotoServiceAndRetry() } },
                             secondaryTitle: "Erneut versuchen",
                             secondaryAction: { device.reconnect() })

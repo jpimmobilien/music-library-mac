@@ -33,10 +33,10 @@ final class MTPWorker: @unchecked Sendable {
     }
 
     /// Öffnet Schnittstelle und MTP-Sitzung. Gibt `interfaceService` in jedem Fall frei.
-    func open(interfaceService: io_service_t, timeout: TimeInterval) async throws -> MTPDeviceInfo {
+    func open(interfaceService: io_service_t, timeout: TimeInterval, seize: Bool = false) async throws -> MTPDeviceInfo {
         try await run(priority: .veryHigh, requiresSession: false) { [self] _, _ in
             defer { IOObjectRelease(interfaceService) }
-            let transport = try Self.openTransport(interfaceService)
+            let transport = try Self.openTransport(interfaceService, seize: seize)
             let session = MTPSession(transport: transport)
             session.commandTimeout = min(timeout, 10)
             session.responseTimeout = max(timeout, 20)
@@ -64,15 +64,15 @@ final class MTPWorker: @unchecked Sendable {
 
     /// Öffnet die Schnittstelle: zuerst über die klassische IOKit-Schnittstelle (bewährt wie libusb),
     /// bei Fehlschlag (außer „belegt“/„getrennt“) über IOUSBHost.
-    private static func openTransport(_ service: io_service_t) throws -> ClosableBulkTransport {
+    private static func openTransport(_ service: io_service_t, seize: Bool) throws -> ClosableBulkTransport {
         do {
-            return try LegacyUSBTransport(interfaceService: service)
+            return try LegacyUSBTransport(interfaceService: service, seize: seize)
         } catch let e as MTPError where e == .busy || e == .disconnected {
             throw e
         } catch {
             Diagnostics.shared.log(.usb, "IOKit-Schnittstelle nicht verfügbar (\(error)) – versuche IOUSBHost", error: true)
             do {
-                return try IOUSBHostTransport(interfaceService: service)
+                return try IOUSBHostTransport(interfaceService: service, seize: seize)
             } catch let second {
                 Diagnostics.shared.log(.usb, "IOUSBHost ebenfalls fehlgeschlagen: \(second)", error: true)
                 throw (error as? MTPError).map { first in

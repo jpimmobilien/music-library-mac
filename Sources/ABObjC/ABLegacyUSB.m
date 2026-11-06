@@ -16,7 +16,7 @@ static NSError *ABError(IOReturn kr, NSString *what) {
     BOOL _open;
 }
 
-- (nullable instancetype)initWithService:(io_service_t)service error:(NSError **)error {
+- (nullable instancetype)initWithService:(io_service_t)service seize:(BOOL)seize error:(NSError **)error {
     self = [super init];
     if (!self) return nil;
 
@@ -41,6 +41,9 @@ static NSError *ABError(IOReturn kr, NSString *what) {
     }
 
     kr = (*_intf)->USBInterfaceOpen(_intf);
+    if (kr == kIOReturnExclusiveAccess && seize) {
+        kr = (*_intf)->USBInterfaceOpenSeize(_intf);
+    }
     if (kr != kIOReturnSuccess) {
         (*_intf)->Release(_intf);
         _intf = NULL;

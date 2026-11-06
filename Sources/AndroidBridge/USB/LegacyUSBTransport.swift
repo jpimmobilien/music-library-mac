@@ -19,9 +19,9 @@ final class LegacyUSBTransport: ClosableBulkTransport {
     private let buffer: UnsafeMutableRawPointer
     private var closed = false
 
-    init(interfaceService: io_service_t) throws {
+    init(interfaceService: io_service_t, seize: Bool = false) throws {
         do {
-            usb = try ABLegacyUSBInterface(service: interfaceService)
+            usb = try ABLegacyUSBInterface(service: interfaceService, seize: seize)
         } catch {
             throw IOKitReturn.map(error)
         }

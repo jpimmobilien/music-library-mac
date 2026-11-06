@@ -162,7 +162,7 @@ final class DeviceConnection: ObservableObject, Identifiable {
         }
     }
 
-    func connect() {
+    func connect(seize: Bool = false) {
         guard !isPreview, let record else { return }
         guard case let .fileTransfer(interfaceNumber, ptpOnly) = record.mode else {
             evaluate()
@@ -184,7 +184,7 @@ final class DeviceConnection: ObservableObject, Identifiable {
         let worker = MTPWorker(name: record.idString)
         connectTask = Task { [weak self] in
             do {
-                let info = try await worker.open(interfaceService: service, timeout: timeout)
+                let info = try await worker.open(interfaceService: service, timeout: timeout, seize: seize)
                 guard let self, !Task.isCancelled else { worker.close(graceful: true); return }
                 self.info = info
                 self.backend = MTPBackend(worker: worker, info: info)
@@ -206,7 +206,7 @@ final class DeviceConnection: ObservableObject, Identifiable {
         Diagnostics.shared.log(.mtp, "Verbindung fehlgeschlagen: \(mapped)", error: true)
         if mapped == .busy {
             state = .busy
-            issue = ABIssue.from(mapped)
+            issue = Self.busyIssue(programs: ConflictingPrograms.running().map(\.name))
             if settings?.releasePhotoServiceAutomatically == true && !releaseAttempted {
                 releaseAttempted = true
                 await releasePhotoServiceAndRetry()
@@ -220,17 +220,23 @@ final class DeviceConnection: ObservableObject, Identifiable {
         }
     }
 
-    /// Beendet den macOS-Fotodienst (ptpcamerad), der Android-Geräte gern beansprucht, und verbindet erneut.
-    /// Der Dienst wird von macOS bei Bedarf automatisch neu gestartet.
+    /// Gibt das Telefon frei: beendet Programme, die es beanspruchen (z. B. Android File Transfer und dessen
+    /// unsichtbaren Agenten) sowie den macOS-Fotodienst, und verbindet dann mit „Übernahme“ erneut.
     func releasePhotoServiceAndRetry() async {
-        Diagnostics.shared.log(.usb, "Gebe macOS-Fotodienst frei (ptpcamerad)")
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/usr/bin/killall")
-        process.arguments = ["-q", "ptpcamerad"]
-        try? process.run()
-        process.waitUntilExit()
-        try? await Task.sleep(nanoseconds: 700_000_000)
-        connect()
+        state = .connecting
+        let released = await ConflictingPrograms.releaseAll()
+        if !released.isEmpty { Diagnostics.shared.log(.usb, "Beendet: \(released.joined(separator: ", "))") }
+        connect(seize: true)
+    }
+
+    static func busyIssue(programs: [String]) -> ABIssue {
+        var issue = ABIssue.from(MTPError.busy)
+        if !programs.isEmpty {
+            let list = programs.joined(separator: ", ")
+            issue.message = "Auf diesem Mac läuft \(list) und hält das Telefon fest. Solange es läuft, kann kein anderes Programm auf das Telefon zugreifen."
+            issue.recommendation = "Klicken Sie auf „Freigeben und verbinden“ – Android Bridge beendet \(list) und verbindet. Dauerhaft: Android File Transfer deinstallieren bzw. unter Systemeinstellungen → Allgemein → Anmeldeobjekte den „Android File Transfer Agent“ entfernen."
+        }
+        return issue
     }
 
     func loadStorages() async {

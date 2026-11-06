@@ -71,8 +71,8 @@ struct ABIssue: Identifiable, Equatable, Error {
                            technical: e.description)
         case .busy:
             return ABIssue(kind: .deviceBusy, title: "Gerät wird von einem anderen Programm verwendet",
-                           message: "Ein anderes Programm – meist der macOS-Fotodienst (Digitale Bilder/Fotos) oder ein anderes Android-Programm – hält die Verbindung.",
-                           recommendation: "Schließen Sie andere Programme oder lassen Sie Android Bridge den macOS-Fotodienst kurz freigeben.",
+                           message: "Ein anderes Programm – etwa Android File Transfer (auch dessen unsichtbarer Agent), der macOS-Fotodienst oder ein anderes Android-Programm – hält die Verbindung.",
+                           recommendation: "Klicken Sie auf „Freigeben und verbinden“: Android Bridge beendet solche Programme kurz und übernimmt das Telefon.",
                            technical: e.description)
         case .accessDenied:
             return ABIssue(kind: .authorization, title: "Zugriff nicht erlaubt",

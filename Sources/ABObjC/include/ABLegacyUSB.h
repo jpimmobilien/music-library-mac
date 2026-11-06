@@ -10,7 +10,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Öffnet die Schnittstelle exklusiv und sucht die Bulk-Endpunkte. Fehlercodes sind IOReturn-Werte
 /// (Domäne „IOKit“), z. B. 0xE00002C5 = belegt.
-- (nullable instancetype)initWithService:(io_service_t)service error:(NSError * _Nullable * _Nullable)error;
+/// `seize` = YES: hält ein anderes Programm die Schnittstelle, wird es (wie bei USBInterfaceOpenSeize vorgesehen)
+/// aufgefordert, sie freizugeben.
+- (nullable instancetype)initWithService:(io_service_t)service seize:(BOOL)seize error:(NSError * _Nullable * _Nullable)error;
 
 @property (nonatomic, readonly) NSUInteger maxPacketSize;
 @property (nonatomic, readonly) uint8_t interfaceNumber;

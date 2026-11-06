@@ -61,14 +61,14 @@ final class IOUSBHostTransport: ClosableBulkTransport {
 
     /// Öffnet die Schnittstelle exklusiv. Wirft `.busy`, wenn ein anderes Programm (z. B. der macOS-Fotodienst
     /// „ptpcamerad“) sie bereits hält.
-    init(interfaceService: io_service_t) throws {
+    init(interfaceService: io_service_t, seize: Bool = false) throws {
         let iface: IOUSBHostInterface
         do {
             var made: IOUSBHostInterface?
             var reason: NSString?
             var initError: Error?
             let ok = ABCatchObjCException({
-                do { made = try IOUSBHostInterface(__ioService: interfaceService, options: [], queue: nil, interestHandler: nil) }
+                do { made = try IOUSBHostInterface(__ioService: interfaceService, options: seize ? [.deviceSeize] : [], queue: nil, interestHandler: nil) }
                 catch { initError = error }
             }, &reason)
             if !ok { throw MTPError.transport("Ausnahme beim Öffnen: \((reason as String?) ?? "?")") }
