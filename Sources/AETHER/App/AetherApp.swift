@@ -48,6 +48,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 Task { @MainActor in model?.intervalChanged() }
             }
             .store(in: &cancellables)
+        model.settings.$smcEnabled
+            .sink { [weak model] enabled in model?.engine.setSMCEnabled(enabled) }
+            .store(in: &cancellables)
         NotificationCenter.default.publisher(for: NSApplication.didHideNotification)
             .sink { [weak model] _ in model?.setAppActive(false) }
             .store(in: &cancellables)

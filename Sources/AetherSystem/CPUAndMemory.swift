@@ -136,7 +136,8 @@ public final class MemorySource {
 
 /// Thermalstatus (öffentlich) und Akkutemperatur (IORegistry).
 public enum ThermalSource {
-    public static func sample(batteryTemperature: Reading<Double>, at date: Date = Date()) -> ThermalSnapshot {
+    public static func sample(batteryTemperature: Reading<Double>, smc: (sensors: Reading<[ThermalSensor]>, fans: Reading<[FanReading]>),
+                              at date: Date = Date()) -> ThermalSnapshot {
         let level: ThermalLevel?
         switch ProcessInfo.processInfo.thermalState {
         case .nominal: level = .nominal
@@ -147,7 +148,6 @@ public enum ThermalSource {
         }
         let state: Reading<ThermalLevel> = level.map { Reading($0, source: .thermalState, at: date) }
             ?? Reading(unavailable: .implausibleValue, source: .thermalState, at: date)
-        return ThermalSnapshot(state: state, batteryTemperature: batteryTemperature,
-                               sensors: Reading(unavailable: .plannedLaterPhase, source: .smcSensors, at: date))
+        return ThermalSnapshot(state: state, batteryTemperature: batteryTemperature, sensors: smc.sensors, fans: smc.fans)
     }
 }

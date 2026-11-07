@@ -94,3 +94,14 @@ public enum HardwareSource {
         return process.terminationStatus == 0 ? data : nil
     }
 }
+
+/// Seriennummer – ausschließlich auf ausdrücklichen Wunsch (Klick auf „Anzeigen“ oder Export mit Häkchen).
+/// Liest gezielt nur diesen einen Eintrag (keine weiteren Kennungen wie die Plattform-UUID) und speichert nichts.
+public enum SerialNumberSource {
+    public static func read() -> String? {
+        let values = IORegistry.property("IOPlatformSerialNumber", ofAll: "IOPlatformExpertDevice")
+        guard let serial = values.compactMap({ $0 as? String }).first?.trimmingCharacters(in: .whitespacesAndNewlines),
+              !serial.isEmpty, serial.count <= 32 else { return nil }
+        return serial
+    }
+}

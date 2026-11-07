@@ -47,6 +47,9 @@ final class MonitorEngine {
     func loadStaticInfo() {
         let basic = HardwareSource.basic()
         system.apply(hardware: basic)
+        let isVirtual = basic.isVirtualMachine
+        queue.async { [samplers] in samplers.isVirtualMachine = isVirtual }
+        refreshPowerProfiler()
         let appleSilicon = basic.isAppleSilicon
         DispatchQueue.global(qos: .utility).async { [weak self] in
             let devices = GPUSource.devices(appleSilicon: appleSilicon)
@@ -72,6 +75,20 @@ final class MonitorEngine {
         isRunning = false
         timer?.cancel()
         timer = nil
+    }
+
+    /// Batterieangaben aus den Systeminformationen (Apples Zustand und maximale Kapazität) – im Hintergrund.
+    func refreshPowerProfiler() {
+        DispatchQueue.global(qos: .utility).async { [weak self] in
+            let info = HardwareSource.run("/usr/sbin/system_profiler", ["SPPowerDataType", "-json", "-detailLevel", "mini"], timeout: 25)
+                .flatMap(PowerProfilerParser.parse)
+            Task { @MainActor in self?.power.apply(profiler: info) }
+        }
+    }
+
+    /// Sensoren über SMC lesen (Einstellung).
+    func setSMCEnabled(_ enabled: Bool) {
+        queue.async { [samplers] in samplers.smcEnabled = enabled }
     }
 
     /// Prozessliste nur messen, wenn ein sichtbarer Bereich sie braucht (Aktivität, CPU, Arbeitsspeicher).
@@ -180,6 +197,9 @@ final class Samplers: @unchecked Sendable {
     private let storage = StorageSource()
     private let selfUsage = SelfUsage()
     private let processSource = ProcessSource()
+    private let smcSource = SMCSource()
+    var smcEnabled = true
+    var isVirtualMachine = false
     private var cpuTracker = ProcessCPUTracker()
     var wantProcesses = false
     private var evaluator = PulseEvaluator(sampleInterval: 2)
@@ -211,7 +231,11 @@ final class Samplers: @unchecked Sendable {
         if uptime - lastMedium >= max(5, interval) || battery == nil {
             let b = BatterySource.sample(at: now)
             battery = b
-            thermal = ThermalSource.sample(batteryTemperature: b.temperature, at: now)
+            let smc = smcEnabled
+                ? smcSource.sample(at: now, isVirtualMachine: isVirtualMachine)
+                : (Reading<[ThermalSensor]>(unavailable: .disabledInSettings, source: .smcSensors, at: now),
+                   Reading<[FanReading]>(unavailable: .disabledInSettings, source: .smcFans, at: now))
+            thermal = ThermalSource.sample(batteryTemperature: b.temperature, smc: smc, at: now)
             lastMedium = uptime
         }
 

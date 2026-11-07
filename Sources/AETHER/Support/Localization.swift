@@ -56,6 +56,7 @@ extension UnavailableReason {
         case .implausibleValue: return tr("The source answered, but the value wasn’t plausible, so it isn’t shown.")
         case .queryFailed: return tr("The query failed.")
         case .plannedLaterPhase: return tr("Coming in a later development phase.")
+        case .disabledInSettings: return tr("Turned off in Settings.")
         }
     }
 }
@@ -73,6 +74,8 @@ extension DataSource {
         case "thermal.state": return tr("The thermal state macOS reports. It’s a classification, not a temperature.")
         case "thermal.smc": return tr("Sensor values from the System Management Controller.")
         case "thermal.battery": return tr("Temperature reported by the battery’s own sensor.")
+        case "thermal.fans": return tr("Fan speeds from the System Management Controller (read-only).")
+        case "battery.profiler": return tr("Battery condition and maximum capacity as shown in System Information.")
         case "battery.iops": return tr("The power source information macOS provides to all apps.")
         case "battery.smart": return tr("Values reported by the battery controller.")
         case "battery.health": return tr("Full charge capacity divided by design capacity. Not identical to Apple’s “Maximum Capacity”.")
@@ -87,6 +90,11 @@ extension DataSource {
         case "hardware.profiler": return tr("Hardware overview from System Information, without personal data.")
         case "software.os": return tr("macOS version and build number.")
         case "pulse": return tr("Fixed rules that only use measured values and system reports.")
+        case "thermal.aggregate": return tr("Average and maximum of all sensors in an area, calculated by AETHER.")
+        case "battery.adapter": return tr("Details the connected power adapter reports to macOS.")
+        case "hardware.displays": return tr("Connected displays as macOS reports them.")
+        case "hardware.serial": return tr("The serial number stored in the Mac’s firmware. Only read when you ask for it.")
+        case "software.uptime": return tr("Time since the last startup, from the kernel’s boot time.")
         default: return ""
         }
     }

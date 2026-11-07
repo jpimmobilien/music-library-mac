@@ -48,10 +48,18 @@ public enum BatterySource {
         }
 
         var adapter: Reading<Int> = Reading(unavailable: .notPresent, source: .powerSources, at: date)
-        if let details = IOPSCopyExternalPowerAdapterDetails()?.takeRetainedValue() as? [String: Any],
-           let watts = (details["Watts"] as? NSNumber)?.intValue, watts > 0 {
-            adapter = Reading(watts, source: .powerSources, at: date)
+        var adapterName: String?
+        var adapterVoltage: Double?
+        var adapterCurrent: Double?
+        if let details = IOPSCopyExternalPowerAdapterDetails()?.takeRetainedValue() as? [String: Any] {
+            if let watts = (details["Watts"] as? NSNumber)?.intValue, watts > 0 {
+                adapter = Reading(watts, source: .powerSources, at: date)
+            }
+            adapterName = (details["Name"] as? String) ?? (details["Description"] as? String)
+            adapterVoltage = (details["AdapterVoltage"] as? NSNumber)?.doubleValue ?? (details["Voltage"] as? NSNumber)?.doubleValue
+            adapterCurrent = (details["Current"] as? NSNumber)?.doubleValue
         }
+        var designCycles: Int?
 
         // AppleSmartBattery: Zyklen, Kapazitäten (mAh), Spannung (mV), Strom (mA), Temperatur (1/100 °C)
         let unavailableReason: UnavailableReason = present ? .notProvidedByMacOS : .notPresent
@@ -84,15 +92,21 @@ public enum BatterySource {
                 let ma = BatteryMath.signedMilliamps(raw)
                 if abs(ma) <= 20_000 { amperage = Reading(Double(ma), source: .smartBattery, at: date) }
             }
+            designCycles = IORegistry.int(smart, "DesignCycleCount9C").flatMap { (100...10_000).contains($0) ? $0 : nil }
             if let raw = IORegistry.int(smart, "Temperature"), let celsius = BatteryMath.celsius(fromCentidegrees: raw) {
                 temperature = Reading(celsius, source: .batteryTemperature, at: date)
             }
         }
 
-        return BatterySnapshot(isPresent: present, percent: percent, isCharging: isCharging, isFullyCharged: isCharged,
-                               powerSource: source, minutesToEmpty: toEmpty, minutesToFull: toFull, cycleCount: cycles,
-                               designCapacity: design, fullChargeCapacity: full, computedHealth: health, voltage: voltage,
-                               amperage: amperage, temperature: temperature, adapterWatts: adapter, systemCondition: condition)
+        var snapshot = BatterySnapshot(isPresent: present, percent: percent, isCharging: isCharging, isFullyCharged: isCharged,
+                                       powerSource: source, minutesToEmpty: toEmpty, minutesToFull: toFull, cycleCount: cycles,
+                                       designCapacity: design, fullChargeCapacity: full, computedHealth: health, voltage: voltage,
+                                       amperage: amperage, temperature: temperature, adapterWatts: adapter, systemCondition: condition)
+        snapshot.designCycleCount = designCycles
+        snapshot.adapterName = adapterName
+        snapshot.adapterVoltage = adapterVoltage
+        snapshot.adapterCurrent = adapterCurrent
+        return snapshot
     }
 }
 

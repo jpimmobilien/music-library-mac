@@ -39,6 +39,8 @@ public enum UnavailableReason: String, Codable, Sendable, CaseIterable {
     case queryFailed
     /// Wird in einer späteren Phase umgesetzt (nur in Zwischenversionen).
     case plannedLaterPhase
+    /// In den Einstellungen ausgeschaltet.
+    case disabledInSettings
 }
 
 /// Eine technische Datenquelle. `id` dient als Schlüssel für die lokalisierte Erklärung.
@@ -63,6 +65,8 @@ public extension DataSource {
     static let swapUsage = DataSource(id: "memory.swap", api: "sysctl vm.swapusage", provenance: .measured)
     static let memoryPressure = DataSource(id: "memory.pressure", api: "sysctl kern.memorystatus_vm_pressure_level", provenance: .systemReported)
     static let thermalState = DataSource(id: "thermal.state", api: "ProcessInfo.thermalState", provenance: .systemReported)
+    static let smcFans = DataSource(id: "thermal.fans", api: "SMC · FNum · F*Ac/F*Mn/F*Mx/F*Tg", provenance: .measured)
+    static let powerProfiler = DataSource(id: "battery.profiler", api: "system_profiler SPPowerDataType -json", provenance: .systemReported)
     static let smcSensors = DataSource(id: "thermal.smc", api: "SMC · AppleSMC · IOConnectCallStructMethod", provenance: .measured)
     static let batteryTemperature = DataSource(id: "thermal.battery", api: "IORegistry · AppleSmartBattery · Temperature", provenance: .measured)
     static let powerSources = DataSource(id: "battery.iops", api: "IOPSCopyPowerSourcesInfo", provenance: .measured)
@@ -78,12 +82,19 @@ public extension DataSource {
     static let systemProfiler = DataSource(id: "hardware.profiler", api: "system_profiler SPHardwareDataType -json", provenance: .systemReported)
     static let osVersion = DataSource(id: "software.os", api: "sysctl kern.osproductversion · kern.osversion", provenance: .systemReported)
     static let pulse = DataSource(id: "pulse", api: "AETHER · Puls-Regeln (AetherCore/Pulse.swift)", provenance: .computed)
+    static let thermalAggregate = DataSource(id: "thermal.aggregate", api: "SMC-Sensoren · Mittelwert und Maximum je Bereich", provenance: .computed)
+    static let batteryPower = DataSource(id: "battery.power", api: "Voltage × Amperage", provenance: .computed)
+    static let adapterDetails = DataSource(id: "battery.adapter", api: "IOPSCopyExternalPowerAdapterDetails", provenance: .systemReported)
+    static let displays = DataSource(id: "hardware.displays", api: "NSScreen · CGDisplayIsBuiltin · CGDisplayScreenSize", provenance: .systemReported)
+    static let serialNumber = DataSource(id: "hardware.serial", api: "IORegistry · IOPlatformExpertDevice · IOPlatformSerialNumber", provenance: .systemReported)
+    static let uptime = DataSource(id: "software.uptime", api: "sysctl kern.boottime", provenance: .measured)
 
     /// Alle Quellen (für die Datenschutz-/Quellenübersicht und Tests der Lokalisierung).
     static let all: [DataSource] = [
         .cpuTicks, .loadAverage, .cpuTopology, .vmStatistics, .swapUsage, .memoryPressure, .thermalState,
-        .smcSensors, .batteryTemperature, .powerSources, .smartBattery, .batteryHealth, .batteryTimeRemaining, .volumes,
+        .smcSensors, .smcFans, .powerProfiler, .batteryTemperature, .powerSources, .smartBattery, .batteryHealth, .batteryTimeRemaining, .volumes,
         .blockStorage, .interfaceCounters, .gpuDevices, .gpuStatistics, .hardwareSysctl, .systemProfiler, .osVersion, .pulse,
+        .thermalAggregate, .batteryPower, .adapterDetails, .displays, .serialNumber, .uptime,
     ]
 }
 

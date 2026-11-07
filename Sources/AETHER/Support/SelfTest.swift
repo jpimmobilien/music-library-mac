@@ -75,6 +75,32 @@ enum SelfTest {
             check("battery", false, "keine Batteriemessung")
         }
 
+        // SMC-Sensoren und Lüfter: echte Werte müssen plausibel sein; sonst ein benannter Grund (virtueller Mac).
+        if let thermal {
+            if let sensors = thermal.sensors.value {
+                let plausible = sensors.allSatisfy { SMCDecoder.plausibleTemperature($0.celsius) }
+                check("thermal.smc", !sensors.isEmpty && plausible,
+                      "Sensoren=\(sensors.count) heißester=\(thermal.hottest.map { "\($0.key) \($0.celsius)" } ?? "-")")
+            } else {
+                check("thermal.smc", thermal.sensors.reason != nil,
+                      "nicht verfügbar mit Grund: \(thermal.sensors.reason?.rawValue ?? "fehlt")")
+            }
+            if let fans = thermal.fans.value {
+                check("thermal.fans", fans.allSatisfy { $0.rpm >= 0 && $0.rpm < 20_000 },
+                      "Lüfter=\(fans.count) " + fans.map { "\(Int($0.rpm)) U/min" }.joined(separator: ", "))
+            } else {
+                check("thermal.fans", thermal.fans.reason != nil, "nicht verfügbar mit Grund: \(thermal.fans.reason?.rawValue ?? "fehlt")")
+            }
+        }
+
+        // Systembericht: Abschnitte aus echten Werten, ohne Seriennummer
+        let sections = HardwareReport.sections(system: engine.system, gpu: engine.gpu, storage: engine.storage, power: engine.power,
+                                               displays: DisplayCatalog.current())
+        let markdown = ReportFormatter.markdown(title: "AETHER", subtitle: "Selbsttest", columns: ("a", "b", "c"), sections: sections,
+                                                includeSensitive: false, describe: { $0.provenance.rawValue })
+        check("hardware.report", sections.contains { !$0.rows.isEmpty } && !sections.flatMap(\.rows).contains { $0.isSensitive },
+              "Abschnitte=\(sections.filter { !$0.rows.isEmpty }.count) Zeichen=\(markdown.count) Bildschirme=\(DisplayCatalog.current().count)")
+
         // GPU
         let gpu = engine.gpu
         for _ in 0..<60 where !gpu.devicesLoaded {

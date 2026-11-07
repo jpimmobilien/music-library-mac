@@ -93,14 +93,45 @@ final class StorageStore: ObservableObject {
     func apply(_ snapshot: StorageSnapshot) { self.snapshot = snapshot }
 }
 
+/// Verlaufslänge für Batterie und Temperatur (Messungen im 5-s-Takt: 30 min).
+let slowCapacity = 360
+
 @MainActor
 final class PowerStore: ObservableObject {
     @Published private(set) var battery: BatterySnapshot?
     @Published private(set) var thermal: ThermalSnapshot?
+    @Published private(set) var profiler: PowerProfilerInfo?
+    @Published private(set) var profilerLoaded = false
+    @Published private(set) var longPercent = RingBuffer<Double>(capacity: slowCapacity)
+    @Published private(set) var longPower = RingBuffer<Double>(capacity: slowCapacity)
+    @Published private(set) var longHottest = RingBuffer<Double>(capacity: slowCapacity)
+    @Published private(set) var longFan = RingBuffer<Double>(capacity: slowCapacity)
+    /// Verlauf je Sensorbereich (Maximum).
+    @Published private(set) var groupHistory: [SensorGroup: RingBuffer<Double>] = [:]
+    private var lastTimestamp: Date?
 
     func apply(battery: BatterySnapshot, thermal: ThermalSnapshot) {
         self.battery = battery
         self.thermal = thermal
+        // Verläufe nur bei neuen Messungen (der mittlere Takt liefert dieselben Werte mehrfach)
+        guard thermal.state.timestamp != lastTimestamp else { return }
+        lastTimestamp = thermal.state.timestamp
+        if let percent = battery.percent.value { longPercent.append(Double(percent)) }
+        if let watts = battery.power.value { longPower.append(abs(watts)) }
+        if let hottest = thermal.hottest { longHottest.append(hottest.celsius) }
+        if let fan = thermal.fans.value?.first { longFan.append(fan.rpm) }
+        if let sensors = thermal.sensors.value {
+            for entry in SensorCatalog.aggregate(sensors) {
+                var buffer = groupHistory[entry.group] ?? RingBuffer<Double>(capacity: slowCapacity)
+                buffer.append(entry.maximum)
+                groupHistory[entry.group] = buffer
+            }
+        }
+    }
+
+    func apply(profiler: PowerProfilerInfo?) {
+        self.profiler = profiler
+        profilerLoaded = true
     }
 }
 

@@ -136,6 +136,11 @@ public struct BatterySnapshot: Sendable, Equatable {
     public var adapterWatts: Reading<Int>
     /// Zustandsangabe von macOS (IOPS „BatteryHealth“), unverändert.
     public var systemCondition: String?
+    /// Auslegung in Ladezyklen (AppleSmartBattery „DesignCycleCount9C“).
+    public var designCycleCount: Int?
+    public var adapterName: String?
+    public var adapterVoltage: Double?
+    public var adapterCurrent: Double?
 
     public init(isPresent: Bool, percent: Reading<Int>, isCharging: Bool?, isFullyCharged: Bool?, powerSource: PowerSourceState,
                 minutesToEmpty: Reading<Int>, minutesToFull: Reading<Int>, cycleCount: Reading<Int>,
@@ -165,7 +170,7 @@ public struct BatterySnapshot: Sendable, Equatable {
         guard let v = voltage.value, let a = amperage.value else {
             return Reading(unavailable: voltage.reason ?? amperage.reason ?? .queryFailed, source: .smartBattery)
         }
-        return Reading(v * a / 1_000_000, source: DataSource(id: "battery.power", api: "Voltage × Amperage", provenance: .computed),
+        return Reading(v * a / 1_000_000, source: .batteryPower,
                        at: voltage.timestamp)
     }
 
@@ -174,6 +179,22 @@ public struct BatterySnapshot: Sendable, Equatable {
         guard let c = systemCondition?.lowercased() else { return nil }
         if c.contains("service") || c.contains("check") || c.contains("poor") { return true }
         return false
+    }
+}
+
+/// Netzteilangaben aus IOPSCopyExternalPowerAdapterDetails: Einheiten sind nicht dokumentiert (Apple Silicon: mV/mA,
+/// manche ältere Macs: V/A). Nur plausible Werte werden angezeigt.
+public enum AdapterUnits {
+    public static func volts(_ raw: Double?) -> Double? {
+        guard let raw, raw > 0 else { return nil }
+        let volts = raw >= 1_000 ? raw / 1_000 : raw
+        return (3...50).contains(volts) ? volts : nil
+    }
+
+    public static func amperes(_ raw: Double?) -> Double? {
+        guard let raw, raw > 0 else { return nil }
+        let amperes = raw >= 20 ? raw / 1_000 : raw
+        return (0.05...10).contains(amperes) ? amperes : nil
     }
 }
 
@@ -307,13 +328,23 @@ public struct GPUSnapshot: Sendable, Equatable {
 public struct ThermalSnapshot: Sendable, Equatable {
     public var state: Reading<ThermalLevel>
     public var batteryTemperature: Reading<Double>
-    /// Sensorwerte (SMC) – ab Phase 5.
-    public var sensors: Reading<Double>
+    /// Temperatursensoren aus dem SMC.
+    public var sensors: Reading<[ThermalSensor]>
+    /// Lüfter aus dem SMC (leere Liste = dieser Mac hat keine Lüfter).
+    public var fans: Reading<[FanReading]>
 
-    public init(state: Reading<ThermalLevel>, batteryTemperature: Reading<Double>, sensors: Reading<Double>) {
+    public init(state: Reading<ThermalLevel>, batteryTemperature: Reading<Double>, sensors: Reading<[ThermalSensor]>,
+                fans: Reading<[FanReading]>) {
         self.state = state
         self.batteryTemperature = batteryTemperature
         self.sensors = sensors
+        self.fans = fans
+    }
+
+    /// Heißester Sensor im CPU-Bereich (sonst insgesamt).
+    public var hottest: ThermalSensor? {
+        let all = sensors.value ?? []
+        return all.filter { $0.group == .cpu }.max { $0.celsius < $1.celsius } ?? all.max { $0.celsius < $1.celsius }
     }
 }
 

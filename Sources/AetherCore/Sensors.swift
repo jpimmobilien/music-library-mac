@@ -121,19 +121,39 @@ public enum SensorCatalog {
         case "TH", "TN": return (.storage, nil)
         case "TB": return (.battery, nil)
         case "TW": return (.wireless, nil)
-        case "TI", "TV", "Tp0", "TD": return (.power, nil)
+        case "TI", "TV", "TD": return (.power, nil)
         case "Ts", "TA", "Ta": return (.enclosure, nil)
         default: return (.other, nil)
         }
     }
 
     /// Mittel und Maximum je Bereich (berechnet).
-    public static func aggregate(_ sensors: [ThermalSensor]) -> [(group: SensorGroup, average: Double, maximum: Double, count: Int)] {
+    public static func aggregate(_ sensors: [ThermalSensor]) -> [SensorGroupSummary] {
         SensorGroup.allCases.compactMap { group in
             let values = sensors.filter { $0.group == group }.map(\.celsius)
             guard !values.isEmpty else { return nil }
-            return (group, values.reduce(0, +) / Double(values.count), values.max() ?? 0, values.count)
+            return SensorGroupSummary(group: group, average: values.reduce(0, +) / Double(values.count),
+                                      maximum: values.max() ?? 0, count: values.count)
         }
+    }
+
+    /// Alle bekannten Bedeutungen (für die Lokalisierung und Tests).
+    public static var knownMeanings: Set<String> { Set(known.values.map(\.1)) }
+}
+
+/// Zusammenfassung eines Sensorbereichs (berechnet).
+public struct SensorGroupSummary: Sendable, Equatable, Identifiable {
+    public var id: SensorGroup { group }
+    public var group: SensorGroup
+    public var average: Double
+    public var maximum: Double
+    public var count: Int
+
+    public init(group: SensorGroup, average: Double, maximum: Double, count: Int) {
+        self.group = group
+        self.average = average
+        self.maximum = maximum
+        self.count = count
     }
 }
 

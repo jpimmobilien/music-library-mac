@@ -68,6 +68,9 @@ private struct ContentArea: View {
         case .activity: ActivityView(store: model.engine.processes)
         case .cpuGPU: CPUGPUView()
         case .memory: MemoryView()
+        case .thermal: ThermalView()
+        case .battery: BatteryView()
+        case .hardware: HardwareView()
         default: PlannedSectionView(section: section)
         }
     }

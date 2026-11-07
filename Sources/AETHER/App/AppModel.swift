@@ -84,8 +84,7 @@ enum AppSection: String, CaseIterable, Identifiable, Hashable {
     var plannedPhase: Int? {
         switch self {
         case .overview, .settings: return nil
-        case .activity, .cpuGPU, .memory: return nil
-        case .thermal, .battery, .hardware: return 5
+        case .activity, .cpuGPU, .memory, .thermal, .battery, .hardware: return nil
         case .storage, .files: return 6
         case .network: return 7
         }

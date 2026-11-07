@@ -108,6 +108,10 @@ struct SettingsView: View {
                         detail: tr("Measures at most every 5 seconds and skips everything that isn’t visible.")) {
                 Toggle("", isOn: $settings.lowImpact).toggleStyle(.switch).labelsHidden()
             }
+            SettingsRow(title: tr("Temperature sensors and fans (SMC)"),
+                        detail: tr("Reads temperatures and fan speeds from the System Management Controller via public IOKit functions – read-only, no administrator rights. Apple doesn’t document the sensor keys.")) {
+                Toggle("", isOn: $settings.smcEnabled).toggleStyle(.switch).labelsHidden()
+            }
             SettingsRow(title: tr("When the window isn’t visible"), detail: nil) {
                 Text(tr("Measurements pause automatically")).font(Typo.callout).foregroundStyle(theme.textSecondary)
             }
@@ -153,7 +157,7 @@ struct SettingsView: View {
                 privacyLine("network.slash", tr("AETHER makes no network connections and sends no data anywhere."))
                 privacyLine("chart.bar.xaxis", tr("No telemetry, no accounts, no passwords."))
                 privacyLine("lock.shield", tr("No administrator rights, no background helpers."))
-                privacyLine("number", tr("The serial number is never shown or stored in this version."))
+                privacyLine("number", tr("The serial number is only read when you ask for it (Hardware → Show) and is never stored."))
                 privacyLine("checkmark.seal", tr("Every value shows where it comes from – click the small symbol next to it."))
             }
             Divider().overlay(theme.hairline)

@@ -16,6 +16,8 @@ final class AppSettings: ObservableObject {
     @Published var density: Density { didSet { save(density.rawValue, "density") } }
     @Published var refreshInterval: RefreshInterval { didSet { save(refreshInterval.rawValue, "refreshInterval") } }
     @Published var lowImpact: Bool { didSet { save(lowImpact, "lowImpact") } }
+    /// Temperaturen und Lüfter über das SMC lesen (nur lesend, undokumentiertes Protokoll – siehe Konzept 8.3).
+    @Published var smcEnabled: Bool { didSet { save(smcEnabled, "smcEnabled") } }
     @Published var dashboard: DashboardLayout {
         didSet {
             save(dashboard.order.map(\.rawValue), "dashboardOrder")
@@ -34,6 +36,7 @@ final class AppSettings: ObservableObject {
         density = (read("density") as? String).flatMap(Density.init(rawValue:)) ?? .standard
         refreshInterval = (read("refreshInterval") as? Int).flatMap(RefreshInterval.init(rawValue:)) ?? .twoSeconds
         lowImpact = (read("lowImpact") as? Bool) ?? false
+        smcEnabled = (read("smcEnabled") as? Bool) ?? true
         dashboard = DashboardLayout.restore(order: (read("dashboardOrder") as? [String]) ?? [],
                                             hidden: (read("dashboardHidden") as? [String]) ?? [])
     }

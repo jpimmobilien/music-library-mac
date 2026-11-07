@@ -172,11 +172,23 @@ struct ThermalCard: View {
                     }
                 }
             }
-            HStack(alignment: .firstTextBaseline, spacing: 6) {
-                Image(systemName: "sensor").font(.system(size: 10)).foregroundStyle(theme.textTertiary)
-                Text(tr("CPU, GPU and SoC sensors and fans follow in phase 5."))
-                    .font(Typo.caption).foregroundStyle(theme.textTertiary)
-                    .fixedSize(horizontal: false, vertical: true)
+            if let hottest = store.thermal?.hottest, let sensors = store.thermal?.sensors {
+                InfoRow(label: tr("Hottest sensor (%@)", hottest.key), value: fmt.celsius(hottest.celsius),
+                        source: sensors.source, timestamp: sensors.timestamp)
+            }
+            if let fans = store.thermal?.fans {
+                if let list = fans.value {
+                    InfoRow(label: tr("Fans"),
+                            value: list.isEmpty ? tr("None (passively cooled)")
+                                                : list.map { fmt.integer(Int($0.rpm.rounded())) }.joined(separator: " · ") + " " + tr("rpm"),
+                            source: fans.source, timestamp: fans.timestamp)
+                } else {
+                    HStack {
+                        Text(tr("Fans")).font(Typo.callout).foregroundStyle(theme.textSecondary)
+                        Spacer()
+                        UnavailableValue(reason: fans.reason ?? .queryFailed, source: fans.source, compact: true)
+                    }
+                }
             }
         }
     }
@@ -285,12 +297,7 @@ struct BatteryCard: View {
         }
     }
 
-    private func chargeState(_ b: BatterySnapshot) -> String {
-        if b.isFullyCharged == true { return tr("Fully charged") }
-        if b.isCharging == true { return tr("Charging") }
-        if b.powerSource == .ac { return tr("On power adapter, not charging") }
-        return tr("On battery")
-    }
+    private func chargeState(_ b: BatterySnapshot) -> String { batteryChargeState(b) }
 }
 
 // MARK: - Netzwerk
@@ -539,10 +546,7 @@ struct ThisMacCard: View {
         }
     }
 
-    private func architecture(_ hw: HardwareSummary) -> String {
-        let base = hw.isAppleSilicon ? tr("Apple Silicon (arm64)") : tr("Intel (x86_64)")
-        return hw.isTranslated ? base + " · " + tr("running via Rosetta") : base
-    }
+    private func architecture(_ hw: HardwareSummary) -> String { architectureDescription(hw) }
 }
 
 func deviceSymbol(_ kind: DeviceKind) -> String {
