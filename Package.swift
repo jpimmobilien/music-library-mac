@@ -18,10 +18,18 @@ var targets: [Target] = [
 var products: [Product] = [.library(name: "AetherCore", targets: ["AetherCore"])]
 
 #if os(macOS)
+// Kleine C-Hilfen mit exaktem Speicherlayout (SMC, nur lesend)
+targets.append(
+    .target(
+        name: "AetherC",
+        path: "Sources/AetherC",
+        linkerSettings: [.linkedFramework("IOKit"), .linkedFramework("CoreFoundation")]
+    )
+)
 targets.append(
     .target(
         name: "AetherSystem",
-        dependencies: ["AetherCore"],
+        dependencies: ["AetherCore", "AetherC"],
         path: "Sources/AetherSystem",
         linkerSettings: [
             .linkedFramework("IOKit"),

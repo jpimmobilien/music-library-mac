@@ -74,6 +74,11 @@ public struct ProcessSample: Sendable, Equatable {
 public struct ProcessIdentity: Hashable, Sendable {
     public var pid: Int32
     public var start: Double
+
+    public init(pid: Int32, start: Double) {
+        self.pid = pid
+        self.start = start
+    }
 }
 
 public struct ProcessSnapshot: Sendable {

@@ -63,6 +63,9 @@ jobs:
           if [ "${MAJOR:-0}" -lt 26 ] && [ -n "$X" ]; then sudo xcode-select -s "$X"; fi
           mkdir -p logs
           { sw_vers; uname -m; xcodebuild -version; swift --version; xcrun --show-sdk-version; ls -l /bin/ps; } 2>&1 | tee logs/system-${{ matrix.os }}.txt
+          # Öffentliche SDK-Header für spätere Funktionen dokumentieren (NVMe-SMART)
+          H="$(xcrun --show-sdk-path)/System/Library/Frameworks/IOKit.framework/Headers/storage/nvme"
+          { ls -la "$H" && grep -n -E "typedef|struct|SMARTReadData|IONVMeSMART|kIOPropertyNVMe|CFUUIDGetConstantUUIDWithBytes|#define" "$H"/*.h | head -120; } > logs/sdk-nvme-${{ matrix.os }}.txt 2>&1 || true
       - name: Kompilieren (Fehlerübersicht)
         run: |
           set +e
