@@ -18,11 +18,20 @@ public struct MemorySnapshot: Sendable, Equatable {
     public var breakdown: Reading<MemoryBreakdown>
     public var swap: Reading<SwapUsage>
     public var pressure: Reading<PressureLevel>
+    /// Ein-/Auslagerungen und Kompressionen pro Sekunde (ab der zweiten Messung).
+    public var activity: Reading<MemoryActivity>?
+    /// Verhältnis unkomprimiert : komprimiert.
+    public var compressionRatio: Double?
+    public var pageSize: UInt64?
 
-    public init(breakdown: Reading<MemoryBreakdown>, swap: Reading<SwapUsage>, pressure: Reading<PressureLevel>) {
+    public init(breakdown: Reading<MemoryBreakdown>, swap: Reading<SwapUsage>, pressure: Reading<PressureLevel>,
+                activity: Reading<MemoryActivity>? = nil, compressionRatio: Double? = nil, pageSize: UInt64? = nil) {
         self.breakdown = breakdown
         self.swap = swap
         self.pressure = pressure
+        self.activity = activity
+        self.compressionRatio = compressionRatio
+        self.pageSize = pageSize
     }
 }
 
@@ -325,6 +334,15 @@ public struct HardwareSummary: Sendable, Equatable {
     public var osVersion: String?
     public var osBuild: String?
     public var bootTime: Date?
+    /// Cache-Größen in Bytes (sysctl), Nenntakt in Hz (nur Intel).
+    public var cacheL1Instruction: Int?
+    public var cacheL1Data: Int?
+    public var cacheL2: Int?
+    public var cacheL3: Int?
+    public var nominalFrequency: Int?
+    public var kernelVersion: String?
+    /// Art je logischem Kern (Apple Silicon, aus dem Gerätebaum); `nil` = keine verlässliche Zuordnung.
+    public var coreKinds: [CoreCluster.Kind]?
 
     public init(modelIdentifier: String? = nil, machineName: String? = nil, kind: DeviceKind = .unknown,
                 processor: ProcessorName? = nil, isAppleSilicon: Bool = false, isTranslated: Bool = false, isVirtualMachine: Bool = false,

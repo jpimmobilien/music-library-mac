@@ -9,18 +9,28 @@ import AetherSystem
 
 /// Länge der Mini-Verläufe (Messungen).
 let sparklineCapacity = 60
+/// Länge der Verläufe auf den Detailseiten (Messungen; bei 2 s = 10 min).
+let detailCapacity = 300
 
 @MainActor
 final class CPUStore: ObservableObject {
     @Published private(set) var snapshot: CPUSnapshot?
     @Published private(set) var busyHistory = RingBuffer<Double>(capacity: sparklineCapacity)
+    @Published private(set) var longBusy = RingBuffer<Double>(capacity: detailCapacity)
+    @Published private(set) var longSystem = RingBuffer<Double>(capacity: detailCapacity)
     @Published private(set) var peak: Double?
+    @Published private(set) var peakTime: Date?
 
     func apply(_ snapshot: CPUSnapshot) {
         self.snapshot = snapshot
         if let usage = snapshot.total.value {
             busyHistory.append(usage.busy)
-            peak = max(peak ?? 0, usage.busy)
+            longBusy.append(usage.busy)
+            longSystem.append(usage.system)
+            if usage.busy > (peak ?? -1) {
+                peak = usage.busy
+                peakTime = snapshot.total.timestamp
+            }
         }
     }
 
@@ -34,10 +44,19 @@ final class CPUStore: ObservableObject {
 final class MemoryStore: ObservableObject {
     @Published private(set) var snapshot: MemorySnapshot?
     @Published private(set) var usedHistory = RingBuffer<Double>(capacity: sparklineCapacity)
+    @Published private(set) var longUsed = RingBuffer<Double>(capacity: detailCapacity)
+    @Published private(set) var longCompressed = RingBuffer<Double>(capacity: detailCapacity)
+    /// Speicherdruck je Messung (1 normal, 2 Warnung, 4 kritisch; 0 = unbekannt).
+    @Published private(set) var longPressure = RingBuffer<Double>(capacity: detailCapacity)
 
     func apply(_ snapshot: MemorySnapshot) {
         self.snapshot = snapshot
-        if let b = snapshot.breakdown.value { usedHistory.append(b.usedFraction) }
+        if let b = snapshot.breakdown.value {
+            usedHistory.append(b.usedFraction)
+            longUsed.append(b.usedFraction)
+            longCompressed.append(b.physical > 0 ? Double(b.compressed) / Double(b.physical) : 0)
+        }
+        longPressure.append(Double(snapshot.pressure.value?.rawValue ?? 0))
     }
 
     func clearHistory() { usedHistory.removeAll() }
@@ -48,12 +67,16 @@ final class NetworkStore: ObservableObject {
     @Published private(set) var snapshot: NetworkSnapshot?
     @Published private(set) var downHistory = RingBuffer<Double>(capacity: sparklineCapacity)
     @Published private(set) var upHistory = RingBuffer<Double>(capacity: sparklineCapacity)
+    @Published private(set) var longDown = RingBuffer<Double>(capacity: detailCapacity)
+    @Published private(set) var longUp = RingBuffer<Double>(capacity: detailCapacity)
 
     func apply(_ snapshot: NetworkSnapshot) {
         self.snapshot = snapshot
         if let d = snapshot.download.value, let u = snapshot.upload.value {
             downHistory.append(d)
             upHistory.append(u)
+            longDown.append(d)
+            longUp.append(u)
         }
     }
 
@@ -89,6 +112,7 @@ final class GPUStore: ObservableObject {
     @Published private(set) var devicesFailed = false
     @Published private(set) var utilization: Reading<Double>?
     @Published private(set) var history = RingBuffer<Double>(capacity: sparklineCapacity)
+    @Published private(set) var longHistory = RingBuffer<Double>(capacity: detailCapacity)
 
     func apply(devices: [GPUDevice]?) {
         self.devices = devices ?? []
@@ -98,7 +122,10 @@ final class GPUStore: ObservableObject {
 
     func apply(utilization: Reading<Double>) {
         self.utilization = utilization
-        if let value = utilization.value { history.append(value) }
+        if let value = utilization.value {
+            history.append(value)
+            longHistory.append(value)
+        }
     }
 }
 

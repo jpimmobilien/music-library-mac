@@ -31,7 +31,7 @@ enum AppSection: String, CaseIterable, Identifiable, Hashable {
         case .cpuGPU: return "cpu"
         case .memory: return "memorychip"
         case .thermal: return "thermometer.medium"
-        case .battery: return "battery.75percent"
+        case .battery: return SymbolName.battery
         case .hardware: return "laptopcomputer"
         case .storage: return "internaldrive"
         case .files: return "folder"
@@ -84,7 +84,7 @@ enum AppSection: String, CaseIterable, Identifiable, Hashable {
     var plannedPhase: Int? {
         switch self {
         case .overview, .settings: return nil
-        case .activity, .cpuGPU, .memory: return 4
+        case .activity, .cpuGPU, .memory: return nil
         case .thermal, .battery, .hardware: return 5
         case .storage, .files: return 6
         case .network: return 7
@@ -122,7 +122,11 @@ enum LaunchMode {
 
 @MainActor
 final class AppModel: ObservableObject {
-    @Published var selection: AppSection = .overview
+    @Published var selection: AppSection = .overview {
+        didSet {
+            if selection != oldValue { updateDemand() }
+        }
+    }
     @Published var sidebarVisible = true
     @Published var editingDashboard = false
 
@@ -144,6 +148,12 @@ final class AppModel: ObservableObject {
         started = true
         engine.loadStaticInfo()
         engine.start(interval: settings.effectiveInterval)
+        updateDemand()
+    }
+
+    /// Teure Messungen nur, solange ein Bereich sie zeigt.
+    func updateDemand() {
+        engine.setProcessDemand([.activity, .cpuGPU, .memory].contains(selection))
     }
 
     func intervalChanged() {
@@ -172,5 +182,13 @@ final class AppModel: ObservableObject {
 
     func select(_ section: AppSection) {
         selection = section
+    }
+
+    /// Prozess, der in der Aktivität ausgewählt werden soll (z. B. aus „Größte Verbraucher“).
+    @Published var focusedPID: Int32?
+
+    func focusProcess(_ pid: Int32) {
+        focusedPID = pid
+        selection = .activity
     }
 }

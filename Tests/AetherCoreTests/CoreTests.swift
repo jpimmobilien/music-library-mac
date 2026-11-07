@@ -452,3 +452,120 @@ final class DisplaysParserTests: XCTestCase {
         XCTAssertEqual(DeviceKind.from(machineName: nil, modelIdentifier: "VMware7,1"), .virtualMachine)
     }
 }
+
+final class ProcessLogicTests: XCTestCase {
+    func testPSTimeFormats() {
+        XCTAssertEqual(PSParser.cpuTime("0:01.23") ?? -1, 1.23, accuracy: 1e-9)
+        XCTAssertEqual(PSParser.cpuTime("12:34.56") ?? -1, 754.56, accuracy: 1e-9)
+        XCTAssertEqual(PSParser.cpuTime("1:02:03.04") ?? -1, 3_723.04, accuracy: 1e-9)
+        XCTAssertEqual(PSParser.cpuTime("2-01:00:00.00") ?? -1, 2 * 86_400 + 3_600, accuracy: 1e-9)
+        XCTAssertNil(PSParser.cpuTime(""))
+        XCTAssertNil(PSParser.cpuTime("abc"))
+    }
+
+    func testPSOutputParsing() {
+        let output = """
+            1   0:12.50  14320
+          412  10:00.00 102400
+        kaputt
+          999   0:00.01      8
+        """
+        let parsed = PSParser.parse(output)
+        XCTAssertEqual(parsed.count, 3)
+        XCTAssertEqual(parsed[412]?.cpuSeconds ?? -1, 600, accuracy: 1e-9)
+        XCTAssertEqual(parsed[412]?.rss, 102_400 * 1_024)
+        XCTAssertEqual(parsed[999]?.rss, 8 * 1_024)
+    }
+
+    private func sample(_ pid: Int32, seconds: Double?, start: Double = 100) -> ProcessSample {
+        ProcessSample(pid: pid, ppid: 1, uid: 501, name: "p\(pid)", path: nil, state: .running,
+                      startTime: Date(timeIntervalSince1970: start), isTranslated: false, cpuSeconds: seconds,
+                      memory: nil, threads: nil, source: .libproc)
+    }
+
+    func testCPUTrackerAndPIDReuse() {
+        var tracker = ProcessCPUTracker()
+        XCTAssertTrue(tracker.update([sample(10, seconds: 5)], time: 0).isEmpty)
+        let rates = tracker.update([sample(10, seconds: 6)], time: 2)
+        XCTAssertEqual(rates[ProcessIdentity(pid: 10, start: 100)] ?? -1, 0.5, accuracy: 1e-9)
+        // gleiche PID, anderer Startzeitpunkt → neuer Prozess, keine Rate
+        XCTAssertTrue(tracker.update([sample(10, seconds: 1, start: 200)], time: 4).isEmpty)
+        // ohne CPU-Zeit (nicht verfügbar) → kein Wert
+        XCTAssertTrue(tracker.update([sample(11, seconds: nil)], time: 6).isEmpty)
+    }
+
+    func testProtection() {
+        XCTAssertEqual(ProcessProtection.evaluate(pid: 0, name: "kernel_task", uid: 0, currentUID: 501, ownPID: 50, path: nil), .blocked)
+        XCTAssertEqual(ProcessProtection.evaluate(pid: 1, name: "launchd", uid: 0, currentUID: 501, ownPID: 50, path: nil), .blocked)
+        XCTAssertEqual(ProcessProtection.evaluate(pid: 50, name: "AETHER", uid: 501, currentUID: 501, ownPID: 50, path: nil), .blocked)
+        XCTAssertEqual(ProcessProtection.evaluate(pid: 300, name: "WindowServer", uid: 88, currentUID: 501, ownPID: 50, path: nil), .blocked)
+        XCTAssertEqual(ProcessProtection.evaluate(pid: 301, name: "mds", uid: 0, currentUID: 501, ownPID: 50, path: nil), .otherUser)
+        XCTAssertEqual(ProcessProtection.evaluate(pid: 302, name: "Dock", uid: 501, currentUID: 501, ownPID: 50,
+                                                  path: "/System/Library/CoreServices/Dock.app/Contents/MacOS/Dock"), .confirmSystem)
+        XCTAssertEqual(ProcessProtection.evaluate(pid: 303, name: "Safari", uid: 501, currentUID: 501, ownPID: 50,
+                                                  path: "/Applications/Safari.app/Contents/MacOS/Safari"), .allowed)
+    }
+
+    func testAppBundles() {
+        XCTAssertEqual(AppFamilyKey.outermostAppBundle(of: "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)"),
+                       "/Applications/Google Chrome.app")
+        XCTAssertEqual(AppFamilyKey.outermostAppBundle(of: "/System/Library/CoreServices/Finder.app/Contents/MacOS/Finder"),
+                       "/System/Library/CoreServices/Finder.app")
+        XCTAssertNil(AppFamilyKey.outermostAppBundle(of: "/usr/sbin/cfprefsd"))
+        XCTAssertEqual(AppFamilyKey.displayName(ofBundlePath: "/Applications/Google Chrome.app"), "Google Chrome")
+    }
+
+    func testFamilies() {
+        let inputs = [
+            FamilyBuilder.Input(pid: 100, ppid: 1, name: "Code", path: "/Applications/Code.app/Contents/MacOS/Code", cpu: 0.2, memory: 100, source: .libproc),
+            FamilyBuilder.Input(pid: 101, ppid: 100, name: "Code Helper", path: "/Applications/Code.app/Contents/Frameworks/Code Helper.app/Contents/MacOS/Code Helper", cpu: 0.1, memory: 50, source: .libproc),
+            FamilyBuilder.Input(pid: 102, ppid: 101, name: "node", path: "/usr/local/bin/node", cpu: 0.3, memory: 25, source: .libproc),
+            FamilyBuilder.Input(pid: 200, ppid: 1, name: "mds", path: "/System/Library/Frameworks/CoreServices.framework/mds", cpu: nil, memory: 70, source: .ps),
+        ]
+        let keys = FamilyBuilder.familyKeys(inputs)
+        XCTAssertEqual(keys[101], "/Applications/Code.app")
+        XCTAssertEqual(keys[102], "/Applications/Code.app", "über die Elternkette zugeordnet")
+        XCTAssertEqual(keys[200], "pid:200")
+        let families = FamilyBuilder.families(inputs)
+        let code = families.first { $0.id == "/Applications/Code.app" }
+        XCTAssertEqual(code?.members, [100, 101, 102])
+        XCTAssertEqual(code?.cpu ?? -1, 0.6, accuracy: 1e-9)
+        XCTAssertEqual(code?.memory, 175)
+        XCTAssertEqual(code?.name, "Code")
+        XCTAssertEqual(families.first { $0.id == "pid:200" }?.cpu, nil)
+    }
+
+    func testSearch() {
+        XCTAssertTrue(ProcessSearch.matches(query: "", name: "x", pid: 1, path: nil, appName: nil))
+        XCTAssertTrue(ProcessSearch.matches(query: "412", name: "x", pid: 412, path: nil, appName: nil))
+        XCTAssertTrue(ProcessSearch.matches(query: "chrome", name: "Helper", pid: 2, path: "/Applications/Google Chrome.app", appName: nil))
+        XCTAssertFalse(ProcessSearch.matches(query: "safari", name: "Helper", pid: 2, path: "/usr/bin/x", appName: "Mail"))
+    }
+
+    func testCoreClusterMap() {
+        let entries: [(logicalID: Int, type: String)] = [(0, "E"), (1, "E"), (2, "P"), (3, "P")]
+        XCTAssertEqual(CoreClusterMap.kinds(entries: entries, coreCount: 4), [.efficiency, .efficiency, .performance, .performance])
+        XCTAssertNil(CoreClusterMap.kinds(entries: entries, coreCount: 5), "unvollständig")
+        XCTAssertNil(CoreClusterMap.kinds(entries: [(0, "E"), (0, "P")], coreCount: 2), "doppelte ID")
+        XCTAssertNil(CoreClusterMap.kinds(entries: [(0, "X")], coreCount: 1), "unbekannter Typ")
+    }
+
+    func testMemoryActivityAndRatio() {
+        let a = VMPageCounts(compressions: 100, decompressions: 50, pageins: 1_000, pageouts: 10, swapins: 0, swapouts: 0)
+        let b = VMPageCounts(compressions: 300, decompressions: 70, pageins: 1_400, pageouts: 10, swapins: 4, swapouts: 8)
+        let rates = MemoryActivity.between(a, b, seconds: 2)
+        XCTAssertEqual(rates?.pageIns, 200)
+        XCTAssertEqual(rates?.compressions, 100)
+        XCTAssertEqual(rates?.swapOuts, 4)
+        XCTAssertNil(MemoryActivity.between(b, a, seconds: 2), "Zähler zurückgesetzt")
+        XCTAssertNil(MemoryActivity.between(a, b, seconds: 0))
+        XCTAssertEqual(CompressionRatio.ratio(uncompressedPages: 300, compressorPages: 100), 3)
+        XCTAssertNil(CompressionRatio.ratio(uncompressedPages: 0, compressorPages: 0))
+    }
+
+    func testKernelStates() {
+        XCTAssertEqual(ProcessState(kernelStat: 2), .running)
+        XCTAssertEqual(ProcessState(kernelStat: 5), .zombie)
+        XCTAssertEqual(ProcessState(kernelStat: 9), .unknown)
+    }
+}

@@ -27,6 +27,15 @@ public enum HardwareSource {
             summary.bootTime = Date(timeIntervalSince1970: Double(boot.tv_sec) + Double(boot.tv_usec) / 1_000_000)
         }
         summary.clusters = clusters()
+        summary.cacheL1Instruction = Sysctl.int("hw.l1icachesize")
+        summary.cacheL1Data = Sysctl.int("hw.l1dcachesize")
+        summary.cacheL2 = Sysctl.int("hw.l2cachesize") ?? Sysctl.int("hw.perflevel0.l2cachesize")
+        summary.cacheL3 = Sysctl.int("hw.l3cachesize").flatMap { $0 > 0 ? $0 : nil }
+        summary.nominalFrequency = (Sysctl.int("hw.cpufrequency_max") ?? Sysctl.int("hw.cpufrequency")).flatMap { $0 > 0 ? $0 : nil }
+        summary.kernelVersion = Sysctl.string("kern.osrelease").map { "Darwin " + $0 }
+        if summary.isAppleSilicon, let logical = summary.logicalCores {
+            summary.coreKinds = CoreClusterSource.kinds(coreCount: logical)
+        }
         summary.kind = DeviceKind.from(machineName: nil, modelIdentifier: summary.modelIdentifier)
         return summary
     }

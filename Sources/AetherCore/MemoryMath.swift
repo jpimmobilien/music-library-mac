@@ -19,11 +19,13 @@ public struct VMPageCounts: Equatable, Sendable {
     public var pageouts: UInt64
     public var swapins: UInt64
     public var swapouts: UInt64
+    /// Unkomprimierte Seiten, die der Kompressor aufbewahrt (für das Kompressionsverhältnis).
+    public var uncompressedInCompressor: UInt64
 
     public init(free: UInt64 = 0, active: UInt64 = 0, inactive: UInt64 = 0, speculative: UInt64 = 0, wired: UInt64 = 0,
                 compressor: UInt64 = 0, purgeable: UInt64 = 0, fileBacked: UInt64 = 0, anonymous: UInt64 = 0,
                 compressions: UInt64 = 0, decompressions: UInt64 = 0, pageins: UInt64 = 0, pageouts: UInt64 = 0,
-                swapins: UInt64 = 0, swapouts: UInt64 = 0) {
+                swapins: UInt64 = 0, swapouts: UInt64 = 0, uncompressedInCompressor: UInt64 = 0) {
         self.free = free
         self.active = active
         self.inactive = inactive
@@ -39,6 +41,7 @@ public struct VMPageCounts: Equatable, Sendable {
         self.pageouts = pageouts
         self.swapins = swapins
         self.swapouts = swapouts
+        self.uncompressedInCompressor = uncompressedInCompressor
     }
 }
 

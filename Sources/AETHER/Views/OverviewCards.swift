@@ -209,7 +209,7 @@ struct BatteryCard: View {
     let action: () -> Void
 
     var body: some View {
-        Card(title: tr("Battery"), symbol: "battery.75percent", tint: theme.battery, action: action) {
+        Card(title: tr("Battery"), symbol: SymbolName.battery, tint: theme.battery, action: action) {
             if let battery = store.battery {
                 if battery.isPresent {
                     present(battery)
@@ -235,7 +235,7 @@ struct BatteryCard: View {
                 }
             }
             VStack(alignment: .leading, spacing: 5) {
-                Label(chargeState(b), systemImage: b.powerSource == .ac ? "bolt.fill" : "battery.50percent")
+                Label(chargeState(b), systemImage: b.powerSource == .ac ? "bolt.fill" : SymbolName.batteryLow)
                     .font(Typo.bodyMedium)
                     .foregroundStyle(theme.textPrimary)
                 if let minutes = (b.isCharging == true ? b.minutesToFull : b.minutesToEmpty).value {

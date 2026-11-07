@@ -237,7 +237,7 @@ private struct PulseRules: View {
                 rule("thermometer.medium", tr("Thermal: state “serious” or “critical” as reported by macOS. Sensor temperatures alone never trigger a warning – Apple doesn’t publish limits."))
                 rule("internaldrive", tr("Startup disk: less than %@ or %@ available", fmt.percent(PulseThresholds.lowDiskFraction), fmt.bytes(PulseThresholds.lowDiskBytes)))
                 rule("network", tr("Network: more than %@ for %ld seconds (information only)", fmt.rate(PulseThresholds.highNetworkBytesPerSecond), Int(PulseThresholds.highNetworkSeconds)))
-                rule("battery.25percent", tr("Battery: only macOS’s own condition (“Service recommended”)"))
+                rule(SymbolName.batteryLow, tr("Battery: only macOS’s own condition (“Service recommended”)"))
             }
         }
         .padding(16)
@@ -326,7 +326,7 @@ func cardSymbol(_ card: DashboardCard) -> String {
     case .cpu: return "cpu"
     case .memory: return "memorychip"
     case .thermal: return "thermometer.medium"
-    case .battery: return "battery.75percent"
+    case .battery: return SymbolName.battery
     case .network: return "network"
     case .storage: return "internaldrive"
     case .gpu: return "cube.transparent"

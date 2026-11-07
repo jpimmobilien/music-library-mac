@@ -65,6 +65,9 @@ private struct ContentArea: View {
         switch section {
         case .overview: OverviewView()
         case .settings: SettingsView()
+        case .activity: ActivityView(store: model.engine.processes)
+        case .cpuGPU: CPUGPUView()
+        case .memory: MemoryView()
         default: PlannedSectionView(section: section)
         }
     }

@@ -89,12 +89,27 @@ public final class MemorySource {
                             purgeable: UInt64(stats.purgeable_count), fileBacked: UInt64(stats.external_page_count),
                             anonymous: UInt64(stats.internal_page_count), compressions: UInt64(stats.compressions),
                             decompressions: UInt64(stats.decompressions), pageins: UInt64(stats.pageins),
-                            pageouts: UInt64(stats.pageouts), swapins: UInt64(stats.swapins), swapouts: UInt64(stats.swapouts))
+                            pageouts: UInt64(stats.pageouts), swapins: UInt64(stats.swapins), swapouts: UInt64(stats.swapouts),
+                            uncompressedInCompressor: UInt64(stats.total_uncompressed_pages_in_compressor))
     }
 
-    public func sample(at date: Date = Date()) -> MemorySnapshot {
+    private var previousCounts: (counts: VMPageCounts, uptime: Double)?
+
+    public func sample(at date: Date = Date(), uptime: Double = ProcessInfo.processInfo.systemUptime) -> MemorySnapshot {
         let breakdown: Reading<MemoryBreakdown>
-        if let counts = readPageCounts(), let physicalMemory, pageSize > 0 {
+        let counts = readPageCounts()
+        var activity: Reading<MemoryActivity>?
+        var ratio: Double?
+        if let counts {
+            ratio = CompressionRatio.ratio(uncompressedPages: counts.uncompressedInCompressor, compressorPages: counts.compressor)
+            if let previous = previousCounts, let rates = MemoryActivity.between(previous.counts, counts, seconds: uptime - previous.uptime) {
+                activity = Reading(rates, source: .vmStatistics, at: date)
+            } else {
+                activity = Reading(unavailable: .awaitingSecondSample, source: .vmStatistics, at: date)
+            }
+            previousCounts = (counts, uptime)
+        }
+        if let counts, let physicalMemory, pageSize > 0 {
             breakdown = Reading(MemoryMath.breakdown(counts, pageSize: pageSize, physical: physicalMemory), source: .vmStatistics, at: date)
         } else {
             breakdown = Reading(unavailable: .queryFailed, source: .vmStatistics, at: date)
@@ -114,7 +129,8 @@ public final class MemorySource {
         } else {
             pressure = Reading(unavailable: .notProvidedByMacOS, source: .memoryPressure, at: date)
         }
-        return MemorySnapshot(breakdown: breakdown, swap: swap, pressure: pressure)
+        return MemorySnapshot(breakdown: breakdown, swap: swap, pressure: pressure, activity: activity,
+                              compressionRatio: ratio, pageSize: pageSize)
     }
 }
 

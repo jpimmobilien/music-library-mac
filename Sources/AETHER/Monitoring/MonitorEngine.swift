@@ -23,6 +23,7 @@ final class MonitorEngine {
     let power = PowerStore()
     let gpu = GPUStore()
     let system = SystemStore()
+    let processes = ProcessStore()
 
     private let queue = DispatchQueue(label: "aether.monitor", qos: .utility)
     private var timer: DispatchSourceTimer?
@@ -71,6 +72,20 @@ final class MonitorEngine {
         isRunning = false
         timer?.cancel()
         timer = nil
+    }
+
+    /// Prozessliste nur messen, wenn ein sichtbarer Bereich sie braucht (Aktivität, CPU, Arbeitsspeicher).
+    func setProcessDemand(_ wanted: Bool) {
+        queue.async { [samplers] in samplers.wantProcesses = wanted }
+        if wanted && isRunning { refreshNow() }
+    }
+
+    /// Sofort eine Messung (z. B. beim Öffnen eines Bereichs), ohne auf den nächsten Takt zu warten.
+    func refreshNow() {
+        queue.async { [weak self, samplers] in
+            let result = samplers.tick(interval: 0)
+            Task { @MainActor in self?.apply(result) }
+        }
     }
 
     func setInterval(_ interval: RefreshInterval) {
@@ -131,6 +146,7 @@ final class MonitorEngine {
         if let storage = result.storage { self.storage.apply(storage) }
         if let battery = result.battery, let thermal = result.thermal { power.apply(battery: battery, thermal: thermal) }
         gpu.apply(utilization: result.gpuUtilization)
+        if let tick = result.processes { processes.apply(snapshot: tick.snapshot, cpu: tick.cpu) }
         system.apply(pulse: result.pulse, input: result.pulseInput, ownUsage: result.ownUsage, at: result.date)
     }
 }
@@ -148,6 +164,12 @@ struct TickResult: Sendable {
     var pulse: Pulse
     var pulseInput: PulseInput
     var ownUsage: SelfUsage.Sample
+    var processes: ProcessTick?
+}
+
+struct ProcessTick: Sendable {
+    var snapshot: ProcessSnapshot
+    var cpu: [ProcessIdentity: Double]
 }
 
 /// Alle Messquellen. Nur auf der Warteschlange der Messmaschine benutzt (deshalb unchecked Sendable).
@@ -157,6 +179,9 @@ final class Samplers: @unchecked Sendable {
     private let network = NetworkSource()
     private let storage = StorageSource()
     private let selfUsage = SelfUsage()
+    private let processSource = ProcessSource()
+    private var cpuTracker = ProcessCPUTracker()
+    var wantProcesses = false
     private var evaluator = PulseEvaluator(sampleInterval: 2)
     private var lastSlow: Double = -.infinity
     private var lastMedium: Double = -.infinity
@@ -205,8 +230,12 @@ final class Samplers: @unchecked Sendable {
                                }(),
                                batteryServiceRecommended: battery?.serviceRecommended)
         let pulse = evaluator.evaluate(input)
+        var processTick: ProcessTick?
+        if wantProcesses, let snapshot = processSource.sample(at: now) {
+            processTick = ProcessTick(snapshot: snapshot, cpu: cpuTracker.update(snapshot.samples, time: uptime))
+        }
         return TickResult(date: now, cpu: cpuSnapshot, memory: memorySnapshot, network: networkSnapshot, storage: storageSnapshot,
                           battery: battery, thermal: thermal, gpuUtilization: gpu, pulse: pulse, pulseInput: input,
-                          ownUsage: selfUsage.sample(uptime: uptime))
+                          ownUsage: selfUsage.sample(uptime: uptime), processes: processTick)
     }
 }

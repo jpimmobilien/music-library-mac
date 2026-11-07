@@ -46,6 +46,9 @@ enum SnapshotRunner {
         Scenario(name: "12-einstellungen-light", size: CGSize(width: 1320, height: 900), theme: .liquidGlassLight, section: .settings),
         Scenario(name: "13-bereich-in-arbeit", size: CGSize(width: 1320, height: 900), theme: .graphite, section: .thermal),
         Scenario(name: "14-glas-intensitaet-0", size: CGSize(width: 1320, height: 900), theme: .liquidGlassDark, glassIntensity: 0),
+        Scenario(name: "15-aktivitaet", size: CGSize(width: 1320, height: 900), theme: .liquidGlassDark, section: .activity),
+        Scenario(name: "16-cpu-gpu", size: CGSize(width: 1320, height: 1000), theme: .liquidGlassDark, section: .cpuGPU),
+        Scenario(name: "17-arbeitsspeicher", size: CGSize(width: 1320, height: 1000), theme: .liquidGlassLight, section: .memory),
     ]
 
     static func run(model: AppModel, output: URL) async {
