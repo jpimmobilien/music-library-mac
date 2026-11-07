@@ -2,7 +2,7 @@
 # Baut AETHER.app als Universal Binary (arm64 + x86_64) und prüft das Ergebnis.
 #
 #   scripts/build_app.sh                       → build/AETHER.app
-#   CLEAN=1 VERSION=0.2.0 BUILD_NUMBER=7 scripts/build_app.sh
+#   CLEAN=1 VERSION=1.0.0 BUILD_NUMBER=1 scripts/build_app.sh
 #   SIGN_IDENTITY="Developer ID Application: …" scripts/build_app.sh   (Hardened Runtime, für Notarisierung)
 #
 # Ohne SIGN_IDENTITY: ad-hoc signiert (keine erfundenen Zertifikate).
@@ -11,7 +11,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-VERSION="${VERSION:-0.2.0}"
+VERSION="${VERSION:-1.0.0}"
 BUILD_NUMBER="${BUILD_NUMBER:-1}"
 APP="build/AETHER.app"
 EXE="AETHER"

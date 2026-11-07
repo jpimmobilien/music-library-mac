@@ -31,14 +31,25 @@ Apple-Entwicklerkonto nötig). macOS fragt deshalb beim **ersten** Start einmal 
 
 ## 3. Berechtigungen
 
-Version 0.2.0 braucht **keine** Freigaben: keine Administratorrechte, keinen Festplattenvollzugriff, keine
-Ortungsdienste. Spätere Versionen fragen nur bei Bedarf und mit Erklärung:
+AETHER braucht **keine Administratorrechte** und startet keine Hintergrunddienste. macOS fragt nur nach, wenn Sie eine
+Funktion nutzen, die es schützt – jeweils mit einer Erklärung von AETHER:
 
-- Ordnerzugriff, sobald der Dateimanager (Phase 6) Schreibtisch, Dokumente oder Downloads öffnet;
-- Ortungsdienste nur für den WLAN-Namen (Phase 7, Vorgabe von Apple).
+| Wann | Was macOS fragt | Ohne Freigabe |
+|---|---|---|
+| Sie öffnen unter **Dateien** Schreibtisch, Dokumente oder Downloads bzw. analysieren sie unter **Speicher** | Zugriff auf diesen Ordner | der Ordner zeigt „Kein Zugriff“ mit Knopf zu den Datenschutz-Einstellungen |
+| Wechselmedien oder Netzlaufwerke öffnen | Zugriff auf Wechselmedien bzw. Netzlaufwerke | wie oben |
+| **Netzwerk → WLAN → „Ortungsfreigabe erlauben …“** (nur auf Klick) | Ortungsdienste – Apple gibt den WLAN-Namen nur so heraus | beim Netzwerknamen steht „Ortungsfreigabe nötig“, alle anderen WLAN-Werte bleiben sichtbar |
+| optional: vollständige Speicheranalyse (z. B. Mail, Nachrichten) | Festplattenvollzugriff (selbst in den Systemeinstellungen zu erteilen) | diese Ordner zählen als „nicht lesbar“ |
 
-## 4. Daten und Deinstallation
+## 4. Menüleiste und Live-Monitor
 
-Einstellungen liegen in `~/Library/Preferences/de.projectaether.macos.plist`. Zum Deinstallieren die App in den
-Papierkorb legen und, falls gewünscht, diese Datei löschen. AETHER legt keine weiteren Dateien an und startet keine
-Hintergrunddienste.
+- **Live-Monitor:** Fenster → Live-Monitor (⌥⌘M).
+- **Menüleiste:** Einstellungen → „In der Menüleiste zeigen“. Dann läuft AETHER auch bei geschlossenem Fenster weiter
+  (Messung höchstens alle 5 Sekunden) und wird über das Menüleistensymbol → „Beenden“ geschlossen.
+
+## 5. Daten und Deinstallation
+
+- Einstellungen: `~/Library/Preferences/de.projectaether.macos.plist`
+- Verlauf (nur wenn eingeschaltet): `~/Library/Application Support/AETHER/history.sqlite` – in den Einstellungen löschbar
+
+Zum Deinstallieren die App in den Papierkorb legen und, falls gewünscht, diese beiden Dateien löschen.

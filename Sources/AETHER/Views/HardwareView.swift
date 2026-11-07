@@ -226,7 +226,9 @@ enum HardwareReport {
         if let identifier = hw.modelIdentifier { mac.append(ReportRow(tr("Model identifier"), identifier, source: .hardwareSysctl)) }
         if let number = profiler?.modelNumber { mac.append(ReportRow(tr("Model number"), number, source: .systemProfiler)) }
         mac.append(ReportRow(tr("Type"), deviceKindName(hw.kind), source: .systemProfiler))
-        if hw.isVirtualMachine { mac.append(ReportRow(tr("Environment"), tr("Virtual Mac"), source: .hardwareSysctl)) }
+        if hw.isVirtualMachine && hw.kind != .virtualMachine {
+            mac.append(ReportRow(tr("Environment"), tr("Virtual Mac"), source: .hardwareSysctl))
+        }
         result.append(ReportSection(title: tr("Mac"), symbol: deviceSymbol(hw.kind), rows: mac))
 
         // Prozessor
@@ -291,7 +293,7 @@ enum HardwareReport {
         // Software
         var software: [ReportRow] = []
         if let os = hw.osVersion { software.append(ReportRow("macOS", hw.osBuild.map { "\(os) (\($0))" } ?? os, source: .osVersion)) }
-        if let kernel = hw.kernelVersion { software.append(ReportRow(tr("Kernel"), "Darwin \(kernel)", source: .osVersion)) }
+        if let kernel = hw.kernelVersion { software.append(ReportRow(tr("Kernel"), kernel, source: .osVersion)) }
         if let boot = hw.bootTime {
             software.append(ReportRow(tr("Uptime"), fmt.duration(seconds: Uptime.seconds(bootTime: boot)), source: .uptime))
             software.append(ReportRow(tr("Last startup"), DateFormatter.localizedString(from: boot, dateStyle: .medium, timeStyle: .short),
