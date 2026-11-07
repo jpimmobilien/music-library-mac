@@ -19,11 +19,12 @@ SKIP=""
 CRASHED=""
 FINAL=0
 : > "$OUT_ABS/run.log"
-for ATTEMPT in 1 2 3 4 5 6; do
+for ATTEMPT in $(seq 1 "${SNAPSHOT_MAX_ATTEMPTS:-6}"); do
     rm -f "$OUT_ABS/current.txt"
     set +e
+    # -ApplePersistenceIgnoreState: kein Dialog „Fenster wieder öffnen?“ nach einem vorherigen Absturz
     AETHER_SNAPSHOT_SKIP="$SKIP" perl -e 'alarm shift; exec @ARGV' 600 ${RUNNER[@]+"${RUNNER[@]}"} "$BIN" --snapshot "$OUT_ABS" \
-        ${LANG_ARGS[@]+"${LANG_ARGS[@]}"} >> "$OUT_ABS/run.log" 2>&1
+        -ApplePersistenceIgnoreState YES ${LANG_ARGS[@]+"${LANG_ARGS[@]}"} >> "$OUT_ABS/run.log" 2>&1
     STATUS=$?
     set -e
     if [ $STATUS -eq 0 ]; then break; fi

@@ -103,6 +103,13 @@ jobs:
       - name: Bildschirmfotos (Liquid Glass bzw. Systemstand)
         continue-on-error: true
         run: scripts/run_snapshots.sh build/AETHER.app snapshots/${{ matrix.os }}-glass
+      - name: Diagnose – Bausteine hell/dunkel einzeln (Metal-Assertion auf virtuellem Intel-Mac)
+        if: matrix.os == 'macos-15-intel'
+        continue-on-error: true
+        env:
+          AETHER_SNAPSHOT_PROBE: "1"
+          SNAPSHOT_MAX_ATTEMPTS: "30"
+        run: scripts/run_snapshots.sh build/AETHER.app snapshots/${{ matrix.os }}-diagnose
       - name: Bildschirmfotos (Rückfall ohne Liquid Glass)
         if: matrix.os == 'macos-26'
         continue-on-error: true

@@ -107,7 +107,7 @@ struct MemoryCard: View {
                     }
                     GridRow {
                         LegendItem(color: theme.memoryCompressed, label: tr("Compressed"), value: fmt.bytes(b.compressed, style: .memory))
-                        LegendItem(color: theme.memoryCached, label: tr("Cached files"), value: fmt.bytes(b.cached, style: .memory))
+                        LegendItem(color: theme.memoryCached, label: tr("Cached"), value: fmt.bytes(b.cached, style: .memory))
                     }
                 }
             } else if let breakdown {

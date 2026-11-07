@@ -31,6 +31,16 @@ enum SnapshotRunner {
         var glassIntensity = 0.85
         /// Statt des Hauptfensters den Live-Monitor fotografieren.
         var liveMonitor = false
+        /// Diagnose: nur einen Baustein zeichnen (siehe SnapshotProbes.swift).
+        var probe: SnapshotProbe? = nil
+    }
+
+    /// Diagnose-Szenarien: jeder Baustein hell und dunkel.
+    static var probeScenarios: [Scenario] {
+        SnapshotProbe.allCases.flatMap { probe in
+            [Scenario(name: "p-\(probe.rawValue)-hell", size: CGSize(width: 420, height: 320), theme: .liquidGlassLight, probe: probe),
+             Scenario(name: "p-\(probe.rawValue)-dunkel", size: CGSize(width: 420, height: 320), theme: .liquidGlassDark, probe: probe)]
+        }
     }
 
     static let scenarios: [Scenario] = [
@@ -80,7 +90,8 @@ enum SnapshotRunner {
            let images = previous["images"] as? [[String: Any]] {
             manifest = images
         }
-        for scenario in scenarios where !skip.contains(scenario.name) {
+        let list = ProcessInfo.processInfo.environment["AETHER_SNAPSHOT_PROBE"] != nil ? probeScenarios : scenarios
+        for scenario in list where !skip.contains(scenario.name) {
             try? Data(scenario.name.utf8).write(to: output.appendingPathComponent("current.txt"))
             print("▸ \(scenario.name)")
             fflush(stdout)
@@ -106,7 +117,11 @@ enum SnapshotRunner {
             window.titleVisibility = .hidden
             window.appearance = appearance
             window.isReleasedWhenClosed = false
-            if scenario.liveMonitor {
+            if let probe = scenario.probe {
+                window.contentView = NSHostingView(rootView: ProbeHost(probe: probe)
+                    .environmentObject(model)
+                    .environmentObject(settings))
+            } else if scenario.liveMonitor {
                 window.contentView = NSHostingView(rootView: LiveMonitorView(embedded: true)
                     .environmentObject(model)
                     .environmentObject(settings))

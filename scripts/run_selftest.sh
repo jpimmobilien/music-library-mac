@@ -9,7 +9,9 @@ BIN="$APP/Contents/MacOS/AETHER"
 RUNNER=()
 if [ -n "${SNAPSHOT_ARCH:-}" ]; then RUNNER=(arch "-$SNAPSHOT_ARCH"); fi
 set +e
-perl -e 'alarm shift; exec @ARGV' 180 ${RUNNER[@]+"${RUNNER[@]}"} "$BIN" --selftest "$OUT_ABS" > "$OUT_ABS.log" 2>&1
+# -ApplePersistenceIgnoreState: keine Fensterwiederherstellung – nach einem früheren Absturz würde macOS sonst beim
+# Start fragen, ob die Fenster wieder geöffnet werden sollen, und der Selbsttest bliebe an diesem Dialog hängen.
+perl -e 'alarm shift; exec @ARGV' 180 ${RUNNER[@]+"${RUNNER[@]}"} "$BIN" --selftest "$OUT_ABS" -ApplePersistenceIgnoreState YES > "$OUT_ABS.log" 2>&1
 STATUS=$?
 set -e
 tail -n 40 "$OUT_ABS.log" || true

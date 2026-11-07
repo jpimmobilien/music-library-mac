@@ -132,6 +132,7 @@
 "Bring to front" = "Bring to front";
 "Built-in" = "Built-in";
 "Byte counters of the physical network interfaces (64 bit)." = "Byte counters of the physical network interfaces (64 bit).";
+"Cached" = "Cached";
 "Cached files" = "Cached files";
 "Calculate" = "Calculate";
 "Calculate Folder Size" = "Calculate Folder Size";

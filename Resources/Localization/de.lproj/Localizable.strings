@@ -111,7 +111,7 @@
 "At least %@" = "Mindestens %@";
 "At least %@ of one core" = "Mindestens %@ eines Kerns";
 "Audio" = "Audio";
-"available incl. %@ purgeable" = "verfügbar inkl. %@ löschbar";
+"available incl. %@ purgeable" = "inkl. %@ löschbar";
 "Available spare" = "Verfügbare Reserve";
 "Average" = "Mittel";
 "Average and maximum of all sensors in an area, calculated by AETHER." = "Mittelwert und Maximum aller Sensoren eines Bereichs, von AETHER berechnet.";
@@ -132,6 +132,7 @@
 "Bring to front" = "In den Vordergrund";
 "Built-in" = "Eingebaut";
 "Byte counters of the physical network interfaces (64 bit)." = "Bytezähler der physischen Netzwerkschnittstellen (64 Bit).";
+"Cached" = "Cache";
 "Cached files" = "Zwischenspeicher";
 "Calculate" = "Berechnen";
 "Calculate Folder Size" = "Ordnergröße berechnen";
