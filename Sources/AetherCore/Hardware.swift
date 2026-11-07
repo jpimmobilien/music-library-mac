@@ -115,7 +115,8 @@ public enum ProfilerParser {
         func string(_ key: String) -> String? {
             guard let value = item[key] as? String else { return nil }
             let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
-            return trimmed.isEmpty ? nil : trimmed
+            // Virtuelle Macs melden teils „Unknown“ – das ist keine Angabe
+            return trimmed.isEmpty || trimmed.lowercased() == "unknown" ? nil : trimmed
         }
         var result = ProfilerHardware()
         result.machineName = string("machine_name")

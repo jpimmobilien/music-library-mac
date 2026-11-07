@@ -121,6 +121,9 @@ enum SnapshotRunner {
             "data": "Echte Messwerte des Build-Rechners",
             "macOS": ProcessInfo.processInfo.operatingSystemVersionString,
             "liquidGlass": LiquidGlass.isAvailable,
+            "systemReduceTransparency": NSWorkspace.shared.accessibilityDisplayShouldReduceTransparency,
+            "systemReduceMotion": NSWorkspace.shared.accessibilityDisplayShouldReduceMotion,
+            "note": "Im Fotomodus wird „Transparenz reduzieren“ des Build-Rechners ignoriert, damit das Glasdesign sichtbar ist. Im normalen Betrieb gilt die Systemeinstellung.",
         ]
         if let data = try? JSONSerialization.data(withJSONObject: summary, options: [.prettyPrinted, .sortedKeys]) {
             try? data.write(to: output.appendingPathComponent("manifest.json"))

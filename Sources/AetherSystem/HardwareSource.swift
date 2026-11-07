@@ -14,6 +14,7 @@ public enum HardwareSource {
         // Läuft dieser Mac auf Apple Silicon – auch wenn dieser Prozess über Rosetta übersetzt wird?
         summary.isAppleSilicon = (Sysctl.int("hw.optional.arm64") ?? 0) == 1
         summary.isTranslated = (Sysctl.int("sysctl.proc_translated") ?? 0) == 1
+        summary.isVirtualMachine = (Sysctl.int("kern.hv_vmm_present") ?? 0) == 1
         summary.physicalCores = Sysctl.int("hw.physicalcpu")
         summary.logicalCores = Sysctl.int("hw.logicalcpu")
         summary.physicalMemory = Sysctl.uint64("hw.memsize")

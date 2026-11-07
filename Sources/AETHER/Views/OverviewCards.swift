@@ -521,6 +521,9 @@ struct ThisMacCard: View {
                 }
                 InfoRow(label: tr("Architecture"), value: architecture(hw),
                         valueColor: hw.isTranslated ? theme.statusElevated : nil)
+                if hw.isVirtualMachine {
+                    InfoRow(label: tr("Environment"), value: tr("Virtual Mac"))
+                }
                 if let os = hw.osVersion {
                     InfoRow(label: "macOS", value: hw.osBuild.map { "\(os) (\($0))" } ?? os, source: .osVersion)
                 }

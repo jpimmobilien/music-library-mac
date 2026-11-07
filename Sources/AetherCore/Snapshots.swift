@@ -316,6 +316,8 @@ public struct HardwareSummary: Sendable, Equatable {
     public var processor: ProcessorName?
     public var isAppleSilicon: Bool
     public var isTranslated: Bool
+    /// Läuft in einer virtuellen Maschine (`kern.hv_vmm_present`).
+    public var isVirtualMachine: Bool
     public var physicalCores: Int?
     public var logicalCores: Int?
     public var clusters: [CoreCluster]
@@ -325,7 +327,7 @@ public struct HardwareSummary: Sendable, Equatable {
     public var bootTime: Date?
 
     public init(modelIdentifier: String? = nil, machineName: String? = nil, kind: DeviceKind = .unknown,
-                processor: ProcessorName? = nil, isAppleSilicon: Bool = false, isTranslated: Bool = false,
+                processor: ProcessorName? = nil, isAppleSilicon: Bool = false, isTranslated: Bool = false, isVirtualMachine: Bool = false,
                 physicalCores: Int? = nil, logicalCores: Int? = nil, clusters: [CoreCluster] = [],
                 physicalMemory: UInt64? = nil, osVersion: String? = nil, osBuild: String? = nil, bootTime: Date? = nil) {
         self.modelIdentifier = modelIdentifier
@@ -334,6 +336,7 @@ public struct HardwareSummary: Sendable, Equatable {
         self.processor = processor
         self.isAppleSilicon = isAppleSilicon
         self.isTranslated = isTranslated
+        self.isVirtualMachine = isVirtualMachine
         self.physicalCores = physicalCores
         self.logicalCores = logicalCores
         self.clusters = clusters

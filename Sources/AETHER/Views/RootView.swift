@@ -13,7 +13,7 @@ struct RootView: View {
 
     var body: some View {
         let theme = AetherTheme.resolve(settings: settings, systemIsDark: colorScheme == .dark,
-                                        reduceTransparency: reduceTransparency)
+                                        reduceTransparency: reduceTransparency && !model.launchMode.isSnapshot)
         ZStack(alignment: .topLeading) {
             AmbientBackground()
             HStack(spacing: 0) {

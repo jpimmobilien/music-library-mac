@@ -323,6 +323,10 @@ final class HardwareTests: XCTestCase {
         XCTAssertEqual(h.processorSpeed, "2,6 GHz")
         XCTAssertEqual(h.totalCores, 6)
         XCTAssertNil(h.performanceCores)
+        let unknown = """
+        {"SPHardwareDataType":[{"cpu_type":"Unknown","machine_name":"Mac mini","machine_model":"Macmini6,2"}]}
+        """
+        XCTAssertNil(try XCTUnwrap(ProfilerParser.hardware(fromJSON: Data(unknown.utf8))).chip, "„Unknown“ ist keine Angabe")
         XCTAssertNil(ProfilerParser.hardware(fromJSON: Data("nicht json".utf8)))
         XCTAssertNil(ProfilerParser.hardware(fromJSON: Data("{}".utf8)))
     }

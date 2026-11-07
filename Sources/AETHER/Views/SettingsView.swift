@@ -7,6 +7,7 @@ struct SettingsView: View {
     @EnvironmentObject private var settings: AppSettings
     @EnvironmentObject private var model: AppModel
     @Environment(\.aether) private var theme
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
     var body: some View {
         ScrollView(.vertical) {
@@ -42,8 +43,7 @@ struct SettingsView: View {
                     }
                 }
             }
-            SettingsRow(title: tr("Glass intensity"),
-                        detail: theme.usesGlass ? nil : tr("This theme uses solid surfaces.")) {
+            SettingsRow(title: tr("Glass intensity"), detail: glassDetail) {
                 HStack(spacing: Spacing.s) {
                     Image(systemName: "square.fill").font(.system(size: 10)).foregroundStyle(theme.textTertiary)
                     Slider(value: $settings.glassIntensity, in: 0...1)
@@ -79,6 +79,14 @@ struct SettingsView: View {
                     .buttonStyle(CapsuleButtonStyle())
             }
         }
+    }
+
+    private var glassDetail: String? {
+        if !ThemeCatalog.spec(settings.theme).usesGlass { return tr("This theme uses solid surfaces.") }
+        if reduceTransparency && !model.launchMode.isSnapshot {
+            return tr("“Reduce transparency” is on in System Settings – surfaces stay solid.")
+        }
+        return nil
     }
 
     // MARK: Messung

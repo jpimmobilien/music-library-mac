@@ -112,6 +112,12 @@ enum LaunchMode {
         if case .normal = self { return false }
         return true
     }
+
+    /// Fotomodus: zeigt das Design auch dann mit Glas, wenn am Build-Rechner „Transparenz reduzieren“ an ist.
+    var isSnapshot: Bool {
+        if case .snapshot = self { return true }
+        return false
+    }
 }
 
 @MainActor

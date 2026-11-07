@@ -76,6 +76,7 @@
 "Download and upload rates with history" = "Download- und Uploadrate mit Verlauf";
 "Download" = "Download";
 "Each sensor with source, time stamp and history; averages clearly marked as computed" = "Jeder Sensor mit Quelle, Zeitstempel und Verlauf; Mittelwerte klar als berechnet gekennzeichnet";
+"Environment" = "Umgebung";
 "Equivalent fallback" = "Gleichwertiger Rückfall";
 "Estimate" = "Schätzung";
 "Every core, both core types, load history and the graphics processors in detail." = "Jeder Kern, beide Kerntypen, Lastverlauf und die Grafikprozessoren im Detail.";
@@ -256,3 +257,4 @@
 "Wired" = "Fest zugeordnet";
 "Wi‑Fi, Ethernet, VPN and other interfaces with addresses" = "WLAN, Ethernet, VPN und weitere Schnittstellen mit Adressen";
 "Your Mac is running smoothly." = "Dein Mac arbeitet ruhig.";
+"“Reduce transparency” is on in System Settings – surfaces stay solid." = "„Transparenz reduzieren“ ist in den Systemeinstellungen an – die Flächen bleiben deckend.";

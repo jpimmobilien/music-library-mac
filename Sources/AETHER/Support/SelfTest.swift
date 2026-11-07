@@ -80,7 +80,7 @@ enum SelfTest {
         for _ in 0..<60 where !gpu.devicesLoaded {
             try? await Task.sleep(nanoseconds: 250_000_000)
         }
-        let isVirtual = engine.system.hardware.kind == .virtualMachine
+        let isVirtual = engine.system.hardware.kind == .virtualMachine || engine.system.hardware.isVirtualMachine
         check("gpu.devices", gpu.devicesLoaded && !gpu.devicesFailed && (!gpu.devices.isEmpty || isVirtual),
               gpu.devices.isEmpty ? "keine GPU gemeldet (virtueller Mac: \(isVirtual), Abfrage fehlgeschlagen: \(gpu.devicesFailed))"
                                   : gpu.devices.map { "\($0.name) [\($0.kind.rawValue), \($0.metalSupport ?? "-"), Kerne \($0.coreCount.map { "\($0)" } ?? "-")]" }.joined(separator: ", "))
@@ -121,6 +121,9 @@ enum SelfTest {
             "translated": hw.isTranslated,
             "macOS": ProcessInfo.processInfo.operatingSystemVersionString,
             "liquidGlass": LiquidGlass.isAvailable,
+            "systemReduceTransparency": NSWorkspace.shared.accessibilityDisplayShouldReduceTransparency,
+            "systemReduceMotion": NSWorkspace.shared.accessibilityDisplayShouldReduceMotion,
+            "virtualMachine": hw.isVirtualMachine,
             "profiler": [
                 "machineName": jsonValue(engine.system.profiler?.machineName),
                 "chip": jsonValue(engine.system.profiler?.chip),

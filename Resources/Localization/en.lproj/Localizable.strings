@@ -76,6 +76,7 @@
 "Download" = "Download";
 "Download and upload rates with history" = "Download and upload rates with history";
 "Each sensor with source, time stamp and history; averages clearly marked as computed" = "Each sensor with source, time stamp and history; averages clearly marked as computed";
+"Environment" = "Environment";
 "Equivalent fallback" = "Equivalent fallback";
 "Estimate" = "Estimate";
 "Every core, both core types, load history and the graphics processors in detail." = "Every core, both core types, load history and the graphics processors in detail.";
@@ -256,3 +257,4 @@
 "Wired" = "Wired";
 "Wi‑Fi, Ethernet, VPN and other interfaces with addresses" = "Wi‑Fi, Ethernet, VPN and other interfaces with addresses";
 "Your Mac is running smoothly." = "Your Mac is running smoothly.";
+"“Reduce transparency” is on in System Settings – surfaces stay solid." = "“Reduce transparency” is on in System Settings – surfaces stay solid.";

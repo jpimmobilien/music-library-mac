@@ -97,7 +97,7 @@ private struct OverviewHeader: View {
         if let os = hw.osVersion {
             parts.append(hw.osBuild.map { "macOS \(os) (\($0))" } ?? "macOS \(os)")
         }
-        if hw.kind == .virtualMachine { parts.append(tr("Virtual Mac")) }
+        if hw.kind == .virtualMachine || hw.isVirtualMachine { parts.append(tr("Virtual Mac")) }
         return parts.joined(separator: "  ·  ")
     }
 }
