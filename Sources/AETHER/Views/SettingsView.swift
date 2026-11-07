@@ -303,7 +303,7 @@ private struct AccentDot: View {
                 if let fixed = accent.fixed {
                     Circle().fill(Color(dark ? fixed.dark : fixed.light))
                 } else {
-                    Circle().fill(AngularGradient(colors: [.red, .orange, .yellow, .green, .blue, .purple, .red], center: .center))
+                    Circle().fill(LinearGradient(colors: [.red, .orange, .yellow, .green, .blue, .purple], startPoint: .topLeading, endPoint: .bottomTrailing))
                 }
                 if selected {
                     Circle().strokeBorder(theme.textPrimary, lineWidth: 2).padding(-4)

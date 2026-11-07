@@ -7,3 +7,4 @@ logs/
 /AETHER-macOS-Universal.dmg
 *.xcodeproj/xcuserdata/
 .DS_Store
+__pycache__/

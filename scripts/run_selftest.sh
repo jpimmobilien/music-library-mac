@@ -15,7 +15,13 @@ set -e
 tail -n 40 "$OUT_ABS.log" || true
 if [ $STATUS -ne 0 ]; then
     echo "✗ App beendet mit Status $STATUS"
-    for f in "$HOME"/Library/Logs/DiagnosticReports/AETHER*; do [ -e "$f" ] && cp "$f" "$(dirname "$OUT_ABS")/"; done
+    # Absturzbericht abwarten (ReportCrash schreibt ihn erst nach einigen Sekunden) und ins Protokoll übernehmen
+    for _ in $(seq 1 30); do ls "$HOME"/Library/Logs/DiagnosticReports/AETHER* >/dev/null 2>&1 && break; sleep 1; done
+    for f in "$HOME"/Library/Logs/DiagnosticReports/AETHER*; do
+        [ -e "$f" ] || continue
+        cp "$f" "$(dirname "$OUT_ABS")/"
+        echo "── Absturzbericht $(basename "$f") (Auszug)"; grep -E '"symbol"|"imageIndex"|Thread|abort|assert|crashed' "$f" | head -80 || true
+    done
     exit $STATUS
 fi
 test -f "$OUT_ABS" || { echo "✗ Ergebnisdatei fehlt"; exit 1; }

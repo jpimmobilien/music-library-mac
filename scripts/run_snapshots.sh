@@ -15,6 +15,7 @@ set -e
 tail -n 30 "$OUT_ABS/run.log" || true
 if [ $STATUS -ne 0 ]; then
     echo "✗ App beendet mit Status $STATUS"
+    for _ in $(seq 1 30); do ls "$HOME"/Library/Logs/DiagnosticReports/AETHER* >/dev/null 2>&1 && break; sleep 1; done
     for f in "$HOME"/Library/Logs/DiagnosticReports/AETHER*; do [ -e "$f" ] && cp "$f" "$OUT_ABS/"; done
     exit $STATUS
 fi

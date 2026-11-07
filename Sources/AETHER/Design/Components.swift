@@ -68,7 +68,6 @@ struct ValueText: View {
                 .font(font)
                 .monospacedDigit()
                 .foregroundStyle(color ?? theme.textPrimary)
-                .contentTransition(.numericText())
             if !unit.isEmpty {
                 Text(unit)
                     .font(.system(size: 12, weight: .medium))
@@ -148,7 +147,8 @@ struct MetricRing<Center: View>: View {
 
 // MARK: - Diagramme
 
-/// Mini-Verlauf als Canvas (kein Swift Charts – günstig bei vielen Aktualisierungen). Werte 0…1.
+/// Mini-Verlauf aus einfachen Formen (Pfad + Verlaufsfüllung). Bewusst kein `Canvas` und keine Shader-Effekte:
+/// Auf manchen virtuellen Intel-Macs bricht das Laden von Metal-Shadern mit einer Assertion ab. Werte 0…1.
 struct Sparkline: View {
     var values: [Double]
     var color: Color
@@ -159,28 +159,43 @@ struct Sparkline: View {
     var scaleMax: Double? = 1
 
     var body: some View {
-        Canvas { context, size in
-            guard values.count > 1 else { return }
-            let maximum = max(scaleMax ?? (values.max() ?? 1), 0.000_001)
-            let step = size.width / CGFloat(max(capacity - 1, 1))
-            let offset = CGFloat(capacity - values.count) * step
-            var line = Path()
-            for (index, value) in values.enumerated() {
-                let x = offset + CGFloat(index) * step
-                let y = size.height - CGFloat(min(1, max(0, value / maximum))) * (size.height - lineWidth) - lineWidth / 2
-                if index == 0 { line.move(to: CGPoint(x: x, y: y)) } else { line.addLine(to: CGPoint(x: x, y: y)) }
-            }
+        let maximum = max(scaleMax ?? (values.max() ?? 1), 0.000_001)
+        ZStack {
             if fill {
-                var area = line
-                area.addLine(to: CGPoint(x: offset + CGFloat(values.count - 1) * step, y: size.height))
-                area.addLine(to: CGPoint(x: offset, y: size.height))
-                area.closeSubpath()
-                context.fill(area, with: .linearGradient(Gradient(colors: [color.opacity(0.28), color.opacity(0.02)]),
-                                                         startPoint: .zero, endPoint: CGPoint(x: 0, y: size.height)))
+                SparklineShape(values: values, capacity: capacity, maximum: maximum, inset: lineWidth / 2, closed: true)
+                    .fill(LinearGradient(colors: [color.opacity(0.28), color.opacity(0.02)], startPoint: .top, endPoint: .bottom))
             }
-            context.stroke(line, with: .color(color), style: StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round))
+            SparklineShape(values: values, capacity: capacity, maximum: maximum, inset: lineWidth / 2, closed: false)
+                .stroke(color, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round))
         }
         .accessibilityHidden(true)
+    }
+}
+
+struct SparklineShape: Shape {
+    var values: [Double]
+    var capacity: Int
+    var maximum: Double
+    var inset: CGFloat
+    var closed: Bool
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        guard values.count > 1 else { return path }
+        let step = rect.width / CGFloat(max(capacity - 1, 1))
+        let offset = CGFloat(max(capacity - values.count, 0)) * step
+        for (index, value) in values.enumerated() {
+            let x = rect.minX + offset + CGFloat(index) * step
+            let fraction = CGFloat(min(1, max(0, value / maximum)))
+            let y = rect.maxY - fraction * (rect.height - 2 * inset) - inset
+            if index == 0 { path.move(to: CGPoint(x: x, y: y)) } else { path.addLine(to: CGPoint(x: x, y: y)) }
+        }
+        if closed {
+            path.addLine(to: CGPoint(x: rect.minX + offset + CGFloat(values.count - 1) * step, y: rect.maxY))
+            path.addLine(to: CGPoint(x: rect.minX + offset, y: rect.maxY))
+            path.closeSubpath()
+        }
+        return path
     }
 }
 
