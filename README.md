@@ -25,6 +25,9 @@ Werte, die macOS nicht liefert, heißen „Nicht verfügbar“ mit Begründung. 
 | Netzwerk, lokaler Verlauf, Exporte | Phase 7 |
 
 Was diese Version nicht kann und was macOS grundsätzlich nicht hergibt: [docs/GRENZEN.md](docs/GRENZEN.md).
+Build- und Testergebnis mit allen Prüfungen und den im Build gefundenen Fehlern: [docs/BUILD_UND_TESTS.md](docs/BUILD_UND_TESTS.md).
+
+![Übersicht – Liquid Glass Dunkel](docs/design/uebersicht-liquid-glass-dunkel.jpg)
 
 ## Installation
 

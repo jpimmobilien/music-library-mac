@@ -34,6 +34,14 @@ Stand 7. November 2026 · AETHER 0.2.0 (Phase 1 und 2)
   Zwischenspeicher = dateigestützte und löschbare Seiten. Kleine Abweichungen zur Aktivitätsanzeige sind möglich, weil
   beide zu leicht unterschiedlichen Zeitpunkten messen.
 
+## Bekannte Schönheitsfehler (Phase 3 – Liquid-Glass-Feinschliff)
+
+- In der dreispaltigen Ansicht bricht in der Speicherkarte die Zeile „… belegt · inkl. … löschbar“ um, und auf
+  Deutsch wird „Zwischenspeicher“ in der Speicherkarte gekürzt.
+- Auf dem virtuellen Apple-Silicon-Build-Rechner meldet `system_profiler` keinen Grafikprozessor. AETHER zeigt dann
+  „Kein Grafikprozessor gemeldet“, statt einen zu erfinden. Auf dem virtuellen Intel-Rechner kamen Modell, Grafikspeicher
+  und Metal-Stufe korrekt an; auf einem physischen Mac ist die Abfrage noch nicht geprüft.
+
 ## Was im Build nicht geprüft werden kann
 
 Die Build-Rechner von GitHub sind **virtuelle Macs**. Dort gibt es keine Batterie, meist kein SMC, keine Lüfter und

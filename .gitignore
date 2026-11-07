@@ -8,3 +8,4 @@ logs/
 *.xcodeproj/xcuserdata/
 .DS_Store
 __pycache__/
+/AETHER-macOS-Universal.dmg.sha256
