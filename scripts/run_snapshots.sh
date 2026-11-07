@@ -8,8 +8,11 @@ OUT_ABS="$(cd "$OUT" && pwd)"
 BIN="$APP/Contents/MacOS/AETHER"
 RUNNER=()
 if [ -n "${SNAPSHOT_ARCH:-}" ]; then RUNNER=(arch "-$SNAPSHOT_ARCH"); fi
+# SNAPSHOT_LANG=de: Oberfläche auf Deutsch (wie „Sprache der App“ in den Systemeinstellungen)
+LANG_ARGS=()
+if [ -n "${SNAPSHOT_LANG:-}" ]; then LANG_ARGS=(-AppleLanguages "($SNAPSHOT_LANG)" -AppleLocale "${SNAPSHOT_LANG}_DE"); fi
 set +e
-perl -e 'alarm shift; exec @ARGV' 600 ${RUNNER[@]+"${RUNNER[@]}"} "$BIN" --snapshot "$OUT_ABS" > "$OUT_ABS/run.log" 2>&1
+perl -e 'alarm shift; exec @ARGV' 600 ${RUNNER[@]+"${RUNNER[@]}"} "$BIN" --snapshot "$OUT_ABS" ${LANG_ARGS[@]+"${LANG_ARGS[@]}"} > "$OUT_ABS/run.log" 2>&1
 STATUS=$?
 set -e
 tail -n 30 "$OUT_ABS/run.log" || true

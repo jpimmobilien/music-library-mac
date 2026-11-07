@@ -12,6 +12,9 @@ import AetherCore
 private final class SnapshotWindow: NSWindow {
     override var canBecomeKey: Bool { true }
     override var canBecomeMain: Bool { true }
+    /// Build-Rechner haben kleine virtuelle Bildschirme – Fenster nicht auf den Bildschirm beschränken, damit die
+    /// gewünschte Fenstergröße wirklich entsteht (der Fensterserver liefert auch Teile außerhalb des Bildschirms).
+    override func constrainFrameRect(_ frameRect: NSRect, to screen: NSScreen?) -> NSRect { frameRect }
 }
 
 @MainActor
@@ -87,19 +90,24 @@ enum SnapshotRunner {
             window.contentView = host
             window.setContentSize(scenario.size)
             if let screen = NSScreen.main?.visibleFrame {
-                window.setFrameTopLeftPoint(NSPoint(x: screen.minX + 20, y: screen.maxY - 20))
+                window.setFrameTopLeftPoint(NSPoint(x: screen.minX, y: screen.maxY))
             }
+            window.setContentSize(scenario.size)
             window.makeKeyAndOrderFront(nil)
             try? await Task.sleep(nanoseconds: 2_400_000_000)
 
-            let file = output.appendingPathComponent("\(scenario.name)-\(Int(scenario.size.width))x\(Int(scenario.size.height)).png")
+            let actual = window.contentView?.bounds.size ?? .zero
+            let language = Bundle.main.preferredLocalizations.first ?? "en"
+            let file = output.appendingPathComponent("\(scenario.name)-\(language)-\(Int(actual.width))x\(Int(actual.height)).png")
             let method = capture(window, to: file)
             manifest.append([
                 "file": file.lastPathComponent,
                 "theme": scenario.theme.rawValue,
                 "appearance": dark ? "dark" : "light",
                 "section": scenario.section.rawValue,
-                "size": "\(Int(scenario.size.width))x\(Int(scenario.size.height))",
+                "requestedSize": "\(Int(scenario.size.width))x\(Int(scenario.size.height))",
+                "actualSize": "\(Int(actual.width))x\(Int(actual.height))",
+                "language": language,
                 "glass": LiquidGlass.isAvailable ? "native" : "fallback",
                 "method": method,
             ])

@@ -105,6 +105,12 @@ jobs:
         env:
           AETHER_FORCE_GLASS_FALLBACK: "1"
         run: scripts/run_snapshots.sh build/AETHER.app snapshots/${{ matrix.os }}-fallback
+      - name: Bildschirmfotos (Deutsch)
+        if: matrix.os == 'macos-26'
+        continue-on-error: true
+        env:
+          SNAPSHOT_LANG: de
+        run: scripts/run_snapshots.sh build/AETHER.app snapshots/${{ matrix.os }}-deutsch
       - name: DMG erstellen und prüfen (Mount-Test)
         run: |
           set -o pipefail

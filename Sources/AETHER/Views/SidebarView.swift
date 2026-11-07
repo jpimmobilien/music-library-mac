@@ -73,13 +73,12 @@ private struct SidebarRow: View {
                     .lineLimit(1)
                 Spacer(minLength: 0)
                 if let phase = section.plannedPhase {
-                    Text(tr("Phase %ld", phase))
-                        .font(.system(size: 9.5, weight: .semibold))
-                        .foregroundStyle(theme.textTertiary)
-                        .padding(.horizontal, 5)
-                        .padding(.vertical, 1.5)
-                        .background(Capsule().fill(theme.fieldFill))
-                        .opacity(hovering || selected ? 1 : 0.7)
+                    // Dezenter Hinweis „in Entwicklung“ – Einzelheiten im Tooltip und auf der Seite selbst
+                    Circle()
+                        .strokeBorder(theme.textTertiary, style: StrokeStyle(lineWidth: 1, dash: [1.5, 1.5]))
+                        .frame(width: 7, height: 7)
+                        .opacity(hovering || selected ? 1 : 0.6)
+                        .help(tr("In development · Phase %ld", phase))
                 }
             }
             .padding(.horizontal, 10)
