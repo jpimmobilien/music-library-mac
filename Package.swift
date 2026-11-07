@@ -4,7 +4,7 @@
 //
 //   AetherCore    reine Swift-Logik ohne Apple-Frameworks: Messwert-Herkunft, CPU-/Speicher-/Raten-Mathematik,
 //                 Puls-Regeln, Formatierung, Theme-Paletten (mit Kontrastprüfung), Parser. Auch unter Linux getestet.
-//   AetherSystem  nur macOS: Messquellen über Darwin, IOKit, Metal, IOPowerSources – je mit Fähigkeitserkennung.
+//   AetherSystem  nur macOS: Messquellen über Darwin, IOKit, IOPowerSources, Systemwerkzeuge – je mit Fähigkeitserkennung.
 //   AETHER        die App (SwiftUI + AppKit), nur macOS.
 //
 // Universal Binary: scripts/build_app.sh baut arm64 und x86_64 getrennt und führt sie mit lipo zusammen.
@@ -25,7 +25,6 @@ targets.append(
         path: "Sources/AetherSystem",
         linkerSettings: [
             .linkedFramework("IOKit"),
-            .linkedFramework("Metal"),
             .linkedFramework("CoreFoundation"),
         ]
     )

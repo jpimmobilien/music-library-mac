@@ -10,7 +10,7 @@ public enum DeviceKind: String, Sendable, Codable, CaseIterable {
     /// die Familie – dann bleibt es `unknown`, bis der Modellname vorliegt.
     public static func from(machineName: String?, modelIdentifier: String?) -> DeviceKind {
         if let name = machineName?.lowercased() {
-            if name.contains("virtual") { return .virtualMachine }
+            if name.contains("virtual") || name.contains("vmware") { return .virtualMachine }
             if name.contains("macbook pro") { return .macBookPro }
             if name.contains("macbook air") { return .macBookAir }
             if name.contains("macbook") { return .macBook }
@@ -20,7 +20,7 @@ public enum DeviceKind: String, Sendable, Codable, CaseIterable {
             if name.contains("mac pro") { return .macPro }
         }
         if let model = modelIdentifier?.lowercased() {
-            if model.hasPrefix("virtualmac") { return .virtualMachine }
+            if model.hasPrefix("virtualmac") || model.hasPrefix("vmware") { return .virtualMachine }
             if model.hasPrefix("macbookpro") { return .macBookPro }
             if model.hasPrefix("macbookair") { return .macBookAir }
             if model.hasPrefix("macbook") { return .macBook }

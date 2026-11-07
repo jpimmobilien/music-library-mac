@@ -1,7 +1,6 @@
 import Foundation
 import IOKit
 import IOKit.ps
-import Metal
 import AetherCore
 
 /// Batterie: IOPowerSources (öffentlich, dokumentiert) und AppleSmartBattery (IORegistry, Schlüssel undokumentiert –
@@ -97,18 +96,22 @@ public enum BatterySource {
     }
 }
 
-/// Grafikprozessoren: Metal (öffentlich) und Auslastung laut Grafiktreiber (IORegistry „PerformanceStatistics“).
+/// Grafikprozessoren: Systeminformationen (`system_profiler`, eigener Prozess) und Auslastung laut Grafiktreiber
+/// (IORegistry „PerformanceStatistics“). Metal wird bewusst nicht befragt – siehe `DisplaysParser`.
 public enum GPUSource {
-    /// Einmal ermitteln – die Geräteliste ändert sich nur beim An-/Abstecken externer GPUs.
-    public static func devices() -> [GPUDevice] {
-        let coreCount = IORegistry.property("gpu-core-count", ofAll: "AGXAccelerator")
-            .compactMap { ($0 as? NSNumber)?.intValue }.first(where: { $0 > 0 && $0 < 1_000 })
-        return MTLCopyAllDevices().map { device in
-            GPUDevice(id: device.registryID, name: device.name, hasUnifiedMemory: device.hasUnifiedMemory,
-                      isLowPower: device.isLowPower, isRemovable: device.isRemovable,
-                      recommendedWorkingSet: device.recommendedMaxWorkingSetSize,
-                      coreCount: device.hasUnifiedMemory ? coreCount : nil)
+    /// Einmal ermitteln (dauert etwa eine Sekunde; nie im Hauptthread).
+    public static func devices(appleSilicon: Bool, timeout: TimeInterval = 25) -> [GPUDevice]? {
+        guard let data = HardwareSource.run("/usr/sbin/system_profiler", ["SPDisplaysDataType", "-json", "-detailLevel", "mini"],
+                                            timeout: timeout),
+              var devices = DisplaysParser.gpus(fromJSON: data, appleSilicon: appleSilicon) else { return nil }
+        // Apple Silicon: Kernzahl zusätzlich aus der IORegistry, falls die Systeminformationen sie nicht nennen
+        if appleSilicon, let cores = IORegistry.property("gpu-core-count", ofAll: "AGXAccelerator")
+            .compactMap({ ($0 as? NSNumber)?.intValue }).first(where: { $0 > 0 && $0 < 1_000 }) {
+            for index in devices.indices where devices[index].hasUnifiedMemory && devices[index].coreCount == nil {
+                devices[index].coreCount = cores
+            }
         }
+        return devices
     }
 
     /// Höchste vom Treiber gemeldete Geräteauslastung (0…1) – oder „nicht verfügbar“, wenn kein Treiber sie meldet.

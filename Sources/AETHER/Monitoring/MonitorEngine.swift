@@ -46,8 +46,9 @@ final class MonitorEngine {
     func loadStaticInfo() {
         let basic = HardwareSource.basic()
         system.apply(hardware: basic)
-        queue.async { [weak self] in
-            let devices = GPUSource.devices()
+        let appleSilicon = basic.isAppleSilicon
+        DispatchQueue.global(qos: .utility).async { [weak self] in
+            let devices = GPUSource.devices(appleSilicon: appleSilicon)
             Task { @MainActor in self?.gpu.apply(devices: devices) }
         }
         DispatchQueue.global(qos: .utility).async { [weak self] in

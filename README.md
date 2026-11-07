@@ -66,7 +66,7 @@ notarisiert und heftet das Ticket an.
 Package.swift
 Sources/AetherCore     reine Logik, auch unter Linux getestet: Herkunft, CPU-/Speicher-/Raten-Mathematik, Puls,
                        Formatierung, Theme-Paletten (Kontraste per Test geprüft), Parser
-Sources/AetherSystem   Messquellen (Darwin, IOKit, Metal, IOPowerSources) mit Fähigkeitserkennung
+Sources/AetherSystem   Messquellen (Darwin, IOKit, IOPowerSources, Systemwerkzeuge) mit Fähigkeitserkennung
 Sources/AETHER         die App: App/, Design/, Monitoring/, Views/, Support/
 Tests/AetherCoreTests
 Resources/             Info.plist, Icon, DMG-Hintergrund, Localization/{en,de}.lproj

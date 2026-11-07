@@ -192,24 +192,95 @@ public enum BatteryMath {
 }
 
 public struct GPUDevice: Sendable, Equatable, Identifiable {
-    public var id: UInt64
-    public var name: String
-    public var hasUnifiedMemory: Bool
-    public var isLowPower: Bool
-    public var isRemovable: Bool
-    /// Empfohlenes Arbeitsbudget laut Metal (keine Belegung!).
-    public var recommendedWorkingSet: UInt64
-    public var coreCount: Int?
+    public enum Kind: String, Sendable, Codable {
+        case integrated, discrete, external, unknown
+    }
 
-    public init(id: UInt64, name: String, hasUnifiedMemory: Bool, isLowPower: Bool, isRemovable: Bool,
-                recommendedWorkingSet: UInt64, coreCount: Int?) {
+    public var id: Int
+    public var name: String
+    /// Hersteller, bereinigt („Apple“, „AMD“, „Intel“, „NVIDIA“) oder wie gemeldet.
+    public var vendor: String?
+    public var kind: Kind
+    public var coreCount: Int?
+    /// Grafikspeicher wie von macOS angegeben (bei Unified Memory nicht vorhanden).
+    public var vram: String?
+    /// Metal-Unterstützung wie von macOS angegeben („Metal 3“).
+    public var metalSupport: String?
+    public var hasUnifiedMemory: Bool
+    public var displayCount: Int
+
+    public init(id: Int, name: String, vendor: String?, kind: Kind, coreCount: Int?, vram: String?, metalSupport: String?,
+                hasUnifiedMemory: Bool, displayCount: Int) {
         self.id = id
         self.name = name
-        self.hasUnifiedMemory = hasUnifiedMemory
-        self.isLowPower = isLowPower
-        self.isRemovable = isRemovable
-        self.recommendedWorkingSet = recommendedWorkingSet
+        self.vendor = vendor
+        self.kind = kind
         self.coreCount = coreCount
+        self.vram = vram
+        self.metalSupport = metalSupport
+        self.hasUnifiedMemory = hasUnifiedMemory
+        self.displayCount = displayCount
+    }
+}
+
+/// Grafikprozessoren aus `system_profiler SPDisplaysDataType -json`. Bewusst nicht über Metal: Die Metal-Abfrage
+/// bricht auf manchen virtuellen Macs mit einer internen Assertion ab (im Build beobachtet) – ein eigener Prozess
+/// kann das nicht.
+public enum DisplaysParser {
+    public static func gpus(fromJSON data: Data, appleSilicon: Bool) -> [GPUDevice]? {
+        guard let root = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let list = root["SPDisplaysDataType"] as? [[String: Any]] else { return nil }
+        return list.enumerated().map { index, item in
+            func string(_ key: String) -> String? {
+                guard let value = item[key] as? String else { return nil }
+                let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+                return trimmed.isEmpty ? nil : trimmed
+            }
+            let name = string("sppci_model") ?? string("_name") ?? "GPU"
+            let vendor = (string("spdisplays_vendor") ?? string("sppci_vendor")).map(vendorName)
+            let bus = (string("sppci_bus") ?? "").lowercased()
+            let kind: GPUDevice.Kind
+            if bus.contains("builtin") { kind = .integrated }
+            else if bus.contains("thunderbolt") || bus.contains("external") { kind = .external }
+            else if bus.contains("pci") { kind = .discrete }
+            else { kind = .unknown }
+            let cores = string("sppci_cores").flatMap { Int($0) }
+            let vram = string("spdisplays_vram") ?? string("spdisplays_vram_shared")
+            let metal = string("spdisplays_mtlgpufamilysupport").map(metalName)
+            let unified = appleSilicon && (vendor == "Apple" || name.hasPrefix("Apple"))
+            let displays = (item["spdisplays_ndrvs"] as? [Any])?.count ?? 0
+            return GPUDevice(id: index, name: name, vendor: vendor, kind: kind, coreCount: cores,
+                             vram: unified ? nil : vram, metalSupport: metal, hasUnifiedMemory: unified, displayCount: displays)
+        }
+    }
+
+    /// „sppci_vendor_Apple“ → „Apple“, „sppci_vendor_amd“ → „AMD“, „Intel“ bleibt „Intel“.
+    public static func vendorName(_ raw: String) -> String {
+        var text = raw
+        for prefix in ["sppci_vendor_", "spdisplays_vendor_"] where text.lowercased().hasPrefix(prefix) {
+            text = String(text.dropFirst(prefix.count))
+        }
+        switch text.lowercased() {
+        case "apple": return "Apple"
+        case "amd", "ati": return "AMD"
+        case "intel": return "Intel"
+        case "nvidia": return "NVIDIA"
+        default:
+            if text.lowercased().contains("intel") { return "Intel" }
+            if text.lowercased().contains("amd") || text.lowercased().contains("ati ") { return "AMD" }
+            return text
+        }
+    }
+
+    /// „spdisplays_metal3“ → „Metal 3“; unbekannte Werte unverändert.
+    public static func metalName(_ raw: String) -> String {
+        let lower = raw.lowercased()
+        if let range = lower.range(of: "metal") {
+            let digits = lower[range.upperBound...].prefix { $0.isNumber }
+            if !digits.isEmpty { return "Metal \(digits)" }
+            return "Metal"
+        }
+        return raw
     }
 }
 

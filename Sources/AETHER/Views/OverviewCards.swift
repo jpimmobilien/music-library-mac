@@ -432,8 +432,18 @@ struct GPUCard: View {
         Card(title: tr("GPU"), symbol: "cube.transparent", tint: theme.gpu, action: action) {
             if let primary = store.devices.first {
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(primary.name).font(Typo.bodyMedium).lineLimit(1)
+                    HStack(spacing: 6) {
+                        Text(primary.name).font(Typo.bodyMedium).lineLimit(1)
+                        Spacer(minLength: 0)
+                        ProvenanceBadge(source: .gpuDevices)
+                    }
                     Text(details(primary)).font(Typo.caption).foregroundStyle(theme.textSecondary).lineLimit(2)
+                }
+            } else if store.devicesLoaded {
+                if store.devicesFailed {
+                    UnavailableValue(reason: .queryFailed, source: .gpuDevices, compact: true)
+                } else {
+                    Text(tr("No graphics processor reported")).font(Typo.callout).foregroundStyle(theme.textSecondary)
                 }
             } else {
                 Text(tr("Measuring…")).font(Typo.callout).foregroundStyle(theme.textSecondary)
@@ -470,9 +480,15 @@ struct GPUCard: View {
         if d.hasUnifiedMemory {
             parts.append(tr("Unified memory"))
         } else {
-            parts.append(d.isLowPower ? tr("Integrated") : (d.isRemovable ? tr("External") : tr("Dedicated")))
+            switch d.kind {
+            case .integrated: parts.append(tr("Integrated"))
+            case .discrete: parts.append(tr("Dedicated"))
+            case .external: parts.append(tr("External"))
+            case .unknown: break
+            }
+            if let vram = d.vram { parts.append(vram) }
         }
-        parts.append("Metal")
+        if let metal = d.metalSupport { parts.append(metal) }
         return parts.joined(separator: " · ")
     }
 }

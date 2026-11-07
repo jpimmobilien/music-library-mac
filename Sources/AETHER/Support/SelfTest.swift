@@ -77,7 +77,13 @@ enum SelfTest {
 
         // GPU
         let gpu = engine.gpu
-        check("gpu.devices", !gpu.devices.isEmpty, gpu.devices.map(\.name).joined(separator: ", "))
+        for _ in 0..<60 where !gpu.devicesLoaded {
+            try? await Task.sleep(nanoseconds: 250_000_000)
+        }
+        let isVirtual = engine.system.hardware.kind == .virtualMachine
+        check("gpu.devices", gpu.devicesLoaded && !gpu.devicesFailed && (!gpu.devices.isEmpty || isVirtual),
+              gpu.devices.isEmpty ? "keine GPU gemeldet (virtueller Mac: \(isVirtual), Abfrage fehlgeschlagen: \(gpu.devicesFailed))"
+                                  : gpu.devices.map { "\($0.name) [\($0.kind.rawValue), \($0.metalSupport ?? "-"), Kerne \($0.coreCount.map { "\($0)" } ?? "-")]" }.joined(separator: ", "))
         check("gpu.utilization", gpu.utilization?.value != nil || gpu.utilization?.reason != nil,
               "Auslastung=\(gpu.utilization?.value.map { "\($0)" } ?? "n. v. (\(gpu.utilization?.reason?.rawValue ?? "-"))")")
 

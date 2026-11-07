@@ -81,7 +81,7 @@ extension DataSource {
         case "storage.volumes": return tr("Capacity and free space of each volume, including space macOS can free up on demand.")
         case "storage.io": return tr("Read and write counters of all disks; the rate is the difference between two readings.")
         case "network.counters": return tr("Byte counters of the physical network interfaces (64 bit).")
-        case "gpu.metal": return tr("Graphics processors as listed by Metal.")
+        case "gpu.devices": return tr("Graphics processors as listed in System Information.")
         case "gpu.utilization": return tr("Utilization as reported by the graphics driver. Not every driver reports it.")
         case "hardware.sysctl": return tr("Hardware details reported by the kernel.")
         case "hardware.profiler": return tr("Hardware overview from System Information, without personal data.")

@@ -71,7 +71,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
+    /// Normal: Schließen des Fensters beendet AETHER (kein versteckter Hintergrundbetrieb).
+    /// Selbsttest und Bildschirmfotos blenden Fenster aus und beenden sich selbst, sobald sie fertig sind.
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        !LaunchMode.fromArguments().isAutomated
+    }
 }
 
 /// Menübefehle mit den üblichen Kurzbefehlen.

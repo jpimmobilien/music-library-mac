@@ -401,3 +401,50 @@ final class PreferencesTests: XCTestCase {
         XCTAssertEqual(DataSource.all.count, Set(DataSource.all.map(\.id)).count, "eindeutige Quellen-IDs")
     }
 }
+
+final class DisplaysParserTests: XCTestCase {
+    func testAppleSiliconGPU() throws {
+        let json = """
+        {"SPDisplaysDataType":[{"_name":"Apple M2 Pro","sppci_bus":"spdisplays_builtin","sppci_cores":"19",
+        "sppci_model":"Apple M2 Pro","spdisplays_vendor":"sppci_vendor_Apple","spdisplays_mtlgpufamilysupport":"spdisplays_metal3",
+        "spdisplays_ndrvs":[{"_name":"Color LCD"},{"_name":"Studio Display"}]}]}
+        """
+        let gpus = try XCTUnwrap(DisplaysParser.gpus(fromJSON: Data(json.utf8), appleSilicon: true))
+        XCTAssertEqual(gpus.count, 1)
+        let g = gpus[0]
+        XCTAssertEqual(g.name, "Apple M2 Pro")
+        XCTAssertEqual(g.vendor, "Apple")
+        XCTAssertEqual(g.kind, .integrated)
+        XCTAssertEqual(g.coreCount, 19)
+        XCTAssertEqual(g.metalSupport, "Metal 3")
+        XCTAssertTrue(g.hasUnifiedMemory)
+        XCTAssertNil(g.vram, "Unified Memory hat keinen eigenen Grafikspeicher")
+        XCTAssertEqual(g.displayCount, 2)
+    }
+
+    func testIntelMacWithTwoGPUs() throws {
+        let json = """
+        {"SPDisplaysDataType":[
+        {"_name":"Intel UHD Graphics 630","sppci_bus":"spdisplays_builtin","sppci_model":"Intel UHD Graphics 630",
+         "spdisplays_vendor":"Intel","spdisplays_vram_shared":"1536 MB","spdisplays_mtlgpufamilysupport":"spdisplays_metal2"},
+        {"_name":"AMD Radeon Pro 5500M","sppci_bus":"spdisplays_pcie_device","sppci_model":"AMD Radeon Pro 5500M",
+         "spdisplays_vendor":"sppci_vendor_amd","spdisplays_vram":"8 GB","spdisplays_mtlgpufamilysupport":"spdisplays_metal3"}]}
+        """
+        let gpus = try XCTUnwrap(DisplaysParser.gpus(fromJSON: Data(json.utf8), appleSilicon: false))
+        XCTAssertEqual(gpus.map(\.kind), [.integrated, .discrete])
+        XCTAssertEqual(gpus.map(\.vendor), ["Intel", "AMD"])
+        XCTAssertEqual(gpus.map(\.vram), ["1536 MB", "8 GB"])
+        XCTAssertEqual(gpus.map(\.metalSupport), ["Metal 2", "Metal 3"])
+        XCTAssertFalse(gpus.contains(where: \.hasUnifiedMemory))
+    }
+
+    func testUnknownAndEmpty() throws {
+        XCTAssertNil(DisplaysParser.gpus(fromJSON: Data("{}".utf8), appleSilicon: true))
+        let empty = try XCTUnwrap(DisplaysParser.gpus(fromJSON: Data(#"{"SPDisplaysDataType":[]}"#.utf8), appleSilicon: false))
+        XCTAssertTrue(empty.isEmpty)
+        XCTAssertEqual(DisplaysParser.metalName("spdisplays_metal4"), "Metal 4")
+        XCTAssertEqual(DisplaysParser.metalName("supported"), "supported")
+        XCTAssertEqual(DisplaysParser.vendorName("sppci_vendor_nvidia"), "NVIDIA")
+        XCTAssertEqual(DeviceKind.from(machineName: nil, modelIdentifier: "VMware7,1"), .virtualMachine)
+    }
+}

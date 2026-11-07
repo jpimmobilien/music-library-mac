@@ -72,7 +72,7 @@ public extension DataSource {
     static let volumes = DataSource(id: "storage.volumes", api: "URLResourceValues · volumeAvailableCapacityForImportantUsage", provenance: .measured)
     static let blockStorage = DataSource(id: "storage.io", api: "IORegistry · IOBlockStorageDriver · Statistics", provenance: .computed)
     static let interfaceCounters = DataSource(id: "network.counters", api: "sysctl NET_RT_IFLIST2 · if_data64", provenance: .computed)
-    static let metal = DataSource(id: "gpu.metal", api: "MTLCopyAllDevices", provenance: .systemReported)
+    static let gpuDevices = DataSource(id: "gpu.devices", api: "system_profiler SPDisplaysDataType -json · IORegistry AGXAccelerator", provenance: .systemReported)
     static let gpuStatistics = DataSource(id: "gpu.utilization", api: "IORegistry · IOAccelerator · PerformanceStatistics", provenance: .systemReported)
     static let hardwareSysctl = DataSource(id: "hardware.sysctl", api: "sysctl hw.model · machdep.cpu.brand_string · hw.memsize", provenance: .systemReported)
     static let systemProfiler = DataSource(id: "hardware.profiler", api: "system_profiler SPHardwareDataType -json", provenance: .systemReported)
@@ -83,7 +83,7 @@ public extension DataSource {
     static let all: [DataSource] = [
         .cpuTicks, .loadAverage, .cpuTopology, .vmStatistics, .swapUsage, .memoryPressure, .thermalState,
         .smcSensors, .batteryTemperature, .powerSources, .smartBattery, .batteryHealth, .batteryTimeRemaining, .volumes,
-        .blockStorage, .interfaceCounters, .metal, .gpuStatistics, .hardwareSysctl, .systemProfiler, .osVersion, .pulse,
+        .blockStorage, .interfaceCounters, .gpuDevices, .gpuStatistics, .hardwareSysctl, .systemProfiler, .osVersion, .pulse,
     ]
 }
 

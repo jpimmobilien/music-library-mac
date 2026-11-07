@@ -84,10 +84,17 @@ final class PowerStore: ObservableObject {
 @MainActor
 final class GPUStore: ObservableObject {
     @Published private(set) var devices: [GPUDevice] = []
+    /// Die Geräteabfrage ist abgeschlossen (erfolgreich oder nicht).
+    @Published private(set) var devicesLoaded = false
+    @Published private(set) var devicesFailed = false
     @Published private(set) var utilization: Reading<Double>?
     @Published private(set) var history = RingBuffer<Double>(capacity: sparklineCapacity)
 
-    func apply(devices: [GPUDevice]) { self.devices = devices }
+    func apply(devices: [GPUDevice]?) {
+        self.devices = devices ?? []
+        devicesFailed = devices == nil
+        devicesLoaded = true
+    }
 
     func apply(utilization: Reading<Double>) {
         self.utilization = utilization

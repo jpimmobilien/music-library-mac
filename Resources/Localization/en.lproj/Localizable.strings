@@ -96,7 +96,7 @@
 "Go" = "Go";
 "GPU" = "GPU";
 "GPU model, cores, Metal family and utilization as reported by the driver" = "GPU model, cores, Metal family and utilization as reported by the driver";
-"Graphics processors as listed by Metal." = "Graphics processors as listed by Metal.";
+"Graphics processors as listed in System Information." = "Graphics processors as listed in System Information.";
 "Graphite" = "Graphite";
 "Hardware" = "Hardware";
 "Hardware & Energy" = "Hardware & Energy";
@@ -158,6 +158,7 @@
 "Network: more than %@ for %ld seconds (information only)" = "Network: more than %@ for %ld seconds (information only)";
 "No administrator rights, no background helpers." = "No administrator rights, no background helpers.";
 "No battery" = "No battery";
+"No graphics processor reported" = "No graphics processor reported";
 "No telemetry, no accounts, no passwords." = "No telemetry, no accounts, no passwords.";
 "Normal" = "Normal";
 "Not available" = "Not available";

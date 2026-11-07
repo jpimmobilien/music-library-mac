@@ -362,7 +362,7 @@ Beim Start ermittelt `HardwareProfile` die Fähigkeiten. Die Oberfläche fragt n
 | Kerncluster (P/E) | `hw.nperflevels`, `hw.perflevelN.{name,physicalcpu,logicalcpu,l2cachesize}` |
 | Intel-Kerne/Threads, Hyper-Threading | `machdep.cpu.core_count`, `machdep.cpu.thread_count`, `hw.physicalcpu` < `hw.logicalcpu` |
 | Takt | Intel: `hw.cpufrequency(_max)` (Nenntakt ◇). Apple Silicon: nicht verfügbar. |
-| GPUs | Metal `MTLCopyAllDevices()`: Name, `hasUnifiedMemory`, `isLowPower`, `isRemovable`, `location`, Speicherbudget, GPU-Familien |
+| GPUs | `system_profiler SPDisplaysDataType -json` (eigener Prozess): Modell, Hersteller, integriert/dediziert/extern, VRAM, Metal-Stufe, Displays. **Nicht** über Metal direkt: `MTLCopyAllDevices()` bricht auf virtuellen Intel-Macs mit einer internen Assertion ab („Target device architecture is nil“) – im ersten Build beobachtet. |
 | GPU-Kerne (Apple Silicon) | IORegistry `AGXAccelerator` → `gpu-core-count` (undokumentierter Schlüssel, ◇) |
 | SMC, Temperaturen, Lüfter | `AppleSMC` öffnen; Schlüssel `#KEY`, `FNum`; Temperaturschlüssel per Plausibilitätsprüfung |
 | Batterie | `IOPSCopyPowerSourcesInfo` hat eine interne Batterie? |
@@ -393,7 +393,7 @@ verfälschen.
 
 | Klasse | Beispiele | Bewertung |
 |---|---|---|
-| **A – öffentlich dokumentiert** | `host_processor_info`, `host_statistics64`, `sysctl`, `getloadavg`, `ProcessInfo.thermalState`, IOPowerSources, Metal, `FileManager`-Volume-Schlüssel, DiskArbitration, `getifaddrs`, SystemConfiguration, `NWPathMonitor`, CoreWLAN, QuickLook, `NSWorkspace`, `proc_listallpids`/`proc_pidinfo`/`proc_pid_rusage` (libproc), `kill`, IOBlockStorageDriver-Statistik, NVMe-SMART (`NVMeSMARTLibExternal.h`) | uneingeschränkt nutzbar |
+| **A – öffentlich dokumentiert** | `host_processor_info`, `host_statistics64`, `sysctl`, `getloadavg`, `ProcessInfo.thermalState`, IOPowerSources, `FileManager`-Volume-Schlüssel, DiskArbitration, `getifaddrs`, SystemConfiguration, `NWPathMonitor`, CoreWLAN, QuickLook, `NSWorkspace`, `proc_listallpids`/`proc_pidinfo`/`proc_pid_rusage` (libproc), `kill`, IOBlockStorageDriver-Statistik, NVMe-SMART (`NVMeSMARTLibExternal.h`) | uneingeschränkt nutzbar |
 | **B – öffentliche Funktion, undokumentierte Schlüssel** | IORegistry: `AppleSmartBattery` (Zyklen, Kapazitäten, Spannung, Strom, Temperatur), `IOAccelerator` → `PerformanceStatistics` (GPU-Auslastung), `AGXAccelerator` → `gpu-core-count` | nutzbar mit Plausibilitätsprüfung; fehlt ein Schlüssel → „nicht verfügbar“ |
 | **C – undokumentiertes Protokoll über öffentliche IOKit-Funktionen** | **SMC** (`IOServiceOpen("AppleSMC")` + `IOConnectCallStructMethod`): Temperaturen, Lüfter | siehe Risikoanalyse 8.3 |
 | **D – Systemwerkzeuge von Apple** | `system_profiler -json` (Modellname, GPU-Kerne, Displays, Apples Batteriezustand), `/bin/ps` (CPU/Speicher aller Prozesse, da mit Systemrechten installiert), `tmutil listlocalsnapshots` | öffentliche, stabile Werkzeuge; Ausgabe wird geparst und unit-getestet. Ob `/bin/ps` mit Systemrechten installiert ist, prüft die App beim Start, statt es anzunehmen. |
@@ -413,7 +413,7 @@ verfälschen.
 | Prozesse anderer Benutzer/System | Name, PID, Benutzer, Eltern, Start, Zustand und Rosetta-Kennzeichen über `sysctl KERN_PROC`. CPU/Speicher über `/bin/ps`, falls mit Systemrechten installiert. Sonst „nur mit Administratorrechten“. | A/D | ● |
 | App-Zuordnung, Symbol | `NSWorkspace.runningApplications`, Pfad → `.app` | A | ● |
 | Beenden | `NSRunningApplication.terminate/forceTerminate`, sonst `kill(SIGTERM/SIGKILL)`; EPERM → Erklärung | A | – |
-| GPU-Modell, Familie, Budget | Metal | A | ◇ |
+| GPU-Modell, Hersteller, Art, VRAM, Metal-Stufe | `system_profiler SPDisplaysDataType` (Metal direkt wäre Klasse A, stürzt aber auf manchen virtuellen Macs ab) | D | ◇ |
 | GPU-Auslastung | IORegistry `IOAccelerator.PerformanceStatistics["Device Utilization %"]` | B | ◇ (Treiberangabe) |
 | Thermalstatus | `ProcessInfo.thermalState` + Benachrichtigung | A | ◇ |
 | CPU-/GPU-/SoC-Temperaturen, Lüfter | SMC | C | ● |
