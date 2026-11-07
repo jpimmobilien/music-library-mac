@@ -1,0 +1,317 @@
+Building for debugging...
+[Computing dependencies]
+[Pre-planning 1 / 124]
+[Planning deferred tasks]
+[33 / 56] AetherCore
+[34 / 56] AetherCore
+[43 / 62] AetherCoreTests-product
+[44 / 62] AetherCoreTests-product
+[48 / 62] AetherCore
+[52 / 63] AetherCoreTests-product
+[56 / 64] AetherCoreTests-product
+[57 / 64] AetherCoreTests-test-runner
+[60 / 67] AetherCore-product
+[60 / 67] AetherCoreTests-test-runner
+[64 / 67] AetherCoreTests-test-runner
+[68 / 68] AetherCoreTests-test-runner
+Build complete! (15.09 secs)
+Test Suite 'All tests' started at 2026-11-07 18:13:05.757
+Test Suite 'Debug-linux-x86_64.xctest' started at 2026-11-07 18:13:05.945
+Test Suite 'AdapterUnitsTests' started at 2026-11-07 18:13:05.945
+Test Case 'AdapterUnitsTests.testMillivoltsAndVolts' started at 2026-11-07 18:13:05.945
+Test Case 'AdapterUnitsTests.testMillivoltsAndVolts' passed (0.001 seconds)
+Test Suite 'AdapterUnitsTests' passed at 2026-11-07 18:13:05.946
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'BatchRenameTests' started at 2026-11-07 18:13:05.946
+Test Case 'BatchRenameTests.testAddAndFormat' started at 2026-11-07 18:13:05.946
+Test Case 'BatchRenameTests.testAddAndFormat' passed (0.101 seconds)
+Test Case 'BatchRenameTests.testConflicts' started at 2026-11-07 18:13:06.047
+Test Case 'BatchRenameTests.testConflicts' passed (0.101 seconds)
+Test Case 'BatchRenameTests.testReplaceKeepsExtension' started at 2026-11-07 18:13:06.148
+Test Case 'BatchRenameTests.testReplaceKeepsExtension' passed (0.0 seconds)
+Test Suite 'BatchRenameTests' passed at 2026-11-07 18:13:06.148
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.202 (0.202) seconds
+Test Suite 'BatteryAndVolumeTests' started at 2026-11-07 18:13:06.148
+Test Case 'BatteryAndVolumeTests.testBatteryTemperatureAndAmperage' started at 2026-11-07 18:13:06.148
+Test Case 'BatteryAndVolumeTests.testBatteryTemperatureAndAmperage' passed (0.0 seconds)
+Test Case 'BatteryAndVolumeTests.testHealthIsComputedOnlyFromPlausibleValues' started at 2026-11-07 18:13:06.149
+Test Case 'BatteryAndVolumeTests.testHealthIsComputedOnlyFromPlausibleValues' passed (0.0 seconds)
+Test Case 'BatteryAndVolumeTests.testPowerFromVoltageAndCurrent' started at 2026-11-07 18:13:06.149
+Test Case 'BatteryAndVolumeTests.testPowerFromVoltageAndCurrent' passed (0.0 seconds)
+Test Case 'BatteryAndVolumeTests.testVolumeUsesImportantUsageAndPurgeable' started at 2026-11-07 18:13:06.149
+Test Case 'BatteryAndVolumeTests.testVolumeUsesImportantUsageAndPurgeable' passed (0.0 seconds)
+Test Suite 'BatteryAndVolumeTests' passed at 2026-11-07 18:13:06.149
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'CPUMathTests' started at 2026-11-07 18:13:06.149
+Test Case 'CPUMathTests.testClusterNames' started at 2026-11-07 18:13:06.149
+Test Case 'CPUMathTests.testClusterNames' passed (0.0 seconds)
+Test Case 'CPUMathTests.testCounterWrapAroundIsHandled' started at 2026-11-07 18:13:06.149
+Test Case 'CPUMathTests.testCounterWrapAroundIsHandled' passed (0.0 seconds)
+Test Case 'CPUMathTests.testNoElapsedTicksGivesNilNotZero' started at 2026-11-07 18:13:06.149
+Test Case 'CPUMathTests.testNoElapsedTicksGivesNilNotZero' passed (0.0 seconds)
+Test Case 'CPUMathTests.testTotalWeightsByTicksNotByCoreAverage' started at 2026-11-07 18:13:06.149
+Test Case 'CPUMathTests.testTotalWeightsByTicksNotByCoreAverage' passed (0.0 seconds)
+Test Case 'CPUMathTests.testUsageFromTickDelta' started at 2026-11-07 18:13:06.149
+Test Case 'CPUMathTests.testUsageFromTickDelta' passed (0.0 seconds)
+Test Suite 'CPUMathTests' passed at 2026-11-07 18:13:06.149
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'CleanupKindTests' started at 2026-11-07 18:13:06.149
+Test Case 'CleanupKindTests.testRelativePathsAreInsideHome' started at 2026-11-07 18:13:06.149
+Test Case 'CleanupKindTests.testRelativePathsAreInsideHome' passed (0.0 seconds)
+Test Suite 'CleanupKindTests' passed at 2026-11-07 18:13:06.149
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'DisplaysParserTests' started at 2026-11-07 18:13:06.149
+Test Case 'DisplaysParserTests.testAppleSiliconGPU' started at 2026-11-07 18:13:06.149
+Test Case 'DisplaysParserTests.testAppleSiliconGPU' passed (0.0 seconds)
+Test Case 'DisplaysParserTests.testIntelMacWithTwoGPUs' started at 2026-11-07 18:13:06.150
+Test Case 'DisplaysParserTests.testIntelMacWithTwoGPUs' passed (0.0 seconds)
+Test Case 'DisplaysParserTests.testUnknownAndEmpty' started at 2026-11-07 18:13:06.150
+Test Case 'DisplaysParserTests.testUnknownAndEmpty' passed (0.0 seconds)
+Test Suite 'DisplaysParserTests' passed at 2026-11-07 18:13:06.150
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'FileCategoryTests' started at 2026-11-07 18:13:06.150
+Test Case 'FileCategoryTests.testClassification' started at 2026-11-07 18:13:06.150
+Test Case 'FileCategoryTests.testClassification' passed (0.0 seconds)
+Test Suite 'FileCategoryTests' passed at 2026-11-07 18:13:06.150
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'FileNamingTests' started at 2026-11-07 18:13:06.150
+Test Case 'FileNamingTests.testSplit' started at 2026-11-07 18:13:06.150
+Test Case 'FileNamingTests.testSplit' passed (0.002 seconds)
+Test Case 'FileNamingTests.testUniqueName' started at 2026-11-07 18:13:06.153
+Test Case 'FileNamingTests.testUniqueName' passed (0.0 seconds)
+Test Case 'FileNamingTests.testValidate' started at 2026-11-07 18:13:06.153
+Test Case 'FileNamingTests.testValidate' passed (0.1 seconds)
+Test Suite 'FileNamingTests' passed at 2026-11-07 18:13:06.253
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.103 (0.103) seconds
+Test Suite 'FormattingTests' started at 2026-11-07 18:13:06.253
+Test Case 'FormattingTests.testBytes' started at 2026-11-07 18:13:06.253
+Test Case 'FormattingTests.testBytes' passed (0.11 seconds)
+Test Case 'FormattingTests.testDuration' started at 2026-11-07 18:13:06.363
+Test Case 'FormattingTests.testDuration' passed (0.0 seconds)
+Test Case 'FormattingTests.testIntegerGroupingAndTemperature' started at 2026-11-07 18:13:06.363
+Test Case 'FormattingTests.testIntegerGroupingAndTemperature' passed (0.0 seconds)
+Test Case 'FormattingTests.testRatesAndPercent' started at 2026-11-07 18:13:06.363
+Test Case 'FormattingTests.testRatesAndPercent' passed (0.0 seconds)
+Test Case 'FormattingTests.testSignificantDigits' started at 2026-11-07 18:13:06.363
+Test Case 'FormattingTests.testSignificantDigits' passed (0.0 seconds)
+Test Suite 'FormattingTests' passed at 2026-11-07 18:13:06.363
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.11 (0.11) seconds
+Test Suite 'HardwareTests' started at 2026-11-07 18:13:06.363
+Test Case 'HardwareTests.testAppleSiliconBrand' started at 2026-11-07 18:13:06.363
+Test Case 'HardwareTests.testAppleSiliconBrand' passed (0.0 seconds)
+Test Case 'HardwareTests.testDeviceKinds' started at 2026-11-07 18:13:06.363
+Test Case 'HardwareTests.testDeviceKinds' passed (0.0 seconds)
+Test Case 'HardwareTests.testIntelBrand' started at 2026-11-07 18:13:06.364
+Test Case 'HardwareTests.testIntelBrand' passed (0.0 seconds)
+Test Case 'HardwareTests.testProfilerAppleSilicon' started at 2026-11-07 18:13:06.364
+Test Case 'HardwareTests.testProfilerAppleSilicon' passed (0.0 seconds)
+Test Case 'HardwareTests.testProfilerIntelAndGarbage' started at 2026-11-07 18:13:06.364
+Test Case 'HardwareTests.testProfilerIntelAndGarbage' passed (0.0 seconds)
+Test Suite 'HardwareTests' passed at 2026-11-07 18:13:06.364
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'HistoryLogicTests' started at 2026-11-07 18:13:06.364
+Test Case 'HistoryLogicTests.testAccumulatorAveragesAndKeepsMaximumLevels' started at 2026-11-07 18:13:06.364
+Test Case 'HistoryLogicTests.testAccumulatorAveragesAndKeepsMaximumLevels' passed (0.0 seconds)
+Test Case 'HistoryLogicTests.testBatteryPowerUsesMagnitude' started at 2026-11-07 18:13:06.364
+Test Case 'HistoryLogicTests.testBatteryPowerUsesMagnitude' passed (0.0 seconds)
+Test Case 'HistoryLogicTests.testBucketingLeavesGaps' started at 2026-11-07 18:13:06.364
+Test Case 'HistoryLogicTests.testBucketingLeavesGaps' passed (0.0 seconds)
+Test Case 'HistoryLogicTests.testCSV' started at 2026-11-07 18:13:06.364
+Test Case 'HistoryLogicTests.testCSV' passed (0.057 seconds)
+Test Case 'HistoryLogicTests.testEmptyMinuteIsNotStored' started at 2026-11-07 18:13:06.422
+Test Case 'HistoryLogicTests.testEmptyMinuteIsNotStored' passed (0.0 seconds)
+Test Suite 'HistoryLogicTests' passed at 2026-11-07 18:13:06.422
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.058 (0.058) seconds
+Test Suite 'InterfaceAnalysisTests' started at 2026-11-07 18:13:06.422
+Test Case 'InterfaceAnalysisTests.testClassification' started at 2026-11-07 18:13:06.422
+Test Case 'InterfaceAnalysisTests.testClassification' passed (0.0 seconds)
+Test Case 'InterfaceAnalysisTests.testLinkLocalAndConnected' started at 2026-11-07 18:13:06.422
+Test Case 'InterfaceAnalysisTests.testLinkLocalAndConnected' passed (0.001 seconds)
+Test Case 'InterfaceAnalysisTests.testPrefixLength' started at 2026-11-07 18:13:06.422
+Test Case 'InterfaceAnalysisTests.testPrefixLength' passed (0.0 seconds)
+Test Case 'InterfaceAnalysisTests.testWiFiNames' started at 2026-11-07 18:13:06.423
+Test Case 'InterfaceAnalysisTests.testWiFiNames' passed (0.0 seconds)
+Test Suite 'InterfaceAnalysisTests' passed at 2026-11-07 18:13:06.423
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'MemoryMathTests' started at 2026-11-07 18:13:06.423
+Test Case 'MemoryMathTests.testBreakdownLikeActivityMonitor' started at 2026-11-07 18:13:06.423
+Test Case 'MemoryMathTests.testBreakdownLikeActivityMonitor' passed (0.0 seconds)
+Test Case 'MemoryMathTests.testFreeNeverNegativeAndAppNeverUnderflows' started at 2026-11-07 18:13:06.423
+Test Case 'MemoryMathTests.testFreeNeverNegativeAndAppNeverUnderflows' passed (0.0 seconds)
+Test Case 'MemoryMathTests.testPressureLevels' started at 2026-11-07 18:13:06.423
+Test Case 'MemoryMathTests.testPressureLevels' passed (0.0 seconds)
+Test Suite 'MemoryMathTests' passed at 2026-11-07 18:13:06.423
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'NVMeHealthTests' started at 2026-11-07 18:13:06.423
+Test Case 'NVMeHealthTests.testDecode' started at 2026-11-07 18:13:06.423
+Test Case 'NVMeHealthTests.testDecode' passed (0.0 seconds)
+Test Case 'NVMeHealthTests.testEmptyShortOrImplausibleLogs' started at 2026-11-07 18:13:06.423
+Test Case 'NVMeHealthTests.testEmptyShortOrImplausibleLogs' passed (0.0 seconds)
+Test Case 'NVMeHealthTests.testUInt128' started at 2026-11-07 18:13:06.423
+Test Case 'NVMeHealthTests.testUInt128' passed (0.0 seconds)
+Test Suite 'NVMeHealthTests' passed at 2026-11-07 18:13:06.423
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'NetstatParserTests' started at 2026-11-07 18:13:06.423
+Test Case 'NetstatParserTests.testEndpoints' started at 2026-11-07 18:13:06.423
+Test Case 'NetstatParserTests.testEndpoints' passed (0.0 seconds)
+Test Case 'NetstatParserTests.testFilterSearchAndSorting' started at 2026-11-07 18:13:06.423
+Test Case 'NetstatParserTests.testFilterSearchAndSorting' passed (0.084 seconds)
+Test Case 'NetstatParserTests.testProcessColumnWithSpaces' started at 2026-11-07 18:13:06.507
+Test Case 'NetstatParserTests.testProcessColumnWithSpaces' passed (0.0 seconds)
+Test Case 'NetstatParserTests.testStableUniqueIDs' started at 2026-11-07 18:13:06.508
+Test Case 'NetstatParserTests.testStableUniqueIDs' passed (0.0 seconds)
+Test Case 'NetstatParserTests.testUDPWithoutStateColumnValue' started at 2026-11-07 18:13:06.508
+Test Case 'NetstatParserTests.testUDPWithoutStateColumnValue' passed (0.0 seconds)
+Test Case 'NetstatParserTests.testVenturaTCP' started at 2026-11-07 18:13:06.508
+Test Case 'NetstatParserTests.testVenturaTCP' passed (0.0 seconds)
+Test Case 'NetstatParserTests.testWithoutProcessColumnAndGarbage' started at 2026-11-07 18:13:06.508
+Test Case 'NetstatParserTests.testWithoutProcessColumnAndGarbage' passed (0.0 seconds)
+Test Suite 'NetstatParserTests' passed at 2026-11-07 18:13:06.508
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.085 (0.085) seconds
+Test Suite 'PaletteTests' started at 2026-11-07 18:13:06.508
+Test Case 'PaletteTests.testAccentsCarryReadableLabels' started at 2026-11-07 18:13:06.508
+Test Case 'PaletteTests.testAccentsCarryReadableLabels' passed (0.0 seconds)
+Test Case 'PaletteTests.testAllThemesHaveReadableText' started at 2026-11-07 18:13:06.509
+Test Case 'PaletteTests.testAllThemesHaveReadableText' passed (0.0 seconds)
+Test Case 'PaletteTests.testLuminanceExtremes' started at 2026-11-07 18:13:06.509
+Test Case 'PaletteTests.testLuminanceExtremes' passed (0.0 seconds)
+Test Case 'PaletteTests.testThemeAppearances' started at 2026-11-07 18:13:06.509
+Test Case 'PaletteTests.testThemeAppearances' passed (0.001 seconds)
+Test Suite 'PaletteTests' passed at 2026-11-07 18:13:06.510
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'PathTests' started at 2026-11-07 18:13:06.510
+Test Case 'PathTests.testAncestorsAndInside' started at 2026-11-07 18:13:06.510
+Test Case 'PathTests.testAncestorsAndInside' passed (0.0 seconds)
+Test Case 'PathTests.testPermissions' started at 2026-11-07 18:13:06.510
+Test Case 'PathTests.testPermissions' passed (0.0 seconds)
+Test Suite 'PathTests' passed at 2026-11-07 18:13:06.510
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'PowerProfilerParserTests' started at 2026-11-07 18:13:06.510
+Test Case 'PowerProfilerParserTests.testAppleSiliconLayout' started at 2026-11-07 18:13:06.510
+Test Case 'PowerProfilerParserTests.testAppleSiliconLayout' passed (0.0 seconds)
+Test Case 'PowerProfilerParserTests.testDesktopWithoutBatteryReturnsNil' started at 2026-11-07 18:13:06.510
+Test Case 'PowerProfilerParserTests.testDesktopWithoutBatteryReturnsNil' passed (0.0 seconds)
+Test Suite 'PowerProfilerParserTests' passed at 2026-11-07 18:13:06.510
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'PreferencesTests' started at 2026-11-07 18:13:06.510
+Test Case 'PreferencesTests.testLayoutNormalizesAndRestores' started at 2026-11-07 18:13:06.510
+Test Case 'PreferencesTests.testLayoutNormalizesAndRestores' passed (0.0 seconds)
+Test Case 'PreferencesTests.testLowImpactInterval' started at 2026-11-07 18:13:06.510
+Test Case 'PreferencesTests.testLowImpactInterval' passed (0.0 seconds)
+Test Case 'PreferencesTests.testReadingMap' started at 2026-11-07 18:13:06.511
+Test Case 'PreferencesTests.testReadingMap' passed (0.0 seconds)
+Test Suite 'PreferencesTests' passed at 2026-11-07 18:13:06.511
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'ProcessLogicTests' started at 2026-11-07 18:13:06.511
+Test Case 'ProcessLogicTests.testAppBundles' started at 2026-11-07 18:13:06.511
+Test Case 'ProcessLogicTests.testAppBundles' passed (0.0 seconds)
+Test Case 'ProcessLogicTests.testCPUTrackerAndPIDReuse' started at 2026-11-07 18:13:06.511
+Test Case 'ProcessLogicTests.testCPUTrackerAndPIDReuse' passed (0.0 seconds)
+Test Case 'ProcessLogicTests.testCoreClusterMap' started at 2026-11-07 18:13:06.511
+Test Case 'ProcessLogicTests.testCoreClusterMap' passed (0.0 seconds)
+Test Case 'ProcessLogicTests.testFamilies' started at 2026-11-07 18:13:06.512
+Test Case 'ProcessLogicTests.testFamilies' passed (0.0 seconds)
+Test Case 'ProcessLogicTests.testKernelStates' started at 2026-11-07 18:13:06.512
+Test Case 'ProcessLogicTests.testKernelStates' passed (0.0 seconds)
+Test Case 'ProcessLogicTests.testMemoryActivityAndRatio' started at 2026-11-07 18:13:06.512
+Test Case 'ProcessLogicTests.testMemoryActivityAndRatio' passed (0.0 seconds)
+Test Case 'ProcessLogicTests.testPSOutputParsing' started at 2026-11-07 18:13:06.512
+Test Case 'ProcessLogicTests.testPSOutputParsing' passed (0.0 seconds)
+Test Case 'ProcessLogicTests.testPSTimeFormats' started at 2026-11-07 18:13:06.512
+Test Case 'ProcessLogicTests.testPSTimeFormats' passed (0.0 seconds)
+Test Case 'ProcessLogicTests.testProtection' started at 2026-11-07 18:13:06.512
+Test Case 'ProcessLogicTests.testProtection' passed (0.0 seconds)
+Test Case 'ProcessLogicTests.testSearch' started at 2026-11-07 18:13:06.512
+Test Case 'ProcessLogicTests.testSearch' passed (0.0 seconds)
+Test Suite 'ProcessLogicTests' passed at 2026-11-07 18:13:06.512
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'PulseTests' started at 2026-11-07 18:13:06.512
+Test Case 'PulseTests.testBatteryServiceFromSystemOnly' started at 2026-11-07 18:13:06.512
+Test Case 'PulseTests.testBatteryServiceFromSystemOnly' passed (0.0 seconds)
+Test Case 'PulseTests.testCalmWhenEverythingUnavailable' started at 2026-11-07 18:13:06.512
+Test Case 'PulseTests.testCalmWhenEverythingUnavailable' passed (0.0 seconds)
+Test Case 'PulseTests.testHighCPUNeedsTenSeconds' started at 2026-11-07 18:13:06.513
+Test Case 'PulseTests.testHighCPUNeedsTenSeconds' passed (0.002 seconds)
+Test Case 'PulseTests.testLowDiskByFraction' started at 2026-11-07 18:13:06.515
+Test Case 'PulseTests.testLowDiskByFraction' passed (0.0 seconds)
+Test Case 'PulseTests.testMemoryPressureAndSwap' started at 2026-11-07 18:13:06.515
+Test Case 'PulseTests.testMemoryPressureAndSwap' passed (0.0 seconds)
+Test Case 'PulseTests.testMinimumStreakEvenWithLongInterval' started at 2026-11-07 18:13:06.515
+Test Case 'PulseTests.testMinimumStreakEvenWithLongInterval' passed (0.0 seconds)
+Test Case 'PulseTests.testNetworkIsInfoOnly' started at 2026-11-07 18:13:06.515
+Test Case 'PulseTests.testNetworkIsInfoOnly' passed (0.0 seconds)
+Test Case 'PulseTests.testSwapAloneIsNotAWarning' started at 2026-11-07 18:13:06.515
+Test Case 'PulseTests.testSwapAloneIsNotAWarning' passed (0.0 seconds)
+Test Case 'PulseTests.testThermalAndDiskAreImmediate' started at 2026-11-07 18:13:06.515
+Test Case 'PulseTests.testThermalAndDiskAreImmediate' passed (0.0 seconds)
+Test Suite 'PulseTests' passed at 2026-11-07 18:13:06.515
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
+Test Suite 'RateTests' started at 2026-11-07 18:13:06.515
+Test Case 'RateTests.testAccumulatorAcrossInterfaces' started at 2026-11-07 18:13:06.515
+Test Case 'RateTests.testAccumulatorAcrossInterfaces' passed (0.0 seconds)
+Test Case 'RateTests.testRateNeedsTwoSamplesAndIgnoresResets' started at 2026-11-07 18:13:06.515
+Test Case 'RateTests.testRateNeedsTwoSamplesAndIgnoresResets' passed (0.0 seconds)
+Test Case 'RateTests.testRingBufferKeepsNewestInOrder' started at 2026-11-07 18:13:06.515
+Test Case 'RateTests.testRingBufferKeepsNewestInOrder' passed (0.0 seconds)
+Test Suite 'RateTests' passed at 2026-11-07 18:13:06.516
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'ReportFormatterTests' started at 2026-11-07 18:13:06.516
+Test Case 'ReportFormatterTests.testEmptySectionsSkippedAndCellsEscaped' started at 2026-11-07 18:13:06.516
+Test Case 'ReportFormatterTests.testEmptySectionsSkippedAndCellsEscaped' passed (0.0 seconds)
+Test Case 'ReportFormatterTests.testFileName' started at 2026-11-07 18:13:06.516
+Test Case 'ReportFormatterTests.testFileName' passed (0.006 seconds)
+Test Case 'ReportFormatterTests.testSensitiveRowsOnlyOnRequest' started at 2026-11-07 18:13:06.522
+Test Case 'ReportFormatterTests.testSensitiveRowsOnlyOnRequest' passed (0.1 seconds)
+Test Suite 'ReportFormatterTests' passed at 2026-11-07 18:13:06.622
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.106 (0.106) seconds
+Test Suite 'SMCDecoderTests' started at 2026-11-07 18:13:06.622
+Test Case 'SMCDecoderTests.testFPE2Fan' started at 2026-11-07 18:13:06.622
+Test Case 'SMCDecoderTests.testFPE2Fan' passed (0.0 seconds)
+Test Case 'SMCDecoderTests.testFloatLittleEndian' started at 2026-11-07 18:13:06.622
+Test Case 'SMCDecoderTests.testFloatLittleEndian' passed (0.0 seconds)
+Test Case 'SMCDecoderTests.testIntegersAndUnknown' started at 2026-11-07 18:13:06.622
+Test Case 'SMCDecoderTests.testIntegersAndUnknown' passed (0.0 seconds)
+Test Case 'SMCDecoderTests.testPlausibility' started at 2026-11-07 18:13:06.622
+Test Case 'SMCDecoderTests.testPlausibility' passed (0.0 seconds)
+Test Case 'SMCDecoderTests.testSP78' started at 2026-11-07 18:13:06.622
+Test Case 'SMCDecoderTests.testSP78' passed (0.0 seconds)
+Test Suite 'SMCDecoderTests' passed at 2026-11-07 18:13:06.622
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'SensorCatalogTests' started at 2026-11-07 18:13:06.623
+Test Case 'SensorCatalogTests.testAggregateComputesAverageAndMaximum' started at 2026-11-07 18:13:06.623
+Test Case 'SensorCatalogTests.testAggregateComputesAverageAndMaximum' passed (0.0 seconds)
+Test Case 'SensorCatalogTests.testFanFraction' started at 2026-11-07 18:13:06.623
+Test Case 'SensorCatalogTests.testFanFraction' passed (0.0 seconds)
+Test Case 'SensorCatalogTests.testHottestPrefersCPUArea' started at 2026-11-07 18:13:06.623
+Test Case 'SensorCatalogTests.testHottestPrefersCPUArea' passed (0.0 seconds)
+Test Case 'SensorCatalogTests.testKnownAndPrefixClassification' started at 2026-11-07 18:13:06.623
+Test Case 'SensorCatalogTests.testKnownAndPrefixClassification' passed (0.0 seconds)
+Test Case 'SensorCatalogTests.testKnownMeaningsAreNamed' started at 2026-11-07 18:13:06.623
+Test Case 'SensorCatalogTests.testKnownMeaningsAreNamed' passed (0.0 seconds)
+Test Suite 'SensorCatalogTests' passed at 2026-11-07 18:13:06.623
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'StorageTallyTests' started at 2026-11-07 18:13:06.623
+Test Case 'StorageTallyTests.testDuplicateCandidatesSkipHardLinksAndPackages' started at 2026-11-07 18:13:06.623
+Test Case 'StorageTallyTests.testDuplicateCandidatesSkipHardLinksAndPackages' passed (0.0 seconds)
+Test Case 'StorageTallyTests.testGroupsFromHashesAndRemoval' started at 2026-11-07 18:13:06.624
+Test Case 'StorageTallyTests.testGroupsFromHashesAndRemoval' passed (0.0 seconds)
+Test Case 'StorageTallyTests.testLargestAndThresholds' started at 2026-11-07 18:13:06.624
+Test Case 'StorageTallyTests.testLargestAndThresholds' passed (0.0 seconds)
+Test Case 'StorageTallyTests.testResultRemoval' started at 2026-11-07 18:13:06.624
+Test Case 'StorageTallyTests.testResultRemoval' passed (0.0 seconds)
+Test Case 'StorageTallyTests.testScannedFileNames' started at 2026-11-07 18:13:06.624
+Test Case 'StorageTallyTests.testScannedFileNames' passed (0.0 seconds)
+Test Case 'StorageTallyTests.testTopLevelComponent' started at 2026-11-07 18:13:06.624
+Test Case 'StorageTallyTests.testTopLevelComponent' passed (0.0 seconds)
+Test Case 'StorageTallyTests.testTotalsFoldersCategoriesAndRetention' started at 2026-11-07 18:13:06.624
+Test Case 'StorageTallyTests.testTotalsFoldersCategoriesAndRetention' passed (0.0 seconds)
+Test Suite 'StorageTallyTests' passed at 2026-11-07 18:13:06.624
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'Debug-linux-x86_64.xctest' passed at 2026-11-07 18:13:06.624
+	 Executed 106 tests, with 0 failures (0 unexpected) in 0.678 (0.678) seconds
+Test Suite 'All tests' passed at 2026-11-07 18:13:06.624
+	 Executed 106 tests, with 0 failures (0 unexpected) in 0.678 (0.678) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.4.2 (288a2328ff84644)
+↳ Target Platform: x86_64-unknown-linux-gnu
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

@@ -1,0 +1,6 @@
+ProductName:		macOS
+ProductVersion:		15.7.9
+BuildVersion:		24G830
+x86_64
+Verwendet: dmgs/AETHER-dmg-macos-26
+x86_64 arm64

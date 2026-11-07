@@ -1,0 +1,27 @@
+2026-11-07 18:19:38.480 AETHER[14634:42781] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/h5/t85nd63d71x27_8gl5gw3l_w0000gn/T/de.projectaether.macos.savedState
+▸ 01-uebersicht-liquid-glass-dark
+▸ 02-uebersicht-liquid-glass-light
+▸ 03-uebersicht-minimal-dark
+▸ 04-uebersicht-minimal-light
+▸ 05-uebersicht-graphite
+▸ 06-uebersicht-system-hell
+▸ 07-uebersicht-system-dunkel
+▸ 08-macbook-air-13-kompakt
+▸ 09-grosses-fenster-ausfuehrlich
+▸ 10-uebersicht-anpassen
+▸ 11-einstellungen-dark
+▸ 12-einstellungen-light
+▸ 13-dateien
+▸ 14-glas-intensitaet-0
+▸ 15-aktivitaet
+2026-11-07 18:20:32.414 AETHER[14634:42781] WARNING: Application performed a reentrant operation in its NSTableView delegate. This warning will become an assert in the future.
+2026-11-07 18:20:32.424 AETHER[14634:42781] WARNING: Application performed a reentrant operation in its NSTableView delegate. This warning will become an assert in the future.
+▸ 16-cpu-gpu
+▸ 17-arbeitsspeicher
+▸ 18-temperatur-luefter
+▸ 19-batterie
+▸ 20-hardware
+▸ 21-speicher
+▸ 22-netzwerk
+▸ 23-dateien-hell
+▸ 24-live-monitor

@@ -1,0 +1,8 @@
+Lauf: 13 (70cb4a6c272155fdf98b5e7861e1c1bdf34f431f)
+core: success
+build: success
+dmg: AETHER-dmg-macos-15-intel
+dmg: AETHER-dmg-macos-26
+smoke: success
+xcode: success
+Sat Nov  7 18:34:38 UTC 2026

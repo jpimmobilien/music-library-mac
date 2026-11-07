@@ -1,0 +1,170 @@
+{
+  "build" : "13",
+  "checks" : [
+    {
+      "detail" : "busy=0.03233830845771144 user=0.01990049751243781 system=0.012437810945273632",
+      "name" : "cpu.total",
+      "ok" : true
+    },
+    {
+      "detail" : "Kerne gemessen=4 logisch=4",
+      "name" : "cpu.cores",
+      "ok" : true
+    },
+    {
+      "detail" : "physisch=15032385536 belegt=3416178688 app=2033995776 fest=1382182912 komprimiert=0 cache=11265171456",
+      "name" : "memory.breakdown",
+      "ok" : true
+    },
+    {
+      "detail" : "Druck=1",
+      "name" : "memory.pressure",
+      "ok" : true
+    },
+    {
+      "detail" : "swap=0\/0",
+      "name" : "memory.swap",
+      "ok" : true
+    },
+    {
+      "detail" : "Startvolume=Macintosh HD Kapazität=348622118912 verfügbar=116703589442 Volumes=1",
+      "name" : "storage.startup",
+      "ok" : true
+    },
+    {
+      "detail" : "lesen=0.0",
+      "name" : "storage.io",
+      "ok" : true
+    },
+    {
+      "detail" : "Verschlüsselung des Startvolumes gelesen: nein",
+      "name" : "storage.encryption",
+      "ok" : true
+    },
+    {
+      "detail" : "nicht verfügbar mit Grund: virtualMachine (SDK-Schnittstelle: ja)",
+      "name" : "storage.smart",
+      "ok" : true
+    },
+    {
+      "detail" : "↓=0.0 Schnittstellen=en0",
+      "name" : "network.rates",
+      "ok" : true
+    },
+    {
+      "detail" : "Thermalstatus=0",
+      "name" : "thermal.state",
+      "ok" : true
+    },
+    {
+      "detail" : "kein Akku – keine Ersatzwerte gemeldet",
+      "name" : "battery.absent",
+      "ok" : true
+    },
+    {
+      "detail" : "nicht verfügbar mit Grund: virtualMachine",
+      "name" : "thermal.smc",
+      "ok" : true
+    },
+    {
+      "detail" : "nicht verfügbar mit Grund: virtualMachine",
+      "name" : "thermal.fans",
+      "ok" : true
+    },
+    {
+      "detail" : "en0(ethernet,primär) lo0(loopback) · gesamt=9",
+      "name" : "network.interfaces",
+      "ok" : true
+    },
+    {
+      "detail" : "Sockets=21 Prozessspalte=true mitProzess=21 tcp4 192.168.64.4:49200 → 20.209.226.1:443 ESTABLISHED Runner.Worker; tcp4 192.168.64.4:49199 → 140.82.113.21:443 ESTABLISHED Runner.Worker",
+      "name" : "network.connections",
+      "ok" : true
+    },
+    {
+      "detail" : "keine WLAN-Schnittstelle (z. B. virtueller Mac) – als „nicht vorhanden“ gemeldet",
+      "name" : "network.wifi",
+      "ok" : true
+    },
+    {
+      "detail" : "geschrieben=true gelesen=1 gleich=true entfernt=true",
+      "name" : "history.database",
+      "ok" : true
+    },
+    {
+      "detail" : "Verlauf im Selbsttest aus (Standard: aus, nichts gespeichert)",
+      "name" : "history.default-off",
+      "ok" : true
+    },
+    {
+      "detail" : "geöffnet=true Schlüssel=653 Temperaturschlüssel=28 Lüfter=1 virtuell=true",
+      "name" : "thermal.smc.path",
+      "ok" : true
+    },
+    {
+      "detail" : "Abschnitte=7 Zeichen=1473 Bildschirme=1",
+      "name" : "hardware.report",
+      "ok" : true
+    },
+    {
+      "detail" : "Apple Paravirtualized Graphics Device [unknown, Metal 2, Kerne -]",
+      "name" : "gpu.devices",
+      "ok" : true
+    },
+    {
+      "detail" : "Auslastung=n. v. (notProvidedByMacOS)",
+      "name" : "gpu.utilization",
+      "ok" : true
+    },
+    {
+      "detail" : "Modell=Macmini6,2 Name=Mac mini Art=macMini",
+      "name" : "hardware.model",
+      "ok" : true
+    },
+    {
+      "detail" : "Prozessor=Intel Core i7-8700B AppleSilicon=false Rosetta=false",
+      "name" : "hardware.processor",
+      "ok" : true
+    },
+    {
+      "detail" : "Prozess=x86_64 Mac=Intel",
+      "name" : "hardware.architecture",
+      "ok" : true
+    },
+    {
+      "detail" : "de,de,en,en",
+      "name" : "localization",
+      "ok" : true
+    },
+    {
+      "detail" : "Overview → Übersicht",
+      "name" : "localization.de",
+      "ok" : true
+    },
+    {
+      "detail" : "sichtbare Fenster=2",
+      "name" : "window",
+      "ok" : true
+    }
+  ],
+  "clusters" : [
+    "Standard:4\/4"
+  ],
+  "liquidGlass" : false,
+  "macOS" : "Version 15.7.9 (Build 24G830)",
+  "ok" : true,
+  "ownCPU" : 0.069569826680472263,
+  "ownFootprint" : 30609408,
+  "process" : "x86_64",
+  "profiler" : {
+    "chip" : null,
+    "cores" : 4,
+    "machineName" : "Mac mini"
+  },
+  "seconds" : 3.1227349042892456,
+  "systemReduceMotion" : true,
+  "systemReduceTransparency" : true,
+  "translated" : false,
+  "version" : "1.0.0",
+  "virtualMachine" : true
+}

@@ -1,0 +1,30 @@
+2026-11-07 18:31:38.417 AETHER[1689:8690] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+✓ cpu.total – busy=0.10817307692307691 user=0.036057692307692304 system=0.07211538461538461
+✓ cpu.cores – Kerne gemessen=4 logisch=4
+✓ memory.breakdown – physisch=15032385536 belegt=3157225472 app=1807650816 fest=1349574656 komprimiert=0 cache=8281169920
+✓ memory.pressure – Druck=1
+✓ memory.swap – swap=0/0
+✓ storage.startup – Startvolume=Macintosh HD Kapazität=348622118912 verfügbar=116570702914 Volumes=1
+✓ storage.io – lesen=0.0
+✓ storage.encryption – Verschlüsselung des Startvolumes gelesen: nein
+✓ storage.smart – nicht verfügbar mit Grund: virtualMachine (SDK-Schnittstelle: ja)
+✓ network.rates – ↓=975.8969027897986 Schnittstellen=en0
+✓ thermal.state – Thermalstatus=0
+✓ battery.absent – kein Akku – keine Ersatzwerte gemeldet
+✓ thermal.smc – nicht verfügbar mit Grund: virtualMachine
+✓ thermal.fans – nicht verfügbar mit Grund: virtualMachine
+✓ network.interfaces – en0(ethernet,primär) lo0(loopback) · gesamt=9
+✓ network.connections – Sockets=32 Prozessspalte=true mitProzess=30 tcp4 192.168.64.2:49169 → 140.82.114.22:443 CLOSE_WAIT Runner.Worker; tcp4 192.168.64.2:49167 → 20.209.226.129:443 ESTABLISHED Runner.Worker
+✓ network.wifi – keine WLAN-Schnittstelle (z. B. virtueller Mac) – als „nicht vorhanden“ gemeldet
+✓ history.database – geschrieben=true gelesen=1 gleich=true entfernt=true
+✓ history.default-off – Verlauf im Selbsttest aus (Standard: aus, nichts gespeichert)
+✓ thermal.smc.path – geöffnet=true Schlüssel=653 Temperaturschlüssel=28 Lüfter=1 virtuell=true
+✓ hardware.report – Abschnitte=7 Zeichen=1472 Bildschirme=1
+✓ gpu.devices – Apple Paravirtualized Graphics Device [unknown, Metal 2, Kerne -]
+✓ gpu.utilization – Auslastung=n. v. (notProvidedByMacOS)
+✓ hardware.model – Modell=Macmini6,2 Name=Mac mini Art=macMini
+✓ hardware.processor – Prozessor=Intel Core i7-8700B AppleSilicon=false Rosetta=false
+✓ hardware.architecture – Prozess=x86_64 Mac=Intel
+✓ localization – de,de,en,en
+✓ localization.de – Overview → Übersicht
+✓ window – sichtbare Fenster=2

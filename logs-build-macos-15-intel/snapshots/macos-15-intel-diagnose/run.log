@@ -1,0 +1,91 @@
+2026-11-07 18:25:33.210 AETHER[13299:39385] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ p-empty-hell
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 1)
+✗ Absturz bei Szenario: p-empty-hell
+2026-11-07 18:25:49.608 AETHER[13647:40326] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ p-empty-dunkel
+▸ p-plainText-hell
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 2)
+✗ Absturz bei Szenario: p-plainText-hell
+2026-11-07 18:26:08.886 AETHER[13937:41059] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ p-plainText-dunkel
+▸ p-text-hell
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 3)
+✗ Absturz bei Szenario: p-text-hell
+2026-11-07 18:26:28.131 AETHER[14199:41750] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ p-text-dunkel
+▸ p-secondaryText-hell
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 4)
+✗ Absturz bei Szenario: p-secondaryText-hell
+2026-11-07 18:26:47.413 AETHER[14393:42290] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ p-secondaryText-dunkel
+▸ p-ambient-hell
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 5)
+✗ Absturz bei Szenario: p-ambient-hell
+2026-11-07 18:27:06.689 AETHER[14772:43175] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ p-ambient-dunkel
+▸ p-glassCard-hell
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 6)
+✗ Absturz bei Szenario: p-glassCard-hell
+2026-11-07 18:27:25.948 AETHER[15073:43856] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ p-glassCard-dunkel
+▸ p-solidCard-hell
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 7)
+✗ Absturz bei Szenario: p-solidCard-hell
+2026-11-07 18:27:45.077 AETHER[15391:44567] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ p-solidCard-dunkel
+▸ p-sidebar-hell
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 8)
+✗ Absturz bei Szenario: p-sidebar-hell
+2026-11-07 18:28:04.594 AETHER[15794:45456] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ p-sidebar-dunkel
+▸ p-hierarchicalSymbol-hell
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 9)
+✗ Absturz bei Szenario: p-hierarchicalSymbol-hell
+2026-11-07 18:28:23.986 AETHER[16056:46005] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ p-hierarchicalSymbol-dunkel
+▸ p-sparkline-hell
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 10)
+✗ Absturz bei Szenario: p-sparkline-hell
+2026-11-07 18:28:44.697 AETHER[16433:46766] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ p-sparkline-dunkel
+▸ p-ring-hell
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 11)
+✗ Absturz bei Szenario: p-ring-hell
+2026-11-07 18:29:04.192 AETHER[16820:47537] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ p-ring-dunkel
+▸ p-badge-hell
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 12)
+✗ Absturz bei Szenario: p-badge-hell
+2026-11-07 18:29:23.472 AETHER[17276:48468] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ p-badge-dunkel
+▸ p-controls-hell
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 13)
+✗ Absturz bei Szenario: p-controls-hell
+2026-11-07 18:29:42.883 AETHER[17674:49230] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ p-controls-dunkel
+▸ p-scroll-hell
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 14)
+✗ Absturz bei Szenario: p-scroll-hell
+2026-11-07 18:30:02.535 AETHER[18086:50019] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ p-scroll-dunkel
+▸ p-statusDot-hell
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 15)
+✗ Absturz bei Szenario: p-statusDot-hell
+2026-11-07 18:30:21.815 AETHER[18512:50797] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ p-statusDot-dunkel

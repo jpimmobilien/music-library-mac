@@ -1,0 +1,30 @@
+2026-11-07 18:21:26.240 AETHER[18576:52247] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/h5/t85nd63d71x27_8gl5gw3l_w0000gn/T/de.projectaether.macos.savedState
+✓ cpu.total – busy=0.36774193548387096 user=0.34516129032258064 system=0.02258064516129032
+✓ cpu.cores – Kerne gemessen=3 logisch=3
+✓ memory.breakdown – physisch=7516192768 belegt=4065312768 app=2108063744 fest=1404010496 komprimiert=553238528 cache=3269017600
+✓ memory.pressure – Druck=1
+✓ memory.swap – swap=0/0
+✓ storage.startup – Startvolume=Macintosh HD Kapazität=343073095680 verfügbar=104444244662 Volumes=1
+✓ storage.io – lesen=429724.61478678987
+✓ storage.encryption – Verschlüsselung des Startvolumes gelesen: nein
+✓ storage.smart – nicht verfügbar mit Grund: virtualMachine (SDK-Schnittstelle: ja)
+✓ network.rates – ↓=0.0 Schnittstellen=en0
+✓ thermal.state – Thermalstatus=0
+✓ battery.absent – kein Akku – keine Ersatzwerte gemeldet
+✓ thermal.smc – nicht verfügbar mit Grund: virtualMachine
+✓ thermal.fans – nicht verfügbar mit Grund: virtualMachine
+✓ network.interfaces – en0(ethernet,primär) lo0(loopback) · gesamt=11
+✓ network.connections – Sockets=29 Prozessspalte=true mitProzess=29 tcp4 192.168.64.9:49194 → 140.82.112.24:443 ESTABLISHED hosted-compute-a; tcp4 192.168.64.9:49186 → 20.209.227.33:443 ESTABLISHED Runner.Worker
+✓ network.wifi – keine WLAN-Schnittstelle (z. B. virtueller Mac) – als „nicht vorhanden“ gemeldet
+✓ history.database – geschrieben=true gelesen=1 gleich=true entfernt=true
+✓ history.default-off – Verlauf im Selbsttest aus (Standard: aus, nichts gespeichert)
+✓ thermal.smc.path – geöffnet=false Schlüssel=0 Temperaturschlüssel=0 Lüfter=- virtuell=true
+✓ hardware.report – Abschnitte=6 Zeichen=1352 Bildschirme=1
+✓ gpu.devices – keine GPU gemeldet (virtueller Mac: true, Abfrage fehlgeschlagen: false)
+✓ gpu.utilization – Auslastung=n. v. (notProvidedByMacOS)
+✓ hardware.model – Modell=VirtualMac2,1 Name=Apple Virtual Machine 1 Art=virtualMachine
+✓ hardware.processor – Prozessor=Apple M1 AppleSilicon=true Rosetta=false
+✓ hardware.architecture – Prozess=arm64 Mac=Apple Silicon
+✓ localization – de,de,en,en
+✓ localization.de – Overview → Übersicht
+✓ window – sichtbare Fenster=2

@@ -1,0 +1,47 @@
+2 images written to build/dmg-background.tiff.
+▸ Prüfe DMG
+Checksumming Protective Master Boot Record (MBR : 0)…
+Protective Master Boot Record (MBR :: verified   CRC32 $28071F97
+Checksumming GPT Header (Primary GPT Header : 1)…
+ GPT Header (Primary GPT Header : 1): verified   CRC32 $515D87F3
+Checksumming GPT Partition Data (Primary GPT Table : 2)…
+GPT Partition Data (Primary GPT Tabl: verified   CRC32 $3B8DC41F
+Checksumming  (Apple_Free : 3)…
+                    (Apple_Free : 3): verified   CRC32 $00000000
+Checksumming disk image (Apple_HFS : 4)…
+          disk image (Apple_HFS : 4): verified   CRC32 $6DE9D03D
+Checksumming  (Apple_Free : 5)…
+                    (Apple_Free : 5): verified   CRC32 $00000000
+Checksumming GPT Partition Data (Backup GPT Table : 6)…
+GPT Partition Data (Backup GPT Table: verified   CRC32 $3B8DC41F
+Checksumming GPT Header (Backup GPT Header : 7)…
+  GPT Header (Backup GPT Header : 7): verified   CRC32 $2EE8D879
+verified   CRC32 $BE8E9E57
+hdiutil: verify: checksum of "dist/AETHER-macOS-Universal.dmg" is VALID
+Checksum Type: CRC32
+	Total Empty Bytes: 2629632
+	Total Bytes: 30730240
+	Total Non-Empty Bytes: 28100608
+		Checksum Type: CRC32
+		Checksum Type: CRC32
+		Checksum Type: CRC32
+		Checksum Type: CRC32
+		Checksum Type: CRC32
+		Checksum Type: CRC32
+		Checksum Type: CRC32
+		Checksum Type: CRC32
+Format: UDZO
+total 4368
+drwxr-xr-x@   7 runner  staff      306 Nov  7 18:21 .
+drwx------@ 186 runner  staff     5952 Nov  7 18:21 ..
+-rw-r--r--    1 runner  staff   749940 Nov  7 18:21 .background.tiff
+-rw-r--r--    1 runner  staff    16388 Nov  7 18:21 .DS_Store
+-rw-r--r--    1 runner  staff  1455536 Nov  7 18:21 .VolumeIcon.icns
+drwxr-xr-x    3 runner  staff      102 Nov  7 18:16 AETHER.app
+lrwxr-xr-x    1 runner  staff       13 Nov  7 18:21 Programme -> /Applications
+-rw-r--r--  1 runner  staff  749940 Nov  7 18:21 /var/folders/h5/t85nd63d71x27_8gl5gw3l_w0000gn/T/tmp.2iTSINRnwu/.background.tiff
+  Architekturen: x86_64 arm64
+  Version: 1.0.0 (13)
+  ✓ Programmdatei identisch mit dem Build
+189c9750aca9cc30da9f1b9417a9d69da5b9c9e833014d2abc31fb12bec47a5a  AETHER-macOS-Universal.dmg
+✓ dist/AETHER-macOS-Universal.dmg (9.4M) – Kopie im Projektverzeichnis: /Users/runner/work/music-library-mac/music-library-mac/AETHER-macOS-Universal.dmg

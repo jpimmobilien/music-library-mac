@@ -1,0 +1,21 @@
+{
+  "data" : "Echte Messwerte des Build-Rechners",
+  "images" : [
+    {
+      "actualSize" : "420x348",
+      "appearance" : "dark",
+      "file" : "p-statusDot-dunkel-en-420x348.png",
+      "glass" : "fallback",
+      "language" : "en",
+      "method" : "window-server",
+      "requestedSize" : "420x320",
+      "section" : "overview",
+      "theme" : "liquidGlassDark"
+    }
+  ],
+  "liquidGlass" : false,
+  "macOS" : "Version 15.7.9 (Build 24G830)",
+  "note" : "Im Fotomodus wird „Transparenz reduzieren“ des Build-Rechners ignoriert, damit das Glasdesign sichtbar ist. Im normalen Betrieb gilt die Systemeinstellung.",
+  "systemReduceMotion" : true,
+  "systemReduceTransparency" : true
+}
