@@ -102,21 +102,15 @@ private struct CoresPanel: View {
             if perCore.isEmpty {
                 Text(tr("Measuring…")).font(Typo.callout).foregroundStyle(theme.textSecondary)
             } else if let kinds, kinds.count == perCore.count {
-                let groups: [(CoreCluster.Kind, [Int])] = [.performance, .efficiency].compactMap { kind in
-                    let indices = kinds.indices.filter { kinds[$0] == kind }
-                    return indices.isEmpty ? nil : (kind, indices)
-                }
-                ForEach(Array(groups.enumerated()), id: \.offset) { _, group in
-                    let kind = group.0
-                    let indices = group.1
+                ForEach(coreGroups(kinds)) { group in
                     VStack(alignment: .leading, spacing: 8) {
                         HStack(spacing: 6) {
-                            Circle().fill(kind == .performance ? theme.cpuUser : theme.memory).frame(width: 7, height: 7)
-                            Text(kind == .performance ? tr("Performance cores") : tr("Efficiency cores"))
+                            Circle().fill(group.isPerformance ? theme.cpuUser : theme.memory).frame(width: 7, height: 7)
+                            Text(group.isPerformance ? tr("Performance cores") : tr("Efficiency cores"))
                                 .font(Typo.captionMedium).foregroundStyle(theme.textSecondary)
-                            Text(average(indices, perCore)).font(Typo.caption).foregroundStyle(theme.textTertiary).monospacedDigit()
+                            Text(average(group.indices, perCore)).font(Typo.caption).foregroundStyle(theme.textTertiary).monospacedDigit()
                         }
-                        coreRow(indices, perCore, tint: kind == .performance ? theme.cpuUser : theme.memory)
+                        coreRow(group.indices, perCore, tint: group.isPerformance ? theme.cpuUser : theme.memory)
                     }
                 }
                 Text(tr("Core types from the device tree (IORegistry). Red share: system."))
@@ -132,6 +126,21 @@ private struct CoresPanel: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
+    }
+
+    private struct CoreGroup: Identifiable {
+        let isPerformance: Bool
+        let indices: [Int]
+        var id: Bool { isPerformance }
+    }
+
+    private func coreGroups(_ kinds: [CoreCluster.Kind]) -> [CoreGroup] {
+        let performance = kinds.indices.filter { kinds[$0] == CoreCluster.Kind.performance }
+        let efficiency = kinds.indices.filter { kinds[$0] == CoreCluster.Kind.efficiency }
+        var groups: [CoreGroup] = []
+        if !performance.isEmpty { groups.append(CoreGroup(isPerformance: true, indices: performance)) }
+        if !efficiency.isEmpty { groups.append(CoreGroup(isPerformance: false, indices: efficiency)) }
+        return groups
     }
 
     private func coreRow(_ indices: [Int], _ perCore: [CPUUsage?], tint: Color) -> some View {
