@@ -46,8 +46,9 @@ CLEAN=1 scripts/build_app.sh     # build/AETHER.app – Universal, geprüft
 scripts/make_dmg.sh              # AETHER-macOS-Universal.dmg im Projektverzeichnis, eingehängt und geprüft
 ```
 
-**In Xcode:** `scripts/make_xcodeproj.sh` erzeugt `AETHER.xcodeproj` (benötigt XcodeGen: `brew install xcodegen`),
-Schema „AETHER-App“. Alternativ `Package.swift` direkt in Xcode öffnen, Schema „AETHER“.
+**In Xcode:** `AETHER.xcodeproj` öffnen, Schema „AETHER-App“ (baut `AETHER.app` für arm64 + x86_64). Kommen
+Quelldateien hinzu, erzeugt `scripts/make_xcodeproj.sh` das Projekt aus `project.yml` neu (XcodeGen:
+`brew install xcodegen`). Alternativ `Package.swift` direkt in Xcode öffnen, Schema „AETHER“.
 
 **Automatisch:** Jeder Push in den Zweig `aether-macos` baut und prüft auf echten macOS-Rechnern
 ([Workflow](.github/workflows/aether-macos.yml)):

@@ -1,5 +1,6 @@
 #!/bin/bash
-# Erzeugt AETHER.xcodeproj aus project.yml (XcodeGen). Danach in Xcode öffnen oder:
+# Erzeugt AETHER.xcodeproj aus project.yml (XcodeGen) neu – nötig, wenn Quelldateien hinzukommen oder wegfallen.
+# Ein erzeugtes Projekt liegt bereits im Repository. Danach in Xcode öffnen oder:
 #   xcodebuild -project AETHER.xcodeproj -scheme AETHER-App -configuration Release build
 set -euo pipefail
 cd "$(dirname "$0")/.."

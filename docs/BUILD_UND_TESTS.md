@@ -1,115 +1,126 @@
 # Build- und Testergebnis
 
-AETHER 0.2.0 · Stand 7. November 2026 · Release-Build: Lauf 4 (GitHub-Lauf 42384028279) (`3ae5b9f`)
+AETHER 1.0.0 · Stand 7. November 2026 · Release-Build: Lauf 13 (GitHub-Lauf 42400099751) (`70cb4a6`)
 
 Gebaut und geprüft wurde auf **echten macOS-Rechnern** von GitHub Actions, Workflow
 [`aether-macos.yml`](../.github/workflows/aether-macos.yml), Zweig `aether-macos`. Alle Protokolle, Selbsttests,
-Bildschirmfotos und die DMG liegen im Zweig `ci-ergebnisse-aether-macos`.
+Bildschirmfotos, Absturzberichte und die DMG liegen im Zweig `ci-ergebnisse-aether-macos`.
 
 ## 1. Ergebnis
 
 | Prüfung | Ergebnis |
 |---|---|
-| Datei | `AETHER-macOS-Universal.dmg` · 5 567 247 Bytes (5,3 MB) · SHA-256 `f96700c5a4f932723076cba163be8810f29d2ca8d68c8dc27222b5547bb3b085` |
-| Architekturen (`lipo -archs`) | `x86_64 arm64` – beide nativ, kein Rosetta-Zwang |
+| Datei | `AETHER-macOS-Universal.dmg` · 9 809 219 Bytes (9,4 MB) · SHA-256 `189c9750aca9cc30da9f1b9417a9d69da5b9c9e833014d2abc31fb12bec47a5a` |
+| Version | 1.0.0 (Build 13), `de.projectaether.macos` |
+| Architekturen (`lipo -archs`) | `x86_64 arm64` – beide nativ |
 | Mindest-macOS je Architektur | 13.0 (arm64 und x86_64) |
-| SDK / Compiler | macOS SDK 26.5, Xcode 26.6, Swift 6.3.3 |
+| SDK / Compiler | macOS SDK 26.5, Xcode 26.6, Swift 6.3.3 (Intel-Rechner: Xcode 26.3, Swift 6.2.4) |
+| Xcode-Projekt | aus `project.yml` erzeugt und mit `xcodebuild` gebaut: `x86_64 arm64` ✓ |
 | Signatur | ad-hoc (`flags=0x2`), keine Developer-ID hinterlegt → **nicht notarisiert** |
 | Verknüpfte Bibliotheken | nur `/System/Library` und `/usr/lib` |
 | Netzwerk-APIs in der Programmdatei | keine (geprüft mit `nm -u`) |
 
-## 2. Ausgeführte Schritte (§3.3 des Auftrags)
+## 2. Ausgeführte Schritte
 
 | # | Schritt | Wo | Ergebnis |
 |---|---|---|---|
 | 1 | Clean Build (`rm -rf .build build`) | macOS 26 (Apple Silicon) und macOS 15 (Intel) | ✓ |
 | 2 | Universal-Build arm64 + x86_64 (`swift build --triple …`, `lipo -create`) | beide | ✓ |
 | 3 | Prüfung der Architekturen (`lipo -archs`, `-verify_arch arm64 x86_64`, `otool` minos/sdk) | beide | ✓ |
-| 4 | App-Bundle-Struktur (`Contents/MacOS`, `Info.plist`, `PkgInfo`, `Resources`) | beide | ✓ |
-| 5 | Ressourcenprüfung (`plutil -lint`, Icon, en/de.lproj, Lokalisierungsabgleich, nur Systembibliotheken, keine Netzwerk-APIs) | beide | ✓ |
-| 6 | DMG erstellen (`dmgbuild`, UDZO, Hintergrund 1×/2×, Volume-Symbol, Link „Programme“) | beide | ✓ |
-| 7 | Mount-Test (`hdiutil verify`, `attach`, Inhalt, Link, Architekturen, `codesign --verify --deep --strict`, Byte-Vergleich mit dem Build) | beide | ✓ |
-| 8 | Prüfung der enthaltenen App: aus der DMG installiert und gestartet (Selbsttest) | macOS 26 nativ (arm64), macOS 26 über Rosetta (x86_64), macOS 15 Intel (x86_64) | ✓ |
-| 9 | Unabhängige Prüfung der fertigen DMG ohne macOS (eigene Decoder für UDIF, HFS+, Mach-O: `tools/dmg_inspect/verify.py`) | Arbeitsumgebung | ✓ |
+| 4 | App-Bundle und Ressourcen (`plutil -lint`, Icon, en/de.lproj inkl. `InfoPlist.strings`, Lokalisierungsabgleich, nur Systembibliotheken, keine Netzwerk-APIs) | beide | ✓ |
+| 5 | Unit-Tests | Linux, macOS 26, macOS 15 Intel | ✓ 106/106 |
+| 6 | Selbsttest der gebauten App mit echten Messwerten | beide | ✓ 29/29 |
+| 7 | DMG erstellen (`dmgbuild`) und Mount-Test (`hdiutil verify/attach`, Inhalt, Link, Architekturen, `codesign --verify --deep --strict`, Byte-Vergleich) | beide | ✓ |
+| 8 | Aus der DMG installieren und starten (Selbsttest) | macOS 26 nativ, macOS 26 über Rosetta, macOS 15 Intel | ✓ 29/29 |
+| 9 | Fertige DMG auf einem zweiten Intel-Mac wie ein Nutzer installieren und starten | macOS 15 Intel | ✓ 29/29 |
+| 10 | Xcode-Projekt erzeugen und universal bauen | macOS 26 | ✓ |
+| 11 | Unabhängige Prüfung der fertigen DMG ohne macOS (eigene Decoder für UDIF, HFS+, Mach-O: `tools/dmg_inspect/verify.py`) | Arbeitsumgebung | ✓ |
 
 ## 3. Tests
 
-**Unit-Tests (AetherCore, 44 Tests):** Linux (x86_64), macOS 26 (arm64), macOS 15 Intel (x86_64) – alle bestanden.
-Geprüft werden unter anderem:
+**Unit-Tests (AetherCore, 106 Tests)** – Linux (x86_64), macOS 26 (arm64), macOS 15 Intel (x86_64), alle bestanden.
+Unter anderem:
 
-- CPU-Auslastung aus Zählerständen, inklusive 32-Bit-Überlauf und „keine verstrichenen Ticks → kein Wert“;
-- Speicheraufteilung wie die Aktivitätsanzeige;
-- Raten mit Zählerrücksetzung;
-- Puls-Regeln mit Haltezeiten, keine Warnung aus fehlenden Werten;
-- Formatierung Deutsch/Englisch;
-- WCAG-Kontraste aller 6 Themes und Akzentfarben;
-- Parser für `system_profiler` (Hardware, Grafik), auch mit „Unknown“ und kaputten Daten;
-- Batterie-Mathematik (Plausibilität, vorzeichenbehafteter Strom);
-- Volumes mit löschbarem Platz;
-- Übersichtslayout aus beschädigten gespeicherten Werten.
+- CPU- und Speichermathematik, Raten mit Zählerrücksetzung, Puls-Regeln;
+- Prozesslogik;
+- SMC-Dekodierung (`sp78`, `fpe2`, `flt`, Ganzzahlen, NaN) und Plausibilität;
+- Sensorzuordnung, Mittel/Maximum je Bereich, Lüfteranteil;
+- Batterie-Parser der Systeminformationen, Netzteileinheiten;
+- Systembericht: Seriennummer nur mit Häkchen, Maskierung, Dateiname;
+- Speicheranalyse: Kategorien, Duplikate inkl. harter Links, NVMe-SMART-Dekodierung;
+- Dateilogik: eindeutige Namen wie „Beide behalten“, Namensprüfung, Stapel-Umbenennung mit Konflikten, Pfade, Rechte;
+- Netzwerk: `netstat`-Formate mit und ohne Prozessspalte, Schnittstellenarten, Verlauf (Minutenmittel, Zeitachse, CSV);
+- Formatierung Deutsch/Englisch und WCAG-Kontraste aller Themes.
 
-**Selbsttest der fertigen App (echte Messwerte des jeweiligen Rechners):**
+**Selbsttest der fertigen App** (29 Prüfungen, echte Messwerte des jeweiligen Rechners). Nicht verfügbare Werte
+bestehen nur, wenn sie mit Grund gemeldet werden – erfundene Ersatzwerte würden die Prüfung scheitern lassen.
 
-- CPU gesamt (Summe = 100 %);
-- Kernzahl = logische CPUs;
-- Speicheraufteilung plausibel;
-- Speicherdruck;
-- Swap;
-- Startvolume;
-- SSD-Aktivität;
-- Netzraten;
-- Thermalstatus;
-- Batterie: vorhanden oder sauber „kein Akku“ ohne Ersatzwerte;
-- GPU-Liste;
-- GPU-Auslastung: Wert oder Grund;
-- Modell, Prozessor, Architektur, Rosetta-Erkennung;
-- Lokalisierung en/de;
-- sichtbares Fenster.
+- CPU, Kerne, Speicheraufteilung, Druck, Swap;
+- Startvolume, SSD-Aktivität, Verschlüsselungsangabe, NVMe-SMART;
+- Netzraten, Schnittstellen, Verbindungen (inkl. Prozessspalte), WLAN;
+- Thermalstatus, SMC-Sensoren und -Lüfter, SMC-Lesepfad;
+- Batterie;
+- Verlauf: Datenbank im Testordner schreiben, lesen und löschen; Standard „aus“;
+- Systembericht ohne Seriennummer;
+- GPU, Modell, Prozessor, Architektur/Rosetta;
+- Lokalisierung en/de, sichtbares Fenster.
 
 | Rechner | Prozess | Ergebnis |
 |---|---|---|
-| macOS 26.7 · Apple Silicon (virtuell, „Apple M2 Pro“) | arm64 nativ | ✓ 18/18 Prüfungen |
-| macOS 26.7 · Apple Silicon | x86_64 über Rosetta | ✓ 18/18 – Rosetta korrekt erkannt, echte Hardware (Apple Silicon) gemeldet |
-| macOS 15.7 · Intel (virtuell) | x86_64 nativ | ✓ 18/18 |
-| macOS 15.7 · Intel – Installation der macOS-26-DMG wie ein Nutzer | x86_64 | ✓ 18/18 |
+| macOS 26.7 · Apple Silicon (virtuell) – gebaut | arm64 nativ | ✓ 29/29 |
+| macOS 26.7 · Apple Silicon – aus der DMG installiert | arm64 nativ | ✓ 29/29 |
+| macOS 26.7 · Apple Silicon – aus der DMG installiert | x86_64 über Rosetta | ✓ 29/29 |
+| macOS 15.7 · Intel (virtuell) – gebaut | x86_64 nativ | ✓ 29/29 |
+| macOS 15.7 · Intel – aus der DMG installiert | x86_64 nativ | ✓ 29/29 |
+| macOS 15.7 · Intel, zweiter Rechner – macOS-26-DMG wie ein Nutzer installiert | x86_64 nativ | ✓ 29/29 |
 
-**Bildschirmfotos:**
+**Bemerkenswert aus den Messungen:**
 
-- alle 6 Themes, kompaktes und ausführliches Layout, Anpassen-Modus, Einstellungen, Bereich in Arbeit, Glasintensität 0;
-- macOS 26 mit nativem Liquid Glass und mit erzwungenem Rückfall;
-- macOS 15 Intel (Rückfall);
-- Englisch und Deutsch.
+- Die Verbindungsliste nennt auf macOS 26 und 15 zu jedem Socket den Prozess (`netstat -anv`, ohne
+  Administratorrechte).
+- Auf dem virtuellen Intel-Rechner ließ sich das (nachgebildete) SMC öffnen: 653 Schlüssel, 28 Temperaturschlüssel,
+  1 Lüfter. Damit ist der Lesepfad in C geprüft. Angezeigt werden diese Werte auf virtuellen Macs bewusst nicht, weil
+  sie keine Messungen echter Hardware sind.
+- NVMe-SMART: Die SDK-Schnittstelle ist vorhanden. Virtuelle Macs liefern keine Daten, deshalb steht dort „nicht
+  verfügbar“ mit Grund.
 
-Siehe `ci-ergebnisse-aether-macos/logs-build-*/snapshots/`. Die Build-Rechner haben „Transparenz reduzieren“
-eingeschaltet. Im Fotomodus wird das ignoriert, damit das Glasdesign sichtbar ist; im normalen Betrieb gilt die
-Systemeinstellung.
+**Bildschirmfotos** – macOS 26 mit Liquid Glass, mit erzwungenem Rückfall und auf Deutsch: je 24 Bilder, alle Bereiche
+einschließlich Speicher, Dateien, Netzwerk und Live-Monitor. Die Build-Rechner haben „Transparenz reduzieren“ an; im
+Fotomodus wird das ignoriert, damit das Glasdesign sichtbar ist.
 
-**Eigenverbrauch** (Selbsttest, Sekundentakt, direkt nach dem Start einschließlich `system_profiler`): 4–8 % eines
-Kerns, 30–40 MB Speicher. Im normalen Betrieb (2 s) liegt er niedriger; die Optimierung und eine Messung im
-Dauerbetrieb sind Teil von Phase 8.
-
-**Bemerkenswert aus den Messungen:** `/bin/ps` ist auf macOS 26 und 15 mit Systemrechten installiert (`-rwsr-xr-x
-root`). Die in Phase 4 geplante Prozessliste mit CPU- und Speicherwerten auch für Systemprozesse ist damit ohne
-Administratorrechte machbar.
+**Eigenverbrauch** (Selbsttest, nur die ersten 3 Sekunden einschließlich Start, Sensor- und Schnittstellensuche):
+ungefähr ein Kern, 40 MB Speicher. Den Dauerbetrieb misst der Build nicht. Die Übersicht zeigt ihn im laufenden
+Betrieb unter „AETHER selbst“ live an.
 
 ## 4. Im Build gefunden und behoben (ehrlich protokolliert)
 
 | Lauf | Befund | Ursache | Behebung |
 |---|---|---|---|
-| 1 | Selbsttest auf macOS 15 Intel: Absturz (`SIGABRT`) | `MTLCopyAllDevices()` → Metal-Assertion „Target device architecture is nil“ auf dem virtuellen Intel-Mac | GPU-Liste aus `system_profiler SPDisplaysDataType` (eigener Prozess) statt Metal |
-| 1 | Bildschirmfotos fehlten | Ausblenden des Hauptfensters beendete die App („nach letztem Fenster beenden“) | gilt nur noch im normalen Betrieb |
-| 2 | Absturz auf Intel bestand weiter | SwiftUI-Effekte, die Metal-Shader laden (Canvas, Zahlenübergang `numericText`, `AngularGradient`) | durch einfache Formen und Verläufe ersetzt |
-| 3 | Fotos zeigten kein Glas | Build-Rechner haben „Transparenz reduzieren“ an (AETHER folgt dem korrekt) | im Fotomodus ignoriert und vermerkt; Einstellungen nennen den Grund |
-| 3 | „Chip: Unknown“ auf dem Intel-Rechner | `system_profiler` meldet dort „Unknown“ | wird ignoriert, die Kernelangabe gilt; virtuelle Macs über `kern.hv_vmm_present` erkannt |
-| 3 | Fotos alle gleich groß | Fenster wurden auf den kleinen virtuellen Bildschirm begrenzt | Fotofenster werden nicht mehr begrenzt; Manifest nennt die tatsächliche Größe |
+| 0.2.0 | Absturz auf dem virtuellen Intel-Mac | `MTLCopyAllDevices()` bzw. Shader-Effekte (Canvas, `numericText`, `AngularGradient`) → Metal-Assertion „Target device architecture is nil“ | GPU-Liste aus `system_profiler`, einfache Formen statt Shader-Effekten |
+| 8 | Intel-Rechner zeigte Temperaturen (z. B. 81,6 °C) und einen Lüfter mit 0 U/min | der Hypervisor bildet ein SMC nach | SMC-Werte auf virtuellen Macs nicht anzeigen („Virtueller Mac ohne physische Sensoren“); der Lesepfad wird im Selbsttest trotzdem geprüft |
+| 10 | Build-Aufträge starteten nicht | GitHub-Abrechnung (privates Repository) | Repository öffentlich gestellt (Entscheidung des Nutzers) |
+| 11 | Selbsttest der installierten App auf Intel hing 180 s | nach den Abstürzen der Fotoläufe fragte macOS beim Start, ob die Fenster wieder geöffnet werden sollen | automatische Läufe starten mit `-ApplePersistenceIgnoreState YES` |
+| 11 | Deutsche Beschriftungen in der Übersicht abgeschnitten | „Zwischenspeicher“, „verfügbar inkl. … löschbar“ | „Cache“, „inkl. … löschbar“ |
+| 12/13 | Fotos auf dem virtuellen Intel-Mac: Absturz bei allen **hellen** Szenarien | siehe Abschnitt 5 | nicht in AETHER behebbar; dokumentiert |
 
-## 5. Nicht durchgeführt
+Die Durchsicht vor dem ersten Kompilieren fand einen wahrscheinlichen Fehler: Eine veränderliche Variable wurde in
+einem nebenläufigen Block eingefangen. Behoben in `5e9214f`. Danach kompilierte der Code von Phase 6–9 im ersten
+Durchlauf.
 
-- **Physische Hardware:** Alle Rechner waren virtuelle Macs (Apple Silicon und Intel). Nicht geprüft sind deshalb
-  echte Akkuwerte, SMC-Sensoren (noch nicht umgesetzt, Phase 5), Lüfter, die GPU-Treiberauslastung auf echter
-  Hardware sowie die Darstellung auf einem echten Retina-Display.
-- **macOS 13 und 14:** GitHub bietet dafür keine Rechner mehr an. Mindestversion 13.0 ist im Binary gesetzt und
-  geprüft; ein Start auf 13/14 ist nicht getestet.
-- **Notarisierung:** nicht möglich ohne Apple-Developer-Zugangsdaten. Der Weg ist vorbereitet (`scripts/notarize.sh`,
-  GitHub-Secrets).
-- **Xcode-Projektdatei:** Das Swift-Paket öffnet sich direkt in Xcode. Eine `.xcodeproj` folgt in Phase 9.
+## 5. Offene Punkte
+
+- **Virtueller Intel-Mac ohne echtes Grafikgerät, helles Erscheinungsbild:** Jedes Fenster im hellen Erscheinungsbild
+  bricht dort mit „Target device architecture is nil“ ab. Ein Diagnoselauf (Lauf 13, `AETHER_SNAPSHOT_PROBE`) hat
+  das eingegrenzt. Es betrifft auch ein **leeres** Fenster (`Color.clear`), einfachen Text und jedes andere Element
+  für sich. Alle dunklen Varianten laufen.
+  - Ursache ist also die Darstellung des Fensters durch macOS auf diesem Grafikgerät (`Apple Paravirtualized
+    Graphics Device`), nicht ein Element von AETHER.
+  - Echte Intel-Macs haben ein Grafikgerät mit Metal-Architektur; ob dort alles läuft, ist ohne physischen Intel-Mac
+    aber nicht geprüft.
+  - Der Selbsttest (dunkel) und alle dunklen Fotos laufen auf demselben Rechner fehlerfrei.
+- **Physische Hardware:** Alle Rechner waren virtuelle Macs. Nicht geprüft sind deshalb echte Akkuwerte, SMC-Sensoren
+  und Lüfter, NVMe-SMART, WLAN-Details, die GPU-Treiberauslastung und die Darstellung auf einem Retina-Display.
+- **macOS 13 und 14:** GitHub bietet dafür keine Rechner mehr an. Die Mindestversion 13.0 ist im Binary gesetzt und
+  geprüft, alle verwendeten Schnittstellen sind für macOS 13 freigegeben. Ein Start auf 13/14 ist nicht getestet.
+- **Notarisierung:** nicht möglich ohne Apple-Developer-Zugangsdaten. Der Weg ist vorbereitet
+  (`scripts/notarize.sh`, GitHub-Secrets).

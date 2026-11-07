@@ -123,6 +123,14 @@ Stand 7. November 2026 · AETHER 1.0 (Phasen 1–9)
   „nicht verfügbar“, statt einen zu erfinden. Auf dem virtuellen Intel-Rechner kamen Modell, Grafikspeicher und
   Metal-Stufe korrekt an; auf einem physischen Mac ist die Abfrage noch nicht geprüft.
 
+## Virtuelle Macs
+
+- Auf dem virtuellen Intel-Build-Rechner (Grafikgerät ohne Metal-Architektur) bricht **jedes** Fenster im hellen
+  Erscheinungsbild ab – auch ein leeres. Das liegt an der Fensterdarstellung von macOS auf diesem Gerät, nicht an
+  AETHER (Diagnose: docs/BUILD_UND_TESTS.md, Abschnitt 5). Im dunklen Erscheinungsbild läuft alles.
+- Batterie, Sensoren, Lüfter, SSD-Zustand und WLAN fehlen in virtuellen Macs; AETHER meldet sie als „nicht vorhanden“
+  bzw. „nicht verfügbar“.
+
 ## Was im Build nicht geprüft werden kann
 
 Die Build-Rechner von GitHub sind **virtuelle Macs**. Dort gibt es keine Batterie, keine echten Sensoren und Lüfter
