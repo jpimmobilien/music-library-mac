@@ -228,7 +228,7 @@ private struct SingleInfo: View {
                 if let size = item.size { infoRow(tr("Size"), fmt.bytes(size) + " (" + tr("%@ bytes", fmt.integer(Int(size))) + ")") }
                 if let allocated = item.allocatedSize { infoRow(tr("On disk"), fmt.bytes(allocated)) }
             }
-            // Gruppe: höchstens zehn direkte Elemente je Builder-Block (macOS 13)
+            // Gruppe: kleine Builder-Blöcke halten die Typprüfung schnell
             Group {
                 if let created = item.created { infoRow(tr("Created"), DateFormatter.localizedString(from: created, dateStyle: .medium, timeStyle: .short)) }
                 if let modified = item.modified { infoRow(tr("Modified"), DateFormatter.localizedString(from: modified, dateStyle: .medium, timeStyle: .short)) }

@@ -337,7 +337,7 @@ private struct FilesToolbar: View {
     var body: some View {
         let selected = browser.selectedItems
         HStack(spacing: 6) {
-            // Gruppe: höchstens zehn direkte Elemente je Builder-Block (macOS 13)
+            // Gruppe: kleine Builder-Blöcke halten die Typprüfung schnell
             Group {
                 iconButton("chevron.left", tr("Back"), enabled: browser.canGoBack) { browser.goBack() }
                 iconButton("chevron.right", tr("Forward"), enabled: browser.canGoForward) { browser.goForward() }

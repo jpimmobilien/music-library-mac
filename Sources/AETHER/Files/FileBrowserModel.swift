@@ -1,3 +1,4 @@
+import Darwin
 import Foundation
 import AppKit
 import UniformTypeIdentifiers
@@ -844,7 +845,8 @@ final class FileBrowserModel: ObservableObject {
         let order = sortOrder
         let base = list
         let truncated = count > Self.resultLimit
-        ioQueue.async { [weak self] in
+        // `paths` als Kopie einfangen: eine veränderliche lokale Variable darf ein @Sendable-Block nicht referenzieren
+        ioQueue.async { [weak self, paths] in
             var found = paths.compactMap { FileItem(url: URL(fileURLWithPath: $0)) }
             if !keepOrder { found = found.sorted(using: order) }
             let items = found
