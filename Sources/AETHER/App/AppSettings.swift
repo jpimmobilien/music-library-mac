@@ -18,6 +18,14 @@ final class AppSettings: ObservableObject {
     @Published var lowImpact: Bool { didSet { save(lowImpact, "lowImpact") } }
     /// Temperaturen und Lüfter über das SMC lesen (nur lesend, undokumentiertes Protokoll – siehe Konzept 8.3).
     @Published var smcEnabled: Bool { didSet { save(smcEnabled, "smcEnabled") } }
+    /// Anzeige in der Menüleiste (misst dann auch bei geschlossenem Fenster, höchstens alle 5 s).
+    @Published var menuBarEnabled: Bool { didSet { save(menuBarEnabled, "menuBarEnabled") } }
+    /// Live-Monitor schwebt über anderen Fenstern.
+    @Published var liveMonitorOnTop: Bool { didSet { save(liveMonitorOnTop, "liveMonitorOnTop") } }
+    /// Lokaler Verlauf (Opt-in, standardmäßig aus) und seine Aufbewahrungsdauer in Tagen.
+    @Published var historyEnabled: Bool { didSet { save(historyEnabled, "historyEnabled") } }
+    @Published var historyRetentionDays: Int { didSet { save(historyRetentionDays, "historyRetentionDays") } }
+    static let historyRetentionChoices = [1, 7, 30, 90]
     @Published var dashboard: DashboardLayout {
         didSet {
             save(dashboard.order.map(\.rawValue), "dashboardOrder")
@@ -37,6 +45,10 @@ final class AppSettings: ObservableObject {
         refreshInterval = (read("refreshInterval") as? Int).flatMap(RefreshInterval.init(rawValue:)) ?? .twoSeconds
         lowImpact = (read("lowImpact") as? Bool) ?? false
         smcEnabled = (read("smcEnabled") as? Bool) ?? true
+        menuBarEnabled = (read("menuBarEnabled") as? Bool) ?? false
+        liveMonitorOnTop = (read("liveMonitorOnTop") as? Bool) ?? true
+        historyEnabled = (read("historyEnabled") as? Bool) ?? false
+        historyRetentionDays = (read("historyRetentionDays") as? Int).flatMap { AppSettings.historyRetentionChoices.contains($0) ? $0 : nil } ?? 7
         dashboard = DashboardLayout.restore(order: (read("dashboardOrder") as? [String]) ?? [],
                                             hidden: (read("dashboardHidden") as? [String]) ?? [])
     }

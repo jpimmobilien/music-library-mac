@@ -29,6 +29,8 @@ enum SnapshotRunner {
         var editing = false
         var density: Density = .standard
         var glassIntensity = 0.85
+        /// Statt des Hauptfensters den Live-Monitor fotografieren.
+        var liveMonitor = false
     }
 
     static let scenarios: [Scenario] = [
@@ -44,7 +46,7 @@ enum SnapshotRunner {
         Scenario(name: "10-uebersicht-anpassen", size: CGSize(width: 1320, height: 900), theme: .liquidGlassDark, editing: true),
         Scenario(name: "11-einstellungen-dark", size: CGSize(width: 1320, height: 900), theme: .liquidGlassDark, section: .settings),
         Scenario(name: "12-einstellungen-light", size: CGSize(width: 1320, height: 900), theme: .liquidGlassLight, section: .settings),
-        Scenario(name: "13-bereich-in-arbeit", size: CGSize(width: 1320, height: 900), theme: .graphite, section: .storage),
+        Scenario(name: "13-dateien", size: CGSize(width: 1320, height: 900), theme: .graphite, section: .files),
         Scenario(name: "14-glas-intensitaet-0", size: CGSize(width: 1320, height: 900), theme: .liquidGlassDark, glassIntensity: 0),
         Scenario(name: "15-aktivitaet", size: CGSize(width: 1320, height: 900), theme: .liquidGlassDark, section: .activity),
         Scenario(name: "16-cpu-gpu", size: CGSize(width: 1320, height: 1000), theme: .liquidGlassDark, section: .cpuGPU),
@@ -52,6 +54,10 @@ enum SnapshotRunner {
         Scenario(name: "18-temperatur-luefter", size: CGSize(width: 1320, height: 1000), theme: .liquidGlassDark, section: .thermal),
         Scenario(name: "19-batterie", size: CGSize(width: 1320, height: 1000), theme: .liquidGlassLight, section: .battery),
         Scenario(name: "20-hardware", size: CGSize(width: 1320, height: 1100), theme: .graphite, section: .hardware),
+        Scenario(name: "21-speicher", size: CGSize(width: 1320, height: 1000), theme: .minimalDark, section: .storage),
+        Scenario(name: "22-netzwerk", size: CGSize(width: 1320, height: 1000), theme: .liquidGlassLight, section: .network),
+        Scenario(name: "23-dateien-hell", size: CGSize(width: 1320, height: 900), theme: .liquidGlassLight, section: .files),
+        Scenario(name: "24-live-monitor", size: CGSize(width: 340, height: 600), theme: .liquidGlassDark, liveMonitor: true),
     ]
 
     static func run(model: AppModel, output: URL) async {
@@ -65,8 +71,19 @@ enum SnapshotRunner {
         NSApp.setActivationPolicy(.regular)
         NSApp.activate(ignoringOtherApps: true)
 
+        // Fortsetzen nach einem Absturz (scripts/run_snapshots.sh): bereits erledigte bzw. abgestürzte Szenarien überspringen.
+        let skip = Set((ProcessInfo.processInfo.environment["AETHER_SNAPSHOT_SKIP"] ?? "").split(separator: ",").map(String.init))
+        let manifestURL = output.appendingPathComponent("manifest.json")
         var manifest: [[String: Any]] = []
-        for scenario in scenarios {
+        if !skip.isEmpty, let data = try? Data(contentsOf: manifestURL),
+           let previous = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+           let images = previous["images"] as? [[String: Any]] {
+            manifest = images
+        }
+        for scenario in scenarios where !skip.contains(scenario.name) {
+            try? Data(scenario.name.utf8).write(to: output.appendingPathComponent("current.txt"))
+            print("▸ \(scenario.name)")
+            fflush(stdout)
             settings.theme = scenario.theme
             settings.density = scenario.density
             settings.glassIntensity = scenario.glassIntensity
@@ -89,11 +106,15 @@ enum SnapshotRunner {
             window.titleVisibility = .hidden
             window.appearance = appearance
             window.isReleasedWhenClosed = false
-            let root = RootView(embedded: true)
-                .environmentObject(model)
-                .environmentObject(settings)
-            let host = NSHostingView(rootView: root)
-            window.contentView = host
+            if scenario.liveMonitor {
+                window.contentView = NSHostingView(rootView: LiveMonitorView(embedded: true)
+                    .environmentObject(model)
+                    .environmentObject(settings))
+            } else {
+                window.contentView = NSHostingView(rootView: RootView(embedded: true)
+                    .environmentObject(model)
+                    .environmentObject(settings))
+            }
             window.setContentSize(scenario.size)
             if let screen = NSScreen.main?.visibleFrame {
                 window.setFrameTopLeftPoint(NSPoint(x: screen.minX, y: screen.maxY))
@@ -132,8 +153,9 @@ enum SnapshotRunner {
             "note": "Im Fotomodus wird „Transparenz reduzieren“ des Build-Rechners ignoriert, damit das Glasdesign sichtbar ist. Im normalen Betrieb gilt die Systemeinstellung.",
         ]
         if let data = try? JSONSerialization.data(withJSONObject: summary, options: [.prettyPrinted, .sortedKeys]) {
-            try? data.write(to: output.appendingPathComponent("manifest.json"))
+            try? data.write(to: manifestURL)
         }
+        try? FileManager.default.removeItem(at: output.appendingPathComponent("current.txt"))
     }
 
     /// Bevorzugt das Bild des Fensterservers (enthält Glas und Unschärfe); sonst die Ansicht selbst zeichnen.

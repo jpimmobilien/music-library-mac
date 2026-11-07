@@ -21,6 +21,7 @@ struct CPUGPUView: View {
                     ProcessorDetailsPanel(system: engine.system)
                 }
                 GPUPanel(store: engine.gpu, interval: settings.effectiveInterval.seconds)
+                HistoryTimelinePanel(metrics: [.cpu, .temperature])
             }
             .padding(.horizontal, Spacing.gutter)
             .padding(.bottom, Spacing.gutter)

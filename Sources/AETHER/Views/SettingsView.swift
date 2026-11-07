@@ -15,6 +15,8 @@ struct SettingsView: View {
                 PageHeader(title: tr("Settings"), subtitle: tr("Everything is stored on this Mac only."))
                 appearance
                 monitoring
+                windows
+                HistorySettingsPanel(store: model.engine.history)
                 language
                 privacy
                 AboutPanel(system: model.engine.system)
@@ -118,6 +120,24 @@ struct SettingsView: View {
         }
     }
 
+    // MARK: Live-Monitor und Menüleiste
+
+    private var windows: some View {
+        SettingsPanel(title: tr("Live Monitor & Menu Bar"), symbol: "menubar.rectangle") {
+            SettingsRow(title: tr("Show in the menu bar"),
+                        detail: tr("Shows the CPU load in the menu bar. AETHER then keeps running when the window is closed and measures at most every 5 seconds.")) {
+                Toggle("", isOn: $settings.menuBarEnabled).toggleStyle(.switch).labelsHidden()
+            }
+            SettingsRow(title: tr("Keep Live Monitor on top"), detail: tr("The Live Monitor (⌥⌘M) floats above other windows.")) {
+                Toggle("", isOn: $settings.liveMonitorOnTop).toggleStyle(.switch).labelsHidden()
+            }
+            HStack {
+                Spacer()
+                OpenLiveMonitorButton(withShortcut: false).buttonStyle(CapsuleButtonStyle())
+            }
+        }
+    }
+
     // MARK: Sprache
 
     private var language: some View {
@@ -157,6 +177,7 @@ struct SettingsView: View {
                 privacyLine("network.slash", tr("AETHER makes no network connections and sends no data anywhere."))
                 privacyLine("chart.bar.xaxis", tr("No telemetry, no accounts, no passwords."))
                 privacyLine("lock.shield", tr("No administrator rights, no background helpers."))
+                privacyLine("clock.arrow.circlepath", tr("Long-term history is off unless you turn it on – and then stays on this Mac."))
                 privacyLine("number", tr("The serial number is only read when you ask for it (Hardware → Show) and is never stored."))
                 privacyLine("checkmark.seal", tr("Every value shows where it comes from – click the small symbol next to it."))
             }

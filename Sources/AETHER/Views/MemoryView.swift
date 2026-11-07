@@ -18,6 +18,7 @@ struct MemoryView: View {
                     MemoryActivityPanel(store: engine.memory)
                     TopProcessesPanel(store: engine.processes, metric: .memory)
                 }
+                HistoryTimelinePanel(metrics: [.memory, .pressure, .swap])
             }
             .padding(.horizontal, Spacing.gutter)
             .padding(.bottom, Spacing.gutter)

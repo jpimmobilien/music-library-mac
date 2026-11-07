@@ -1,0 +1,47 @@
+# Xcode-Projekt für AETHER (XcodeGen). Erzeugen: scripts/make_xcodeproj.sh  →  AETHER.xcodeproj
+# Die Logik-Module kommen aus dem Swift-Paket im selben Ordner (AetherCore, AetherSystem, AetherC);
+# die App-Quellen (Sources/AETHER) kompiliert das Xcode-Ziel „AETHER-App“ direkt. Ergebnis: AETHER.app (arm64 + x86_64).
+name: AETHER
+options:
+  deploymentTarget:
+    macOS: "13.0"
+  developmentLanguage: en
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MACOSX_DEPLOYMENT_TARGET: "13.0"
+    CODE_SIGN_IDENTITY: "-"
+    CODE_SIGN_STYLE: Manual
+    DEVELOPMENT_TEAM: ""
+    ENABLE_HARDENED_RUNTIME: NO
+  configs:
+    Release:
+      ONLY_ACTIVE_ARCH: NO
+      ARCHS: "arm64 x86_64"
+packages:
+  AetherPackage:
+    path: .
+targets:
+  AETHER-App:
+    type: application
+    platform: macOS
+    deploymentTarget: "13.0"
+    sources:
+      - path: Sources/AETHER
+      - path: Resources/Localization
+      - path: Resources/AppIcon.icns
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_NAME: AETHER
+        PRODUCT_BUNDLE_IDENTIFIER: de.projectaether.macos
+        INFOPLIST_FILE: Xcode/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/../Frameworks"
+    dependencies:
+      - package: AetherPackage
+        product: AetherCore
+      - package: AetherPackage
+        product: AetherSystem
+    scheme: {}

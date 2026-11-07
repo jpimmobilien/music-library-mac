@@ -44,6 +44,8 @@ public struct NetworkSnapshot: Sendable, Equatable {
     public var sessionDownloaded: UInt64
     public var sessionUploaded: UInt64
     public var activeInterfaces: [String]
+    /// Verkehr je Schnittstelle (alle Schnittstellen, auch Tunnel und Loopback – ohne Summenbildung).
+    public var interfaces: [InterfaceTraffic] = []
 
     public init(download: Reading<Double>, upload: Reading<Double>, sessionDownloaded: UInt64, sessionUploaded: UInt64,
                 activeInterfaces: [String]) {

@@ -10,6 +10,14 @@ public final class NetworkSource {
     private var upRate = CounterRate()
     private var downTotal = CounterAccumulator()
     private var upTotal = CounterAccumulator()
+    /// Zähler je Schnittstelle (für die Netzwerkseite).
+    private struct InterfaceTracker {
+        var down = CounterRate()
+        var up = CounterRate()
+        var totalIn = CounterAccumulator()
+        var totalOut = CounterAccumulator()
+    }
+    private var trackers: [String: InterfaceTracker] = [:]
 
     public init() {}
 
@@ -77,8 +85,30 @@ public final class NetworkSource {
         let down = downRate.update(value: inSum, time: uptime)
         let up = upRate.update(value: outSum, time: uptime)
         let active = counted.filter { $0.isUp && ($0.bytesIn > 0 || $0.bytesOut > 0) }.map(\.name).sorted()
-        return NetworkSnapshot(download: reading(down), upload: reading(up), sessionDownloaded: downTotal.total,
-                               sessionUploaded: upTotal.total, activeInterfaces: active)
+        var snapshot = NetworkSnapshot(download: reading(down), upload: reading(up), sessionDownloaded: downTotal.total,
+                                       sessionUploaded: upTotal.total, activeInterfaces: active)
+        snapshot.interfaces = perInterface(all, uptime: uptime)
+        return snapshot
+    }
+
+    /// Raten und Summen je Schnittstelle (gleiche Zähler wie oben, ohne Summenbildung über Schnittstellen).
+    private func perInterface(_ all: [InterfaceCounters], uptime: Double) -> [InterfaceTraffic] {
+        var result: [InterfaceTraffic] = []
+        var seen: Set<String> = []
+        for counters in all where !seen.contains(counters.name) {
+            seen.insert(counters.name)
+            var tracker = trackers[counters.name] ?? InterfaceTracker()
+            let down = tracker.down.update(value: counters.bytesIn, time: uptime)
+            let up = tracker.up.update(value: counters.bytesOut, time: uptime)
+            tracker.totalIn.update([counters.name: counters.bytesIn])
+            tracker.totalOut.update([counters.name: counters.bytesOut])
+            trackers[counters.name] = tracker
+            result.append(InterfaceTraffic(name: counters.name, isUp: counters.isUp, download: down, upload: up,
+                                           sessionDownloaded: tracker.totalIn.total, sessionUploaded: tracker.totalOut.total))
+        }
+        // Verschwundene Schnittstellen vergessen
+        trackers = trackers.filter { seen.contains($0.key) }
+        return result
     }
 }
 
@@ -93,6 +123,7 @@ public final class StorageSource {
         .volumeNameKey, .volumeLocalizedNameKey, .volumeTotalCapacityKey, .volumeAvailableCapacityKey,
         .volumeAvailableCapacityForImportantUsageKey, .volumeLocalizedFormatDescriptionKey, .volumeIsInternalKey,
         .volumeIsRemovableKey, .volumeIsEjectableKey, .volumeIsRootFileSystemKey, .volumeIsReadOnlyKey, .volumeIsLocalKey,
+        .volumeIsEncryptedKey,
     ]
 
     public static func volumes() -> [VolumeInfo] {
@@ -113,7 +144,7 @@ public final class StorageSource {
                 isRemovable: (values.volumeIsRemovable ?? false) || (values.volumeIsEjectable ?? false),
                 isRoot: values.volumeIsRootFileSystem ?? (url.path == "/"),
                 isReadOnly: values.volumeIsReadOnly ?? false,
-                isEncrypted: nil,
+                isEncrypted: values.volumeIsEncrypted,
                 isNetwork: values.volumeIsLocal == false
             ))
         }

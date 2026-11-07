@@ -18,6 +18,30 @@ struct AetherApp: App {
         .windowStyle(.hiddenTitleBar)
         .defaultSize(width: 1240, height: 800)
         .commands { AppCommands(model: model) }
+
+        Window(tr("Live Monitor"), id: "live-monitor") {
+            LiveMonitorView()
+                .environmentObject(model)
+                .environmentObject(model.settings)
+        }
+        .windowStyle(.hiddenTitleBar)
+        .windowResizability(.contentSize)
+        .defaultPosition(.topTrailing)
+
+        MenuBarExtra(isInserted: menuBarBinding) {
+            MenuBarPanel()
+                .environmentObject(model)
+                .environmentObject(model.settings)
+        } label: {
+            MenuBarLabel(cpu: model.engine.cpu)
+        }
+        .menuBarExtraStyle(.window)
+    }
+
+    /// Menüleiste nur auf Wunsch (Einstellungen) und nie in den Automatikmodi des Builds.
+    private var menuBarBinding: Binding<Bool> {
+        Binding(get: { model.settings.menuBarEnabled && !model.launchMode.isAutomated },
+                set: { model.settings.menuBarEnabled = $0 })
     }
 }
 
@@ -48,8 +72,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 Task { @MainActor in model?.intervalChanged() }
             }
             .store(in: &cancellables)
+        model.settings.$historyEnabled
+            .combineLatest(model.settings.$historyRetentionDays)
+            .sink { [weak model] enabled, days in
+                guard let model else { return }
+                model.engine.history.configure(enabled: enabled, retentionDays: days, allowed: !model.launchMode.isAutomated)
+            }
+            .store(in: &cancellables)
         model.settings.$smcEnabled
             .sink { [weak model] enabled in model?.engine.setSMCEnabled(enabled) }
+            .store(in: &cancellables)
+        model.settings.$menuBarEnabled
+            .dropFirst()
+            .sink { [weak model] _ in
+                Task { @MainActor in model?.menuBarSettingChanged() }
+            }
             .store(in: &cancellables)
         NotificationCenter.default.publisher(for: NSApplication.didHideNotification)
             .sink { [weak model] _ in model?.setAppActive(false) }
@@ -76,8 +113,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Normal: Schließen des Fensters beendet AETHER (kein versteckter Hintergrundbetrieb).
     /// Selbsttest und Bildschirmfotos blenden Fenster aus und beenden sich selbst, sobald sie fertig sind.
+    /// Mit Menüleisten-Anzeige läuft AETHER weiter, bis „Beenden“ gewählt wird.
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        !LaunchMode.fromArguments().isAutomated
+        !LaunchMode.fromArguments().isAutomated && !(model?.settings.menuBarEnabled ?? false)
+    }
+
+    /// Angefangene Verlaufsminute noch speichern.
+    func applicationWillTerminate(_ notification: Notification) {
+        model?.engine.history.flushNow()
     }
 }
 
@@ -98,6 +141,9 @@ struct AppCommands: Commands {
                         .keyboardShortcut(key, modifiers: .command)
                 }
             }
+        }
+        CommandGroup(after: .windowArrangement) {
+            OpenLiveMonitorButton()
         }
         CommandGroup(after: .sidebar) {
             Button(model.sidebarVisible ? tr("Hide Sidebar") : tr("Show Sidebar")) {

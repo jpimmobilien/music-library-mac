@@ -89,12 +89,33 @@ public extension DataSource {
     static let serialNumber = DataSource(id: "hardware.serial", api: "IORegistry · IOPlatformExpertDevice · IOPlatformSerialNumber", provenance: .systemReported)
     static let uptime = DataSource(id: "software.uptime", api: "sysctl kern.boottime", provenance: .measured)
 
+    static let smartHealth = DataSource(id: "storage.smart", api: "IOKit · IONVMeSMARTInterface · SMARTReadData", provenance: .measured)
+    static let purgeableSpace = DataSource(id: "storage.purgeable",
+                                           api: "volumeAvailableCapacityForImportantUsage − volumeAvailableCapacity", provenance: .computed)
+    static let folderScan = DataSource(id: "storage.scan", api: "FileManager.enumerator · totalFileAllocatedSize (Summe)", provenance: .computed)
+    static let duplicateCheck = DataSource(id: "storage.duplicates",
+                                           api: "Größe + SHA-256 (CryptoKit) · lstat Inode · getattrlist EF_MAY_SHARE_BLOCKS", provenance: .computed)
+
+    static let networkInterfaces = DataSource(id: "network.interfaces",
+                                              api: "getifaddrs · SCNetworkInterfaceCopyAll · SCDynamicStore PrimaryInterface",
+                                              provenance: .systemReported)
+    static let wifi = DataSource(id: "network.wifi", api: "CoreWLAN · CWInterface (rssiValue, noiseMeasurement, wlanChannel, transmitRate)",
+                                 provenance: .measured)
+    static let wifiSNR = DataSource(id: "network.wifi.snr", api: "RSSI − Rauschen (CoreWLAN)", provenance: .computed)
+    static let connections = DataSource(id: "network.connections", api: "/usr/sbin/netstat -anv -p tcp|udp (Socket-Tabellen des Kernels)",
+                                        provenance: .measured)
+    static let localHistory = DataSource(id: "history.local",
+                                         api: "SQLite · ~/Library/Application Support/AETHER/history.sqlite · Minutenmittel",
+                                         provenance: .computed)
+
     /// Alle Quellen (für die Datenschutz-/Quellenübersicht und Tests der Lokalisierung).
     static let all: [DataSource] = [
         .cpuTicks, .loadAverage, .cpuTopology, .vmStatistics, .swapUsage, .memoryPressure, .thermalState,
         .smcSensors, .smcFans, .powerProfiler, .batteryTemperature, .powerSources, .smartBattery, .batteryHealth, .batteryTimeRemaining, .volumes,
         .blockStorage, .interfaceCounters, .gpuDevices, .gpuStatistics, .hardwareSysctl, .systemProfiler, .osVersion, .pulse,
         .thermalAggregate, .batteryPower, .adapterDetails, .displays, .serialNumber, .uptime,
+        .smartHealth, .purgeableSpace, .folderScan, .duplicateCheck,
+        .networkInterfaces, .wifi, .wifiSNR, .connections, .localHistory,
     ]
 }
 

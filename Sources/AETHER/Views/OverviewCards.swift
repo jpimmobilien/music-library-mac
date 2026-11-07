@@ -416,13 +416,16 @@ struct StorageCard: View {
                     Text(tr("%@ of %@ used", fmt.bytes(v.used), fmt.bytes(v.capacity)))
                     if let purgeable = v.purgeable, purgeable > 0 {
                         Text("·")
-                        Text(tr("incl. %@ purgeable", fmt.bytes(purgeable)))
+                        // Löschbarer Platz zählt zum verfügbaren, nicht zum belegten Platz.
+                        Text(tr("available incl. %@ purgeable", fmt.bytes(purgeable)))
                             .help(tr("Space macOS frees up automatically when needed (e.g. caches, local snapshots)."))
                     }
                     Spacer(minLength: 0)
                     ProvenanceBadge(source: .volumes)
                 }
                 .font(Typo.caption).monospacedDigit().foregroundStyle(theme.textSecondary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
             }
         }
     }

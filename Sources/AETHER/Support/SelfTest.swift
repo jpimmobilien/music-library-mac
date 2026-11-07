@@ -54,6 +54,30 @@ enum SelfTest {
               "Startvolume=\(startup?.name ?? "fehlt") Kapazität=\(startup?.capacity ?? 0) verfügbar=\(startup?.effectiveAvailable ?? 0) Volumes=\(storage?.volumes.count ?? 0)")
         check("storage.io", storage?.readRate.value != nil || storage?.readRate.reason != nil,
               "lesen=\(storage?.readRate.value.map { "\($0)" } ?? "n. v. (\(storage?.readRate.reason?.rawValue ?? "-"))")")
+        // Nicht jede macOS-Version meldet die Verschlüsselung – „nicht gemeldet“ ist ehrlich und kein Fehler.
+        check("storage.encryption", startup != nil,
+              "Verschlüsselung des Startvolumes gelesen: \(startup?.isEncrypted.map { $0 ? "ja" : "nein" } ?? "nicht gelesen")")
+        // SSD-Gesundheit: entweder plausible SMART-Werte oder „nicht verfügbar“ mit Grund – nie Ersatzwerte.
+        let smart = SMARTSource.read(isVirtualMachine: engine.system.hardware.isVirtualMachine)
+        if let drives = smart.value {
+            let ok = !drives.isEmpty && drives.allSatisfy { drive in
+                drive.health.value.map { $0.isPlausible } ?? (drive.health.reason != nil)
+            }
+            var parts: [String] = []
+            for drive in drives {
+                let name = drive.model ?? "NVMe"
+                if let h = drive.health.value {
+                    let temperature = h.temperatureCelsius.map { String(Int($0)) } ?? "-"
+                    parts.append("\(name): Abnutzung \(h.percentageUsed) %, Reserve \(h.availableSpare) %, Temperatur \(temperature) °C")
+                } else {
+                    parts.append("\(name): n. v. (\(drive.health.reason?.rawValue ?? "-"))")
+                }
+            }
+            check("storage.smart", ok, parts.joined(separator: "; "))
+        } else {
+            check("storage.smart", smart.reason != nil,
+                  "nicht verfügbar mit Grund: \(smart.reason?.rawValue ?? "fehlt") (SDK-Schnittstelle: \(SMARTSource.isSupportedByBuild ? "ja" : "nein"))")
+        }
 
         // Netzwerk
         let network = engine.network.snapshot
@@ -92,6 +116,58 @@ enum SelfTest {
                 check("thermal.fans", thermal.fans.reason != nil, "nicht verfügbar mit Grund: \(thermal.fans.reason?.rawValue ?? "fehlt")")
             }
         }
+
+        // Netzwerkdetails: Schnittstellen mit Adressen, Verbindungen aus netstat, WLAN plausibel oder nicht vorhanden
+        let (interfaces, wifi, connections) = await Task.detached(priority: .utility) {
+            (InterfaceInventory.read(), WiFiSource.sample(), ConnectionSource.sample())
+        }.value
+        check("network.interfaces", interfaces.contains { !$0.addresses.isEmpty },
+              interfaces.filter(\.isConnected).map { "\($0.bsdName)(\($0.kind.rawValue)\($0.isPrimary ? ",primär" : ""))" }
+                .joined(separator: " ") + " · gesamt=\(interfaces.count)")
+        if let result = connections.value {
+            var detail = "Sockets=\(result.connections.count) Prozessspalte=\(result.hasProcessColumn) mitProzess=\(result.connections.filter { $0.processName != nil }.count) "
+                + result.connections.prefix(2).map { "\($0.proto) \($0.local.display) → \($0.remote.display) \($0.state?.rawValue ?? "-") \($0.processName ?? "?")" }
+                    .joined(separator: "; ")
+            if result.connections.isEmpty, let raw = HardwareSource.run("/usr/sbin/netstat", ["-anv", "-p", "tcp"], timeout: 8) {
+                detail += " Rohausgabe: " + String(String(decoding: raw, as: UTF8.self).prefix(400))
+            }
+            check("network.connections", !result.connections.isEmpty, detail)
+        } else {
+            check("network.connections", false, "netstat nicht lesbar: \(connections.reason?.rawValue ?? "-")")
+        }
+        if let wifi {
+            let plausible = !wifi.isAssociated || (wifi.rssi.map(WiFiNames.plausibleSignal) ?? false)
+            check("network.wifi", plausible,
+                  "an=\(wifi.isPoweredOn) verbunden=\(wifi.isAssociated) RSSI=\(wifi.rssi.map { String($0) } ?? "-") Rauschen=\(wifi.noise.map { String($0) } ?? "-") Kanal=\(wifi.channel.map { String($0) } ?? "-") Name=\(wifi.ssid == nil ? "nicht freigegeben" : "vorhanden")")
+        } else {
+            check("network.wifi", true, "keine WLAN-Schnittstelle (z. B. virtueller Mac) – als „nicht vorhanden“ gemeldet")
+        }
+
+        // Lokaler Verlauf: in einem Temp-Ordner schreiben, zurücklesen, löschen – der echte Verlauf bleibt unberührt.
+        let historyURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent("aether-selftest-\(UUID().uuidString)", isDirectory: true)
+            .appendingPathComponent("history.sqlite")
+        do {
+            let database = try HistoryDatabase(url: historyURL)
+            let minute = Date(timeIntervalSince1970: (Date().timeIntervalSince1970 / 60).rounded(.down) * 60)
+            let sample = HistorySample(time: minute, cpuBusy: 0.25, memoryUsed: 0.5, pressure: 1, download: 1_234, upload: nil)
+            let wrote = database.insertNow(sample)
+            let back = database.samples(from: minute.addingTimeInterval(-60), to: minute.addingTimeInterval(60))
+            database.close()
+            let removed = HistoryDatabase.removeFiles(at: historyURL)
+            try? FileManager.default.removeItem(at: historyURL.deletingLastPathComponent())
+            check("history.database", wrote && back.count == 1 && back.first == sample && removed,
+                  "geschrieben=\(wrote) gelesen=\(back.count) gleich=\(back.first == sample) entfernt=\(removed)")
+        } catch {
+            check("history.database", false, "Öffnen fehlgeschlagen: \(error)")
+        }
+        check("history.default-off", !engine.history.isRecording && !model.settings.historyEnabled,
+              "Verlauf im Selbsttest aus (Standard: aus, nichts gespeichert)")
+
+        // SMC-Lesepfad (auch auf virtuellen Macs, dort ohne Anzeige der nachgebildeten Werte)
+        let smc = SMCSource().diagnostics()
+        check("thermal.smc.path", !smc.opened || smc.keys > 0,
+              "geöffnet=\(smc.opened) Schlüssel=\(smc.keys) Temperaturschlüssel=\(smc.temperatureKeys) Lüfter=\(smc.fans.map(String.init) ?? "-") virtuell=\(engine.system.hardware.isVirtualMachine)")
 
         // Systembericht: Abschnitte aus echten Werten, ohne Seriennummer
         let sections = HardwareReport.sections(system: engine.system, gpu: engine.gpu, storage: engine.storage, power: engine.power,

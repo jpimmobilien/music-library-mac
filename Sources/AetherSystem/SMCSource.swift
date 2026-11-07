@@ -64,9 +64,19 @@ public final class SMCSource {
         if let fans = number("FNum") { fanCount = Int(fans) }
     }
 
+    /// Nur für den Selbsttest im Build: prüft den Lesepfad (Öffnen, Schlüssel aufzählen, Dekodieren), ohne die Werte
+    /// anzuzeigen – auch auf virtuellen Macs.
+    public func diagnostics() -> (opened: Bool, keys: Int, temperatureKeys: Int, fans: Int?) {
+        guard isAvailable else { return (false, 0, 0, nil) }
+        if !discovered { discover() }
+        return (true, keyCount, temperatureKeys.count, fanCount)
+    }
+
     /// Eine Messung. `isVirtualMachine` bestimmt die Begründung, wenn kein SMC vorhanden ist.
     public func sample(at date: Date = Date(), isVirtualMachine: Bool) -> (sensors: Reading<[ThermalSensor]>, fans: Reading<[FanReading]>) {
-        guard isAvailable else {
+        // Virtuelle Macs: Ein vorhandenes SMC ist vom Hypervisor nachgebildet – seine Werte sind keine Messungen
+        // echter Hardware und werden deshalb nicht als Temperaturen dieses Macs angezeigt.
+        guard !isVirtualMachine, isAvailable else {
             let reason: UnavailableReason = isVirtualMachine ? .virtualMachine : .notProvidedByMacOS
             return (Reading(unavailable: reason, source: .smcSensors, at: date), Reading(unavailable: reason, source: .smcFans, at: date))
         }

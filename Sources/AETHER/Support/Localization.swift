@@ -83,6 +83,10 @@ extension DataSource {
         case "battery.power": return tr("Voltage multiplied by current.")
         case "storage.volumes": return tr("Capacity and free space of each volume, including space macOS can free up on demand.")
         case "storage.io": return tr("Read and write counters of all disks; the rate is the difference between two readings.")
+        case "storage.smart": return tr("Health log the NVMe drive reports about itself (SMART), read through Apple’s public interface.")
+        case "storage.purgeable": return tr("Space macOS can free up on demand: available for important use minus currently free.")
+        case "storage.scan": return tr("Sum of the space the files of the analysed folder occupy on the disk.")
+        case "storage.duplicates": return tr("Files with identical size and identical SHA-256 checksum. Hard links count once.")
         case "network.counters": return tr("Byte counters of the physical network interfaces (64 bit).")
         case "gpu.devices": return tr("Graphics processors as listed in System Information.")
         case "gpu.utilization": return tr("Utilization as reported by the graphics driver. Not every driver reports it.")
@@ -95,6 +99,11 @@ extension DataSource {
         case "hardware.displays": return tr("Connected displays as macOS reports them.")
         case "hardware.serial": return tr("The serial number stored in the Mac’s firmware. Only read when you ask for it.")
         case "software.uptime": return tr("Time since the last startup, from the kernel’s boot time.")
+        case "network.interfaces": return tr("Network interfaces, their addresses and the interface of the default route as macOS reports them.")
+        case "network.wifi": return tr("Signal, noise, channel and data rate of the Wi‑Fi interface. Passwords are never read.")
+        case "network.wifi.snr": return tr("Signal-to-noise ratio: signal strength minus noise level.")
+        case "network.connections": return tr("Open TCP and UDP sockets from the kernel’s tables, read via netstat. The process is the socket’s last owner.")
+        case "history.local": return tr("One-minute averages AETHER stores on this Mac only – only while history is turned on.")
         default: return ""
         }
     }

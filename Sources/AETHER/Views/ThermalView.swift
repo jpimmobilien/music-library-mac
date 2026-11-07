@@ -17,6 +17,7 @@ struct ThermalView: View {
                 FansPanel(store: power, interval: settings.effectiveInterval.seconds)
                 SensorListPanel(store: power)
                 SMCNote(enabled: settings.smcEnabled)
+                HistoryTimelinePanel(metrics: [.temperature, .thermalState])
             }
             .padding(.horizontal, Spacing.gutter)
             .padding(.bottom, Spacing.gutter)

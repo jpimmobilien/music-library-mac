@@ -1,0 +1,8 @@
+/* AETHER – Info.plist (Deutsch) */
+"NSDesktopFolderUsageDescription" = "AETHER zeigt den Inhalt Ihres Schreibtischordners unter „Dateien“ und bezieht ihn in Speicheranalysen ein, die Sie starten. Nichts verlässt diesen Mac.";
+"NSDocumentsFolderUsageDescription" = "AETHER zeigt den Inhalt Ihres Dokumentenordners unter „Dateien“ und bezieht ihn in Speicheranalysen ein, die Sie starten. Nichts verlässt diesen Mac.";
+"NSDownloadsFolderUsageDescription" = "AETHER zeigt den Inhalt Ihres Downloads-Ordners unter „Dateien“ und bezieht ihn in Speicheranalysen ein, die Sie starten. Nichts verlässt diesen Mac.";
+"NSRemovableVolumesUsageDescription" = "AETHER zeigt Dateien auf Wechselmedien unter „Dateien“ und analysiert ihren Speicher, wenn Sie es wünschen.";
+"NSNetworkVolumesUsageDescription" = "AETHER zeigt Dateien auf Netzlaufwerken unter „Dateien“, wenn Sie sie öffnen.";
+"NSLocationUsageDescription" = "macOS gibt den Namen des WLAN-Netzes nur an Apps mit Ortungsfreigabe weiter. AETHER nutzt die Freigabe für nichts anderes und speichert Ihren Standort nie.";
+"NSLocationWhenInUseUsageDescription" = "macOS gibt den Namen des WLAN-Netzes nur an Apps mit Ortungsfreigabe weiter. AETHER nutzt die Freigabe für nichts anderes und speichert Ihren Standort nie.";

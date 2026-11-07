@@ -6,6 +6,7 @@
 #            Selbsttest → Bildschirmfotos (Liquid Glass und Rückfall) → DMG + Mount-Test →
 #            aus der DMG installieren und starten (Apple Silicon zusätzlich der Intel-Teil über Rosetta)
 #   smoke    fertige DMG auf einem Intel-Mac wie ein Nutzer installieren und starten
+#   xcode    Xcode-Projekt aus project.yml erzeugen (XcodeGen) und mit xcodebuild universal bauen
 #   results  DMG, Prüfsumme, Protokolle, Bildschirmfotos → Zweig „ci-ergebnisse-aether-macos“
 name: AETHER macOS
 
@@ -205,10 +206,53 @@ jobs:
             snapshots/
           if-no-files-found: ignore
 
+  xcode:
+    name: Xcode-Projekt (XcodeGen + xcodebuild, Universal)
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Werkzeuge
+        run: |
+          MAJOR=$(xcodebuild -version | head -1 | sed -E 's/Xcode ([0-9]+).*/\1/')
+          X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | grep -vi beta | sort -V | tail -1)
+          if [ "${MAJOR:-0}" -lt 26 ] && [ -n "$X" ]; then sudo xcode-select -s "$X"; fi
+          brew install xcodegen
+          mkdir -p logs
+          { xcodebuild -version; xcodegen --version; } 2>&1 | tee logs/xcode-tools.txt
+      - name: Projekt erzeugen
+        run: BUILD_NUMBER=${{ github.run_number }} scripts/make_xcodeproj.sh 2>&1 | tee logs/xcodegen.txt
+      - name: Universal-Build mit xcodebuild
+        run: |
+          set +e
+          xcodebuild -project AETHER.xcodeproj -scheme AETHER-App -configuration Release -derivedDataPath build/xcode \
+            -destination 'generic/platform=macOS' ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO \
+            CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO build > logs/xcodebuild.txt 2>&1
+          STATUS=$?
+          grep -E "error:|BUILD (SUCCEEDED|FAILED)" logs/xcodebuild.txt | sed 's|/Users/runner/work/[^ ]*/Sources/|Sources/|' | sort -u | head -60
+          [ $STATUS -eq 0 ] || exit $STATUS
+          set -e
+          APP=build/xcode/Build/Products/Release/AETHER.app
+          lipo -archs "$APP/Contents/MacOS/AETHER" | tee logs/xcode-archs.txt
+          lipo "$APP/Contents/MacOS/AETHER" -verify_arch arm64 x86_64
+          test -s "$APP/Contents/Resources/de.lproj/Localizable.strings"
+          test -s "$APP/Contents/Resources/en.lproj/Localizable.strings"
+          /usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$APP/Contents/Info.plist"
+          echo "✓ Xcode-Build universal (arm64 + x86_64)"
+      - name: Projekt sichern
+        if: always()
+        run: zip -qr logs/AETHER-xcodeproj.zip AETHER.xcodeproj Xcode 2>/dev/null || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: xcode-project
+          path: logs/
+          if-no-files-found: ignore
+
   results:
     name: Ergebnisse sichern
     if: always()
-    needs: [core, build, smoke]
+    needs: [core, build, smoke, xcode]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -237,6 +281,7 @@ jobs:
             echo "build: ${{ needs.build.result }}"
             ls -d AETHER-dmg-* 2>/dev/null | sed 's/^/dmg: /'
             echo "smoke: ${{ needs.smoke.result }}"
+            echo "xcode: ${{ needs.xcode.result }}"
             date -u
           } > ERGEBNIS.txt
           git init -q -b ci-ergebnisse-aether-macos

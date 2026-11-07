@@ -79,16 +79,6 @@ enum AppSection: String, CaseIterable, Identifiable, Hashable {
         case .settings: return nil
         }
     }
-
-    /// Entwicklungsphase, in der der Bereich vollständig umgesetzt wird (siehe docs/KONZEPT.md).
-    var plannedPhase: Int? {
-        switch self {
-        case .overview, .settings: return nil
-        case .activity, .cpuGPU, .memory, .thermal, .battery, .hardware: return nil
-        case .storage, .files: return 6
-        case .network: return 7
-        }
-    }
 }
 
 /// Startart: normal, Selbsttest oder Bildschirmfotos (nur in der Build-Pipeline).
@@ -132,6 +122,8 @@ final class AppModel: ObservableObject {
     let settings: AppSettings
     let engine: MonitorEngine
     let launchMode: LaunchMode
+    /// „Dateien“ behält Ort, Auswahl und Verlauf beim Wechsel zwischen den Bereichen.
+    let files: FileBrowserModel
     private var started = false
     private var windowVisible = true
     private var appActive = true
@@ -140,6 +132,7 @@ final class AppModel: ObservableObject {
         self.launchMode = launchMode
         settings = AppSettings(persist: !launchMode.isAutomated)
         engine = MonitorEngine()
+        files = FileBrowserModel(isSnapshot: launchMode.isSnapshot)
     }
 
     func start() {
@@ -156,7 +149,38 @@ final class AppModel: ObservableObject {
     }
 
     func intervalChanged() {
-        engine.setInterval(settings.effectiveInterval)
+        if started && !launchMode.isAutomated {
+            updateRunning()
+        } else {
+            engine.setInterval(settings.effectiveInterval)
+        }
+    }
+
+    // MARK: Live-Monitor und Menüleiste
+
+    private var liveMonitorVisible = false
+    private var menuBarPanelVisible = false
+
+    /// Takt, solange nur die Menüleiste misst (höchstens alle 5 s – spart Energie).
+    var menuBarInterval: RefreshInterval {
+        settings.effectiveInterval.rawValue < 5 ? .fiveSeconds : settings.effectiveInterval
+    }
+
+    func setLiveMonitorVisible(_ visible: Bool) {
+        guard liveMonitorVisible != visible else { return }
+        liveMonitorVisible = visible
+        updateRunning()
+    }
+
+    func setMenuBarPanelVisible(_ visible: Bool) {
+        guard menuBarPanelVisible != visible else { return }
+        menuBarPanelVisible = visible
+        updateRunning()
+    }
+
+    func menuBarSettingChanged() {
+        objectWillChange.send()
+        updateRunning()
     }
 
     /// Messungen ruhen, solange das Fenster nicht zu sehen ist.
@@ -170,10 +194,13 @@ final class AppModel: ObservableObject {
         updateRunning()
     }
 
+    /// Gemessen wird nur, solange etwas davon zu sehen ist: Hauptfenster, Live-Monitor oder Menüleiste.
     private func updateRunning() {
         guard started, !launchMode.isAutomated else { return }
-        if windowVisible {
+        if windowVisible || liveMonitorVisible || menuBarPanelVisible {
             engine.start(interval: settings.effectiveInterval)
+        } else if settings.menuBarEnabled {
+            engine.start(interval: menuBarInterval)
         } else {
             engine.stop()
         }
@@ -181,6 +208,15 @@ final class AppModel: ObservableObject {
 
     func select(_ section: AppSection) {
         selection = section
+    }
+
+    /// Ordner oder Datei, die unter „Dateien“ geöffnet werden soll (z. B. aus „Speicher“). Die Dateien-Seite
+    /// übernimmt die Anfrage und setzt sie zurück.
+    @Published var filesRequest: URL?
+
+    func openInFiles(_ url: URL) {
+        filesRequest = url
+        selection = .files
     }
 
     /// Prozess, der in der Aktivität ausgewählt werden soll (z. B. aus „Größte Verbraucher“).

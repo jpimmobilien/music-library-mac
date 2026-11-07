@@ -75,6 +75,7 @@ test -s "$APP/Contents/Resources/AppIcon.icns"
 for L in en de; do
     test -s "$APP/Contents/Resources/$L.lproj/Localizable.strings" || { echo "✗ $L.lproj fehlt"; exit 1; }
     plutil -lint "$APP/Contents/Resources/$L.lproj/Localizable.strings"
+    plutil -lint "$APP/Contents/Resources/$L.lproj/InfoPlist.strings"
 done
 echo "  ✓ Info.plist, Icon, Lokalisierungen (en, de)"
 

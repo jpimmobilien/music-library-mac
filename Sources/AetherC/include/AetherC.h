@@ -27,4 +27,35 @@ bool aether_smc_key_at(io_connect_t connection, uint32_t index, char key[5]);
 /// Liest einen Schlüssel (4 Zeichen). false bei Fehler.
 bool aether_smc_read(io_connect_t connection, const char *key, AetherSMCValue *value);
 
+// ---------------------------------------------------------------------------------------------
+// NVMe-SMART (SSD-Gesundheit): öffentliche IOKit-Plug-in-Schnittstelle IONVMeSMARTInterface
+// (IOKit/storage/nvme/NVMeSMARTLibExternal.h). Nur lesend. Die Seriennummer wird nicht gelesen.
+
+enum {
+    AETHER_NVME_OK = 0,
+    AETHER_NVME_PLUGIN_FAILED = 1,
+    AETHER_NVME_INTERFACE_FAILED = 2,
+    AETHER_NVME_READ_FAILED = 3,
+    AETHER_NVME_NOT_PERMITTED = 4,
+};
+
+typedef struct {
+    char model[64];
+    char firmware[32];
+    int32_t status;
+    int32_t ioReturn;
+    uint8_t raw[512];
+} AetherNVMeDrive;
+
+/// War die SDK-Schnittstelle beim Bauen vorhanden?
+bool aether_nvme_supported(void);
+/// Liest das SMART-Protokoll aller NVMe-Laufwerke mit „NVMe SMART Capable“ (höchstens `capacity`).
+/// Rückgabe: Anzahl gefundener Laufwerke; je Laufwerk `status` (AETHER_NVME_…).
+int32_t aether_nvme_read_all(AetherNVMeDrive *drives, int32_t capacity);
+
+// ---------------------------------------------------------------------------------------------
+// APFS-Klon-Hinweis: getattrlist ATTR_CMNEXT_EXT_FLAGS → EF_MAY_SHARE_BLOCKS.
+// Rückgabe false = Angabe nicht verfügbar (älteres System, anderes Dateisystem, Fehler).
+bool aether_file_may_share_blocks(const char *path, bool *mayShare);
+
 #endif

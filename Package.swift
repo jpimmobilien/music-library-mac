@@ -49,6 +49,8 @@ targets.append(
     )
 )
 products.append(.executable(name: "AETHER", targets: ["AETHER"]))
+// Für das Xcode-Projekt (project.yml): die App-Quellen linken diese Bibliotheken.
+products.append(.library(name: "AetherSystem", targets: ["AetherSystem"]))
 #endif
 
 let package = Package(

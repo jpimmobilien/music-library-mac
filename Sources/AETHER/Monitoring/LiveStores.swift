@@ -89,8 +89,21 @@ final class NetworkStore: ObservableObject {
 @MainActor
 final class StorageStore: ObservableObject {
     @Published private(set) var snapshot: StorageSnapshot?
+    /// Lese- und Schreibrate aller Datenträger (Bytes/s) für die Speicherseite.
+    @Published private(set) var longRead = RingBuffer<Double>(capacity: detailCapacity)
+    @Published private(set) var longWrite = RingBuffer<Double>(capacity: detailCapacity)
+    @Published private(set) var peakRead: Double?
+    @Published private(set) var peakWrite: Double?
 
-    func apply(_ snapshot: StorageSnapshot) { self.snapshot = snapshot }
+    func apply(_ snapshot: StorageSnapshot) {
+        self.snapshot = snapshot
+        if let read = snapshot.readRate.value, let write = snapshot.writeRate.value {
+            longRead.append(read)
+            longWrite.append(write)
+            peakRead = max(peakRead ?? 0, read)
+            peakWrite = max(peakWrite ?? 0, write)
+        }
+    }
 }
 
 /// Verlaufslänge für Batterie und Temperatur (Messungen im 5-s-Takt: 30 min).

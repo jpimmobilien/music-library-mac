@@ -15,6 +15,7 @@ struct BatteryView: View {
                 BatteryContent(store: model.engine.power, interval: settings.effectiveInterval.seconds) {
                     model.select(.thermal)
                 }
+                HistoryTimelinePanel(metrics: [.batteryPercent, .batteryPower])
             }
             .padding(.horizontal, Spacing.gutter)
             .padding(.bottom, Spacing.gutter)

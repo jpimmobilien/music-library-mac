@@ -39,6 +39,10 @@ struct RootView: View {
         .tint(theme.accent)
         .foregroundStyle(theme.textPrimary)
         .animation(theme.motion == .off ? nil : .easeInOut(duration: 0.25), value: settings.theme)
+        .onDisappear {
+            // Fenster geschlossen (z. B. bei Menüleisten-Anzeige): nicht mehr im vollen Takt messen
+            if !embedded { model.setWindowVisible(false) }
+        }
     }
 }
 
@@ -71,7 +75,9 @@ private struct ContentArea: View {
         case .thermal: ThermalView()
         case .battery: BatteryView()
         case .hardware: HardwareView()
-        default: PlannedSectionView(section: section)
+        case .storage: StorageView()
+        case .network: NetworkView()
+        case .files: FilesView()
         }
     }
 }

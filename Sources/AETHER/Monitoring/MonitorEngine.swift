@@ -24,6 +24,8 @@ final class MonitorEngine {
     let gpu = GPUStore()
     let system = SystemStore()
     let processes = ProcessStore()
+    /// Lokaler Verlauf (nur bei eingeschalteter Einstellung).
+    let history = HistoryStore()
 
     private let queue = DispatchQueue(label: "aether.monitor", qos: .utility)
     private var timer: DispatchSourceTimer?
@@ -165,6 +167,7 @@ final class MonitorEngine {
         gpu.apply(utilization: result.gpuUtilization)
         if let tick = result.processes { processes.apply(snapshot: tick.snapshot, cpu: tick.cpu) }
         system.apply(pulse: result.pulse, input: result.pulseInput, ownUsage: result.ownUsage, at: result.date)
+        history.record(result)
     }
 }
 
