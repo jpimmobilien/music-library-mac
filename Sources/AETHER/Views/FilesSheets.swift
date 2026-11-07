@@ -228,14 +228,17 @@ private struct SingleInfo: View {
                 if let size = item.size { infoRow(tr("Size"), fmt.bytes(size) + " (" + tr("%@ bytes", fmt.integer(Int(size))) + ")") }
                 if let allocated = item.allocatedSize { infoRow(tr("On disk"), fmt.bytes(allocated)) }
             }
-            if let created = item.created { infoRow(tr("Created"), DateFormatter.localizedString(from: created, dateStyle: .medium, timeStyle: .short)) }
-            if let modified = item.modified { infoRow(tr("Modified"), DateFormatter.localizedString(from: modified, dateStyle: .medium, timeStyle: .short)) }
-            if let opened = details?.lastOpened { infoRow(tr("Last opened"), DateFormatter.localizedString(from: opened, dateStyle: .medium, timeStyle: .short)) }
-            infoRow(tr("Where"), displayPath(item.url.deletingLastPathComponent()))
-            if let permissions = details?.permissions { infoRow(tr("Permissions"), permissions) }
-            if let owner = details?.owner { infoRow(tr("Owner"), owner) }
-            if let type = item.contentType?.identifier { infoRow(tr("Type"), type) }
-            if let count = details?.itemCount { infoRow(tr("Contains"), tr("%ld items", count)) }
+            // Gruppe: höchstens zehn direkte Elemente je Builder-Block (macOS 13)
+            Group {
+                if let created = item.created { infoRow(tr("Created"), DateFormatter.localizedString(from: created, dateStyle: .medium, timeStyle: .short)) }
+                if let modified = item.modified { infoRow(tr("Modified"), DateFormatter.localizedString(from: modified, dateStyle: .medium, timeStyle: .short)) }
+                if let opened = details?.lastOpened { infoRow(tr("Last opened"), DateFormatter.localizedString(from: opened, dateStyle: .medium, timeStyle: .short)) }
+                infoRow(tr("Where"), displayPath(item.url.deletingLastPathComponent()))
+                if let permissions = details?.permissions { infoRow(tr("Permissions"), permissions) }
+                if let owner = details?.owner { infoRow(tr("Owner"), owner) }
+                if let type = item.contentType?.identifier { infoRow(tr("Type"), type) }
+                if let count = details?.itemCount { infoRow(tr("Contains"), tr("%ld items", count)) }
+            }
             Divider().overlay(theme.hairline)
             HStack(spacing: Spacing.s) {
                 Button(tr("Open")) { browser.open(item) }.buttonStyle(CapsuleButtonStyle())

@@ -337,9 +337,12 @@ private struct FilesToolbar: View {
     var body: some View {
         let selected = browser.selectedItems
         HStack(spacing: 6) {
-            iconButton("chevron.left", tr("Back"), enabled: browser.canGoBack) { browser.goBack() }
-            iconButton("chevron.right", tr("Forward"), enabled: browser.canGoForward) { browser.goForward() }
-            iconButton("chevron.up", tr("Enclosing folder"), enabled: browser.canGoUp && browser.results == nil) { browser.goUp() }
+            // Gruppe: höchstens zehn direkte Elemente je Builder-Block (macOS 13)
+            Group {
+                iconButton("chevron.left", tr("Back"), enabled: browser.canGoBack) { browser.goBack() }
+                iconButton("chevron.right", tr("Forward"), enabled: browser.canGoForward) { browser.goForward() }
+                iconButton("chevron.up", tr("Enclosing folder"), enabled: browser.canGoUp && browser.results == nil) { browser.goUp() }
+            }
             Picker("", selection: $browser.viewMode) {
                 Image(systemName: "list.bullet").help(tr("List")).tag(FileBrowserModel.ViewMode.list)
                 Image(systemName: "square.grid.2x2").help(tr("Icons")).tag(FileBrowserModel.ViewMode.icons)
