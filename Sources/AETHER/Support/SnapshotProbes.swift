@@ -9,7 +9,7 @@ import AetherCore
 // =============================================================================================
 
 enum SnapshotProbe: String, CaseIterable {
-    case text, secondaryText, ambient, glassCard, solidCard, sidebar, hierarchicalSymbol, sparkline, ring, badge,
+    case empty, plainText, text, secondaryText, ambient, glassCard, solidCard, sidebar, hierarchicalSymbol, sparkline, ring, badge,
          controls, scroll, statusDot
 }
 
@@ -32,6 +32,10 @@ struct ProbeHost: View {
     @ViewBuilder
     private var content: some View {
         switch probe {
+        case .empty:
+            Color.clear
+        case .plainText:
+            Text("Plain")
         case .text:
             Text("AETHER 123 °C").font(Typo.metricLarge)
         case .secondaryText:

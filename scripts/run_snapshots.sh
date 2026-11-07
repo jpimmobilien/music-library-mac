@@ -36,7 +36,7 @@ for ATTEMPT in $(seq 1 "${SNAPSHOT_MAX_ATTEMPTS:-6}"); do
     [ -n "$CURRENT" ] || break
     echo "✗ Absturz bei Szenario: $CURRENT" | tee -a "$OUT_ABS/run.log"
     CRASHED="$CRASHED $CURRENT"
-    DONE="$(ls "$OUT_ABS"/*.png 2>/dev/null | xargs -n1 basename 2>/dev/null | sed -E 's/-(en|de)-[0-9]+x[0-9]+\.png$//' | tr '\n' ',')"
+    DONE="$( (ls "$OUT_ABS"/*.png 2>/dev/null || true) | xargs -n1 basename 2>/dev/null | sed -E 's/-(en|de)-[0-9]+x[0-9]+\.png$//' | tr '\n' ',' || true)"
     SKIP="${DONE}$(echo $CRASHED | tr ' ' ',')"
 done
 tail -n 40 "$OUT_ABS/run.log" || true
