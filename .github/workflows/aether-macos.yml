@@ -1,0 +1,238 @@
+# AETHER macOS – Tests, Clean Build, Universal-Build, DMG, Installations- und Starttests auf echten macOS-Rechnern
+#
+#   core     Linux: Kernlogik-Tests (AetherCore ist frei von Apple-Frameworks) und Lokalisierungsprüfung
+#   build    macOS 26 (Apple Silicon, Xcode 26) und macOS 15 Intel (Ausweichrechner) parallel:
+#            Unit-Tests → Clean Build arm64 + x86_64 → lipo → App-Bundle + Ressourcenprüfung → Signatur →
+#            Selbsttest → Bildschirmfotos (Liquid Glass und Rückfall) → DMG + Mount-Test →
+#            aus der DMG installieren und starten (Apple Silicon zusätzlich der Intel-Teil über Rosetta)
+#   smoke    fertige DMG auf einem Intel-Mac wie ein Nutzer installieren und starten
+#   results  DMG, Prüfsumme, Protokolle, Bildschirmfotos → Zweig „ci-ergebnisse-aether-macos“
+name: AETHER macOS
+
+on:
+  push:
+    branches: [aether-macos]
+  workflow_dispatch:
+
+concurrency:
+  group: aether-macos-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  VERSION: "0.2.0"
+
+jobs:
+  core:
+    name: Kernlogik · Linux
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lokalisierung
+        run: python3 tools/check_l10n.py
+      - name: Tests (AetherCore)
+        run: |
+          set -o pipefail
+          mkdir -p logs
+          swift --version | tee logs/swift-linux.txt
+          swift test 2>&1 | tee logs/test-output-linux.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs-core-linux
+          path: logs/
+          if-no-files-found: ignore
+
+  build:
+    name: Build und DMG (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-26, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Werkzeuge
+        run: |
+          MAJOR=$(xcodebuild -version | head -1 | sed -E 's/Xcode ([0-9]+).*/\1/')
+          X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | grep -vi beta | sort -V | tail -1)
+          if [ "${MAJOR:-0}" -lt 26 ] && [ -n "$X" ]; then sudo xcode-select -s "$X"; fi
+          mkdir -p logs
+          { sw_vers; uname -m; xcodebuild -version; swift --version; xcrun --show-sdk-version; ls -l /bin/ps; } 2>&1 | tee logs/system-${{ matrix.os }}.txt
+      - name: Kompilieren (Fehlerübersicht)
+        run: |
+          set +e
+          swift build -c release --product AETHER > logs/compile.txt 2>&1
+          STATUS=$?
+          echo "::group::Fehler"
+          grep -n "error:" logs/compile.txt | sed "s|$GITHUB_WORKSPACE/||" | sort -u | head -300
+          echo "::endgroup::"
+          grep -n "warning:" logs/compile.txt | grep "Sources/" | sed "s|$GITHUB_WORKSPACE/||" | sort -u | head -300 > logs/warnings.txt
+          echo "Warnungen in eigenen Quellen: $(wc -l < logs/warnings.txt)"
+          tail -5 logs/compile.txt
+          exit $STATUS
+      - name: Unit-Tests
+        run: |
+          set -o pipefail
+          swift test 2>&1 | tee logs/test-output-${{ matrix.os }}.txt
+      - name: Signatur vorbereiten (nur mit Developer-ID-Secrets)
+        env:
+          MACOS_CERT_P12_BASE64: ${{ secrets.MACOS_CERT_P12_BASE64 }}
+          MACOS_CERT_PASSWORD: ${{ secrets.MACOS_CERT_PASSWORD }}
+          NOTARY_APPLE_ID: ${{ secrets.NOTARY_APPLE_ID }}
+          NOTARY_TEAM_ID: ${{ secrets.NOTARY_TEAM_ID }}
+          NOTARY_PASSWORD: ${{ secrets.NOTARY_PASSWORD }}
+        run: scripts/notarize.sh keychain 2>&1 | tee logs/signing.txt
+      - name: Clean Build · Universal (arm64 + x86_64) · Bundle- und Ressourcenprüfung
+        env:
+          CLEAN: "1"
+          BUILD_NUMBER: ${{ github.run_number }}
+        run: |
+          set -o pipefail
+          scripts/build_app.sh 2>&1 | tee logs/build-output.txt
+      - name: Selbsttest (Build, nativ)
+        run: scripts/run_selftest.sh build/AETHER.app logs/selftest-${{ matrix.os }}.json
+      - name: Bildschirmfotos (Liquid Glass bzw. Systemstand)
+        continue-on-error: true
+        run: scripts/run_snapshots.sh build/AETHER.app snapshots/${{ matrix.os }}-glass
+      - name: Bildschirmfotos (Rückfall ohne Liquid Glass)
+        if: matrix.os == 'macos-26'
+        continue-on-error: true
+        env:
+          AETHER_FORCE_GLASS_FALLBACK: "1"
+        run: scripts/run_snapshots.sh build/AETHER.app snapshots/${{ matrix.os }}-fallback
+      - name: DMG erstellen und prüfen (Mount-Test)
+        run: |
+          set -o pipefail
+          scripts/make_dmg.sh 2>&1 | tee logs/dmg-output.txt
+      - name: Notarisierung (nur mit Developer-ID-Secrets)
+        env:
+          MACOS_CERT_P12_BASE64: ${{ secrets.MACOS_CERT_P12_BASE64 }}
+          NOTARY_APPLE_ID: ${{ secrets.NOTARY_APPLE_ID }}
+          NOTARY_TEAM_ID: ${{ secrets.NOTARY_TEAM_ID }}
+          NOTARY_PASSWORD: ${{ secrets.NOTARY_PASSWORD }}
+        run: scripts/notarize.sh dmg 2>&1 | tee logs/notarization.txt
+      - name: Aus der DMG installieren und starten (Apple Silicon zusätzlich Intel-Teil über Rosetta)
+        run: |
+          set -e
+          MNT="$(mktemp -d)"
+          hdiutil attach dist/AETHER-macOS-Universal.dmg -nobrowse -readonly -mountpoint "$MNT"
+          mkdir -p "$HOME/Applications"
+          rm -rf "$HOME/Applications/AETHER.app"
+          ditto "$MNT/AETHER.app" "$HOME/Applications/AETHER.app"
+          hdiutil detach "$MNT"
+          codesign --verify --deep --strict --verbose=2 "$HOME/Applications/AETHER.app"
+          scripts/run_selftest.sh "$HOME/Applications/AETHER.app" logs/selftest-installiert-${{ matrix.os }}.json
+          if [ "$(uname -m)" = "arm64" ]; then
+            /usr/sbin/softwareupdate --install-rosetta --agree-to-license || true
+            SNAPSHOT_ARCH=x86_64 scripts/run_selftest.sh "$HOME/Applications/AETHER.app" logs/selftest-installiert-${{ matrix.os }}-rosetta.json
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AETHER-dmg-${{ matrix.os }}
+          path: |
+            dist/AETHER-macOS-Universal.dmg
+            dist/AETHER-macOS-Universal.dmg.sha256
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs-build-${{ matrix.os }}
+          path: |
+            logs/
+            snapshots/
+          if-no-files-found: ignore
+
+  smoke:
+    name: Installation + Start (Intel-Mac · macOS 15)
+    needs: build
+    if: ${{ !cancelled() }}
+    runs-on: macos-15-intel
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: AETHER-dmg-*
+          path: dmgs
+      - name: DMG wählen (bevorzugt macOS-26-Build)
+        run: |
+          mkdir -p dist
+          SRC=dmgs/AETHER-dmg-macos-26
+          [ -f "$SRC/AETHER-macOS-Universal.dmg" ] || SRC=dmgs/AETHER-dmg-macos-15-intel
+          cp "$SRC"/AETHER-macOS-Universal.dmg* dist/
+          echo "Verwendet: $SRC" | tee dist/quelle.txt
+      - name: DMG einhängen und wie ein Benutzer installieren
+        run: |
+          set -e
+          mkdir -p logs/smoke-intel
+          { sw_vers; uname -m; cat dist/quelle.txt; } | tee logs/smoke-intel/system.txt
+          (cd dist && shasum -a 256 -c AETHER-macOS-Universal.dmg.sha256)
+          MNT="$(mktemp -d)"
+          hdiutil attach dist/AETHER-macOS-Universal.dmg -nobrowse -readonly -mountpoint "$MNT"
+          ls -la "$MNT" | tee logs/smoke-intel/dmg-inhalt.txt
+          test -L "$MNT/Programme"
+          mkdir -p "$HOME/Applications"
+          ditto "$MNT/AETHER.app" "$HOME/Applications/AETHER.app"
+          hdiutil detach "$MNT"
+          lipo -archs "$HOME/Applications/AETHER.app/Contents/MacOS/AETHER" | tee -a logs/smoke-intel/system.txt
+          codesign --verify --deep --strict --verbose=2 "$HOME/Applications/AETHER.app"
+      - name: App starten (Selbsttest)
+        run: scripts/run_selftest.sh "$HOME/Applications/AETHER.app" logs/smoke-intel/selftest.json
+      - name: Bildschirmfotos
+        if: always()
+        continue-on-error: true
+        run: scripts/run_snapshots.sh "$HOME/Applications/AETHER.app" snapshots/smoke-intel
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: smoke-intel
+          path: |
+            logs/
+            snapshots/
+          if-no-files-found: ignore
+
+  results:
+    name: Ergebnisse sichern
+    if: always()
+    needs: [core, build, smoke]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: ergebnisse
+      - name: Bilder verkleinern (PNG → JPEG)
+        run: |
+          python3 -m pip install --quiet --user --break-system-packages pillow
+          python3 - <<'PY'
+          import pathlib
+          from PIL import Image
+          for p in pathlib.Path("ergebnisse").rglob("*.png"):
+              Image.open(p).convert("RGB").save(p.with_suffix(".jpg"), quality=88, optimize=True)
+              p.unlink()
+          PY
+      - name: In Zweig „ci-ergebnisse-aether-macos“ schreiben
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd ergebnisse
+          {
+            echo "Lauf: ${GITHUB_RUN_NUMBER} (${GITHUB_SHA})"
+            echo "core: ${{ needs.core.result }}"
+            echo "build: ${{ needs.build.result }}"
+            ls -d AETHER-dmg-* 2>/dev/null | sed 's/^/dmg: /'
+            echo "smoke: ${{ needs.smoke.result }}"
+            date -u
+          } > ERGEBNIS.txt
+          git init -q -b ci-ergebnisse-aether-macos
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "CI-Ergebnisse AETHER macOS Lauf ${GITHUB_RUN_NUMBER}"
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" ci-ergebnisse-aether-macos

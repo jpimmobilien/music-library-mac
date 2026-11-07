@@ -1,0 +1,9 @@
+.build/
+.swiftpm/
+build/
+dist/
+snapshots/
+logs/
+/AETHER-macOS-Universal.dmg
+*.xcodeproj/xcuserdata/
+.DS_Store
