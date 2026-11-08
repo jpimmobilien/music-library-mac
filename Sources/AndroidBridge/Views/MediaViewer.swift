@@ -90,7 +90,12 @@ struct MediaViewer: View {
     @ViewBuilder
     private var stage: some View {
         if let image {
+            let px = Self.pixelSize(image)
+            // Die Bildfläche hat das Seitenverhältnis des Bildes und ist höchstens so groß wie das Bild –
+            // SwiftUI zentriert sie; Zoomen und Verschieben bleiben im Inneren möglich.
             ZoomableImageView(image: image)
+                .aspectRatio(px, contentMode: .fit)
+                .frame(maxWidth: px.width, maxHeight: px.height)
                 .shadow(color: .black.opacity(0.6), radius: 30)
                 .transition(.opacity.combined(with: .scale(scale: 0.97)))
         } else if let player {
@@ -248,6 +253,13 @@ struct MediaViewer: View {
         if let date = entry.bestDate { parts.append(date.formatted(date: .abbreviated, time: .shortened)) }
         parts.append("\(index + 1) von \(items.count)")
         return parts.joined(separator: " · ")
+    }
+
+    static func pixelSize(_ image: NSImage) -> CGSize {
+        let rep = image.representations.first
+        let w = CGFloat(rep?.pixelsWide ?? 0), h = CGFloat(rep?.pixelsHigh ?? 0)
+        if w > 0 && h > 0 { return CGSize(width: w, height: h) }
+        return CGSize(width: max(image.size.width, 1), height: max(image.size.height, 1))
     }
 
     private func dimensions(for entry: DeviceEntry) -> String? {
