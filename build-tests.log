@@ -1,0 +1,174 @@
+[0/1] Planning build
+Building for debugging...
+[0/16] /Users/runner/work/music-library-mac/music-library-mac/.build/x86_64-apple-macosx/debug/MusicLibraryPackageTests.derived/runner.swift
+[0/16] Write sources
+[8/19] Copying Info.plist
+[10/19] Write sources
+[12/19] Copying Fixtures
+[14/19] Write swift-version-1977FEB4D2752686.txt
+[16/38] Compiling OggVorbisTests resource_bundle_accessor.swift
+[17/38] Compiling MLTagsTests AudioIntegrityTests.swift
+[18/38] Compiling MLTagsTests BridgeAPITests.swift
+[19/40] Emitting module OggVorbisTests
+[20/40] Compiling OggVorbisTests VorbisDecoderTests.swift
+[21/42] Compiling MLTagsTests FixtureSupport.swift
+[22/42] Compiling MLTagsTests FormatSpecificTests.swift
+[23/42] Emitting module MLTagsTests
+[24/42] Compiling MLTagsTests ImageProbeTests.swift
+[25/42] Compiling MLTagsTests SafeTagWriterTests.swift
+[26/42] Compiling StudioEngineTests StudioEngineSmokeTests.swift
+[27/42] Compiling StudioEngineTests RemoteWebCheckTests.swift
+[28/42] Emitting module StudioEngineTests
+[29/42] Compiling StudioEngineTests RemoteTests.swift
+[30/45] Compiling MLStudioTests MLStudioTests.swift
+[31/45] Emitting module MLStudioTests
+[32/50] Compiling MLTagsTests TagFileRoundTripTests.swift
+[33/50] Compiling MLTagsTests resource_bundle_accessor.swift
+[34/68] Compiling MLCoreTests LibraryLogicTests.swift
+[35/68] Compiling MLCoreTests LyricsParserTests.swift
+[36/68] Compiling MLCoreTests DuplicateFinderTests.swift
+[37/68] Compiling MLCoreTests EqualizerModelTests.swift
+[38/69] Compiling MLStoreTests DateAddedStoreTests.swift
+[39/69] Compiling MLStoreTests LibraryStoreTests.swift
+[40/69] Emitting module MLStoreTests
+[41/69] Emitting module MLCoreTests
+[42/74] Compiling MLRenderTests PortableCdTests.swift
+[43/75] Compiling MLRenderTests KotlinReferenceTests.swift
+[44/75] Compiling MLCoreTests AlbumGroupingTests.swift
+[45/75] Compiling MLCoreTests CoverPaletteTests.swift
+[46/75] Emitting module MLRenderTests
+[47/75] Emitting module MusicLibraryTests
+[50/75] Compiling MLRenderTests TurntableTests.swift
+[57/75] Compiling MusicLibraryTests StudioModelTests.swift
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/StudioModelTests.swift:55:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 53 |     func export(_ request: ExportRequest, pause: PauseGate?, progress: @escaping @Sendable (Double) -> Void) async throws -> ExportResult {
+ 54 |         let title = request.metadata.title
+ 55 |         lock.lock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 56 |         requests.append(request)
+ 57 |         active += 1
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/StudioModelTests.swift:62:14: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 60 |         let data = content
+ 61 |         let duration = resultDuration
+ 62 |         lock.unlock()
+    |              `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 63 |         defer { lock.lock(); active -= 1; lock.unlock() }
+ 64 |         for i in 0..<10 {
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/StudioModelTests.swift:63:22: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 61 |         let duration = resultDuration
+ 62 |         lock.unlock()
+ 63 |         defer { lock.lock(); active -= 1; lock.unlock() }
+    |                      `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 64 |         for i in 0..<10 {
+ 65 |             await pause?.waitIfPaused()
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/StudioModelTests.swift:63:48: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 61 |         let duration = resultDuration
+ 62 |         lock.unlock()
+ 63 |         defer { lock.lock(); active -= 1; lock.unlock() }
+    |                                                `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 64 |         for i in 0..<10 {
+ 65 |             await pause?.waitIfPaused()
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/StudioModelTests.swift:123:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+121 | 
+122 |     func analyze(url: URL, kind: SourceKind) async throws -> SourceInfo {
+123 |         lock.lock(); analyzed.append(url.absoluteString); lock.unlock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+124 |         return info(url, kind: kind)
+125 |     }
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/StudioModelTests.swift:123:64: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+121 | 
+122 |     func analyze(url: URL, kind: SourceKind) async throws -> SourceInfo {
+123 |         lock.lock(); analyzed.append(url.absoluteString); lock.unlock()
+    |                                                                `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+124 |         return info(url, kind: kind)
+125 |     }
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/StudioModelTests.swift:136:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+134 |         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+135 |         let part = directory.appendingPathComponent("audio.m4a.part")
+136 |         lock.lock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+137 |         downloadCalls += 1
+138 |         if FileManager.default.fileExists(atPath: part.path) { sawPartialFile = true }
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/StudioModelTests.swift:139:14: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+137 |         downloadCalls += 1
+138 |         if FileManager.default.fileExists(atPath: part.path) { sawPartialFile = true }
+139 |         lock.unlock()
+    |              `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+140 |         if !FileManager.default.fileExists(atPath: part.path) { try Data("TEIL".utf8).write(to: part) }
+141 |         progress(DownloadProgress(fraction: 0.5, bytesDone: 50, bytesTotal: 100))
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+[58/75] Compiling MLCoreTests V21LogicTests.swift
+[59/75] Compiling MLCoreTests V2FilterTests.swift
+[60/75] Compiling MLCoreTests V2PerformanceTests.swift
+[61/75] Compiling MLCoreTests V2SettingsTests.swift
+[62/75] Compiling MLCoreTests V2SortingTests.swift
+[63/75] Compiling MLCoreTests SyncPlannerTests.swift
+[64/75] Compiling MLCoreTests TagMergeTests.swift
+[65/75] Compiling MLCoreTests TestTracks.swift
+[66/75] Compiling MLCoreTests TextTests.swift
+[67/75] Compiling MLCoreTests TimePitchEngineTests.swift
+[68/75] Compiling MLCoreTests NaturalOrderJvmTests.swift
+[69/75] Compiling MLCoreTests PlayQueueTests.swift
+[70/75] Compiling MLCoreTests PlaybackLogicTests.swift
+[71/75] Compiling MLCoreTests ResumeAndHistoryTests.swift
+[72/75] Compiling MLCoreTests SVGPathTests.swift
+[73/75] Compiling MLCoreTests SettingsTests.swift
+[74/77] Compiling MusicLibraryPackageTests runner.swift
+[75/77] Emitting module MusicLibraryPackageTests
+[75/77] Write Objects.LinkFileList
+[76/77] Linking MusicLibraryPackageTests
+Build complete! (39.64s)
