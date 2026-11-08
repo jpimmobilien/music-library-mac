@@ -149,7 +149,6 @@ private struct ChipDie: View {
                     .overlay(RoundedRectangle(cornerRadius: side * 0.07, style: .continuous)
                         .strokeBorder(Color.white.opacity(0.16), lineWidth: 1))
                     .padding(pinLength)
-                    .shadow(color: Color.black.opacity(theme.isDark ? 0.5 : 0.25), radius: 18, y: 10)
                 // Die
                 RoundedRectangle(cornerRadius: side * 0.04, style: .continuous)
                     .fill(LinearGradient(colors: [Color(white: 0.13), Color(white: 0.05)], startPoint: .top, endPoint: .bottom))

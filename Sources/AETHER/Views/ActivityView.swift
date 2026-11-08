@@ -17,6 +17,8 @@ struct ActivityView: View {
     @State private var familySortOrder = [KeyPathComparator(\FamilyRow.cpuSort, order: .reverse)]
     @State private var pending: PendingAction?
     @State private var message: String?
+    /// Prozesslandschaft über der Tabelle (ausblendbar, damit die Tabelle mehr Platz hat).
+    @AppStorage("aether.activity.landscape") private var showLandscape = true
 
     struct PendingAction: Identifiable {
         let id = UUID()
@@ -26,18 +28,20 @@ struct ActivityView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            PageHeader(title: tr("Activity"), subtitle: subtitle) {
-                HStack(spacing: Spacing.s) {
-                    Picker("", selection: $grouped) {
-                        Text(tr("Processes")).tag(false)
-                        Text(tr("App families")).tag(true)
+            header
+            if showLandscape {
+                ZStack {
+                    StageLight(color: AppSection.activity.tint(theme))
+                        .padding(.horizontal, -Spacing.gutter)
+                        .padding(.vertical, -24)
+                    ProcessLandscapeHero(store: store, selected: grouped ? nil : selection.first) { pid in
+                        grouped = false
+                        selection = [pid]
                     }
-                    .pickerStyle(.segmented)
-                    .labelsHidden()
-                    .frame(width: 230)
-                    SearchField(text: $query, prompt: tr("Name, PID or path"))
-                        .frame(width: 220)
                 }
+                .frame(height: 196)
+                .padding(.vertical, 4)
+                .transition(.opacity)
             }
             filterBar
             if store.loaded && !store.othersAvailable {
@@ -70,6 +74,7 @@ struct ActivityView: View {
         }
         .padding(.horizontal, Spacing.gutter)
         .padding(.bottom, Spacing.gutter)
+        .aetherAnimation(Motion.easeOut(0.3), value: showLandscape)
         .onAppear {
             if let pid = model.focusedPID {
                 selection = [pid]
@@ -89,6 +94,46 @@ struct ActivityView: View {
     }
 
     // MARK: Kopf und Filter
+
+    /// Überzeile, Aussage, Anzahl – daneben (oder bei schmalem Fenster darunter) die Werkzeuge.
+    private var header: some View {
+        ViewThatFits(in: .horizontal) {
+            HStack(alignment: .top, spacing: Spacing.xl) {
+                headline
+                Spacer(minLength: Spacing.l)
+                tools
+            }
+            VStack(alignment: .leading, spacing: Spacing.m) {
+                headline
+                tools
+            }
+        }
+        .padding(.top, Metrics.headerTop + 6)
+    }
+
+    private var headline: some View {
+        StudioHeadline(eyebrow: tr("Activity"), headline: tr("What your Mac is working on"), lead: subtitle,
+                       tint: AppSection.activity.tint(theme), compact: true)
+    }
+
+    private var tools: some View {
+        HStack(spacing: Spacing.s) {
+            Picker("", selection: $grouped) {
+                Text(tr("Processes")).tag(false)
+                Text(tr("App families")).tag(true)
+            }
+            .pickerStyle(.segmented)
+            .labelsHidden()
+            .frame(width: 230)
+            SearchField(text: $query, prompt: tr("Name, PID or path"))
+                .frame(width: 220)
+            ToolbarIconButton(symbol: "chart.bar.xaxis",
+                              help: showLandscape ? tr("Hide process landscape") : tr("Show process landscape"),
+                              active: showLandscape) {
+                showLandscape.toggle()
+            }
+        }
+    }
 
     private var subtitle: String {
         guard store.loaded else { return tr("Measuring…") }

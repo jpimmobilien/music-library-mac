@@ -8,10 +8,11 @@ struct ThermalView: View {
     @Environment(\.aether) private var theme
 
     var body: some View {
-        let power = model.engine.power
+        let engine = model.engine
+        let power = engine.power
         ScrollView(.vertical) {
             VStack(alignment: .leading, spacing: theme.density.cardSpacing + 4) {
-                PageHeader(title: tr("Temperature & Fans"), subtitle: tr("Real sensor values only – unavailable values are named as such."))
+                ThermalHeader(store: power, system: engine.system, telemetry: engine.telemetry)
                 ThermalStatePanel(store: power, interval: settings.effectiveInterval.seconds)
                 SensorGroupsPanel(store: power)
                 FansPanel(store: power, interval: settings.effectiveInterval.seconds)

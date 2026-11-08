@@ -97,7 +97,8 @@ private struct ThermalHeroContent: View, Equatable {
                           source: sensors.source, reason: reason)
             }
             fans
-            if !list.isEmpty {
+            // Bei mehr als zwei Lüftern reicht der Platz nicht – der Verlauf steht dann in der Tafel darunter.
+            if !list.isEmpty, (thermal?.fans.value?.count ?? 0) <= 2 {
                 LiveChart(series: telemetry.series(.hottest, unit: .celsius), range: range, color: theme.thermal,
                           scale: .auto(minimum: 60), height: 50, label: { fmt.celsius($0) })
             }

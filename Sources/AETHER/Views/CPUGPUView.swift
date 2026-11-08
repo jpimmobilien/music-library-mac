@@ -13,7 +13,7 @@ struct CPUGPUView: View {
         let engine = model.engine
         ScrollView(.vertical) {
             VStack(alignment: .leading, spacing: theme.density.cardSpacing + 4) {
-                PageHeader(title: tr("CPU & GPU"), subtitle: processorSubtitle(engine.system.hardware, engine.system.profiler))
+                CPUStudioHeader(system: engine.system, telemetry: engine.telemetry, gpu: engine.gpu)
                 CPUTotalPanel(store: engine.cpu, interval: settings.effectiveInterval.seconds)
                 CoresPanel(store: engine.cpu, system: engine.system)
                 HStack(alignment: .top, spacing: theme.density.cardSpacing) {

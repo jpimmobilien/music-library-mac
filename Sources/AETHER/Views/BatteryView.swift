@@ -11,7 +11,7 @@ struct BatteryView: View {
     var body: some View {
         ScrollView(.vertical) {
             VStack(alignment: .leading, spacing: theme.density.cardSpacing + 4) {
-                PageHeader(title: tr("Battery"), subtitle: tr("Charge, condition and power – measured values and macOS reports kept apart."))
+                BatteryHeader(store: model.engine.power, telemetry: model.engine.telemetry)
                 BatteryContent(store: model.engine.power, interval: settings.effectiveInterval.seconds) {
                     model.select(.thermal)
                 }
@@ -23,7 +23,6 @@ struct BatteryView: View {
     }
 }
 
-/// Ladezustand in einem Satz (gemeinsam für Übersicht und Batterieseite).
 /// Restlaufzeit bzw. Zeit bis voll – nur, wenn sie etwas aussagt: nicht bei voller Ladung, nicht am Netzteil ohne
 /// Laden (macOS meldet dort „Time to Empty“ = 0) und nie „0 s“.
 /// - Returns: nil = nichts anzeigen
@@ -36,6 +35,7 @@ func batteryTimeReading(_ b: BatterySnapshot) -> (charging: Bool, reading: Readi
     return (charging, reading)
 }
 
+/// Ladezustand in einem Satz (gemeinsam für Übersicht und Batterieseite).
 func batteryChargeState(_ b: BatterySnapshot) -> String {
     if b.isFullyCharged == true { return tr("Fully charged") }
     if b.isCharging == true { return tr("Charging") }
