@@ -1,0 +1,1588 @@
+[0/1] Planning build
+Test Suite 'Selected tests' started at 2026-11-08 21:21:53.817.
+Test Suite 'MusicLibraryPackageTests.xctest' started at 2026-11-08 21:21:53.821.
+Test Suite 'AlbumGroupingTests' started at 2026-11-08 21:21:53.821.
+Test Case '-[MLCoreTests.AlbumGroupingTests testAlbumInterpretWeichtVomTrackInterpretAb]' started.
+Test Case '-[MLCoreTests.AlbumGroupingTests testAlbumInterpretWeichtVomTrackInterpretAb]' passed (0.003 seconds).
+Test Case '-[MLCoreTests.AlbumGroupingTests testAlbumKeyByTrack_undSchluesselFuerUnbekannt]' started.
+Test Case '-[MLCoreTests.AlbumGroupingTests testAlbumKeyByTrack_undSchluesselFuerUnbekannt]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.AlbumGroupingTests testAlbumSchluesselIstStabil]' started.
+Test Case '-[MLCoreTests.AlbumGroupingTests testAlbumSchluesselIstStabil]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.AlbumGroupingTests testCompilationMitFlag_bleibtEinAlbum]' started.
+Test Case '-[MLCoreTests.AlbumGroupingTests testCompilationMitFlag_bleibtEinAlbum]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.AlbumGroupingTests testFehlendeTracknummern_stabileReihenfolgeNachDateiname]' started.
+Test Case '-[MLCoreTests.AlbumGroupingTests testFehlendeTracknummern_stabileReihenfolgeNachDateiname]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.AlbumGroupingTests testGemischteJahreImSelbenOrdner_bleibenEinAlbum]' started.
+Test Case '-[MLCoreTests.AlbumGroupingTests testGemischteJahreImSelbenOrdner_bleibenEinAlbum]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.AlbumGroupingTests testGleicherTitel_ohneAlbumInterpret_verschiedeneOrdnerUndInterpreten_getrennt]' started.
+Test Case '-[MLCoreTests.AlbumGroupingTests testGleicherTitel_ohneAlbumInterpret_verschiedeneOrdnerUndInterpreten_getrennt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.AlbumGroupingTests testGleicherTitel_verschiedeneInterpreten_werdenNichtZusammengefuehrt]' started.
+Test Case '-[MLCoreTests.AlbumGroupingTests testGleicherTitel_verschiedeneInterpreten_werdenNichtZusammengefuehrt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.AlbumGroupingTests testGleichnamigesAlbum_andereJahre_andereOrdner_getrennt]' started.
+Test Case '-[MLCoreTests.AlbumGroupingTests testGleichnamigesAlbum_andereJahre_andereOrdner_getrennt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.AlbumGroupingTests testJahrUndGenre_haeufigsterWert_ohneErfinden]' started.
+Test Case '-[MLCoreTests.AlbumGroupingTests testJahrUndGenre_haeufigsterWert_ohneErfinden]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.AlbumGroupingTests testMultiDisc_inUnterordnernOhneDiscTags]' started.
+Test Case '-[MLCoreTests.AlbumGroupingTests testMultiDisc_inUnterordnernOhneDiscTags]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.AlbumGroupingTests testMultiDisc_istEinAlbum_sortiertNachDiscUndTrack]' started.
+Test Case '-[MLCoreTests.AlbumGroupingTests testMultiDisc_istEinAlbum_sortiertNachDiscUndTrack]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.AlbumGroupingTests testOhneAlbumTag_unbekanntesAlbumJeInterpret]' started.
+Test Case '-[MLCoreTests.AlbumGroupingTests testOhneAlbumTag_unbekanntesAlbumJeInterpret]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.AlbumGroupingTests testSchreibweisenVarianten_werdenZusammengefuehrt]' started.
+Test Case '-[MLCoreTests.AlbumGroupingTests testSchreibweisenVarianten_werdenZusammengefuehrt]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.AlbumGroupingTests testTeilweiseGetaggterAlbumInterpret_wirdZusammengefuehrt]' started.
+Test Case '-[MLCoreTests.AlbumGroupingTests testTeilweiseGetaggterAlbumInterpret_wirdZusammengefuehrt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.AlbumGroupingTests testVariousArtistsAlsAlbumInterpretTag]' started.
+Test Case '-[MLCoreTests.AlbumGroupingTests testVariousArtistsAlsAlbumInterpretTag]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.AlbumGroupingTests testZusammenstellung_cd1cd2_ohneFlag_wirdZusammengefuehrt]' started.
+Test Case '-[MLCoreTests.AlbumGroupingTests testZusammenstellung_cd1cd2_ohneFlag_wirdZusammengefuehrt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.AlbumGroupingTests testZusammenstellungOhneFlag_imSelbenOrdner_bleibtEinAlbum]' started.
+Test Case '-[MLCoreTests.AlbumGroupingTests testZusammenstellungOhneFlag_imSelbenOrdner_bleibtEinAlbum]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.AlbumGroupingTests testZweiZusammenstellungenGleichenNamens_bekommenOrtsschluessel]' started.
+Test Case '-[MLCoreTests.AlbumGroupingTests testZweiZusammenstellungenGleichenNamens_bekommenOrtsschluessel]' passed (0.000 seconds).
+Test Suite 'AlbumGroupingTests' passed at 2026-11-08 21:21:53.833.
+	 Executed 19 tests, with 0 failures (0 unexpected) in 0.010 (0.012) seconds
+Test Suite 'AlbumShuffleTests' started at 2026-11-08 21:21:53.833.
+Test Case '-[MLCoreTests.AlbumShuffleTests testAlbumGroupsSurviveCodingAndManualEditsFallBack]' started.
+Test Case '-[MLCoreTests.AlbumShuffleTests testAlbumGroupsSurviveCodingAndManualEditsFallBack]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.AlbumShuffleTests testAlbumsStayInTrackOrderAndCurrentAlbumFirst]' started.
+Test Case '-[MLCoreTests.AlbumShuffleTests testAlbumsStayInTrackOrderAndCurrentAlbumFirst]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.AlbumShuffleTests testAllAlbumOrdersOccur]' started.
+Test Case '-[MLCoreTests.AlbumShuffleTests testAllAlbumOrdersOccur]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.AlbumShuffleTests testQueueAlbumShuffleAndRepeatWithoutImmediateRepeat]' started.
+Test Case '-[MLCoreTests.AlbumShuffleTests testQueueAlbumShuffleAndRepeatWithoutImmediateRepeat]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.AlbumShuffleTests testShuffleToggleKeepsCurrentAlbumAndOffRestoresListOrder]' started.
+Test Case '-[MLCoreTests.AlbumShuffleTests testShuffleToggleKeepsCurrentAlbumAndOffRestoresListOrder]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.AlbumShuffleTests testTrackShuffleNewCycleDoesNotRepeatLastTrack]' started.
+Test Case '-[MLCoreTests.AlbumShuffleTests testTrackShuffleNewCycleDoesNotRepeatLastTrack]' passed (0.000 seconds).
+Test Suite 'AlbumShuffleTests' passed at 2026-11-08 21:21:53.839.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.005 (0.005) seconds
+Test Suite 'AudioEngineTests' started at 2026-11-08 21:21:53.839.
+Test Case '-[MusicLibraryTests.AudioEngineTests testBassShelfBoostsLowsOnly]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testBassShelfBoostsLowsOnly]' passed (0.150 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testEffectiveRate]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testEffectiveRate]' passed (0.002 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testEqualizerBandBoostAtCenterFrequency]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testEqualizerBandBoostAtCenterFrequency]' passed (0.036 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testEqualizerLeavesDistantFrequenciesAlone]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testEqualizerLeavesDistantFrequenciesAlone]' passed (0.041 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testEveryBuiltInPresetIsAudible]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testEveryBuiltInPresetIsAudible]' passed (0.923 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testHeadroomCompensatesBoost]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testHeadroomCompensatesBoost]' passed (0.036 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testLevelMeterFollowsRenderedAudio]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testLevelMeterFollowsRenderedAudio]' passed (0.383 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testNeutralChainIsTransparent]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testNeutralChainIsTransparent]' passed (0.035 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchHalfSemitoneFromSettingsIsAudible]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchHalfSemitoneFromSettingsIsAudible]' passed (1.202 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchOneFineStepDownIsAudible]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchOneFineStepDownIsAudible]' passed (1.937 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchQualityStationaryChord]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchQualityStationaryChord]' passed (3.005 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchShiftOctaveUpKeepsDuration]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchShiftOctaveUpKeepsDuration]' passed (1.451 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchTransientsLessSmearedThanAppleTimePitch]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchTransientsLessSmearedThanAppleTimePitch]' passed (4.308 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testPortedPitchAccuracyLowHighAndMono]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testPortedPitchAccuracyLowHighAndMono]' passed (3.148 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testTempoChangeKeepsPitch]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testTempoChangeKeepsPitch]' passed (0.039 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testVarispeedChangesPitchAndSpeed]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testVarispeedChangesPitchAndSpeed]' passed (0.033 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testVolumeBelowFullScalesLinearly]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testVolumeBelowFullScalesLinearly]' passed (0.017 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testVolumeBoostIsLouderButLimited]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testVolumeBoostIsLouderButLimited]' passed (0.050 seconds).
+Test Suite 'AudioEngineTests' passed at 2026-11-08 21:22:10.639.
+	 Executed 18 tests, with 0 failures (0 unexpected) in 16.797 (16.800) seconds
+Test Suite 'AudioIntegrityTests' started at 2026-11-08 21:22:10.639.
+Test Case '-[MLTagsTests.AudioIntegrityTests testDecodedAudioIsIdenticalAfterWritingEveryFormat]' started.
+Test Case '-[MLTagsTests.AudioIntegrityTests testDecodedAudioIsIdenticalAfterWritingEveryFormat]' passed (20.341 seconds).
+Test Suite 'AudioIntegrityTests' passed at 2026-11-08 21:22:30.980.
+	 Executed 1 test, with 0 failures (0 unexpected) in 20.341 (20.341) seconds
+Test Suite 'BridgeAPITests' started at 2026-11-08 21:22:30.981.
+Test Case '-[MLTagsTests.BridgeAPITests testFieldErrorsAndMessages]' started.
+Test Case '-[MLTagsTests.BridgeAPITests testFieldErrorsAndMessages]' passed (0.004 seconds).
+Test Case '-[MLTagsTests.BridgeAPITests testGenericProperties]' started.
+Test Case '-[MLTagsTests.BridgeAPITests testGenericProperties]' passed (0.004 seconds).
+Test Case '-[MLTagsTests.BridgeAPITests testInformationFunctions]' started.
+Test Case '-[MLTagsTests.BridgeAPITests testInformationFunctions]' passed (0.002 seconds).
+Test Case '-[MLTagsTests.BridgeAPITests testManyOpenReadCloseCycles]' started.
+Test Case '-[MLTagsTests.BridgeAPITests testManyOpenReadCloseCycles]' passed (0.337 seconds).
+Test Case '-[MLTagsTests.BridgeAPITests testOpenErrors]' started.
+Test Case '-[MLTagsTests.BridgeAPITests testOpenErrors]' passed (0.002 seconds).
+Test Case '-[MLTagsTests.BridgeAPITests testPictureOperations]' started.
+Test Case '-[MLTagsTests.BridgeAPITests testPictureOperations]' passed (0.009 seconds).
+Test Case '-[MLTagsTests.BridgeAPITests testSaveOnReadOnlyHandleFails]' started.
+Test Case '-[MLTagsTests.BridgeAPITests testSaveOnReadOnlyHandleFails]' passed (0.001 seconds).
+Test Case '-[MLTagsTests.BridgeAPITests testVersionAndStatusMessages]' started.
+Test Case '-[MLTagsTests.BridgeAPITests testVersionAndStatusMessages]' passed (0.000 seconds).
+Test Suite 'BridgeAPITests' passed at 2026-11-08 21:22:31.341.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.359 (0.361) seconds
+Test Suite 'CassetteTests' started at 2026-11-08 21:22:31.341.
+Test Case '-[MLRenderTests.CassetteTests testBandmenge_bleibtErhalten]' started.
+Test Case '-[MLRenderTests.CassetteTests testBandmenge_bleibtErhalten]' passed (0.001 seconds).
+Test Case '-[MLRenderTests.CassetteTests testGrafik_etikettDeckend_gehaeuseDurchscheinend]' started.
+Test Case '-[MLRenderTests.CassetteTests testGrafik_etikettDeckend_gehaeuseDurchscheinend]' passed (0.048 seconds).
+Test Case '-[MLRenderTests.CassetteTests testGrafik_istDeterministisch]' started.
+Test Case '-[MLRenderTests.CassetteTests testGrafik_istDeterministisch]' passed (0.057 seconds).
+Test Case '-[MLRenderTests.CassetteTests testGrafik_nabeUndWickel]' started.
+Test Case '-[MLRenderTests.CassetteTests testGrafik_nabeUndWickel]' passed (0.009 seconds).
+Test Case '-[MLRenderTests.CassetteTests testKleinerWickel_drehtSchneller]' started.
+Test Case '-[MLRenderTests.CassetteTests testKleinerWickel_drehtSchneller]' passed (0.000 seconds).
+Test Case '-[MLRenderTests.CassetteTests testWickel_anfangLinksVoll_endeRechtsVoll]' started.
+Test Case '-[MLRenderTests.CassetteTests testWickel_anfangLinksVoll_endeRechtsVoll]' passed (0.000 seconds).
+Test Case '-[MLRenderTests.CassetteTests testWickel_passenNebeneinander]' started.
+Test Case '-[MLRenderTests.CassetteTests testWickel_passenNebeneinander]' passed (0.000 seconds).
+Test Suite 'CassetteTests' passed at 2026-11-08 21:22:31.457.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.115 (0.116) seconds
+Test Suite 'CoverLabelAndMotionTests' started at 2026-11-08 21:22:31.457.
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testCassetteReels_kleinerWickelDrehtSchneller_gegenDenUhrzeigersinn]' started.
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testCassetteReels_kleinerWickelDrehtSchneller_gegenDenUhrzeigersinn]' passed (0.000 seconds).
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testCdRing_mitteFrei]' started.
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testCdRing_mitteFrei]' passed (0.016 seconds).
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testCircularLabel_mittigQuadratisch_runderRand]' started.
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testCircularLabel_mittigQuadratisch_runderRand]' passed (0.015 seconds).
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testEasing_fastOutSlowIn]' started.
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testEasing_fastOutSlowIn]' passed (0.000 seconds).
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testScaled_ganzesBildOhneZuschnitt]' started.
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testScaled_ganzesBildOhneZuschnitt]' passed (0.012 seconds).
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testSquareCrop_verkleinertMitFlaechenmittel]' started.
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testSquareCrop_verkleinertMitFlaechenmittel]' passed (0.001 seconds).
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testTangentPoint_liegtAufDemKreisUndIstTangential]' started.
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testTangentPoint_liegtAufDemKreisUndIstTangential]' passed (0.000 seconds).
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testTonearm_springtBeiTitelwechsel_folgtSonstLinear]' started.
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testTonearm_springtBeiTitelwechsel_folgtSonstLinear]' passed (0.000 seconds).
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testTonearmPose]' started.
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testTonearmPose]' passed (0.003 seconds).
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testTurntableSpin_anUndAuslaufen]' started.
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testTurntableSpin_anUndAuslaufen]' passed (0.000 seconds).
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testVisualizerSmoothing]' started.
+Test Case '-[MLRenderTests.CoverLabelAndMotionTests testVisualizerSmoothing]' passed (0.000 seconds).
+Test Suite 'CoverLabelAndMotionTests' passed at 2026-11-08 21:22:31.507.
+	 Executed 11 tests, with 0 failures (0 unexpected) in 0.049 (0.050) seconds
+Test Suite 'CoverPaletteTests' started at 2026-11-08 21:22:31.507.
+Test Case '-[MLCoreTests.CoverPaletteTests testAuchSehrHelleCover_bleibenLesbar]' started.
+Test Case '-[MLCoreTests.CoverPaletteTests testAuchSehrHelleCover_bleibenLesbar]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.CoverPaletteTests testBlauesCover_ergibtBlauenHintergrund]' started.
+Test Case '-[MLCoreTests.CoverPaletteTests testBlauesCover_ergibtBlauenHintergrund]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.CoverPaletteTests testErsatzCover_bauplan]' started.
+Test Case '-[MLCoreTests.CoverPaletteTests testErsatzCover_bauplan]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.CoverPaletteTests testGraues_oderLeeresCover_ergibtNeutral]' started.
+Test Case '-[MLCoreTests.CoverPaletteTests testGraues_oderLeeresCover_ergibtNeutral]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.CoverPaletteTests testNurBildausschnittWirdVerwendet]' started.
+Test Case '-[MLCoreTests.CoverPaletteTests testNurBildausschnittWirdVerwendet]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.CoverPaletteTests testZweiFarben_obenUndUntenVerschieden]' started.
+Test Case '-[MLCoreTests.CoverPaletteTests testZweiFarben_obenUndUntenVerschieden]' passed (0.000 seconds).
+Test Suite 'CoverPaletteTests' passed at 2026-11-08 21:22:31.510.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
+Test Suite 'DateAddedResolverTests' started at 2026-11-08 21:22:31.510.
+Test Case '-[MLCoreTests.DateAddedResolverTests testImplausibleDatesAreIgnored]' started.
+Test Case '-[MLCoreTests.DateAddedResolverTests testImplausibleDatesAreIgnored]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.DateAddedResolverTests testNewTrackPrefersAppleMusicThenCreationThenFolder]' started.
+Test Case '-[MLCoreTests.DateAddedResolverTests testNewTrackPrefersAppleMusicThenCreationThenFolder]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.DateAddedResolverTests testReconstructOnlyMovesDatesEarlierAndKeepsAppleMusic]' started.
+Test Case '-[MLCoreTests.DateAddedResolverTests testReconstructOnlyMovesDatesEarlierAndKeepsAppleMusic]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.DateAddedResolverTests testTracksAndAlbumsSortByDateAddedBothDirections]' started.
+Test Case '-[MLCoreTests.DateAddedResolverTests testTracksAndAlbumsSortByDateAddedBothDirections]' passed (0.002 seconds).
+Test Suite 'DateAddedResolverTests' passed at 2026-11-08 21:22:31.513.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
+Test Suite 'DateAddedServiceTests' started at 2026-11-08 21:22:31.513.
+Test Case '-[MusicLibraryTests.DateAddedServiceTests testMissingXMLGivesNil]' started.
+Test Case '-[MusicLibraryTests.DateAddedServiceTests testMissingXMLGivesNil]' passed (0.001 seconds).
+Test Case '-[MusicLibraryTests.DateAddedServiceTests testReconstructionFromFileDatesPersistsAcrossRestart]' started.
+Test Case '-[MusicLibraryTests.DateAddedServiceTests testReconstructionFromFileDatesPersistsAcrossRestart]' passed (0.012 seconds).
+Test Case '-[MusicLibraryTests.DateAddedServiceTests testXMLDatesMatchByPathOrUniqueMetadata]' started.
+Test Case '-[MusicLibraryTests.DateAddedServiceTests testXMLDatesMatchByPathOrUniqueMetadata]' passed (0.001 seconds).
+Test Suite 'DateAddedServiceTests' passed at 2026-11-08 21:22:31.528.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.014 (0.015) seconds
+Test Suite 'DateAddedStoreTests' started at 2026-11-08 21:22:31.528.
+Test Case '-[MLStoreTests.DateAddedStoreTests testAdditiveMigrationOfVersion20Database]' started.
+Test Case '-[MLStoreTests.DateAddedStoreTests testAdditiveMigrationOfVersion20Database]' passed (0.009 seconds).
+Test Case '-[MLStoreTests.DateAddedStoreTests testRescanUpdateNeverOverwritesDateAdded]' started.
+Test Case '-[MLStoreTests.DateAddedStoreTests testRescanUpdateNeverOverwritesDateAdded]' passed (0.001 seconds).
+Test Case '-[MLStoreTests.DateAddedStoreTests testScanStoresIndividualDatesAndSources]' started.
+Test Case '-[MLStoreTests.DateAddedStoreTests testScanStoresIndividualDatesAndSources]' passed (0.001 seconds).
+Test Case '-[MLStoreTests.DateAddedStoreTests testSetDateAddedAndRowsAndMeta]' started.
+Test Case '-[MLStoreTests.DateAddedStoreTests testSetDateAddedAndRowsAndMeta]' passed (0.001 seconds).
+Test Suite 'DateAddedStoreTests' passed at 2026-11-08 21:22:31.540.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.012 (0.012) seconds
+Test Suite 'DesignResourceTests' started at 2026-11-08 21:22:31.540.
+Test Case '-[MusicLibraryTests.DesignResourceTests testEveryGenreCategoryHasIcon]' started.
+Test Case '-[MusicLibraryTests.DesignResourceTests testEveryGenreCategoryHasIcon]' passed (0.005 seconds).
+Test Case '-[MusicLibraryTests.DesignResourceTests testEveryIconConstantResolvesToDrawablePaths]' started.
+Test Case '-[MusicLibraryTests.DesignResourceTests testEveryIconConstantResolvesToDrawablePaths]' passed (0.018 seconds).
+Test Case '-[MusicLibraryTests.DesignResourceTests testIconLiteralsInViewsExist]' started.
+Test Case '-[MusicLibraryTests.DesignResourceTests testIconLiteralsInViewsExist]' passed (0.027 seconds).
+Test Case '-[MusicLibraryTests.DesignResourceTests testPalettesDifferBetweenLightAndDark]' started.
+Test Case '-[MusicLibraryTests.DesignResourceTests testPalettesDifferBetweenLightAndDark]' passed (0.001 seconds).
+Test Suite 'DesignResourceTests' passed at 2026-11-08 21:22:31.591.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.051 (0.051) seconds
+Test Suite 'DuplicateFinderTests' started at 2026-11-08 21:22:31.591.
+Test Case '-[MLCoreTests.DuplicateFinderTests testAlbumOptional]' started.
+Test Case '-[MLCoreTests.DuplicateFinderTests testAlbumOptional]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.DuplicateFinderTests testBeideKriterien_eineGruppe_jederTitelNurEinmal]' started.
+Test Case '-[MLCoreTests.DuplicateFinderTests testBeideKriterien_eineGruppe_jederTitelNurEinmal]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.DuplicateFinderTests testDauertoleranz_hoechstensZweiSekundenZumErsten_keineKetten]' started.
+Test Case '-[MLCoreTests.DuplicateFinderTests testDauertoleranz_hoechstensZweiSekundenZumErsten_keineKetten]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.DuplicateFinderTests testGleichesLied_normalisierterTitelUndHauptinterpret]' started.
+Test Case '-[MLCoreTests.DuplicateFinderTests testGleichesLied_normalisierterTitelUndHauptinterpret]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.DuplicateFinderTests testIdentischeKopie_gleicheGroesseUndDauer]' started.
+Test Case '-[MLCoreTests.DuplicateFinderTests testIdentischeKopie_gleicheGroesseUndDauer]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.DuplicateFinderTests testNichtVerfuegbare_werdenStandardmaessigIgnoriert]' started.
+Test Case '-[MLCoreTests.DuplicateFinderTests testNichtVerfuegbare_werdenStandardmaessigIgnoriert]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.DuplicateFinderTests testOhneTitelTag_nurBeiGleichemDateinamen]' started.
+Test Case '-[MLCoreTests.DuplicateFinderTests testOhneTitelTag_nurBeiGleichemDateinamen]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.DuplicateFinderTests testStabileKennungUndReihenfolge]' started.
+Test Case '-[MLCoreTests.DuplicateFinderTests testStabileKennungUndReihenfolge]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.DuplicateFinderTests testVerlustfreiErkennung]' started.
+Test Case '-[MLCoreTests.DuplicateFinderTests testVerlustfreiErkennung]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.DuplicateFinderTests testVorzug_verlustfreiBitrateCoverTagsAlter]' started.
+Test Case '-[MLCoreTests.DuplicateFinderTests testVorzug_verlustfreiBitrateCoverTagsAlter]' passed (0.000 seconds).
+Test Suite 'DuplicateFinderTests' passed at 2026-11-08 21:22:31.595.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+Test Suite 'EditorSessionTests' started at 2026-11-08 21:22:31.595.
+Test Case '-[MusicLibraryTests.EditorSessionTests testCopyPasteSkipsTrackSpecificFields]' started.
+Test Case '-[MusicLibraryTests.EditorSessionTests testCopyPasteSkipsTrackSpecificFields]' passed (0.002 seconds).
+Test Case '-[MusicLibraryTests.EditorSessionTests testMixedPicturesAreNotShown]' started.
+Test Case '-[MusicLibraryTests.EditorSessionTests testMixedPicturesAreNotShown]' passed (0.001 seconds).
+Test Case '-[MusicLibraryTests.EditorSessionTests testMultiSelectionMarksMixedFieldsAndWritesOnlyChanges]' started.
+Test Case '-[MusicLibraryTests.EditorSessionTests testMultiSelectionMarksMixedFieldsAndWritesOnlyChanges]' passed (0.000 seconds).
+Test Case '-[MusicLibraryTests.EditorSessionTests testPictureEditingReplacesAll]' started.
+Test Case '-[MusicLibraryTests.EditorSessionTests testPictureEditingReplacesAll]' passed (0.001 seconds).
+Test Case '-[MusicLibraryTests.EditorSessionTests testSingleTrackShowsValuesWithoutChanges]' started.
+Test Case '-[MusicLibraryTests.EditorSessionTests testSingleTrackShowsValuesWithoutChanges]' passed (0.000 seconds).
+Test Case '-[MusicLibraryTests.EditorSessionTests testStarsMapToRating]' started.
+Test Case '-[MusicLibraryTests.EditorSessionTests testStarsMapToRating]' passed (0.000 seconds).
+Test Suite 'EditorSessionTests' passed at 2026-11-08 21:22:31.600.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.005 (0.005) seconds
+Test Suite 'EqualizerModelTests' started at 2026-11-08 21:22:31.600.
+Test Case '-[MLCoreTests.EqualizerModelTests testAutoAussteuerung_senktVorverstaerkung]' started.
+Test Case '-[MLCoreTests.EqualizerModelTests testAutoAussteuerung_senktVorverstaerkung]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.EqualizerModelTests testBass_aussteuerung_beruecksichtigtBassanhebung]' started.
+Test Case '-[MLCoreTests.EqualizerModelTests testBass_aussteuerung_beruecksichtigtBassanhebung]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.EqualizerModelTests testBass_mitBassBoostPreset_keineDoppelteAnhebung]' started.
+Test Case '-[MLCoreTests.EqualizerModelTests testBass_mitBassBoostPreset_keineDoppelteAnhebung]' passed (0.003 seconds).
+Test Case '-[MLCoreTests.EqualizerModelTests testBass_rundetAufHalbeDezibel_undBegrenzt]' started.
+Test Case '-[MLCoreTests.EqualizerModelTests testBass_rundetAufHalbeDezibel_undBegrenzt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.EqualizerModelTests testBass_unabhaengigVomEqualizerSchalter]' started.
+Test Case '-[MLCoreTests.EqualizerModelTests testBass_unabhaengigVomEqualizerSchalter]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.EqualizerModelTests testFrequenzgaenge_wieKotlin]' started.
+Test Case '-[MLCoreTests.EqualizerModelTests testFrequenzgaenge_wieKotlin]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.EqualizerModelTests testHohesBandBeiNiedrigerAbtastrate_wirdUebersprungen]' started.
+Test Case '-[MLCoreTests.EqualizerModelTests testHohesBandBeiNiedrigerAbtastrate_wirdUebersprungen]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.EqualizerModelTests testNeutral_undVerstaerkung]' started.
+Test Case '-[MLCoreTests.EqualizerModelTests testNeutral_undVerstaerkung]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.EqualizerModelTests testPresets_vollstaendig]' started.
+Test Case '-[MLCoreTests.EqualizerModelTests testPresets_vollstaendig]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.EqualizerModelTests testTolerantesLesen]' started.
+Test Case '-[MLCoreTests.EqualizerModelTests testTolerantesLesen]' passed (0.000 seconds).
+Test Suite 'EqualizerModelTests' passed at 2026-11-08 21:22:31.605.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.005 (0.006) seconds
+Test Suite 'FormatSpecificTests' started at 2026-11-08 21:22:31.605.
+Test Case '-[MLTagsTests.FormatSpecificTests testAPEKeepsOnePicturePerKind]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testAPEKeepsOnePicturePerKind]' passed (0.002 seconds).
+Test Case '-[MLTagsTests.FormatSpecificTests testAPETagInMP3IsKeptAndUpdated]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testAPETagInMP3IsKeptAndUpdated]' passed (0.003 seconds).
+Test Case '-[MLTagsTests.FormatSpecificTests testCommentKeepsITunesFramesAndLanguage]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testCommentKeepsITunesFramesAndLanguage]' passed (0.002 seconds).
+Test Case '-[MLTagsTests.FormatSpecificTests testGarbageAndMissingFilesThrow]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testGarbageAndMissingFilesThrow]' passed (0.003 seconds).
+Test Case '-[MLTagsTests.FormatSpecificTests testGroupingAndWorkAreIndependentInOtherFormats]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testGroupingAndWorkAreIndependentInOtherFormats]' passed (0.005 seconds).
+Test Case '-[MLTagsTests.FormatSpecificTests testID3v1IsUpdatedTogetherWithID3v2]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testID3v1IsUpdatedTogetherWithID3v2]' passed (0.002 seconds).
+Test Case '-[MLTagsTests.FormatSpecificTests testID3v23WithV24OnlyFrameIsNotWritable]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testID3v23WithV24OnlyFrameIsNotWritable]' passed (0.002 seconds).
+Test Case '-[MLTagsTests.FormatSpecificTests testID3v2VersionIsKept]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testID3v2VersionIsKept]' passed (0.011 seconds).
+Test Case '-[MLTagsTests.FormatSpecificTests testITunesGroupingAndWork]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testITunesGroupingAndWork]' passed (0.005 seconds).
+Test Case '-[MLTagsTests.FormatSpecificTests testLegacyGroupingInTIT1]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testLegacyGroupingInTIT1]' passed (0.004 seconds).
+Test Case '-[MLTagsTests.FormatSpecificTests testMisnamedFileIsDetectedByContent]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testMisnamedFileIsDetectedByContent]' passed (0.004 seconds).
+Test Case '-[MLTagsTests.FormatSpecificTests testMP4RatingAtomAndCoverWithoutTypes]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testMP4RatingAtomAndCoverWithoutTypes]' passed (0.005 seconds).
+Test Case '-[MLTagsTests.FormatSpecificTests testMP4WithUnpreservableAtomIsNotWritable]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testMP4WithUnpreservableAtomIsNotWritable]' passed (0.002 seconds).
+Test Case '-[MLTagsTests.FormatSpecificTests testMultiValueRepresentationPerFormat]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testMultiValueRepresentationPerFormat]' passed (0.017 seconds).
+Test Case '-[MLTagsTests.FormatSpecificTests testNewID3v2TagIsVersion24AndID3v1IsKept]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testNewID3v2TagIsVersion24AndID3v1IsKept]' passed (0.002 seconds).
+Test Case '-[MLTagsTests.FormatSpecificTests testPOPMKeepsForeignFrameAndPlayCounter]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testPOPMKeepsForeignFrameAndPlayCounter]' passed (0.003 seconds).
+Test Case '-[MLTagsTests.FormatSpecificTests testPOPMMappingTable]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testPOPMMappingTable]' passed (0.011 seconds).
+Test Case '-[MLTagsTests.FormatSpecificTests testRIFFInfoIsUpdatedTogetherWithID3v2]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testRIFFInfoIsUpdatedTogetherWithID3v2]' passed (0.002 seconds).
+Test Case '-[MLTagsTests.FormatSpecificTests testVorbisDescriptionIsCommentAlias]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testVorbisDescriptionIsCommentAlias]' passed (0.004 seconds).
+Test Case '-[MLTagsTests.FormatSpecificTests testVorbisTrackNumberWithTotalIsSplit]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testVorbisTrackNumberWithTotalIsSplit]' passed (0.002 seconds).
+Test Case '-[MLTagsTests.FormatSpecificTests testWMARatingUsesFullStarsAndSkipsUnsupportedFields]' started.
+Test Case '-[MLTagsTests.FormatSpecificTests testWMARatingUsesFullStarsAndSkipsUnsupportedFields]' passed (0.004 seconds).
+Test Suite 'FormatSpecificTests' passed at 2026-11-08 21:22:31.702.
+	 Executed 21 tests, with 0 failures (0 unexpected) in 0.094 (0.097) seconds
+Test Suite 'HistoryRuleTests' started at 2026-11-08 21:22:31.702.
+Test Case '-[MLCoreTests.HistoryRuleTests testEintrag_mitZaehlung]' started.
+Test Case '-[MLCoreTests.HistoryRuleTests testEintrag_mitZaehlung]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.HistoryRuleTests testSitzung_kurzAngespielt_keinEintrag]' started.
+Test Case '-[MLCoreTests.HistoryRuleTests testSitzung_kurzAngespielt_keinEintrag]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.HistoryRuleTests testSitzung_zaehltEinmal_undSchreibtVerlauf]' started.
+Test Case '-[MLCoreTests.HistoryRuleTests testSitzung_zaehltEinmal_undSchreibtVerlauf]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.HistoryRuleTests testStatistik_wieAndroidRecordPlay]' started.
+Test Case '-[MLCoreTests.HistoryRuleTests testStatistik_wieAndroidRecordPlay]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.HistoryRuleTests testVerlauf_abFuenfSekundenOderGezaehlt]' started.
+Test Case '-[MLCoreTests.HistoryRuleTests testVerlauf_abFuenfSekundenOderGezaehlt]' passed (0.000 seconds).
+Test Suite 'HistoryRuleTests' passed at 2026-11-08 21:22:31.704.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'ImageProbeTests' started at 2026-11-08 21:22:31.704.
+Test Case '-[MLTagsTests.ImageProbeTests testBMP]' started.
+Test Case '-[MLTagsTests.ImageProbeTests testBMP]' passed (0.000 seconds).
+Test Case '-[MLTagsTests.ImageProbeTests testGIF]' started.
+Test Case '-[MLTagsTests.ImageProbeTests testGIF]' passed (0.000 seconds).
+Test Case '-[MLTagsTests.ImageProbeTests testHEICWithAndWithoutSize]' started.
+Test Case '-[MLTagsTests.ImageProbeTests testHEICWithAndWithoutSize]' passed (0.000 seconds).
+Test Case '-[MLTagsTests.ImageProbeTests testJPEGAndPNGFixtures]' started.
+Test Case '-[MLTagsTests.ImageProbeTests testJPEGAndPNGFixtures]' passed (0.000 seconds).
+Test Case '-[MLTagsTests.ImageProbeTests testJPEGWithSegmentsBeforeSOF]' started.
+Test Case '-[MLTagsTests.ImageProbeTests testJPEGWithSegmentsBeforeSOF]' passed (0.000 seconds).
+Test Case '-[MLTagsTests.ImageProbeTests testProbeWorksOnDataSlices]' started.
+Test Case '-[MLTagsTests.ImageProbeTests testProbeWorksOnDataSlices]' passed (0.000 seconds).
+Test Case '-[MLTagsTests.ImageProbeTests testUnknownAndTruncatedData]' started.
+Test Case '-[MLTagsTests.ImageProbeTests testUnknownAndTruncatedData]' passed (0.004 seconds).
+Test Case '-[MLTagsTests.ImageProbeTests testWebPVariants]' started.
+Test Case '-[MLTagsTests.ImageProbeTests testWebPVariants]' passed (0.000 seconds).
+Test Suite 'ImageProbeTests' passed at 2026-11-08 21:22:31.710.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.005 (0.006) seconds
+Test Suite 'KotlinReferenceTests' started at 2026-11-08 21:22:31.710.
+Test Case '-[MLRenderTests.KotlinReferenceTests testAllLayersMatchTheKotlinRenderers]' started.
+Test Case '-[MLRenderTests.KotlinReferenceTests testAllLayersMatchTheKotlinRenderers]' passed (0.118 seconds).
+Test Case '-[MLRenderTests.KotlinReferenceTests testPremultipliedConversion]' started.
+Test Case '-[MLRenderTests.KotlinReferenceTests testPremultipliedConversion]' passed (0.000 seconds).
+Test Suite 'KotlinReferenceTests' passed at 2026-11-08 21:22:31.828.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.118 (0.118) seconds
+Test Suite 'LibraryListsTests' started at 2026-11-08 21:22:31.828.
+Test Case '-[MusicLibraryTests.LibraryListsTests testFacetsCoverGenresDecadesAndFormats]' started.
+Test Case '-[MusicLibraryTests.LibraryListsTests testFacetsCoverGenresDecadesAndFormats]' passed (13.096 seconds).
+Test Case '-[MusicLibraryTests.LibraryListsTests testFilterAndMultiTermSearchCombine]' started.
+Test Case '-[MusicLibraryTests.LibraryListsTests testFilterAndMultiTermSearchCombine]' passed (0.509 seconds).
+Test Case '-[MusicLibraryTests.LibraryListsTests testFilterByDecadeAndLosslessNarrowsAllSections]' started.
+Test Case '-[MusicLibraryTests.LibraryListsTests testFilterByDecadeAndLosslessNarrowsAllSections]' passed (0.828 seconds).
+Test Case '-[MusicLibraryTests.LibraryListsTests testNewTrackSortsOrderCorrectly]' started.
+Test Case '-[MusicLibraryTests.LibraryListsTests testNewTrackSortsOrderCorrectly]' passed (0.726 seconds).
+Test Case '-[MusicLibraryTests.LibraryListsTests testSmartPlaylistsIncludeV2Kinds]' started.
+Test Case '-[MusicLibraryTests.LibraryListsTests testSmartPlaylistsIncludeV2Kinds]' passed (0.417 seconds).
+Test Case '-[MusicLibraryTests.LibraryListsTests testTenThousandTracksComputeQuickly]' started.
+Test Case '-[MusicLibraryTests.LibraryListsTests testTenThousandTracksComputeQuickly]' passed (13.171 seconds).
+Test Suite 'LibraryListsTests' passed at 2026-11-08 21:23:00.576.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 28.746 (28.748) seconds
+Test Suite 'LibraryLogicTests' started at 2026-11-08 21:23:00.576.
+Test Case '-[MLCoreTests.LibraryLogicTests testAlbumSortierung_statistikAusTiteln]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testAlbumSortierung_statistikAusTiteln]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testAlbumSuche_auchNachTrackInterpretUndGenre]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testAlbumSuche_auchNachTrackInterpretUndGenre]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testFavoritenPlaylist_stabileReihenfolge_nurVerfuegbare]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testFavoritenPlaylist_stabileReihenfolge_nurVerfuegbare]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testFavoritenSortierung]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testFavoritenSortierung]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testFormatierung]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testFormatierung]' passed (0.005 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testGenreIcons_feste_zuordnung]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testGenreIcons_feste_zuordnung]' passed (0.007 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testGenrePalette_wieAndroid]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testGenrePalette_wieAndroid]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testGenres_nachTags_mehrfachUndUnbekannt]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testGenres_nachTags_mehrfachUndUnbekannt]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testInterpreten_feat_wirdGetrennt_bandnamenNicht]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testInterpreten_feat_wirdGetrennt_bandnamenNicht]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testInterpreten_weitereSchreibweisen]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testInterpreten_weitereSchreibweisen]' passed (0.002 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testInterpretenIndex_ohneDubletten_mitGaestenUndAlbumInterpret]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testInterpretenIndex_ohneDubletten_mitGaestenUndAlbumInterpret]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testInterpretenUndGenres_nachAnzahl]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testInterpretenUndGenres_nachAnzahl]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testJahrzehnte_nurMitBekanntemJahr]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testJahrzehnte_nurMitBekanntemJahr]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testListCodec_mehrfachwerteMitKommas]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testListCodec_mehrfachwerteMitKommas]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testMeistUndWenigstGespielt]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testMeistUndWenigstGespielt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testNatuerlicheSortierung]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testNatuerlicheSortierung]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testPlaylistSortierung]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testPlaylistSortierung]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testPlaylistVerschieben]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testPlaylistVerschieben]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testSortierTagsVonItunesWerdenVerwendet]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testSortierTagsVonItunesWerdenVerwendet]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testSortLabelUndSpeicherformat]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testSortLabelUndSpeicherformat]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testSuche_titelInterpretAlbumGenre_undAkzente]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testSuche_titelInterpretAlbumGenre_undAkzente]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.LibraryLogicTests testTitelSortierung_alleFelder_fehlendeWerteAmEnde]' started.
+Test Case '-[MLCoreTests.LibraryLogicTests testTitelSortierung_alleFelder_fehlendeWerteAmEnde]' passed (0.000 seconds).
+Test Suite 'LibraryLogicTests' passed at 2026-11-08 21:23:00.606.
+	 Executed 22 tests, with 0 failures (0 unexpected) in 0.026 (0.030) seconds
+Test Suite 'LibraryStoreTests' started at 2026-11-08 21:23:00.606.
+Test Case '-[MLStoreTests.LibraryStoreTests testCountPlayAndFinishPlaybackAreSeparate]' started.
+Test Case '-[MLStoreTests.LibraryStoreTests testCountPlayAndFinishPlaybackAreSeparate]' passed (0.003 seconds).
+Test Case '-[MLStoreTests.LibraryStoreTests testFileDatabasePersistsAndBackup]' started.
+Test Case '-[MLStoreTests.LibraryStoreTests testFileDatabasePersistsAndBackup]' passed (0.015 seconds).
+Test Case '-[MLStoreTests.LibraryStoreTests testFolderRemovalAndAvailability]' started.
+Test Case '-[MLStoreTests.LibraryStoreTests testFolderRemovalAndAvailability]' passed (0.001 seconds).
+Test Case '-[MLStoreTests.LibraryStoreTests testInsertAndReadTrackRoundTrip]' started.
+Test Case '-[MLStoreTests.LibraryStoreTests testInsertAndReadTrackRoundTrip]' passed (0.001 seconds).
+Test Case '-[MLStoreTests.LibraryStoreTests testLargeLibraryPerformance]' started.
+Test Case '-[MLStoreTests.LibraryStoreTests testLargeLibraryPerformance]' passed (0.329 seconds).
+Test Case '-[MLStoreTests.LibraryStoreTests testMissingTracksAreKeptAndDeleteCascades]' started.
+Test Case '-[MLStoreTests.LibraryStoreTests testMissingTracksAreKeptAndDeleteCascades]' passed (0.001 seconds).
+Test Case '-[MLStoreTests.LibraryStoreTests testMovedFileKeepsUid]' started.
+Test Case '-[MLStoreTests.LibraryStoreTests testMovedFileKeepsUid]' passed (0.002 seconds).
+Test Case '-[MLStoreTests.LibraryStoreTests testPlaylistOrderOperations]' started.
+Test Case '-[MLStoreTests.LibraryStoreTests testPlaylistOrderOperations]' passed (0.004 seconds).
+Test Case '-[MLStoreTests.LibraryStoreTests testResumePointsStateAndHidden]' started.
+Test Case '-[MLStoreTests.LibraryStoreTests testResumePointsStateAndHidden]' passed (0.002 seconds).
+Test Case '-[MLStoreTests.LibraryStoreTests testStatsHistoryAndReset]' started.
+Test Case '-[MLStoreTests.LibraryStoreTests testStatsHistoryAndReset]' passed (0.001 seconds).
+Test Case '-[MLStoreTests.LibraryStoreTests testTagUpdateKeepsUidAndUserData]' started.
+Test Case '-[MLStoreTests.LibraryStoreTests testTagUpdateKeepsUidAndUserData]' passed (0.001 seconds).
+Test Suite 'LibraryStoreTests' passed at 2026-11-08 21:23:00.967.
+	 Executed 11 tests, with 0 failures (0 unexpected) in 0.359 (0.361) seconds
+Test Suite 'LyricsParserTests' started at 2026-11-08 21:23:00.967.
+Test Case '-[MLCoreTests.LyricsParserTests testEinzelneZeitangabeImNormalenText_bleibtUnsynchronisiert]' started.
+Test Case '-[MLCoreTests.LyricsParserTests testEinzelneZeitangabeImNormalenText_bleibtUnsynchronisiert]' passed (0.002 seconds).
+Test Case '-[MLCoreTests.LyricsParserTests testNegativerOffset_spaeter_undNieUnterNull]' started.
+Test Case '-[MLCoreTests.LyricsParserTests testNegativerOffset_spaeter_undNieUnterNull]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.LyricsParserTests testNurKopfzeilen_nichtSynchronisiert]' started.
+Test Case '-[MLCoreTests.LyricsParserTests testNurKopfzeilen_nichtSynchronisiert]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.LyricsParserTests testOffsetWirdBeimSchreibenEingerechnet]' started.
+Test Case '-[MLCoreTests.LyricsParserTests testOffsetWirdBeimSchreibenEingerechnet]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.LyricsParserTests testSchreiben_undWiederLesen]' started.
+Test Case '-[MLCoreTests.LyricsParserTests testSchreiben_undWiederLesen]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.LyricsParserTests testSortierungNachZeit_stabilBeiGleicherZeit]' started.
+Test Case '-[MLCoreTests.LyricsParserTests testSortierungNachZeit_stabilBeiGleicherZeit]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.LyricsParserTests testSynchronisiert_mitEinzelnenZeilenOhneMarke]' started.
+Test Case '-[MLCoreTests.LyricsParserTests testSynchronisiert_mitEinzelnenZeilenOhneMarke]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.LyricsParserTests testSynchronisiert_mitKopfOffsetUndMehrerenMarken]' started.
+Test Case '-[MLCoreTests.LyricsParserTests testSynchronisiert_mitKopfOffsetUndMehrerenMarken]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.LyricsParserTests testUnsynchronisiert_unveraendertDurchgereicht]' started.
+Test Case '-[MLCoreTests.LyricsParserTests testUnsynchronisiert_unveraendertDurchgereicht]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.LyricsParserTests testZeilenendenUndBOM]' started.
+Test Case '-[MLCoreTests.LyricsParserTests testZeilenendenUndBOM]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.LyricsParserTests testZeilenindex_binaereSuche]' started.
+Test Case '-[MLCoreTests.LyricsParserTests testZeilenindex_binaereSuche]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.LyricsParserTests testZeitFormat]' started.
+Test Case '-[MLCoreTests.LyricsParserTests testZeitFormat]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.LyricsParserTests testZeitmarkenFormate]' started.
+Test Case '-[MLCoreTests.LyricsParserTests testZeitmarkenFormate]' passed (0.001 seconds).
+Test Suite 'LyricsParserTests' passed at 2026-11-08 21:23:00.979.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.009 (0.012) seconds
+Test Suite 'NaturalOrderJvmTests' started at 2026-11-08 21:23:00.980.
+Test Case '-[MLCoreTests.NaturalOrderJvmTests testCollatorEinzelregeln]' started.
+Test Case '-[MLCoreTests.NaturalOrderJvmTests testCollatorEinzelregeln]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.NaturalOrderJvmTests testSortierungUnabhaengigVonEingabereihenfolge]' started.
+Test Case '-[MLCoreTests.NaturalOrderJvmTests testSortierungUnabhaengigVonEingabereihenfolge]' passed (0.003 seconds).
+Test Case '-[MLCoreTests.NaturalOrderJvmTests testSortierungWieAufDerJvm]' started.
+Test Case '-[MLCoreTests.NaturalOrderJvmTests testSortierungWieAufDerJvm]' passed (0.002 seconds).
+Test Case '-[MLCoreTests.NaturalOrderJvmTests testStringHashCodeWieJvm]' started.
+Test Case '-[MLCoreTests.NaturalOrderJvmTests testStringHashCodeWieJvm]' passed (0.000 seconds).
+Test Suite 'NaturalOrderJvmTests' passed at 2026-11-08 21:23:00.985.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.005 (0.006) seconds
+Test Suite 'OggPlaybackTests' started at 2026-11-08 21:23:00.985.
+Test Case '-[MusicLibraryTests.OggPlaybackTests testNonVorbisOggFails]' started.
+Test Case '-[MusicLibraryTests.OggPlaybackTests testNonVorbisOggFails]' passed (0.007 seconds).
+Test Case '-[MusicLibraryTests.OggPlaybackTests testTranscodedFileIsPlayableWithFullLength]' started.
+Test Case '-[MusicLibraryTests.OggPlaybackTests testTranscodedFileIsPlayableWithFullLength]' passed (0.113 seconds).
+Test Suite 'OggPlaybackTests' passed at 2026-11-08 21:23:01.106.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.120 (0.121) seconds
+Test Suite 'PauseGateTests' started at 2026-11-08 21:23:01.106.
+Test Case '-[MLStudioTests.PauseGateTests testWaitsUntilResumed]' started.
+Test Case '-[MLStudioTests.PauseGateTests testWaitsUntilResumed]' passed (0.171 seconds).
+Test Suite 'PauseGateTests' passed at 2026-11-08 21:23:01.277.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.171 (0.171) seconds
+Test Suite 'PlayQueueTests' started at 2026-11-08 21:23:01.277.
+Test Case '-[MLCoreTests.PlayQueueTests testAlsNaechstes_direktHinterDemLaufenden]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testAlsNaechstes_direktHinterDemLaufenden]' passed (0.003 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testAlsNaechstes_imZufallsmodus_direktHinterDemLaufenden]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testAlsNaechstes_imZufallsmodus_direktHinterDemLaufenden]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testBlaettern_imZufallsmodus_folgtDerZufallsreihenfolge]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testBlaettern_imZufallsmodus_folgtDerZufallsreihenfolge]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testEintraegeHabenEigeneKennungen_doppelteTitelErlaubt]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testEintraegeHabenEigeneKennungen_doppelteTitelErlaubt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testEndeImZufallsmodus_vonVornBeginntMitErstemDerZufallsfolge]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testEndeImZufallsmodus_vonVornBeginntMitErstemDerZufallsfolge]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testEntfernen_alle_leer]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testEntfernen_alle_leer]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testEntfernen_geloeschterTitel_alleVorkommen_imZufallsmodus]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testEntfernen_geloeschterTitel_alleVorkommen_imZufallsmodus]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testEntfernen_laufend_imZufallsmodus_naechsterDerZufallsfolge]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testEntfernen_laufend_imZufallsmodus_naechsterDerZufallsfolge]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testEntfernen_laufend_naechsterWirdLaufend]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testEntfernen_laufend_naechsterWirdLaufend]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testEntfernen_laufenderLetzter_ohneWiederholung_halten]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testEntfernen_laufenderLetzter_ohneWiederholung_halten]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testEntfernen_nichtLaufend]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testEntfernen_nichtLaufend]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testHinzufuegenZuLeererWarteschlange_startetDamit]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testHinzufuegenZuLeererWarteschlange_startetDamit]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testKeep_behaeltZufallsmodus]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testKeep_behaeltZufallsmodus]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testLadenTolerant_defekteAngabenWerdenKorrigiert]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testLadenTolerant_defekteAngabenWerdenKorrigiert]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testLeereListe_leereWarteschlange]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testLeereListe_leereWarteschlange]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testMischen_starttitelVorn_alleGenauEinmal]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testMischen_starttitelVorn_alleGenauEinmal]' passed (0.002 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testMischenOhneStart_beginntMitErstemDerZufallsfolge]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testMischenOhneStart_beginntMitErstemDerZufallsfolge]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testNaechster_mitQuelleWiederholen_beginntVonVorn]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testNaechster_mitQuelleWiederholen_beginntVonVorn]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testNaechster_mitTitelWiederholen_wieAus]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testNaechster_mitTitelWiederholen_wieAus]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testNaechster_ohneWiederholung_endetAmEnde]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testNaechster_ohneWiederholung_endetAmEnde]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testNeueWarteschlange_listenreihenfolge]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testNeueWarteschlange_listenreihenfolge]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testPlay_mitQueuePlan]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testPlay_mitQueuePlan]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testSpeichernUndLaden]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testSpeichernUndLaden]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testSprungZuEintrag]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testSprungZuEintrag]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testStartIndexWirdBegrenzt]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testStartIndexWirdBegrenzt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testTitelende_allePfade]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testTitelende_allePfade]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testUmsortieren_alsNaechstes_mitZufall_listeBleibt]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testUmsortieren_alsNaechstes_mitZufall_listeBleibt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testUmsortieren_alsNaechstes_ohneZufall]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testUmsortieren_alsNaechstes_ohneZufall]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testUmsortieren_ueberDenLaufendenHinweg_ohneZufall]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testUmsortieren_ueberDenLaufendenHinweg_ohneZufall]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testUpcoming_wieAndroid]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testUpcoming_wieAndroid]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testVorheriger_dreiSekundenRegel]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testVorheriger_dreiSekundenRegel]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testZufallEinschalten_laufenderBleibt_undStehtVorn]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testZufallEinschalten_laufenderBleibt_undStehtVorn]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testZufallNochmalEinschalten_aendertNichts]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testZufallNochmalEinschalten_aendertNichts]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlayQueueTests testZurWarteschlange_amEndeDerAbspielfolge]' started.
+Test Case '-[MLCoreTests.PlayQueueTests testZurWarteschlange_amEndeDerAbspielfolge]' passed (0.000 seconds).
+Test Suite 'PlayQueueTests' passed at 2026-11-08 21:23:01.298.
+	 Executed 34 tests, with 0 failures (0 unexpected) in 0.015 (0.021) seconds
+Test Suite 'PlaybackLogicTests' started at 2026-11-08 21:23:01.298.
+Test Case '-[MLCoreTests.PlaybackLogicTests testAlbumAbTitel_undMischen]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testAlbumAbTitel_undMischen]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testAlsNaechstesEingereiht_folgtImZufallDirektAufDenLaufendenTitel]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testAlsNaechstesEingereiht_folgtImZufallDirektAufDenLaufendenTitel]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testAngetippterTitel_startetDieGanzeListe]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testAngetippterTitel_startetDieGanzeListe]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testEntfernen_ausDerZufallsreihenfolge]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testEntfernen_ausDerZufallsreihenfolge]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testFehlendeTitel_werdenEntfernt_undStartWandertMit]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testFehlendeTitel_werdenEntfernt_undStartWandertMit]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testHoerzeit_nurWaehrendWiedergabe_einmalGezaehlt]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testHoerzeit_nurWaehrendWiedergabe_einmalGezaehlt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testNurDiesenTitel_wirdAlleinAbgespielt]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testNurDiesenTitel_wirdAlleinAbgespielt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testOhneTitel_wirdNichtsGezaehlt]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testOhneTitel_wirdNichtsGezaehlt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testPitch_tempoUnabhaengigImModusTonhoehe]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testPitch_tempoUnabhaengigImModusTonhoehe]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testPitch_tolerantesLesen]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testPitch_tolerantesLesen]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testPitch_zweiModi]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testPitch_zweiModi]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testPlaylistMitDoppeltemTitel_startetAnDerAngetipptenStelle]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testPlaylistMitDoppeltemTitel_startetAnDerAngetipptenStelle]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testSleepTimer_countdownUndAusblenden]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testSleepTimer_countdownUndAusblenden]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testSleepTimer_endeDesTitelsUndPruefabstand]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testSleepTimer_endeDesTitelsUndPruefabstand]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testStartFirstShuffleOrder_navigation]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testStartFirstShuffleOrder_navigation]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testVorherigerTitel_dreiSekundenRegel]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testVorherigerTitel_dreiSekundenRegel]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testWiedergabeZaehlt_haelfteOderDreissigSekunden]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testWiedergabeZaehlt_haelfteOderDreissigSekunden]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testWiederholenZyklus]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testWiederholenZyklus]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testZufallsreihenfolge_starttitelVorn_alleGenauEinmal]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testZufallsreihenfolge_starttitelVorn_alleGenauEinmal]' passed (0.001 seconds).
+Test Suite 'PlaybackLogicTests' passed at 2026-11-08 21:23:01.305.
+	 Executed 19 tests, with 0 failures (0 unexpected) in 0.005 (0.007) seconds
+Test Suite 'PortableCdTests' started at 2026-11-08 21:23:01.305.
+Test Case '-[MLRenderTests.PortableCdTests testAnzeige_segmenteDerZiffern]' started.
+Test Case '-[MLRenderTests.PortableCdTests testAnzeige_segmenteDerZiffern]' passed (0.001 seconds).
+Test Case '-[MLRenderTests.PortableCdTests testAnzeige_segmenteLiegenImZiffernfeld]' started.
+Test Case '-[MLRenderTests.PortableCdTests testAnzeige_segmenteLiegenImZiffernfeld]' passed (0.001 seconds).
+Test Case '-[MLRenderTests.PortableCdTests testAnzeige_titelnummerUndLaufzeit]' started.
+Test Case '-[MLRenderTests.PortableCdTests testAnzeige_titelnummerUndLaufzeit]' passed (0.000 seconds).
+Test Case '-[MLRenderTests.PortableCdTests testCd_aufbauVonInnenNachAussen]' started.
+Test Case '-[MLRenderTests.PortableCdTests testCd_aufbauVonInnenNachAussen]' passed (0.001 seconds).
+Test Case '-[MLRenderTests.PortableCdTests testDrehung_ohneWiedergabe_stehtStill_undHaengtNichtVonDerPositionAb]' started.
+Test Case '-[MLRenderTests.PortableCdTests testDrehung_ohneWiedergabe_stehtStill_undHaengtNichtVonDerPositionAb]' passed (0.001 seconds).
+Test Case '-[MLRenderTests.PortableCdTests testDrehung_wiedergabe_pause_fortsetzen]' started.
+Test Case '-[MLRenderTests.PortableCdTests testDrehung_wiedergabe_pause_fortsetzen]' passed (0.001 seconds).
+Test Case '-[MLRenderTests.PortableCdTests testDrehung_winkelBleibtImBereich_auchRueckwaerts]' started.
+Test Case '-[MLRenderTests.PortableCdTests testDrehung_winkelBleibtImBereich_auchRueckwaerts]' passed (0.000 seconds).
+Test Case '-[MLRenderTests.PortableCdTests testGeraet_cdImFenster_anzeigeUndLeuchteImGehaeuse]' started.
+Test Case '-[MLRenderTests.PortableCdTests testGeraet_cdImFenster_anzeigeUndLeuchteImGehaeuse]' passed (0.001 seconds).
+Test Case '-[MLRenderTests.PortableCdTests testGrafik_cd_silberUndKlarerInnenring]' started.
+Test Case '-[MLRenderTests.PortableCdTests testGrafik_cd_silberUndKlarerInnenring]' passed (0.192 seconds).
+Test Case '-[MLRenderTests.PortableCdTests testGrafik_ersatzlabel_ringMitAussparung]' started.
+Test Case '-[MLRenderTests.PortableCdTests testGrafik_ersatzlabel_ringMitAussparung]' passed (0.078 seconds).
+Test Case '-[MLRenderTests.PortableCdTests testGrafik_gehaeuse_anzeigefensterUndRand]' started.
+Test Case '-[MLRenderTests.PortableCdTests testGrafik_gehaeuse_anzeigefensterUndRand]' passed (0.222 seconds).
+Test Case '-[MLRenderTests.PortableCdTests testGrafik_istDeterministisch]' started.
+Test Case '-[MLRenderTests.PortableCdTests testGrafik_istDeterministisch]' passed (0.304 seconds).
+Test Case '-[MLRenderTests.PortableCdTests testGrafik_reflexeStehenUeberDerCd_deckelscheibeDurchsichtig]' started.
+Test Case '-[MLRenderTests.PortableCdTests testGrafik_reflexeStehenUeberDerCd_deckelscheibeDurchsichtig]' passed (0.228 seconds).
+Test Case '-[MLRenderTests.PortableCdTests testGroesse_passtInFlaeche_seitenverhaeltnisBleibt]' started.
+Test Case '-[MLRenderTests.PortableCdTests testGroesse_passtInFlaeche_seitenverhaeltnisBleibt]' passed (0.001 seconds).
+Test Case '-[MLRenderTests.PortableCdTests testGroessenDerEbenen]' started.
+Test Case '-[MLRenderTests.PortableCdTests testGroessenDerEbenen]' passed (1.365 seconds).
+Test Case '-[MLRenderTests.PortableCdTests testLabel_fuelltNichtDieGanzeCd_spiegelflaecheBleibtSichtbar]' started.
+Test Case '-[MLRenderTests.PortableCdTests testLabel_fuelltNichtDieGanzeCd_spiegelflaecheBleibtSichtbar]' passed (0.000 seconds).
+Test Suite 'PortableCdTests' passed at 2026-11-08 21:23:03.705.
+	 Executed 16 tests, with 0 failures (0 unexpected) in 2.395 (2.399) seconds
+Test Suite 'RemoteTests' started at 2026-11-08 21:23:03.705.
+Test Case '-[StudioEngineTests.RemoteTests testArguments]' started.
+Test Case '-[StudioEngineTests.RemoteTests testArguments]' passed (0.006 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testCancellationTerminatesProcessTree]' started.
+Test Case '-[StudioEngineTests.RemoteTests testCancellationTerminatesProcessTree]' passed (0.073 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testChecksumListParsing]' started.
+Test Case '-[StudioEngineTests.RemoteTests testChecksumListParsing]' passed (0.001 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testDefaultExpandPlaylistOfSimpleProvider]' started.
+Test Case '-[StudioEngineTests.RemoteTests testDefaultExpandPlaylistOfSimpleProvider]' passed (0.002 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testDefaultSearchPathsCoverFinderApps]' started.
+Test Case '-[StudioEngineTests.RemoteTests testDefaultSearchPathsCoverFinderApps]' passed (0.001 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testEnvironmentHasUsefulPath]' started.
+Test Case '-[StudioEngineTests.RemoteTests testEnvironmentHasUsefulPath]' passed (0.001 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testErrorMapping]' started.
+Test Case '-[StudioEngineTests.RemoteTests testErrorMapping]' passed (0.003 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testInstallAbortsOnChecksumMismatchAndInstallsNothing]' started.
+Test Case '-[StudioEngineTests.RemoteTests testInstallAbortsOnChecksumMismatchAndInstallsNothing]' passed (0.068 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testInstallVerifiesAndInstallsFromLocalReleases]' started.
+Test Case '-[StudioEngineTests.RemoteTests testInstallVerifiesAndInstallsFromLocalReleases]' passed (0.134 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testLastErrorLine]' started.
+Test Case '-[StudioEngineTests.RemoteTests testLastErrorLine]' passed (0.001 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testMissingToolsAreReported]' started.
+Test Case '-[StudioEngineTests.RemoteTests testMissingToolsAreReported]' passed (0.002 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testNeedsConversion]' started.
+Test Case '-[StudioEngineTests.RemoteTests testNeedsConversion]' passed (0.000 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testOpusWithoutFFmpegIsRejectedClearly]' started.
+Test Case '-[StudioEngineTests.RemoteTests testOpusWithoutFFmpegIsRejectedClearly]' passed (0.001 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testParsePlaylistAndPreview]' started.
+Test Case '-[StudioEngineTests.RemoteTests testParsePlaylistAndPreview]' passed (0.004 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testParseSingleVideo]' started.
+Test Case '-[StudioEngineTests.RemoteTests testParseSingleVideo]' passed (0.000 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testProgressLinesAreParsed]' started.
+Test Case '-[StudioEngineTests.RemoteTests testProgressLinesAreParsed]' passed (0.001 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testProgressTemplateHasAllFields]' started.
+Test Case '-[StudioEngineTests.RemoteTests testProgressTemplateHasAllFields]' passed (0.000 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testProviderAnalyzeAndDownloadWithFakeTool]' started.
+Test Case '-[StudioEngineTests.RemoteTests testProviderAnalyzeAndDownloadWithFakeTool]' passed (0.061 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testProviderMapsToolErrors]' started.
+Test Case '-[StudioEngineTests.RemoteTests testProviderMapsToolErrors]' passed (0.020 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testSHA256OfLocalFiles]' started.
+Test Case '-[StudioEngineTests.RemoteTests testSHA256OfLocalFiles]' passed (0.012 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testSpotifyDownloadIsRefusedAsDRM]' started.
+Test Case '-[StudioEngineTests.RemoteTests testSpotifyDownloadIsRefusedAsDRM]' passed (0.001 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testThumbnailNormalization]' started.
+Test Case '-[StudioEngineTests.RemoteTests testThumbnailNormalization]' passed (0.015 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testThumbnailOnlyOverHTTPS]' started.
+Test Case '-[StudioEngineTests.RemoteTests testThumbnailOnlyOverHTTPS]' passed (0.001 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testTimeoutAndExitStatus]' started.
+Test Case '-[StudioEngineTests.RemoteTests testTimeoutAndExitStatus]' passed (0.609 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testToolLookupPrefersManagedAndFindsSystemTools]' started.
+Test Case '-[StudioEngineTests.RemoteTests testToolLookupPrefersManagedAndFindsSystemTools]' passed (0.047 seconds).
+Test Suite 'RemoteTests' passed at 2026-11-08 21:23:04.775.
+	 Executed 25 tests, with 0 failures (0 unexpected) in 1.066 (1.071) seconds
+Test Suite 'RemoteWebCheckTests' started at 2026-11-08 21:23:04.775.
+Test Case '-[StudioEngineTests.RemoteWebCheckTests testRealSourcesWithFreeContent]' started.
+/Users/runner/work/music-library-mac/music-library-mac/Tests/StudioEngineTests/RemoteWebCheckTests.swift:59: -[StudioEngineTests.RemoteWebCheckTests testRealSourcesWithFreeContent] : Test skipped - Nur mit ML_STUDIO_WEBTEST=1 (scripts/studio_webcheck.sh).
+Test Case '-[StudioEngineTests.RemoteWebCheckTests testRealSourcesWithFreeContent]' skipped (0.004 seconds).
+Test Suite 'RemoteWebCheckTests' passed at 2026-11-08 21:23:04.780.
+	 Executed 1 test, with 1 test skipped and 0 failures (0 unexpected) in 0.004 (0.004) seconds
+Test Suite 'ResumeRuleTests' started at 2026-11-08 21:23:04.780.
+Test Case '-[MLCoreTests.ResumeRuleTests testGespeicherterZustand_codable]' started.
+Test Case '-[MLCoreTests.ResumeRuleTests testGespeicherterZustand_codable]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.ResumeRuleTests testLangeTitel_anwendenUndStartposition]' started.
+Test Case '-[MLCoreTests.ResumeRuleTests testLangeTitel_anwendenUndStartposition]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.ResumeRuleTests testLangeTitel_positionMerken]' started.
+Test Case '-[MLCoreTests.ResumeRuleTests testLangeTitel_positionMerken]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.ResumeRuleTests testStart_ausgeschaltet_oderNichtsGespeichert]' started.
+Test Case '-[MLCoreTests.ResumeRuleTests testStart_ausgeschaltet_oderNichtsGespeichert]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.ResumeRuleTests testStart_fehlenderLaufenderTitel_naechsterBeginntBeiNull]' started.
+Test Case '-[MLCoreTests.ResumeRuleTests testStart_fehlenderLaufenderTitel_naechsterBeginntBeiNull]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.ResumeRuleTests testStart_positionAmEnde_oderUngueltig]' started.
+Test Case '-[MLCoreTests.ResumeRuleTests testStart_positionAmEnde_oderUngueltig]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.ResumeRuleTests testStart_stelltWarteschlangeTitelUndPositionWiederHer]' started.
+Test Case '-[MLCoreTests.ResumeRuleTests testStart_stelltWarteschlangeTitelUndPositionWiederHer]' passed (0.000 seconds).
+Test Suite 'ResumeRuleTests' passed at 2026-11-08 21:23:04.782.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Test Suite 'SVGPathTests' started at 2026-11-08 21:23:04.782.
+Test Case '-[MLCoreTests.SVGPathTests testAbsoluteQuadraticPath]' started.
+Test Case '-[MLCoreTests.SVGPathTests testAbsoluteQuadraticPath]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SVGPathTests testArcCircleStaysOnRadiusAndEndsExactly]' started.
+Test Case '-[MLCoreTests.SVGPathTests testArcCircleStaysOnRadiusAndEndsExactly]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SVGPathTests testCompactNumbersAndExponent]' started.
+Test Case '-[MLCoreTests.SVGPathTests testCompactNumbersAndExponent]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SVGPathTests testHorizontalVerticalAndCloseResetsPoint]' started.
+Test Case '-[MLCoreTests.SVGPathTests testHorizontalVerticalAndCloseResetsPoint]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SVGPathTests testRelativeSmoothCubicsWithImplicitRepeat]' started.
+Test Case '-[MLCoreTests.SVGPathTests testRelativeSmoothCubicsWithImplicitRepeat]' passed (0.000 seconds).
+Test Suite 'SVGPathTests' passed at 2026-11-08 21:23:04.784.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'SafeTagWriterTests' started at 2026-11-08 21:23:04.784.
+Test Case '-[MLTagsTests.SafeTagWriterTests testBatchContinuesAfterFailures]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testBatchContinuesAfterFailures]' passed (0.031 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testCleanupRemovesOldBackupsAndJournals]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testCleanupRemovesOldBackupsAndJournals]' passed (0.023 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testCorruptedTempFileIsDetected]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testCorruptedTempFileIsDetected]' passed (0.010 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testDefaultBackupRoot]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testDefaultBackupRoot]' passed (0.001 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testEveryFormatThroughSafeWriter]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testEveryFormatThroughSafeWriter]' passed (0.318 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testFormatThatWouldLoseDataIsRefused]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testFormatThatWouldLoseDataIsRefused]' passed (0.003 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testInsufficientDiskSpaceIsRefused]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testInsufficientDiskSpaceIsRefused]' passed (0.002 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testMissingFileAndUnsupportedFile]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testMissingFileAndUnsupportedFile]' passed (0.002 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testOriginalModifiedDuringEdit]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testOriginalModifiedDuringEdit]' passed (0.008 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testOriginalTouchedDuringEditIsDetectedByModificationTime]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testOriginalTouchedDuringEditIsDetectedByModificationTime]' passed (0.006 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testPermissionsArePreserved]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testPermissionsArePreserved]' passed (0.007 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testReadOnlyDirectoryIsRefused]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testReadOnlyDirectoryIsRefused]' passed (0.001 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testReadOnlyFileIsRefused]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testReadOnlyFileIsRefused]' passed (0.002 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testRemoveLeftoverTemporaryFiles]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testRemoveLeftoverTemporaryFiles]' passed (0.002 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testSHA256KnownVectors]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testSHA256KnownVectors]' passed (0.313 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testSimulatedWriteFailure]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testSimulatedWriteFailure]' passed (0.009 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testSingleChangedAudioByteIsDetected]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testSingleChangedAudioByteIsDetected]' passed (0.094 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testSuccessfulWriteCreatesBackupAndJournal]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testSuccessfulWriteCreatesBackupAndJournal]' passed (0.024 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testUndoRefusesFileChangedAfterWriteUnlessForced]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testUndoRefusesFileChangedAfterWriteUnlessForced]' passed (0.034 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testUndoRestoresByteIdenticalOriginals]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testUndoRestoresByteIdenticalOriginals]' passed (0.097 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testUndoWithDamagedOrMissingBackup]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testUndoWithDamagedOrMissingBackup]' passed (0.009 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testVerificationMismatchOfEditedField]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testVerificationMismatchOfEditedField]' passed (0.010 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testVerificationMismatchOfUntouchedFieldAndPictures]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testVerificationMismatchOfUntouchedFieldAndPictures]' passed (0.013 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testVeryLongFileName]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testVeryLongFileName]' passed (0.023 seconds).
+Test Case '-[MLTagsTests.SafeTagWriterTests testWriteThroughSymlinkKeepsTheLink]' started.
+Test Case '-[MLTagsTests.SafeTagWriterTests testWriteThroughSymlinkKeepsTheLink]' passed (0.020 seconds).
+Test Suite 'SafeTagWriterTests' passed at 2026-11-08 21:23:05.851.
+	 Executed 25 tests, with 0 failures (0 unexpected) in 1.063 (1.067) seconds
+Test Suite 'SettingsTests' started at 2026-11-08 21:23:05.851.
+Test Case '-[MLCoreTests.SettingsTests testEinstellungen_bassUndPlayerDesign_undAlteDarstellungUebernommen]' started.
+Test Case '-[MLCoreTests.SettingsTests testEinstellungen_bassUndPlayerDesign_undAlteDarstellungUebernommen]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.SettingsTests testEinstellungen_defekteWerteFallenAufStandard]' started.
+Test Case '-[MLCoreTests.SettingsTests testEinstellungen_defekteWerteFallenAufStandard]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SettingsTests testEinstellungen_werdenDauerhaftUndJeBereichGespeichert]' started.
+Test Case '-[MLCoreTests.SettingsTests testEinstellungen_werdenDauerhaftUndJeBereichGespeichert]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SettingsTests testKaputteDatei_ergibtStandard]' started.
+Test Case '-[MLCoreTests.SettingsTests testKaputteDatei_ergibtStandard]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.SettingsTests testMacEinstellungen_standardwerteUndSpeichern]' started.
+Test Case '-[MLCoreTests.SettingsTests testMacEinstellungen_standardwerteUndSpeichern]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SettingsTests testPlayerDesign_wechselLaesstAllesAndereUnveraendert]' started.
+Test Case '-[MLCoreTests.SettingsTests testPlayerDesign_wechselLaesstAllesAndereUnveraendert]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SettingsTests testSechsBereiche_inDerRichtigenReihenfolge]' started.
+Test Case '-[MLCoreTests.SettingsTests testSechsBereiche_inDerRichtigenReihenfolge]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SettingsTests testSpeicherformat_lesbar]' started.
+Test Case '-[MLCoreTests.SettingsTests testSpeicherformat_lesbar]' passed (0.000 seconds).
+Test Suite 'SettingsTests' passed at 2026-11-08 21:23:05.857.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.005 (0.006) seconds
+Test Suite 'StudioEngineSmokeTests' started at 2026-11-08 21:23:05.857.
+Test Case '-[StudioEngineTests.StudioEngineSmokeTests testVersion]' started.
+Test Case '-[StudioEngineTests.StudioEngineSmokeTests testVersion]' passed (0.000 seconds).
+Test Suite 'StudioEngineSmokeTests' passed at 2026-11-08 21:23:05.857.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'StudioExactnessTests' started at 2026-11-08 21:23:05.857.
+Test Case '-[StudioEngineTests.StudioExactnessTests testBitExactFLACAndAIFF]' started.
+Test Case '-[StudioEngineTests.StudioExactnessTests testBitExactFLACAndAIFF]' passed (0.930 seconds).
+Test Case '-[StudioEngineTests.StudioExactnessTests testBitExactWAVCopies]' started.
+Test Case '-[StudioEngineTests.StudioExactnessTests testBitExactWAVCopies]' passed (0.652 seconds).
+Test Case '-[StudioEngineTests.StudioExactnessTests testFadesAreSmoothAndExact]' started.
+Test Case '-[StudioEngineTests.StudioExactnessTests testFadesAreSmoothAndExact]' passed (0.266 seconds).
+Test Case '-[StudioEngineTests.StudioExactnessTests testNoClippingAfterResampling]' started.
+Test Case '-[StudioEngineTests.StudioExactnessTests testNoClippingAfterResampling]' passed (0.246 seconds).
+Test Case '-[StudioEngineTests.StudioExactnessTests testTrimAccuracyWithClickMarkers]' started.
+Test Case '-[StudioEngineTests.StudioExactnessTests testTrimAccuracyWithClickMarkers]' passed (1.788 seconds).
+Test Case '-[StudioEngineTests.StudioExactnessTests testVeryShortSelections]' started.
+Test Case '-[StudioEngineTests.StudioExactnessTests testVeryShortSelections]' passed (0.150 seconds).
+Test Suite 'StudioExactnessTests' passed at 2026-11-08 21:23:09.891.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 4.033 (4.034) seconds
+Test Suite 'StudioFFprobeTests' started at 2026-11-08 21:23:09.891.
+Test Case '-[StudioEngineTests.StudioFFprobeTests testFFprobeAgreesForEveryFormat]' started.
+Test Case '-[StudioEngineTests.StudioFFprobeTests testFFprobeAgreesForEveryFormat]' passed (12.053 seconds).
+Test Suite 'StudioFFprobeTests' passed at 2026-11-08 21:23:21.945.
+	 Executed 1 test, with 0 failures (0 unexpected) in 12.053 (12.054) seconds
+Test Suite 'StudioFormatExportTests' started at 2026-11-08 21:23:21.945.
+Test Case '-[StudioEngineTests.StudioFormatExportTests testEveryFormatFromStereo24Bit]' started.
+Test Case '-[StudioEngineTests.StudioFormatExportTests testEveryFormatFromStereo24Bit]' passed (5.074 seconds).
+Test Case '-[StudioEngineTests.StudioFormatExportTests testMonoAndMultichannel]' started.
+Test Case '-[StudioEngineTests.StudioFormatExportTests testMonoAndMultichannel]' passed (1.457 seconds).
+Test Case '-[StudioEngineTests.StudioFormatExportTests testMP3DurationSeenByAVFoundation]' started.
+Test Case '-[StudioEngineTests.StudioFormatExportTests testMP3DurationSeenByAVFoundation]' passed (0.926 seconds).
+Test Case '-[StudioEngineTests.StudioFormatExportTests testSampleRatesAndConversion]' started.
+Test Case '-[StudioEngineTests.StudioFormatExportTests testSampleRatesAndConversion]' passed (5.014 seconds).
+Test Case '-[StudioEngineTests.StudioFormatExportTests testUnusualSampleRates]' started.
+[Audio] Bass +6 dB: 50 Hz 5.6235447 dB, 5 kHz -7.86937e-05 dB
+[Audio] EQ 1 kHz +12 dB: gemessen 12.000021 dB
+[Audio] EQ 16 kHz +12 dB bei 125 Hz: 0.0016161695 dB
+[Audio] Preset Neutral (gemessen/erwartet dB): 31 Hz +0.0/+0.0 · 125 Hz +0.0/+0.0 · 500 Hz +0.0/+0.0 · 2000 Hz +0.0/+0.0 · 8000 Hz +0.0/+0.0
+[Audio] Preset Bass Boost (gemessen/erwartet dB): 31 Hz +4.2/+4.2 · 125 Hz +3.3/+3.3 · 500 Hz -0.7/-0.7 · 2000 Hz -2.9/-2.9 · 8000 Hz -3.0/-3.0
+[Audio] Preset Rock (gemessen/erwartet dB): 31 Hz +3.0/+3.0 · 125 Hz +0.6/+0.6 · 500 Hz -3.2/-3.2 · 2000 Hz -1.3/-1.5 · 8000 Hz +2.5/+1.3
+[Audio] Preset Pop (gemessen/erwartet dB): 31 Hz -2.7/-2.7 · 125 Hz +0.4/+0.4 · 500 Hz +2.8/+2.8 · 2000 Hz -0.2/-0.2 · 8000 Hz -2.6/-2.3
+[Audio] Preset Klassik (gemessen/erwartet dB): 31 Hz +2.0/+2.0 · 125 Hz +0.6/+0.6 · 500 Hz -1.3/-1.3 · 2000 Hz -1.1/-1.3 · 8000 Hz +1.8/+0.9
+[Audio] Preset Jazz (gemessen/erwartet dB): 31 Hz +1.9/+1.9 · 125 Hz +0.2/+0.2 · 500 Hz -2.3/-2.3 · 2000 Hz -1.4/-1.5 · 8000 Hz +1.6/+0.8
+[Audio] Preset Gesang (gemessen/erwartet dB): 31 Hz -4.0/-4.0 · 125 Hz -2.9/-2.9 · 500 Hz +1.6/+1.6 · 2000 Hz +2.2/+2.2 · 8000 Hz -1.8/-1.5
+[Audio] Preset Elektronisch (gemessen/erwartet dB): 31 Hz +3.3/+3.3 · 125 Hz -0.1/-0.1 · 500 Hz -3.7/-3.7 · 2000 Hz -1.3/-1.5 · 8000 Hz +3.5/+2.1
+[Audio] EQ +12 dB mit −12 dB Aussteuerung: 0.0 dB
+[Audio] Pegel 1 kHz −6 dBFS: Bänder 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.90 0.00 0.00 0.00 0.00 0.00 0.00 0.00, L 0.89982295, R 0.89982295
+[Audio] Pegelanalyse je Bild: 0.408 ms
+[Audio] neutral: Spitze 0.4999968
+[Audio] Tonhöhe +0,5 Halbtöne: 453.33333333333337 Hz (erwartet 452.8929841231365)
+[Audio] Tonhöhe −0,1 Halbtöne: 437.5 Hz (erwartet 437.4657864797208)
+[Pitch] Akkord +2 Halbtöne, Apple TimePitch (2.0): Störanteil -53.0 dB, Spitze 0.567
+[Pitch] Akkord +2 Halbtöne, Android-Verfahren (2.1): Störanteil -48.7 dB, Spitze 0.567
+[Audio] Tonhöhe +12 Halbtöne: 880.0 Hz
+[Pitch] Anschläge +2 Halbtöne, Apple TimePitch (2.0): Vorecho -6.0 dB
+[Pitch] Anschläge -3 Halbtöne, Apple TimePitch (2.0): Vorecho -10.2 dB
+[Pitch] Anschläge +2 Halbtöne, Android-Verfahren (2.1): Vorecho -25.0 dB
+[Pitch] Anschläge -3 Halbtöne, Android-Verfahren (2.1): Vorecho -31.9 dB
+[Pitch] 55.0 Hz −1 Halbton: 51.666666666666664 Hz (erwartet 51.91308719749314)
+[Pitch] 3000.0 Hz −1 Halbton: 2831.6666666666665 Hz (erwartet 2831.6229380450804)
+[Pitch] Mono +3 Halbtöne: 523.6502857565613 Hz (erwartet 523.2511306011972)
+[Audio] Tempo 1,5×: 440.0 Hz, Restpegel 0.0
+[Audio] Drehzahl 2×: 880.0 Hz, Restpegel 0.0
+[Audio] Lautstärke 50 %: Spitze 0.2499984
+[Audio] Lautstärke 300 %: Spitze 0.95258456, Pegelgewinn 5.598891 dB
+[Listen] 10.000 Titel: Index 508 ms, alle Listen mit Suche + Filter 1696 ms
+5000 Titel: Einfügen 0.28 s, Lesen 0.042 s
+[Studio] Bitgenaue Kopie FLAC 16 Bit → FLAC: Samples identisch, MD5 829b7c611bab49022a3a6206c1da168f
+[Studio] Bitgenaue Kopie FLAC 24 Bit → FLAC: Samples identisch, MD5 55e48e2e5806f492a2be4cf6c6e41a5a
+[Studio] Bitgenaue Kopie WAV 16 Bit → WAV: Samples und data-Block identisch, passthrough=true
+[Studio] Bitgenaue Kopie WAV 24 Bit → WAV: Samples und data-Block identisch, passthrough=true
+[Studio] Bitgenaue Kopie WAV 32 Bit → WAV: Samples und data-Block identisch, passthrough=true
+[Studio] Blenden: Anfang 0.00000, 0,25 s 0.074, 0,5 s 0.251, Mitte 0.500, 2,5 s 0.251, Ende 0.00000 (Sinus 0,5)
+[Studio] Keine Übersteuerung: Spitze 0.99185, Samples an der Grenze 0
+[Studio] Schnitt WAV → WAV: 93100 Frames (erwartet 93100), Klickversatz [0, 0, 0, 0], Dauer 2.111111 s
+[Studio] Schnitt WAV → FLAC: 93100 Frames (erwartet 93100), Klickversatz [0, 0, 0, 0], Dauer 2.111111 s
+[Studio] Schnitt WAV → AIFF: 93100 Frames (erwartet 93100), Klickversatz [0, 0, 0, 0], Dauer 2.111111 s
+[Studio] Schnitt FLAC → WAV: 93100 Frames (erwartet 93100), Klickversatz [0, 0, 0, 0], Dauer 2.111111 s
+[Studio] Schnitt FLAC → FLAC: 93100 Frames (erwartet 93100), Klickversatz [0, 0, 0, 0], Dauer 2.111111 s
+[Studio] Schnitt FLAC → AIFF: 93100 Frames (erwartet 93100), Klickversatz [0, 0, 0, 0], Dauer 2.111111 s
+[Studio] Schnitt aus MP3 → WAV: 93100 Frames (erwartet 93100), erster Klick bei 16156 (erwartet 16156, Versatz 0 Frames, Pegel 0.82)
+[Studio] Schnitt aus M4A → WAV: 93100 Frames (erwartet 93100), erster Klick bei 16156 (erwartet 16156, Versatz 0 Frames, Pegel 0.90)
+[Studio] Ausschnitt 0,2 s → MP3: Dauer 0.2000 s (Δ +0.00 ms)
+[Studio] Ausschnitt 0,2 s → WAV: Dauer 0.2000 s (Δ +0.00 ms)
+[Studio] Ausschnitt 0,2 s → FLAC: Dauer 0.2000 s (Δ +0.00 ms)
+[Studio] Ausschnitt 0,2 s → AAC: Dauer 0.2554 s (Δ +55.42 ms)
+[Studio] Ausschnitt 0,2 s → M4A: Dauer 0.2000 s (Δ +0.00 ms)
+[Studio] Ausschnitt 0,2 s → AIFF: Dauer 0.2000 s (Δ +0.00 ms)
+[Studio] ffprobe MP3 · 96 kbit/s: Codec mp3, 44100 Hz, 2 Kan., Bits 0, 96000 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe MP3 · 128 kbit/s: Codec mp3, 44100 Hz, 2 Kan., Bits 0, 128000 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe MP3 · 160 kbit/s: Codec mp3, 44100 Hz, 2 Kan., Bits 0, 160000 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe MP3 · 192 kbit/s: Codec mp3, 44100 Hz, 2 Kan., Bits 0, 192000 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe MP3 · 224 kbit/s: Codec mp3, 44100 Hz, 2 Kan., Bits 0, 224000 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe MP3 · 256 kbit/s: Codec mp3, 44100 Hz, 2 Kan., Bits 0, 256000 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe MP3 · 320 kbit/s: Codec mp3, 44100 Hz, 2 Kan., Bits 0, 320000 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe WAV · 16 Bit: Codec pcm_s16le, 44100 Hz, 2 Kan., Bits 16, 1411200 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe WAV · 24 Bit: Codec pcm_s24le, 44100 Hz, 2 Kan., Bits 24, 2116800 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe WAV · 32 Bit Float: Codec pcm_f32le, 44100 Hz, 2 Kan., Bits 32, 2822400 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe AIFF · 16 Bit: Codec pcm_s16be, 44100 Hz, 2 Kan., Bits 16, 1411200 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe AIFF · 24 Bit: Codec pcm_s24be, 44100 Hz, 2 Kan., Bits 24, 2116800 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe AIFF · 32 Bit Float: Codec pcm_f32be, 44100 Hz, 2 Kan., Bits 32, 2822400 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe FLAC · 16 Bit · Stufe 5: Codec flac, 44100 Hz, 2 Kan., Bits 16, 378180 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe FLAC · Bittiefe wie Quelle · Stufe 8: Codec flac, 44100 Hz, 2 Kan., Bits 24, 628419 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe AAC · 192 kbit/s: Codec aac, 44100 Hz, 2 Kan., Bits 0, 194052 bit/s, Dauer 5.067302 s (Engine 5.061950 s), FFmpeg dekodiert 223232 Frames, Titel „–“, Cover-Stream nein
+[Studio] ffprobe M4A · 192 kbit/s: Codec aac, 44100 Hz, 2 Kan., Bits 0, 191845 bit/s, Dauer 5.061950 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] MP3 96: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits –, 96 kbit/s (Ziel 96, Audiodaten 96.00 kbit/s, Δ -0.00 %), Tags+Cover ok, Größe 74253 B, SNR 26.0 dB (Versatz 0), Fortschritt 2 Meldungen
+[Studio] MP3 128: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits –, 128 kbit/s (Ziel 128, Audiodaten 128.00 kbit/s, Δ -0.00 %), Tags+Cover ok, Größe 98494 B, SNR 26.0 dB (Versatz 0), Fortschritt 3 Meldungen
+[Studio] MP3 160: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits –, 160 kbit/s (Ziel 160, Audiodaten 160.00 kbit/s, Δ 0.00 %), Tags+Cover ok, Größe 122737 B, SNR 26.0 dB (Versatz 0), Fortschritt 3 Meldungen
+[Studio] MP3 192: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits –, 192 kbit/s (Ziel 192, Audiodaten 192.00 kbit/s, Δ -0.00 %), Tags+Cover ok, Größe 146977 B, SNR 30.4 dB (Versatz 0), Fortschritt 2 Meldungen
+[Studio] MP3 224: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits –, 224 kbit/s (Ziel 224, Audiodaten 224.00 kbit/s, Δ -0.00 %), Tags+Cover ok, Größe 171220 B, SNR 34.0 dB (Versatz 0), Fortschritt 2 Meldungen
+[Studio] MP3 256: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits –, 256 kbit/s (Ziel 256, Audiodaten 256.00 kbit/s, Δ -0.00 %), Tags+Cover ok, Größe 195461 B, SNR 77.1 dB (Versatz 0), Fortschritt 2 Meldungen
+[Studio] MP3 320: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits –, 320 kbit/s (Ziel 320, Audiodaten 320.00 kbit/s, Δ -0.00 %), Tags+Cover ok, Größe 243944 B, SNR 77.1 dB (Versatz 0), Fortschritt 2 Meldungen
+[Studio] WAV 16 Bit: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits 16, 1411 kbit/s, Tags+Cover ok, Größe 1059982 B, SNR 86.0 dB (Versatz 0), Fortschritt 3 Meldungen
+[Studio] AIFF 16 Bit: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits 16, 1411 kbit/s, Tags+Cover ok, Größe 1059992 B, SNR 86.0 dB (Versatz 0), Fortschritt 3 Meldungen
+[Studio] WAV 24 Bit: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits 24, 2117 kbit/s, Tags+Cover ok, Größe 1589206 B, SNR 999.0 dB (Versatz 0), Fortschritt 3 Meldungen
+[Studio] AIFF 24 Bit: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits 24, 2117 kbit/s, Tags+Cover ok, Größe 1589192 B, SNR 999.0 dB (Versatz 0), Fortschritt 3 Meldungen
+[Studio] WAV 32 Bit Float: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits 32, 2822 kbit/s, Tags+Cover ok, Größe 2118396 B, SNR 999.0 dB (Versatz 0), Fortschritt 3 Meldungen
+[Studio] AIFF 32 Bit Float: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits 32, 2822 kbit/s, Tags+Cover ok, Größe 2118430 B, SNR 999.0 dB (Versatz 0), Fortschritt 3 Meldungen
+[Studio] FLAC 16 Stufe 0: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits 16, 615 kbit/s, Tags+Cover ok, Größe 465851 B, SNR 86.0 dB (Versatz 0), Fortschritt 3 Meldungen
+[Studio] FLAC 24 Stufe 5: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits 24, 688 kbit/s, Tags+Cover ok, Größe 520380 B, SNR 999.0 dB (Versatz 0), Fortschritt 3 Meldungen
+[Studio] FLAC wie Quelle Stufe 8: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits 24, 611 kbit/s, Tags+Cover ok, Größe 462911 B, SNR 999.0 dB (Versatz 0), Fortschritt 3 Meldungen
+[Studio] AAC 128: Dauer 6.0604 s (Δ +60.41 ms), 44100 Hz, 2 Kan., Bits –, 130 kbit/s (Ziel 128, Δ 1.6 %), keine (ADTS), Größe 98837 B, SNR 56.2 dB (Versatz 2112), Fortschritt 2 Meldungen
+[Studio] M4A 128: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits –, 128 kbit/s (Ziel 128, Δ 0.0 %), Tags+Cover ok, Größe 155190 B, SNR 56.2 dB (Versatz 0), Fortschritt 3 Meldungen
+[Studio] AAC 256: Dauer 6.0604 s (Δ +60.41 ms), 44100 Hz, 2 Kan., Bits –, 258 kbit/s (Ziel 256, Δ 0.8 %), keine (ADTS), Größe 195681 B, SNR 71.1 dB (Versatz 2112), Fortschritt 3 Meldungen
+[Studio] M4A 256: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits –, 256 kbit/s (Ziel 256, Δ 0.0 %), Tags+Cover ok, Größe 252034 B, SNR 71.1 dB (Versatz 0), Fortschritt 3 Meldungen
+[Studio] Mono → MP3 (Mono behalten: true): 1 Kanäle, Dauer 3.0000 s
+[Studio] Mono → MP3 (Mono behalten: false): 2 Kanäle, Dauer 3.0000 s
+[Studio] Mono → WAV (Mono behalten: true): 1 Kanäle, Dauer 3.0000 s
+[Studio] Mono → WAV (Mono behalten: false): 2 Kanäle, Dauer 3.0000 s
+[Studio] Mono → FLAC (Mono behalten: true): 1 Kanäle, Dauer 3.0000 s
+[Studio] Mono → FLAC (Mono behalten: false): 2 Kanäle, Dauer 3.0000 s
+[Studio] Mono → M4A (Mono behalten: true): 1 Kanäle, Dauer 3.0000 s
+[Studio] Mono → M4A (Mono behalten: false): 2 Kanäle, Dauer 3.0000 s
+[Studio] Mono → AIFF (Mono behalten: true): 1 Kanäle, Dauer 3.0000 s
+[Studio] Mono → AIFF (Mono behalten: false): 2 Kanäle, Dauer 3.0000 s
+[Studio] Mono → AAC (Mono behalten: true): 1 Kanäle, Dauer 3.0650 s
+[Studio] Mono → AAC (Mono behalten: false): 2 Kanäle, Dauer 3.0650 s
+[Studio] 5.1-Heruntermischen, nur Center: links 0.146, rechts 0.146
+[Studio] 5.1-Heruntermischen, nur Surround links: links 0.146, rechts 0.000
+[Studio] 5.1-Heruntermischen, nur Surround rechts: links 0.000, rechts 0.146
+[Studio] 5.1 → WAV: 2 Kanäle, Spitze 0.900
+[Studio] 5.1 → MP3: 2 Kanäle, Spitze 0.901
+[Studio] 5.1 → FLAC: 2 Kanäle, Spitze 0.900
+[Studio] MP3 96 kbit/s Dauer: Ergebnis 6.0000 s, LAME-Angaben 6.0000 s, AVAudioFile ohne Tags 6.0000 s, mit ID3v2+ID3v1 6.0000 s, ID3v1 vorhanden nein, ohne ID3v1 6.0000 s
+[Studio] MP3 128 kbit/s Dauer: Ergebnis 6.0000 s, LAME-Angaben 6.0000 s, AVAudioFile ohne Tags 6.0000 s, mit ID3v2+ID3v1 6.0000 s, ID3v1 vorhanden nein, ohne ID3v1 6.0000 s
+[Studio] MP3 160 kbit/s Dauer: Ergebnis 6.0000 s, LAME-Angaben 6.0000 s, AVAudioFile ohne Tags 6.0261 s, mit ID3v2+ID3v1 6.0261 s, ID3v1 vorhanden nein, ohne ID3v1 6.0261 s
+[Studio] MP3 192 kbit/s Dauer: Ergebnis 6.0000 s, LAME-Angaben 6.0000 s, AVAudioFile ohne Tags 6.0000 s, mit ID3v2+ID3v1 6.0000 s, ID3v1 vorhanden nein, ohne ID3v1 6.0000 s
+[Studio] MP3 224 kbit/s Dauer: Ergebnis 6.0000 s, LAME-Angaben 6.0000 s, AVAudioFile ohne Tags 6.0261 s, mit ID3v2+ID3v1 6.0261 s, ID3v1 vorhanden nein, ohne ID3v1 6.0261 s
+[Studio] MP3 256 kbit/s Dauer: Ergebnis 6.0000 s, LAME-Angaben 6.0000 s, AVAudioFile ohne Tags 6.0000 s, mit ID3v2+ID3v1 6.0000 s, ID3v1 vorhanden nein, ohne ID3v1 6.0000 s
+[Studio] MP3 320 kbit/s Dauer: Ergebnis 6.0000 s, LAME-Angaben 6.0000 s, AVAudioFile ohne Tags 6.0000 s, mit ID3v2+ID3v1 6.0000 s, ID3v1 vorhanden nein, ohne ID3v1 6.0000 s
+[Studio] Abtastrate 48000 → WAV Original: 48000 Hz (erwartet 48000), Dauer Δ +0.00 ms, SNR 138.6 dB (Versatz 0)
+[Studio] Abtastrate 48000 → WAV 44100: 44100 Hz (erwartet 44100), Dauer Δ +0.00 ms, SNR 135.4 dB (Versatz 0)
+[Studio] Abtastrate 48000 → FLAC Original: 48000 Hz (erwartet 48000), Dauer Δ +0.00 ms, SNR 138.6 dB (Versatz 0)
+[Studio] Abtastrate 48000 → AIFF 48000: 48000 Hz (erwartet 48000), Dauer Δ +0.00 ms, SNR 138.6 dB (Versatz 0)
+[Studio] Abtastrate 48000 → MP3 Original: 48000 Hz (erwartet 48000), Dauer Δ +0.00 ms, SNR 76.9 dB (Versatz 0)
+[Studio] Abtastrate 48000 → M4A Original: 48000 Hz (erwartet 48000), Dauer Δ +0.00 ms, SNR 67.2 dB (Versatz 0)
+[Studio] Abtastrate 96000 → WAV Original: 96000 Hz (erwartet 96000), Dauer Δ +0.00 ms, SNR 138.6 dB (Versatz 0)
+[Studio] Abtastrate 96000 → WAV 44100: 44100 Hz (erwartet 44100), Dauer Δ +0.00 ms, SNR 136.5 dB (Versatz 0)
+[Studio] Abtastrate 96000 → FLAC Original: 96000 Hz (erwartet 96000), Dauer Δ +0.00 ms, SNR 138.6 dB (Versatz 0)
+[Studio] Abtastrate 96000 → AIFF 48000: 48000 Hz (erwartet 48000), Dauer Δ +0.00 ms, SNR 139.3 dB (Versatz 0)
+[Studio] Abtastrate 96000 → MP3 Original: 48000 Hz (erwartet 48000), Dauer Δ +0.00 ms, SNR 77.0 dB (Versatz 0)
+[Studio] Abtastrate 96000 → M4A Original: 48000 Hz (erwartet 48000), Dauer Δ +0.00 ms, SNR 67.8 dB (Versatz 0)
+[Studio] Ungewöhnliche Rate 22050 → MP3: 32000 Hz (erwartet 32000), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 22050 → AAC: 22050 Hz (erwartet 22050), Dauer 2.1362 s
+[Studio] Ungewöhnliche Rate 22050 → M4A: 22050 Hz (erwartet 22050), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 22050 → FLAC: 22050 Hz (erwartet 22050), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 2205Test Case '-[StudioEngineTests.StudioFormatExportTests testUnusualSampleRates]' passed (2.346 seconds).
+Test Suite 'StudioFormatExportTests' passed at 2026-11-08 21:23:36.762.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 14.816 (14.818) seconds
+Test Suite 'StudioFormatTests' started at 2026-11-08 21:23:36.762.
+Test Case '-[MLStudioTests.StudioFormatTests testAllRequiredMP3Bitrates]' started.
+Test Case '-[MLStudioTests.StudioFormatTests testAllRequiredMP3Bitrates]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioFormatTests testDefaultsAreSensible]' started.
+Test Case '-[MLStudioTests.StudioFormatTests testDefaultsAreSensible]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioFormatTests testHonestNotesForLossyToLossless]' started.
+Test Case '-[MLStudioTests.StudioFormatTests testHonestNotesForLossyToLossless]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioFormatTests testNormalizedClampsInvalidValues]' started.
+Test Case '-[MLStudioTests.StudioFormatTests testNormalizedClampsInvalidValues]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioFormatTests testOutputDepth]' started.
+Test Case '-[MLStudioTests.StudioFormatTests testOutputDepth]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioFormatTests testOutputSampleRate]' started.
+Test Case '-[MLStudioTests.StudioFormatTests testOutputSampleRate]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioFormatTests testSummary]' started.
+Test Case '-[MLStudioTests.StudioFormatTests testSummary]' passed (0.000 seconds).
+Test Suite 'StudioFormatTests' passed at 2026-11-08 21:23:36.766.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'StudioModelTests' started at 2026-11-08 21:23:36.766.
+Test Case '-[MusicLibraryTests.StudioModelTests testCutLibraryTrackAsNewFileNextToOriginal]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testCutLibraryTrackAsNewFileNextToOriginal]' passed (0.492 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testDestinationRules]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testDestinationRules]' passed (0.009 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testDuplicateCandidatesAndPreviousExport]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testDuplicateCandidatesAndPreviousExport]' passed (0.238 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testFailureMovesOnToNextJob]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testFailureMovesOnToNextJob]' passed (0.193 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testFinishedFileGetsFreeName]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testFinishedFileGetsFreeName]' passed (0.083 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testHistoryIsSavedAndLoaded]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testHistoryIsSavedAndLoaded]' passed (0.161 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testImportIntoLibraryFolderRescans]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testImportIntoLibraryFolderRescans]' passed (0.091 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testParseInput]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testParseInput]' passed (0.003 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPauseAndResumeWaitingJobAndRemove]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPauseAndResumeWaitingJobAndRemove]' passed (0.278 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPauseResumeCancelRetry]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPauseResumeCancelRetry]' passed (0.246 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPausingDownloadKeepsPartialFileAndResumes]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPausingDownloadKeepsPartialFileAndResumes]' passed (0.138 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPlaylistAndMultipleAddressesBecomeJobs]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPlaylistAndMultipleAddressesBecomeJobs]' passed (0.276 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPrepareForEditingUsesCacheAndCleansUp]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPrepareForEditingUsesCacheAndCleansUp]' passed (0.312 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPreviewPlaysSelectionAndFollowsPlayhead]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPreviewPlaysSelectionAndFollowsPlayhead]' passed (0.063 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testQueueRunsInOrderWithExactlyOneActiveJob]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testQueueRunsInOrderWithExactlyOneActiveJob]' passed (0.495 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceIsAbortedWhenExportHasWrongLength]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceIsAbortedWhenExportHasWrongLength]' passed (0.224 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceOriginalWithBackupAndUndo]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceOriginalWithBackupAndUndo]' passed (0.336 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceRequiresOriginalFormat]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceRequiresOriginalFormat]' passed (0.029 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testSetFormatOfWaitingJob]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testSetFormatOfWaitingJob]' passed (0.273 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testSettingsAreStoredInInjectedDefaults]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testSettingsAreStoredInInjectedDefaults]' passed (0.012 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testSingleAddressShowsSourceAndExportDownloads]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testSingleAddressShowsSourceAndExportDownloads]' passed (0.316 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testSpotifyShowsMetadataButCannotExport]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testSpotifyShowsMetadataButCannotExport]' passed (0.030 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testUndoIsRefusedWhenFileChangedAfterReplace]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testUndoIsRefusedWhenFileChangedAfterReplace]' passed (0.248 seconds).
+Test Suite 'StudioModelTests' passed at 2026-11-08 21:23:41.324.
+	 Executed 23 tests, with 0 failures (0 unexpected) in 4.549 (4.558) seconds
+Test Suite 'StudioNamingTests' started at 2026-11-08 21:23:41.324.
+Test Case '-[MLStudioTests.StudioNamingTests testSanitize]' started.
+Test Case '-[MLStudioTests.StudioNamingTests testSanitize]' passed (0.002 seconds).
+Test Case '-[MLStudioTests.StudioNamingTests testSchemes]' started.
+Test Case '-[MLStudioTests.StudioNamingTests testSchemes]' passed (0.002 seconds).
+Test Case '-[MLStudioTests.StudioNamingTests testTagEditOnlyFilledFields]' started.
+Test Case '-[MLStudioTests.StudioNamingTests testTagEditOnlyFilledFields]' passed (0.001 seconds).
+Test Case '-[MLStudioTests.StudioNamingTests testUnique]' started.
+Test Case '-[MLStudioTests.StudioNamingTests testUnique]' passed (0.001 seconds).
+Test Suite 'StudioNamingTests' passed at 2026-11-08 21:23:41.332.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.005 (0.008) seconds
+Test Suite 'StudioPassthroughTests' started at 2026-11-08 21:23:41.332.
+Test Case '-[StudioEngineTests.StudioPassthroughTests testM4APassthrough]' started.
+Test Case '-[StudioEngineTests.StudioPassthroughTests testM4APassthrough]' passed (1.777 seconds).
+Test Case '-[StudioEngineTests.StudioPassthroughTests testMP3PassthroughCutsAtFrameBoundaries]' started.
+Test Case '-[StudioEngineTests.StudioPassthroughTests testMP3PassthroughCutsAtFrameBoundaries]' passed (2.435 seconds).
+Test Case '-[StudioEngineTests.StudioPassthroughTests testPassthroughOnlyWhenPossible]' started.
+Test Case '-[StudioEngineTests.StudioPassthroughTests testPassthroughOnlyWhenPossible]' passed (0.375 seconds).
+Test Suite 'StudioPassthroughTests' passed at 2026-11-08 21:23:45.921.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 4.587 (4.589) seconds
+Test Suite 'StudioQueueTests' started at 2026-11-08 21:23:45.921.
+Test Case '-[MLStudioTests.StudioQueueTests testContinuesAfterFailure]' started.
+Test Case '-[MLStudioTests.StudioQueueTests testContinuesAfterFailure]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioQueueTests testDestinations]' started.
+Test Case '-[MLStudioTests.StudioQueueTests testDestinations]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioQueueTests testDuplicates]' started.
+Test Case '-[MLStudioTests.StudioQueueTests testDuplicates]' passed (0.001 seconds).
+Test Case '-[MLStudioTests.StudioQueueTests testHistoryLimitAndLookup]' started.
+Test Case '-[MLStudioTests.StudioQueueTests testHistoryLimitAndLookup]' passed (0.001 seconds).
+Test Case '-[MLStudioTests.StudioQueueTests testOnlyOneActive]' started.
+Test Case '-[MLStudioTests.StudioQueueTests testOnlyOneActive]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioQueueTests testOverallProgress]' started.
+Test Case '-[MLStudioTests.StudioQueueTests testOverallProgress]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioQueueTests testPermissions]' started.
+Test Case '-[MLStudioTests.StudioQueueTests testPermissions]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioQueueTests testSummary]' started.
+Test Case '-[MLStudioTests.StudioQueueTests testSummary]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioQueueTests testTrimClamp]' started.
+Test Case '-[MLStudioTests.StudioQueueTests testTrimClamp]' passed (0.000 seconds).
+Test Suite 'StudioQueueTests' passed at 2026-11-08 21:23:45.926.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
+Test Suite 'StudioRobustnessTests' started at 2026-11-08 21:23:45.926.
+Test Case '-[StudioEngineTests.StudioRobustnessTests testCancelMidExportLeavesNothing]' started.
+Test Case '-[StudioEngineTests.StudioRobustnessTests testCancelMidExportLeavesNothing]' passed (3.324 seconds).
+Test Case '-[StudioEngineTests.StudioRobustnessTests testDamagedAndUnsupportedFiles]' started.
+Test Case '-[StudioEngineTests.StudioRobustnessTests testDamagedAndUnsupportedFiles]' passed (0.839 seconds).
+Test Case '-[StudioEngineTests.StudioRobustnessTests testLongFilesTimeAndMemory]' started.
+Test Case '-[StudioEngineTests.StudioRobustnessTests testLongFilesTimeAndMemory]' passed (351.659 seconds).
+Test Case '-[StudioEngineTests.StudioRobustnessTests testPauseAndResume]' started.
+Test Case '-[StudioEngineTests.StudioRobustnessTests testPauseAndResume]' passed (5.661 seconds).
+Test Suite 'StudioRobustnessTests' passed at 2026-11-08 21:29:47.410.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 361.483 (361.484) seconds
+Test Suite 'StudioSourceTests' started at 2026-11-08 21:29:47.410.
+Test Case '-[MLStudioTests.StudioSourceTests testClassify]' started.
+Test Case '-[MLStudioTests.StudioSourceTests testClassify]' passed (0.003 seconds).
+Test Case '-[MLStudioTests.StudioSourceTests testCleanTitleKeepsRemix]' started.
+Test Case '-[MLStudioTests.StudioSourceTests testCleanTitleKeepsRemix]' passed (0.001 seconds).
+Test Case '-[StudioEngineTests.StudioSourceTests testLocalAnalysisOfExportedFiles]' started.
+Test Case '-[StudioEngineTests.StudioSourceTests testLocalAnalysisOfExportedFiles]' passed (0.631 seconds).
+Test Case '-[StudioEngineTests.StudioSourceTests testPreviewPlayer]' started.
+Test Case '-[StudioEngineTests.StudioSourceTests testPreviewPlayer]' passed (1.957 seconds).
+Test Case '-[MLStudioTests.StudioSourceTests testSameFormat]' started.
+Test Case '-[MLStudioTests.StudioSourceTests testSameFormat]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioSourceTests testSpotifyEndpoint]' started.
+Test Case '-[MLStudioTests.StudioSourceTests testSpotifyEndpoint]' passed (0.000 seconds).
+Test Case '-[StudioEngineTests.StudioSourceTests testVideoOggAndExoticInputs]' started.
+Test Case '-[StudioEngineTests.StudioSourceTests testVideoOggAndExoticInputs]' passed (3.104 seconds).
+Test Case '-[StudioEngineTests.StudioSourceTests testWaveform]' started.
+Test Case '-[StudioEngineTests.StudioSourceTests testWaveform]' passed (0.149 seconds).
+Test Case '-[MLStudioTests.StudioSourceTests testYtDlpMapping]' started.
+Test Case '-[MLStudioTests.StudioSourceTests testYtDlpMapping]' passed (0.001 seconds).
+Test Case '-[MLStudioTests.StudioSourceTests testYtDlpMusicFieldsWin]' started.
+Test Case '-[MLStudioTests.StudioSourceTests testYtDlpMusicFieldsWin]' passed (0.000 seconds).
+Test Suite 'StudioSourceTests' passed at 2026-11-08 21:29:53.259.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 5.847 (5.849) seconds
+Test Suite 'StudioVendorTests' started at 2026-11-08 21:29:53.259.
+Test Case '-[StudioEngineTests.StudioVendorTests testBuildWithXcode16]' started.
+/Users/runner/work/music-library-mac/music-library-mac/Tests/StudioEngineTests/StudioVendorTests.swift:61: -[StudioEngineTests.StudioVendorTests testBuildWithXcode16] : Test skipped - ML_XCODE16_BUILD nicht gesetzt
+Test Case '-[StudioEngineTests.StudioVendorTests testBuildWithXcode16]' skipped (0.008 seconds).
+Test Case '-[StudioEngineTests.StudioVendorTests testEncoderVersions]' started.
+Test Case '-[StudioEngineTests.StudioVendorTests testEncoderVersions]' passed (0.000 seconds).
+Test Case '-[StudioEngineTests.StudioVendorTests testUniversalReleaseBuild]' started.
+/Users/runner/work/music-library-mac/music-library-mac/Tests/StudioEngineTests/StudioVendorTests.swift:35: -[StudioEngineTests.StudioVendorTests testUniversalReleaseBuild] : Test skipped - ML_UNIVERSAL_BUILD nicht gesetzt
+Test Case '-[StudioEngineTests.StudioVendorTests testUniversalReleaseBuild]' skipped (0.001 seconds).
+Test Case '-[StudioEngineTests.StudioVendorTests testVerifyVendoredSources]' started.
+/Users/runner/work/music-library-mac/music-library-mac/Tests/StudioEngineTests/StudioVendorTests.swift:28: -[StudioEngineTests.StudioVendorTests testVerifyVendoredSources] : Test skipped - ML_VERIFY_VENDOR nicht gesetzt
+Test Case '-[StudioEngineTests.StudioVendorTests testVerifyVendoredSources]' skipped (0.000 seconds).
+Test Suite 'StudioVendorTests' passed at 2026-11-08 21:29:53.269.
+	 Executed 4 tests, with 3 tests skipped and 0 failures (0 unexpected) in 0.010 (0.010) seconds
+Test Suite 'StudioWaveformTests' started at 2026-11-08 21:29:53.269.
+Test Case '-[MLStudioTests.StudioWaveformTests testLevelsAndColumns]' started.
+Test Case '-[MLStudioTests.StudioWaveformTests testLevelsAndColumns]' passed (0.007 seconds).
+Test Case '-[MLStudioTests.StudioWaveformTests testSettingsRoundTripAndCorruptData]' started.
+Test Case '-[MLStudioTests.StudioWaveformTests testSettingsRoundTripAndCorruptData]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioWaveformTests testTimeFormatAndParse]' started.
+Test Case '-[MLStudioTests.StudioWaveformTests testTimeFormatAndParse]' passed (0.000 seconds).
+Test Suite 'StudioWaveformTests' passed at 2026-11-08 21:29:53.277.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.007 (0.008) seconds
+Test Suite 'SyncPlannerTests' started at 2026-11-08 21:29:53.277.
+Test Case '-[MLCoreTests.SyncPlannerTests testErsetzteDateiMitNeuerKennung_amSelbenOrt_behaeltKennung]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testErsetzteDateiMitNeuerKennung_amSelbenOrt_behaeltKennung]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testErstscan_allesNeu]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testErstscan_allesNeu]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testGeaenderteDatei_metadatenNeuLesen_kennungBleibt]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testGeaenderteDatei_metadatenNeuLesen_kennungBleibt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testGeloeschteDatei_wirdNurAlsFehlendMarkiert]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testGeloeschteDatei_wirdNurAlsFehlendMarkiert]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testGleicheKennungTrotzVertrauen_pfadHatVorrang_reihenfolgeEgal]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testGleicheKennungTrotzVertrauen_pfadHatVorrang_reihenfolgeEgal]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testGrossKleinVerschiedeneDateien_exakterPfadHatVorrang]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testGrossKleinVerschiedeneDateien_exakterPfadHatVorrang]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testLaufwerkGetrennt_offline_nichtFehlend]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testLaufwerkGetrennt_offline_nichtFehlend]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testLaufwerkWiederAngeschlossen_wirdWiederVerfuegbar]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testLaufwerkWiederAngeschlossen_wirdWiederVerfuegbar]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testLoeschenUndNeuKopieren_inSpaeteremAbgleich_wirdWiedererkannt]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testLoeschenUndNeuKopieren_inSpaeteremAbgleich_wirdWiedererkannt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testMehrdeutigerKandidat_gleichesAenderungsdatumEntscheidet]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testMehrdeutigerKandidat_gleichesAenderungsdatumEntscheidet]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testMehrdeutigerKandidat_wirdNichtGeraten]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testMehrdeutigerKandidat_wirdNichtGeraten]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testNeueTagLeserVersion_liestNeu]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testNeueTagLeserVersion_liestNeu]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testNormalformDesPfads_istKeineAenderung]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testNormalformDesPfads_istKeineAenderung]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testNurSchreibweiseDesNamensGeaendert_behaeltKennung]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testNurSchreibweiseDesNamensGeaendert_behaeltKennung]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testOrdnerErreichbarAberLeer_wirdWieOfflineBehandelt]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testOrdnerErreichbarAberLeer_wirdWieOfflineBehandelt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testPfadSchluessel_ohneGrossKlein_undNormalform]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testPfadSchluessel_ohneGrossKlein_undNormalform]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testReihenfolgeDerErgebnisse_wieGefunden]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testReihenfolgeDerErgebnisse_wieGefunden]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testUmbenannt_gleicheGroesseUndAenderungsdatum_wirdWiedererkannt]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testUmbenannt_gleicheGroesseUndAenderungsdatum_wirdWiedererkannt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testUmbenanntGleicheKennungUndGroesse_behaeltKennung]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testUmbenanntGleicheKennungUndGroesse_behaeltKennung]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testUmbenanntUndTagsGeaendert_gleicheGueltigeKennung_behaeltKennung]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testUmbenanntUndTagsGeaendert_gleicheGueltigeKennung_behaeltKennung]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testUnveraendert_nichtsZuTun]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testUnveraendert_nichtsZuTun]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testUnzuverlaessigeKennungen_keineFalscheZuordnung]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testUnzuverlaessigeKennungen_keineFalscheZuordnung]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testVerschobeneDatei_neueKennungNeuerOrdner_wirdWiedererkannt]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testVerschobeneDatei_neueKennungNeuerOrdner_wirdWiedererkannt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SyncPlannerTests testVerschobenZwischenOrdnernAufDemselbenLaufwerk_perKennung]' started.
+Test Case '-[MLCoreTests.SyncPlannerTests testVerschobenZwischenOrdnernAufDemselbenLaufwerk_perKennung]' passed (0.000 seconds).
+Test Suite 'SyncPlannerTests' passed at 2026-11-08 21:29:53.285.
+	 Executed 24 tests, with 0 failures (0 unexpected) in 0.006 (0.009) seconds
+Test Suite 'TagFileRoundTripTests' started at 2026-11-08 21:29:53.286.
+Test Case '-[MLTagsTests.TagFileRoundTripTests testClearAllFieldsEveryFormat]' started.
+Test Case '-[MLTagsTests.TagFileRoundTripTests testClearAllFieldsEveryFormat]' passed (0.121 seconds).
+Test Case '-[MLTagsTests.TagFileRoundTripTests testCompilationAndRatingToggleEveryFormat]' started.
+Test Case '-[MLTagsTests.TagFileRoundTripTests testCompilationAndRatingToggleEveryFormat]' passed (0.041 seconds).
+Test Case '-[MLTagsTests.TagFileRoundTripTests testCustomPropertyValuePreserved]' started.
+Test Case '-[MLTagsTests.TagFileRoundTripTests testCustomPropertyValuePreserved]' passed (0.032 seconds).
+Test Case '-[MLTagsTests.TagFileRoundTripTests testFullRoundTripEveryFormat]' started.
+Test Case '-[MLTagsTests.TagFileRoundTripTests testFullRoundTripEveryFormat]' passed (0.063 seconds).
+Test Case '-[MLTagsTests.TagFileRoundTripTests testLossyCodecsHaveNoBitDepth]' started.
+Test Case '-[MLTagsTests.TagFileRoundTripTests testLossyCodecsHaveNoBitDepth]' passed (0.007 seconds).
+Test Case '-[MLTagsTests.TagFileRoundTripTests testLyricsLineEndingsPreserved]' started.
+Test Case '-[MLTagsTests.TagFileRoundTripTests testLyricsLineEndingsPreserved]' passed (0.025 seconds).
+Test Case '-[MLTagsTests.TagFileRoundTripTests testMultiValuesWithSemicolonInputAreSplit]' started.
+Test Case '-[MLTagsTests.TagFileRoundTripTests testMultiValuesWithSemicolonInputAreSplit]' passed (0.002 seconds).
+Test Case '-[MLTagsTests.TagFileRoundTripTests testPictureGeometryStoredInFLACBlocks]' started.
+Test Case '-[MLTagsTests.TagFileRoundTripTests testPictureGeometryStoredInFLACBlocks]' passed (0.002 seconds).
+Test Case '-[MLTagsTests.TagFileRoundTripTests testPicturesReplaceRemoveMultipleEveryFormat]' started.
+Test Case '-[MLTagsTests.TagFileRoundTripTests testPicturesReplaceRemoveMultipleEveryFormat]' passed (0.075 seconds).
+Test Case '-[MLTagsTests.TagFileRoundTripTests testReadEveryFixture]' started.
+Test Case '-[MLTagsTests.TagFileRoundTripTests testReadEveryFixture]' passed (0.009 seconds).
+Test Case '-[MLTagsTests.TagFileRoundTripTests testTrackNumberKeepsTotalEveryFormat]' started.
+Test Case '-[MLTagsTests.TagFileRoundTripTests testTrackNumberKeepsTotalEveryFormat]' passed (0.021 seconds).
+Test Case '-[MLTagsTests.TagFileRoundTripTests testUntouchedFieldsAndUnknownDataPreserved]' started.
+Test Case '-[MLTagsTests.TagFileRoundTripTests testUntouchedFieldsAndUnknownDataPreserved]' passed (0.041 seconds).
+Test Case '-[MLTagsTests.TagFileRoundTripTests testYearKeepsFullDateIfYearUnchanged]' started.
+Test Case '-[MLTagsTests.TagFileRoundTripTests testYearKeepsFullDateIfYearUnchanged]' passed (0.035 seconds).
+Test Suite 'TagFileRoundTripTests' passed at 2026-11-08 21:29:53.762.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.474 (0.476) seconds
+Test Suite 'TagMergeTests' started at 2026-11-08 21:29:53.762.
+Test Case '-[MLCoreTests.TagMergeTests testBearbeitung_nurGeaenderteFelder]' started.
+Test Case '-[MLCoreTests.TagMergeTests testBearbeitung_nurGeaenderteFelder]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.TagMergeTests testEinzelbearbeitung_titelErlaubt]' started.
+Test Case '-[MLCoreTests.TagMergeTests testEinzelbearbeitung_titelErlaubt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.TagMergeTests testGemeinsameWerte_alsFormularStart]' started.
+Test Case '-[MLCoreTests.TagMergeTests testGemeinsameWerte_alsFormularStart]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.TagMergeTests testGemischteBilder]' started.
+Test Case '-[MLCoreTests.TagMergeTests testGemischteBilder]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.TagMergeTests testGemischtesFeldAusdruecklichLeeren]' started.
+Test Case '-[MLCoreTests.TagMergeTests testGemischtesFeldAusdruecklichLeeren]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.TagMergeTests testGemischteWerteJeFeld]' started.
+Test Case '-[MLCoreTests.TagMergeTests testGemischteWerteJeFeld]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.TagMergeTests testKopierenUndEinfuegen]' started.
+Test Case '-[MLCoreTests.TagMergeTests testKopierenUndEinfuegen]' passed (0.001 seconds).
+Test Suite 'TagMergeTests' passed at 2026-11-08 21:29:53.765.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'TextTests' started at 2026-11-08 21:29:53.765.
+Test Case '-[MLCoreTests.TextTests testDateinamen]' started.
+Test Case '-[MLCoreTests.TextTests testDateinamen]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.TextTests testFormate_weitere]' started.
+Test Case '-[MLCoreTests.TextTests testFormate_weitere]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.TextTests testFormate_wieKotlin]' started.
+Test Case '-[MLCoreTests.TextTests testFormate_wieKotlin]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.TextTests testSchluessel]' started.
+Test Case '-[MLCoreTests.TextTests testSchluessel]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.TextTests testStabilesSortieren]' started.
+Test Case '-[MLCoreTests.TextTests testStabilesSortieren]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.TextTests testTagBereinigen]' started.
+Test Case '-[MLCoreTests.TextTests testTagBereinigen]' passed (0.000 seconds).
+Test Suite 'TextTests' passed at 2026-11-08 21:29:53.767.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'TimePitchEngineTests' started at 2026-11-08 21:29:53.767.
+Test Case '-[MLCoreTests.TimePitchEngineTests testAkkordNaheVollaussteuerung_keinClipping_pegelWieEingang]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testAkkordNaheVollaussteuerung_keinClipping_pegelWieEingang]' passed (12.100 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testAkkordPlus2Halbtoene_verzerrungsanteil]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testAkkordPlus2Halbtoene_verzerrungsanteil]' passed (3.477 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testAnschlaege_bleibenScharf]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testAnschlaege_bleibenScharf]' passed (4.988 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testAusgabelaenge_istGenauEingangDurchSpeed]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testAusgabelaenge_istGenauEingangDurchSpeed]' passed (5.562 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testErgebnis_unabhaengigVonBlockgroessen]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testErgebnis_unabhaengigVonBlockgroessen]' passed (12.762 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testInPlace_gleichesErgebnis]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testInPlace_gleichesErgebnis]' passed (1.532 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testLatenz_fuerAlleTonhoehenGleich_undOhneUnterlauf]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testLatenz_fuerAlleTonhoehenGleich_undOhneUnterlauf]' passed (2.758 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testLautesMaterial_wirdBegrenztStattGeclippt]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testLautesMaterial_wirdBegrenztStattGeclippt]' passed (3.688 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testNeutraleEinstellungen_reichenBitgenauDurch]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testNeutraleEinstellungen_reichenBitgenauDurch]' passed (0.064 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testRechenaufwand_60SekundenStereo]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testRechenaufwand_60SekundenStereo]' passed (73.309 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testReset_verhaeltSichWieNeueInstanz]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testReset_verhaeltSichWieNeueInstanz]' passed (7.040 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testSchallplatte_unterdruecktSpiegelfrequenzen]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testSchallplatte_unterdruecktSpiegelfrequenzen]' passed (0.246 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testSchallplatte_verschiebtTonSauberUndHaeltPegel]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testSchallplatte_verschiebtTonSauberUndHaeltPegel]' passed (1.590 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testSinus440_frequenzGenauVerschoben]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testSinus440_frequenzGenauVerschoben]' passed (6.957 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testStereobild_bleibtErhalten]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testStereobild_bleibtErhalten]' passed (1.205 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testStilleBleibtStille]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testStilleBleibtStille]' passed (0.956 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testTonhoehe_monoUndAndereAbtastraten]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testTonhoehe_monoUndAndereAbtastraten]' passed (5.732 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testTonhoehe_verschiebtAkkordOhneTempoaenderung]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testTonhoehe_verschiebtAkkordOhneTempoaenderung]' passed (2.756 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testUeberblenden_beimTonhoehenwechselOhneLuecke]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testUeberblenden_beimTonhoehenwechselOhneLuecke]' passed (2.807 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testZeitbezug_anschlagErscheintNachLatenz]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testZeitbezug_anschlagErscheintNachLatenz]' passed (1.741 seconds).
+Test Suite 'TimePitchEngineTests' passed at 2026-11-08 21:32:25.041.
+	 Executed 20 tests, with 0 failures (0 unexpected) in 151.270 (151.274) seconds
+Test Suite 'TurntableTests' started at 2026-11-08 21:32:25.041.
+Test Case '-[MLRenderTests.TurntableTests testArmAnglesMatchTheAndroidValues]' started.
+Test Case '-[MLRenderTests.TurntableTests testArmAnglesMatchTheAndroidValues]' passed (0.000 seconds).
+Test Case '-[MLRenderTests.TurntableTests testArmStaysInsideTheTurntableArea]' started.
+Test Case '-[MLRenderTests.TurntableTests testArmStaysInsideTheTurntableArea]' passed (0.000 seconds).
+Test Case '-[MLRenderTests.TurntableTests testAssetSizesMatchTheAndroidCache]' started.
+Test Case '-[MLRenderTests.TurntableTests testAssetSizesMatchTheAndroidCache]' passed (0.063 seconds).
+Test Case '-[MLRenderTests.TurntableTests testFallbackLabelIsACircle]' started.
+Test Case '-[MLRenderTests.TurntableTests testFallbackLabelIsACircle]' passed (0.001 seconds).
+Test Case '-[MLRenderTests.TurntableTests testLightReflectionPointsTowardsTheLight]' started.
+Test Case '-[MLRenderTests.TurntableTests testLightReflectionPointsTowardsTheLight]' passed (0.012 seconds).
+Test Case '-[MLRenderTests.TurntableTests testRecordIsRoundOpaqueAndDark]' started.
+Test Case '-[MLRenderTests.TurntableTests testRecordIsRoundOpaqueAndDark]' passed (0.019 seconds).
+Test Case '-[MLRenderTests.TurntableTests testRenderingIsDeterministic]' started.
+Test Case '-[MLRenderTests.TurntableTests testRenderingIsDeterministic]' passed (0.038 seconds).
+Test Case '-[MLRenderTests.TurntableTests testRestPositionIsBesideThePlatter]' started.
+Test Case '-[MLRenderTests.TurntableTests testRestPositionIsBesideThePlatter]' passed (0.000 seconds).
+Test Case '-[MLRenderTests.TurntableTests testStylusFollowsTheGrooveAreaFromOutsideToInside]' started.
+Test Case '-[MLRenderTests.TurntableTests testStylusFollowsTheGrooveAreaFromOutsideToInside]' passed (0.000 seconds).
+Test Case '-[MLRenderTests.TurntableTests testTonearmHasItsPivotInsideTheImage]' started.
+Test Case '-[MLRenderTests.TurntableTests testTonearmHasItsPivotInsideTheImage]' passed (0.013 seconds).
+Test Suite 'TurntableTests' passed at 2026-11-08 21:32:25.189.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.146 (0.148) seconds
+Test Suite 'V21SettingsTests' started at 2026-11-08 21:32:25.189.
+Test Case '-[MLCoreTests.V21SettingsTests testBackgroundBrightness]' started.
+Test Case '-[MLCoreTests.V21SettingsTests testBackgroundBrightness]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V21SettingsTests testCoverSizeAllowsLargeTiles]' started.
+Test Case '-[MLCoreTests.V21SettingsTests testCoverSizeAllowsLargeTiles]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.V21SettingsTests testNewSettingsRoundTripAndOldValuesStay]' started.
+Test Case '-[MLCoreTests.V21SettingsTests testNewSettingsRoundTripAndOldValuesStay]' passed (0.001 seconds).
+Test Suite 'V21SettingsTests' passed at 2026-11-08 21:32:25.192.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
+Test Suite 'V2FilterTests' started at 2026-11-08 21:32:25.192.
+Test Case '-[MLCoreTests.V2FilterTests testAmBestenBewertet]' started.
+Test Case '-[MLCoreTests.V2FilterTests testAmBestenBewertet]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testFacetten_anzahlenUndReihenfolge]' started.
+Test Case '-[MLCoreTests.V2FilterTests testFacetten_anzahlenUndReihenfolge]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testFacetten_haeufigsteSchreibweise_undHoechstens200Interpreten]' started.
+Test Case '-[MLCoreTests.V2FilterTests testFacetten_haeufigsteSchreibweise_undHoechstens200Interpreten]' passed (0.018 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testFacetten_idsPassenZuIndexUndFilter]' started.
+Test Case '-[MLCoreTests.V2FilterTests testFacetten_idsPassenZuIndexUndFilter]' passed (0.002 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testFacetten_jahrzehnteFormateGenresInterpreten]' started.
+Test Case '-[MLCoreTests.V2FilterTests testFacetten_jahrzehnteFormateGenresInterpreten]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testFacetten_kombiniert_UNDzwischenFacetten]' started.
+Test Case '-[MLCoreTests.V2FilterTests testFacetten_kombiniert_UNDzwischenFacetten]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testFacetten_titelMitDoppeltemGenreZaehltEinmal]' started.
+Test Case '-[MLCoreTests.V2FilterTests testFacetten_titelMitDoppeltemGenreZaehltEinmal]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testFilter_codable_tolerant]' started.
+Test Case '-[MLCoreTests.V2FilterTests testFilter_codable_tolerant]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testFilter_leerUndAnzahl]' started.
+Test Case '-[MLCoreTests.V2FilterTests testFilter_leerUndAnzahl]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testFormatfamilie_ausCodecUndEndung]' started.
+Test Case '-[MLCoreTests.V2FilterTests testFormatfamilie_ausCodecUndEndung]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testGenrePlaylists_nachAnzahlDannName_ohneUnbekannt]' started.
+Test Case '-[MLCoreTests.V2FilterTests testGenrePlaylists_nachAnzahlDannName_ohneUnbekannt]' passed (0.005 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testGenrePlaylists_reihenfolgeInnerhalb_deterministisch]' started.
+Test Case '-[MLCoreTests.V2FilterTests testGenrePlaylists_reihenfolgeInnerhalb_deterministisch]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testGruppen_bleibenWennEinTitelPasst]' started.
+Test Case '-[MLCoreTests.V2FilterTests testGruppen_bleibenWennEinTitelPasst]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testNeu_relativZuJetzt]' started.
+Test Case '-[MLCoreTests.V2FilterTests testNeu_relativZuJetzt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testNieGespielt]' started.
+Test Case '-[MLCoreTests.V2FilterTests testNieGespielt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testSchnellfilter_jederEinzeln]' started.
+Test Case '-[MLCoreTests.V2FilterTests testSchnellfilter_jederEinzeln]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testSchnellfilter_kombiniert_alleMuessenZutreffen]' started.
+Test Case '-[MLCoreTests.V2FilterTests testSchnellfilter_kombiniert_alleMuessenZutreffen]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testSchnellfilter_namenUndGespeicherteWerte]' started.
+Test Case '-[MLCoreTests.V2FilterTests testSchnellfilter_namenUndGespeicherteWerte]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testSmartPlaylist_initOhneGenre_bleibtQuellkompatibel]' started.
+Test Case '-[MLCoreTests.V2FilterTests testSmartPlaylist_initOhneGenre_bleibtQuellkompatibel]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testVerlustfrei]' started.
+Test Case '-[MLCoreTests.V2FilterTests testVerlustfrei]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testZuletztGespielt]' started.
+Test Case '-[MLCoreTests.V2FilterTests testZuletztGespielt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2FilterTests testZuletztHinzugefuegt]' started.
+Test Case '-[MLCoreTests.V2FilterTests testZuletztHinzugefuegt]' passed (0.000 seconds).
+Test Suite 'V2FilterTests' passed at 2026-11-08 21:32:25.228.
+	 Executed 22 tests, with 0 failures (0 unexpected) in 0.033 (0.036) seconds
+Test Suite 'V2PerformanceTests' started at 2026-11-08 21:32:25.228.
+Test Case '-[MLCoreTests.V2PerformanceTests testZeiten_mit20000Titeln]' started.
+Test Case '-[MLCoreTests.V2PerformanceTests testZeiten_mit20000Titeln]' passed (4.818 seconds).
+Test Suite 'V2PerformanceTests' passed at 2026-11-08 21:32:30.047.
+	 Executed 1 test, with 0 failures (0 unexpected) in 4.818 (4.819) seconds
+Test Suite 'V2SettingsTests' started at 2026-11-08 21:32:30.047.
+Test Case '-[MLCoreTests.V2SettingsTests testAlteEinstellungsdatei_ohneNeueSchluessel_ergibtStandardwerte]' started.
+Test Case '-[MLCoreTests.V2SettingsTests testAlteEinstellungsdatei_ohneNeueSchluessel_ergibtStandardwerte]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.V2SettingsTests testAnsichten_begrenztUndBereinigt]' started.
+Test Case '-[MLCoreTests.V2SettingsTests testAnsichten_begrenztUndBereinigt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SettingsTests testAnsichten_codable]' started.
+Test Case '-[MLCoreTests.V2SettingsTests testAnsichten_codable]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SettingsTests testAnsichten_namenUndSpalten]' started.
+Test Case '-[MLCoreTests.V2SettingsTests testAnsichten_namenUndSpalten]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SettingsTests testAnsichten_standardJeBereich]' started.
+Test Case '-[MLCoreTests.V2SettingsTests testAnsichten_standardJeBereich]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SettingsTests testEinstellungen_ansichtenTolerantGelesen]' started.
+Test Case '-[MLCoreTests.V2SettingsTests testEinstellungen_ansichtenTolerantGelesen]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SettingsTests testEinstellungen_ansichtJeBereich]' started.
+Test Case '-[MLCoreTests.V2SettingsTests testEinstellungen_ansichtJeBereich]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.V2SettingsTests testEqPreset_anwendenUndErkennen]' started.
+Test Case '-[MLCoreTests.V2SettingsTests testEqPreset_anwendenUndErkennen]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SettingsTests testEqPreset_baenderImmerZehnUndBegrenzt]' started.
+Test Case '-[MLCoreTests.V2SettingsTests testEqPreset_baenderImmerZehnUndBegrenzt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SettingsTests testEqPreset_namenEindeutigGekuerztUndStandard]' started.
+Test Case '-[MLCoreTests.V2SettingsTests testEqPreset_namenEindeutigGekuerztUndStandard]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SettingsTests testEqPreset_speichernAusAktuellenBaendern]' started.
+Test Case '-[MLCoreTests.V2SettingsTests testEqPreset_speichernAusAktuellenBaendern]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SettingsTests testEqPreset_tolerantGelesen]' started.
+Test Case '-[MLCoreTests.V2SettingsTests testEqPreset_tolerantGelesen]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SettingsTests testEqPreset_umbenennenAktualisierenLoeschen]' started.
+Test Case '-[MLCoreTests.V2SettingsTests testEqPreset_umbenennenAktualisierenLoeschen]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SettingsTests testFormatierung_halbtoeneMitZehntelnUndCent]' started.
+Test Case '-[MLCoreTests.V2SettingsTests testFormatierung_halbtoeneMitZehntelnUndCent]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SettingsTests testKassettenfarbenMiniPlayerAnimationen]' started.
+Test Case '-[MLCoreTests.V2SettingsTests testKassettenfarbenMiniPlayerAnimationen]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SettingsTests testNeueEinstellungen_standardwerte]' started.
+Test Case '-[MLCoreTests.V2SettingsTests testNeueEinstellungen_standardwerte]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SettingsTests testNeueEinstellungen_ungueltigeWerte_begrenztOderStandard]' started.
+Test Case '-[MLCoreTests.V2SettingsTests testNeueEinstellungen_ungueltigeWerte_begrenztOderStandard]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SettingsTests testNeueEinstellungen_werdenGespeichert]' started.
+Test Case '-[MLCoreTests.V2SettingsTests testNeueEinstellungen_werdenGespeichert]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.V2SettingsTests testPlayerDesigns_neuHintenAngefuegt]' started.
+Test Case '-[MLCoreTests.V2SettingsTests testPlayerDesigns_neuHintenAngefuegt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SettingsTests testTonhoehe_rundetAufHundertstelUndBegrenzt]' started.
+Test Case '-[MLCoreTests.V2SettingsTests testTonhoehe_rundetAufHundertstelUndBegrenzt]' passed (0.000 seconds).
+Test Suite 'V2SettingsTests' passed at 2026-11-08 21:32:30.056.
+	 Executed 20 tests, with 0 failures (0 unexpected) in 0.007 (0.009) seconds
+Test Suite 'V2SortingTests' started at 2026-11-08 21:32:30.056.
+Test Case '-[MLCoreTests.V2SortingTests testAlben_hinzugefuegtIstJuengsterTitel_undSortierungNachHinzugefuegtUndAnzahl]' started.
+Test Case '-[MLCoreTests.V2SortingTests testAlben_hinzugefuegtIstJuengsterTitel_undSortierungNachHinzugefuegtUndAnzahl]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.V2SortingTests testAlbumInfo_initOhneHinzugefuegt_bleibtQuellkompatibel]' started.
+Test Case '-[MLCoreTests.V2SortingTests testAlbumInfo_initOhneHinzugefuegt_bleibtQuellkompatibel]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SortingTests testBestehendeTitelSortierung_unveraendert]' started.
+Test Case '-[MLCoreTests.V2SortingTests testBestehendeTitelSortierung_unveraendert]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SortingTests testEinstellungen_speichernNeueSortierungen]' started.
+Test Case '-[MLCoreTests.V2SortingTests testEinstellungen_speichernNeueSortierungen]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SortingTests testFavoritenTitel_nachHinzugefuegtUndBewertung]' started.
+Test Case '-[MLCoreTests.V2SortingTests testFavoritenTitel_nachHinzugefuegtUndBewertung]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SortingTests testInterpreten_nachAlbenanzahl]' started.
+Test Case '-[MLCoreTests.V2SortingTests testInterpreten_nachAlbenanzahl]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.V2SortingTests testNeueFelder_beschriftungUndUeblicheRichtung]' started.
+Test Case '-[MLCoreTests.V2SortingTests testNeueFelder_beschriftungUndUeblicheRichtung]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SortingTests testNeueFelder_hintenAngefuegt_gespeicherteNamenBleibenGueltig]' started.
+Test Case '-[MLCoreTests.V2SortingTests testNeueFelder_hintenAngefuegt_gespeicherteNamenBleibenGueltig]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SortingTests testPlaylists_nachErstelltUndGeaendert_unbekanntAmEnde]' started.
+Test Case '-[MLCoreTests.V2SortingTests testPlaylists_nachErstelltUndGeaendert_unbekanntAmEnde]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SortingTests testTitel_gleicheWerte_stabilNachNameDannKennung]' started.
+Test Case '-[MLCoreTests.V2SortingTests testTitel_gleicheWerte_stabilNachNameDannKennung]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SortingTests testTitel_nachAlbum_inAlbumreihenfolge_ohneAlbumAmEnde]' started.
+Test Case '-[MLCoreTests.V2SortingTests testTitel_nachAlbum_inAlbumreihenfolge_ohneAlbumAmEnde]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SortingTests testTitel_nachAlbum_sortierTagUndGleichnamigeAlbenGetrennt]' started.
+Test Case '-[MLCoreTests.V2SortingTests testTitel_nachAlbum_sortierTagUndGleichnamigeAlbenGetrennt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SortingTests testTitel_nachAlbuminterpret_ersatzweiseInterpret]' started.
+Test Case '-[MLCoreTests.V2SortingTests testTitel_nachAlbuminterpret_ersatzweiseInterpret]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.V2SortingTests testTitel_nachHinzugefuegtBewertungBpm_fehlendeWerteInBeidenRichtungenAmEnde]' started.
+Test Case '-[MLCoreTests.V2SortingTests testTitel_nachHinzugefuegtBewertungBpm_fehlendeWerteInBeidenRichtungenAmEnde]' passed (0.000 seconds).
+Test Suite 'V2SortingTests' passed at 2026-11-08 21:32:30.063.
+	 Executed 14 tests, with 0 failures (0 unexpected) in 0.005 (0.007) seconds
+Test Suite 'VorbisDecoderTests' started at 2026-11-08 21:32:30.063.
+Test Case '-[OggVorbisTests.VorbisDecoderTests testDecodesFullLengthWithExpectedContent]' started.
+Test Case '-[OggVorbisTests.VorbisDecoderTests testDecodesFullLengthWithExpectedContent]' passed (0.066 seconds).
+Test Case '-[OggVorbisTests.VorbisDecoderTests testMonoLowSampleRate]' started.
+Test Case '-[OggVorbisTests.VorbisDecoderTests testMonoLowSampleRate]' passed (0.003 seconds).
+Test Case '-[OggVorbisTests.VorbisDecoderTests testRejectsNonOggFiles]' started.
+Test Case '-[OggVorbisTests.VorbisDecoderTests testRejectsNonOggFiles]' passed (0.001 seconds).
+Test Case '-[OggVorbisTests.VorbisDecoderTests testSeek]' started.
+Test Case '-[OggVorbisTests.VorbisDecoderTests testSeek]' passed (0.004 seconds).
+Test Case '-[OggVorbisTests.VorbisDecoderTests testStereoToneProperties]' started.
+Test Case '-[OggVorbisTests.VorbisDecoderTests testStereoToneProperties]' passed (0.001 seconds).
+Test Suite 'VorbisDecoderTests' passed at 2026-11-08 21:32:30.138.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.074 (0.075) seconds
+Test Suite 'MusicLibraryPackageTests.xctest' passed at 2026-11-08 21:32:30.138.
+	 Executed 577 tests, with 4 tests skipped and 0 failures (0 unexpected) in 636.216 (636.317) seconds
+Test Suite 'Selected tests' passed at 2026-11-08 21:32:30.138.
+	 Executed 577 tests, with 4 tests skipped and 0 failures (0 unexpected) in 636.216 (636.321) seconds
+0 → WAV: 22050 Hz (erwartet 22050), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 22050 → AIFF: 22050 Hz (erwartet 22050), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 88200 → MP3: 48000 Hz (erwartet 48000), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 88200 → AAC: 48000 Hz (erwartet 48000), Dauer 2.0480 s
+[Studio] Ungewöhnliche Rate 88200 → M4A: 48000 Hz (erwartet 48000), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 88200 → FLAC: 88200 Hz (erwartet 88200), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 88200 → WAV: 88200 Hz (erwartet 88200), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 88200 → AIFF: 88200 Hz (erwartet 88200), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 96000 → MP3: 48000 Hz (erwartet 48000), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 96000 → AAC: 48000 Hz (erwartet 48000), Dauer 2.0480 s
+[Studio] Ungewöhnliche Rate 96000 → M4A: 48000 Hz (erwartet 48000), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 96000 → FLAC: 96000 Hz (erwartet 96000), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 96000 → WAV: 96000 Hz (erwartet 96000), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 96000 → AIFF: 96000 Hz (erwartet 96000), Dauer 2.0000 s
+[Studio] M4A ohne Neukodierung 5.0–15.0 s: Dauer 10.0000 s (Δ +0.00 ms), 192 kbit/s (Quelle 192), FFmpeg 441000 Frames, passthrough=ja
+[Studio] M4A ohne Neukodierung 1.0–1.2 s: Dauer 0.2000 s (Δ +0.00 ms), 192 kbit/s (Quelle 192), FFmpeg 8820 Frames, passthrough=ja
+[Studio] M4A ohne Neukodierung: Versatz 0 Frames, Störabstand zur Quelle 999.0 dB
+[Studio] MP3 ohne Neukodierung 5–15 s: AVAudioFile 10.0000 s (Δ +0.00 ms), LAME-Angaben 10.0000 s, FFmpeg 441000 Frames (erwartet 441000), 385 Frames, Verzögerung 1044, Auffüllung 1476
+[Studio] MP3 ohne Neukodierung: Versatz 0 Frames, Störabstand zur Quelle 999.0 dB
+[Studio] MP3 ohne Neukodierung: Tags übernommen (Liedtext, Sortierfelder, 2 Bilder, WebP → JPEG)
+[Studio] MP3 ohne Neukodierung 0.0–2.0 s: AVAudioFile 2.0000 s, LAME 2.0000 s, FFmpeg 88200 Frames (erwartet 88200)
+[Studio] MP3 ohne Neukodierung 28.0–30.0 s: AVAudioFile 2.0000 s, LAME 2.0000 s, FFmpeg 88200 Frames (erwartet 88200)
+[Studio] MP3 ohne Neukodierung 10.0–10.2 s: AVAudioFile 0.2000 s, LAME 0.2000 s, FFmpeg 8820 Frames (erwartet 8820)
+[Studio] Ohne Neukodierung nur, wenn möglich: Blende/anderes Format/andere Rate → neu kodiert
+[Studio] Abbruch MP3 bei 25 %: StudioError.cancelled, Ordner danach: q.wav
+[Studio] Abbruch FLAC bei 20 %: StudioError.cancelled, Ordner danach: q.wav
+[Studio] Abbruch WAV bei 23 %: StudioError.cancelled, Ordner danach: q.wav
+[Studio] Abbruch M4A bei 24 %: StudioError.cancelled, Ordner danach: q.wav
+[Studio] Beschädigt/unbekannt muell.wav: Die Datei konnte nicht gelesen werden. Sie ist beschädigt oder enthält keine lesbaren Audiodaten.
+[Studio] Analyse muell.wav: Die Datei konnte nicht gelesen werden. Sie ist beschädigt oder enthält keine lesbaren Audiodaten.
+[Studio] Beschädigt/unbekannt muell.mp3: Die Datei konnte nicht gelesen werden. Sie ist beschädigt oder enthält keine lesbaren Audiodaten.
+[Studio] Analyse muell.mp3: Die Datei konnte nicht gelesen werden. Sie ist beschädigt oder enthält keine lesbaren Audiodaten.
+[Studio] Beschädigt/unbekannt text.flac: Die Datei konnte nicht gelesen werden. Sie ist beschädigt oder enthält keine lesbaren Audiodaten.
+[Studio] Analyse text.flac: Die Datei konnte nicht gelesen werden. Sie ist beschädigt oder enthält keine lesbaren Audiodaten.
+[Studio] Beschädigt/unbekannt leer.mp3: Die Datei konnte nicht gelesen werden. Die Datei ist leer.
+[Studio] Analyse leer.mp3: Die Datei konnte nicht gelesen werden. Die Datei ist leer.
+[Studio] Beschädigt/unbekannt abgeschnitten.wav: Die Datei konnte nicht gelesen werden. Sie ist beschädigt oder enthält keine lesbaren Audiodaten.
+[Studio] Analyse abgeschnitten.wav: Die Datei konnte nicht gelesen werden. Sie ist beschädigt oder enthält keine lesbaren Audiodaten.
+[Studio] Beschädigt/unbekannt abgeschnitten.flac: Die Datei konnte nicht gelesen werden. Sie ist beschädigt oder enthält keine lesbaren Audiodaten.
+[Studio] Analyse abgeschnitten.flac: Die Datei konnte nicht gelesen werden. Sie ist beschädigt oder enthält keine lesbaren Audiodaten.
+[Studio] Beschädigt/unbekannt unbekannt.xyz: Das Format „xyz“ wird nicht unterstützt.
+[Studio] Analyse unbekannt.xyz: Das Format „xyz“ wird nicht unterstützt.
+[Studio] Fehlende Datei: Die Datei konnte nicht gelesen werden. Die Quelldatei wurde nicht gefunden.
+[Studio] Lange Datei: 30 min WAV (303 MB) in 48.1 s erzeugt
+[Studio] Lange Datei 30 min → MP3 · 320 kbit/s: 18.8 s (96× Echtzeit), Speicher vorher 115.4 MB, Spitze 115.6 MB (+0.2 MB), Dauer 1800.000 s, 320 kbit/s, 68 MB
+[Studio] Wellenform 30 min MP3: 2.6 s, 310079 Blöcke
+[Studio] Lange Datei 30 min → FLAC · Bittiefe wie Quelle · Stufe 5: 53.3 s (34× Echtzeit), Speicher vorher 115.5 MB, Spitze 115.8 MB (+0.3 MB), Dauer 1800.000 s, 233 kbit/s, 49 MB
+[Studio] Lange Datei 30 min → M4A · 256 kbit/s: 28.0 s (64× Echtzeit), Speicher vorher 115.5 MB, Spitze 116.0 MB (+0.5 MB), Dauer 1800.000 s, 256 kbit/s, 55 MB
+[Studio] Lange Datei 30 min → WAV · 24 Bit · 48 kHz: 105.0 s (17× Echtzeit), Speicher vorher 115.7 MB, Spitze 116.6 MB (+0.8 MB), Dauer 1800.000 s, 2304 kbit/s, 494 MB
+[Studio] Wellenform 1 h WAV 44,1 kHz Stereo: 0.85 s, 620157 Blöcke (erwartet 620157), 6 Stufen, Spitze 0.500, Speicher +0.0 MB, 8 Fortschrittsmeldungen
+[Studio] Anhalten bei 13 %: 0,8 s kein Fortschritt (0.1333 → 0.1333), nach Fortsetzen fertig: 90.000 s, Rückrufe max. 11/s
+[Studio] Abbruch im angehaltenen Zustand nach 2 ms
+[Studio] Analyse MP3: Titel „Testtitel äöü“, Interpret „Test-Interpret“, Codec MP3, 258 kbit/s, 48000 Hz, Bits –, 2 Kan., verlustfrei nein, Dauer 4.000 s, Cover 323 B, 131321 B
+[Studio] Analyse FLAC: Titel „Testtitel äöü“, Interpret „Test-Interpret“, Codec FLAC, 741 kbit/s, 48000 Hz, Bits 24, 2 Kan., verlustfrei ja, Dauer 4.000 s, Cover 323 B, 375316 B
+[Studio] Analyse WAV: Titel „Testtitel äöü“, Interpret „Test-Interpret“, Codec PCM, 1536 kbit/s, 48000 Hz, Bits 16, 2 Kan., verlustfrei ja, Dauer 4.000 s, Cover 323 B, 769582 B
+[Studio] Analyse AIFF: Titel „Testtitel äöü“, Interpret „Test-Interpret“, Codec PCM, 2304 kbit/s, 48000 Hz, Bits 24, 2 Kan., verlustfrei ja, Dauer 4.000 s, Cover 323 B, 1153592 B
+[Studio] Analyse M4A: Titel „Testtitel äöü“, Interpret „Test-Interpret“, Codec AAC, 192 kbit/s, 48000 Hz, Bits –, 2 Kan., verlustfrei nein, Dauer 4.000 s, Cover 323 B, 159534 B
+[Studio] Analyse AAC: Titel „a“, Interpret „“, Codec AAC, 194 kbit/s, 48000 Hz, Bits –, 2 Kan., verlustfrei nein, Dauer 4.065 s, Cover 0 B, 98588 B
+[Studio] Vorhören 1,0–1,6 s: Position nach 0,25 s 1.256 s, Ende gemeldet: ja, Position danach 1.600 s
+[Studio] Vorhören: Anhalten bei 0.288 s gehalten, Stoppen ohne onFinish
+[Studio] Eingang video.mp4: Codec AAC, 44100 Hz, 1 Kan., Dauer 3.000 s, Vorschaubild 16283 B → WAV-Ausschnitt 2.0000 s (Δ +0.00 ms), 1 Kan., Spitze 0.13
+[Studio] Eingang video.mov: Codec PCM, 48000 Hz, 1 Kan., Dauer 3.000 s, Vorschaubild 16283 B → WAV-Ausschnitt 2.0000 s (Δ +0.00 ms), 1 Kan., Spitze 0.12
+[Studio] Eingang vorbis.ogg: Codec Vorbis, 48000 Hz, 2 Kan., Dauer 3.000 s, Vorschaubild 0 B → WAV-Ausschnitt 2.0000 s (Δ +0.00 ms), 2 Kan., Spitze 0.18
+[Studio] Eingang opus.opus: Codec Opus, 48000 Hz, 2 Kan., Dauer 3.000 s, Vorschaubild 0 B → WAV-Ausschnitt 2.0000 s (Δ +0.00 ms), 2 Kan., Spitze 0.13
+[Studio] Eingang webm.webm: Codec OPUS, 48000 Hz, 2 Kan., Dauer 3.008 s, Vorschaubild 0 B → WAV-Ausschnitt 2.0000 s (Δ +0.00 ms), 2 Kan., Spitze 0.13
+[Studio] Eingang mka.mka: Codec FLAC, 48000 Hz, 2 Kan., Dauer 3.000 s, Vorschaubild 0 B → WAV-Ausschnitt 2.0000 s (Δ +0.00 ms), 2 Kan., Spitze 0.12
+[Studio] Wellenform 10 s: 1724 Blöcke, 1 Stufen, Spitze 0.5, 2 Fortschrittsmeldungen
+[Studio] Encoder: LAME 3.100, libFLAC 1.5.0 (reference libFLAC 1.5.0 20250211)
+TimePitch Akkord Spitze 0.990 2.0 HT: Ausgang 0.9868 (-0.03 dB)
+TimePitch Akkord Spitze 0.990 -5.0 HT: Ausgang 0.9868 (-0.03 dB)
+TimePitch Akkord Spitze 0.990 12.0 HT: Ausgang 0.9868 (-0.03 dB)
+TimePitch Akkord Spitze 0.990 -12.0 HT: Ausgang 0.9868 (-0.03 dB)
+TimePitch Akkord Spitze 0.500 2.0 HT: Ausgang 0.5005 (0.01 dB)
+TimePitch Akkord Spitze 0.500 -5.0 HT: Ausgang 0.5008 (0.01 dB)
+TimePitch Akkord Spitze 0.500 12.0 HT: Ausgang 0.5001 (0.00 dB)
+TimePitch Akkord Spitze 0.500 -12.0 HT: Ausgang 0.5002 (0.00 dB)
+TimePitch Akkord 2.0 HT: Verzerrungs-/Rauschanteil -59.5 dB
+TimePitch Akkord -2.0 HT: Verzerrungs-/Rauschanteil -60.4 dB
+TimePitch-Latenz: 44,1 kHz 6251 Frames, 48 kHz 6251, 96 kHz 12395
+TimePitch Rechenaufwand 0.5 HT: 60 s Stereo in 26.098 s → 2.3× Echtzeit
+TimePitch Rechenaufwand 12.0 HT: 60 s Stereo in 44.907 s → 1.3× Echtzeit
+TimePitch Sinus 440 Hz 0.5 HT: soll 452.893 Hz, gemessen 452.8930 Hz (Nulldurchgänge) / 452.893 Hz (FFT), Störabstand 107.2 dB
+TimePitch Sinus 440 Hz -0.1 HT: soll 437.466 Hz, gemessen 437.4658 Hz (Nulldurchgänge) / 437.467 Hz (FFT), Störabstand 97.3 dB
+TimePitch Sinus 440 Hz 12.0 HT: soll 880.000 Hz, gemessen 880.0000 Hz (Nulldurchgänge) / 879.998 Hz (FFT), Störabstand 90.8 dB
+TimePitch Sinus 440 Hz -12.0 HT: soll 220.000 Hz, gemessen 220.0000 Hz (Nulldurchgänge) / 219.999 Hz (FFT), Störabstand 100.1 dB
+[v2-perf] LibraryIndex.build (Vergleich): 922.6 ms
+[v2-perf] facets: 146.0 ms
+[v2-perf] filter (Genres + Jahrzehnte + 2 Schnellfilter): 10.6 ms
+[v2-perf] filter (Interpreten + Formate): 37.1 ms
+[v2-perf] filter (alle Schnellfilter): 6.9 ms
+[v2-perf] filter Alben: 21.4 ms
+[v2-perf] filter Interpreten: 18.0 ms
+[v2-perf] filter Genres: 13.3 ms
+[v2-perf] Sortierung Titel TITLE: 146.4 ms
+[v2-perf] Sortierung Titel ALBUM: 335.3 ms
+[v2-perf] Sortierung Titel ALBUM_ARTIST: 408.1 ms
+[v2-perf] Sortierung Titel DATE_ADDED: 157.6 ms
+[v2-perf] Sortierung Titel RATING: 355.1 ms
+[v2-perf] Sortierung Titel BPM: 256.8 ms
+[v2-perf] Sortierung Alben DATE_ADDED: 66.5 ms
+[v2-perf] Sortierung Alben TRACK_COUNT: 358.5 ms
+[v2-perf] Sortierung Interpreten ALBUM_COUNT: 63.6 ms
+[v2-perf] SmartPlaylists.byGenre: 977.5 ms
+[v2-perf] SmartPlaylists.recentlyAdded: 129.1 ms
+[v2-perf] SmartPlaylists.recentlyPlayed: 9.0 ms
+[v2-perf] SmartPlaylists.neverPlayed: 124.3 ms
+[v2-perf] SmartPlaylists.topRated: 128.2 ms
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

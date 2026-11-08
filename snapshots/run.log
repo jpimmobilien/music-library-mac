@@ -1,0 +1,112 @@
+[Snapshot] ▸ 60-studio-leer hell
+[Snapshot] 60-studio-leer hell: Aufbau+Warten 2252 ms, Hauptthread-Verzögerung Ø 12.1 ms, max 29.3 ms, Hauptthread belegt 4 %
+[Snapshot] ▸ 60-studio-leer dunkel
+[Snapshot] 60-studio-leer dunkel: Aufbau+Warten 2217 ms, Hauptthread-Verzögerung Ø 8.1 ms, max 25.2 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 60-studio-leer-schmal hell
+[Snapshot] 60-studio-leer-schmal hell: Aufbau+Warten 2235 ms, Hauptthread-Verzögerung Ø 13.6 ms, max 26.2 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 60-studio-leer-schmal dunkel
+[Snapshot] 60-studio-leer-schmal dunkel: Aufbau+Warten 2250 ms, Hauptthread-Verzögerung Ø 13.8 ms, max 31.0 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 60-studio-quelle hell
+[Snapshot] 60-studio-quelle hell: Aufbau+Warten 2249 ms, Hauptthread-Verzögerung Ø 80.8 ms, max 149.2 ms, Hauptthread belegt 4 %
+[Snapshot] ▸ 60-studio-quelle dunkel
+[Snapshot] 60-studio-quelle dunkel: Aufbau+Warten 2281 ms, Hauptthread-Verzögerung Ø 85.9 ms, max 140.4 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 60-studio-quelle-standard hell
+[Snapshot] 60-studio-quelle-standard hell: Aufbau+Warten 2216 ms, Hauptthread-Verzögerung Ø 109.1 ms, max 158.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-quelle-standard dunkel
+[Snapshot] 60-studio-quelle-standard dunkel: Aufbau+Warten 2251 ms, Hauptthread-Verzögerung Ø 79.4 ms, max 143.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-zoom-blenden hell
+[Snapshot] 60-studio-zoom-blenden hell: Aufbau+Warten 2352 ms, Hauptthread-Verzögerung Ø 103.5 ms, max 143.3 ms, Hauptthread belegt 2 %
+[Snapshot] ▸ 60-studio-zoom-blenden dunkel
+[Snapshot] 60-studio-zoom-blenden dunkel: Aufbau+Warten 2242 ms, Hauptthread-Verzögerung Ø 94.1 ms, max 160.7 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 60-studio-export-mp3 hell
+[Snapshot] 60-studio-export-mp3 hell: Aufbau+Warten 2231 ms, Hauptthread-Verzögerung Ø 65.4 ms, max 122.2 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 60-studio-export-mp3 dunkel
+[Snapshot] 60-studio-export-mp3 dunkel: Aufbau+Warten 2240 ms, Hauptthread-Verzögerung Ø 75.2 ms, max 128.9 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 60-studio-export-wav hell
+[Snapshot] 60-studio-export-wav hell: Aufbau+Warten 2302 ms, Hauptthread-Verzögerung Ø 119.3 ms, max 157.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-export-wav dunkel
+[Snapshot] 60-studio-export-wav dunkel: Aufbau+Warten 2251 ms, Hauptthread-Verzögerung Ø 81.6 ms, max 129.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-export-flac hell
+[Snapshot] 60-studio-export-flac hell: Aufbau+Warten 2242 ms, Hauptthread-Verzögerung Ø 104.3 ms, max 156.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-export-flac dunkel
+[Snapshot] 60-studio-export-flac dunkel: Aufbau+Warten 2309 ms, Hauptthread-Verzögerung Ø 69.2 ms, max 133.3 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 60-studio-metadaten hell
+[Snapshot] 60-studio-metadaten hell: Aufbau+Warten 2326 ms, Hauptthread-Verzögerung Ø 67.7 ms, max 154.1 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 60-studio-metadaten dunkel
+[Snapshot] 60-studio-metadaten dunkel: Aufbau+Warten 2345 ms, Hauptthread-Verzögerung Ø 82.9 ms, max 143.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-ziel hell
+[Snapshot] 60-studio-ziel hell: Aufbau+Warten 2297 ms, Hauptthread-Verzögerung Ø 86.3 ms, max 152.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-ziel dunkel
+[Snapshot] 60-studio-ziel dunkel: Aufbau+Warten 2359 ms, Hauptthread-Verzögerung Ø 84.9 ms, max 147.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-warteschlange hell
+[Snapshot] 60-studio-warteschlange hell: Aufbau+Warten 2330 ms, Hauptthread-Verzögerung Ø 79.0 ms, max 145.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-warteschlange dunkel
+[Snapshot] 60-studio-warteschlange dunkel: Aufbau+Warten 2222 ms, Hauptthread-Verzögerung Ø 60.3 ms, max 160.5 ms, Hauptthread belegt 5 %
+[Snapshot] ▸ 60-studio-verlauf hell
+[Snapshot] 60-studio-verlauf hell: Aufbau+Warten 2335 ms, Hauptthread-Verzögerung Ø 76.3 ms, max 142.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-verlauf dunkel
+[Snapshot] 60-studio-verlauf dunkel: Aufbau+Warten 2311 ms, Hauptthread-Verzögerung Ø 92.0 ms, max 151.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-werkzeuge hell
+[Snapshot] 60-studio-werkzeuge hell: Aufbau+Warten 2278 ms, Hauptthread-Verzögerung Ø 102.9 ms, max 160.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-werkzeuge dunkel
+[Snapshot] 60-studio-werkzeuge dunkel: Aufbau+Warten 2201 ms, Hauptthread-Verzögerung Ø 75.2 ms, max 122.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-werkzeuge-installation hell
+[Snapshot] 60-studio-werkzeuge-installation hell: Aufbau+Warten 2352 ms, Hauptthread-Verzögerung Ø 106.7 ms, max 154.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-werkzeuge-installation dunkel
+[Snapshot] 60-studio-werkzeuge-installation dunkel: Aufbau+Warten 2207 ms, Hauptthread-Verzögerung Ø 97.2 ms, max 142.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-werkzeuge-fehlen hell
+[Snapshot] 60-studio-werkzeuge-fehlen hell: Aufbau+Warten 2236 ms, Hauptthread-Verzögerung Ø 90.5 ms, max 150.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-werkzeuge-fehlen dunkel
+[Snapshot] 60-studio-werkzeuge-fehlen dunkel: Aufbau+Warten 2340 ms, Hauptthread-Verzögerung Ø 78.1 ms, max 160.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-spotify hell
+[Snapshot] 60-studio-spotify hell: Aufbau+Warten 2347 ms, Hauptthread-Verzögerung Ø 120.8 ms, max 154.8 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-spotify dunkel
+[Snapshot] 60-studio-spotify dunkel: Aufbau+Warten 2289 ms, Hauptthread-Verzögerung Ø 61.1 ms, max 141.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-doppelt hell
+[Snapshot] 60-studio-doppelt hell: Aufbau+Warten 2255 ms, Hauptthread-Verzögerung Ø 61.6 ms, max 146.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-doppelt dunkel
+[Snapshot] 60-studio-doppelt dunkel: Aufbau+Warten 2320 ms, Hauptthread-Verzögerung Ø 110.6 ms, max 160.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-analyse hell
+[Snapshot] 60-studio-analyse hell: Aufbau+Warten 2385 ms, Hauptthread-Verzögerung Ø 138.2 ms, max 152.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-analyse dunkel
+[Snapshot] 60-studio-analyse dunkel: Aufbau+Warten 2338 ms, Hauptthread-Verzögerung Ø 89.4 ms, max 150.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-laden hell
+[Snapshot] 60-studio-laden hell: Aufbau+Warten 2270 ms, Hauptthread-Verzögerung Ø 74.6 ms, max 142.7 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 60-studio-laden dunkel
+[Snapshot] 60-studio-laden dunkel: Aufbau+Warten 2275 ms, Hauptthread-Verzögerung Ø 72.9 ms, max 160.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-laden-noetig hell
+[Snapshot] 60-studio-laden-noetig hell: Aufbau+Warten 2241 ms, Hauptthread-Verzögerung Ø 39.4 ms, max 125.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-laden-noetig dunkel
+[Snapshot] 60-studio-laden-noetig dunkel: Aufbau+Warten 2262 ms, Hauptthread-Verzögerung Ø 87.7 ms, max 149.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-wellenform-berechnung hell
+[Snapshot] 60-studio-wellenform-berechnung hell: Aufbau+Warten 2208 ms, Hauptthread-Verzögerung Ø 98.7 ms, max 150.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-wellenform-berechnung dunkel
+[Snapshot] 60-studio-wellenform-berechnung dunkel: Aufbau+Warten 2305 ms, Hauptthread-Verzögerung Ø 77.4 ms, max 151.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-schneiden hell
+[Snapshot] 60-studio-schneiden hell: Aufbau+Warten 2343 ms, Hauptthread-Verzögerung Ø 118.3 ms, max 147.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-schneiden dunkel
+[Snapshot] 60-studio-schneiden dunkel: Aufbau+Warten 2229 ms, Hauptthread-Verzögerung Ø 82.3 ms, max 160.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-schneiden-speichern hell
+[Snapshot] 60-studio-schneiden-speichern hell: Aufbau+Warten 2355 ms, Hauptthread-Verzögerung Ø 64.1 ms, max 143.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-schneiden-speichern dunkel
+[Snapshot] 60-studio-schneiden-speichern dunkel: Aufbau+Warten 2294 ms, Hauptthread-Verzögerung Ø 93.8 ms, max 160.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-schneiden-bestaetigen hell
+[Snapshot] 60-studio-schneiden-bestaetigen hell: Aufbau+Warten 2344 ms, Hauptthread-Verzögerung Ø 92.7 ms, max 137.8 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-schneiden-bestaetigen dunkel
+[Snapshot] 60-studio-schneiden-bestaetigen dunkel: Aufbau+Warten 2246 ms, Hauptthread-Verzögerung Ø 71.1 ms, max 144.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-verlauf-loeschen hell
+[Snapshot] 60-studio-verlauf-loeschen hell: Aufbau+Warten 2229 ms, Hauptthread-Verzögerung Ø 65.3 ms, max 122.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-verlauf-loeschen dunkel
+[Snapshot] 60-studio-verlauf-loeschen dunkel: Aufbau+Warten 2220 ms, Hauptthread-Verzögerung Ø 100.6 ms, max 153.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-schmal hell
+[Snapshot] 60-studio-schmal hell: Aufbau+Warten 2273 ms, Hauptthread-Verzögerung Ø 84.2 ms, max 150.5 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 60-studio-schmal dunkel
+[Snapshot] 60-studio-schmal dunkel: Aufbau+Warten 2268 ms, Hauptthread-Verzögerung Ø 83.7 ms, max 150.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-schmal-export hell
+[Snapshot] 60-studio-schmal-export hell: Aufbau+Warten 2306 ms, Hauptthread-Verzögerung Ø 112.5 ms, max 150.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-schmal-export dunkel
+[Snapshot] 60-studio-schmal-export dunkel: Aufbau+Warten 2265 ms, Hauptthread-Verzögerung Ø 134.0 ms, max 153.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-einstellungen hell
+[Snapshot] 60-studio-einstellungen hell: Aufbau+Warten 2203 ms, Hauptthread-Verzögerung Ø 96.3 ms, max 153.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-einstellungen dunkel
+[Snapshot] 60-studio-einstellungen dunkel: Aufbau+Warten 2295 ms, Hauptthread-Verzögerung Ø 74.8 ms, max 160.6 ms, Hauptthread belegt 0 %
