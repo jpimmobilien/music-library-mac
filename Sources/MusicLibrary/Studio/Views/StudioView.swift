@@ -21,6 +21,10 @@ struct StudioView: View {
 
     /// Ab dieser Breite steht die Warteschlange als eigene Spalte rechts.
     static let columnBreakpoint: CGFloat = 1140
+    /// Größte Breite von Arbeitsfläche und Spalte zusammen.
+    static let maxContentWidth: CGFloat = 1680
+    /// Größte Breite der Arbeitsfläche.
+    static let maxMainWidth: CGFloat = 1240
 
     var body: some View {
         GeometryReader { geo in
@@ -39,8 +43,11 @@ struct StudioView: View {
                         .transition(.move(edge: .trailing).combined(with: .opacity))
                 }
             }
+            // Vollbild: Arbeitsfläche und Spalte bleiben beieinander (mittig) statt auseinanderzudriften
+            .frame(maxWidth: Self.maxContentWidth)
             .padding(.leading, Spacing.gutter)
             .padding(.trailing, wide ? 18 : Spacing.gutter)
+            .frame(maxWidth: .infinity)
             .animation(Motion.easeOut(Motion.medium), value: wide)
         }
         // Obere Zeile (neben der Navigation) verschiebt das Fenster wie eine Titelleiste
@@ -106,7 +113,7 @@ private struct StudioMainColumn: View {
                         }
                         .padding(.top, Chrome.contentTop + 2)
                         .padding(.bottom, bottomInset + (showsBar ? 92 : 12))
-                        .frame(maxWidth: 1180)
+                        .frame(maxWidth: StudioView.maxMainWidth)
                         .frame(maxWidth: .infinity)
                         .animation(Motion.easeOut(Motion.medium), value: studio.isEmptyStudio)
                         .animation(Motion.easeOut(Motion.medium), value: studio.showsEditor)
@@ -120,7 +127,7 @@ private struct StudioMainColumn: View {
                         .allowsHitTesting(false)
                         .transition(.opacity)
                     StudioExportBar(studio: studio, askDuplicates: $askDuplicates, export: startExport, proceed: proceed)
-                        .frame(maxWidth: 1180)
+                        .frame(maxWidth: StudioView.maxMainWidth)
                         .padding(.bottom, bottomInset - 8)
                         .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
