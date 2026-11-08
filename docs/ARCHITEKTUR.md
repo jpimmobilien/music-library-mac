@@ -103,3 +103,23 @@ Eigenes Designsystem nach den Prinzipien der Musikbibliothek (nicht kopiert):
 - Fenster: Inhalt bis an den Rand, schwebende Glas-Seitenleiste (Ampel-Knöpfe liegen darauf), Atmosphäre-Hintergrund.
 - MTP-Vorschaubilder: schwarze Balken (Android rechnet Hochformatfotos in 160×120 ein) werden symmetrisch erkannt
   und abgeschnitten (`Letterbox`, ABCore, getestet).
+
+## Version 3.0: „Midnight Glass“
+
+- `Design/Theme.swift`: neue Palette (tiefe Flächen, Signal-Grün, Tiefblau, Violett), Systemschrift SF Pro,
+  `CinematicBackground` (Lichtfelder, höchstens 20 Bilder/s, pausiert ohne Animationen bzw. bei „Bewegung reduzieren“),
+  Glas in fünf Schichten, `revealOnAppear`.
+- `Design/Visuals.swift`: eigene Darstellungen – Telefon, neutrales Notebook (ohne Markenzeichen), Lichtverbindung,
+  Speicherring, Akku, Vorschaumosaik.
+- `Services/DeviceShowcase.swift`: liest für die Übersicht nur 2–3 Ordnerlisten des Kameraordners (keine Inhalte);
+  `StorageBreakdown` berechnet die Belegung nach Art aus einer vollständigen Galerie-Suche.
+- Fenster: durchgehende Seitenleiste; unter 1100 pt Breite (oder per ⌃⌘S) Symbolleiste. Seitenköpfe weichen bei
+  Platzmangel aus (`ViewThatFits`) – Werkzeuge rücken unter den Titel statt abgeschnitten zu werden.
+- Dateimanager: eigene `SplitPanes` statt `HSplitView` (die Systemteilung erzeugte unter macOS 26 einen grauen
+  Titelleistenstreifen über dem Seitentitel).
+- Galerie: Abschnitte je Monat (`GallerySection`), `SectionMosaic` (neuestes Bild 2×2, Rest als fester Raster, faul geladen).
+- Großansicht als Ebene über dem ganzen Fenster statt als Dialog.
+- USB-Erkennung: Geräte eines Android-Herstellers gelten nur noch als „Telefon ohne Dateiübertragung“, wenn sie eine
+  telefontypische Schnittstelle haben (ADB, MTP/PTP, Tethering, MIDI, herstellerspezifisch) – Massenspeicher wie die
+  Samsung PSSD T5 EVO, Monitore oder Tastaturen werden ignoriert.
+- Akkustand: PTP-Geräteeigenschaft 0x5001 (`GetDevicePropValue`), nur wenn das Gerät sie anbietet.
