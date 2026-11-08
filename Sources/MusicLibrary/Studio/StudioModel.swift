@@ -281,10 +281,9 @@ final class StudioModel: ObservableObject {
     }
 
     /// Standardordner für „nur speichern“ und als Rückfall ohne Musikordner: ~/Music/Audio Studio
-    nonisolated static var defaultSaveFolder: String {
-        let music = FileManager.default.urls(for: .musicDirectory, in: .userDomainMask).first
-            ?? URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent("Music", isDirectory: true)
-        return music.appendingPathComponent("Audio Studio", isDirectory: true).path
+    /// (gleicher Pfad wie `defaultSaveFolder` der Oberfläche).
+    nonisolated static var standardSaveFolder: String {
+        (NSHomeDirectory() as NSString).appendingPathComponent("Music/Audio Studio")
     }
 
     /// Ziel nach den Einstellungen: Musikordner der Bibliothek (gewählter oder erster), ohne Musikordner
@@ -295,9 +294,9 @@ final class StudioModel: ObservableObject {
             if let folder = folders.first(where: { $0.id == settings.libraryFolderID }) ?? folders.first {
                 return .library(folderID: folder.id, folderPath: folder.path, subfolder: settings.librarySubfolder)
             }
-            return .folder(path: Self.defaultSaveFolder)
+            return .folder(path: Self.standardSaveFolder)
         }
-        return .folder(path: settings.saveFolderPath ?? Self.defaultSaveFolder)
+        return .folder(path: settings.saveFolderPath ?? Self.standardSaveFolder)
     }
 
     /// Ziel nach den Einstellungen (Bibliotheksordner oder freier Ordner). Beim Schneiden eines
@@ -341,7 +340,8 @@ final class StudioModel: ObservableObject {
     }
 
     /// Diese Quelle wurde schon einmal erfolgreich exportiert (Doppel-Warnung „Quelle schon exportiert“).
-    var previousExport: StudioHistoryEntry? {
+    /// Gleiche Schlüssel wie `previousExport` der Oberfläche (Adresse bzw. Dateipfad).
+    var previousExportEntry: StudioHistoryEntry? {
         guard let source else { return nil }
         return history.previousExport(of: Self.historyKey(source))
     }

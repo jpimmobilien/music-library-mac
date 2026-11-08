@@ -355,13 +355,13 @@ final class StudioModelTests: XCTestCase {
     func testDestinationRules() throws {
         let model = makeModel()
         model.settings.saveFolderPath = nil
-        XCTAssertEqual(model.destination, .folder(path: StudioModel.defaultSaveFolder))
-        XCTAssertTrue(StudioModel.defaultSaveFolder.hasSuffix("/Music/Audio Studio"))
+        XCTAssertEqual(model.destination, .folder(path: StudioModel.standardSaveFolder))
+        XCTAssertTrue(StudioModel.standardSaveFolder.hasSuffix("/Music/Audio Studio"))
         model.settings.saveFolderPath = "/Volumes/Daten/Export"
         XCTAssertEqual(model.destination, .folder(path: "/Volumes/Daten/Export"))
 
         model.settings.importToLibrary = true
-        XCTAssertEqual(model.destination, .folder(path: StudioModel.defaultSaveFolder), "ohne Musikordner: ~/Music/Audio Studio")
+        XCTAssertEqual(model.destination, .folder(path: StudioModel.standardSaveFolder), "ohne Musikordner: ~/Music/Audio Studio")
 
         func folder(_ id: Int64, _ path: String, enabled: Bool = true) -> LibraryFolder {
             LibraryFolder(id: id, path: path, bookmark: nil, name: (path as NSString).lastPathComponent, addedAt: 0, lastScanAt: nil,
@@ -450,10 +450,10 @@ final class StudioModelTests: XCTestCase {
         XCTAssertTrue(model.duplicateCandidates.isEmpty)
         model.metadata.artist = "Lina Hafen"
 
-        XCTAssertNil(model.previousExport)
+        XCTAssertNil(model.previousExportEntry)
         let job = try XCTUnwrap(model.addToQueue())
         await waitUntil("fertig") { model.job(job.id)?.phase == .done }
-        XCTAssertEqual(model.previousExport?.outputPath, model.job(job.id)?.outputPath)
+        XCTAssertEqual(model.previousExportEntry?.outputPath, model.job(job.id)?.outputPath)
     }
 
     // MARK: Eingabe und Internet-Quellen
