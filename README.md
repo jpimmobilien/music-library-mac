@@ -12,7 +12,7 @@ Werte, die macOS nicht liefert, heißen „Nicht verfügbar“ mit Begründung. 
 
 | Bereich | Inhalt |
 |---|---|
-| **Übersicht** | Puls (Systemstatus als Satz, Regeln offen einsehbar), anpassbare Karten: CPU, Arbeitsspeicher, Thermik, Batterie, Netzwerk, Speicher, GPU, Dieser Mac |
+| **Übersicht** | Studio-Bühne: Systemstatus als Aussage (Regeln offen einsehbar, Hinweise führen zum Bereich), Gerätebild passend zum Modell mit gemessener Last je Kern, Netz-Datenströme nach Durchsatz, Live-Leiste (CPU, GPU, RAM, ↓/↑, Temperatur, Batterie) und anpassbare Module mit Verlauf 1 min / 5 min / 15 min / 1 h |
 | **Aktivität** | alle Prozesse mit CPU, Speicher, Threads, Benutzer, Architektur; App-Familien, Filter, Suche, Beenden/Sofort beenden mit Bestätigung und Schutzliste |
 | **CPU & GPU** | Auslastung gesamt und je Kern (Leistungs-/Effizienzkerne bzw. Kerne/Threads), Last, Verlauf, Spitzen, GPU-Modell und Treiberauslastung |
 | **Arbeitsspeicher** | App, fest zugeordnet, komprimiert, Zwischenspeicher, Swap, Druck, Ein-/Auslagerungen, größte Verbraucher |
@@ -24,7 +24,12 @@ Werte, die macOS nicht liefert, heißen „Nicht verfügbar“ mit Begründung. 
 | **Netzwerk** | Schnittstellen mit Adressen und eigenen Raten, WLAN-Details (Name nur mit Ortungsfreigabe), Verbindungen mit Prozess, Verlauf |
 | **Verlauf** | optional (aus, bis Sie ihn einschalten): ein Wert pro Minute in SQLite auf diesem Mac, Zeitachse, CSV-Export, Löschen |
 | **Live-Monitor & Menüleiste** | kleines Fenster (⌥⌘M), auf Wunsch im Vordergrund; optionale CPU-Anzeige in der Menüleiste |
-| **Einstellungen** | 6 Themes, Akzent, Glasintensität, Bewegung, Dichte, Intervall, Sparmodus, SMC an/aus, Verlauf, Menüleiste, Sprache (Englisch/Deutsch), Datenschutz- und Quellenübersicht |
+| **Einstellungen** | 6 Themes, Akzent, Glasintensität, Bewegung, Dichte, Intervall, Sparmodus, SMC an/aus, Rohwerte statt geglätteter Werte, Entwickler-Diagnose (Eigenverbrauch, Messzeiten), Verlauf, Menüleiste, Sprache (Englisch/Deutsch), Datenschutz- und Quellenübersicht |
+
+**Seit 1.1 – „Studio“ und Monitoring 2.0:** Jede Detailseite beginnt mit einer großen Visualisierung aus echten
+Messwerten (schematische Darstellungen sind als solche beschriftet). Große Zahlen sind zeitbasiert geglättet (schneller
+Anstieg, langsamer Abfall), Spitzen der letzten 10 s bleiben sichtbar, der Rohwert steht darunter; jede Quelle misst in
+ihrem eigenen Takt. Konzept und Messgrößen: [docs/DESIGN_STUDIO.md](docs/DESIGN_STUDIO.md).
 
 Was macOS grundsätzlich nicht hergibt und wo die Grenzen liegen: [docs/GRENZEN.md](docs/GRENZEN.md).
 Build- und Testergebnis mit allen Prüfungen und den im Build gefundenen Fehlern: [docs/BUILD_UND_TESTS.md](docs/BUILD_UND_TESTS.md).

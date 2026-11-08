@@ -19,8 +19,19 @@ Stand 7. November 2026 · AETHER 1.0 (Phasen 1–9)
 
 - **SSD-Aktivität** summiert alle Blockgeräte, eingehängte Disk-Images eingeschlossen. Beim Lesen aus einer DMG zählt
   derselbe Verkehr deshalb zweimal (Image und SSD).
-- **Netzwerkraten gesamt** zählen nur Schnittstellen „en*“ (Ethernet, WLAN, Thunderbolt/USB-Ethernet); VPN-Tunnel
-  werden je Schnittstelle gezeigt, aber nicht addiert, damit nichts doppelt erscheint.
+- **Netzwerkraten gesamt** zählen nur Schnittstellen „en*“ (Ethernet, WLAN, Thunderbolt/USB-Ethernet) **mit routbarer
+  Adresse**; VPN-Tunnel werden je Schnittstelle gezeigt, aber nicht addiert, damit nichts doppelt erscheint. Die
+  interne Verbindung zum T1/T2-Chip mancher Intel-Macs (`en5`, nur link-lokal) zählt nicht mit – sie erzeugte in 1.0
+  scheinbaren Verkehr, bei dem Upload immer gleich Download war. Wechselt die Menge der gezählten Schnittstellen,
+  beginnt die Ratenmessung neu (kein Sprung durch Zählerstände einer neuen Schnittstelle).
+- **Geglättete Anzeige:** Große Zahlen folgen dem Messwert mit Zeitkonstanten (z. B. CPU: Anstieg τ 0,5 s, Abfall
+  τ 2,5 s). Nach einem Lastende zeigt die Zahl deshalb einige Sekunden lang einen höheren Wert als die letzte Messung –
+  der Rohwert steht klein darunter („jetzt …“), Spitzen der letzten 10 s werden extra genannt, und in den
+  Einstellungen lässt sich auf Rohwerte umschalten. Verläufe zeigen beides: Linie = geglättet, Band = Minimum bis
+  Maximum der Rohwerte je Abschnitt.
+- **Schematische Darstellungen:** Kernkacheln im Chip (CPU & GPU) und Wärmepunkte (Temperatur) stehen nicht an der
+  echten Stelle auf dem Chip bzw. im Gehäuse – die Werte sind gemessen, die Lage ist schematisch und so beschriftet.
+  Gerätebilder sind Illustrationen der Modellfamilie, keine Fotos dieses Macs.
 - **Speicheraufteilung** folgt der Berechnungsweise der Aktivitätsanzeige: App = anonyme Seiten ohne löschbare;
   Zwischenspeicher = dateigestützte und löschbare Seiten. Kleine Abweichungen sind möglich, weil beide Programme zu
   leicht unterschiedlichen Zeitpunkten messen.
