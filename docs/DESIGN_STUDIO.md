@@ -125,3 +125,47 @@ Kein Neon, kein RGB.
 - Dekorative Elemente (Bühnenlicht, Glanz) tragen keine Daten und sehen auch nicht danach aus.
 - Fehlt ein Wert, bleibt seine Visualisierung dunkel und trägt den Grund („nicht verfügbar – …“).
 - Keine Zufallsbewegung, die als Aktivität gelesen werden könnte.
+
+## 4. Umsetzung und Messung (Schritte 4–9)
+
+**Gemessen im Build** (Selbsttest der gebauten App, echte Messwerte, Grundtakt 1 s, je Bereich 8 s nach 2 s
+Eingewöhnung, CPU-Zeit des eigenen Prozesses über alle Threads):
+
+| Bereich | vor der Korrektur | nach der Korrektur (macOS 26, Apple Silicon, VM) |
+|---|---|---|
+| Übersicht | 99,6 % eines Kerns | **2,2 %** |
+| Übersicht, Bewegung aus | 100,9 % | 2,6 % |
+| Einstellungen | 100,2 % | 2,9 % |
+| Arbeitsspeicher | 100,1 % | 3,1 % |
+| Netzwerk | 100,3 % | 3,3 % |
+| Aktivität (Prozesse werden gemessen) | 100,3 % | 5,4 % |
+| CPU & GPU (Prozesse werden gemessen) | 93,0 % | 6,8 % |
+
+Messmaschine: 5,4 ms je Takt im Hintergrund, 0,65 ms je Takt im Hauptthread, ≈ 10 Anzeige-Aktualisierungen je
+Sekunde für alle sichtbaren Zahlen zusammen.
+
+**Gefundene Hauptursache** (Stichprobenprofil mit `/usr/bin/sample`, 83 % des Hauptthreads): Die Beschriftung der
+Menüleisten-Anzeige (`MenuBarExtra`) beobachtete den CPU-Speicher und änderte sich jede Sekunde. Jede Änderung des
+App-Graphen lässt SwiftUI die **gesamte** Ansicht jedes offenen Fensters neu auswerten und vermessen
+(`scenesDidChange → updateRootView → preferenceValues → sizeThatFits`) – in jedem Bereich und auch dann, wenn die
+Menüleisten-Anzeige ausgeschaltet ist. Diese Ursache steckte schon in 1.0 und erklärt einen großen Teil der dort
+beobachteten Last. Lösung: Die Menüleisten-Anzeige ist jetzt ein AppKit-Statusobjekt, dessen Titel direkt gesetzt
+wird; das Feld darunter ist ein `NSPopover` mit derselben SwiftUI-Ansicht.
+
+Zweite Ursache: Die Zeitraumwahl als `Picker(.segmented)` (AppKit) vermaß bei jedem Layout-Durchgang ihre
+Beschriftungen (≈ 5 %). Ersetzt durch eine reine SwiftUI-Auswahl mit fester Größe.
+
+**Weitere Umsetzung**
+- Übersicht: Aussage (Puls, Hinweise führen zum Bereich), Gerätebühne (Gerät passend zum Modell, Last je Kern auf dem
+  Bildschirm, Datenströme), Live-Leiste mit Verlauf der letzten Minute, Module mit Verlauf 1 min – 1 h, anpassbar wie
+  bisher.
+- Detailseiten: eigene Hero-Visualisierung je Bereich (siehe Tabelle in Abschnitt 3); schematische Darstellungen sind
+  beschriftet; fehlende Werte erscheinen als „–“ mit Grund, nie als Platzhalterzahl.
+- Seitenleiste 216 pt, Auswahl als Lichtfläche in der Bereichsfarbe, Mini-Werte geglättet.
+- Einstellungen → Messung: „Rohwerte zeigen“ und „Entwickler-Diagnose“ (Tafel und Fensteranzeige).
+- Batterie: keine Restlaufzeit „0 s“ mehr (vollständig geladen bzw. am Netzteil ohne Laden).
+- Netzwerk: nur Schnittstellen mit routbarer Adresse; kein Scheinverkehr über die T2-Brücke.
+
+**Nicht im Build prüfbar:** Batterie-Darstellung mit echtem Akku, Wärmekarte mit echten Sensoren und Lüftern
+(Build-Rechner sind virtuelle Macs ohne Akku und Sensoren). Diese Zustände sind im Code an echte Messwerte gebunden und
+erscheinen auf den Build-Rechnern ehrlich als „nicht vorhanden“ bzw. „nicht verfügbar“.
