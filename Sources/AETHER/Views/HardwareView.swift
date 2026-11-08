@@ -40,14 +40,20 @@ private struct HardwareContent: View {
         let sections = HardwareReport.sections(system: system, gpu: gpu, storage: storage, power: power, displays: displays)
         ScrollView(.vertical) {
             VStack(alignment: .leading, spacing: theme.density.cardSpacing + 4) {
-                PageHeader(title: system.hardware.machineName ?? system.profiler?.machineName ?? tr("This Mac"),
-                           subtitle: headerSubtitle) {
+                StudioHero(section: .hardware, eyebrow: tr("This Mac"),
+                           headline: system.hardware.machineName ?? system.profiler?.machineName ?? tr("This Mac"),
+                           lead: headerSubtitle, height: 320) {
                     Button {
                         exporting = true
                     } label: {
                         Label(tr("Export Report…"), systemImage: "square.and.arrow.up")
                     }
                     .buttonStyle(CapsuleButtonStyle(prominent: true))
+                } hero: {
+                    // Seriennummer bewusst nicht in der Bühne – sie bleibt hinter „Anzeigen“ (SerialPanel).
+                    HardwareHero(hardware: system.hardware, chip: system.profiler?.chip,
+                                 totalCores: system.profiler?.totalCores)
+                        .equatable()
                 }
                 if let message = exportMessage {
                     HStack(spacing: Spacing.m) {

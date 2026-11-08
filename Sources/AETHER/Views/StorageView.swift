@@ -13,7 +13,7 @@ struct StorageView: View {
         let isSnapshot = model.launchMode.isSnapshot
         ScrollView(.vertical) {
             VStack(alignment: .leading, spacing: theme.density.cardSpacing + 4) {
-                StorageHeader(store: engine.storage)
+                StorageHeroHeader(store: engine.storage, telemetry: engine.telemetry)
                 VolumesPanel(store: engine.storage, actions: VolumeActionsModel.shared) { url in
                     model.openInFiles(url)
                 }
@@ -32,19 +32,6 @@ struct StorageView: View {
             .padding(.horizontal, Spacing.gutter)
             .padding(.bottom, Spacing.gutter)
         }
-    }
-}
-
-private struct StorageHeader: View {
-    @ObservedObject var store: StorageStore
-
-    var body: some View {
-        PageHeader(title: tr("Storage"), subtitle: subtitle)
-    }
-
-    private var subtitle: String {
-        guard let startup = store.snapshot?.startup else { return tr("Volumes, disk activity, SSD health and folder analysis") }
-        return tr("%@ available of %@ on “%@”", fmt.bytes(startup.effectiveAvailable), fmt.bytes(startup.capacity), startup.name)
     }
 }
 

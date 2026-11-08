@@ -11,7 +11,7 @@ struct MemoryView: View {
         let engine = model.engine
         ScrollView(.vertical) {
             VStack(alignment: .leading, spacing: theme.density.cardSpacing + 4) {
-                PageHeader(title: tr("Memory"), subtitle: memorySubtitle(engine.system.hardware))
+                MemoryHeroHeader(memory: engine.memory, system: engine.system, telemetry: engine.telemetry)
                 MemoryBreakdownPanel(store: engine.memory, system: engine.system)
                 MemoryHistoryPanel(store: engine.memory, interval: settings.effectiveInterval.seconds)
                 HStack(alignment: .top, spacing: theme.density.cardSpacing) {
@@ -23,12 +23,6 @@ struct MemoryView: View {
             .padding(.horizontal, Spacing.gutter)
             .padding(.bottom, Spacing.gutter)
         }
-    }
-
-    private func memorySubtitle(_ hw: HardwareSummary) -> String {
-        guard let physical = hw.physicalMemory else { return "" }
-        let size = fmt.bytes(physical, style: .memory)
-        return hw.isAppleSilicon ? tr("%@ unified memory – shared by CPU, GPU and Neural Engine", size) : tr("%@ RAM", size)
     }
 }
 

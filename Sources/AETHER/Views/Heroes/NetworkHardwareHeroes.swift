@@ -162,10 +162,9 @@ struct HardwareHero: View, Equatable {
     let hardware: HardwareSummary
     let chip: String?
     let totalCores: Int?
-    let memoryText: String?
 
     static func == (a: HardwareHero, b: HardwareHero) -> Bool {
-        a.hardware == b.hardware && a.chip == b.chip && a.totalCores == b.totalCores && a.memoryText == b.memoryText
+        a.hardware == b.hardware && a.chip == b.chip && a.totalCores == b.totalCores
     }
 
     var body: some View {
@@ -221,7 +220,7 @@ struct HardwareHero: View, Equatable {
         if let memory = hardware.physicalMemory {
             let parts = fmt.byteParts(Double(memory), style: .memory)
             BigFigure(label: hardware.isAppleSilicon ? tr("Unified memory") : tr("Memory"), value: parts.value, unit: parts.unit,
-                      detail: memoryText, size: .small, source: .hardwareSysctl)
+                      size: .small, source: .hardwareSysctl)
         } else {
             BigFigure(label: tr("Memory"), value: "–", size: .small, source: .hardwareSysctl, reason: .queryFailed)
         }
