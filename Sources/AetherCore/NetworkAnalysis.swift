@@ -613,3 +613,24 @@ public enum HistoryCSV {
         return lines.joined(separator: "\r\n") + "\r\n"
     }
 }
+
+
+/// Adressen, über die echter Netzverkehr läuft (nicht Schleife, nicht link-lokal, nicht unbestimmt).
+public enum RoutableAddress {
+    /// `ipv4` in Host-Bytereihenfolge.
+    public static func isRoutable(ipv4: UInt32) -> Bool {
+        guard ipv4 != 0 else { return false }
+        if ipv4 >> 24 == 127 { return false }              // 127.0.0.0/8
+        if ipv4 >> 16 == 0xA9FE { return false }           // 169.254.0.0/16 (link-lokal)
+        return true
+    }
+
+    /// 16 Bytes in Netzwerkreihenfolge.
+    public static func isRoutable(ipv6 bytes: [UInt8]) -> Bool {
+        guard bytes.count == 16 else { return false }
+        if bytes.allSatisfy({ $0 == 0 }) { return false }                           // ::
+        if bytes.prefix(15).allSatisfy({ $0 == 0 }) && bytes[15] == 1 { return false } // ::1
+        if bytes[0] == 0xFE && (bytes[1] & 0xC0) == 0x80 { return false }           // fe80::/10
+        return true
+    }
+}

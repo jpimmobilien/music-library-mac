@@ -117,6 +117,19 @@ struct SettingsView: View {
             SettingsRow(title: tr("When the window isn’t visible"), detail: nil) {
                 Text(tr("Measurements pause automatically")).font(Typo.callout).foregroundStyle(theme.textSecondary)
             }
+            SettingsRow(title: tr("Show raw values"),
+                        detail: tr("Off: large numbers are smoothed (time-based, rises fast, falls slowly) so they don’t flicker – peaks of the last 10 seconds stay visible, and the latest raw value is shown underneath. On: every number shows exactly the latest measurement.")) {
+                Toggle("", isOn: $settings.showRawValues).toggleStyle(.switch).labelsHidden()
+            }
+            SettingsRow(title: tr("Developer diagnostics"),
+                        detail: tr("Shows how much CPU and memory AETHER itself uses, how long each measurement takes and how often the display updates. Also shows a small overlay in the window.")) {
+                Toggle("", isOn: $settings.diagnosticsEnabled).toggleStyle(.switch).labelsHidden()
+            }
+            if settings.diagnosticsEnabled {
+                DiagnosticsPanel(diagnostics: model.engine.diagnostics)
+                    .padding(14)
+                    .background(RoundedRectangle(cornerRadius: Radius.control, style: .continuous).fill(theme.fieldFill))
+            }
         }
     }
 

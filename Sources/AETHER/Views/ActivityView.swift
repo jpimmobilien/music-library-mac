@@ -140,18 +140,10 @@ struct ActivityView: View {
         }
     }
 
-    private func passes(_ row: ProcessRow, _ f: ProcessFilter) -> Bool {
-        switch f {
-        case .all: return true
-        case .mine: return row.isOwn
-        case .system: return row.isSystem
-        case .apps: return row.isApp
-        case .highCPU: return (row.cpu ?? 0) >= ProcessFilter.highCPUThreshold
-        case .highMemory: return (row.memory ?? 0) >= ProcessFilter.highMemoryThreshold
-        }
-    }
+    private func passes(_ row: ProcessRow, _ f: ProcessFilter) -> Bool { f.passes(row) }
 
-    private func count(for f: ProcessFilter) -> Int { store.rows.filter { passes($0, f) }.count }
+    /// Einmal je Messung im Store berechnet (nicht bei jedem Neuzeichnen).
+    private func count(for f: ProcessFilter) -> Int { store.filterCounts[f] ?? 0 }
 
     private var visibleRows: [ProcessRow] {
         store.rows
@@ -224,6 +216,8 @@ struct ActivityView: View {
         }
         .tableStyle(.inset(alternatesRowBackgrounds: false))
         .scrollContentBackground(.hidden)
+        // Neue Messwerte ohne Zeilenanimation übernehmen (530 Zeilen umzustellen kostet sonst viel Rechenzeit)
+        .transaction { $0.animation = nil }
         .contextMenu(forSelectionType: Int32.self) { ids in
             if let pid = ids.first, let row = store.row(pid) {
                 processMenu(row)

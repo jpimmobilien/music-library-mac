@@ -24,6 +24,18 @@ struct BatteryView: View {
 }
 
 /// Ladezustand in einem Satz (gemeinsam für Übersicht und Batterieseite).
+/// Restlaufzeit bzw. Zeit bis voll – nur, wenn sie etwas aussagt: nicht bei voller Ladung, nicht am Netzteil ohne
+/// Laden (macOS meldet dort „Time to Empty“ = 0) und nie „0 s“.
+/// - Returns: nil = nichts anzeigen
+func batteryTimeReading(_ b: BatterySnapshot) -> (charging: Bool, reading: Reading<Int>)? {
+    guard b.isPresent, b.isFullyCharged != true else { return nil }
+    let charging = b.isCharging == true
+    guard charging || b.powerSource == .battery else { return nil }
+    let reading = charging ? b.minutesToFull : b.minutesToEmpty
+    if let minutes = reading.value, minutes <= 0 { return nil }
+    return (charging, reading)
+}
+
 func batteryChargeState(_ b: BatterySnapshot) -> String {
     if b.isFullyCharged == true { return tr("Fully charged") }
     if b.isCharging == true { return tr("Charging") }
@@ -116,11 +128,9 @@ private struct ChargePanel: View {
 
     @ViewBuilder
     private func timeRow(_ b: BatterySnapshot) -> some View {
-        if b.isFullyCharged == true {
-            EmptyView()
-        } else {
-            let charging = b.isCharging == true
-            let reading = charging ? b.minutesToFull : b.minutesToEmpty
+        if let time = batteryTimeReading(b) {
+            let charging = time.charging
+            let reading = time.reading
             HStack(spacing: 6) {
                 if let minutes = reading.value {
                     let text = fmt.duration(seconds: Double(minutes) * 60)

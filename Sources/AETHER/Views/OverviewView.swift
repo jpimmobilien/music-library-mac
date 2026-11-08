@@ -1,190 +1,175 @@
 import SwiftUI
 import AetherCore
 
-/// Übersicht – die Systemzentrale: Identität, Puls, Karten.
+// =============================================================================================
+// Übersicht „Studio“: Aussage (Puls) → Gerätebühne mit Live-Daten → Live-Leiste → große Module.
+// Jede Visualisierung zeigt Messwerte; Gerätesilhouette und Bühnenlicht sind als Illustration gekennzeichnet.
+// Jede Ansicht beobachtet nur, was sie zeigt (Monitoring 2.0) – große Zahlen ändern sich nur bei sichtbarer Änderung.
+// =============================================================================================
+
 struct OverviewView: View {
     @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var settings: AppSettings
     @Environment(\.aether) private var theme
+    @AppStorage("aether.overview.range") private var range: ChartRange = .fiveMinutes
 
     var body: some View {
+        let engine = model.engine
         ScrollView(.vertical) {
-            VStack(alignment: .leading, spacing: theme.density.cardSpacing + 4) {
-                OverviewHeader(system: model.engine.system)
-                PulseBanner(system: model.engine.system, cpu: model.engine.cpu, storage: model.engine.storage)
+            VStack(alignment: .leading, spacing: 34) {
+                OverviewIntro(system: engine.system)
+                    .padding(.top, Metrics.headerTop + 6)
                 if model.editingDashboard {
                     DashboardEditor()
                         .transition(.opacity.combined(with: .move(edge: .top)))
                 }
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 268, maximum: 560), spacing: theme.density.cardSpacing,
-                                             alignment: .top)],
-                          alignment: .leading, spacing: theme.density.cardSpacing) {
-                    ForEach(settings.dashboard.visible) { card in
-                        cardView(card)
-                    }
-                }
-                .aetherAnimation(Motion.spring, value: settings.dashboard)
+                OverviewStage(system: engine.system, telemetry: engine.telemetry, gpu: engine.gpu)
+                LiveStrip(power: engine.power, gpu: engine.gpu, system: engine.system, telemetry: engine.telemetry)
+                OverviewModules(range: $range)
             }
-            .padding(.horizontal, Spacing.gutter)
-            .padding(.bottom, Spacing.gutter)
+            .padding(.horizontal, Spacing.gutter + 8)
+            .padding(.bottom, 44)
             .aetherAnimation(Motion.spring, value: model.editingDashboard)
         }
         .scrollIndicators(.automatic)
     }
-
-    @ViewBuilder
-    private func cardView(_ card: DashboardCard) -> some View {
-        let engine = model.engine
-        switch card {
-        case .cpu: CPUCard(store: engine.cpu, system: engine.system) { model.select(.cpuGPU) }
-        case .memory: MemoryCard(store: engine.memory, system: engine.system) { model.select(.memory) }
-        case .thermal: ThermalCard(store: engine.power) { model.select(.thermal) }
-        case .battery: BatteryCard(store: engine.power) { model.select(.battery) }
-        case .network: NetworkCard(store: engine.network) { model.select(.network) }
-        case .storage: StorageCard(store: engine.storage) { model.select(.storage) }
-        case .gpu: GPUCard(store: engine.gpu) { model.select(.cpuGPU) }
-        case .thisMac: ThisMacCard(system: engine.system) { model.select(.hardware) }
-        }
-    }
 }
 
-// MARK: - Kopf
+// MARK: - Aussage
 
-private struct OverviewHeader: View {
+/// Überzeile (Gerät), Aussage (Puls), Erklärung (System) und Werkzeuge.
+private struct OverviewIntro: View {
     @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var settings: AppSettings
     @ObservedObject var system: SystemStore
     @Environment(\.aether) private var theme
+    @State private var showingRules = false
 
     var body: some View {
         let hw = system.hardware
-        PageHeader(title: hw.machineName ?? tr("This Mac"), subtitle: subtitle(hw)) {
-            GlassGroup {
-                HStack(spacing: 2) {
-                    Menu {
-                        Picker(tr("Update interval"), selection: $settings.refreshInterval) {
-                            ForEach(RefreshInterval.allCases) { interval in
-                                Text(intervalName(interval)).tag(interval)
-                            }
+        let pulse = system.pulse
+        let measuring = system.lastUpdate == nil || system.pulseInput.cpuBusy == nil
+        HStack(alignment: .top, spacing: Spacing.xl) {
+            VStack(alignment: .leading, spacing: 10) {
+                Text(eyebrow(hw))
+                    .font(StudioType.eyebrow)
+                    .tracking(0.4)
+                    .foregroundStyle(theme.accent)
+                    .lineLimit(1)
+                HStack(alignment: .firstTextBaseline, spacing: 12) {
+                    StatusDot(color: measuring ? theme.statusUnavailable : theme.color(for: pulse.level), size: 12)
+                        .alignmentGuide(.firstTextBaseline) { $0[.bottom] + 8 }
+                    Text(measuring ? tr("Measuring…") : headline(pulse))
+                        .font(StudioType.headline)
+                        .tracking(-0.5)
+                        .foregroundStyle(theme.textPrimary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Text(lead(hw))
+                    .font(StudioType.lead)
+                    .foregroundStyle(theme.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                HStack(spacing: 8) {
+                    ForEach(pulse.findings) { finding in
+                        Button {
+                            model.select(section(for: finding.kind))
+                        } label: {
+                            Chip(text: findingSentence(finding), color: theme.color(for: finding.severity), symbol: "arrow.up.right")
                         }
-                        .pickerStyle(.inline)
-                        Toggle(tr("Low-impact mode"), isOn: $settings.lowImpact)
-                    } label: {
-                        HStack(spacing: 5) {
-                            Image(systemName: "timer").font(.system(size: 12, weight: .medium))
-                            Text(intervalName(settings.effectiveInterval)).font(.system(size: 12, weight: .medium)).monospacedDigit()
-                        }
-                        .padding(.horizontal, 10)
-                        .frame(height: 30)
+                        .buttonStyle(.plain)
+                        .help(tr("Show details"))
                     }
-                    .menuStyle(.borderlessButton)
-                    .menuIndicator(.hidden)
-                    .fixedSize()
-                    .help(tr("Update interval"))
-                    ToolbarIconButton(symbol: "square.grid.2x2", help: tr("Customize Overview"), active: model.editingDashboard) {
-                        model.editingDashboard.toggle()
+                    Button {
+                        showingRules.toggle()
+                    } label: {
+                        Label(tr("Why?"), systemImage: "info.circle")
+                    }
+                    .buttonStyle(CapsuleButtonStyle())
+                    .popover(isPresented: $showingRules, arrowEdge: .bottom) {
+                        PulseRules(pulse: pulse)
                     }
                 }
-                .padding(.horizontal, 4)
-                .glassSurface(Capsule(), interactive: true)
+                .padding(.top, 4)
             }
+            Spacer(minLength: Spacing.l)
+            tools
+        }
+        .aetherAnimation(Motion.easeOut(), value: pulse)
+    }
+
+    private var tools: some View {
+        GlassGroup {
+            HStack(spacing: 2) {
+                Menu {
+                    Picker(tr("Update interval"), selection: $settings.refreshInterval) {
+                        ForEach(RefreshInterval.allCases) { interval in
+                            Text(intervalName(interval)).tag(interval)
+                        }
+                    }
+                    .pickerStyle(.inline)
+                    Toggle(tr("Low-impact mode"), isOn: $settings.lowImpact)
+                } label: {
+                    HStack(spacing: 5) {
+                        Image(systemName: "timer").font(.system(size: 12, weight: .medium))
+                        Text(intervalName(settings.effectiveInterval)).font(.system(size: 12, weight: .medium)).monospacedDigit()
+                    }
+                    .padding(.horizontal, 10)
+                    .frame(height: 30)
+                }
+                .menuStyle(.borderlessButton)
+                .menuIndicator(.hidden)
+                .fixedSize()
+                .help(tr("Update interval"))
+                ToolbarIconButton(symbol: "square.grid.2x2", help: tr("Customize Overview"), active: model.editingDashboard) {
+                    model.editingDashboard.toggle()
+                }
+            }
+            .padding(.horizontal, 4)
+            .glassSurface(Capsule(), interactive: true)
         }
     }
 
-    private func subtitle(_ hw: HardwareSummary) -> String {
-        var parts: [String] = []
+    private func eyebrow(_ hw: HardwareSummary) -> String {
+        var parts = [hw.machineName ?? hw.modelIdentifier ?? tr("This Mac")]
         if let chip = system.profiler?.chip ?? hw.processor?.displayName { parts.append(chip) }
+        return parts.joined(separator: "  ·  ")
+    }
+
+    private func headline(_ pulse: Pulse) -> String {
+        guard let first = pulse.findings.first else { return tr("Your Mac is running smoothly.") }
+        return findingSentence(first)
+    }
+
+    private func lead(_ hw: HardwareSummary) -> String {
+        var parts: [String] = []
         if let os = hw.osVersion {
             parts.append(hw.osBuild.map { "macOS \(os) (\($0))" } ?? "macOS \(os)")
         }
+        if let memory = hw.physicalMemory {
+            parts.append(hw.isAppleSilicon ? tr("%@ unified memory", fmt.bytes(memory, style: .memory))
+                                           : tr("%@ memory", fmt.bytes(memory, style: .memory)))
+        }
+        if let boot = hw.bootTime {
+            parts.append(tr("up %@", fmt.duration(seconds: Uptime.seconds(bootTime: boot))))
+        }
         if hw.kind == .virtualMachine || hw.isVirtualMachine { parts.append(tr("Virtual Mac")) }
         return parts.joined(separator: "  ·  ")
+    }
+
+    private func section(for kind: PulseFindingKind) -> AppSection {
+        switch kind {
+        case .highCPU: return .cpuGPU
+        case .memoryPressure, .highSwap: return .memory
+        case .thermal: return .thermal
+        case .lowDiskSpace: return .storage
+        case .highNetwork: return .network
+        case .batteryService: return .battery
+        }
     }
 }
 
 func intervalName(_ interval: RefreshInterval) -> String {
     tr("%ld s", interval.rawValue)
-}
-
-// MARK: - Puls
-
-private struct PulseBanner: View {
-    @EnvironmentObject private var model: AppModel
-    @ObservedObject var system: SystemStore
-    @ObservedObject var cpu: CPUStore
-    @ObservedObject var storage: StorageStore
-    @Environment(\.aether) private var theme
-    @State private var showingRules = false
-
-    var body: some View {
-        let pulse = system.pulse
-        let measuring = system.lastUpdate == nil || cpu.snapshot?.total.value == nil
-        HStack(alignment: .center, spacing: Spacing.l) {
-            ZStack {
-                Circle().fill(statusColor(pulse, measuring).opacity(0.18)).frame(width: 34, height: 34)
-                StatusDot(color: statusColor(pulse, measuring), size: 11)
-            }
-            VStack(alignment: .leading, spacing: 7) {
-                HStack(spacing: 8) {
-                    Text(measuring ? tr("Measuring…") : sentence(pulse))
-                        .font(.system(size: 17, weight: .semibold))
-                        .foregroundStyle(theme.textPrimary)
-                    if pulse.findings.count > 1 {
-                        Text(tr("+%ld more", pulse.findings.count - 1))
-                            .font(Typo.captionMedium)
-                            .foregroundStyle(theme.textSecondary)
-                    }
-                }
-                evidence
-            }
-            Spacer(minLength: Spacing.s)
-            Button {
-                showingRules.toggle()
-            } label: {
-                Label(tr("Why?"), systemImage: "info.circle")
-            }
-            .buttonStyle(CapsuleButtonStyle())
-            .popover(isPresented: $showingRules, arrowEdge: .bottom) {
-                PulseRules(pulse: pulse)
-            }
-        }
-        .padding(.horizontal, 18)
-        .padding(.vertical, 14)
-        .glassSurface(RoundedRectangle(cornerRadius: Radius.card, style: .continuous), strong: true)
-        .aetherAnimation(Motion.easeOut(), value: pulse)
-        .accessibilityElement(children: .combine)
-    }
-
-    private var evidence: some View {
-        let input = system.pulseInput
-        return HStack(spacing: 6) {
-            if let busy = input.cpuBusy {
-                Chip(text: "CPU \(fmt.percent(busy))", color: theme.cpuUser)
-                    .onTapGesture { model.select(.cpuGPU) }
-            }
-            if let pressure = input.pressure {
-                Chip(text: tr("Memory pressure: %@", pressureName(pressure)), color: theme.color(for: pressure))
-                    .onTapGesture { model.select(.memory) }
-            }
-            if let thermal = input.thermal {
-                Chip(text: tr("Thermal: %@", thermalShortName(thermal)), color: theme.color(for: thermal))
-                    .onTapGesture { model.select(.thermal) }
-            }
-            if let available = input.startupAvailable {
-                Chip(text: tr("%@ free", fmt.bytes(available)), color: theme.storage)
-                    .onTapGesture { model.select(.storage) }
-            }
-        }
-    }
-
-    private func statusColor(_ pulse: Pulse, _ measuring: Bool) -> Color {
-        measuring ? theme.statusUnavailable : theme.color(for: pulse.level)
-    }
-
-    private func sentence(_ pulse: Pulse) -> String {
-        guard let first = pulse.findings.first else { return tr("Your Mac is running smoothly.") }
-        return findingSentence(first)
-    }
 }
 
 func findingSentence(_ finding: PulseFinding) -> String {

@@ -58,9 +58,9 @@ final class HistoryStore: ObservableObject {
         let sample = HistorySample(
             time: result.date,
             cpuBusy: result.cpu.total.value?.busy,
-            memoryUsed: result.memory.breakdown.value?.usedFraction,
-            pressure: result.memory.pressure.value?.rawValue,
-            swapUsed: result.memory.swap.value.map { Double($0.used) },
+            memoryUsed: result.memory?.breakdown.value?.usedFraction,
+            pressure: result.memory?.pressure.value?.rawValue,
+            swapUsed: result.memory?.swap.value.map { Double($0.used) },
             download: result.network.download.value,
             upload: result.network.upload.value,
             batteryPercent: battery?.isPresent == true ? battery?.percent.value.map { Double($0) } : nil,

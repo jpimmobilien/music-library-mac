@@ -18,8 +18,41 @@ public final class NetworkSource {
         var totalOut = CounterAccumulator()
     }
     private var trackers: [String: InterfaceTracker] = [:]
+    private var routable: Set<String> = []
+    private var routableChecked: Double = -.infinity
+    private var lastCounted: Set<String> = []
 
     public init() {}
+
+    /// Schnittstellen mit einer Adresse, über die echter Netzverkehr läuft: IPv4 außer 0.0.0.0, 127/8 und
+    /// 169.254/16, IPv6 außer ::1 und fe80::/10. Die interne Verbindung zum T1/T2-Sicherheitschip mancher Intel-Macs
+    /// (`en5`, nur link-lokal) zählt damit nicht als Netzwerk – sie erzeugte sonst scheinbaren Verkehr in beide
+    /// Richtungen.
+    public static func routableInterfaces() -> Set<String> {
+        var result = Set<String>()
+        var list: UnsafeMutablePointer<ifaddrs>?
+        guard getifaddrs(&list) == 0, let first = list else { return result }
+        defer { freeifaddrs(list) }
+        var cursor: UnsafeMutablePointer<ifaddrs>? = first
+        while let entry = cursor {
+            cursor = entry.pointee.ifa_next
+            guard let address = entry.pointee.ifa_addr else { continue }
+            let name = String(cString: entry.pointee.ifa_name)
+            switch Int32(address.pointee.sa_family) {
+            case AF_INET:
+                let ipv4 = address.withMemoryRebound(to: sockaddr_in.self, capacity: 1) { UInt32(bigEndian: $0.pointee.sin_addr.s_addr) }
+                if RoutableAddress.isRoutable(ipv4: ipv4) { result.insert(name) }
+            case AF_INET6:
+                let bytes = address.withMemoryRebound(to: sockaddr_in6.self, capacity: 1) { pointer in
+                    withUnsafeBytes(of: pointer.pointee.sin6_addr) { Array($0) }
+                }
+                if RoutableAddress.isRoutable(ipv6: bytes) { result.insert(name) }
+            default:
+                break
+            }
+        }
+        return result
+    }
 
     public struct InterfaceCounters: Sendable {
         public var name: String
@@ -72,7 +105,18 @@ public final class NetworkSource {
                                    upload: Reading(unavailable: .queryFailed, source: .interfaceCounters, at: date),
                                    sessionDownloaded: downTotal.total, sessionUploaded: upTotal.total, activeInterfaces: [])
         }
-        let counted = all.filter { Self.isCountedInterface($0.name) }
+        if uptime - routableChecked >= 5 {
+            routable = Self.routableInterfaces()
+            routableChecked = uptime
+        }
+        let counted = all.filter { Self.isCountedInterface($0.name) && routable.contains($0.name) }
+        // Andere Schnittstellen als zuvor (WLAN verbunden, Kabel gezogen): Summe springt – diese Messung neu beginnen
+        let names = Set(counted.map(\.name))
+        if names != lastCounted {
+            downRate.reset()
+            upRate.reset()
+            lastCounted = names
+        }
         let inSum = counted.reduce(UInt64(0)) { $0 &+ $1.bytesIn }
         let outSum = counted.reduce(UInt64(0)) { $0 &+ $1.bytesOut }
         downTotal.update(Dictionary(counted.map { ($0.name, $0.bytesIn) }, uniquingKeysWith: { a, _ in a }))

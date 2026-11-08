@@ -20,6 +20,10 @@ final class AppSettings: ObservableObject {
     @Published var smcEnabled: Bool { didSet { save(smcEnabled, "smcEnabled") } }
     /// Anzeige in der Menüleiste (misst dann auch bei geschlossenem Fenster, höchstens alle 5 s).
     @Published var menuBarEnabled: Bool { didSet { save(menuBarEnabled, "menuBarEnabled") } }
+    /// Rohwerte statt geglätteter Anzeige (Monitoring 2.0).
+    @Published var showRawValues: Bool { didSet { save(showRawValues, "showRawValues") } }
+    /// Entwickler-Diagnose: Eigenverbrauch, Takt, Verarbeitungsdauer.
+    @Published var diagnosticsEnabled: Bool { didSet { save(diagnosticsEnabled, "diagnosticsEnabled") } }
     /// Live-Monitor schwebt über anderen Fenstern.
     @Published var liveMonitorOnTop: Bool { didSet { save(liveMonitorOnTop, "liveMonitorOnTop") } }
     /// Lokaler Verlauf (Opt-in, standardmäßig aus) und seine Aufbewahrungsdauer in Tagen.
@@ -42,15 +46,25 @@ final class AppSettings: ObservableObject {
         glassIntensity = min(1, max(0, (read("glassIntensity") as? Double) ?? 0.85))
         motion = (read("motion") as? String).flatMap(MotionLevel.init(rawValue:)) ?? .full
         density = (read("density") as? String).flatMap(Density.init(rawValue:)) ?? .standard
-        refreshInterval = (read("refreshInterval") as? Int).flatMap(RefreshInterval.init(rawValue:)) ?? .twoSeconds
+        // Ab Version 2 der Einstellungen ist der Grundtakt 1 s (die Anzeige wird geglättet, einzelne Quellen haben
+        // eigene, längere Takte). Ältere gespeicherte 2-s-Takte werden einmalig umgestellt.
+        let storedInterval = (read("refreshInterval") as? Int).flatMap(RefreshInterval.init(rawValue:))
+        let settingsVersion = (read("settingsVersion") as? Int) ?? 1
+        refreshInterval = settingsVersion < 2 && storedInterval == .twoSeconds ? .oneSecond : (storedInterval ?? .oneSecond)
         lowImpact = (read("lowImpact") as? Bool) ?? false
         smcEnabled = (read("smcEnabled") as? Bool) ?? true
         menuBarEnabled = (read("menuBarEnabled") as? Bool) ?? false
+        showRawValues = (read("showRawValues") as? Bool) ?? false
+        diagnosticsEnabled = (read("diagnosticsEnabled") as? Bool) ?? false
         liveMonitorOnTop = (read("liveMonitorOnTop") as? Bool) ?? true
         historyEnabled = (read("historyEnabled") as? Bool) ?? false
         historyRetentionDays = (read("historyRetentionDays") as? Int).flatMap { AppSettings.historyRetentionChoices.contains($0) ? $0 : nil } ?? 7
         dashboard = DashboardLayout.restore(order: (read("dashboardOrder") as? [String]) ?? [],
                                             hidden: (read("dashboardHidden") as? [String]) ?? [])
+        if persist && settingsVersion < 2 {
+            defaults.set(refreshInterval.rawValue, forKey: "aether.refreshInterval")
+            defaults.set(2, forKey: "aether.settingsVersion")
+        }
     }
 
     var effectiveInterval: RefreshInterval { refreshInterval.effective(lowImpact: lowImpact) }

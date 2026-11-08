@@ -82,6 +82,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         model.settings.$smcEnabled
             .sink { [weak model] enabled in model?.engine.setSMCEnabled(enabled) }
             .store(in: &cancellables)
+        model.settings.$showRawValues
+            .sink { [weak model] raw in model?.engine.telemetry.showRaw = raw }
+            .store(in: &cancellables)
+        model.settings.$diagnosticsEnabled
+            .sink { [weak model] enabled in model?.engine.diagnostics.enabled = enabled }
+            .store(in: &cancellables)
         model.settings.$menuBarEnabled
             .dropFirst()
             .sink { [weak model] _ in

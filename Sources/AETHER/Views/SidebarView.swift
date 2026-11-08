@@ -41,7 +41,7 @@ struct SidebarView: View {
             .padding(.vertical, Spacing.s)
         }
         .frame(maxHeight: .infinity)
-        .glassSurface(RoundedRectangle(cornerRadius: Radius.panel, style: .continuous), strong: false, elevated: true)
+        .glassSurface(RoundedRectangle(cornerRadius: Radius.panel, style: .continuous), strong: false, elevated: true, floating: true)
     }
 
     private func row(_ section: AppSection) -> some View {
@@ -63,13 +63,13 @@ private struct SidebarRow: View {
         Button(action: action) {
             HStack(spacing: 10) {
                 Image(systemName: section.symbol)
-                    .font(.system(size: 13, weight: .medium))
+                    .font(.system(size: 13, weight: selected ? .semibold : .medium))
                     .symbolRenderingMode(.hierarchical)
-                    .foregroundStyle(selected ? theme.accent : theme.textSecondary)
+                    .foregroundStyle(selected ? section.tint(theme) : theme.textSecondary)
                     .frame(width: 20)
                 Text(section.title)
                     .font(.system(size: 13, weight: selected ? .semibold : .regular))
-                    .foregroundStyle(theme.textPrimary)
+                    .foregroundStyle(selected || hovering ? theme.textPrimary : theme.textPrimary.opacity(0.88))
                     .lineLimit(1)
                 Spacer(minLength: 0)
             }
@@ -77,11 +77,22 @@ private struct SidebarRow: View {
             .frame(height: Metrics.sidebarRow)
             .background {
                 if selected {
-                    RoundedRectangle(cornerRadius: 9, style: .continuous)
-                        .fill(theme.selectionFill)
+                    // Auswahl: weiches Licht in der Bereichsfarbe mit feiner Lichtkante links
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(LinearGradient(colors: [section.tint(theme).opacity(theme.isDark ? 0.26 : 0.17),
+                                                      section.tint(theme).opacity(theme.isDark ? 0.10 : 0.06)],
+                                             startPoint: .leading, endPoint: .trailing))
+                        .overlay(alignment: .leading) {
+                            Capsule()
+                                .fill(section.tint(theme))
+                                .frame(width: 3, height: 14)
+                                .padding(.leading, 2)
+                        }
+                        .overlay(RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .strokeBorder(Color.white.opacity(theme.isDark ? 0.07 : 0.5), lineWidth: 0.5))
                         .matchedGeometryEffect(id: "selection", in: namespace)
                 } else if hovering {
-                    RoundedRectangle(cornerRadius: 9, style: .continuous)
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
                         .fill(theme.hoverFill)
                 }
             }
@@ -90,6 +101,7 @@ private struct SidebarRow: View {
         .buttonStyle(.plain)
         .onHover { hovering = $0 }
         .aetherAnimation(Motion.spring, value: selected)
+        .aetherAnimation(Motion.quick, value: hovering)
         .accessibilityLabel(section.title)
         .accessibilityAddTraits(selected ? .isSelected : [])
     }
@@ -101,19 +113,22 @@ private struct MiniStatus: View {
 
     var body: some View {
         HStack(spacing: Spacing.m) {
-            MiniCPU(store: engine.cpu)
+            MiniCPU(metric: engine.telemetry.value(.cpuTotal))
             MiniMemory(store: engine.memory)
             MiniThermal(store: engine.power)
         }
     }
 }
 
+/// Geglättet wie die großen Zahlen (bzw. roh, wenn eingestellt) – ändert sich nur bei sichtbarer Änderung.
 private struct MiniCPU: View {
-    @ObservedObject var store: CPUStore
+    @ObservedObject var metric: MetricValue
+    @EnvironmentObject private var settings: AppSettings
     @Environment(\.aether) private var theme
 
     var body: some View {
-        MiniValue(label: "CPU", value: store.snapshot?.total.value.map { fmt.percent($0.busy) } ?? "–", color: theme.cpuUser)
+        let value = metric.isAvailable ? metric.display(raw: settings.showRawValues) : nil
+        MiniValue(label: "CPU", value: value.map { fmt.percent($0) } ?? "–", color: theme.cpuUser)
     }
 }
 

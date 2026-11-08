@@ -196,10 +196,17 @@ final class SystemStore: ObservableObject {
         }
     }
 
+    /// Nur veröffentlichen, was sich ändert bzw. seltener nötig ist – sonst würde jede Ansicht, die den Systemzustand
+    /// beobachtet, in jedem Takt neu gezeichnet.
     func apply(pulse: Pulse, input: PulseInput, ownUsage: SelfUsage.Sample?, at date: Date) {
         if self.pulse != pulse { self.pulse = pulse }
-        pulseInput = input
-        self.ownUsage = ownUsage
-        lastUpdate = date
+        if let ownUsage, ownUsage != self.ownUsage { self.ownUsage = ownUsage }
+        // Erklärungen des Pulses und Betriebszeit: alle 5 s genügen
+        // (sofort, sobald die CPU-Auslastung erstmals berechenbar ist – sonst stünde „Wird gemessen …“ 5 s lang da)
+        let firstCPU = pulseInput.cpuBusy == nil && input.cpuBusy != nil
+        if firstCPU || lastUpdate.map({ date.timeIntervalSince($0) >= 5 }) ?? true {
+            pulseInput = input
+            lastUpdate = date
+        }
     }
 }

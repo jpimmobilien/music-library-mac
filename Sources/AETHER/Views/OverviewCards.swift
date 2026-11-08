@@ -250,12 +250,12 @@ struct BatteryCard: View {
                 Label(chargeState(b), systemImage: b.powerSource == .ac ? "bolt.fill" : SymbolName.batteryLow)
                     .font(Typo.bodyMedium)
                     .foregroundStyle(theme.textPrimary)
-                if let minutes = (b.isCharging == true ? b.minutesToFull : b.minutesToEmpty).value {
+                if let time = batteryTimeReading(b), let minutes = time.reading.value {
                     HStack(spacing: 4) {
-                        Text(b.isCharging == true ? tr("Full in %@", fmt.duration(seconds: Double(minutes) * 60))
-                                                  : tr("%@ remaining", fmt.duration(seconds: Double(minutes) * 60)))
+                        Text(time.charging ? tr("Full in %@", fmt.duration(seconds: Double(minutes) * 60))
+                                           : tr("%@ remaining", fmt.duration(seconds: Double(minutes) * 60)))
                             .font(Typo.caption).foregroundStyle(theme.textSecondary)
-                        ProvenanceBadge(source: .batteryTimeRemaining, timestamp: b.minutesToEmpty.timestamp)
+                        ProvenanceBadge(source: .batteryTimeRemaining, timestamp: time.reading.timestamp)
                     }
                 }
                 if let watts = b.adapterWatts.value, b.powerSource == .ac {

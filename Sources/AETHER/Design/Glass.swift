@@ -21,7 +21,12 @@ struct BackdropBlur: NSViewRepresentable {
     }
 }
 
-/// Glasfläche: natives Liquid Glass auf macOS 26, sonst Unschärfe + Tönung + Lichtkante + Glanz.
+/// Liquid Glass 2.0 – drei Ebenen:
+///   Grund       die Bühne (`AmbientBackground`)
+///   Schicht     Inhaltsflächen: getönte Füllung, obere Lichtkante, Haarlinie, weicher Schatten – OHNE eigene
+///               Hintergrundunschärfe. Zehn Unschärfeflächen kosteten WindowServer auf Intel-Grafik spürbar Leistung,
+///               und hinter den Flächen liegt ohnehin nur der ruhige Verlauf der Bühne.
+///   Schwebend   Seitenleiste und Werkzeuge: natives Liquid Glass (macOS 26) bzw. echte Unschärfe (macOS 13–15).
 /// Bei Themes ohne Glas, Glasintensität 0 oder „Transparenz reduzieren“: deckende Fläche mit Haarlinie.
 struct GlassSurface<S: InsettableShape>: ViewModifier {
     @Environment(\.aether) private var theme
@@ -29,16 +34,41 @@ struct GlassSurface<S: InsettableShape>: ViewModifier {
     var strong = false
     var elevated = false
     var interactive = false
+    var floating = false
 
     @ViewBuilder
     func body(content: Content) -> some View {
         if !theme.glassActive {
             solid(content)
+        } else if !floating {
+            layer(content)
         } else if LiquidGlass.isAvailable {
             native(content)
         } else {
             fallback(content)
         }
+    }
+
+    /// Schicht: Tiefe aus Licht und Schatten, ohne Unschärfe und ohne Offscreen-Komposition.
+    private func layer(_ content: Content) -> some View {
+        let intensity = theme.glassIntensity
+        return content
+            .background(
+                ZStack {
+                    shape.fill(theme.glassTint(strong: strong))
+                    shape.fill(LinearGradient(stops: [.init(color: theme.sheen.opacity(0.9 * intensity), location: 0),
+                                                      .init(color: .clear, location: 0.42)],
+                                              startPoint: .top, endPoint: .bottom))
+                }
+                .shadow(color: theme.shadow.opacity(elevated ? 1 : 0.45), radius: elevated ? 18 : 8, y: elevated ? 8 : 3)
+            )
+            .overlay(
+                shape.strokeBorder(
+                    LinearGradient(colors: [theme.edgeLight.opacity(0.35 + 0.55 * intensity), theme.edgeDark.opacity(0.6),
+                                            theme.edgeLight.opacity(0.15 + 0.2 * intensity)],
+                                   startPoint: .top, endPoint: .bottom),
+                    lineWidth: 0.8)
+            )
     }
 
     private func solid(_ content: Content) -> some View {
@@ -71,6 +101,7 @@ struct GlassSurface<S: InsettableShape>: ViewModifier {
                 ZStack {
                     BackdropBlur(material: theme.isDark ? .hudWindow : .popover)
                     shape.fill(theme.glassTint(strong: strong))
+                        .shadow(color: elevated ? theme.shadow : theme.shadow.opacity(0.35), radius: elevated ? 16 : 6, y: elevated ? 6 : 2)
                     LinearGradient(stops: [.init(color: theme.sheen.opacity(intensity), location: 0),
                                            .init(color: .clear, location: 0.55)],
                                    startPoint: .top, endPoint: .bottom)
@@ -84,15 +115,14 @@ struct GlassSurface<S: InsettableShape>: ViewModifier {
                                    startPoint: .topLeading, endPoint: .bottomTrailing),
                     lineWidth: 0.8)
             )
-            .compositingGroup()
-            .shadow(color: elevated ? theme.shadow : theme.shadow.opacity(0.35), radius: elevated ? 16 : 6, y: elevated ? 6 : 2)
+
     }
 }
 
 extension View {
     func glassSurface<S: InsettableShape>(_ shape: S, strong: Bool = false, elevated: Bool = false,
-                                          interactive: Bool = false) -> some View {
-        modifier(GlassSurface(shape: shape, strong: strong, elevated: elevated, interactive: interactive))
+                                          interactive: Bool = false, floating: Bool = false) -> some View {
+        modifier(GlassSurface(shape: shape, strong: strong, elevated: elevated, interactive: interactive, floating: floating))
     }
 
     func glassCard(cornerRadius: CGFloat = Radius.card, strong: Bool = true, elevated: Bool = false) -> some View {

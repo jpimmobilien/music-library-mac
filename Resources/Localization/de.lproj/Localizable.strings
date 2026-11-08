@@ -4,15 +4,20 @@
 "%@ available of %@ on “%@”" = "%@ verfügbar von %@ auf „%@“";
 "%@ bytes" = "%@ Byte";
 "%@ free" = "%@ frei";
+"%@ memory" = "%@ Arbeitsspeicher";
+"%@ ms" = "%@ ms";
 "%@ of %@ designed" = "%@ von %@ ausgelegten";
 "%@ of %@ free" = "%@ von %@ frei";
 "%@ of %@ used" = "%@ von %@ belegt";
 "%@ RAM" = "%@ Arbeitsspeicher";
 "%@ received · %@ sent since AETHER started" = "%@ empfangen · %@ gesendet seit Start von AETHER";
 "%@ remaining" = "noch %@";
+"%@ s" = "%@ s";
+"%@ unified memory" = "%@ gemeinsamer Arbeitsspeicher";
 "%@ unified memory – shared by CPU, GPU and Neural Engine" = "%@ Unified Memory – gemeinsam für CPU, GPU und Neural Engine";
 "%@ used of %@" = "%@ von %@ belegt";
 "%ld active" = "%ld aktiv";
+"%ld charge cycles" = "%ld Ladezyklen";
 "%ld copies · %@ each" = "%ld Kopien · je %@";
 "%ld cores" = "%ld Kerne";
 "%ld cores · %ld threads (Hyper-Threading)" = "%ld Kerne · %ld Threads (Hyper-Threading)";
@@ -53,9 +58,12 @@
 "+%ld more" = "+%ld weitere";
 ", encrypted" = ", verschlüsselt";
 "1 day" = "1 Tag";
-"1 h" = "1 Std.";
+"1 h" = "1 h";
+"1 min" = "1 min";
+"15 min" = "15 min";
 "24 h" = "24 Std.";
 "30 d" = "30 T";
+"5 min" = "5 min";
 "7 d" = "7 T";
 "A classification or specification provided by macOS or the manufacturer." = "Eine Einstufung oder Angabe von macOS oder vom Hersteller.";
 "About AETHER" = "Über AETHER";
@@ -67,9 +75,11 @@
 "Adds up Ethernet and Wi‑Fi interfaces. VPN tunnels, AirDrop links and loopback are listed separately below and not added – otherwise the same traffic would count twice." = "Summiert Ethernet- und WLAN-Schnittstellen. VPN-Tunnel, AirDrop-Verbindungen und Loopback stehen unten einzeln und werden nicht addiert – sonst würde derselbe Verkehr doppelt gezählt.";
 "Aether Blue" = "Ätherblau";
 "AETHER computes the capacity as full charge capacity ÷ design capacity. Apple’s “Maximum capacity” uses its own method and can differ by a few percent – both are shown unchanged." = "AETHER berechnet die Kapazität als volle Ladekapazität ÷ Designkapazität. Apples „Maximale Kapazität“ folgt einem eigenen Verfahren und kann um einige Prozent abweichen – beide Werte werden unverändert gezeigt.";
+"AETHER CPU" = "CPU von AETHER";
 "AETHER itself" = "AETHER selbst";
 "AETHER makes no network connections and sends no data anywhere." = "AETHER baut keine Netzwerkverbindungen auf und sendet keine Daten.";
 "AETHER makes no network connections itself. It only reads the counters, interface details and socket tables macOS provides." = "AETHER baut selbst keine Netzwerkverbindungen auf. Es liest nur die Zähler, Schnittstellenangaben und Socket-Tabellen, die macOS bereitstellt.";
+"AETHER memory" = "Speicher von AETHER";
 "AETHER only reads battery values and never changes how the Mac charges. Optimised charging and the charge limit are set in System Settings." = "AETHER liest Batteriewerte nur und ändert nie, wie der Mac lädt. Optimiertes Laden und die Ladegrenze stellen Sie in den Systemeinstellungen ein.";
 "AETHER only uses measured values and what macOS itself reports, with fixed thresholds. It doesn’t diagnose anything." = "AETHER nutzt nur Messwerte und Meldungen von macOS selbst, mit festen Schwellen. Es wird nichts diagnostiziert.";
 "AETHER runs as" = "AETHER läuft als";
@@ -112,6 +122,7 @@
 "At least %@ of one core" = "Mindestens %@ eines Kerns";
 "Audio" = "Audio";
 "available incl. %@ purgeable" = "inkl. %@ löschbar";
+"Available on “%@”" = "Verfügbar auf „%@“";
 "Available spare" = "Verfügbare Reserve";
 "Average" = "Mittel";
 "Average and maximum of all sensors in an area, calculated by AETHER." = "Mittelwert und Maximum aller Sensoren eines Bereichs, von AETHER berechnet.";
@@ -119,6 +130,7 @@
 "Back" = "Zurück";
 "Back to folder" = "Zurück zum Ordner";
 "Background" = "Hintergrund";
+"Base interval" = "Grundtakt";
 "Battery" = "Batterie";
 "Battery charge" = "Ladestand";
 "Battery condition and maximum capacity as shown in System Information." = "Batteriezustand und maximale Kapazität wie in den Systeminformationen.";
@@ -127,6 +139,7 @@
 "Battery Settings…" = "Batterie-Einstellungen …";
 "Battery: only macOS’s own condition (“Service recommended”)" = "Batterie: nur die Zustandsangabe von macOS („Service empfohlen“)";
 "Before name" = "Vor dem Namen";
+"being measured" = "wird gemessen";
 "Belongs to another user – quitting needs administrator rights." = "Gehört einem anderen Benutzer – Beenden nur mit Administratorrechten.";
 "Bridge" = "Brücke";
 "Bring to front" = "In den Vordergrund";
@@ -140,6 +153,7 @@
 "Calculated by AETHER from measured values." = "Von AETHER aus Messwerten berechnet.";
 "Cancel" = "Abbrechen";
 "Capacity (computed)" = "Kapazität (berechnet)";
+"Capacity (computed): %@" = "Kapazität (berechnet): %@";
 "Capacity and free space of each volume, including space macOS can free up on demand." = "Kapazität und freier Platz jedes Volumes, einschließlich Platz, den macOS bei Bedarf freigibt.";
 "Categories" = "Kategorien";
 "Caution: for %ld duplicate groups all copies are selected – no copy would remain outside the Trash." = "Achtung: Bei %ld Duplikatgruppen sind alle Kopien ausgewählt – keine Kopie bliebe außerhalb des Papierkorbs.";
@@ -170,6 +184,7 @@
 "Computed" = "Berechnet";
 "Condition" = "Zustand";
 "Condition (macOS)" = "Zustand (macOS)";
+"Condition (macOS): %@" = "Zustand (macOS): %@";
 "Connected" = "Verbunden";
 "Connected displays" = "Angeschlossene Displays";
 "Connected displays as macOS reports them." = "Angeschlossene Bildschirme, wie macOS sie meldet.";
@@ -184,6 +199,7 @@
 "Core counts and core types as reported by the kernel." = "Kernzahlen und Kerntypen laut Kernel.";
 "Core types from the device tree (IORegistry). Red share: system." = "Kerntypen aus dem Gerätebaum (IORegistry). Roter Anteil: System.";
 "Cores" = "Kerne";
+"Counted interfaces: only network adapters with a routable address – internal connections (e.g. to the T2 chip) are excluded." = "Gezählte Schnittstellen: nur Netzwerkadapter mit routbarer Adresse – interne Verbindungen (z. B. zum T2-Chip) sind ausgenommen.";
 "Country code" = "Ländercode";
 "CPU" = "CPU";
 "CPU & GPU" = "CPU & GPU";
@@ -209,6 +225,7 @@
 "Data rate" = "Datenrate";
 "Data read" = "Gelesene Daten";
 "Data sources" = "Datenquellen";
+"Data streams: density and speed follow the measured network throughput. No traffic, no particles." = "Datenströme: Dichte und Tempo folgen dem gemessenen Netzwerkdurchsatz. Kein Verkehr, keine Partikel.";
 "Data written" = "Geschriebene Daten";
 "Date Modified" = "Änderungsdatum";
 "Decompressions" = "Dekomprimierungen";
@@ -222,10 +239,14 @@
 "Design capacity" = "Designkapazität";
 "Desktop" = "Schreibtisch";
 "Detailed" = "Ausführlich";
+"Details" = "Details";
 "Details the connected power adapter reports to macOS." = "Angaben, die das angeschlossene Netzteil an macOS meldet.";
+"Developer diagnostics" = "Entwickler-Diagnose";
+"Developer diagnostics – turn off in Settings → Monitoring." = "Entwickler-Diagnose – ausschalten unter Einstellungen → Messung.";
 "Discharge current" = "Entladestrom";
 "Disk activity" = "Datenträgeraktivität";
 "Disk activity: read and write rate of all disks" = "Laufwerksaktivität: Lese- und Schreibrate aller Laufwerke";
+"Display updates per second" = "Anzeige-Aktualisierungen je Sekunde";
 "Displays" = "Bildschirme";
 "Document" = "Dokument";
 "Documents" = "Dokumente";
@@ -240,6 +261,7 @@
 "Duplicates" = "Duplikate";
 "Duplicates (%ld)" = "Duplikate (%ld)";
 "Duplicates weren’t checked because the analysis was stopped." = "Duplikate wurden nicht geprüft, weil die Analyse gestoppt wurde.";
+"Efficiency" = "Effizienz";
 "Efficiency cores" = "Effizienzkerne";
 "Eject" = "Auswerfen";
 "Ejecting…" = "Wird ausgeworfen …";
@@ -265,6 +287,7 @@
 "Exported: %@" = "Exportiert: %@";
 "External" = "Extern";
 "Fair" = "Erhöht";
+"Fan" = "Lüfter";
 "Fan %ld" = "Lüfter %ld";
 "Fan speeds" = "Lüfterdrehzahlen";
 "Fan speeds from the System Management Controller (read-only)." = "Lüfterdrehzahlen aus dem System Management Controller (nur lesend).";
@@ -323,14 +346,19 @@
 "High memory" = "Hoher Speicher";
 "High network activity." = "Hohe Netzwerkaktivität.";
 "High swap usage." = "Hohe Swap-Nutzung.";
+"Highest in the last %@: %@" = "Höchstwert der letzten %@: %@";
 "History" = "Verlauf";
 "History deleted." = "Verlauf gelöscht.";
+"History of the last %@: now %@, maximum %@" = "Verlauf der letzten %@: jetzt %@, höchstens %@";
+"History: no data yet" = "Verlauf: noch keine Daten";
 "Home folder" = "Benutzerordner";
 "Hottest sensor" = "Heißester Sensor";
 "Hottest sensor (%@)" = "Heißester Sensor (%@)";
+"How late the tick started compared with the schedule." = "Wie viel später als geplant der Takt begonnen hat.";
 "How the status is determined" = "So entsteht der Status";
 "Icons" = "Symbole";
 "Idle" = "Leerlauf";
+"Illustration – the screen shows the measured load of each core." = "Illustration – der Bildschirm zeigt die gemessene Last jedes Kerns.";
 "Images" = "Bilder";
 "Inactive" = "Inaktiv";
 "Include serial number" = "Seriennummer aufnehmen";
@@ -367,6 +395,9 @@
 "L2 cache" = "L2-Cache";
 "L3 cache" = "L3-Cache";
 "Language" = "Sprache";
+"Large numbers are only redrawn when their rounded value changes." = "Große Zahlen werden nur neu gezeichnet, wenn sich ihr gerundeter Wert ändert.";
+"Large numbers are smoothed so they don’t flicker; peaks stay visible. Settings → Monitoring switches to raw values." = "Große Zahlen werden geglättet, damit sie nicht flackern; Spitzen bleiben sichtbar. Einstellungen → Messung schaltet auf Rohwerte um.";
+"Large numbers are smoothed so they don’t flicker; peaks stay visible. This is the value of the latest measurement. Settings → Monitoring switches to raw values." = "Große Zahlen werden geglättet, damit sie nicht flackern; Spitzen bleiben sichtbar. Dies ist der Wert der letzten Messung. Einstellungen → Messung schaltet auf Rohwerte um.";
 "Largest files" = "Größte Dateien";
 "last %@" = "letzte %@";
 "Last 12 months" = "Letzte 12 Monate";
@@ -374,7 +405,9 @@
 "Last 7 days" = "Letzte 7 Tage";
 "Last opened" = "Zuletzt geöffnet";
 "Last startup" = "Letzter Start";
+"Late" = "Verzug";
 "Leave this off if you want to share the report." = "Lassen Sie das aus, wenn Sie den Bericht weitergeben möchten.";
+"Line: smoothed value · band: lowest to highest measured value" = "Linie: geglätteter Wert · Band: niedrigster bis höchster gemessener Wert";
 "link-local" = "link-lokal";
 "Liquid Glass" = "Liquid Glass";
 "Liquid Glass Dark" = "Liquid Glass Dunkel";
@@ -382,10 +415,13 @@
 "List" = "Liste";
 "Listening" = "Lauschend";
 "Little free space on the startup disk." = "Wenig freier Speicher auf dem Startvolume.";
+"Live" = "Live";
 "Live Monitor" = "Live-Monitor";
 "Live Monitor & Menu Bar" = "Live-Monitor & Menüleiste";
 "Load %@" = "Last %@";
 "Load average" = "Durchschnittslast";
+"Load per core" = "Last je Kern";
+"Load per core: highest %@, average %@" = "Last je Kern: höchstens %@, im Mittel %@";
 "Loading…" = "Wird geladen …";
 "Local" = "Lokal";
 "Local device backups. Only remove backups you no longer need; manage them in the Finder with the device connected." = "Lokale Gerätebackups. Entfernen Sie nur Backups, die Sie nicht mehr brauchen; verwalten Sie sie im Finder bei angeschlossenem Gerät.";
@@ -413,6 +449,7 @@
 "macOS reports a critical thermal state." = "macOS meldet einen kritischen Thermalstatus.";
 "macOS reports an elevated thermal state." = "macOS meldet einen erhöhten Thermalstatus.";
 "macOS version and build number." = "macOS-Version und Buildnummer.";
+"Main" = "Haupt";
 "Main display" = "Hauptbildschirm";
 "Mainboard" = "Hauptplatine";
 "Manufacturer" = "Hersteller";
@@ -427,6 +464,8 @@
 "Measured = read directly · Computed = calculated by AETHER · Reported by macOS = system information or manufacturer data · Estimate = estimate by macOS." = "Gemessen = direkt gelesen · Berechnet = von AETHER berechnet · Von macOS gemeldet = Systeminformation oder Herstellerangabe · Schätzung = Schätzung von macOS.";
 "Measured as" = "Gemessen als";
 "Measured at %@" = "Gemessen um %@";
+"Measurement time per source (smoothed)" = "Messzeit je Quelle (geglättet)";
+"Measurement time per tick" = "Messzeit je Takt";
 "Measurements pause automatically" = "Die Messungen pausieren automatisch";
 "Measures at most every 5 seconds and skips everything that isn’t visible." = "Misst höchstens alle 5 Sekunden und lässt alles aus, was nicht sichtbar ist.";
 "Measuring…" = "Wird gemessen …";
@@ -490,6 +529,7 @@
 "No administrator rights, no background helpers." = "Keine Administratorrechte, keine Hintergrundhelfer.";
 "No battery" = "Kein Akku";
 "No data yet" = "Noch keine Daten";
+"No fans – passively cooled" = "Keine Lüfter – passiv gekühlt";
 "No files of this size in the analysed folder." = "Keine Dateien dieser Größe im analysierten Ordner.";
 "No folders found." = "Keine Ordner gefunden.";
 "No graphics processor reported" = "Kein Grafikprozessor gemeldet";
@@ -517,6 +557,7 @@
 "Not readable – privacy protection" = "Nicht lesbar – Datenschutz";
 "Nothing is selected automatically. Tick the copies you don’t need – keep at least one of each group." = "Nichts wird automatisch ausgewählt. Markieren Sie die Kopien, die Sie nicht brauchen – behalten Sie mindestens eine je Gruppe.";
 "now" = "jetzt";
+"now %@" = "jetzt %@";
 "Number" = "Nummer";
 "NVMe drive" = "NVMe-Laufwerk";
 "Occupied" = "Belegt";
@@ -524,6 +565,7 @@
 "of %@ swap space on the startup disk%@" = "von %@ Auslagerungsspeicher auf dem Startvolume%@";
 "of %@ used" = "von %@ belegt";
 "Off" = "Aus";
+"Off: large numbers are smoothed (time-based, rises fast, falls slowly) so they don’t flicker – peaks of the last 10 seconds stay visible, and the latest raw value is shown underneath. On: every number shows exactly the latest measurement." = "Aus: Große Zahlen werden geglättet (zeitbasiert, steigt schnell, fällt langsam), damit sie nicht flackern – Spitzen der letzten 10 Sekunden bleiben sichtbar, darunter steht der letzte Rohwert. Ein: Jede Zahl zeigt genau die letzte Messung.";
 "Older values are deleted automatically." = "Ältere Werte werden automatisch gelöscht.";
 "On" = "An";
 "On battery" = "Batteriebetrieb";
@@ -559,6 +601,8 @@
 "Paste" = "Einsetzen";
 "Paste into “%@”" = "In „%@“ einsetzen";
 "Path" = "Pfad";
+"paused (not visible)" = "pausiert (nicht sichtbar)";
+"Peak (10 s): %@" = "Spitze (10 s): %@";
 "Peak in this window ↓ / ↑" = "Spitze in diesem Zeitraum ↓ / ↑";
 "Peak since start: %@" = "Spitze seit Start: %@";
 "Peak since start: read %@ · write %@" = "Spitze seit Start: Lesen %@ · Schreiben %@";
@@ -568,6 +612,7 @@
 "Permissions" = "Zugriffsrechte";
 "Persistent memory region is read-only" = "Persistenter Speicherbereich ist schreibgeschützt";
 "Physical cores" = "Physische Kerne";
+"Physical memory footprint of AETHER, as Activity Monitor shows it." = "Physischer Speicherbedarf von AETHER, wie ihn die Aktivitätsanzeige zeigt.";
 "Pictures" = "Bilder";
 "Pink" = "Rosa";
 "Places that often grow large. AETHER only measures them – nothing is deleted. Decide in the Finder what you want to remove." = "Orte, die oft groß werden. AETHER misst sie nur – es wird nichts gelöscht. Entscheiden Sie im Finder, was Sie entfernen möchten.";
@@ -588,12 +633,14 @@
 "Privacy" = "Datenschutz";
 "privacy protection or missing rights – not included" = "Datenschutz oder fehlende Rechte – nicht enthalten";
 "Process" = "Prozess";
+"Process list" = "Prozessliste";
 "Processes" = "Prozesse";
 "Processes of other users (root and system services) and protected system processes" = "Prozesse anderer Benutzer (root und Systemdienste) sowie geschützte Systemprozesse";
 "Processing time counters of all cores; usage is the difference between two readings." = "Rechenzeit-Zähler aller Kerne; die Auslastung ist die Differenz zweier Messungen.";
 "Processor" = "Prozessor";
 "PROJECT AETHER – macOS Edition · System Intelligence & File Explorer" = "PROJECT AETHER – macOS Edition · System Intelligence & File Explorer";
 "Protocol" = "Protokoll";
+"Publishing time per tick" = "Übergabezeit je Takt";
 "Purgeable" = "Löschbar";
 "Put Back" = "Zurücklegen";
 "Put back %ld items. Analyse again to include them in the lists." = "%ld Objekte zurückgelegt. Analysieren Sie erneut, damit sie wieder in den Listen erscheinen.";
@@ -604,6 +651,7 @@
 "Quitting failed (error %ld)." = "Beenden fehlgeschlagen (Fehler %ld).";
 "RAM" = "RAM";
 "Rated power" = "Nennleistung";
+"Raw values – exactly as measured" = "Rohwerte – genau wie gemessen";
 "Read" = "Lesen";
 "Read and write counters of all disks; the rate is the difference between two readings." = "Lese- und Schreibzähler aller Laufwerke; die Rate ist die Differenz zweier Messungen.";
 "Read directly from a counter or sensor." = "Direkt aus einem Zähler oder Sensor gelesen.";
@@ -632,6 +680,7 @@
 "Replace with" = "Ersetzen durch";
 "Report saved: %@" = "Bericht gesichert: %@";
 "Reported by macOS" = "Angabe von macOS";
+"reported by macOS" = "von macOS gemeldet";
 "Reported by macOS – a classification, not a temperature" = "Von macOS gemeldet – eine Einstufung, keine Temperatur";
 "Reset" = "Zurücksetzen";
 "Reset appearance" = "Darstellung zurücksetzen";
@@ -643,6 +692,7 @@
 "running via Rosetta" = "läuft über Rosetta";
 "Same as system" = "Wie System";
 "Save…" = "Sichern …";
+"Schematic illustration – values are measured, positions are not." = "Schematische Darstellung – die Werte sind gemessen, die Positionen nicht.";
 "Search" = "Suchen";
 "Search in" = "Suchen in";
 "Search options" = "Suchoptionen";
@@ -650,6 +700,7 @@
 "Search: “%@”" = "Suche: „%@“";
 "Security" = "Sicherheit";
 "Sensor areas" = "Sensorbereiche";
+"Sensor temperatures" = "Sensortemperaturen";
 "Sensor values from the System Management Controller." = "Sensorwerte aus dem System Management Controller.";
 "Sent since AETHER started" = "Gesendet seit Start von AETHER";
 "Serial number" = "Seriennummer";
@@ -659,12 +710,14 @@
 "Settings…" = "Einstellungen …";
 "Share" = "Teilen";
 "Share of one core – a process can use more than 100 %." = "Anteil eines Kerns – ein Prozess kann mehr als 100 % nutzen.";
+"Share of one CPU core used by AETHER itself (all threads)." = "Anteil eines CPU-Kerns, den AETHER selbst nutzt (alle Threads).";
 "Shared by CPU, GPU and Neural Engine – there is no separate graphics memory." = "Gemeinsam für CPU, GPU und Neural Engine – es gibt keinen getrennten Grafikspeicher.";
 "Share…" = "Teilen …";
 "Shorter intervals react faster but cost a little more energy." = "Kürzere Intervalle reagieren schneller, kosten aber etwas mehr Energie.";
 "Show" = "Anzeigen";
 "Show all %ld" = "Alle %ld anzeigen";
 "Show All (%ld)" = "Alle anzeigen (%ld)";
+"Show details" = "Details zeigen";
 "Show Fewer" = "Weniger anzeigen";
 "Show hidden files" = "Unsichtbare Dateien zeigen";
 "Show in Files" = "In „Dateien“ zeigen";
@@ -672,10 +725,12 @@
 "Show in the menu bar" = "In der Menüleiste zeigen";
 "Show Info" = "Informationen einblenden";
 "Show Package Contents" = "Paketinhalt zeigen";
+"Show raw values" = "Rohwerte zeigen";
 "Show Sidebar" = "Seitenleiste einblenden";
 "Showing the 100 groups that free the most space." = "Die 100 Gruppen, die am meisten Platz freigeben, werden gezeigt.";
 "Showing the 200 largest files." = "Die 200 größten Dateien werden gezeigt.";
 "Showing the first %ld of %ld – use the search to narrow the list." = "Die ersten %ld von %ld – grenzen Sie die Liste mit der Suche ein.";
+"Shows how much CPU and memory AETHER itself uses, how long each measurement takes and how often the display updates. Also shows a small overlay in the window." = "Zeigt, wie viel CPU und Arbeitsspeicher AETHER selbst nutzt, wie lange jede Messung dauert und wie oft sich die Anzeige aktualisiert. Blendet außerdem eine kleine Anzeige im Fenster ein.";
 "Shows the CPU load in the menu bar. AETHER then keeps running when the window is closed and measures at most every 5 seconds." = "Zeigt die CPU-Auslastung in der Menüleiste. AETHER läuft dann auch bei geschlossenem Fenster weiter und misst höchstens alle 5 Sekunden.";
 "Signal (RSSI)" = "Signal (RSSI)";
 "Signal, noise, channel and data rate of the Wi‑Fi interface. Passwords are never read." = "Signal, Rauschen, Kanal und Datenrate der WLAN-Schnittstelle. Passwörter werden nie gelesen.";
@@ -683,8 +738,11 @@
 "Signal-to-noise ratio: signal strength minus noise level." = "Signal-Rausch-Abstand: Signalstärke minus Rauschpegel.";
 "Since start: ↓ %@ · ↑ %@" = "Seit Start: ↓ %@ · ↑ %@";
 "Size" = "Größe";
+"smoothed %@" = "geglättet %@";
+"Smoothed values – peaks stay visible" = "Geglättete Werte – Spitzen bleiben sichtbar";
 "Software" = "Software";
 "Source" = "Quelle";
+"Sources per tick (max.)" = "Quellen je Takt (max.)";
 "Space macOS can free up on demand: available for important use minus currently free." = "Platz, den macOS bei Bedarf freigibt: verfügbar für wichtige Nutzung abzüglich des derzeit freien Platzes.";
 "Space macOS frees up automatically when needed (e.g. caches, local snapshots)." = "Platz, den macOS bei Bedarf automatisch freigibt (z. B. Caches, lokale Snapshots).";
 "Spare capacity below the threshold" = "Reservekapazität unter dem Schwellenwert";
@@ -706,6 +764,7 @@
 "Stored data" = "Gespeicherte Daten";
 "Stores one average value per minute (CPU, memory, network, battery, temperature) in a database on this Mac. Off by default; nothing is ever transmitted." = "Speichert einen Mittelwert pro Minute (CPU, Arbeitsspeicher, Netzwerk, Batterie, Temperatur) in einer Datenbank auf diesem Mac. Standardmäßig aus; es wird nie etwas übertragen.";
 "Sum of the space the files of the analysed folder occupy on the disk." = "Summe des Platzes, den die Dateien des analysierten Ordners auf dem Datenträger belegen.";
+"Swap" = "Auslagerung";
 "Swap space used on the startup disk." = "Belegter Auslagerungsspeicher auf dem Startvolume.";
 "Swap used" = "Swap belegt";
 "Swap used: %@" = "Swap belegt: %@";
@@ -775,7 +834,11 @@
 "Threads" = "Threads";
 "Throughput" = "Durchsatz";
 "Thunderbolt" = "Thunderbolt";
+"Tick" = "Takt";
+"Time on the main thread to hand the results to the views." = "Zeit im Hauptthread, um die Ergebnisse an die Ansichten zu übergeben.";
 "Time since the last startup, from the kernel’s boot time." = "Zeit seit dem letzten Start, aus der Startzeit des Kernels.";
+"Time the background measurement needs per tick (all sources due in this tick)." = "Zeit, die die Messung im Hintergrund je Takt braucht (alle in diesem Takt fälligen Quellen).";
+"Timer delay" = "Verzögerung des Takts";
 "Today" = "Heute";
 "Today, %@" = "Heute, %@";
 "Top processes by CPU" = "Größte Verbraucher (CPU)";
@@ -796,6 +859,8 @@
 "Unsafe shutdowns" = "Unsichere Abschaltungen";
 "Unsaved changes will be lost. The process ends immediately." = "Nicht gesicherte Änderungen gehen verloren. Der Prozess endet sofort.";
 "untitled folder" = "Neuer Ordner";
+"up %@" = "seit %@ in Betrieb";
+"Upd./s" = "Akt./s";
 "Update interval" = "Aktualisierung";
 "Upload" = "Upload";
 "Uptime" = "Betriebszeit";
@@ -849,3 +914,4 @@
 "“%@” was ejected." = "„%@“ wurde ausgeworfen.";
 "“Reduce transparency” is on in System Settings – surfaces stay solid." = "„Transparenz reduzieren“ ist in den Systemeinstellungen an – die Flächen bleiben deckend.";
 "… and %ld more" = "… und %ld weitere";
+"−%@" = "−%@";

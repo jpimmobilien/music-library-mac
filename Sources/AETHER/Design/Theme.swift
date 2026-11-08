@@ -179,7 +179,7 @@ enum Radius {
 }
 
 enum Metrics {
-    static let sidebarWidth: CGFloat = 232
+    static let sidebarWidth: CGFloat = 216
     static let sidebarInset: CGFloat = 10
     /// Platz für die Ampelknöpfe über der Seitenleiste.
     static let trafficLights: CGFloat = 46
