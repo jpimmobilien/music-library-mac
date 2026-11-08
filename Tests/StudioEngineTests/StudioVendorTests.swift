@@ -64,16 +64,18 @@ final class StudioVendorTests: XCTestCase {
             .sorted { $0.compare($1, options: .numeric) == .orderedAscending }
         guard let xcode = apps.last else { throw XCTSkip("Xcode 16 nicht installiert (\(apps))") }
         let developer = "/Applications/\(xcode)/Contents/Developer"
-        let env = ["DEVELOPER_DIR": developer]
-        let version = TS.run("/usr/bin/xcrun", ["swift", "--version"], timeout: 60, environment: env)
-        let sdk = TS.run("/usr/bin/xcrun", ["--sdk", "macosx", "--show-sdk-version"], timeout: 60, environment: env)
-        TS.log("Xcode 16: \(xcode), \(version.out.split(separator: "\n").first ?? ""), SDK \(sdk.out.trimmingCharacters(in: .whitespacesAndNewlines))")
+        var env = ["DEVELOPER_DIR": developer]
+        let sdkPath = TS.run("/usr/bin/xcrun", ["--sdk", "macosx", "--show-sdk-path"], timeout: 60, environment: env, cleanEnvironment: true)
+        env["SDKROOT"] = sdkPath.out.trimmingCharacters(in: .whitespacesAndNewlines)
+        let version = TS.run("/usr/bin/xcrun", ["swift", "--version"], timeout: 60, environment: env, cleanEnvironment: true)
+        let sdk = TS.run("/usr/bin/xcrun", ["--sdk", "macosx", "--show-sdk-version"], timeout: 60, environment: env, cleanEnvironment: true)
+        TS.log("Xcode 16: \(xcode), \(version.out.split(separator: "\n").first ?? ""), SDK \(sdk.out.trimmingCharacters(in: .whitespacesAndNewlines)) (\(env["SDKROOT"] ?? ""))")
         let scratch = FileManager.default.temporaryDirectory.appendingPathComponent("studio-xcode16-\(UUID().uuidString.prefix(6))")
         defer { try? FileManager.default.removeItem(at: scratch) }
         let t0 = Date()
         // Testziel bauen = StudioEngine (mit CLame/CFLAC und allen Abhängigkeiten) + diese Tests
         let r = TS.run("/usr/bin/xcrun", ["swift", "build", "--target", "StudioEngineTests", "--package-path", Self.root.path,
-                                          "--scratch-path", scratch.path], timeout: 2400, environment: env)
+                                          "--scratch-path", scratch.path], timeout: 2400, environment: env, cleanEnvironment: true)
         let errors = (r.out + r.err).split(separator: "\n").filter { $0.contains("error:") }.prefix(30)
         for e in errors { TS.log("Xcode 16 Fehler: \(e)") }
         let warnings = (r.out + r.err).split(separator: "\n").filter { $0.contains("warning:") && $0.contains("StudioEngine") }

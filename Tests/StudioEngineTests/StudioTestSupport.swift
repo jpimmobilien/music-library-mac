@@ -247,13 +247,17 @@ enum TS {
     static var ffmpegPath: String? { FFmpegTool.path }
 
     @discardableResult
-    static func run(_ tool: String, _ args: [String], timeout: Double = 600, environment: [String: String]? = nil) -> (status: Int32, out: String, err: String) {
+    /// Führt ein Programm aus. `environment` ergänzt die Umgebung; mit `cleanEnvironment` wird nur PATH/HOME/
+    /// TMPDIR/USER/LANG übernommen (z. B. damit SDKROOT des laufenden Xcode einen anderen Compiler nicht stört).
+    static func run(_ tool: String, _ args: [String], timeout: Double = 600, environment: [String: String]? = nil,
+                    cleanEnvironment: Bool = false) -> (status: Int32, out: String, err: String) {
         let p = Process()
         p.executableURL = URL(fileURLWithPath: tool)
         p.arguments = args
-        if let environment {
+        if environment != nil || cleanEnvironment {
             var env = ProcessInfo.processInfo.environment
-            for (k, v) in environment { env[k] = v }
+            if cleanEnvironment { env = env.filter { ["PATH", "HOME", "TMPDIR", "USER", "LANG", "LOGNAME", "SHELL"].contains($0.key) } }
+            for (k, v) in environment ?? [:] { env[k] = v }
             p.environment = env
         }
         let outPipe = Pipe(), errPipe = Pipe()
