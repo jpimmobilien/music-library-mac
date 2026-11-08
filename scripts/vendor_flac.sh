@@ -1,7 +1,7 @@
 #!/bin/bash
 # Bindet libFLAC 1.5.0 (BSD-3, Xiph.Org) als Quelltext in Sources/CFLAC ein – ohne Ogg, ohne
 # Assembler/Intrinsics (SSE/AVX/NEON), ohne Werkzeuge. Die Dateien werden UNVERÄNDERT kopiert;
-# config.h und CFLAC.h sind handgeschrieben und werden nicht überschrieben.
+# config.h ist handgeschrieben und wird nicht überschrieben.
 #
 #   scripts/vendor_flac.sh            → aktualisiert Sources/CFLAC/{include/FLAC,vendor}
 #
@@ -28,7 +28,7 @@ rm -rf "$DEST/include/FLAC" "$DEST/vendor"
 mkdir -p "$DEST/include/FLAC" "$DEST/vendor/include/share" "$DEST/vendor/src/libFLAC/include/private" \
          "$DEST/vendor/src/libFLAC/include/protected" "$DEST/vendor/src/libFLAC/deduplication"
 
-# Öffentliche Kopfdateien (für Swift sichtbar über include/CFLAC.h)
+# Öffentliche Kopfdateien (SwiftPM bildet aus include/ das Modul CFLAC)
 cp "$S"/include/FLAC/*.h "$DEST/include/FLAC/"
 
 # Interne Hilfsköpfe (nur die von libFLAC benutzten)

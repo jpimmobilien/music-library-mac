@@ -11,8 +11,7 @@
 ## Inhalt
 
 ```
-include/CFLAC.h                     handgeschriebener Schirm-Header für Swift (bindet FLAC/all.h ein)
-include/FLAC/*.h                    öffentliche Schnittstelle (unverändert)
+include/FLAC/*.h                    öffentliche Schnittstelle (unverändert; SwiftPM bildet daraus das Modul CFLAC)
 vendor/include/share/*.h            interne Hilfsköpfe (unverändert, nur die benötigten)
 vendor/src/libFLAC/*.c              Bibliothek (unverändert)
 vendor/src/libFLAC/deduplication/   per #include eingebundene Teile (unverändert, nicht einzeln übersetzt)

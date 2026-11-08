@@ -112,7 +112,7 @@ public final class StudioPreviewPlayer: StudioPreviewing {
             guard count > 0, first < file.length else { finish(gen); return }
             node.scheduleSegment(file, startingFrame: first, frameCount: count, at: nil,
                                  completionCallbackType: .dataPlayedBack) { [weak self] _ in
-                Task { @MainActor in self?.finish(gen) }
+                Task { @MainActor [weak self] in self?.finish(gen) }
             }
             node.play()
             playing = true
@@ -134,7 +134,7 @@ public final class StudioPreviewPlayer: StudioPreviewing {
                 guard Int(reader.sampleRate.rounded()) == Int(format.sampleRate.rounded()), reader.channelCount == Int(format.channelCount) else {
                     // Format weicht ab: Verbindung auf dem Hauptthread anpassen und neu starten
                     let rate = reader.sampleRate, ch = reader.channelCount, dur = reader.durationSeconds ?? 0
-                    await MainActor.run { self?.reconnect(rate: rate, channels: ch, duration: dur, restartFrom: start, to: end, generation: gen) }
+                    await MainActor.run { [weak self] in self?.reconnect(rate: rate, channels: ch, duration: dur, restartFrom: start, to: end, generation: gen) }
                     return
                 }
                 let rate = reader.sampleRate
@@ -164,11 +164,11 @@ public final class StudioPreviewPlayer: StudioPreviewing {
                 // Ende: nach dem letzten Puffer melden
                 guard let silence = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 1) else { return }
                 silence.frameLength = 1
-                node.scheduleBuffer(silence, at: nil, options: [], completionCallbackType: .dataPlayedBack) { _ in
-                    Task { @MainActor in self?.finish(gen) }
+                node.scheduleBuffer(silence, at: nil, options: [], completionCallbackType: .dataPlayedBack) { [weak self] _ in
+                    Task { @MainActor [weak self] in self?.finish(gen) }
                 }
             } catch {
-                await MainActor.run { self?.finish(gen) }
+                await MainActor.run { [weak self] in self?.finish(gen) }
             }
         }
     }
