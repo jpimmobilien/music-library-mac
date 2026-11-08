@@ -19,7 +19,7 @@ struct MemoryHeroHeader: View {
     let telemetry: Telemetry
 
     var body: some View {
-        StudioHero(section: .memory, eyebrow: tr("Memory"), headline: headline, lead: lead, height: 340) {
+        StudioHero(section: .memory, eyebrow: tr("Memory"), headline: headline, lead: lead, height: 360) {
             MemoryStrataHero(store: memory, telemetry: telemetry)
         }
     }
