@@ -9,7 +9,7 @@ import MLTags
 
 enum SettingsCategory: String, CaseIterable, Hashable, Identifiable {
     case general, appearance, playerDesigns, library, folders, sorting, playback, equalizer, pitch, volume,
-         lyrics, metadata, shortcuts, storage, privacy, about
+         lyrics, metadata, studio, shortcuts, storage, privacy, about
 
     var id: String { rawValue }
 
@@ -27,6 +27,7 @@ enum SettingsCategory: String, CaseIterable, Hashable, Identifiable {
         case .volume: return "Lautstärke"
         case .lyrics: return "Liedtexte"
         case .metadata: return "Metadaten"
+        case .studio: return "Audio Studio"
         case .shortcuts: return "Tastaturkurzbefehle"
         case .storage: return "Speicher & Cache"
         case .privacy: return "Datenschutz"
@@ -48,6 +49,7 @@ enum SettingsCategory: String, CaseIterable, Hashable, Identifiable {
         case .volume: return Icons.volumeUp
         case .lyrics: return Icons.lyrics
         case .metadata: return Icons.editNote
+        case .studio: return Icons.studio
         case .shortcuts: return Icons.keyboard
         case .storage: return Icons.storage
         case .privacy: return Icons.privacy
@@ -169,6 +171,7 @@ private struct SettingsContent: View {
         case .volume: VolumeSettings()
         case .lyrics: LyricsSettings()
         case .metadata: MetadataSettings()
+        case .studio: StudioSettingsPane()
         case .shortcuts: ShortcutSettings()
         case .storage: StorageSettings()
         case .privacy: PrivacySettings()
@@ -997,11 +1000,13 @@ private struct ShortcutSettings: View {
 
     private static let shortcuts: [(String, String)] = [
         ("Leertaste", "Abspielen / Pause"), ("⌘ →  /  ⌘ ←", "Nächster / vorheriger Titel"), ("⌘ ↑  /  ⌘ ↓", "Lauter / leiser"),
-        ("⌘1 … ⌘6", "Bereiche Titel … Favoriten"), ("⌘F", "Suchen im Bereich"), ("⌘I", "Informationen (Metadaten)"),
+        ("⌘1 … ⌘6", "Bereiche Titel … Favoriten"), ("⌘7", "Audio Studio"), ("⌘F", "Suchen im Bereich"), ("⌘I", "Informationen (Metadaten)"),
         ("⌘L", "Liedtext-Seitenleiste"), ("⌥⌘U", "Warteschlange"), ("⇧⌘F", "Großer Player öffnen/schließen"),
         ("⌥⌘M", "Mini-Player-Fenster"), ("⌥⌘E", "Equalizer"), ("⌘N", "Neue Playlist"), ("⇧⌘O", "Musikordner hinzufügen"),
         ("⌘R", "Bibliothek neu einlesen"), ("⌘,", "Einstellungen"), ("⌥⌘Z", "Letzte Metadaten-Änderung widerrufen"),
         ("⌘[", "Zurück"), ("Eingabe", "Auswahl abspielen"), ("⌫", "Auswahl aus der Bibliothek entfernen"), ("Esc", "Player schließen"),
+        ("Leertaste (Studio)", "Auswahl vorhören / Pause"), ("I / O (Studio)", "Start / Ende am Abspielkopf setzen"),
+        ("⌘↩ (Studio)", "Exportieren"),
     ]
 
     var body: some View {

@@ -75,6 +75,11 @@ struct QueuePanel: View {
                                 Button("Aus der Warteschlange entfernen") { player.removeFromQueue(item: item) }
                                 Divider()
                                 Button("Informationen …") { model.showInfo([track.uid]) }
+                                Button("Im Audio Studio schneiden …") {
+                                    model.studio.openLibraryTrack(track.uid)
+                                    model.openStudio()
+                                }
+                                .disabled(!track.available)
                             }
                             .onDrag { NSItemProvider(object: "queue:\(index)" as NSString) }
                             .onDrop(of: [UTType.plainText], isTargeted: Binding(get: { dropIndex == index }, set: { dropIndex = $0 ? index : (dropIndex == index ? nil : dropIndex) })) { providers in

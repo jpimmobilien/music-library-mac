@@ -100,9 +100,11 @@ private struct LibraryLayer: View {
             VStack(spacing: 10) {
                 Spacer(minLength: 0)
                 ToastStack()
-                // Mehrfachauswahl: Anzahl und Aktionen (v2.1)
-                SelectionBarHost()
-                    .padding(.horizontal, 18)
+                // Mehrfachauswahl: Anzahl und Aktionen (v2.1) – nicht im Audio Studio
+                if !model.studioOpen {
+                    SelectionBarHost()
+                        .padding(.horizontal, 18)
+                }
                 if showMini {
                     MiniPlayerBar()
                         .frame(maxWidth: 1080)
@@ -120,50 +122,63 @@ private struct LibraryLayer: View {
     }
 }
 
-/// Inhalt des aktiven Bereichs (Übersicht oder Detailansicht).
+/// Inhalt des aktiven Bereichs (Übersicht oder Detailansicht) – bzw. das Audio Studio.
 struct SectionHost: View {
     @EnvironmentObject private var model: AppModel
 
     var body: some View {
         let destination = model.currentDestination
         ZStack {
-            switch destination {
-            case .album(let key)?: AlbumDetailView(albumKey: key)
-            case .artist(let key)?: ArtistDetailView(artistKey: key)
-            case .genre(let key)?: GenreDetailView(genreKey: key)
-            case .playlist(let id)?: PlaylistDetailView(playlistID: id)
-            case .smartPlaylist(let id)?: SmartPlaylistDetailView(smartID: id)
-            case .history?: HistoryView()
-            case .duplicates?: DuplicatesView()
-            case nil:
-                switch model.section {
-                case .tracks: TracksView()
-                case .albums: AlbumsView()
-                case .playlists: PlaylistsView()
-                case .artists: ArtistsView()
-                case .genres: GenresView()
-                case .favorites: FavoritesView()
+            if model.studioOpen {
+                StudioView(studio: model.studio)
+                    .transition(.opacity.combined(with: .offset(x: 12)))
+            } else {
+                ZStack {
+                    switch destination {
+                    case .album(let key)?: AlbumDetailView(albumKey: key)
+                    case .artist(let key)?: ArtistDetailView(artistKey: key)
+                    case .genre(let key)?: GenreDetailView(genreKey: key)
+                    case .playlist(let id)?: PlaylistDetailView(playlistID: id)
+                    case .smartPlaylist(let id)?: SmartPlaylistDetailView(smartID: id)
+                    case .history?: HistoryView()
+                    case .duplicates?: DuplicatesView()
+                    case nil:
+                        switch model.section {
+                        case .tracks: TracksView()
+                        case .albums: AlbumsView()
+                        case .playlists: PlaylistsView()
+                        case .artists: ArtistsView()
+                        case .genres: GenresView()
+                        case .favorites: FavoritesView()
+                        }
+                    }
                 }
+                .id(sectionID(destination))
+                .transition(.opacity.combined(with: .offset(x: destination == nil ? -12 : 12)))
             }
         }
-        .id(sectionID(destination))
-        .transition(.opacity.combined(with: .offset(x: destination == nil ? -12 : 12)))
         .animation(Motion.easeOut(Motion.medium), value: sectionID(destination))
+        .animation(Motion.easeOut(Motion.medium), value: model.studioOpen)
     }
 
     private func sectionID(_ d: Destination?) -> String { "\(model.section.rawValue)/\(String(describing: d))" }
 }
 
-/// Schwebende Glas-Navigation mit genau sechs Bereichen und gleitender Rosé-Linse (Android `FloatingNavBar`).
+/// Schwebende Glas-Navigation: sechs Bereiche der Bibliothek und – als siebter Eintrag – das Audio Studio,
+/// mit gleitender Rosé-Linse (Android `FloatingNavBar`).
 struct NavBar: View {
     @EnvironmentObject private var model: AppModel
     @Environment(\.musicColors) private var colors
 
+    /// Breite der Leiste (sieben Einträge).
+    static let width: CGFloat = 588
+
     var body: some View {
         let entries = LibrarySection.allCases
-        let index = CGFloat(entries.firstIndex(of: model.section) ?? 0)
+        let count = entries.count + 1
+        let index = CGFloat(model.studioOpen ? entries.count : (entries.firstIndex(of: model.section) ?? 0))
         GeometryReader { geo in
-            let itemWidth = max(0, geo.size.width - 10) / CGFloat(max(entries.count, 1))
+            let itemWidth = max(0, geo.size.width - 10) / CGFloat(count)
             ZStack(alignment: .leading) {
                 // Linse unter dem aktiven Eintrag
                 RoundedRectangle(cornerRadius: 22, style: .continuous)
@@ -175,15 +190,20 @@ struct NavBar: View {
                     .animation(Motion.lensSpring, value: index)
                 HStack(spacing: 0) {
                     ForEach(entries, id: \.self) { s in
-                        NavItem(section: s, selected: s == model.section) { model.select(s) }
+                        let selected = !model.studioOpen && s == model.section
+                        NavItem(icon: s.icon(selected: selected), label: s.label, help: String("\(s.label) (⌘\(s.shortcutDigit))"),
+                                selected: selected) { model.select(s) }
                             .frame(width: itemWidth, height: geo.size.height - 10)
                     }
+                    NavItem(icon: model.studioOpen ? Icons.studioFill : Icons.studio, label: "Studio", help: "Audio Studio (⌘7)",
+                            selected: model.studioOpen) { model.openStudio() }
+                        .frame(width: itemWidth, height: geo.size.height - 10)
                 }
                 .padding(.horizontal, 5)
             }
             .frame(width: geo.size.width, height: geo.size.height)
         }
-        .frame(width: 560, height: Metrics.navBarHeight)
+        .frame(width: Self.width, height: Metrics.navBarHeight)
         .glassSurface(RoundedRectangle(cornerRadius: Radius.bar, style: .continuous), elevated: true)
         .accessibilityElement(children: .contain)
         .accessibilityLabel("Bereiche")
@@ -192,7 +212,9 @@ struct NavBar: View {
 
 private struct NavItem: View {
     @Environment(\.musicColors) private var colors
-    let section: LibrarySection
+    let icon: String
+    let label: String
+    let help: String
     let selected: Bool
     let action: () -> Void
     @State private var hover = false
@@ -201,8 +223,8 @@ private struct NavItem: View {
         let fg = selected ? colors.accentText : colors.textPrimary.opacity(hover ? 0.9 : 0.72)
         Button(action: action) {
             VStack(spacing: 1) {
-                Icon(section.icon(selected: selected), size: 19, color: fg)
-                Text(section.label)
+                Icon(icon, size: 19, color: fg)
+                Text(label)
                     .font(Typo.inter(10, selected ? .semibold : .medium))
                     .foregroundColor(fg)
                     .lineLimit(1)
@@ -213,7 +235,8 @@ private struct NavItem: View {
         }
         .buttonStyle(PressScaleStyle(scale: 0.94))
         .onHover { hover = $0 }
-        .help(String("\(section.label) (⌘\(section.shortcutDigit))"))
+        .help(help)
+        .accessibilityLabel(label)
         .accessibilityAddTraits(selected ? [.isSelected, .isButton] : .isButton)
         .animation(Motion.easeOut(Motion.short), value: selected)
     }
