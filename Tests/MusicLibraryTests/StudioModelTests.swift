@@ -163,6 +163,27 @@ final class FakeRemote: RemoteSourceProviding, @unchecked Sendable {
     func thumbnail(for source: SourceInfo) async -> Data? { nil }
 }
 
+/// Vorhören ohne Audio: merkt sich Aufrufe; Position und Ende setzt der Test.
+@MainActor
+final class FakePreview: StudioPreviewing {
+    var loaded: [URL] = []
+    var plays: [(start: Double, end: Double?)] = []
+    var pauses = 0
+    var stops = 0
+    var position: Double = 0
+    var isPlaying = false
+    var onFinish: (() -> Void)?
+
+    func load(_ file: URL) throws { loaded.append(file) }
+    func play(from start: Double, to end: Double?) {
+        plays.append((start, end))
+        position = start
+        isPlaying = true
+    }
+    func pause() { pauses += 1; isPlaying = false }
+    func stop() { stops += 1; isPlaying = false }
+}
+
 struct FakeTools: StudioToolManaging {
     func status() async -> StudioToolStatus { StudioToolStatus(ytDlpPath: "/x/yt-dlp", ytDlpVersion: "2026.10.21", ytDlpOrigin: .managed) }
     func installOrUpdate(progress: @escaping @Sendable (ToolInstallProgress) -> Void) async throws -> StudioToolStatus {
@@ -200,9 +221,9 @@ final class StudioModelTests: XCTestCase {
         try? FileManager.default.removeItem(at: temp)
     }
 
-    private func makeModel(support: URL? = nil, defaults: UserDefaults? = nil) -> StudioModel {
+    private func makeModel(support: URL? = nil, defaults: UserDefaults? = nil, preview: StudioPreviewing? = nil) -> StudioModel {
         let services = StudioServiceSet(exporter: exporter, waveforms: FakeWaveforms(), local: local, remote: remote, tools: FakeTools())
-        let model = StudioModel(app: nil, services: services, preview: nil, demo: false, library: library,
+        let model = StudioModel(app: nil, services: services, preview: preview, demo: false, library: library,
                                 supportDirectory: support ?? temp.appendingPathComponent("Support", isDirectory: true),
                                 defaults: defaults ?? UserDefaults(suiteName: "StudioModelTests-\(UUID().uuidString)")!)
         model.settings.importToLibrary = false
@@ -351,6 +372,54 @@ final class StudioModelTests: XCTestCase {
         await waitUntil("fertig") { model.jobs.allSatisfy { $0.phase == .done } }
         XCTAssertEqual((model.job(b)?.outputPath as NSString?)?.pathExtension, "flac")
         XCTAssertEqual(exporter.allRequests.last?.options.format, .flac)
+    }
+
+    // MARK: Vorhören
+
+    func testPreviewPlaysSelectionAndFollowsPlayhead() async throws {
+        let player = FakePreview()
+        let model = makeModel(preview: player)
+        let src = try file("Quelle/a.m4a")
+        model.importFiles([src])
+        await waitUntil("Quelle bereit") { model.sourceState == .ready }
+
+        // ganze Datei ab Anfang
+        model.togglePreview()
+        XCTAssertEqual(player.loaded.map(\.path), [src.path])
+        XCTAssertEqual(player.plays.last?.start, 0)
+        XCTAssertNil(player.plays.last?.end ?? nil)
+        XCTAssertTrue(model.playback.playing)
+        player.position = 12.5
+        await waitUntil("Abspielkopf folgt") { abs(model.playback.playhead - 12.5) < 0.001 }
+        model.togglePreview()
+        XCTAssertEqual(player.pauses, 1)
+        XCTAssertFalse(model.playback.playing)
+
+        // Auswahl: ab Abspielkopf (liegt in der Auswahl) bis zum Ende der Auswahl
+        model.setSelection(start: 10, end: 20)
+        model.togglePreview()
+        XCTAssertEqual(player.plays.last?.start, 12.5)
+        XCTAssertEqual(player.plays.last?.end ?? nil, 20)
+        model.seek(to: 15)
+        XCTAssertEqual(player.plays.last?.start, 15)
+        XCTAssertEqual(player.plays.last?.end ?? nil, 20)
+        // Ende erreicht
+        player.isPlaying = false
+        player.onFinish?()
+        XCTAssertFalse(model.playback.playing)
+        XCTAssertEqual(model.playback.playhead, 20)
+        // Auswahl von Anfang an
+        model.previewSelection()
+        XCTAssertEqual(player.plays.last?.start, 10)
+        XCTAssertEqual(player.loaded.count, 1, "Datei wird nur einmal geladen")
+
+        // Neue bzw. keine Quelle beendet das Vorhören
+        let stopsBefore = player.stops
+        model.clearSource()
+        XCTAssertGreaterThan(player.stops, stopsBefore)
+        XCTAssertFalse(model.playback.playing)
+        model.togglePreview()
+        XCTAssertEqual(player.plays.count, 4, "ohne Quelle nichts abspielen")
     }
 
     // MARK: Ziel und Dateinamen
