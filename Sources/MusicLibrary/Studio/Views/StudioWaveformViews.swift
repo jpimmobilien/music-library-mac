@@ -44,8 +44,22 @@ struct StudioEditorCard: View {
 
 enum WaveformMetrics {
     static let ruler: CGFloat = 20
+    /// Höhe der Wellenform (niedriger bei kleinen Fenstern, siehe `studioWaveHeight`).
     static let wave: CGFloat = 156
+    static let compactWave: CGFloat = 116
     static let handleHit: CGFloat = 10
+}
+
+private struct StudioWaveHeightKey: EnvironmentKey {
+    static let defaultValue: CGFloat = WaveformMetrics.wave
+}
+
+extension EnvironmentValues {
+    /// Höhe der Wellenform im Editor.
+    var studioWaveHeight: CGFloat {
+        get { self[StudioWaveHeightKey.self] }
+        set { self[StudioWaveHeightKey.self] = newValue }
+    }
 }
 
 // MARK: - Editor
@@ -54,6 +68,7 @@ struct StudioWaveformEditor: View {
     @ObservedObject var studio: StudioModel
     let waveform: WaveformData
     @Environment(\.musicColors) private var colors
+    @Environment(\.studioWaveHeight) private var waveHeight
     @StateObject private var input = WaveformInputMonitor()
     /// Auswahl während des Ziehens (wird beim Loslassen übernommen – flüssig, ohne das ganze Studio neu zu zeichnen).
     @State private var live: TrimRange?
@@ -84,7 +99,7 @@ struct StudioWaveformEditor: View {
                     waveArea(width: width, range: range, sel: sel, x0: x0, x1: x1)
                         .offset(y: WaveformMetrics.ruler)
                 }
-                .frame(width: width, height: WaveformMetrics.ruler + WaveformMetrics.wave, alignment: .topLeading)
+                .frame(width: width, height: WaveformMetrics.ruler + waveHeight, alignment: .topLeading)
                 .contentShape(Rectangle())
                 .gesture(dragGesture(width: width, range: range, sel: sel, x0: x0, x1: x1))
                 .onContinuousHover(coordinateSpace: .local) { phase in
@@ -101,7 +116,7 @@ struct StudioWaveformEditor: View {
                 .onAppear { input.width = width }
                 .onChange(of: width) { input.width = $0 }
             }
-            .frame(height: WaveformMetrics.ruler + WaveformMetrics.wave)
+            .frame(height: WaveformMetrics.ruler + waveHeight)
             if studio.zoom > 1.01 {
                 WaveformOverview(studio: studio, waveform: waveform)
                     .frame(height: 30)
@@ -125,7 +140,7 @@ struct StudioWaveformEditor: View {
 
     @ViewBuilder
     private func waveArea(width: CGFloat, range: ClosedRange<Double>, sel: TrimRange, x0: CGFloat, x1: CGFloat) -> some View {
-        let h = WaveformMetrics.wave
+        let h = waveHeight
         let bx0 = min(max(x0, 0), width)
         let bx1 = min(max(x1, 0), width)
         ZStack(alignment: .topLeading) {
@@ -150,11 +165,11 @@ struct StudioWaveformEditor: View {
                 .equatable()
                 .frame(width: width, height: h)
             if x0 >= -WaveformMetrics.handleHit, x0 <= width + WaveformMetrics.handleHit {
-                TrimHandle(active: isDragging(edge: sel.start))
+                TrimHandle(active: isDragging(edge: sel.start), height: h)
                     .offset(x: x0 - 8)
             }
             if x1 >= -WaveformMetrics.handleHit, x1 <= width + WaveformMetrics.handleHit {
-                TrimHandle(active: isDragging(edge: sel.end))
+                TrimHandle(active: isDragging(edge: sel.end), height: h)
                     .offset(x: x1 - 8)
             }
             WaveformPlayhead(playback: studio.playback, range: range, width: width, height: h)
@@ -277,12 +292,13 @@ struct StudioWaveformEditor: View {
 private struct TrimHandle: View {
     @Environment(\.musicColors) private var colors
     let active: Bool
+    let height: CGFloat
 
     var body: some View {
         ZStack {
             Capsule()
                 .fill(colors.accent)
-                .frame(width: 3, height: WaveformMetrics.wave)
+                .frame(width: 3, height: height)
             RoundedRectangle(cornerRadius: 5, style: .continuous)
                 .fill(colors.accent)
                 .frame(width: active ? 14 : 12, height: active ? 46 : 40)
@@ -294,7 +310,7 @@ private struct TrimHandle: View {
                 )
                 .shadow(color: Color.black.opacity(colors.dark ? 0.45 : 0.22), radius: 4, y: 1.5)
         }
-        .frame(width: 16, height: WaveformMetrics.wave)
+        .frame(width: 16, height: height)
         .animation(Motion.standardSpring, value: active)
         .allowsHitTesting(false)
     }
@@ -498,6 +514,7 @@ private struct WaveformOverview: View {
 struct StudioWaveformPlaceholder: View {
     @Environment(\.musicColors) private var colors
     @Environment(\.continuousMotion) private var motion
+    @Environment(\.studioWaveHeight) private var waveHeight
     let progress: Double?
     var showsLabel: Bool = true
     var animated: Bool = true
@@ -543,7 +560,7 @@ struct StudioWaveformPlaceholder: View {
                 .glassSurface(Capsule(), strong: true)
             }
         }
-        .frame(height: WaveformMetrics.ruler + WaveformMetrics.wave)
+        .frame(height: WaveformMetrics.ruler + waveHeight)
         .accessibilityElement(children: .combine)
     }
 }

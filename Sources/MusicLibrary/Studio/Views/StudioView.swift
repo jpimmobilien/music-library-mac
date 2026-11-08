@@ -64,7 +64,11 @@ struct StudioView: View {
         .onAppear {
             if !studio.demo { studio.refreshToolStatus() }
             if studio.demo && StudioDemo.askDuplicates { askDuplicates = true }
+            if studio.jobs.isEmpty && !studio.history.entries.isEmpty { queueTab = .history }
             if studio.demo, let tab = StudioDemo.queueTab { queueTab = tab }
+        }
+        .onChange(of: studio.jobs.count) { count in
+            if count > 0 { queueTab = .queue }
         }
         .onChange(of: studio.source?.id) { _ in askDuplicates = false }
         .accessibilityElement(children: .contain)
@@ -133,6 +137,8 @@ private struct StudioMainColumn: View {
                 }
             }
             .animation(Motion.easeOut(Motion.medium), value: showsBar)
+            // Kleine Fenster: flachere Wellenform, damit Bedienleiste und Zeiten über der Exportleiste bleiben
+            .environment(\.studioWaveHeight, geo.size.height < 760 ? WaveformMetrics.compactWave : WaveformMetrics.wave)
         }
     }
 
@@ -347,9 +353,10 @@ extension View {
     /// Sprungziel knapp oberhalb der Ansicht: Beim Scrollen dorthin bleibt Platz für die schwebende Navigation.
     func studioAnchor(_ anchor: StudioAnchor) -> some View {
         background(alignment: .top) {
+            // Ausrichtungslinie statt `offset`: Nur die Lage im Layout zählt für `scrollTo`.
             Color.clear
                 .frame(width: 1, height: 1)
-                .offset(y: -(Chrome.contentTop + 6))
+                .alignmentGuide(.top) { d in d[.top] + Chrome.contentTop + 6 }
                 .id(anchor)
                 .accessibilityHidden(true)
         }

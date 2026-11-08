@@ -214,7 +214,12 @@ struct StudioQualityControls: View {
 
     private func rateTitle(_ hz: Int?) -> String {
         guard let hz else {
-            if let src = studio.source?.sampleRate, src > 0 { return "Wie Quelle (\(ExportOptions.rateLabel(studio.options.outputSampleRate(sourceRate: src))))" }
+            if let src = studio.source?.sampleRate, src > 0 {
+                // Was „wie Quelle“ ergibt (MP3/AAC können nicht jede Rate – dann die nächstpassende)
+                var o = studio.options
+                o.sampleRate = nil
+                return "Wie Quelle (\(ExportOptions.rateLabel(o.outputSampleRate(sourceRate: src))))"
+            }
             return "Wie Quelle"
         }
         return ExportOptions.rateLabel(hz)

@@ -301,7 +301,7 @@ enum SnapshotRunner {
                 s.cutSaveMode = .replaceOriginal
                 StudioScrollSeed.pending = .export
             }, view: main),
-            Scenario(name: "60-studio-schneiden-bestaetigen", size: CGSize(width: 480, height: 350), prepare: studio { m, s in
+            Scenario(name: "60-studio-schneiden-bestaetigen", size: CGSize(width: 480, height: 372), prepare: studio { m, s in
                 if let src = StudioDemo.libraryTrackSource(m) {
                     StudioDemo.load(s, src, selection: TrimRange(start: 8.4, end: 141.2))
                 }

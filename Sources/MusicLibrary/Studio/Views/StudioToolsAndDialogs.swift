@@ -288,9 +288,7 @@ struct StudioReplaceDialogView: View {
                 point(Icons.favoriteBorder, "Favoriten, Playlists, Wiedergabestatistik und Hinzufügedatum bleiben am Titel.")
                 point(Icons.label, "Tags, Cover und Liedtexte bleiben erhalten.")
                 if let badge = studio.passthroughBadge {
-                    point(Icons.check, badge == "ohne Neukodierung"
-                          ? "Format wie Original – ohne Neukodierung geschnitten (MP3 an Frame-Grenzen, etwa 26 ms genau)."
-                          : "Format wie Original – verlustfrei.")
+                    point(Icons.check, passthroughText(badge))
                 }
             }
             .padding(14)
@@ -310,6 +308,15 @@ struct StudioReplaceDialogView: View {
         }
         .padding(22)
         .background(AmbientBackground())
+    }
+
+    private func passthroughText(_ badge: String) -> String {
+        guard badge == "ohne Neukodierung" else { return "Format wie Original – verlustfrei." }
+        switch studio.originalFormat {
+        case .mp3?: return "Format wie Original – ohne Neukodierung geschnitten (an MP3-Frame-Grenzen, auf etwa 26 ms genau)."
+        case .m4a?: return "Format wie Original – ohne Neukodierung geschnitten (an AAC-Blockgrenzen, auf etwa 23 ms genau)."
+        default: return "Format wie Original – ohne Neukodierung geschnitten."
+        }
     }
 
     private func point(_ icon: String, _ text: String) -> some View {
