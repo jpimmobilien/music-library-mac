@@ -11,7 +11,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-VERSION="${VERSION:-2.1.0}"
+VERSION="${VERSION:-2.2.0}"
 BUILD_NUMBER="${BUILD_NUMBER:-1}"
 APP="build/Music Library.app"
 
@@ -19,7 +19,9 @@ echo "▸ Swift: $(swift --version 2>&1 | head -1)"
 # Je Architektur getrennt bauen und mit lipo zusammenfügen – funktioniert mit Xcode und mit den
 # Befehlszeilenwerkzeugen allein (der Mehrarchitektur-Build von SwiftPM bräuchte Xcode).
 SLICES=()
-for ARCH in arm64 x86_64; do
+# ARCHS="arm64" bzw. "x86_64" baut zum schnellen Prüfen nur einen Teil (Auslieferung immer beide)
+ARCHS="${ARCHS:-arm64 x86_64}"
+for ARCH in $ARCHS; do
     TRIPLE="$ARCH-apple-macosx13.0"
     echo "▸ Baue $ARCH ($TRIPLE) …"
     swift build -c release --triple "$TRIPLE" --product MusicLibrary
@@ -45,7 +47,7 @@ cp Resources/Licenses/* "$APP/Contents/Resources/Licenses/"
 
 echo "▸ Prüfe Architekturen …"
 lipo -info "$APP/Contents/MacOS/MusicLibrary"
-lipo "$APP/Contents/MacOS/MusicLibrary" -verify_arch arm64 x86_64
+lipo "$APP/Contents/MacOS/MusicLibrary" -verify_arch $ARCHS
 
 echo "▸ Mindest-macOS je Architektur:"
 otool -l "$APP/Contents/MacOS/MusicLibrary" -arch arm64 | grep -A3 LC_BUILD_VERSION | grep minos || true

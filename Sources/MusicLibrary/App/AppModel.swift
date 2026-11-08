@@ -16,6 +16,8 @@ final class AppModel: ObservableObject {
     let player: PlayerService
     let library: LibraryService
     let metadata: MetadataService
+    /// Audio Studio (2.2): Download, Umwandeln, Schneiden.
+    private(set) var studio: StudioModel!
     /// Demo-Modus (Vorschaubilder/Snapshots): keine Dateizugriffe, keine Wiedergabe.
     let demo: Bool
 
@@ -55,6 +57,8 @@ final class AppModel: ObservableObject {
     @Published var stacks: [LibrarySection: [Destination]] = [:]
     @Published var queries: [LibrarySection: String] = [:]
     @Published var playerOpen = false
+    /// Audio Studio statt der Bibliothek anzeigen (eigener Eintrag in der Navigation).
+    @Published var studioOpen = false
     @Published var sidePanel: SidePanel?
     @Published var toasts: [Toast] = []
     @Published var searchFocusRequest = 0
@@ -110,6 +114,7 @@ final class AppModel: ObservableObject {
         self.metadata = MetadataService(store: store)
         self.section = settings.startSection ?? settings.lastSection   // Einstellung „Bereich beim Start“
         AppModel.shared = self
+        self.studio = StudioModel(app: self, services: demo ? .demo : .live, preview: demo ? nil : StudioPreviewFactory.make(), demo: demo)
         player.model = self
         library.model = self
         metadata.model = self
@@ -416,6 +421,12 @@ final class AppModel: ObservableObject {
     // MARK: - Navigation
 
     func select(_ target: LibrarySection) {
+        if studioOpen {
+            studioOpen = false
+            section = target
+            settings.lastSection = target
+            return
+        }
         if section == target {
             // Erneut gewählt: zurück zur Übersicht des Bereichs (wie Android)
             stacks[target] = []
@@ -453,6 +464,12 @@ final class AppModel: ObservableObject {
     }
 
     var currentDestination: Destination? { stacks[section]?.last }
+
+    /// Audio Studio öffnen (Navigation, ⌘7, Menü).
+    func openStudio() {
+        playerOpen = false
+        studioOpen = true
+    }
 
     func openAlbum(of track: Track) {
         if let key = index.albumKeyByTrack[track.uid] { open(.album(key), in: .albums) }

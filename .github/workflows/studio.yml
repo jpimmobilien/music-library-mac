@@ -1,0 +1,95 @@
+# Entwicklungsprüfung für das Audio Studio (Version 2.2): bauen, ausgewählte Tests, optional Vorschaubilder
+# und eine Prüfung echter Internet-Quellen. Nur von Hand (workflow_dispatch) – Ergebnisse im Zweig
+# „ci-studio-<Zweig>-<Rechner>“ (build.log, test.log, Vorschaubilder als JPEG).
+name: Studio
+
+on:
+  workflow_dispatch:
+    inputs:
+      tests:
+        description: "Filter für swift test (Regex; leer = keine Tests)"
+        default: "MLStudioTests|StudioEngineTests|Studio"
+      snapshots:
+        description: "Vorschaubilder: Namensmuster für ML_SNAPSHOT_ONLY (z. B. „60-studio“; leer = keine)"
+        default: ""
+      runner:
+        description: "Rechner (macos-26 = Apple Silicon, macos-26-intel, macos-15-intel)"
+        default: "macos-26-intel"
+      webcheck:
+        description: "Echte Internet-Quellen prüfen (1 = ja; nur freie Testinhalte aus scripts/studio_webcheck.sh)"
+        default: "0"
+
+concurrency:
+  group: studio-${{ github.ref }}-${{ inputs.runner }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  studio:
+    name: Studio (${{ inputs.runner }})
+    runs-on: ${{ inputs.runner }}
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Werkzeuge
+        run: |
+          X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -n "$X" ]; then sudo xcode-select -s "$X"; fi
+          xcodebuild -version | head -1
+          swift --version 2>&1 | head -1
+          mkdir -p out
+          { sw_vers; uname -m; xcodebuild -version | head -1; } > out/rechner.txt
+          # ffprobe zum Prüfen der erzeugten Dateien (Dauer, Bitrate, Abtastrate, Tags)
+          command -v ffprobe >/dev/null || brew install --quiet ffmpeg > out/brew.log 2>&1 || true
+          command -v ffprobe && ffprobe -version | head -1 >> out/rechner.txt || true
+      - name: Bauen (Debug)
+        run: |
+          set +e
+          swift build --product MusicLibrary > out/build.log 2>&1
+          STATUS=$?
+          grep -n "error:" out/build.log | sed 's|/Users/runner/work/music-library-mac/music-library-mac/||' | sort -u | head -300
+          grep -n "warning:" out/build.log | grep -E "Sources/(StudioEngine|MLStudio|MusicLibrary/Studio)" | sed 's|/Users/runner/work/music-library-mac/music-library-mac/||' | sort -u | head -100
+          tail -3 out/build.log
+          exit $STATUS
+      - name: Tests
+        if: inputs.tests != ''
+        continue-on-error: true
+        run: |
+          set +e
+          swift build --build-tests > out/build-tests.log 2>&1 || { grep -n "error:" out/build-tests.log | sed 's|/Users/runner/work/music-library-mac/music-library-mac/||' | sort -u | head -200; exit 1; }
+          swift test --skip-build --filter "${{ inputs.tests }}" > out/test.log 2>&1
+          STATUS=$?
+          grep -E "error:|failed|passed|Executed|\[Studio\]" out/test.log | head -400
+          tail -5 out/test.log
+          exit $STATUS
+      - name: Internet-Quellen (freie Testinhalte)
+        if: inputs.webcheck == '1'
+        continue-on-error: true
+        run: |
+          set +e
+          if [ -x scripts/studio_webcheck.sh ]; then scripts/studio_webcheck.sh out/webcheck 2>&1 | tee out/webcheck.log; else echo "scripts/studio_webcheck.sh fehlt"; fi
+      - name: Vorschaubilder
+        if: inputs.snapshots != ''
+        continue-on-error: true
+        env:
+          ML_SNAPSHOT_ONLY: ${{ inputs.snapshots }}
+        run: |
+          ARCHS="$(uname -m)" scripts/build_app.sh > out/build-app.log 2>&1 || { tail -40 out/build-app.log; exit 1; }
+          mkdir -p out/snapshots
+          scripts/run_snapshots.sh "build/Music Library.app" out/snapshots
+      - name: Ergebnisse in Zweig sichern
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BR="ci-studio-${GITHUB_REF_NAME//\//-}-${{ inputs.runner }}"
+          cd out
+          find . -name "*.png" | while read -r f; do sips -s format jpeg -s formatOptions 80 "$f" --out "${f%.png}.jpg" >/dev/null 2>&1 && rm "$f"; done
+          git init -q -b "$BR"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Studio $GITHUB_SHA ${{ inputs.runner }}" || true
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$BR"

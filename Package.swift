@@ -10,6 +10,9 @@
 //   MLTags     Lesen/Schreiben der Tags in Swift + sichere Schreibstrategie (Sicherung, Kopie, Prüfung, Ersetzen, Rückgängig)
 //   MLRender   Raster-Renderer der Player-Designs (Vinyl, Kassette, CD) – Portierung der Android-Renderer
 //   OggVorbis  Ogg-Vorbis-Decoder (stb_vorbis), da macOS Ogg nicht selbst abspielt
+//   MLStudio   Audio Studio (2.2): Formate, Optionen, Aufträge, Warteschlange, Dateinamen – reine Logik
+//   StudioEngine  Audio Studio: Lesen, Schneiden, Umrechnen, Kodieren (MP3/WAV/FLAC/AAC/M4A/AIFF), Tags,
+//              Wellenform, Vorhören, Internet-Quellen über yt-dlp – nur unter macOS
 //   MusicLibrary  die macOS-App (SwiftUI + AppKit + AVFoundation), nur unter macOS
 //
 import PackageDescription
@@ -57,6 +60,7 @@ var targets: [Target] = [
     .target(name: "MLStore", dependencies: ["MLCore", "CSQLite"], path: "Sources/MLStore"),
     .target(name: "MLTags", dependencies: ["MLCore", "TagBridge"], path: "Sources/MLTags"),
     .target(name: "MLRender", path: "Sources/MLRender"),
+    .target(name: "MLStudio", dependencies: ["MLCore"], path: "Sources/MLStudio"),
     .testTarget(name: "MLCoreTests", dependencies: ["MLCore"], path: "Tests/MLCoreTests"),
     .testTarget(name: "MLStoreTests", dependencies: ["MLStore"], path: "Tests/MLStoreTests"),
     .testTarget(
@@ -66,14 +70,31 @@ var targets: [Target] = [
         resources: [.copy("Fixtures")]
     ),
     .testTarget(name: "MLRenderTests", dependencies: ["MLRender"], path: "Tests/MLRenderTests"),
+    .testTarget(name: "MLStudioTests", dependencies: ["MLStudio"], path: "Tests/MLStudioTests"),
     .testTarget(name: "OggVorbisTests", dependencies: ["OggVorbis"], path: "Tests/OggVorbisTests", resources: [.copy("Fixtures")]),
 ]
 
 #if os(macOS)
+// Audio Studio: Verarbeitung getrennt von der Oberfläche
+targets.append(
+    .target(
+        name: "StudioEngine",
+        dependencies: ["MLCore", "MLStudio", "MLTags", "OggVorbis"],
+        path: "Sources/StudioEngine",
+        linkerSettings: [
+            .linkedFramework("AVFoundation"),
+            .linkedFramework("AudioToolbox"),
+            .linkedFramework("Accelerate"),
+        ]
+    )
+)
+targets.append(
+    .testTarget(name: "StudioEngineTests", dependencies: ["StudioEngine"], path: "Tests/StudioEngineTests")
+)
 targets.append(
     .executableTarget(
         name: "MusicLibrary",
-        dependencies: ["MLCore", "MLStore", "MLTags", "MLRender", "OggVorbis"],
+        dependencies: ["MLCore", "MLStore", "MLTags", "MLRender", "OggVorbis", "MLStudio", "StudioEngine"],
         path: "Sources/MusicLibrary",
         linkerSettings: [
             .linkedFramework("AppKit"),
