@@ -73,7 +73,8 @@ final class StudioFFprobeTests: XCTestCase {
                 if abs(duration - seconds) > 1.0 / 44_100 + 1e-6 { notes.append("Dauer \(duration)") }
                 if let decoded, decoded != Int(seconds * 44_100) { notes.append("dekodiert \(decoded) Frames") }
             } else if o.format == .m4a {
-                if abs(duration - seconds) > 0.03 { notes.append("Dauer \(duration)") }
+                // ffprobe nennt die Containerdauer inkl. Encoder-Vorlauf; dekodiert wird samplegenau (Edit-Liste)
+                if let decoded, decoded != Int(seconds * 44_100) { notes.append("dekodiert \(decoded) Frames") }
             }
             if o.format.supportsTags {
                 if lower["title"] != meta.title { notes.append("Titel \(lower["title"] ?? "nil")") }

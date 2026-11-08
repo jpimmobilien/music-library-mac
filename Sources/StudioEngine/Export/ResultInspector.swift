@@ -15,7 +15,12 @@ enum ResultInspector {
         }
         let rate = file.fileFormat.sampleRate
         let channels = Int(file.fileFormat.channelCount)
-        let duration = rate > 0 ? Double(file.length) / rate : 0
+        var duration = rate > 0 ? Double(file.length) / rate : 0
+        // MP3: Dauer aus Frameanzahl und LAME-Angaben (Verzögerung/Auffüllung) – samplegenau; AVFoundation
+        // schätzt bei manchen CBR-Dateien einen Frame (26 ms) zu viel.
+        var mp3: MP3StreamInfo?
+        if format == .mp3 { mp3 = try? MP3Stream.scan(url: url) }
+        if let mp3, mp3.infoTag?.encoderDelay != nil { duration = mp3.duration }
         let props = try? TagFile.read(url: url).audio
 
         var bitDepth: Int?
@@ -31,7 +36,7 @@ enum ResultInspector {
         var kbps = 0
         switch format {
         case .mp3:
-            if let info = try? MP3Stream.scan(url: url) {
+            if let info = mp3 {
                 // CBR: Bitrate aus dem Frame-Kopf; VBR: Audiodaten · 8 / Dauer
                 kbps = info.isCBR ? info.header.bitrateKbps : Int(info.averageKbps.rounded())
             }

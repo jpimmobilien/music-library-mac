@@ -154,7 +154,9 @@ final class StudioFormatExportTests: XCTestCase {
                 let (result, _) = try await TS.export(ExportRequest(input: source, trim: nil, options: o, metadata: StudioMetadata(), output: out))
                 TS.log("Ungewöhnliche Rate \(Int(rate)) → \(o.format.label): \(result.sampleRate) Hz (erwartet \(expected)), Dauer \(String(format: "%.4f", result.duration)) s")
                 if result.sampleRate != expected { failures.append("\(Int(rate)) → \(o.format.label): \(result.sampleRate) statt \(expected)") }
-                if abs(result.duration - 2) > (o.format.isLossless ? 0.001 : (o.format == .aac ? 0.12 : 0.04)) {
+                // ADTS kann die Encoder-Verzögerung (2112 Samples) nicht kennzeichnen: bis zu 2112 + 1024 Samples länger
+                let aacSlack = Double(2112 + 1024) / Double(expected) + 0.002
+                if abs(result.duration - 2) > (o.format.isLossless ? 0.001 : (o.format == .aac ? aacSlack : 0.04)) {
                     failures.append("\(Int(rate)) → \(o.format.label): Dauer \(result.duration)")
                 }
             }
@@ -177,7 +179,18 @@ final class StudioFormatExportTests: XCTestCase {
                 TS.log("Mono → \(format.label) (Mono behalten: \(keep)): \(r.channels) Kanäle, Dauer \(String(format: "%.4f", r.duration)) s")
             }
         }
-        // 5.1 → Stereo
+        // 5.1 (L R C LFE Ls Rs): Center nur in der Mitte, Surround-links nur links, Surround-rechts nur rechts
+        for (index, name, expectLeft, expectRight) in [(2, "Center", true, true), (4, "Surround links", true, false), (5, "Surround rechts", false, true)] {
+            let src = try TS.writePCM(dir.appendingPathComponent("kanal\(index).wav"), rate: 48_000, channels: 6, bits: 24, seconds: 1, signal: .onlyChannel(index, 500, 0.5))
+            let out = dir.appendingPathComponent("kanal\(index)-stereo.wav")
+            _ = try await TS.export(ExportRequest(input: src, trim: nil, options: ExportOptions(format: .wav, pcmDepth: .float32), metadata: StudioMetadata(), output: out))
+            let p = TS.peaks(try TS.readAll(out))
+            TS.log(String(format: "5.1-Heruntermischen, nur %@: links %.3f, rechts %.3f", name, p[0], p[1]))
+            XCTAssertEqual(p.count, 2)
+            XCTAssertEqual(p[0] > 0.05, expectLeft, "\(name) links")
+            XCTAssertEqual(p[1] > 0.05, expectRight, "\(name) rechts")
+        }
+        // 5.1 → Stereo, alle Kanäle voll ausgesteuert
         let surround = try TS.writePCM(dir.appendingPathComponent("surround.wav"), rate: 48_000, channels: 6, bits: 24, seconds: 2, signal: .sine(1000, 0.9))
         for format in [StudioFormat.wav, .mp3, .flac] {
             let o = ExportOptions(format: format, pcmDepth: .float32)
@@ -190,6 +203,36 @@ final class StudioFormatExportTests: XCTestCase {
             if format.isLossless { XCTAssertLessThanOrEqual(peak, 0.99998, "5.1 → \(format.label): keine Übersteuerung") }
             XCTAssertGreaterThan(peak, 0.2, "5.1 → \(format.label): Signal vorhanden")
             TS.log(String(format: "5.1 → %@: %d Kanäle, Spitze %.3f", format.label, r.channels, peak))
+        }
+    }
+
+    /// MP3-Dauer: LAME-Angaben (exakt) gegenüber AVFoundation; Einfluss von ID3v2/ID3v1 berichten.
+    func testMP3DurationSeenByAVFoundation() async throws {
+        let source = try TS.writePCM(dir.appendingPathComponent("q.wav"), rate: 44_100, channels: 2, bits: 16, seconds: 6, signal: .sweep)
+        for kbps in ExportOptions.mp3Bitrates {
+            let out = dir.appendingPathComponent("d\(kbps).mp3")
+            let (r, _) = try await TS.export(ExportRequest(input: source, trim: nil, options: ExportOptions(format: .mp3, mp3Bitrate: kbps),
+                                                           metadata: StudioMetadata(), output: out))
+            func avDuration() throws -> Double {
+                let f = try AVAudioFile(forReading: out)
+                return Double(f.length) / f.processingFormat.sampleRate
+            }
+            let plain = try avDuration()
+            try TagFile.write(url: out, edit: TS.metadata(cover: TS.jpeg).tagEdit(coverMimeType: "image/jpeg"))
+            let tagged = try avDuration()
+            let data = try Data(contentsOf: out)
+            let hasV1 = data.count > 128 && data[(data.count - 128)..<(data.count - 125)] == Data("TAG".utf8)
+            var withoutV1 = tagged
+            if hasV1 {
+                try data.prefix(data.count - 128).write(to: out)
+                withoutV1 = try avDuration()
+            }
+            let exact = try MP3Stream.scan(url: out).duration
+            TS.log(String(format: "MP3 %d kbit/s Dauer: Ergebnis %.4f s, LAME-Angaben %.4f s, AVAudioFile ohne Tags %.4f s, mit ID3v2+ID3v1 %.4f s, ID3v1 vorhanden %@, ohne ID3v1 %.4f s",
+                          kbps, r.duration, exact, plain, tagged, hasV1 ? "ja" : "nein", withoutV1))
+            XCTAssertEqual(r.duration, 6, accuracy: 0.0001)
+            XCTAssertEqual(exact, 6, accuracy: 0.0001)
+            XCTAssertEqual(plain, 6, accuracy: 0.03)
         }
     }
 }

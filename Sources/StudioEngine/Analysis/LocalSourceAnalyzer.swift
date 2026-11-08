@@ -54,13 +54,19 @@ public struct LocalSourceAnalyzer: LocalSourceAnalyzing {
                 if lossless, a.bitsPerSample > 0 { info.bitDepth = a.bitsPerSample }
             }
         }
+        // MP3: samplegenaue Dauer aus Frameanzahl und LAME-Angaben (TagLib rechnet ohne Verzögerung/Auffüllung)
+        if ext == "mp3", let mp3 = try? MP3Stream.scan(url: url), mp3.frameCount > 0 {
+            info.duration = mp3.duration
+        }
         try Task.checkCancellation()
 
         // 2. AVFoundation: Videodateien, Formate ohne TagLib-Unterstützung, genauere Dauer
-        if isVideo || !known || info.duration == nil {
+        // (MPEG-4-Audio ebenfalls: AVFoundation berücksichtigt die Encoder-Verzögerung, TagLib nicht)
+        let mpeg4Audio = ["m4a", "m4b", "m4r"].contains(ext)
+        if isVideo || mpeg4Audio || !known || info.duration == nil {
             if let av = await Self.avDetails(url) {
                 known = true
-                if isVideo || info.duration == nil { info.duration = av.duration }
+                if isVideo || mpeg4Audio || info.duration == nil { info.duration = av.duration ?? info.duration }
                 if isVideo || info.codec == nil { info.codec = av.codec }
                 if info.sampleRate == nil || isVideo { info.sampleRate = av.sampleRate }
                 if info.channels == nil || isVideo { info.channels = av.channels }

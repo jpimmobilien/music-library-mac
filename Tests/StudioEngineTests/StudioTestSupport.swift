@@ -30,6 +30,8 @@ enum TS {
         case clicks([Int])
         /// Sinus mit fester Frequenz und Amplitude (alle Kanäle).
         case sine(Double, Float)
+        /// Sinus nur in einem Kanal (Index), sonst Stille.
+        case onlyChannel(Int, Double, Float)
     }
 
     /// Wert des Signals zur Zeit `t` (Sekunden) in Kanal `ch` bei Gesamtlänge `length` (Sekunden).
@@ -44,6 +46,8 @@ enum TS {
             return frames.contains(frame) ? (ch % 2 == 0 ? 0.9 : -0.9) : 0
         case .sine(let f, let a):
             return a * Float(sin(2 * Double.pi * f * t))
+        case .onlyChannel(let c, let f, let a):
+            return c == ch ? a * Float(sin(2 * Double.pi * f * t)) : 0
         }
     }
 
@@ -243,10 +247,15 @@ enum TS {
     static var ffmpegPath: String? { FFmpegTool.path }
 
     @discardableResult
-    static func run(_ tool: String, _ args: [String], timeout: Double = 600) -> (status: Int32, out: String, err: String) {
+    static func run(_ tool: String, _ args: [String], timeout: Double = 600, environment: [String: String]? = nil) -> (status: Int32, out: String, err: String) {
         let p = Process()
         p.executableURL = URL(fileURLWithPath: tool)
         p.arguments = args
+        if let environment {
+            var env = ProcessInfo.processInfo.environment
+            for (k, v) in environment { env[k] = v }
+            p.environment = env
+        }
         let outPipe = Pipe(), errPipe = Pipe()
         p.standardOutput = outPipe
         p.standardError = errPipe
@@ -303,6 +312,9 @@ enum TS {
         }
         return kr == KERN_SUCCESS ? info.phys_footprint : 0
     }
+
+    /// Spitzenwert je Kanal.
+    static func peaks(_ a: Audio) -> [Float] { a.channels.map { $0.map { abs($0) }.max() ?? 0 } }
 
     static func mb(_ bytes: UInt64) -> String { String(format: "%.1f MB", Double(bytes) / 1_048_576) }
 
