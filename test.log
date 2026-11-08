@@ -1,0 +1,61 @@
+[0/1] Planning build
+Test Suite 'Selected tests' started at 2026-11-08 20:55:36.891.
+Test Suite 'MusicLibraryPackageTests.xctest' started at 2026-11-08 20:55:36.893.
+Test Suite 'StudioVendorTests' started at 2026-11-08 20:55:36.893.
+Test Case '-[StudioEngineTests.StudioVendorTests testBuildWithXcode16]' started.
+Test Case '-[StudioEngineTests.StudioVendorTests testBuildWithXcode16]' passed (214.086 seconds).
+Test Case '-[StudioEngineTests.StudioVendorTests testEncoderVersions]' started.
+Test Case '-[StudioEngineTests.StudioVendorTests testEncoderVersions]' passed (0.001 seconds).
+Test Case '-[StudioEngineTests.StudioVendorTests testUniversalReleaseBuild]' started.
+/Users/runner/work/music-library-mac/music-library-mac/Tests/StudioEngineTests/StudioVendorTests.swift:35: -[StudioEngineTests.StudioVendorTests testUniversalReleaseBuild] : Test skipped - ML_UNIVERSAL_BUILD nicht gesetzt
+Test Case '-[StudioEngineTests.StudioVendorTests testUniversalReleaseBuild]' skipped (0.003 seconds).
+Test Case '-[StudioEngineTests.StudioVendorTests testVerifyVendoredSources]' started.
+Test Case '-[StudioEngineTests.StudioVendorTests testVerifyVendoredSources]' passed (8.305 seconds).
+Test Suite 'StudioVendorTests' passed at 2026-11-08 20:59:19.289.
+	 Executed 4 tests, with 1 test skipped and 0 failures (0 unexpected) in 222.394 (222.396) seconds
+Test Suite 'MusicLibraryPackageTests.xctest' passed at 2026-11-08 20:59:19.289.
+	 Executed 4 tests, with 1 test skipped and 0 failures (0 unexpected) in 222.394 (222.396) seconds
+Test Suite 'Selected tests' passed at 2026-11-08 20:59:19.289.
+	 Executed 4 tests, with 1 test skipped and 0 failures (0 unexpected) in 222.394 (222.399) seconds
+[Studio] Xcode 16: Xcode_16.app, Apple Swift version 6.0 (swiftlang-6.0.0.9.10 clang-1600.0.26.2), SDK 15.0 (/Applications/Xcode_16.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk)
+[Studio] Xcode 16: swift build --target StudioEngineTests → Status 0 in 202 s
+[Studio] Encoder: LAME 3.100, libFLAC 1.5.0 (reference libFLAC 1.5.0 20250211)
+[Studio] verify_vendor: == LAME 3.100 ==
+[Studio] verify_vendor:   Tarball: https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz
+[Studio] verify_vendor:   SHA-256: ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e
+[Studio] verify_vendor:   Homebrew lame: Version 4.0, https://downloads.sourceforge.net/project/lame/lame/4.0/lame-4.0.tar.gz
+[Studio] verify_vendor:   Homebrew SHA-256: 3df5124d5ad3a98312ffd7ba6a9b36230e4f8a3e66d3ce0f425e336c32d216eb
+[Studio] verify_vendor:   Homebrew führt inzwischen 4.0 – suche die Formel für 3.100 in der Geschichte von homebrew-core …
+[Studio] verify_vendor:   Homebrew (homebrew-core 54ad61d5ae50) lame 3.100 SHA-256: ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e
+[Studio] verify_vendor:   OK: Prüfsumme stimmt mit der Homebrew-Formel für 3.100 überein
+[Studio] verify_vendor:   NUR CVS-KENNUNG ($Id$ nicht expandiert): Sources/CLame/include/lame.h
+[Studio] verify_vendor:   NUR CVS-KENNUNG ($Id$ nicht expandiert): Sources/CLame/libmp3lame/bitstream.c
+[Studio] verify_vendor:   NUR CVS-KENNUNG ($Id$ nicht expandiert): Sources/CLame/libmp3lame/encoder.c
+[Studio] verify_vendor:   NUR CVS-KENNUNG ($Id$ nicht expandiert): Sources/CLame/libmp3lame/fft.c
+[Studio] verify_vendor:   NUR CVS-KENNUNG ($Id$ nicht expandiert): Sources/CLame/libmp3lame/id3tag.c
+[Studio] verify_vendor:   NUR CVS-KENNUNG ($Id$ nicht expandiert): Sources/CLame/libmp3lame/lame.c
+[Studio] verify_vendor:   NUR CVS-KENNUNG ($Id$ nicht expandiert): Sources/CLame/libmp3lame/newmdct.c
+[Studio] verify_vendor:   NUR CVS-KENNUNG ($Id$ nicht expandiert): Sources/CLame/libmp3lame/psymodel.c
+[Studio] verify_vendor:   NUR CVS-KENNUNG ($Id$ nicht expandiert): Sources/CLame/libmp3lame/quantize_pvt.c
+[Studio] verify_vendor:   NUR CVS-KENNUNG ($Id$ nicht expandiert): Sources/CLame/libmp3lame/quantize.c
+[Studio] verify_vendor:   NUR CVS-KENNUNG ($Id$ nicht expandiert): Sources/CLame/libmp3lame/reservoir.c
+[Studio] verify_vendor:   NUR CVS-KENNUNG ($Id$ nicht expandiert): Sources/CLame/libmp3lame/set_get.c
+[Studio] verify_vendor:   NUR CVS-KENNUNG ($Id$ nicht expandiert): Sources/CLame/libmp3lame/tables.c
+[Studio] verify_vendor:   NUR CVS-KENNUNG ($Id$ nicht expandiert): Sources/CLame/libmp3lame/takehiro.c
+[Studio] verify_vendor:   NUR CVS-KENNUNG ($Id$ nicht expandiert): Sources/CLame/libmp3lame/util.c
+[Studio] verify_vendor:   NUR CVS-KENNUNG ($Id$ nicht expandiert): Sources/CLame/libmp3lame/vbrquantize.c
+[Studio] verify_vendor:   NUR CVS-KENNUNG ($Id$ nicht expandiert): Sources/CLame/libmp3lame/VbrTag.c
+[Studio] verify_vendor:   NUR CVS-KENNUNG ($Id$ nicht expandiert): Sources/CLame/libmp3lame/version.c
+[Studio] verify_vendor:   LAME: 24 Dateien identisch, 18 nur mit anderer $Id$-Kommentarzeile, 0 mit inhaltlichem Unterschied, 0 nicht im Tarball
+[Studio] verify_vendor:   Nicht übernommen (bewusst): i386 mpglib_interface.c vector/xmm_quantize_sub.c 
+[Studio] verify_vendor: == libFLAC 1.5.0 ==
+[Studio] verify_vendor:   Tarball: https://downloads.xiph.org/releases/flac/flac-1.5.0.tar.xz
+[Studio] verify_vendor:   SHA-256: f2c1c76592a82ffff8413ba3c4a1299b6c7ab06c734dee03fd88630485c2b920
+[Studio] verify_vendor:   Homebrew flac: Version 1.5.0, https://ftp.osuosl.org/pub/xiph/releases/flac/flac-1.5.0.tar.xz
+[Studio] verify_vendor:   OK: Prüfsumme stimmt mit Homebrew überein
+[Studio] verify_vendor:   libFLAC: 54 Dateien identisch, 0 nur mit anderer $Id$-Kommentarzeile, 0 mit inhaltlichem Unterschied, 0 nicht im Tarball
+[Studio] verify_vendor: == Ergebnis: alles in Ordnung ==
+◇ Test run started.
+↳ Testing Library Version: 1501
+↳ Target Platform: x86_64-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.
