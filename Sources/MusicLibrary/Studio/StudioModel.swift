@@ -10,6 +10,15 @@ import MLStudio
 /// Hintergrund-Tasks; der Hauptthread wird nie blockiert. Die Bibliothek, der Hauptplayer, EQ und Tonhöhe
 /// werden nicht verändert – fertige Dateien kommen über das normale Einlesen in die Bibliothek.
 @MainActor
+final class StudioPlayback: ObservableObject {
+    @Published var playing = false
+    /// Abspielkopf in Sekunden.
+    @Published var playhead: Double = 0
+}
+
+/// Hinweis zur Leistung: Häufige Änderungen (Fortschritt von Laden, Export, Wellenform) höchstens ~5× pro
+/// Sekunde veröffentlichen – jede Änderung eines `@Published`-Werts lässt alle beobachtenden Ansichten neu auswerten.
+@MainActor
 final class StudioModel: ObservableObject {
     weak var app: AppModel?
     let services: StudioServiceSet
@@ -75,9 +84,9 @@ final class StudioModel: ObservableObject {
     @Published var zoom: Double = 1
     /// Linker Rand des sichtbaren Bereichs in Sekunden.
     @Published var visibleStart: Double = 0
-    @Published var previewPlaying = false
-    /// Abspielkopf in Sekunden (während der Vorschau ~30× pro Sekunde aktualisiert).
-    @Published var playhead: Double = 0
+    /// Vorhören: eigenes Objekt, damit der Abspielkopf (~30×/s) nur die Wellenform neu zeichnet und nicht
+    /// das ganze Studio.
+    let playback = StudioPlayback()
 
     // MARK: Export der aktuellen Quelle
 
