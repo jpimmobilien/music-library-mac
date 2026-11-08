@@ -1,0 +1,261 @@
+[0/1] Planning build
+Test Suite 'Selected tests' started at 2026-11-08 21:04:35.793.
+Test Suite 'MusicLibraryPackageTests.xctest' started at 2026-11-08 21:04:35.798.
+Test Suite 'StudioEngineSmokeTests' started at 2026-11-08 21:04:35.798.
+Test Case '-[StudioEngineTests.StudioEngineSmokeTests testVersion]' started.
+Test Case '-[StudioEngineTests.StudioEngineSmokeTests testVersion]' passed (0.004 seconds).
+Test Suite 'StudioEngineSmokeTests' passed at 2026-11-08 21:04:35.803.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.004 (0.004) seconds
+Test Suite 'StudioExactnessTests' started at 2026-11-08 21:04:35.803.
+Test Case '-[StudioEngineTests.StudioExactnessTests testBitExactFLACAndAIFF]' started.
+Test Case '-[StudioEngineTests.StudioExactnessTests testBitExactFLACAndAIFF]' passed (1.669 seconds).
+Test Case '-[StudioEngineTests.StudioExactnessTests testBitExactWAVCopies]' started.
+Test Case '-[StudioEngineTests.StudioExactnessTests testBitExactWAVCopies]' passed (0.846 seconds).
+Test Case '-[StudioEngineTests.StudioExactnessTests testFadesAreSmoothAndExact]' started.
+Test Case '-[StudioEngineTests.StudioExactnessTests testFadesAreSmoothAndExact]' passed (0.425 seconds).
+Test Case '-[StudioEngineTests.StudioExactnessTests testNoClippingAfterResampling]' started.
+Test Case '-[StudioEngineTests.StudioExactnessTests testNoClippingAfterResampling]' passed (0.358 seconds).
+Test Case '-[StudioEngineTests.StudioExactnessTests testTrimAccuracyWithClickMarkers]' started.
+Test Case '-[StudioEngineTests.StudioExactnessTests testTrimAccuracyWithClickMarkers]' passed (2.196 seconds).
+Test Case '-[StudioEngineTests.StudioExactnessTests testVeryShortSelections]' started.
+Test Case '-[StudioEngineTests.StudioExactnessTests testVeryShortSelections]' passed (0.154 seconds).
+Test Suite 'StudioExactnessTests' passed at 2026-11-08 21:04:41.452.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 5.648 (5.649) seconds
+Test Suite 'StudioFFprobeTests' started at 2026-11-08 21:04:41.452.
+Test Case '-[StudioEngineTests.StudioFFprobeTests testFFprobeAgreesForEveryFormat]' started.
+Test Case '-[StudioEngineTests.StudioFFprobeTests testFFprobeAgreesForEveryFormat]' passed (12.549 seconds).
+Test Suite 'StudioFFprobeTests' passed at 2026-11-08 21:04:54.001.
+	 Executed 1 test, with 0 failures (0 unexpected) in 12.549 (12.549) seconds
+Test Suite 'StudioFormatExportTests' started at 2026-11-08 21:04:54.001.
+Test Case '-[StudioEngineTests.StudioFormatExportTests testEveryFormatFromStereo24Bit]' started.
+Test Case '-[StudioEngineTests.StudioFormatExportTests testEveryFormatFromStereo24Bit]' passed (7.586 seconds).
+Test Case '-[StudioEngineTests.StudioFormatExportTests testMonoAndMultichannel]' started.
+Test Case '-[StudioEngineTests.StudioFormatExportTests testMonoAndMultichannel]' passed (2.620 seconds).
+Test Case '-[StudioEngineTests.StudioFormatExportTests testMP3DurationSeenByAVFoundation]' started.
+Test Case '-[StudioEngineTests.StudioFormatExportTests testMP3DurationSeenByAVFoundation]' passed (1.211 seconds).
+Test Case '-[StudioEngineTests.StudioFormatExportTests testSampleRatesAndConversion]' started.
+Test Case '-[StudioEngineTests.StudioFormatExportTests testSampleRatesAndConversion]' passed (7.976 seconds).
+Test Case '-[StudioEngineTests.StudioFormatExportTests testUnusualSampleRates]' started.
+Test Case '-[StudioEngineTests.StudioFormatExportTests testUnusualSampleRates]' passed (2.767 seconds).
+Test Suite 'StudioFormatExportTests' passed at 2026-11-08 21:05:16.162.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 22.160 (22.161) seconds
+Test Suite 'StudioPassthroughTests' started at 2026-11-08 21:05:16.162.
+Test Case '-[StudioEngineTests.StudioPassthroughTests testM4APassthrough]' started.
+Test Case '-[StudioEngineTests.StudioPassthroughTests testM4APassthrough]' passed (2.302 seconds).
+Test Case '-[StudioEngineTests.StudioPassthroughTests testMP3PassthroughCutsAtFrameBoundaries]' started.
+Test Case '-[StudioEngineTests.StudioPassthroughTests testMP3PassthroughCutsAtFrameBoundaries]' passed (3.004 seconds).
+Test Case '-[StudioEngineTests.StudioPassthroughTests testPassthroughOnlyWhenPossible]' started.
+Test Case '-[StudioEngineTests.StudioPassthroughTests testPassthroughOnlyWhenPossible]' passed (0.554 seconds).
+Test Suite 'StudioPassthroughTests' passed at 2026-11-08 21:05:22.024.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 5.861 (5.862) seconds
+Test Suite 'StudioRobustnessTests' started at 2026-11-08 21:05:22.024.
+Test Case '-[StudioEngineTests.StudioRobustnessTests testCancelMidExportLeavesNothing]' started.
+Test Case '-[StudioEngineTests.StudioRobustnessTests testCancelMidExportLeavesNothing]' passed (6.518 seconds).
+Test Case '-[StudioEngineTests.StudioRobustnessTests testDamagedAndUnsupportedFiles]' started.
+[Studio] Bitgenaue Kopie FLAC 16 Bit → FLAC: Samples identisch, MD5 46e713298f530d1c67d69915e07eeaeb
+[Studio] Bitgenaue Kopie FLAC 24 Bit → FLAC: Samples identisch, MD5 6201bbcfdb80803510f1b5984249c4a4
+[Studio] Bitgenaue Kopie WAV 16 Bit → WAV: Samples und data-Block identisch, passthrough=true
+[Studio] Bitgenaue Kopie WAV 24 Bit → WAV: Samples und data-Block identisch, passthrough=true
+[Studio] Bitgenaue Kopie WAV 32 Bit → WAV: Samples und data-Block identisch, passthrough=true
+[Studio] Blenden: Anfang 0.00000, 0,25 s 0.074, 0,5 s 0.251, Mitte 0.500, 2,5 s 0.251, Ende 0.00000 (Sinus 0,5)
+[Studio] Keine Übersteuerung: Spitze 0.99185, Samples an der Grenze 0
+[Studio] Schnitt WAV → WAV: 93100 Frames (erwartet 93100), Klickversatz [0, 0, 0, 0], Dauer 2.111111 s
+[Studio] Schnitt WAV → FLAC: 93100 Frames (erwartet 93100), Klickversatz [0, 0, 0, 0], Dauer 2.111111 s
+[Studio] Schnitt WAV → AIFF: 93100 Frames (erwartet 93100), Klickversatz [0, 0, 0, 0], Dauer 2.111111 s
+[Studio] Schnitt FLAC → WAV: 93100 Frames (erwartet 93100), Klickversatz [0, 0, 0, 0], Dauer 2.111111 s
+[Studio] Schnitt FLAC → FLAC: 93100 Frames (erwartet 93100), Klickversatz [0, 0, 0, 0], Dauer 2.111111 s
+[Studio] Schnitt FLAC → AIFF: 93100 Frames (erwartet 93100), Klickversatz [0, 0, 0, 0], Dauer 2.111111 s
+[Studio] Schnitt aus MP3 → WAV: 93100 Frames (erwartet 93100), erster Klick bei 16156 (erwartet 16156, Versatz 0 Frames, Pegel 0.82)
+[Studio] Schnitt aus M4A → WAV: 93100 Frames (erwartet 93100), erster Klick bei 16156 (erwartet 16156, Versatz 0 Frames, Pegel 0.90)
+[Studio] Ausschnitt 0,2 s → MP3: Dauer 0.2000 s (Δ +0.00 ms)
+[Studio] Ausschnitt 0,2 s → WAV: Dauer 0.2000 s (Δ +0.00 ms)
+[Studio] Ausschnitt 0,2 s → FLAC: Dauer 0.2000 s (Δ +0.00 ms)
+[Studio] Ausschnitt 0,2 s → AAC: Dauer 0.2554 s (Δ +55.42 ms)
+[Studio] Ausschnitt 0,2 s → M4A: Dauer 0.2000 s (Δ +0.00 ms)
+[Studio] Ausschnitt 0,2 s → AIFF: Dauer 0.2000 s (Δ +0.00 ms)
+[Studio] ffprobe MP3 · 96 kbit/s: Codec mp3, 44100 Hz, 2 Kan., Bits 0, 96000 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe MP3 · 128 kbit/s: Codec mp3, 44100 Hz, 2 Kan., Bits 0, 128000 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe MP3 · 160 kbit/s: Codec mp3, 44100 Hz, 2 Kan., Bits 0, 160000 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe MP3 · 192 kbit/s: Codec mp3, 44100 Hz, 2 Kan., Bits 0, 192000 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe MP3 · 224 kbit/s: Codec mp3, 44100 Hz, 2 Kan., Bits 0, 224000 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe MP3 · 256 kbit/s: Codec mp3, 44100 Hz, 2 Kan., Bits 0, 256000 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe MP3 · 320 kbit/s: Codec mp3, 44100 Hz, 2 Kan., Bits 0, 320000 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe WAV · 16 Bit: Codec pcm_s16le, 44100 Hz, 2 Kan., Bits 16, 1411200 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe WAV · 24 Bit: Codec pcm_s24le, 44100 Hz, 2 Kan., Bits 24, 2116800 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe WAV · 32 Bit Float: Codec pcm_f32le, 44100 Hz, 2 Kan., Bits 32, 2822400 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe AIFF · 16 Bit: Codec pcm_s16be, 44100 Hz, 2 Kan., Bits 16, 1411200 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe AIFF · 24 Bit: Codec pcm_s24be, 44100 Hz, 2 Kan., Bits 24, 2116800 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe AIFF · 32 Bit Float: Codec pcm_f32be, 44100 Hz, 2 Kan., Bits 32, 2822400 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe FLAC · 16 Bit · Stufe 5: Codec flac, 44100 Hz, 2 Kan., Bits 16, 383705 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe FLAC · Bittiefe wie Quelle · Stufe 8: Codec flac, 44100 Hz, 2 Kan., Bits 24, 625185 bit/s, Dauer 5.000000 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] ffprobe AAC · 192 kbit/s: Codec aac, 44100 Hz, 2 Kan., Bits 0, 193913 bit/s, Dauer 5.070934 s (Engine 5.061950 s), FFmpeg dekodiert 223232 Frames, Titel „–“, Cover-Stream nein
+[Studio] ffprobe M4A · 192 kbit/s: Codec aac, 44100 Hz, 2 Kan., Bits 0, 191845 bit/s, Dauer 5.061950 s (Engine 5.000000 s), FFmpeg dekodiert 220500 Frames, Titel „Testtitel äöü“, Cover-Stream ja
+[Studio] MP3 96: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits –, 96 kbit/s (Ziel 96, Audiodaten 96.00 kbit/s, Δ -0.00 %), Tags+Cover ok, Größe 74253 B, SNR 26.0 dB (Versatz 0), Fortschritt 2 Meldungen
+[Studio] MP3 128: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits –, 128 kbit/s (Ziel 128, Audiodaten 128.00 kbit/s, Δ -0.00 %), Tags+Cover ok, Größe 98494 B, SNR 26.0 dB (Versatz 0), Fortschritt 2 Meldungen
+[Studio] MP3 160: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits –, 160 kbit/s (Ziel 160, Audiodaten 160.00 kbit/s, Δ 0.00 %), Tags+Cover ok, Größe 122737 B, SNR 26.0 dB (Versatz 0), Fortschritt 2 Meldungen
+[Studio] MP3 192: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits –, 192 kbit/s (Ziel 192, Audiodaten 192.00 kbit/s, Δ -0.00 %), Tags+Cover ok, Größe 146977 B, SNR 30.4 dB (Versatz 0), Fortschritt 2 Meldungen
+[Studio] MP3 224: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits –, 224 kbit/s (Ziel 224, Audiodaten 224.00 kbit/s, Δ -0.00 %), Tags+Cover ok, Größe 171220 B, SNR 34.0 dB (Versatz 0), Fortschritt 2 Meldungen
+[Studio] MP3 256: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits –, 256 kbit/s (Ziel 256, Audiodaten 256.00 kbit/s, Δ -0.00 %), Tags+Cover ok, Größe 195461 B, SNR 77.8 dB (Versatz 0), Fortschritt 2 Meldungen
+[Studio] MP3 320: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits –, 320 kbit/s (Ziel 320, Audiodaten 320.00 kbit/s, Δ -0.00 %), Tags+Cover ok, Größe 243944 B, SNR 77.7 dB (Versatz 0), Fortschritt 2 Meldungen
+[Studio] WAV 16 Bit: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits 16, 1411 kbit/s, Tags+Cover ok, Größe 1059982 B, SNR 86.0 dB (Versatz 0), Fortschritt 4 Meldungen
+[Studio] AIFF 16 Bit: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits 16, 1411 kbit/s, Tags+Cover ok, Größe 1059992 B, SNR 86.0 dB (Versatz 0), Fortschritt 4 Meldungen
+[Studio] WAV 24 Bit: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits 24, 2117 kbit/s, Tags+Cover ok, Größe 1589206 B, SNR 999.0 dB (Versatz 0), Fortschritt 4 Meldungen
+[Studio] AIFF 24 Bit: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits 24, 2117 kbit/s, Tags+Cover ok, Größe 1589192 B, SNR 999.0 dB (Versatz 0), Fortschritt 4 Meldungen
+[Studio] WAV 32 Bit Float: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits 32, 2822 kbit/s, Tags+Cover ok, Größe 2118396 B, SNR 999.0 dB (Versatz 0), Fortschritt 4 Meldungen
+[Studio] AIFF 32 Bit Float: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits 32, 2822 kbit/s, Tags+Cover ok, Größe 2118430 B, SNR 999.0 dB (Versatz 0), Fortschritt 4 Meldungen
+[Studio] FLAC 16 Stufe 0: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits 16, 615 kbit/s, Tags+Cover ok, Größe 465848 B, SNR 86.0 dB (Versatz 0), Fortschritt 4 Meldungen
+[Studio] FLAC 24 Stufe 5: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits 24, 680 kbit/s, Tags+Cover ok, Größe 514669 B, SNR 999.0 dB (Versatz 0), Fortschritt 4 Meldungen
+[Studio] FLAC wie Quelle Stufe 8: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits 24, 615 kbit/s, Tags+Cover ok, Größe 466131 B, SNR 999.0 dB (Versatz 0), Fortschritt 4 Meldungen
+[Studio] AAC 128: Dauer 6.0604 s (Δ +60.41 ms), 44100 Hz, 2 Kan., Bits –, 130 kbit/s (Ziel 128, Δ 1.6 %), keine (ADTS), Größe 98835 B, SNR 56.5 dB (Versatz 2112), Fortschritt 3 Meldungen
+[Studio] M4A 128: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits –, 128 kbit/s (Ziel 128, Δ 0.0 %), Tags+Cover ok, Größe 155188 B, SNR 56.5 dB (Versatz 0), Fortschritt 2 Meldungen
+[Studio] AAC 256: Dauer 6.0604 s (Δ +60.41 ms), 44100 Hz, 2 Kan., Bits –, 258 kbit/s (Ziel 256, Δ 0.8 %), keine (ADTS), Größe 195681 B, SNR 71.2 dB (Versatz 2112), Fortschritt 3 Meldungen
+[Studio] M4A 256: Dauer 6.0000 s (Δ +0.00 ms), 44100 Hz, 2 Kan., Bits –, 256 kbit/s (Ziel 256, Δ 0.0 %), Tags+Cover ok, Größe 252034 B, SNR 71.2 dB (Versatz 0), Fortschritt 3 Meldungen
+[Studio] Mono → MP3 (Mono behalten: true): 1 Kanäle, Dauer 3.0000 s
+[Studio] Mono → MP3 (Mono behalten: false): 2 Kanäle, Dauer 3.0000 s
+[Studio] Mono → WAV (Mono behalten: true): 1 Kanäle, Dauer 3.0000 s
+[Studio] Mono → WAV (Mono behalten: false): 2 Kanäle, Dauer 3.0000 s
+[Studio] Mono → FLAC (Mono behalten: true): 1 Kanäle, Dauer 3.0000 s
+[Studio] Mono → FLAC (Mono behalten: false): 2 Kanäle, Dauer 3.0000 s
+[Studio] Mono → M4A (Mono behalten: true): 1 Kanäle, Dauer 3.0000 s
+[Studio] Mono → M4A (Mono behalten: false): 2 Kanäle, Dauer 3.0000 s
+[Studio] Mono → AIFF (Mono behalten: true): 1 Kanäle, Dauer 3.0000 s
+[Studio] Mono → AIFF (Mono behalten: false): 2 Kanäle, Dauer 3.0000 s
+[Studio] Mono → AAC (Mono behalten: true): 1 Kanäle, Dauer 3.0650 s
+[Studio] Mono → AAC (Mono behalten: false): 2 Kanäle, Dauer 3.0650 s
+[Studio] 5.1-Heruntermischen, nur Center: links 0.146, rechts 0.146
+[Studio] 5.1-Heruntermischen, nur Surround links: links 0.146, rechts 0.000
+[Studio] 5.1-Heruntermischen, nur Surround rechts: links 0.000, rechts 0.146
+[Studio] 5.1 → WAV: 2 Kanäle, Spitze 0.900
+[Studio] 5.1 → MP3: 2 Kanäle, Spitze 0.901
+[Studio] 5.1 → FLAC: 2 Kanäle, Spitze 0.900
+[Studio] MP3 96 kbit/s Dauer: Ergebnis 6.0000 s, LAME-Angaben 6.0000 s, AVAudioFile ohne Tags 6.0000 s, mit ID3v2+ID3v1 6.0000 s, ID3v1 vorhanden nein, ohne ID3v1 6.0000 s
+[Studio] MP3 128 kbit/s Dauer: Ergebnis 6.0000 s, LAME-Angaben 6.0000 s, AVAudioFile ohne Tags 6.0000 s, mit ID3v2+ID3v1 6.0000 s, ID3v1 vorhanden nein, ohne ID3v1 6.0000 s
+[Studio] MP3 160 kbit/s Dauer: Ergebnis 6.0000 s, LAME-Angaben 6.0000 s, AVAudioFile ohne Tags 6.0261 s, mit ID3v2+ID3v1 6.0261 s, ID3v1 vorhanden nein, ohne ID3v1 6.0261 s
+[Studio] MP3 192 kbit/s Dauer: Ergebnis 6.0000 s, LAME-Angaben 6.0000 s, AVAudioFile ohne Tags 6.0000 s, mit ID3v2+ID3v1 6.0000 s, ID3v1 vorhanden nein, ohne ID3v1 6.0000 s
+[Studio] MP3 224 kbit/s Dauer: Ergebnis 6.0000 s, LAME-Angaben 6.0000 s, AVAudioFile ohne Tags 6.0261 s, mit ID3v2+ID3v1 6.0261 s, ID3v1 vorhanden nein, ohne ID3v1 6.0261 s
+[Studio] MP3 256 kbit/s Dauer: Ergebnis 6.0000 s, LAME-Angaben 6.0000 s, AVAudioFile ohne Tags 6.0000 s, mit ID3v2+ID3v1 6.0000 s, ID3v1 vorhanden nein, ohne ID3v1 6.0000 s
+[Studio] MP3 320 kbit/s Dauer: Ergebnis 6.0000 s, LAME-Angaben 6.0000 s, AVAudioFile ohne Tags 6.0000 s, mit ID3v2+ID3v1 6.0000 s, ID3v1 vorhanden nein, ohne ID3v1 6.0000 s
+[Studio] Abtastrate 48000 → WAV Original: 48000 Hz (erwartet 48000), Dauer Δ +0.00 ms, SNR 138.6 dB (Versatz 0)
+[Studio] Abtastrate 48000 → WAV 44100: 44100 Hz (erwartet 44100), Dauer Δ +0.00 ms, SNR 133.6 dB (Versatz 0)
+[Studio] Abtastrate 48000 → FLAC Original: 48000 Hz (erwartet 48000), Dauer Δ +0.00 ms, SNR 138.6 dB (Versatz 0)
+[Studio] Abtastrate 48000 → AIFF 48000: 48000 Hz (erwartet 48000), Dauer Δ +0.00 ms, SNR 138.6 dB (Versatz 0)
+[Studio] Abtastrate 48000 → MP3 Original: 48000 Hz (erwartet 48000), Dauer Δ +0.00 ms, SNR 77.6 dB (Versatz 0)
+[Studio] Abtastrate 48000 → M4A Original: 48000 Hz (erwartet 48000), Dauer Δ +0.00 ms, SNR 68.0 dB (Versatz 0)
+[Studio] Abtastrate 96000 → WAV Original: 96000 Hz (erwartet 96000), Dauer Δ +0.00 ms, SNR 138.6 dB (Versatz 0)
+[Studio] Abtastrate 96000 → WAV 44100: 44100 Hz (erwartet 44100), Dauer Δ +0.00 ms, SNR 134.3 dB (Versatz 0)
+[Studio] Abtastrate 96000 → FLAC Original: 96000 Hz (erwartet 96000), Dauer Δ +0.00 ms, SNR 138.6 dB (Versatz 0)
+[Studio] Abtastrate 96000 → AIFF 48000: 48000 Hz (erwartet 48000), Dauer Δ +0.00 ms, SNR 136.5 dB (Versatz 0)
+[Studio] Abtastrate 96000 → MP3 Original: 48000 Hz (erwartet 48000), Dauer Δ +0.00 ms, SNR 77.3 dB (Versatz 0)
+[Studio] Abtastrate 96000 → M4A Original: 48000 Hz (erwartet 48000), Dauer Δ +0.00 ms, SNR 67.6 dB (Versatz 0)
+[Studio] Ungewöhnliche Rate 22050 → MP3: 32000 Hz (erwartet 32000), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 22050 → AAC: 22050 Hz (erwartet 22050), Dauer 2.1362 s
+[Studio] Ungewöhnliche Rate 22050 → M4A: 22050 Hz (erwartet 22050), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 22050 → FLAC: 22050 Hz (erwartet 22050), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 22050 → WAV: 22050 Hz (erwartet 22050), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 22050 → AIFF: 22050 Hz (erwartet 22050), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 88200 → MP3: 48000 Hz (erwartet 48000), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 88200 → AAC: 48000 Hz (erwartet 48000), Dauer 2.0480 s
+[Studio] Ungewöhnliche Rate 88200 → M4A: 48000 Hz (erwartet 48000), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 88200 → FLAC: 88200 Hz (erwartet 88200), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 88200 → WAV: 88200 Hz (erwartet 88200), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 88200 → AIFF: 88200 Hz (erwartet 88200), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 96000 → MP3: 48000 Hz (erwartet 48000), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 96000 → AAC: 48000 Hz (erwartet 48000), Dauer 2.0480 s
+[Studio] Ungewöhnliche Rate 96000 → M4A: 48000 Hz (erwartet 48000), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 96000 → FLAC: 96000 Hz (erwartet 96000), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 96000 → WAV: 96000 Hz (erwartet 96000), Dauer 2.0000 s
+[Studio] Ungewöhnliche Rate 96000 → AIFF: 96000 Hz (erwartet 96000), Dauer 2.0000 s
+[Studio] M4A ohne Neukodierung 5.0–15.0 s: Dauer 10.0000 s (Δ +0.00 ms), 192 kbit/s (Quelle 192), FFmpeg 441000 Frames, passthrough=ja
+[Studio] M4A ohne Neukodierung 1.0–1.2 s: Dauer 0.2000 s (Δ +0.00 ms), 192 kbit/s (Quelle 192), FFmpeg 8820 Frames, passthrough=ja
+[Studio] M4A ohne Neukodierung: Versatz 0 Frames, Störabstand zur Quelle 999.0 dB
+[Studio] MP3 ohne Neukodierung 5–15 s: AVAudioFile 10.0000 s (Δ +0.00 ms), LAME-Angaben 10.0000 s, FFmpeg 441000 Frames (erwartet 441000), 385 Frames, Verzögerung 1044, Auffüllung 1476
+[Studio] MP3 ohne Neukodierung: Versatz 0 Frames, Störabstand zur Quelle 999.0 dB
+[Studio] MP3 ohne Neukodierung: Tags übernommen (Liedtext, Sortierfelder, 2 Bilder, WebP → JPEG)
+[Studio] MP3 ohne Neukodierung 0.0–2.0 s: AVAudioFile 2.0000 s, LAME 2.0000 s, FFmpeg 88200 Frames (erwartet 88200)
+[Studio] MP3 ohne Neukodierung 28.0–30.0 s: AVAudioFile 2.0000 s, LAME 2.0000 s, FFmpeg 88200 Frames (erwartet 88200)
+[Studio] MP3 ohne Neukodierung 10.0–10.2 s: AVAudioFile 0.2000 s, LAME 0.2000 s, FFmpeg 8820 Frames (erwartet 8820)
+[Studio] Ohne Neukodierung nur, wenn möglich: Blende/anderes Format/andere Rate → neu kodiert
+[Studio] Abbruch MP3 bei 26 %: StudioError.cancelled, Ordner danach: q.wav
+[Studio] Abbruch FLAC bei 21 %: StudioError.cancelled, Ordner danach: q.wav
+[Studio] Abbruch WAV bei 21 %: StudioError.cancelled, Ordner danach: q.wav
+[Studio] Abbruch M4A bei 21 %: StudioError.cancelled, Ordner danach: q.wav
+[Studio] Beschädigt/unbekannt muell.wav: Die Datei konnte nicht gelesen werden. Sie ist beschädigt oder enthält keine lesbaren Audiodaten.
+[Studio] Analyse muell.wavTest Case '-[StudioEngineTests.StudioRobustnessTests testDamagedAndUnsupportedFiles]' passed (1.470 seconds).
+Test Case '-[StudioEngineTests.StudioRobustnessTests testLongFilesTimeAndMemory]' started.
+Test Case '-[StudioEngineTests.StudioRobustnessTests testLongFilesTimeAndMemory]' passed (592.654 seconds).
+Test Case '-[StudioEngineTests.StudioRobustnessTests testPauseAndResume]' started.
+Test Case '-[StudioEngineTests.StudioRobustnessTests testPauseAndResume]' passed (8.969 seconds).
+Test Suite 'StudioRobustnessTests' passed at 2026-11-08 21:15:31.637.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 609.611 (609.612) seconds
+Test Suite 'StudioSourceTests' started at 2026-11-08 21:15:31.637.
+Test Case '-[StudioEngineTests.StudioSourceTests testLocalAnalysisOfExportedFiles]' started.
+Test Case '-[StudioEngineTests.StudioSourceTests testLocalAnalysisOfExportedFiles]' passed (1.063 seconds).
+Test Case '-[StudioEngineTests.StudioSourceTests testPreviewPlayer]' started.
+Test Case '-[StudioEngineTests.StudioSourceTests testPreviewPlayer]' passed (2.522 seconds).
+Test Case '-[StudioEngineTests.StudioSourceTests testVideoOggAndExoticInputs]' started.
+Test Case '-[StudioEngineTests.StudioSourceTests testVideoOggAndExoticInputs]' passed (4.379 seconds).
+Test Case '-[StudioEngineTests.StudioSourceTests testWaveform]' started.
+Test Case '-[StudioEngineTests.StudioSourceTests testWaveform]' passed (0.355 seconds).
+Test Suite 'StudioSourceTests' passed at 2026-11-08 21:15:39.957.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 8.319 (8.320) seconds
+Test Suite 'StudioVendorTests' started at 2026-11-08 21:15:39.957.
+Test Case '-[StudioEngineTests.StudioVendorTests testBuildWithXcode16]' started.
+/Users/runner/work/music-library-mac/music-library-mac/Tests/StudioEngineTests/StudioVendorTests.swift:61: -[StudioEngineTests.StudioVendorTests testBuildWithXcode16] : Test skipped - ML_XCODE16_BUILD nicht gesetzt
+Test Case '-[StudioEngineTests.StudioVendorTests testBuildWithXcode16]' skipped (0.002 seconds).
+Test Case '-[StudioEngineTests.StudioVendorTests testEncoderVersions]' started.
+Test Case '-[StudioEngineTests.StudioVendorTests testEncoderVersions]' passed (0.000 seconds).
+Test Case '-[StudioEngineTests.StudioVendorTests testUniversalReleaseBuild]' started.
+/Users/runner/work/music-library-mac/music-library-mac/Tests/StudioEngineTests/StudioVendorTests.swift:35: -[StudioEngineTests.StudioVendorTests testUniversalReleaseBuild] : Test skipped - ML_UNIVERSAL_BUILD nicht gesetzt
+Test Case '-[StudioEngineTests.StudioVendorTests testUniversalReleaseBuild]' skipped (0.001 seconds).
+Test Case '-[StudioEngineTests.StudioVendorTests testVerifyVendoredSources]' started.
+/Users/runner/work/music-library-mac/music-library-mac/Tests/StudioEngineTests/StudioVendorTests.swift:28: -[StudioEngineTests.StudioVendorTests testVerifyVendoredSources] : Test skipped - ML_VERIFY_VENDOR nicht gesetzt
+Test Case '-[StudioEngineTests.StudioVendorTests testVerifyVendoredSources]' skipped (0.001 seconds).
+Test Suite 'StudioVendorTests' passed at 2026-11-08 21:15:39.961.
+	 Executed 4 tests, with 3 tests skipped and 0 failures (0 unexpected) in 0.004 (0.005) seconds
+Test Suite 'MusicLibraryPackageTests.xctest' passed at 2026-11-08 21:15:39.961.
+	 Executed 28 tests, with 3 tests skipped and 0 failures (0 unexpected) in 664.155 (664.163) seconds
+Test Suite 'Selected tests' passed at 2026-11-08 21:15:39.962.
+	 Executed 28 tests, with 3 tests skipped and 0 failures (0 unexpected) in 664.155 (664.168) seconds
+: Die Datei konnte nicht gelesen werden. Sie ist beschädigt oder enthält keine lesbaren Audiodaten.
+[Studio] Beschädigt/unbekannt muell.mp3: Die Datei konnte nicht gelesen werden. Sie ist beschädigt oder enthält keine lesbaren Audiodaten.
+[Studio] Analyse muell.mp3: Die Datei konnte nicht gelesen werden. Sie ist beschädigt oder enthält keine lesbaren Audiodaten.
+[Studio] Beschädigt/unbekannt text.flac: Die Datei konnte nicht gelesen werden. Sie ist beschädigt oder enthält keine lesbaren Audiodaten.
+[Studio] Analyse text.flac: Die Datei konnte nicht gelesen werden. Sie ist beschädigt oder enthält keine lesbaren Audiodaten.
+[Studio] Beschädigt/unbekannt leer.mp3: Die Datei konnte nicht gelesen werden. Die Datei ist leer.
+[Studio] Analyse leer.mp3: Die Datei konnte nicht gelesen werden. Die Datei ist leer.
+[Studio] Beschädigt/unbekannt abgeschnitten.wav: Die Datei konnte nicht gelesen werden. Sie ist beschädigt oder enthält keine lesbaren Audiodaten.
+[Studio] Analyse abgeschnitten.wav: Die Datei konnte nicht gelesen werden. Sie ist beschädigt oder enthält keine lesbaren Audiodaten.
+[Studio] Beschädigt/unbekannt abgeschnitten.flac: Die Datei konnte nicht gelesen werden. Sie ist beschädigt oder enthält keine lesbaren Audiodaten.
+[Studio] Analyse abgeschnitten.flac: Die Datei konnte nicht gelesen werden. Sie ist beschädigt oder enthält keine lesbaren Audiodaten.
+[Studio] Beschädigt/unbekannt unbekannt.xyz: Das Format „xyz“ wird nicht unterstützt.
+[Studio] Analyse unbekannt.xyz: Das Format „xyz“ wird nicht unterstützt.
+[Studio] Fehlende Datei: Die Datei konnte nicht gelesen werden. Die Quelldatei wurde nicht gefunden.
+[Studio] Lange Datei: 30 min WAV (303 MB) in 88.5 s erzeugt
+[Studio] Lange Datei 30 min → MP3 · 320 kbit/s: 27.6 s (65× Echtzeit), Speicher vorher 20.9 MB, Spitze 21.1 MB (+0.3 MB), Dauer 1800.000 s, 320 kbit/s, 68 MB
+[Studio] Wellenform 30 min MP3: 1.9 s, 310079 Blöcke
+[Studio] Lange Datei 30 min → FLAC · Bittiefe wie Quelle · Stufe 5: 94.6 s (19× Echtzeit), Speicher vorher 22.9 MB, Spitze 23.2 MB (+0.3 MB), Dauer 1800.000 s, 233 kbit/s, 49 MB
+[Studio] Lange Datei 30 min → M4A · 256 kbit/s: 28.5 s (63× Echtzeit), Speicher vorher 22.9 MB, Spitze 23.3 MB (+0.4 MB), Dauer 1800.000 s, 256 kbit/s, 55 MB
+[Studio] Lange Datei 30 min → WAV · 24 Bit · 48 kHz: 175.9 s (10× Echtzeit), Speicher vorher 22.8 MB, Spitze 24.0 MB (+1.2 MB), Dauer 1800.000 s, 2304 kbit/s, 494 MB
+[Studio] Wellenform 1 h WAV 44,1 kHz Stereo: 0.92 s, 620157 Blöcke (erwartet 620157), 6 Stufen, Spitze 0.500, Speicher +5.0 MB, 7 Fortschrittsmeldungen
+[Studio] Anhalten bei 12 %: 0,8 s kein Fortschritt (0.1176 → 0.1176), nach Fortsetzen fertig: 90.000 s, Rückrufe max. 10/s
+[Studio] Abbruch im angehaltenen Zustand nach 1 ms
+[Studio] Analyse MP3: Titel „Testtitel äöü“, Interpret „Test-Interpret“, Codec MP3, 258 kbit/s, 48000 Hz, Bits –, 2 Kan., verlustfrei nein, Dauer 4.000 s, Cover 323 B, 131321 B
+[Studio] Analyse FLAC: Titel „Testtitel äöü“, Interpret „Test-Interpret“, Codec FLAC, 751 kbit/s, 48000 Hz, Bits 24, 2 Kan., verlustfrei ja, Dauer 4.000 s, Cover 323 B, 380398 B
+[Studio] Analyse WAV: Titel „Testtitel äöü“, Interpret „Test-Interpret“, Codec PCM, 1536 kbit/s, 48000 Hz, Bits 16, 2 Kan., verlustfrei ja, Dauer 4.000 s, Cover 323 B, 769582 B
+[Studio] Analyse AIFF: Titel „Testtitel äöü“, Interpret „Test-Interpret“, Codec PCM, 2304 kbit/s, 48000 Hz, Bits 24, 2 Kan., verlustfrei ja, Dauer 4.000 s, Cover 323 B, 1153592 B
+[Studio] Analyse M4A: Titel „Testtitel äöü“, Interpret „Test-Interpret“, Codec AAC, 192 kbit/s, 48000 Hz, Bits –, 2 Kan., verlustfrei nein, Dauer 4.000 s, Cover 323 B, 159490 B
+[Studio] Analyse AAC: Titel „a“, Interpret „“, Codec AAC, 194 kbit/s, 48000 Hz, Bits –, 2 Kan., verlustfrei nein, Dauer 4.064 s, Cover 0 B, 98544 B
+[Studio] Vorhören 1,0–1,6 s: Position nach 0,25 s 1.290 s, Ende gemeldet: ja, Position danach 1.600 s
+[Studio] Vorhören: Anhalten bei 0.186 s gehalten, Stoppen ohne onFinish
+[Studio] Eingang video.mp4: Codec AAC, 44100 Hz, 1 Kan., Dauer 3.000 s, Vorschaubild 14033 B → WAV-Ausschnitt 2.0000 s (Δ +0.00 ms), 1 Kan., Spitze 0.13
+[Studio] Eingang video.mov: Codec PCM, 48000 Hz, 1 Kan., Dauer 3.000 s, Vorschaubild 14033 B → WAV-Ausschnitt 2.0000 s (Δ +0.00 ms), 1 Kan., Spitze 0.12
+[Studio] Eingang vorbis.ogg: Codec Vorbis, 48000 Hz, 2 Kan., Dauer 3.000 s, Vorschaubild 0 B → WAV-Ausschnitt 2.0000 s (Δ +0.00 ms), 2 Kan., Spitze 0.18
+[Studio] Eingang opus.opus: Codec Opus, 48000 Hz, 2 Kan., Dauer 3.000 s, Vorschaubild 0 B → WAV-Ausschnitt 2.0000 s (Δ +0.00 ms), 2 Kan., Spitze 0.13
+[Studio] Eingang webm.webm: Codec OPUS, 48000 Hz, 2 Kan., Dauer 3.008 s, Vorschaubild 0 B → WAV-Ausschnitt 2.0000 s (Δ +0.00 ms), 2 Kan., Spitze 0.13
+[Studio] Eingang mka.mka: Codec FLAC, 48000 Hz, 2 Kan., Dauer 3.000 s, Vorschaubild 0 B → WAV-Ausschnitt 2.0000 s (Δ +0.00 ms), 2 Kan., Spitze 0.12
+[Studio] Wellenform 10 s: 1724 Blöcke, 1 Stufen, Spitze 0.5, 2 Fortschrittsmeldungen
+[Studio] Encoder: LAME 3.100, libFLAC 1.5.0 (reference libFLAC 1.5.0 20250211)
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: x86_64-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.
