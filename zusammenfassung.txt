@@ -1,0 +1,28 @@
+== alt Runde 1
+Stichproben von PID 3025 gespeichert
+Leerlauf mit Wiedergabe: Verspätung je Bild                   46.6    120.5    129.7
+Leerlauf mit Wiedergabe: Hauptthread belegt [%]               27.0     27.0     27.0
+Leerlauf mit Wiedergabe: Prozess-CPU [%]                      28.4     28.4     28.4
+Großer Player (Vinyl) läuft: Hauptthread belegt [%]           24.3     24.3     24.3
+Großer Player (Vinyl) läuft: Prozess-CPU [%]                  25.2     25.2     25.2
+== neu Runde 1
+Stichproben von PID 8426 gespeichert
+Leerlauf mit Wiedergabe: Verspätung je Bild                   44.3    116.7    121.9
+Leerlauf mit Wiedergabe: Hauptthread belegt [%]               15.1     15.1     15.1
+Leerlauf mit Wiedergabe: Prozess-CPU [%]                      15.9     15.9     15.9
+Großer Player (Vinyl) läuft: Hauptthread belegt [%]           19.2     19.2     19.2
+Großer Player (Vinyl) läuft: Prozess-CPU [%]                  20.0     20.0     20.0
+== alt Runde 2
+Stichproben von PID 12586 gespeichert
+Leerlauf mit Wiedergabe: Verspätung je Bild                   43.6    123.3    124.1
+Leerlauf mit Wiedergabe: Hauptthread belegt [%]               14.3     14.3     14.3
+Leerlauf mit Wiedergabe: Prozess-CPU [%]                      14.9     14.9     14.9
+Großer Player (Vinyl) läuft: Hauptthread belegt [%]           17.7     17.7     17.7
+Großer Player (Vinyl) läuft: Prozess-CPU [%]                  18.4     18.4     18.4
+== neu Runde 2
+Stichproben von PID 16302 gespeichert
+Leerlauf mit Wiedergabe: Verspätung je Bild                   41.9    121.2    133.2
+Leerlauf mit Wiedergabe: Hauptthread belegt [%]               14.6     14.6     14.6
+Leerlauf mit Wiedergabe: Prozess-CPU [%]                      15.3     15.3     15.3
+Großer Player (Vinyl) läuft: Hauptthread belegt [%]           14.9     14.9     14.9
+Großer Player (Vinyl) läuft: Prozess-CPU [%]                  15.6     15.6     15.6
