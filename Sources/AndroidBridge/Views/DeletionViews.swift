@@ -94,9 +94,12 @@ struct DeleteConfirmationSheet: View {
             .background(RoundedRectangle(cornerRadius: Radius.tile, style: .continuous).fill(Palette.dangerSoft))
 
             if needsAcknowledgement {
-                Toggle("Ich verstehe, dass die Ordner mit ihrem gesamten Inhalt endgültig gelöscht werden.", isOn: $understood)
-                    .toggleStyle(.checkbox)
-                    .font(Typo.callout)
+                Toggle(isOn: $understood) {
+                    Text("Ich verstehe, dass die Ordner mit ihrem gesamten Inhalt endgültig gelöscht werden.")
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .toggleStyle(.checkbox)
+                .font(Typo.callout)
             }
 
             HStack(spacing: 10) {

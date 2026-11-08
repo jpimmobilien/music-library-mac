@@ -293,9 +293,10 @@ enum SnapshotRunner {
                 window.titleVisibility = .hidden
                 let content: AnyView = scenario.custom?(model)
                     ?? AnyView(RootView(settings: model.settings, transfers: model.transfers, deletion: model.deletion))
+                // Füllt das ganze Fenster (inklusive Titelleistenbereich) – wie in der App.
                 let root = content
                     .environmentObject(model)
-                    .frame(width: size.width, height: size.height)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 let host = NSHostingView(rootView: root)
                 host.sizingOptions = []
                 window.contentView = host

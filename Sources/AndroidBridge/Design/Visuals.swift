@@ -182,17 +182,23 @@ struct PhoneScreenContent: View {
             GeometryReader { geo in
                 VStack(spacing: geo.size.width * 0.02) {
                     Text(Date(), format: .dateTime.hour().minute())
-                        .font(.system(size: geo.size.width * 0.2, weight: .semibold, design: .rounded))
+                        .font(.system(size: geo.size.width * 0.19, weight: .semibold, design: .rounded))
                         .monospacedDigit()
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.4)
                         .foregroundStyle(.white)
+                        .padding(.horizontal, geo.size.width * 0.06)
                     Text(Date(), format: .dateTime.weekday(.wide).day().month(.wide))
                         .font(.system(size: geo.size.width * 0.06, weight: .medium))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                         .foregroundStyle(.white.opacity(0.85))
+                        .padding(.horizontal, geo.size.width * 0.06)
                     Spacer()
                     if let stateSymbol, let stateText {
                         HStack(spacing: 5) {
                             Image(systemName: stateSymbol)
-                            Text(stateText).lineLimit(1)
+                            Text(stateText).lineLimit(1).minimumScaleFactor(0.6)
                         }
                         .font(.system(size: geo.size.width * 0.058, weight: .semibold))
                         .foregroundStyle(.white)
@@ -200,6 +206,7 @@ struct PhoneScreenContent: View {
                         .padding(.vertical, geo.size.width * 0.03)
                         .background(Capsule().fill(.ultraThinMaterial))
                         .environment(\.colorScheme, .dark)
+                        .padding(.horizontal, geo.size.width * 0.05)
                     }
                 }
                 .padding(.top, geo.size.height * 0.12)

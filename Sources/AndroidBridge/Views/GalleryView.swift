@@ -101,6 +101,13 @@ struct GalleryView: View {
                 .padding(.horizontal, Spacing.gutter)
             }
         }
+        .mask(
+            HStack(spacing: 0) {
+                LinearGradient(colors: [.clear, .black], startPoint: .leading, endPoint: .trailing).frame(width: 18)
+                Color.black
+                LinearGradient(colors: [.black, .clear], startPoint: .leading, endPoint: .trailing).frame(width: 36)
+            }
+        )
         .padding(.bottom, 8)
     }
 

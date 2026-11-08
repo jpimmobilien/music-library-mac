@@ -507,7 +507,7 @@ struct DevicePaneView: View {
             }
             if let device = browser.device, device.storages.count > 1 {
                 Picker("", selection: Binding(get: { browser.storageID ?? 0 }, set: { browser.selectStorage($0) })) {
-                    ForEach(device.storages) { s in Label(s.displayName, systemImage: s.symbolName).tag(s.id) }
+                    ForEach(device.storages) { s in Label(s.shortName, systemImage: s.symbolName).tag(s.id) }
                 }
                 .labelsHidden()
                 .pickerStyle(.menu)
@@ -533,20 +533,22 @@ struct DevicePaneView: View {
                     Text(e.name).lineLimit(1).truncationMode(.middle)
                 }
             }
-            .width(min: 180, ideal: 320)
+            .width(min: 140, ideal: 210)
             TableColumn("Geändert") { e in
-                Text(e.bestDate.map { $0.formatted(date: .abbreviated, time: .shortened) } ?? "–")
+                Text(e.bestDate.map { $0.formatted(date: .numeric, time: .shortened) } ?? "–")
                     .foregroundStyle(.secondary)
+                    .monospacedDigit()
+                    .lineLimit(1)
             }
-            .width(min: 100, ideal: 140)
+            .width(min: 88, ideal: 112)
             TableColumn("Größe") { e in
-                Text(e.isFolder ? "–" : ByteFormat.string(e.size)).foregroundStyle(.secondary).monospacedDigit()
+                Text(e.isFolder ? "–" : ByteFormat.string(e.size)).foregroundStyle(.secondary).monospacedDigit().lineLimit(1)
             }
-            .width(min: 60, ideal: 80)
+            .width(min: 52, ideal: 64)
             TableColumn("Art") { e in
-                Text(kindName(e.kind, name: e.name)).foregroundStyle(.secondary)
+                Text(kindName(e.kind, name: e.name)).foregroundStyle(.secondary).lineLimit(1)
             }
-            .width(min: 60, ideal: 90)
+            .width(min: 40, ideal: 56)
         } rows: {
             ForEach(browser.visible) { e in
                 TableRow(e).itemProvider { dragProvider(for: e, device: device) }
@@ -966,15 +968,16 @@ struct LocalPaneView: View {
                     Text(e.name).lineLimit(1).truncationMode(.middle)
                 }
             }
-            .width(min: 160, ideal: 280)
+            .width(min: 130, ideal: 200)
             TableColumn("Geändert") { e in
-                Text(e.modified.map { $0.formatted(date: .abbreviated, time: .shortened) } ?? "–").foregroundStyle(.secondary)
+                Text(e.modified.map { $0.formatted(date: .numeric, time: .shortened) } ?? "–").foregroundStyle(.secondary)
+                    .monospacedDigit().lineLimit(1)
             }
-            .width(min: 100, ideal: 140)
+            .width(min: 88, ideal: 112)
             TableColumn("Größe") { e in
-                Text(e.isFolder && !e.isPackage ? "–" : ByteFormat.string(e.size)).foregroundStyle(.secondary).monospacedDigit()
+                Text(e.isFolder && !e.isPackage ? "–" : ByteFormat.string(e.size)).foregroundStyle(.secondary).monospacedDigit().lineLimit(1)
             }
-            .width(min: 60, ideal: 80)
+            .width(min: 52, ideal: 64)
         } rows: {
             ForEach(browser.visible) { e in
                 TableRow(e).itemProvider { NSItemProvider(object: e.url as NSURL) }

@@ -89,6 +89,17 @@ public struct DeviceStorage: Identifiable, Hashable, Codable, Sendable {
         return isRemovable ? "SD-Karte" : "Interner Speicher"
     }
 
+    /// Kurzer Name für knappe Stellen („Interner gemeinsamer Speicher“ → „Interner Speicher“).
+    public var shortName: String {
+        let name = displayName
+        let lower = name.lowercased()
+        if lower.contains("intern") || lower.contains("internal") || lower.contains("phone") || lower.contains("shared") {
+            return "Interner Speicher"
+        }
+        if isRemovable || lower.contains("sd") { return name.count <= 14 ? name : "SD-Karte" }
+        return name.count <= 20 ? name : String(name.prefix(18)) + "…"
+    }
+
     public var typeName: String { isRemovable ? "Wechselspeicher" : "Interner Speicher" }
     public var symbolName: String { isRemovable ? "sdcard" : "internaldrive" }
 }

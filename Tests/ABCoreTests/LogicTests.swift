@@ -41,6 +41,15 @@ final class ClassificationTests: XCTestCase {
         XCTAssertEqual(USBDeviceClassifier.classify(vendorID: 0x18D1, interfaces: ifaces), .androidWithoutFileTransfer)
     }
 
+    func testStorageShortName() {
+        let internalStorage = DeviceStorage(id: 1, description: "Interner gemeinsamer Speicher", volumeLabel: "", capacity: 1, free: 1, isRemovable: false, isReadOnly: false)
+        XCTAssertEqual(internalStorage.shortName, "Interner Speicher")
+        let sd = DeviceStorage(id: 2, description: "SanDisk SD card", volumeLabel: "", capacity: 1, free: 1, isRemovable: true, isReadOnly: false)
+        XCTAssertEqual(sd.shortName, "SD-Karte")
+        let english = DeviceStorage(id: 3, description: "Internal shared storage", volumeLabel: "", capacity: 1, free: 1, isRemovable: false, isReadOnly: false)
+        XCTAssertEqual(english.shortName, "Interner Speicher")
+    }
+
     func testSamsungSSDIsNotAPhone() {
         // Samsung PSSD T5 EVO: Samsung-Hersteller-ID, aber Massenspeicher (UAS/BOT)
         let ssd = [USBInterfaceDescriptor(number: 0, interfaceClass: 0x08, subClass: 0x06, interfaceProtocol: 0x62)]

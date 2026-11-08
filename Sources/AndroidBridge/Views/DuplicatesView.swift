@@ -528,7 +528,9 @@ private struct DuplicateFileCard: View {
                         .font(Typo.bodyMedium)
                         .strikethrough(marked, color: Palette.danger)
                         .foregroundStyle(marked ? Palette.textSecondary : Palette.textPrimary)
-                        .lineLimit(1).truncationMode(.middle)
+                        .lineLimit(2).truncationMode(.middle)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .help(file.entry.name)
                 }
                 Text(file.path.isEmpty ? "Hauptordner" : file.path.joined(separator: " › "))
                     .font(Typo.caption).foregroundStyle(Palette.textSecondary)

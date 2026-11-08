@@ -131,14 +131,14 @@ struct SidebarView: View {
                     }
                     if devices.devices.isEmpty {
                         if rail {
-                            Image(systemName: "cable.connector.slash")
+                            Image(systemName: "cable.connector")
                                 .font(.ui(15))
                                 .foregroundStyle(Palette.textTertiary)
                                 .frame(width: 44, height: Metrics.sidebarRow)
                                 .help("Kein Gerät angeschlossen")
                         } else {
                             HStack(spacing: 10) {
-                                Image(systemName: "cable.connector.slash").frame(width: 22)
+                                Image(systemName: "cable.connector").frame(width: 22)
                                 Text("Kein Gerät angeschlossen").lineLimit(1)
                             }
                             .font(Typo.caption)

@@ -45,6 +45,10 @@ struct PageHeader<Toolbar: View>: View {
             }
             VStack(alignment: .leading, spacing: Spacing.m) {
                 titles(singleLineSubtitle: false)
+                toolbar()
+            }
+            VStack(alignment: .leading, spacing: Spacing.m) {
+                titles(singleLineSubtitle: false)
                 ScrollView(.horizontal, showsIndicators: false) {
                     toolbar().padding(.vertical, 2)
                 }

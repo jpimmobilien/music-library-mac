@@ -458,7 +458,7 @@ struct StorageTile: View {
                 VStack(alignment: .leading, spacing: 6) {
                     HStack(spacing: 6) {
                         Image(systemName: storage.symbolName)
-                        Text(storage.displayName).lineLimit(2).fixedSize(horizontal: false, vertical: true)
+                        Text(storage.shortName).lineLimit(1)
                     }
                     .font(.ui(15, .semibold))
                     .foregroundStyle(Palette.textPrimary)
