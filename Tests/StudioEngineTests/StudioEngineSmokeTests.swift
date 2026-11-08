@@ -3,6 +3,6 @@ import XCTest
 
 final class StudioEngineSmokeTests: XCTestCase {
     func testVersion() {
-        XCTAssertEqual(StudioEngine.version, "2.2.0")
+        XCTAssertEqual(StudioEngineInfo.version, "2.2.0")
     }
 }
