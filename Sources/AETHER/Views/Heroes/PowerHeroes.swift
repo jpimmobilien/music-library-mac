@@ -28,7 +28,10 @@ struct ThermalHeader: View {
         let thermal = store.thermal
         StudioHero(section: .thermal, eyebrow: tr("Temperature & Fans"), headline: headline(thermal),
                    lead: tr("The state comes from macOS. Temperatures and fan speeds are read from the System Management Controller – Apple doesn’t publish limits, so temperatures alone never trigger a warning."),
-                   height: 340, tools: { RangePicker(range: $range) }) {
+                   height: 340, tools: {
+                       // Zeitraumwahl nur, wenn es einen Temperaturverlauf gibt
+                       if !(thermal?.sensors.value?.isEmpty ?? true) { RangePicker(range: $range) }
+                   }) {
             // SystemStore ändert sich alle 2 s (Eigenverbrauch) – der Inhalt nur bei neuen Messwerten.
             ThermalHeroContent(thermal: thermal, kind: system.hardware.kind, telemetry: telemetry, range: range)
                 .equatable()

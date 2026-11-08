@@ -31,7 +31,7 @@ struct RootView: View {
             .aetherAnimation(Motion.spring, value: model.sidebarVisible)
         }
         .overlay(alignment: .bottomTrailing) {
-            if settings.diagnosticsEnabled && !embedded {
+            if settings.diagnosticsEnabled {
                 DiagnosticsHUD(diagnostics: model.engine.diagnostics)
                     .padding(14)
             }

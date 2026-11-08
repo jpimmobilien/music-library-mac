@@ -248,8 +248,10 @@ struct CoreLights: View {
     var body: some View {
         GeometryReader { geo in
             let count = max(1, levels.count)
-            let spacing = max(2, geo.size.width * 0.012)
-            let barW = max(2, (geo.size.width - spacing * CGFloat(count + 1)) / CGFloat(count))
+            // Säulen bleiben schlank (höchstens 18 pt bzw. 12 % der Höhe) – bei wenigen Kernen mittig statt breit
+            let barW = min(18, geo.size.height * 0.12,
+                           max(2, (geo.size.width - max(2, geo.size.width * 0.012) * CGFloat(count + 1)) / CGFloat(count)))
+            let spacing = min(max(2, geo.size.width * 0.012) * 2.5, max(2, (geo.size.width - barW * CGFloat(count)) / CGFloat(count + 1)))
             HStack(alignment: .bottom, spacing: spacing) {
                 ForEach(Array(levels.enumerated()), id: \.offset) { index, level in
                     let tint = kinds.indices.contains(index) && kinds[index] == .efficiency ? (efficiencyColor ?? color) : color
@@ -273,7 +275,6 @@ struct CoreLights: View {
                     .frame(width: barW)
                 }
             }
-            .padding(.horizontal, spacing)
             .frame(width: geo.size.width, height: geo.size.height, alignment: .bottom)
         }
         .aetherAnimation(Motion.easeOut(0.6), value: levels.map { (($0 ?? 0) * 100).rounded() })

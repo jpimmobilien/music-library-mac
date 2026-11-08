@@ -122,8 +122,8 @@
 "Audio" = "Audio";
 "Available" = "Available";
 "available incl. %@ purgeable" = "available incl. %@ purgeable";
-"Available on “%@”" = "Available on “%@”";
 "Available spare" = "Available spare";
+"available · %@ of %@ used" = "available · %@ of %@ used";
 "Average" = "Average";
 "Average and maximum of all sensors in an area, calculated by AETHER." = "Average and maximum of all sensors in an area, calculated by AETHER.";
 "Average number of runnable threads over 1, 5 and 15 minutes." = "Average number of runnable threads over 1, 5 and 15 minutes.";

@@ -128,6 +128,7 @@
 "available incl. %@ purgeable" = "inkl. %@ löschbar";
 "Available on “%@”" = "Verfügbar auf „%@“";
 "Available spare" = "Verfügbare Reserve";
+"available · %@ of %@ used" = "verfügbar · %@ von %@ belegt";
 "Average" = "Mittel";
 "Average and maximum of all sensors in an area, calculated by AETHER." = "Mittelwert und Maximum aller Sensoren eines Bereichs, von AETHER berechnet.";
 "Average number of runnable threads over 1, 5 and 15 minutes." = "Mittlere Zahl lauffähiger Threads über 1, 5 und 15 Minuten.";

@@ -891,8 +891,8 @@ private struct StorageModule: View {
             if let startup = store.snapshot?.startup {
                 let available = fmt.byteParts(Double(startup.effectiveAvailable))
                 HStack(alignment: .top, spacing: 26) {
-                    BigFigure(label: tr("Available on “%@”", startup.name), value: available.value, unit: available.unit,
-                              detail: tr("%@ of %@ used", fmt.bytes(startup.used), fmt.bytes(startup.capacity)),
+                    BigFigure(label: startup.name, value: available.value, unit: available.unit,
+                              detail: tr("available · %@ of %@ used", fmt.bytes(startup.used), fmt.bytes(startup.capacity)),
                               source: .volumes)
                     FigureDivider()
                     LiveFigure(metric: telemetry.value(.diskRead, unit: .bytesPerSecond), label: tr("Read"),
