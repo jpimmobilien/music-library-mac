@@ -496,6 +496,14 @@ struct TrackMenuItems: View {
             }
             Divider()
             Button(single != nil ? "Informationen bearbeiten …" : "Informationen bearbeiten (\(Formatting.tracks(uids.count))) …") { model.showInfo(uids) }
+            // Audio Studio (2.2): nur bei genau einem Titel
+            if let single {
+                Button("Im Audio Studio schneiden …") {
+                    model.studio.openLibraryTrack(single.uid)
+                    model.openStudio()
+                }
+                .disabled(!single.available)
+            }
             Button("Metadaten kopieren") { model.metadata.copyMetadata(from: uids.first) }
                 .disabled(uids.count != 1)
             Button("Metadaten einfügen …") { model.metadata.pasteMetadata(to: uids) }

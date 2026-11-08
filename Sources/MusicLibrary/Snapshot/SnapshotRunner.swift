@@ -3,6 +3,7 @@ import AppKit
 import MLCore
 import MLStore
 import MLTags
+import MLStudio
 
 /// Vorschaubilder aller wichtigen Ansichten in Hell/Dunkel und verschiedenen Fenstergrößen.
 ///
@@ -86,6 +87,7 @@ enum SnapshotRunner {
         func library(_ section: LibrarySection, _ destination: Destination? = nil, panel: SidePanel? = nil, player open: Bool = false, theme: PlayerTheme = .vinylStudio) -> @MainActor (AppModel) -> Void {
             return { m in
                 m.playerOpen = false
+                m.studioOpen = false
                 m.section = section
                 m.stacks = destination.map { [section: [$0]] } ?? [:]
                 m.sidePanel = panel
@@ -139,6 +141,180 @@ enum SnapshotRunner {
             AnyView(PlayerSheetHost(sheet: .equalizer, theme: .vinylStudio, artwork: NowPlayingArtwork()))
         }))
         list += v2Scenarios(library: library, main: main, big: big, small: small)
+        list += studioScenarios(library: library, main: main, big: big, small: small, wide: wide)
+        return list
+    }
+
+    /// Version 2.2: Audio Studio – Leerzustand, Quellen, Editor, Export, Metadaten, Warteschlange, Verlauf,
+    /// Werkzeuge, Spotify, Doppel-Warnung, Schneiden mit „Original ersetzen“, schmales Fenster.
+    @MainActor
+    private static func studioScenarios(library: @escaping @MainActor (LibrarySection, Destination?, SidePanel?, Bool, PlayerTheme) -> @MainActor (AppModel) -> Void,
+                                        main: @escaping @MainActor () -> AnyView, big: CGSize, small: CGSize, wide: CGSize) -> [Scenario] {
+        /// Grundzustand: Bibliothek mit Mini-Player, Studio geöffnet und zurückgesetzt, dann `setup`.
+        func studio(_ setup: @escaping @MainActor (AppModel, StudioModel) -> Void = { _, _ in }) -> @MainActor (AppModel) -> Void {
+            return { m in
+                for c in LibraryViewContext.allCases { m.setViewOptions(.defaults(for: c), for: c) }
+                library(.tracks, nil, nil, false, .vinylStudio)(m)
+                m.settings.miniPlayerSize = .standard
+                m.settings.playerBackground = .auto
+                StudioDemo.reset(m)
+                setup(m, m.studio)
+            }
+        }
+        let withJobs: @MainActor (StudioModel) -> Void = { s in
+            s.jobs = Array(StudioDemo.jobs().prefix(4))
+            s.history = StudioDemo.history()
+        }
+        var list: [Scenario] = [
+            Scenario(name: "60-studio-leer", size: big, prepare: studio(), view: main),
+            Scenario(name: "60-studio-leer-schmal", size: small, prepare: studio(), view: main),
+            Scenario(name: "60-studio-quelle", size: wide, prepare: studio { _, s in
+                StudioDemo.load(s, StudioDemo.youtubeSource(), selection: TrimRange(start: 42.3, end: 190.5), playhead: 61.8)
+                withJobs(s)
+            }, view: main),
+            Scenario(name: "60-studio-quelle-standard", size: big, prepare: studio { _, s in
+                StudioDemo.load(s, StudioDemo.youtubeSource(), selection: TrimRange(start: 42.3, end: 190.5), playhead: 61.8)
+                withJobs(s)
+            }, view: main),
+            Scenario(name: "60-studio-zoom-blenden", size: wide, prepare: studio { _, s in
+                StudioDemo.load(s, StudioDemo.youtubeSource(), selection: TrimRange(start: 58.2, end: 92.6), playhead: 66.4)
+                s.fadeIn = 2
+                s.fadeOut = 3
+                s.zoom = 4.5
+                s.visibleStart = 48
+                withJobs(s)
+            }, view: main),
+            Scenario(name: "60-studio-export-mp3", size: wide, prepare: studio { _, s in
+                StudioDemo.load(s, StudioDemo.youtubeSource(), selection: TrimRange(start: 42.3, end: 190.5))
+                s.setFormat(.mp3)
+                s.updateOptions { $0.mp3Bitrate = 320 }
+                withJobs(s)
+                StudioScrollSeed.pending = .export
+            }, view: main),
+            Scenario(name: "60-studio-export-wav", size: wide, prepare: studio { _, s in
+                StudioDemo.load(s, StudioDemo.localWavSource())
+                s.setFormat(.wav)
+                s.updateOptions { $0.pcmDepth = .int24; $0.sampleRate = 96_000 }
+                StudioScrollSeed.pending = .export
+            }, view: main),
+            Scenario(name: "60-studio-export-flac", size: big, prepare: studio { _, s in
+                StudioDemo.load(s, StudioDemo.localWavSource(), selection: TrimRange(start: 12.5, end: 231.0))
+                s.setFormat(.flac)
+                s.updateOptions { $0.flacKeepSourceDepth = false; $0.pcmDepth = .int16; $0.flacLevel = 8 }
+                StudioScrollSeed.pending = .export
+            }, view: main),
+            Scenario(name: "60-studio-metadaten", size: big, prepare: studio { _, s in
+                StudioDemo.load(s, StudioDemo.youtubeSource(), selection: TrimRange(start: 42.3, end: 190.5))
+                s.metadata.trackNumber = 3
+                s.settings.fileNameScheme = .custom("Lina Sommer – Stadt aus Glas (Radio Edit)")
+                s.customFileName = "Lina Sommer – Stadt aus Glas (Radio Edit)"
+                withJobs(s)
+                StudioScrollSeed.pending = .metadata
+            }, view: main),
+        ]
+        list += [
+            Scenario(name: "60-studio-ziel", size: big, prepare: studio { _, s in
+                StudioDemo.load(s, StudioDemo.youtubeSource(), selection: TrimRange(start: 42.3, end: 190.5))
+                s.settings.librarySubfolder = "Audio Studio/Live"
+                withJobs(s)
+                StudioScrollSeed.pending = .destination
+            }, view: main),
+            Scenario(name: "60-studio-warteschlange", size: wide, prepare: studio { _, s in
+                StudioDemo.load(s, StudioDemo.localWavSource())
+                s.jobs = StudioDemo.jobs()
+                s.history = StudioDemo.history()
+            }, view: main),
+            Scenario(name: "60-studio-verlauf", size: wide, prepare: studio { _, s in
+                StudioDemo.load(s, StudioDemo.localWavSource())
+                s.jobs = Array(StudioDemo.jobs().prefix(2))
+                s.history = StudioDemo.history()
+                StudioDemo.queueTab = .history
+            }, view: main),
+            Scenario(name: "60-studio-werkzeuge", size: CGSize(width: 560, height: 700), prepare: studio { _, s in
+                s.toolStatus = StudioDemo.partialTools
+            }, view: { AnyView(StudioToolsView(studio: AppModel.shared!.studio, close: {})) }),
+            Scenario(name: "60-studio-werkzeuge-installation", size: CGSize(width: 560, height: 740), prepare: studio { _, s in
+                s.toolStatus = StudioToolStatus()
+                s.toolInstall = .running(ToolInstallProgress(step: "Deno wird geladen und geprüft … 16,2 von 38,4 MB", fraction: 0.42))
+            }, view: { AnyView(StudioToolsView(studio: AppModel.shared!.studio, close: {})) }),
+            Scenario(name: "60-studio-werkzeuge-fehlen", size: big, prepare: studio { _, s in
+                s.toolStatus = StudioToolStatus()
+                s.urlText = "https://www.youtube.com/watch?v=Beispiel01"
+                s.sourceState = .failed(StudioError.toolMissing("yt-dlp").errorDescription ?? "")
+            }, view: main),
+            Scenario(name: "60-studio-spotify", size: big, prepare: studio { _, s in
+                s.urlText = "https://open.spotify.com/track/Beispiel"
+                s.source = StudioDemo.spotifySource()
+                s.sourceState = .ready
+                s.metadata = s.source?.suggested ?? StudioMetadata()
+            }, view: main),
+            Scenario(name: "60-studio-doppelt", size: big, prepare: studio { m, s in
+                StudioDemo.load(s, StudioDemo.youtubeSource(), selection: TrimRange(start: 0, end: 212.4))
+                s.exportWholeFile = true
+                if let t = m.track(1) {
+                    StudioDemo.duplicates = [DuplicateCheck.Candidate(uid: t.uid, title: t.displayTitle, artist: t.artistText ?? "",
+                                                                      durationSeconds: Double(t.durationMs) / 1000, path: t.path)]
+                }
+                StudioDemo.askDuplicates = true
+            }, view: main),
+            Scenario(name: "60-studio-analyse", size: big, prepare: studio { _, s in
+                s.urlText = "https://soundcloud.com/beispiel/velvet-rain"
+                s.sourceState = .analyzing("SoundCloud wird abgefragt …")
+            }, view: main),
+            Scenario(name: "60-studio-laden", size: big, prepare: studio { _, s in
+                StudioDemo.load(s, StudioDemo.youtubeSource())
+                s.waveform = nil
+                s.prepare = .downloading(DownloadProgress(fraction: 0.46, bytesDone: 1_600_000, bytesTotal: 3_480_000, bytesPerSecond: 1_900_000, etaSeconds: 1))
+            }, view: main),
+            Scenario(name: "60-studio-laden-noetig", size: big, prepare: studio { _, s in
+                StudioDemo.load(s, StudioDemo.youtubeSource())
+                s.waveform = nil
+                s.prepare = .needed
+            }, view: main),
+        ]
+        list += [
+            Scenario(name: "60-studio-wellenform-berechnung", size: big, prepare: studio { _, s in
+                StudioDemo.load(s, StudioDemo.localWavSource())
+                s.waveform = nil
+                s.waveformProgress = 0.42
+            }, view: main),
+            Scenario(name: "60-studio-schneiden", size: wide, prepare: studio { m, s in
+                if let src = StudioDemo.libraryTrackSource(m) {
+                    StudioDemo.load(s, src, selection: TrimRange(start: 8.4, end: 141.2), playhead: 20.5)
+                }
+                s.cutSaveMode = .replaceOriginal
+                s.history = StudioDemo.history()
+            }, view: main),
+            Scenario(name: "60-studio-schneiden-speichern", size: big, prepare: studio { m, s in
+                if let src = StudioDemo.libraryTrackSource(m) {
+                    StudioDemo.load(s, src, selection: TrimRange(start: 8.4, end: 141.2))
+                }
+                s.cutSaveMode = .replaceOriginal
+                StudioScrollSeed.pending = .export
+            }, view: main),
+            Scenario(name: "60-studio-schneiden-bestaetigen", size: CGSize(width: 480, height: 470), prepare: studio { m, s in
+                if let src = StudioDemo.libraryTrackSource(m) {
+                    StudioDemo.load(s, src, selection: TrimRange(start: 8.4, end: 141.2))
+                }
+                s.cutSaveMode = .replaceOriginal
+            }, view: { AnyView(StudioReplaceDialogView(studio: AppModel.shared!.studio, close: {})) }),
+            Scenario(name: "60-studio-verlauf-loeschen", size: CGSize(width: 440, height: 260), prepare: studio { _, s in
+                s.history = StudioDemo.history()
+            }, view: { AnyView(StudioClearHistoryDialogView(studio: AppModel.shared!.studio, close: {})) }),
+            Scenario(name: "60-studio-schmal", size: small, prepare: studio { _, s in
+                StudioDemo.load(s, StudioDemo.youtubeSource(), selection: TrimRange(start: 42.3, end: 190.5), playhead: 61.8)
+                withJobs(s)
+            }, view: main),
+            Scenario(name: "60-studio-schmal-export", size: small, prepare: studio { _, s in
+                StudioDemo.load(s, StudioDemo.youtubeSource(), selection: TrimRange(start: 42.3, end: 190.5))
+                withJobs(s)
+                StudioScrollSeed.pending = .export
+            }, view: main),
+            Scenario(name: "60-studio-einstellungen", size: CGSize(width: 860, height: 760), prepare: studio { m, _ in
+                m.studioOpen = false
+                WindowRouter.shared.pendingSettingsCategory = SettingsCategory.studio.rawValue
+            }, view: { AnyView(SettingsView()) }),
+        ]
         return list
     }
 

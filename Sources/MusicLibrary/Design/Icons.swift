@@ -42,7 +42,7 @@ final class IconCache: @unchecked Sendable {
         lock.lock()
         defer { lock.unlock() }
         if let p = cache[name] { return p }
-        guard let spec = IconData.spec(name) else { return nil }
+        guard let spec = IconData.spec(name) ?? HandDrawnIcons.spec(name) else { return nil }
         let parts = spec.paths.map { p -> (CGPath, IconPath) in
             let path = CGMutablePath()
             for cmd in SVGPath.parse(p.d) {
@@ -307,4 +307,99 @@ enum Icons {
     static let openWith = "open_with"
     static let north = "north"
     static let south = "south"
+
+    // v2.2 Audio Studio (eigene Zeichnungen, siehe `HandDrawnIcons`)
+    static let studio = "studio"
+    static let studioFill = "studio_fill"
+    static let waveform = "waveform"
+    static let download = "download"
+    static let cut = "content_cut"
+    static let link = "link"
+    static let audioFile = "audio_file"
+    static let newFile = "note_add"
+    static let lock = "lock"
+    static let fadeIn = "fade_in"
+    static let fadeOut = "fade_out"
+    static let fitWidth = "fit_width"
+    static let globe = "public"
+    static let wrench = "build"
+    static let live = "live"
+    static let swap = "swap_horiz"
+    static let previewSelection = "preview_selection"
+}
+
+/// Eigene Symbole des Audio Studios (Version 2.2), von Hand im Stil von Material Symbols Rounded gezeichnet
+/// (24-pt-Raster, Strichstärke 2, runde Enden – wie die Genre-Symbole). Bewusst nicht in `IconData.swift`,
+/// das von `scripts/gen_icons.py` erzeugt und dabei überschrieben wird.
+enum HandDrawnIcons {
+    private static func stroke(_ d: String, _ width: Double = 2) -> IconPath {
+        IconPath(d: d, fill: 0, evenOdd: false, stroke: 1, lineWidth: width, cap: .round, join: .round)
+    }
+
+    private static func fill(_ d: String, _ alpha: Double = 1) -> IconPath {
+        IconPath(d: d, fill: alpha, evenOdd: false, stroke: 0, lineWidth: 0, cap: .butt, join: .miter)
+    }
+
+    private static func icon(_ paths: [IconPath]) -> IconSpec { IconSpec(width: 24, height: 24, paths: paths) }
+
+    /// Dokument mit Eselsohr (gemeinsam für Datei-Symbole).
+    private static let document = [
+        stroke("M13.5,3.5H7.2A2.2,2.2 0 0 0 5,5.7v12.6a2.2,2.2 0 0 0 2.2,2.2h9.6a2.2,2.2 0 0 0 2.2,-2.2V9Z", 1.8),
+        stroke("M13.5,3.5V7.2a1.8,1.8 0 0 0 1.8,1.8H19", 1.8),
+    ]
+
+    /// Klammern links und rechts (Auswahl in der Wellenform).
+    private static let brackets = [
+        stroke("M6.2,4.5H4.5v15h1.7"),
+        stroke("M17.8,4.5h1.7v15h-1.7"),
+    ]
+
+    static func spec(_ name: String) -> IconSpec? {
+        switch name {
+        case "studio":
+            return icon(brackets + [stroke("M9,9.5v5"), stroke("M12,6.5v11"), stroke("M15,9v6")])
+        case "studio_fill":
+            return icon([fill("M4.5,4.5h15v15h-15z", 0.24)] + brackets + [stroke("M9,9.5v5", 2.2), stroke("M12,6.5v11", 2.2), stroke("M15,9v6", 2.2)])
+        case "waveform":
+            return icon([stroke("M3.5,10.5v3"), stroke("M6.3,8.5v7"), stroke("M9.2,5.5v13"), stroke("M12,3.5v17"),
+                         stroke("M14.8,6.5v11"), stroke("M17.7,9v6"), stroke("M20.5,10.5v3")])
+        case "download":
+            return icon([stroke("M12,4.5v10"), stroke("M7.5,10.5L12,15l4.5,-4.5"), stroke("M5.5,19.5h13")])
+        case "content_cut":
+            return icon([stroke("M6.5,14.5a3,3 0 1 0 0,6a3,3 0 1 0 0,-6z"), stroke("M17.5,14.5a3,3 0 1 0 0,6a3,3 0 1 0 0,-6z"),
+                         stroke("M8.6,15.4L17.5,4"), stroke("M15.4,15.4L6.5,4")])
+        case "link":
+            return icon([stroke("M10.5,7.5H8a4.5,4.5 0 0 0 0,9h2.5"), stroke("M13.5,7.5H16a4.5,4.5 0 0 1 0,9h-2.5"), stroke("M8.5,12h7")])
+        case "audio_file":
+            return icon(document + [fill("M10.3,14.6a1.8,1.8 0 1 0 0,3.6a1.8,1.8 0 1 0 0,-3.6z"), stroke("M12,16.4V11.6l2.6,0.9", 1.6)])
+        case "note_add":
+            return icon(document + [stroke("M12,11.5v6", 1.8), stroke("M9,14.5h6", 1.8)])
+        case "lock":
+            return icon([stroke("M7.2,10.5h9.6a1.7,1.7 0 0 1 1.7,1.7v6.1a1.7,1.7 0 0 1 -1.7,1.7H7.2a1.7,1.7 0 0 1 -1.7,-1.7v-6.1A1.7,1.7 0 0 1 7.2,10.5z"),
+                         stroke("M8.5,10.5V8a3.5,3.5 0 0 1 7,0v2.5"), stroke("M12,14.4v1.8")])
+        case "fade_in":
+            return icon([fill("M4.5,18.5L19.5,5.5V18.5Z", 0.22), stroke("M4.5,18.5L19.5,5.5V18.5Z", 1.8)])
+        case "fade_out":
+            return icon([fill("M4.5,5.5L19.5,18.5H4.5Z", 0.22), stroke("M4.5,5.5L19.5,18.5H4.5Z", 1.8)])
+        case "fit_width":
+            return icon([stroke("M4,5v14"), stroke("M20,5v14"), stroke("M8,12h8"), stroke("M10.5,9L7.5,12l3,3"), stroke("M13.5,9l3,3l-3,3")])
+        case "public":
+            return icon([stroke("M12,3.5a8.5,8.5 0 1 0 0,17a8.5,8.5 0 1 0 0,-17z", 1.8),
+                         stroke("M12,3.5c-2.2,2.3 -3.4,5.2 -3.4,8.5s1.2,6.2 3.4,8.5", 1.8),
+                         stroke("M12,3.5c2.2,2.3 3.4,5.2 3.4,8.5s-1.2,6.2 -3.4,8.5", 1.8),
+                         stroke("M4,9.3h16", 1.8), stroke("M4,14.7h16", 1.8)])
+        case "build":
+            return icon([stroke("M14.6,4.1a4.6,4.6 0 0 0 -4.9,6.2L4.7,15.3a2.1,2.1 0 0 0 3,3l5,-5a4.6,4.6 0 0 0 6.2,-4.9l-2.8,2.8l-2.6,-0.6l-0.6,-2.6z", 1.8)])
+        case "live":
+            return icon([fill("M12,10a2,2 0 1 0 0,4a2,2 0 1 0 0,-4z"),
+                         stroke("M8.4,8.4a5.1,5.1 0 0 0 0,7.2"), stroke("M15.6,8.4a5.1,5.1 0 0 1 0,7.2"),
+                         stroke("M5.6,5.6a9,9 0 0 0 0,12.8"), stroke("M18.4,5.6a9,9 0 0 1 0,12.8")])
+        case "swap_horiz":
+            return icon([stroke("M4.5,8.5h14"), stroke("M15.5,5.5l3,3l-3,3"), stroke("M19.5,15.5h-14"), stroke("M8.5,12.5l-3,3l3,3")])
+        case "preview_selection":
+            return icon(brackets + [fill("M10,8.6v6.8a0.8,0.8 0 0 0 1.2,0.7l5.2,-3.4a0.8,0.8 0 0 0 0,-1.4L11.2,7.9A0.8,0.8 0 0 0 10,8.6z")])
+        default:
+            return nil
+        }
+    }
 }

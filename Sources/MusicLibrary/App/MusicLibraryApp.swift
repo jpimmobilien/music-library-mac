@@ -2,6 +2,7 @@ import SwiftUI
 import AppKit
 import MLCore
 import MLStore
+import MLStudio
 
 @main
 struct MusicLibraryApp: App {
@@ -234,6 +235,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             // Pfeiltasten tragen zusätzlich .numericPad/.function – für den Vergleich entfernen
             let flags = event.modifierFlags.intersection(.deviceIndependentFlagsMask).subtracting([.numericPad, .function])
             let list = KeyboardFocus.shared.activeList
+            // Audio Studio: Leertaste steuert das Vorhören (nicht den Hauptplayer), I/O setzen Start/Ende am Abspielkopf
+            if model.studioOpen && !model.playerOpen && flags.isEmpty, model.studio.waveform != nil {
+                switch event.keyCode {
+                case 49: // Leertaste
+                    model.studio.togglePreview()
+                    return nil
+                case 34: // I
+                    model.studio.setSelection(start: model.studio.playback.playhead, end: model.studio.shownSelection.end)
+                    return nil
+                case 31: // O
+                    model.studio.setSelection(start: model.studio.shownSelection.start, end: model.studio.playback.playhead)
+                    return nil
+                default:
+                    break
+                }
+            }
             switch event.keyCode {
             case 49 where flags.isEmpty: // Leertaste
                 model.player.togglePlay()
@@ -383,6 +400,7 @@ struct AppCommands: Commands {
             }
             .keyboardShortcut("i", modifiers: .command)
         }
+        StudioCommands(model: model, studio: model.studio)
     }
 
     @MainActor
@@ -390,5 +408,47 @@ struct AppCommands: Commands {
         let v = min(AudioEffectsSettings.maxVolume, max(0, model.player.liveVolume + delta))
         model.player.setLiveVolume(v)
         model.settings.effects.volume = model.player.liveVolume   // auf die Höchstlautstärke begrenzt
+    }
+}
+
+/// Menü „Audio Studio“ (2.2): öffnen (⌘7), Quelle wählen, Vorhören, Auswahl, Werkzeuge.
+struct StudioCommands: Commands {
+    @ObservedObject var model: AppModel
+    @ObservedObject var studio: StudioModel
+
+    var body: some Commands {
+        CommandMenu("Audio Studio") {
+            Button("Audio Studio öffnen") { model.openStudio() }
+                .keyboardShortcut("7", modifiers: .command)
+            Divider()
+            Group {
+                Button("Datei öffnen …") {
+                    model.openStudio()
+                    studio.chooseFiles()
+                }
+                Button("Adresse aus der Zwischenablage einfügen") {
+                    model.openStudio()
+                    studio.pasteFromClipboard()
+                }
+                Button("Quelle schließen") { studio.clearSource() }
+                    .disabled(studio.source == nil)
+            }
+            Divider()
+            Group {
+                Button("Vorhören / Pause (Leertaste)") { studio.togglePreview() }
+                    .disabled(!model.studioOpen || studio.waveform == nil)
+                Button("Auswahl von Anfang an vorhören") { studio.previewSelection() }
+                    .disabled(!model.studioOpen || studio.waveform == nil)
+                Button("Ganze Datei auswählen") { studio.selectAll() }
+                    .disabled(studio.source == nil)
+                Button("Auf die Auswahl zoomen") { studio.zoomToSelection() }
+                    .disabled(studio.waveform == nil || studio.exportWholeFile)
+            }
+            Divider()
+            Button("Werkzeuge für Internet-Quellen …") {
+                model.openStudio()
+                StudioToolsSheet.present()
+            }
+        }
     }
 }
