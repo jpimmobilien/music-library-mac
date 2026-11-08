@@ -66,12 +66,13 @@ final class StudioVendorTests: XCTestCase {
         let developer = "/Applications/\(xcode)/Contents/Developer"
         let env = ["DEVELOPER_DIR": developer]
         let version = TS.run("/usr/bin/xcrun", ["swift", "--version"], timeout: 60, environment: env)
-        let sdk = TS.run("/usr/bin/xcrun", ["--show-sdk-version"], timeout: 60, environment: env)
+        let sdk = TS.run("/usr/bin/xcrun", ["--sdk", "macosx", "--show-sdk-version"], timeout: 60, environment: env)
         TS.log("Xcode 16: \(xcode), \(version.out.split(separator: "\n").first ?? ""), SDK \(sdk.out.trimmingCharacters(in: .whitespacesAndNewlines))")
         let scratch = FileManager.default.temporaryDirectory.appendingPathComponent("studio-xcode16-\(UUID().uuidString.prefix(6))")
         defer { try? FileManager.default.removeItem(at: scratch) }
         let t0 = Date()
-        let r = TS.run("/usr/bin/xcrun", ["swift", "build", "--build-tests", "--target", "StudioEngineTests", "--package-path", Self.root.path,
+        // Testziel bauen = StudioEngine (mit CLame/CFLAC und allen Abhängigkeiten) + diese Tests
+        let r = TS.run("/usr/bin/xcrun", ["swift", "build", "--target", "StudioEngineTests", "--package-path", Self.root.path,
                                           "--scratch-path", scratch.path], timeout: 2400, environment: env)
         let errors = (r.out + r.err).split(separator: "\n").filter { $0.contains("error:") }.prefix(30)
         for e in errors { TS.log("Xcode 16 Fehler: \(e)") }

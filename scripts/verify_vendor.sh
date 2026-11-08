@@ -67,7 +67,7 @@ compare_files() {
 
 echo "== LAME 3.100 =="
 LAME_URL="https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz"
-if curl -fsSL --retry 3 -o "$TMP/lame.tar.gz" "$LAME_URL"; then
+if curl -fsSL --retry 3 --retry-all-errors -o "$TMP/lame.tar.gz" "$LAME_URL"; then
     SUM="$(sha256 "$TMP/lame.tar.gz")"
     echo "  Tarball: $LAME_URL"
     echo "  SHA-256: $SUM"
@@ -108,8 +108,13 @@ else
 fi
 
 echo "== libFLAC 1.5.0 =="
-FLAC_URL="https://downloads.xiph.org/releases/flac/flac-1.5.0.tar.xz"
-if curl -fsSL --retry 3 -o "$TMP/flac.tar.xz" "$FLAC_URL"; then
+# Xiph-Server, sonst der von Homebrew verwendete Spiegel (OSU Open Source Lab)
+FLAC_URL=""
+for u in "https://downloads.xiph.org/releases/flac/flac-1.5.0.tar.xz" "https://ftp.osuosl.org/pub/xiph/releases/flac/flac-1.5.0.tar.xz"; do
+    if curl -fsSL --retry 3 --retry-all-errors -o "$TMP/flac.tar.xz" "$u"; then FLAC_URL="$u"; break; fi
+    echo "  Hinweis: $u nicht erreichbar"
+done
+if [ -n "$FLAC_URL" ]; then
     SUM="$(sha256 "$TMP/flac.tar.xz")"
     echo "  Tarball: $FLAC_URL"
     echo "  SHA-256: $SUM"
@@ -130,7 +135,7 @@ if curl -fsSL --retry 3 -o "$TMP/flac.tar.xz" "$FLAC_URL"; then
         for f in $(cd Sources/CFLAC/vendor && find src -type f | sort); do echo "Sources/CFLAC/vendor/$f|$F/$f"; done
     } | compare_files "libFLAC" || STATUS=1
 else
-    echo "  FEHLER: Tarball nicht ladbar ($FLAC_URL)"
+    echo "  FEHLER: Tarball nicht ladbar (Xiph und Spiegel)"
     STATUS=1
 fi
 
