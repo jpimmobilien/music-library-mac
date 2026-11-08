@@ -1,0 +1,119 @@
+[0/1] Planning build
+Test Suite 'Selected tests' started at 2026-11-08 17:03:03.322.
+Test Suite 'MusicLibraryPackageTests.xctest' started at 2026-11-08 17:03:03.325.
+Test Suite 'RemoteTests' started at 2026-11-08 17:03:03.325.
+Test Case '-[StudioEngineTests.RemoteTests testArguments]' started.
+Test Case '-[StudioEngineTests.RemoteTests testArguments]' passed (0.004 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testCancellationTerminatesProcessTree]' started.
+Test Case '-[StudioEngineTests.RemoteTests testCancellationTerminatesProcessTree]' passed (0.168 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testChecksumListParsing]' started.
+Test Case '-[StudioEngineTests.RemoteTests testChecksumListParsing]' passed (0.003 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testDefaultExpandPlaylistOfSimpleProvider]' started.
+Test Case '-[StudioEngineTests.RemoteTests testDefaultExpandPlaylistOfSimpleProvider]' passed (0.001 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testDefaultSearchPathsCoverFinderApps]' started.
+Test Case '-[StudioEngineTests.RemoteTests testDefaultSearchPathsCoverFinderApps]' passed (0.000 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testEnvironmentHasUsefulPath]' started.
+Test Case '-[StudioEngineTests.RemoteTests testEnvironmentHasUsefulPath]' passed (0.000 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testErrorMapping]' started.
+Test Case '-[StudioEngineTests.RemoteTests testErrorMapping]' passed (0.002 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testInstallAbortsOnChecksumMismatchAndInstallsNothing]' started.
+Test Case '-[StudioEngineTests.RemoteTests testInstallAbortsOnChecksumMismatchAndInstallsNothing]' passed (0.050 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testInstallVerifiesAndInstallsFromLocalReleases]' started.
+Test Case '-[StudioEngineTests.RemoteTests testInstallVerifiesAndInstallsFromLocalReleases]' passed (0.109 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testLastErrorLine]' started.
+Test Case '-[StudioEngineTests.RemoteTests testLastErrorLine]' passed (0.000 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testMissingToolsAreReported]' started.
+Test Case '-[StudioEngineTests.RemoteTests testMissingToolsAreReported]' passed (0.001 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testNeedsConversion]' started.
+Test Case '-[StudioEngineTests.RemoteTests testNeedsConversion]' passed (0.000 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testOpusWithoutFFmpegIsRejectedClearly]' started.
+Test Case '-[StudioEngineTests.RemoteTests testOpusWithoutFFmpegIsRejectedClearly]' passed (0.001 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testParsePlaylistAndPreview]' started.
+Test Case '-[StudioEngineTests.RemoteTests testParsePlaylistAndPreview]' passed (0.004 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testParseSingleVideo]' started.
+Test Case '-[StudioEngineTests.RemoteTests testParseSingleVideo]' passed (0.001 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testProgressLinesAreParsed]' started.
+Test Case '-[StudioEngineTests.RemoteTests testProgressLinesAreParsed]' passed (0.001 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testProgressTemplateHasAllFields]' started.
+Test Case '-[StudioEngineTests.RemoteTests testProgressTemplateHasAllFields]' passed (0.000 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testProviderAnalyzeAndDownloadWithFakeTool]' started.
+Test Case '-[StudioEngineTests.RemoteTests testProviderAnalyzeAndDownloadWithFakeTool]' passed (0.043 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testProviderMapsToolErrors]' started.
+Test Case '-[StudioEngineTests.RemoteTests testProviderMapsToolErrors]' passed (0.013 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testSHA256OfLocalFiles]' started.
+Test Case '-[StudioEngineTests.RemoteTests testSHA256OfLocalFiles]' passed (0.006 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testSpotifyDownloadIsRefusedAsDRM]' started.
+Test Case '-[StudioEngineTests.RemoteTests testSpotifyDownloadIsRefusedAsDRM]' passed (0.001 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testThumbnailNormalization]' started.
+Test Case '-[StudioEngineTests.RemoteTests testThumbnailNormalization]' passed (0.015 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testThumbnailOnlyOverHTTPS]' started.
+Test Case '-[StudioEngineTests.RemoteTests testThumbnailOnlyOverHTTPS]' passed (0.001 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testTimeoutAndExitStatus]' started.
+Test Case '-[StudioEngineTests.RemoteTests testTimeoutAndExitStatus]' passed (0.638 seconds).
+Test Case '-[StudioEngineTests.RemoteTests testToolLookupPrefersManagedAndFindsSystemTools]' started.
+Test Case '-[StudioEngineTests.RemoteTests testToolLookupPrefersManagedAndFindsSystemTools]' passed (0.043 seconds).
+Test Suite 'RemoteTests' passed at 2026-11-08 17:03:04.433.
+	 Executed 25 tests, with 0 failures (0 unexpected) in 1.104 (1.107) seconds
+Test Suite 'RemoteWebCheckTests' started at 2026-11-08 17:03:04.433.
+Test Case '-[StudioEngineTests.RemoteWebCheckTests testRealSourcesWithFreeContent]' started.
+/Users/runner/work/music-library-mac/music-library-mac/Tests/StudioEngineTests/RemoteWebCheckTests.swift:59: -[StudioEngineTests.RemoteWebCheckTests testRealSourcesWithFreeContent] : Test skipped - Nur mit ML_STUDIO_WEBTEST=1 (scripts/studio_webcheck.sh).
+Test Case '-[StudioEngineTests.RemoteWebCheckTests testRealSourcesWithFreeContent]' skipped (0.001 seconds).
+Test Suite 'RemoteWebCheckTests' passed at 2026-11-08 17:03:04.434.
+	 Executed 1 test, with 1 test skipped and 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'StudioModelTests' started at 2026-11-08 17:03:04.434.
+Test Case '-[MusicLibraryTests.StudioModelTests testCutLibraryTrackAsNewFileNextToOriginal]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testCutLibraryTrackAsNewFileNextToOriginal]' passed (0.402 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testDestinationRules]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testDestinationRules]' passed (0.014 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testDuplicateCandidatesAndPreviousExport]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testDuplicateCandidatesAndPreviousExport]' passed (0.203 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testFailureMovesOnToNextJob]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testFailureMovesOnToNextJob]' passed (0.276 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testFinishedFileGetsFreeName]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testFinishedFileGetsFreeName]' passed (0.244 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testHistoryIsSavedAndLoaded]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testHistoryIsSavedAndLoaded]' passed (0.276 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testImportIntoLibraryFolderRescans]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testImportIntoLibraryFolderRescans]' passed (0.306 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testParseInput]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testParseInput]' passed (0.004 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPauseAndResumeWaitingJobAndRemove]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPauseAndResumeWaitingJobAndRemove]' passed (0.454 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPauseResumeCancelRetry]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPauseResumeCancelRetry]' passed (0.563 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPausingDownloadKeepsPartialFileAndResumes]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPausingDownloadKeepsPartialFileAndResumes]' passed (0.206 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPlaylistAndMultipleAddressesBecomeJobs]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPlaylistAndMultipleAddressesBecomeJobs]' passed (0.657 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPrepareForEditingUsesCacheAndCleansUp]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPrepareForEditingUsesCacheAndCleansUp]' passed (0.366 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPreviewPlaysSelectionAndFollowsPlayhead]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPreviewPlaysSelectionAndFollowsPlayhead]' passed (0.175 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testQueueRunsInOrderWithExactlyOneActiveJob]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testQueueRunsInOrderWithExactlyOneActiveJob]' passed (0.398 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceIsAbortedWhenExportHasWrongLength]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceIsAbortedWhenExportHasWrongLength]' passed (0.183 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceOriginalWithBackupAndUndo]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceOriginalWithBackupAndUndo]' passed (0.313 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceRequiresOriginalFormat]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceRequiresOriginalFormat]' passed (0.061 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testSetFormatOfWaitingJob]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testSetFormatOfWaitingJob]' passed (0.235 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testSettingsAreStoredInInjectedDefaults]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testSettingsAreStoredInInjectedDefaults]' passed (0.008 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testSingleAddressShowsSourceAndExportDownloads]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testSingleAddressShowsSourceAndExportDownloads]' passed (0.234 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testSpotifyShowsMetadataButCannotExport]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testSpotifyShowsMetadataButCannotExport]' passed (0.031 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testUndoIsRefusedWhenFileChangedAfterReplace]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testUndoIsRefusedWhenFileChangedAfterReplace]' passed (0.290 seconds).
+Test Suite 'StudioModelTests' passed at 2026-11-08 17:03:10.343.
+	 Executed 23 tests, with 0 failures (0 unexpected) in 5.898 (5.909) seconds
+Test Suite 'MusicLibraryPackageTests.xctest' passed at 2026-11-08 17:03:10.343.
+	 Executed 49 tests, with 1 test skipped and 0 failures (0 unexpected) in 7.004 (7.018) seconds
+Test Suite 'Selected tests' passed at 2026-11-08 17:03:10.344.
+	 Executed 49 tests, with 1 test skipped and 0 failures (0 unexpected) in 7.004 (7.021) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

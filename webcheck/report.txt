@@ -1,0 +1,13 @@
+INFO Rechner: Version 26.7.2 (Build 25G332)
+OK Werkzeuge installiert (SHA-256 geprüft) in 3 s: yt-dlp 2026.10.26, Deno 2.9.8
+INFO YouTube „Big Buck Bunny“: https://www.youtube.com/watch?v=aqz-KE-bpKQ – Lizenz CC BY 3.0, Blender Foundation (peach.blender.org)
+BLOCKIERT YouTube „Big Buck Bunny“: Analyse – Der Inhalt ist nicht verfügbar: YouTube verlangt eine Anmeldung zur Bestätigung, dass kein Bot zugreift (häufig in Rechenzentren oder über VPN). Ohne Anmeldung kann der Inhalt nicht geladen werden.
+INFO YouTube „Big Buck Bunny“: yt-dlp meldet wörtlich: ERROR: [youtube] aqz-KE-bpKQ: Sign in to confirm you’re not a bot. This helps protect our community. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+INFO SoundCloud „Echoes“: https://soundcloud.com/scottbuckley/echoes-cc-by – Lizenz CC BY 4.0, Scott Buckley (scottbuckley.com.au)
+OK SoundCloud „Echoes“: Analyse in 2 s – „Echoes (CC-BY)“, Interpret „Scott Buckley“, 363 s, Codec mp4a.40.2, 160 kbit/s, 0 Hz
+OK SoundCloud „Echoes“: Vorschaubild 174420 Bytes (JPEG)
+OK SoundCloud „Echoes“: geladen in 4 s – 1847240487.m4a, 7341844 Bytes
+OK SoundCloud „Echoes“: AVFoundation liest die Datei – 363.9 s, 44100 Hz, 2 Kanäle
+HINWEIS SoundCloud „Echoes“: Export nach MP3 nicht geprüft – auf diesem Zweig ist der Exporter noch der Platzhalter des Engine-Teils (Export ist noch nicht verfügbar.)
+OK Spotify: Metadaten „Today’s Top Hits“, Vorschaubild 32791 Bytes
+OK Spotify: Download abgelehnt – „Spotify-Audio ist kopiergeschützt (DRM) und kann nicht exportiert werden. Titel, Interpret und Cover lassen sich übernehmen.“

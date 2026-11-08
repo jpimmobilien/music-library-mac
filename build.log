@@ -1,0 +1,788 @@
+Building for debugging...
+[0/162] Write swift-version-7974D3F7F03D5E95.txt
+[1/162] Compiling xmproperties.cpp
+[2/162] Compiling ebmlmkseekhead.cpp
+[3/162] Compiling ebmlmksegment.cpp
+[4/162] Compiling wavpackproperties.cpp
+[5/162] Compiling xmfile.cpp
+[6/162] Compiling wavpackfile.cpp
+[7/162] Compiling trueaudioproperties.cpp
+[8/162] Compiling tzlib.cpp
+[9/162] Compiling trueaudiofile.cpp
+[10/162] Compiling tversionnumber.cpp
+[11/162] Compiling tstringlist.cpp
+[12/162] Compiling tstring.cpp
+[13/162] Compiling tvariant.cpp
+[14/162] Compiling tpropertymap.cpp
+[15/162] Compiling tpicturetype.cpp
+[15/162] Compiling tiostream.cpp
+[17/162] Compiling tfilestream.cpp
+[18/162] Compiling tdebug.cpp
+[19/162] Compiling tdebuglistener.cpp
+[20/162] Compiling tfile.cpp
+[21/162] Compiling tbytevectorstream.cpp
+[22/162] Compiling tbytevectorlist.cpp
+[23/162] Compiling tbytevector.cpp
+[24/162] Compiling tagutils.cpp
+[25/162] Compiling tagunion.cpp
+[26/162] Compiling tag.cpp
+[27/162] Compiling shortenproperties.cpp
+[28/162] Compiling shortentag.cpp
+[29/162] Compiling s3mproperties.cpp
+[30/162] Compiling shortenfile.cpp
+[31/162] Compiling s3mfile.cpp
+[32/162] Compiling wavproperties.cpp
+[33/162] Compiling wavfile.cpp
+[34/162] Compiling infotag.cpp
+[35/162] Compiling rifffile.cpp
+[36/162] Compiling aiffproperties.cpp
+[37/162] Compiling aifffile.cpp
+[38/162] Compiling xiphcomment.cpp
+[39/162] Compiling vorbisproperties.cpp
+[40/162] Compiling vorbisfile.cpp
+[41/162] Compiling speexproperties.cpp
+[42/162] Compiling speexfile.cpp
+[43/162] Compiling opusproperties.cpp
+[44/162] Compiling opusfile.cpp
+[45/162] Compiling oggpageheader.cpp
+[46/162] Compiling oggpage.cpp
+[47/162] Compiling oggflacfile.cpp
+[48/162] Compiling oggfile.cpp
+[49/162] Compiling xingheader.cpp
+[50/162] Compiling mpegheader.cpp
+[51/162] Compiling mpegproperties.cpp
+[52/162] Compiling mpegfile.cpp
+[53/162] Compiling id3v2synchdata.cpp
+[54/162] Compiling id3v2header.cpp
+[55/162] Compiling id3v2tag.cpp
+[56/162] Compiling id3v2framefactory.cpp
+[57/162] Compiling id3v2footer.cpp
+[58/162] Compiling id3v2frame.cpp
+[59/162] Compiling id3v2extendedheader.cpp
+[60/162] Compiling urllinkframe.cpp
+[61/162] Compiling unknownframe.cpp
+[62/162] Compiling unsynchronizedlyricsframe.cpp
+[63/162] Compiling uniquefileidentifierframe.cpp
+[64/162] Compiling tableofcontentsframe.cpp
+[65/162] Compiling textidentificationframe.cpp
+[66/162] Compiling synchronizedlyricsframe.cpp
+[67/162] Compiling privateframe.cpp
+[68/162] Compiling relativevolumeframe.cpp
+[69/162] Compiling popularimeterframe.cpp
+[70/162] Compiling podcastframe.cpp
+[71/162] Compiling ownershipframe.cpp
+[72/162] Compiling generalencapsulatedobjectframe.cpp
+[73/162] Compiling eventtimingcodesframe.cpp
+[74/162] Compiling commentsframe.cpp
+[75/162] Compiling chapterframe.cpp
+[76/162] Compiling attachedpictureframe.cpp
+[77/162] Compiling id3v1tag.cpp
+[78/162] Compiling id3v1genres.cpp
+[79/162] Compiling mpcproperties.cpp
+[80/162] Compiling mpcfile.cpp
+[81/162] Compiling mp4stem.cpp
+[82/162] Compiling mp4tag.cpp
+[83/162] Compiling mp4qtchapterlist.cpp
+[84/162] Compiling mp4properties.cpp
+[85/162] Compiling mp4nerochapterlist.cpp
+[86/162] Compiling mp4item.cpp
+[87/162] Compiling mp4itemfactory.cpp
+[88/162] Compiling mp4file.cpp
+[89/162] Compiling mp4coverart.cpp
+[90/162] Compiling mp4chapter.cpp
+[91/162] Compiling modproperties.cpp
+[92/162] Compiling mp4atom.cpp
+[93/162] Compiling modtag.cpp
+[94/162] Compiling modfilebase.cpp
+[95/162] Compiling modfile.cpp
+[96/162] Compiling matroskasimpletag.cpp
+[97/162] Compiling matroskasegment.cpp
+[98/162] Compiling matroskatag.cpp
+[99/162] Compiling matroskaseekhead.cpp
+[100/162] Compiling matroskaproperties.cpp
+[101/162] Compiling matroskafile.cpp
+[102/162] Compiling matroskaelement.cpp
+[103/162] Compiling matroskacues.cpp
+[104/162] Compiling matroskachapters.cpp
+[105/162] Compiling matroskachapteredition.cpp
+[106/162] Compiling matroskachapter.cpp
+[107/162] Compiling matroskaattachedfile.cpp
+[108/162] Compiling ebmlvoidelement.cpp
+[109/162] Compiling matroskaattachments.cpp
+[110/162] Compiling ebmluintelement.cpp
+[111/162] Compiling ebmlstringelement.cpp
+[112/162] Compiling ebmlutils.cpp
+[113/162] Compiling ebmlmktracks.cpp
+[114/162] Compiling ebmlmkinfo.cpp
+[115/162] Compiling ebmlmktags.cpp
+[116/162] Compiling ebmlmkcues.cpp
+[117/162] Compiling ebmlmkattachments.cpp
+[118/162] Compiling ebmlmkchapters.cpp
+[119/162] Compiling ebmlmasterelement.cpp
+[120/162] Compiling ebmlfloatelement.cpp
+[121/162] Compiling ebmlelement.cpp
+[122/162] Compiling itproperties.cpp
+[123/162] Compiling ebmldeferredbinaryelement.cpp
+[124/162] Compiling ebmlbinaryelement.cpp
+[125/162] Compiling flacunknownmetadatablock.cpp
+[126/162] Compiling itfile.cpp
+[127/162] Compiling flacproperties.cpp
+[128/162] Compiling flacpicture.cpp
+[128/162] Compiling flacmetadatablock.cpp
+[130/162] Compiling dsfproperties.cpp
+[131/162] Compiling flacfile.cpp
+[132/162] Compiling fileref.cpp
+[133/162] Compiling dsdiffproperties.cpp
+[134/162] Compiling dsffile.cpp
+[135/162] Compiling audioproperties.cpp
+[136/162] Compiling dsdifffile.cpp
+[137/162] Compiling dsdiffdiintag.cpp
+[138/162] Compiling asfproperties.cpp
+[139/162] Compiling asfpicture.cpp
+[140/162] Compiling asftag.cpp
+[141/162] Compiling asffile.cpp
+[142/162] Compiling asfattribute.cpp
+[143/162] Compiling apetag.cpp
+[144/162] Compiling apeproperties.cpp
+[145/162] Compiling apeitem.cpp
+[146/162] Compiling apefooter.cpp
+[147/162] Write sources
+[150/162] Write MusicLibrary-entitlement.plist
+[151/162] Write sources
+[156/169] Compiling apefile.cpp
+[157/196] Compiling TagBridge.cpp
+[158/196] Compiling CVorbis cvorbis.c
+[160/198] Emitting module MLCore
+[161/210] Compiling MLCore RealFFT.swift
+[162/210] Compiling MLCore SincResampler.swift
+[163/210] Compiling MLCore TimePitchEngine.swift
+[164/213] Emitting module OggVorbis
+[165/213] Compiling OggVorbis VorbisDecoder.swift
+[166/213] Emitting module MLRender
+[167/213] Compiling MLCore EqualizerModel.swift
+[168/213] Compiling MLCore FloatFifo.swift
+[169/213] Compiling MLCore PhaseVocoder.swift
+[170/213] Compiling MLRender RasterKit.swift
+[171/213] Compiling MLRender TurntableGeometry.swift
+[172/213] Compiling MLRender VinylRenderer.swift
+[173/213] Compiling MLCore PlayQueue.swift
+[174/213] Compiling MLCore PlaybackRules.swift
+[175/213] Compiling MLCore ResumeRule.swift
+[176/213] Compiling MLCore SleepTimerLogic.swift
+[177/213] Compiling MLCore StartFirstShuffleOrder.swift
+[178/213] Compiling MLCore AppSettings.swift
+[179/213] Compiling MLCore ViewOptions.swift
+[180/213] Compiling MLCore TagMerge.swift
+[181/213] Compiling MLCore Formatting.swift
+[182/213] Compiling MLCore LogicSupport.swift
+[183/213] Compiling MLCore NaturalOrder.swift
+[184/213] Compiling MLCore TextNorm.swift
+[194/213] Compiling MLCore SVGPath.swift
+[195/213] Compiling MLCore AlbumGrouping.swift
+[196/213] Compiling MLCore ArtistNames.swift
+[197/213] Compiling MLCore ArtistsAndGenres.swift
+[198/213] Compiling MLCore DuplicateFinder.swift
+[199/213] Compiling MLCore LibraryFilter.swift
+[200/213] Compiling MLCore LibraryIndex.swift
+[201/213] Compiling MLCore PlaylistOrdering.swift
+[202/213] Compiling MLCore SmartPlaylists.swift
+[203/213] Compiling MLCore Sorting.swift
+[204/213] Compiling MLCore SyncPlanner.swift
+[205/213] Compiling MLCore LyricsParser.swift
+[206/213] Compiling MLCore DateAdded.swift
+[207/213] Compiling MLCore Tags.swift
+[208/213] Compiling MLCore Track.swift
+[209/213] Compiling MLCore UserData.swift
+[210/213] Compiling MLCore HistoryRule.swift
+[211/229] Emitting module MLStudio
+[212/231] Compiling MLStudio StudioPreview.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:89:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 87 |     /// Wartet, solange angehalten ist. Kehrt sofort zurück, wenn nicht angehalten.
+ 88 |     public func waitIfPaused() async {
+ 89 |         lock.lock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 90 |         if !paused { lock.unlock(); return }
+ 91 |         lock.unlock()
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:90:27: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 88 |     public func waitIfPaused() async {
+ 89 |         lock.lock()
+ 90 |         if !paused { lock.unlock(); return }
+    |                           `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 91 |         lock.unlock()
+ 92 |         await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:91:14: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 89 |         lock.lock()
+ 90 |         if !paused { lock.unlock(); return }
+ 91 |         lock.unlock()
+    |              `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 92 |         await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+ 93 |             lock.lock()
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+[213/231] Compiling MLStudio StudioRemoteLookup.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:89:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 87 |     /// Wartet, solange angehalten ist. Kehrt sofort zurück, wenn nicht angehalten.
+ 88 |     public func waitIfPaused() async {
+ 89 |         lock.lock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 90 |         if !paused { lock.unlock(); return }
+ 91 |         lock.unlock()
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:90:27: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 88 |     public func waitIfPaused() async {
+ 89 |         lock.lock()
+ 90 |         if !paused { lock.unlock(); return }
+    |                           `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 91 |         lock.unlock()
+ 92 |         await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:91:14: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 89 |         lock.lock()
+ 90 |         if !paused { lock.unlock(); return }
+ 91 |         lock.unlock()
+    |              `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 92 |         await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+ 93 |             lock.lock()
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+[214/231] Compiling MLStudio StudioServices.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:89:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 87 |     /// Wartet, solange angehalten ist. Kehrt sofort zurück, wenn nicht angehalten.
+ 88 |     public func waitIfPaused() async {
+ 89 |         lock.lock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 90 |         if !paused { lock.unlock(); return }
+ 91 |         lock.unlock()
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:90:27: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 88 |     public func waitIfPaused() async {
+ 89 |         lock.lock()
+ 90 |         if !paused { lock.unlock(); return }
+    |                           `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 91 |         lock.unlock()
+ 92 |         await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:91:14: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 89 |         lock.lock()
+ 90 |         if !paused { lock.unlock(); return }
+ 91 |         lock.unlock()
+    |              `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 92 |         await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+ 93 |             lock.lock()
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+[215/231] Compiling MLStore SQLite.swift
+[216/232] Compiling MLStore Schema.swift
+[217/232] Compiling MLStore LibraryStore.swift
+[218/232] Emitting module MLStore
+[219/232] Compiling MLStudio StudioSource.swift
+[220/232] Compiling MLStudio StudioWaveform.swift
+[221/232] Compiling MLStudio StudioFormat.swift
+[222/232] Compiling MLStudio StudioJob.swift
+[223/232] Compiling MLStudio StudioMetadata.swift
+[226/234] Emitting module MLTags
+[230/234] Compiling MLTags TagError.swift
+[231/234] Compiling MLTags TagFile.swift
+[232/243] Emitting module StudioEngine
+[233/243] Compiling StudioEngine StudioProcess.swift
+[234/243] Compiling StudioEngine StudioToolManager.swift
+[235/243] Compiling StudioEngine ToolChecksum.swift
+[236/243] Compiling StudioEngine YtDlpOutput.swift
+[237/243] Compiling StudioEngine LocalSourceAnalyzer.swift
+[238/243] Compiling StudioEngine AudioExporter.swift
+[239/243] Compiling StudioEngine StudioPreviewPlayer.swift
+[240/243] Compiling StudioEngine StudioHTTP.swift
+[241/246] Compiling StudioEngine YtDlpSourceProvider.swift
+[242/246] Compiling StudioEngine StudioEngineInfo.swift
+[243/246] Compiling StudioEngine WaveformAnalyzer.swift
+[244/289] Compiling MusicLibrary AppModel.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[245/289] Compiling MusicLibrary MusicLibraryApp.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[246/289] Compiling MusicLibrary Navigation.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[247/289] Compiling MusicLibrary AudioEngine.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[248/289] Compiling MusicLibrary OggTranscoder.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[249/289] Compiling MusicLibrary PitchShiftUnit.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[250/289] Compiling MusicLibrary PlayerService.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[251/289] Compiling MusicLibrary Artwork.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[252/289] Compiling MusicLibrary Controls.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[253/289] Compiling MusicLibrary Glass.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[254/289] Compiling MusicLibrary GlassMenu.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[255/289] Compiling MusicLibrary IconData.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[256/289] Compiling MusicLibrary Icons.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[257/289] Compiling MusicLibrary Theme.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[258/289] Compiling MusicLibrary WindowDrag.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[259/289] Compiling MusicLibrary DateAddedService.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[260/289] Compiling MusicLibrary LibraryService.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[261/289] Compiling MusicLibrary CoverLyricsTabs.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[262/289] Compiling MusicLibrary EditorSession.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[263/289] Compiling MusicLibrary EditorView.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[264/289] Compiling MusicLibrary MetadataService.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[265/289] Emitting module MusicLibrary
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[266/289] Compiling MusicLibrary AuroraHero.swift
+[267/289] Compiling MusicLibrary CassetteCDHero.swift
+[268/289] Compiling MusicLibrary FullPlayerView.swift
+[269/289] Compiling MusicLibrary MiniHeroes.swift
+[270/289] Compiling MusicLibrary MiniPlayerBar.swift
+[271/289] Compiling MusicLibrary MiniWindows.swift
+[272/289] Compiling MusicLibrary ModernGlassHero.swift
+[273/289] Compiling MusicLibrary PlayerBackdrop.swift
+[274/289] Compiling MusicLibrary PlayerSheets.swift
+[275/289] Compiling MusicLibrary PlayerSupport.swift
+[276/289] Compiling MusicLibrary ReelToReelHero.swift
+[277/289] Compiling MusicLibrary SidePanels.swift
+[278/289] Compiling MusicLibrary VinylClassicHero.swift
+[279/289] Compiling MusicLibrary Visualizer.swift
+[280/289] Compiling MusicLibrary SettingsView.swift
+[281/289] Compiling MusicLibrary Benchmark.swift
+[282/289] Compiling MusicLibrary DemoLibrary.swift
+[283/289] Compiling MusicLibrary HangWatchdog.swift
+[284/289] Compiling MusicLibrary SnapshotRunner.swift
+[285/289] Compiling MusicLibrary StudioDemoServices.swift
+[286/289] Compiling MusicLibrary StudioFileOps.swift
+[287/309] Compiling MusicLibrary StudioLibraryBridge.swift
+[288/309] Compiling MusicLibrary StudioModel.swift
+[289/309] Compiling MusicLibrary StudioQueueRunner.swift
+[290/309] Compiling MusicLibrary StudioServicesWiring.swift
+[291/309] Compiling MusicLibrary FavoritesAndTools.swift
+[292/309] Compiling MusicLibrary CoverFlow.swift
+[293/309] Compiling MusicLibrary FilterPanel.swift
+[294/309] Compiling MusicLibrary LibraryCollection.swift
+[295/309] Compiling MusicLibrary LibraryDialogs.swift
+[296/309] Compiling MusicLibrary LibraryKit.swift
+[297/309] Compiling MusicLibrary LibraryToolbar.swift
+[298/309] Compiling MusicLibrary MarqueeSelection.swift
+[299/309] Compiling MusicLibrary SectionCollections.swift
+[300/309] Compiling MusicLibrary SelectionBar.swift
+[301/309] Compiling MusicLibrary ViewOptionsPanel.swift
+[302/309] Compiling MusicLibrary LibraryViews.swift
+[303/309] Compiling MusicLibrary MainWindow.swift
+[304/309] Compiling MusicLibrary PlaylistViews.swift
+[305/309] Compiling MusicLibrary Scaffold.swift
+[306/309] Compiling MusicLibrary TrackList.swift
+[306/309] Write Objects.LinkFileList
+[307/309] Linking MusicLibrary
+[308/309] Applying MusicLibrary
+Build of product 'MusicLibrary' complete! (97.47s)
