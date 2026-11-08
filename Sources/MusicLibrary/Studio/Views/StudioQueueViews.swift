@@ -273,7 +273,8 @@ private struct StudioJobFormatMenu: View {
             .padding(.horizontal, 7)
             .frame(height: 20)
             .background(Capsule().fill(colors.accentSoft))
-            .contentShape(Capsule())
+            .padding(.vertical, 4)
+            .contentShape(Rectangle())
         } content: { menu in
             GlassMenuHeader(title: "Format")
             ForEach(StudioFormat.allCases, id: \.self) { f in
@@ -473,7 +474,7 @@ struct StudioLinkButton: View {
                 .foregroundColor(enabled ? colors.accentText : colors.textTertiary)
                 .underline(hover && enabled)
                 .padding(.horizontal, 6)
-                .frame(minHeight: 26)
+                .frame(minHeight: 28)
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)

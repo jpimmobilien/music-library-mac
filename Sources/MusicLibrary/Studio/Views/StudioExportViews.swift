@@ -239,7 +239,7 @@ struct StudioMetadataCard: View {
     var body: some View {
         let tags = studio.isLibraryTrack && studio.keepOriginalFormat ? (studio.originalFormat?.supportsTags ?? true) : studio.options.format.supportsTags
         StudioCard(icon: Icons.label, title: "Metadaten", subtitle: tags ? (studio.isLibraryTrack ? "Tags des Originals bleiben, Änderungen kommen dazu" : "Werden in die Datei geschrieben") : "AAC-Rohdaten können keine Tags speichern") {
-            if let suggested = studio.source?.suggested, suggested != studio.metadata, !suggested.isEmpty {
+            if let suggested = studio.source?.suggested, !suggested.isEmpty, Self.differs(suggested, studio.metadata) {
                 IconTap(icon: Icons.restart, label: "Vorschlag der Quelle wiederherstellen", tint: colors.textSecondary, iconSize: 17, touch: 30) {
                     var m = suggested
                     if m.cover == nil { m.cover = studio.metadata.cover }
@@ -290,6 +290,15 @@ struct StudioMetadataCard: View {
             }
         }
         .frame(maxWidth: .infinity)
+    }
+
+    /// Felder geändert (das Cover zählt nicht – es wird oft aus dem Vorschaubild übernommen).
+    static func differs(_ a: StudioMetadata, _ b: StudioMetadata) -> Bool {
+        var x = a
+        var y = b
+        x.cover = nil
+        y.cover = nil
+        return x != y
     }
 
     private func numberBinding(_ key: WritableKeyPath<StudioMetadata, Int?>, digits: Int) -> Binding<String> {
@@ -652,6 +661,8 @@ struct StudioExportBar: View {
                 if warn && !askDuplicates {
                     Button { withAnimation(Motion.easeOut()) { askDuplicates = true } } label: {
                         StudioBadge(text: "Schon vorhanden?", icon: Icons.warning, tint: colors.accentText)
+                            .padding(.vertical, 4)
+                            .contentShape(Rectangle())
                     }
                     .buttonStyle(.plain)
                     .help("Möglicherweise liegt diese Aufnahme schon in der Bibliothek")
