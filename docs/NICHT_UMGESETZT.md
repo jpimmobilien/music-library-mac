@@ -1,4 +1,24 @@
-# Einschränkungen und offene Punkte (Version 2.1)
+# Einschränkungen und offene Punkte (Version 2.2)
+
+## Audio Studio (2.2)
+
+| Punkt | Stand |
+|---|---|
+| **Spotify-Audio** | Nicht umgesetzt – kopiergeschützt (DRM). Spotify-Links liefern nur Titel und Cover. |
+| **YouTube** | Umgesetzt (yt-dlp + Deno), aber **auf echten YouTube-Inhalten nicht nachgewiesen**: YouTube verlangt auf den GitHub-Testrechnern eine Anmeldung („Sign in to confirm you're not a bot“). Das wurde nicht umgangen. Diese Sperre trifft vor allem Rechenzentren und VPNs; ob es an deinem Anschluss funktioniert, ist nicht geprüft. Ändert YouTube etwas, hilft meist „Werkzeuge → Aktualisieren“. |
+| **SoundCloud** | Mit einem CC-lizenzierten Titel von der Analyse bis zum MP3-Export geprüft. Kostenpflichtige Go+-Titel liefern nur eine Hörprobe und werden abgelehnt. |
+| **Anmeldung, Cookies, Altersgrenzen, private Inhalte** | Bewusst nicht unterstützt. |
+| **Bedienung von Hand** | Ziehen der Auswahl, Zoom, Ablegen von Dateien, Tastatur und Dialoge sind gebaut und als Vorschaubild geprüft, aber nicht automatisch bedient. |
+| **Anhören** | Klang über Messungen (Störabstand, Bitgenauigkeit, Klickmarken) geprüft, nicht über Lautsprecher. |
+| **Rohes AAC (.aac)** | Kann keine Tags/kein Cover speichern und die Encoder-Verzögerung nicht kennzeichnen (Datei ≈ 60 ms länger). Für die Bibliothek M4A verwenden. |
+| **MP3-Dauer in macOS** | Bei 160 und 224 kbit/s meldet macOS (AVFoundation) einen Frame (26 ms) mehr als die tatsächliche Länge; die Datei selbst ist exakt (mit FFmpeg geprüft). |
+| **Opus/WebM/MKV-Dateien** | Nur mit installiertem FFmpeg (z. B. Homebrew); ohne FFmpeg verständliche Meldung. |
+| **Sicherungen** | Ersetzte Originale werden unter „Audio Studio/Backups“ aufbewahrt und nicht automatisch gelöscht. |
+| **Warteschlange** | Wird beim Beenden nicht gespeichert (keine Downloads ohne Nutzeraktion beim nächsten Start); der Verlauf bleibt. |
+| **Fenster 940 × 660** | Die schwebende Exportleiste überdeckt den unteren Teil der Wellenform; man muss scrollen. |
+| **Voller Datenträger** | Wird erkannt und gemeldet, aber nicht getestet. |
+
+# Einschränkungen aus Version 2.1
 
 ## Nicht geprüft (kein Gerät bzw. nicht automatisierbar)
 
