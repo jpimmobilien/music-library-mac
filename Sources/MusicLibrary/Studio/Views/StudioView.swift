@@ -24,7 +24,8 @@ struct StudioView: View {
 
     var body: some View {
         GeometryReader { geo in
-            let wide = geo.size.width >= Self.columnBreakpoint
+            // Eigene Spalte nur, wenn es Aufträge oder Verlauf gibt – sonst bekommt die Arbeitsfläche die ganze Breite
+            let wide = geo.size.width >= Self.columnBreakpoint && (!studio.jobs.isEmpty || !studio.history.entries.isEmpty)
             let queueWidth: CGFloat = geo.size.width >= 1440 ? 372 : 336
             let bottom = Chrome.contentBottom(miniPlayer: player.current != nil)
             HStack(alignment: .top, spacing: 18) {
@@ -86,6 +87,7 @@ private struct StudioMainColumn: View {
                             StudioHeader(studio: studio, showsJobs: !wide) {
                                 withAnimation(Motion.easeOut()) { proxy.scrollTo(StudioAnchor.queue, anchor: .top) }
                             }
+                            .studioAnchor(.top)
                             StudioSourceInput(studio: studio)
                             if studio.isEmptyStudio {
                                 StudioEmptyState(studio: studio, columns: width >= 760 ? 3 : 1)
@@ -94,12 +96,12 @@ private struct StudioMainColumn: View {
                             }
                             if studio.showsEditor {
                                 StudioEditorCard(studio: studio)
-                                    .id(StudioAnchor.editor)
+                                    .studioAnchor(.editor)
                                 exportSection(twoColumns: twoColumns, width: width)
                             }
                             if !wide && (!studio.jobs.isEmpty || !studio.history.entries.isEmpty) {
                                 StudioQueuePanel(studio: studio, tab: $queueTab, column: false)
-                                    .id(StudioAnchor.queue)
+                                    .studioAnchor(.queue)
                             }
                         }
                         .padding(.top, Chrome.contentTop + 2)
@@ -112,6 +114,11 @@ private struct StudioMainColumn: View {
                     .onAppear { StudioScrollSeed.apply(proxy) }
                 }
                 if showsBar {
+                    // Inhalte laufen vor der Exportleiste weich aus (statt hart unter Leiste und Mini-Player)
+                    EdgeFade(top: false, strength: 0.8)
+                        .frame(height: bottomInset + 104)
+                        .allowsHitTesting(false)
+                        .transition(.opacity)
                     StudioExportBar(studio: studio, askDuplicates: $askDuplicates, export: startExport, proceed: proceed)
                         .frame(maxWidth: 1180)
                         .padding(.bottom, bottomInset - 8)
@@ -130,16 +137,17 @@ private struct StudioMainColumn: View {
                     .frame(maxWidth: .infinity)
                 StudioMetadataCard(studio: studio, compact: width < 1060)
                     .frame(maxWidth: .infinity)
+                    .studioAnchor(.metadata)
             }
-            .id(StudioAnchor.export)
+            .studioAnchor(.export)
         } else {
             StudioFormatCard(studio: studio)
-                .id(StudioAnchor.export)
+                .studioAnchor(.export)
             StudioMetadataCard(studio: studio, compact: width < 560)
-                .id(StudioAnchor.metadata)
+                .studioAnchor(.metadata)
         }
         StudioDestinationCard(studio: studio, compact: width < 720)
-            .id(StudioAnchor.destination)
+            .studioAnchor(.destination)
     }
 
     /// „Exportieren“: beim Ersetzen erst bestätigen, bei möglichen Dubletten erst nachfragen.
@@ -325,7 +333,20 @@ enum StudioDrop {
 // MARK: - Sprungziele (Scrollen)
 
 enum StudioAnchor: Hashable {
-    case editor, export, metadata, destination, queue
+    case top, editor, export, metadata, destination, queue
+}
+
+extension View {
+    /// Sprungziel knapp oberhalb der Ansicht: Beim Scrollen dorthin bleibt Platz für die schwebende Navigation.
+    func studioAnchor(_ anchor: StudioAnchor) -> some View {
+        background(alignment: .top) {
+            Color.clear
+                .frame(width: 1, height: 1)
+                .offset(y: -(Chrome.contentTop + 6))
+                .id(anchor)
+                .accessibilityHidden(true)
+        }
+    }
 }
 
 /// Vorschaubilder: Studio beim Öffnen an eine Stelle scrollen (z. B. zum Export).

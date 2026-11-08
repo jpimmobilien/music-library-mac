@@ -319,7 +319,7 @@ struct WaveformRuler: View, Equatable {
             let first = Int((range.lowerBound / minor).rounded(.up))
             let last = Int((range.upperBound / minor).rounded(.down))
             guard last >= first, last - first < 4000 else { return }
-            var ticks = Path()
+            let ticks = CGMutablePath()
             for i in first...last {
                 let t = Double(i) * minor
                 let x = CGFloat((t - range.lowerBound) * pxPerSecond)
@@ -331,7 +331,7 @@ struct WaveformRuler: View, Equatable {
                     ctx.draw(text, at: CGPoint(x: x + 3, y: 1), anchor: .topLeading)
                 }
             }
-            ctx.fill(ticks, with: .color(tick))
+            ctx.fill(Path(ticks), with: .color(tick))
         }
         .allowsHitTesting(false)
         .accessibilityHidden(true)
@@ -355,7 +355,9 @@ struct WaveformRuler: View, Equatable {
     }
 }
 
-/// Symmetrische, abgerundete Balken – nur die sichtbaren Spalten. Zwei Füllungen (Auswahl / Rest) statt einer je Balken.
+/// Symmetrische Balken mit runden Enden – nur die sichtbaren Spalten. Zwei Striche (Auswahl / Rest) statt einer
+/// Füllung je Balken; gezeichnet über `CGMutablePath` (SwiftUI-`Path` mit sehr vielen abgerundeten Rechtecken
+/// füllte unter macOS 26 fehlerhaft).
 struct WaveformCanvas: View, Equatable {
     let waveform: WaveformData
     let range: ClosedRange<Double>
@@ -376,9 +378,9 @@ struct WaveformCanvas: View, Equatable {
             let peak = max(Double(waveform.peak), 0.05)
             let mid = size.height / 2
             let maxH = max(mid - 6, 1)
-            let corner = CGSize(width: barWidth / 2, height: barWidth / 2)
-            var inside = Path()
-            var outside = Path()
+            let cap = barWidth / 2
+            let inside = CGMutablePath()
+            let outside = CGMutablePath()
             for i in 0..<cols.count {
                 let c = cols[i]
                 let t = range.lowerBound + (Double(i) + 0.5) * span / Double(n)
@@ -389,28 +391,33 @@ struct WaveformCanvas: View, Equatable {
                     if fadeIn > 0 { a *= min(max((t - selection.start) / fadeIn, 0), 1) }
                     if fadeOut > 0 { a *= min(max((selection.end - t) / fadeOut, 0), 1) }
                 }
-                let h = max(1.2, CGFloat(pow(a, 0.85)) * maxH)
-                let rect = CGRect(x: CGFloat(i) * step + (step - barWidth) / 2, y: mid - h, width: barWidth, height: 2 * h)
-                if sel { inside.addRoundedRect(in: rect, cornerSize: corner) } else { outside.addRoundedRect(in: rect, cornerSize: corner) }
+                // Halbe Höhe ohne die runden Enden (die Linie wird um `cap` länger gezeichnet)
+                let h = max(0.4, CGFloat(pow(a, 0.85)) * maxH - cap)
+                let x = CGFloat(i) * step + step / 2
+                let path = sel ? inside : outside
+                path.move(to: CGPoint(x: x, y: mid - h))
+                path.addLine(to: CGPoint(x: x, y: mid + h))
             }
-            ctx.fill(outside, with: .color(muted))
-            ctx.fill(inside, with: .color(selected))
+            let style = StrokeStyle(lineWidth: barWidth, lineCap: .round)
+            ctx.stroke(Path(outside), with: .color(muted), style: style)
+            ctx.stroke(Path(inside), with: .color(selected), style: style)
             // Blendkurven (Hüllkurve über dem Ausschnitt)
             if fadeIn > 0 || fadeOut > 0 {
                 func px(_ t: Double) -> CGFloat { CGFloat((t - range.lowerBound) / max(span, 1e-6)) * size.width }
-                var curve = Path()
+                let curve = CGMutablePath()
                 if fadeIn > 0 {
-                    curve.move(to: CGPoint(x: px(selection.start), y: mid))
-                    curve.addLine(to: CGPoint(x: px(min(selection.start + fadeIn, selection.end)), y: mid - maxH))
-                    curve.move(to: CGPoint(x: px(selection.start), y: mid))
-                    curve.addLine(to: CGPoint(x: px(min(selection.start + fadeIn, selection.end)), y: mid + maxH))
+                    let end = px(min(selection.start + fadeIn, selection.end))
+                    curve.move(to: CGPoint(x: end, y: mid - maxH))
+                    curve.addLine(to: CGPoint(x: px(selection.start), y: mid))
+                    curve.addLine(to: CGPoint(x: end, y: mid + maxH))
                 }
                 if fadeOut > 0 {
-                    curve.move(to: CGPoint(x: px(max(selection.end - fadeOut, selection.start)), y: mid - maxH))
+                    let start = px(max(selection.end - fadeOut, selection.start))
+                    curve.move(to: CGPoint(x: start, y: mid - maxH))
                     curve.addLine(to: CGPoint(x: px(selection.end), y: mid))
-                    curve.addLine(to: CGPoint(x: px(max(selection.end - fadeOut, selection.start)), y: mid + maxH))
+                    curve.addLine(to: CGPoint(x: start, y: mid + maxH))
                 }
-                ctx.stroke(curve, with: .color(selected.opacity(0.9)), style: StrokeStyle(lineWidth: 1.4, lineCap: .round, dash: [3, 3]))
+                ctx.stroke(Path(curve), with: .color(selected.opacity(0.9)), style: StrokeStyle(lineWidth: 1.4, lineCap: .round, lineJoin: .round, dash: [3, 3]))
             }
         }
         .allowsHitTesting(false)
@@ -506,19 +513,21 @@ struct StudioWaveformPlaceholder: View {
                     let n = Int(size.width / step)
                     let mid = size.height / 2
                     let done = CGFloat(progress ?? 0) * size.width
-                    var lit = Path()
-                    var dim = Path()
+                    let lit = CGMutablePath()
+                    let dim = CGMutablePath()
                     for i in 0..<max(n, 0) {
                         let p = Double(i) / Double(max(n, 1))
                         let env = 0.35 + 0.65 * sin(p * .pi) * (0.6 + 0.4 * sin(p * 9.0))
                         let wave = 0.55 + 0.45 * sin(Double(i) * 0.31 - t * 2.4) * sin(Double(i) * 0.07 + t * 0.9)
-                        let h = max(1.2, CGFloat(env * wave) * (mid - 10))
-                        let x = CGFloat(i) * step
-                        let rect = CGRect(x: x, y: mid - h, width: 2.2, height: 2 * h)
-                        if x < done { lit.addRoundedRect(in: rect, cornerSize: CGSize(width: 1.1, height: 1.1)) } else { dim.addRoundedRect(in: rect, cornerSize: CGSize(width: 1.1, height: 1.1)) }
+                        let h = max(0.4, CGFloat(env * wave) * (mid - 10) - 1.1)
+                        let x = CGFloat(i) * step + step / 2
+                        let path = x < done ? lit : dim
+                        path.move(to: CGPoint(x: x, y: mid - h))
+                        path.addLine(to: CGPoint(x: x, y: mid + h))
                     }
-                    ctx.fill(dim, with: .color(colors.textPrimary.opacity(colors.dark ? 0.16 : 0.12)))
-                    ctx.fill(lit, with: .color(colors.accent.opacity(0.55)))
+                    let style = StrokeStyle(lineWidth: 2.2, lineCap: .round)
+                    ctx.stroke(Path(dim), with: .color(colors.textPrimary.opacity(colors.dark ? 0.16 : 0.12)), style: style)
+                    ctx.stroke(Path(lit), with: .color(colors.accent.opacity(0.55)), style: style)
                 }
             }
             if showsLabel {

@@ -21,7 +21,7 @@ struct StudioFormatCard: View {
             VStack(alignment: .leading, spacing: 16) {
                 if studio.isLibraryTrack { keepOriginalRow }
                 if !keep {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 148), spacing: 8)], alignment: .leading, spacing: 8) {
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8, alignment: .top), count: 3), alignment: .leading, spacing: 8) {
                         ForEach(StudioFormat.allCases, id: \.self) { f in
                             StudioFormatTile(format: f, selected: studio.options.format == f) {
                                 withAnimation(Motion.easeOut(Motion.short)) { studio.setFormat(f) }
@@ -106,7 +106,7 @@ struct StudioFormatTile: View {
                 Text(format.summary)
                     .textStyle(Typo.labelSmall)
                     .foregroundColor(colors.textSecondary)
-                    .lineLimit(2)
+                    .lineLimit(3)
                     .multilineTextAlignment(.leading)
                     .fixedSize(horizontal: false, vertical: true)
                 Spacer(minLength: 0)
@@ -316,6 +316,19 @@ struct StudioCoverWell: View {
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 136, height: 136)
                         .clipped()
+                } else if let uid = studio.source?.libraryUid, let track = model.track(uid), track.hasPicture {
+                    // Schneiden: Das Cover des Originals bleibt erhalten, solange kein neues gewählt wird
+                    TrackArtwork(track: track, size: .medium, cornerRadius: 12)
+                        .frame(width: 136, height: 136)
+                        .overlay(alignment: .bottom) {
+                            Text("Cover des Originals")
+                                .font(Typo.inter(10, .semibold))
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 8)
+                                .frame(height: 20)
+                                .background(Capsule().fill(Color.black.opacity(0.45)))
+                                .padding(.bottom, 8)
+                        }
                 } else {
                     VStack(spacing: 6) {
                         Icon(Icons.image, size: 26, color: targeted ? colors.accentText : colors.textTertiary)
@@ -334,7 +347,7 @@ struct StudioCoverWell: View {
             .clipShape(shape)
             .overlay(
                 Group {
-                    if cover == nil || targeted {
+                    if (cover == nil && studio.source?.libraryUid == nil) || targeted {
                         shape.strokeBorder(targeted ? colors.accent : colors.textTertiary.opacity(0.45), style: StrokeStyle(lineWidth: targeted ? 2 : 1.2, dash: [5, 4]))
                     } else {
                         shape.strokeBorder(colors.artworkStroke, lineWidth: 0.6)

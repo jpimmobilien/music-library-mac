@@ -157,7 +157,8 @@ enum StudioDemo {
                    suggested: StudioMetadata(title: "Static Bloom", artist: "VELVET//MACHINE"))
     }
 
-    static func libraryTrackSource(_ model: AppModel, uid: Int64 = 1) -> SourceInfo? {
+    /// Titel der Demo-Bibliothek zum Schneiden (Standard: „Salt & Silver“, AAC in M4A – ohne Neukodierung schneidbar).
+    static func libraryTrackSource(_ model: AppModel, uid: Int64 = 9) -> SourceInfo? {
         guard let t = model.track(uid) else { return nil }
         let url = URL(fileURLWithPath: t.path)
         let meta = StudioMetadata(title: t.displayTitle, artist: t.artistText ?? "", album: t.album ?? "", albumArtist: t.albumArtistText ?? "",

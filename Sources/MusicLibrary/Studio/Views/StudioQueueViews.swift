@@ -52,17 +52,19 @@ struct StudioQueueList: View {
     var body: some View {
         let jobs = studio.jobs
         VStack(alignment: .leading, spacing: 8) {
-            HStack(spacing: 8) {
-                Text(StudioQueueLogic.summary(jobs))
-                    .textStyle(Typo.labelMedium)
-                    .monospacedDigit()
-                    .foregroundColor(colors.textSecondary)
-                Spacer(minLength: 4)
-                if jobs.contains(where: { $0.phase.isFinished }) {
-                    StudioLinkButton(title: "Erledigte entfernen") { withAnimation(Motion.easeOut()) { studio.clearFinished() } }
+            if !jobs.isEmpty {
+                HStack(spacing: 8) {
+                    Text(StudioQueueLogic.summary(jobs))
+                        .textStyle(Typo.labelMedium)
+                        .monospacedDigit()
+                        .foregroundColor(colors.textSecondary)
+                    Spacer(minLength: 4)
+                    if jobs.contains(where: { $0.phase.isFinished }) {
+                        StudioLinkButton(title: "Erledigte entfernen") { withAnimation(Motion.easeOut()) { studio.clearFinished() } }
+                    }
                 }
+                .padding(.horizontal, 4)
             }
-            .padding(.horizontal, 4)
             if jobs.isEmpty {
                 StudioPanelEmpty(icon: Icons.queue, title: "Keine Aufträge",
                                  text: "Exporte erscheinen hier mit Fortschritt. Sie laufen nacheinander – auch während du schon die nächste Quelle bearbeitest.")
@@ -102,12 +104,12 @@ struct StudioJobRow: View {
                     phaseBadge(Icons.close, colors.danger)
                 }
             }
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 3) {
                 Text(title)
                     .textStyle(Typo.titleSmall)
                     .foregroundColor(job.phase == .cancelled ? colors.textTertiary : colors.textPrimary)
                     .lineLimit(1)
-                HStack(spacing: 6) {
+                HStack(spacing: 5) {
                     if job.phase == .waiting {
                         StudioJobFormatMenu(studio: studio, job: job)
                     } else {
@@ -116,28 +118,23 @@ struct StudioJobRow: View {
                             .foregroundColor(colors.textSecondary)
                             .lineLimit(1)
                     }
-                    Text(destinationLabel)
-                        .textStyle(Typo.labelSmall)
-                        .foregroundColor(colors.textTertiary)
-                        .lineLimit(1)
+                    if let dest = destinationLabel {
+                        Text(dest)
+                            .textStyle(Typo.labelSmall)
+                            .foregroundColor(colors.textTertiary)
+                            .lineLimit(1)
+                    }
                 }
                 if showsProgress {
                     StudioProgressBar(value: job.overallProgress, tint: job.phase == .paused ? colors.textTertiary : colors.accent, height: 4)
-                        .padding(.top, 2)
+                        .padding(.vertical, 2)
                 }
                 HStack(spacing: 6) {
                     Text(job.phase.label)
                         .textStyle(Typo.labelMedium)
                         .foregroundColor(phaseColor)
                         .lineLimit(1)
-                    if let detail = job.detail, !detail.isEmpty, !job.phase.isFinished || job.phase == .done {
-                        Text(detail)
-                            .textStyle(Typo.labelSmall)
-                            .monospacedDigit()
-                            .foregroundColor(colors.textTertiary)
-                            .lineLimit(1)
-                            .truncationMode(.middle)
-                    }
+                        .layoutPriority(1)
                     Spacer(minLength: 0)
                     if job.phase.isActive || job.phase == .paused {
                         Text("\(Int((job.overallProgress * 100).rounded())) %")
@@ -145,6 +142,14 @@ struct StudioJobRow: View {
                             .monospacedDigit()
                             .foregroundColor(colors.textSecondary)
                     }
+                }
+                if let detail = job.detail, !detail.isEmpty, !job.phase.isFinished || job.phase == .done {
+                    Text(detail)
+                        .textStyle(Typo.labelSmall)
+                        .monospacedDigit()
+                        .foregroundColor(colors.textTertiary)
+                        .lineLimit(1)
+                        .truncationMode(.middle)
                 }
                 if job.phase == .failed, let error = job.error, !error.isEmpty {
                     Text(error)
@@ -174,9 +179,10 @@ struct StudioJobRow: View {
         return a.isEmpty ? t : "\(t) – \(a)"
     }
 
-    private var destinationLabel: String {
+    /// Ziel nur, wenn es nicht die Bibliothek ist (der Regelfall bleibt ruhig).
+    private var destinationLabel: String? {
         switch job.destination {
-        case .library: return "→ Bibliothek"
+        case .library: return nil
         case .folder: return "→ Ordner"
         case .replaceOriginal: return "→ ersetzt Original"
         }

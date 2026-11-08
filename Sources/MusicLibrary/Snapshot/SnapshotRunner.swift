@@ -161,6 +161,15 @@ enum SnapshotRunner {
                 setup(m, m.studio)
             }
         }
+        /// Blatt-Inhalt wie in `GlassSheet` (feste Breite, Höhe nach Inhalt), oben im Bild.
+        func sheet<V: View>(_ width: CGFloat, @ViewBuilder _ content: @escaping @MainActor () -> V) -> @MainActor () -> AnyView {
+            return {
+                AnyView(ZStack(alignment: .top) {
+                    AmbientBackground()
+                    content().frame(width: width).fixedSize(horizontal: false, vertical: true)
+                })
+            }
+        }
         let withJobs: @MainActor (StudioModel) -> Void = { s in
             s.jobs = Array(StudioDemo.jobs().prefix(4))
             s.history = StudioDemo.history()
@@ -230,13 +239,13 @@ enum SnapshotRunner {
                 s.history = StudioDemo.history()
                 StudioDemo.queueTab = .history
             }, view: main),
-            Scenario(name: "60-studio-werkzeuge", size: CGSize(width: 560, height: 700), prepare: studio { _, s in
+            Scenario(name: "60-studio-werkzeuge", size: CGSize(width: 560, height: 500), prepare: studio { _, s in
                 s.toolStatus = StudioDemo.partialTools
-            }, view: { AnyView(StudioToolsView(studio: AppModel.shared!.studio, close: {})) }),
-            Scenario(name: "60-studio-werkzeuge-installation", size: CGSize(width: 560, height: 740), prepare: studio { _, s in
+            }, view: sheet(560) { StudioToolsView(studio: AppModel.shared!.studio, close: {}) }),
+            Scenario(name: "60-studio-werkzeuge-installation", size: CGSize(width: 560, height: 540), prepare: studio { _, s in
                 s.toolStatus = StudioToolStatus()
                 s.toolInstall = .running(ToolInstallProgress(step: "Deno wird geladen und geprüft … 16,2 von 38,4 MB", fraction: 0.42))
-            }, view: { AnyView(StudioToolsView(studio: AppModel.shared!.studio, close: {})) }),
+            }, view: sheet(560) { StudioToolsView(studio: AppModel.shared!.studio, close: {}) }),
             Scenario(name: "60-studio-werkzeuge-fehlen", size: big, prepare: studio { _, s in
                 s.toolStatus = StudioToolStatus()
                 s.urlText = "https://www.youtube.com/watch?v=Beispiel01"
@@ -253,7 +262,7 @@ enum SnapshotRunner {
                 s.exportWholeFile = true
                 if let t = m.track(1) {
                     StudioDemo.duplicates = [DuplicateCheck.Candidate(uid: t.uid, title: t.displayTitle, artist: t.artistText ?? "",
-                                                                      durationSeconds: Double(t.durationMs) / 1000, path: t.path)]
+                                                                      durationSeconds: 212.0, path: t.path)]
                 }
                 StudioDemo.askDuplicates = true
             }, view: main),
@@ -292,15 +301,15 @@ enum SnapshotRunner {
                 s.cutSaveMode = .replaceOriginal
                 StudioScrollSeed.pending = .export
             }, view: main),
-            Scenario(name: "60-studio-schneiden-bestaetigen", size: CGSize(width: 480, height: 470), prepare: studio { m, s in
+            Scenario(name: "60-studio-schneiden-bestaetigen", size: CGSize(width: 480, height: 350), prepare: studio { m, s in
                 if let src = StudioDemo.libraryTrackSource(m) {
                     StudioDemo.load(s, src, selection: TrimRange(start: 8.4, end: 141.2))
                 }
                 s.cutSaveMode = .replaceOriginal
-            }, view: { AnyView(StudioReplaceDialogView(studio: AppModel.shared!.studio, close: {})) }),
-            Scenario(name: "60-studio-verlauf-loeschen", size: CGSize(width: 440, height: 260), prepare: studio { _, s in
+            }, view: sheet(480) { StudioReplaceDialogView(studio: AppModel.shared!.studio, close: {}) }),
+            Scenario(name: "60-studio-verlauf-loeschen", size: CGSize(width: 440, height: 210), prepare: studio { _, s in
                 s.history = StudioDemo.history()
-            }, view: { AnyView(StudioClearHistoryDialogView(studio: AppModel.shared!.studio, close: {})) }),
+            }, view: sheet(440) { StudioClearHistoryDialogView(studio: AppModel.shared!.studio, close: {}) }),
             Scenario(name: "60-studio-schmal", size: small, prepare: studio { _, s in
                 StudioDemo.load(s, StudioDemo.youtubeSource(), selection: TrimRange(start: 42.3, end: 190.5), playhead: 61.8)
                 withJobs(s)

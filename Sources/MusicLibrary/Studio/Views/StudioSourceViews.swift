@@ -59,6 +59,8 @@ struct StudioSourceInput: View {
                     }
                     .fixedSize()
                 }
+                // Schaltflächen zuerst ausmessen: mit Beschriftung, solange Platz ist – das Feld nimmt den Rest
+                .layoutPriority(1)
             }
             .padding(.leading, 14)
             .padding(.trailing, 8)
@@ -196,10 +198,13 @@ private struct StudioSourceInfoCard: View {
 
     var body: some View {
         let web = source.kind != .localFile && source.libraryUid == nil
+        // Querformat nur für Video-Vorschaubilder; quadratische Cover (z. B. Spotify, SoundCloud) bleiben quadratisch
+        let thumb = StudioImages.image(source.thumbnail, key: "thumb-" + source.id)
+        let landscape = web && (thumb.map { $0.size.width / max($0.size.height, 1) > 1.25 } ?? true)
         VStack(alignment: .leading, spacing: 14) {
             HStack(alignment: .top, spacing: 16) {
                 StudioArtwork(source: source, key: source.id, cornerRadius: Radius.artwork)
-                    .frame(width: web ? 176 : 104, height: web ? 99 : 104)
+                    .frame(width: landscape ? 176 : 104, height: landscape ? 99 : 104)
                     .shadow(color: Color.black.opacity(colors.dark ? 0.35 : 0.14), radius: 10, y: 4)
                 VStack(alignment: .leading, spacing: 5) {
                     StudioFlow(spacing: 6) {

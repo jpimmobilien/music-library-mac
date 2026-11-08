@@ -51,7 +51,7 @@ private struct StudioSettingsContent: View {
                     .frame(width: 230)
             }
             Hairline()
-            SettingRow(title: "Dateiname", text: "Vorschau: \(studio.fileNamePreview)") {
+            SettingRow(title: "Dateiname", text: "Beispiel: \(example)") {
                 Picker("", selection: Binding(get: { studio.isCustomScheme ? -1 : (FileNameScheme.presets.firstIndex(of: studio.settings.fileNameScheme) ?? 0) },
                                               set: { i in if i >= 0 { studio.settings.fileNameScheme = FileNameScheme.presets[i] } })) {
                     ForEach(Array(FileNameScheme.presets.enumerated()), id: \.offset) { i, scheme in Text(scheme.label).tag(i) }
@@ -72,6 +72,13 @@ private struct StudioSettingsContent: View {
                 }
             }
         }
+    }
+
+    /// Beispiel-Dateiname nach dem gewählten Schema.
+    private var example: String {
+        let scheme: FileNameScheme = studio.isCustomScheme ? .custom(studio.customFileName) : studio.settings.fileNameScheme
+        let meta = studio.source == nil ? StudioMetadata(title: "Titel", artist: "Interpret") : studio.metadata
+        return scheme.render(meta, fallback: "Titel") + "." + studio.options.format.fileExtension
     }
 
     private func toolText(origin: StudioToolStatus.Origin, version: String?, purpose: String) -> String {
