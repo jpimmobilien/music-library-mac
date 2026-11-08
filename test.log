@@ -1,0 +1,94 @@
+[0/1] Planning build
+Test Suite 'Selected tests' started at 2026-11-08 16:22:37.683.
+Test Suite 'MusicLibraryPackageTests.xctest' started at 2026-11-08 16:22:37.685.
+Test Suite 'PauseGateTests' started at 2026-11-08 16:22:37.686.
+Test Case '-[MLStudioTests.PauseGateTests testWaitsUntilResumed]' started.
+Test Case '-[MLStudioTests.PauseGateTests testWaitsUntilResumed]' passed (0.247 seconds).
+Test Suite 'PauseGateTests' passed at 2026-11-08 16:22:37.934.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.247 (0.248) seconds
+Test Suite 'StudioEngineSmokeTests' started at 2026-11-08 16:22:37.934.
+Test Case '-[StudioEngineTests.StudioEngineSmokeTests testVersion]' started.
+Test Case '-[StudioEngineTests.StudioEngineSmokeTests testVersion]' passed (0.000 seconds).
+Test Suite 'StudioEngineSmokeTests' passed at 2026-11-08 16:22:37.934.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+Test Suite 'StudioFormatTests' started at 2026-11-08 16:22:37.934.
+Test Case '-[MLStudioTests.StudioFormatTests testAllRequiredMP3Bitrates]' started.
+Test Case '-[MLStudioTests.StudioFormatTests testAllRequiredMP3Bitrates]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioFormatTests testDefaultsAreSensible]' started.
+Test Case '-[MLStudioTests.StudioFormatTests testDefaultsAreSensible]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioFormatTests testHonestNotesForLossyToLossless]' started.
+Test Case '-[MLStudioTests.StudioFormatTests testHonestNotesForLossyToLossless]' passed (0.001 seconds).
+Test Case '-[MLStudioTests.StudioFormatTests testNormalizedClampsInvalidValues]' started.
+Test Case '-[MLStudioTests.StudioFormatTests testNormalizedClampsInvalidValues]' passed (0.002 seconds).
+Test Case '-[MLStudioTests.StudioFormatTests testOutputDepth]' started.
+Test Case '-[MLStudioTests.StudioFormatTests testOutputDepth]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioFormatTests testOutputSampleRate]' started.
+Test Case '-[MLStudioTests.StudioFormatTests testOutputSampleRate]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioFormatTests testSummary]' started.
+Test Case '-[MLStudioTests.StudioFormatTests testSummary]' passed (0.000 seconds).
+Test Suite 'StudioFormatTests' passed at 2026-11-08 16:22:37.940.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.004 (0.006) seconds
+Test Suite 'StudioNamingTests' started at 2026-11-08 16:22:37.940.
+Test Case '-[MLStudioTests.StudioNamingTests testSanitize]' started.
+Test Case '-[MLStudioTests.StudioNamingTests testSanitize]' passed (0.005 seconds).
+Test Case '-[MLStudioTests.StudioNamingTests testSchemes]' started.
+Test Case '-[MLStudioTests.StudioNamingTests testSchemes]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioNamingTests testTagEditOnlyFilledFields]' started.
+Test Case '-[MLStudioTests.StudioNamingTests testTagEditOnlyFilledFields]' passed (0.003 seconds).
+Test Case '-[MLStudioTests.StudioNamingTests testUnique]' started.
+Test Case '-[MLStudioTests.StudioNamingTests testUnique]' passed (0.000 seconds).
+Test Suite 'StudioNamingTests' passed at 2026-11-08 16:22:37.950.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.008 (0.009) seconds
+Test Suite 'StudioQueueTests' started at 2026-11-08 16:22:37.950.
+Test Case '-[MLStudioTests.StudioQueueTests testContinuesAfterFailure]' started.
+Test Case '-[MLStudioTests.StudioQueueTests testContinuesAfterFailure]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioQueueTests testDestinations]' started.
+Test Case '-[MLStudioTests.StudioQueueTests testDestinations]' passed (0.005 seconds).
+Test Case '-[MLStudioTests.StudioQueueTests testDuplicates]' started.
+Test Case '-[MLStudioTests.StudioQueueTests testDuplicates]' passed (0.011 seconds).
+Test Case '-[MLStudioTests.StudioQueueTests testHistoryLimitAndLookup]' started.
+Test Case '-[MLStudioTests.StudioQueueTests testHistoryLimitAndLookup]' passed (0.008 seconds).
+Test Case '-[MLStudioTests.StudioQueueTests testOnlyOneActive]' started.
+Test Case '-[MLStudioTests.StudioQueueTests testOnlyOneActive]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioQueueTests testOverallProgress]' started.
+Test Case '-[MLStudioTests.StudioQueueTests testOverallProgress]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioQueueTests testPermissions]' started.
+Test Case '-[MLStudioTests.StudioQueueTests testPermissions]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioQueueTests testSummary]' started.
+Test Case '-[MLStudioTests.StudioQueueTests testSummary]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioQueueTests testTrimClamp]' started.
+Test Case '-[MLStudioTests.StudioQueueTests testTrimClamp]' passed (0.000 seconds).
+Test Suite 'StudioQueueTests' passed at 2026-11-08 16:22:37.977.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.026 (0.027) seconds
+Test Suite 'StudioSourceTests' started at 2026-11-08 16:22:37.977.
+Test Case '-[MLStudioTests.StudioSourceTests testClassify]' started.
+Test Case '-[MLStudioTests.StudioSourceTests testClassify]' passed (0.007 seconds).
+Test Case '-[MLStudioTests.StudioSourceTests testCleanTitleKeepsRemix]' started.
+Test Case '-[MLStudioTests.StudioSourceTests testCleanTitleKeepsRemix]' passed (0.001 seconds).
+Test Case '-[MLStudioTests.StudioSourceTests testSameFormat]' started.
+Test Case '-[MLStudioTests.StudioSourceTests testSameFormat]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioSourceTests testSpotifyEndpoint]' started.
+Test Case '-[MLStudioTests.StudioSourceTests testSpotifyEndpoint]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.StudioSourceTests testYtDlpMapping]' started.
+Test Case '-[MLStudioTests.StudioSourceTests testYtDlpMapping]' passed (0.005 seconds).
+Test Case '-[MLStudioTests.StudioSourceTests testYtDlpMusicFieldsWin]' started.
+Test Case '-[MLStudioTests.StudioSourceTests testYtDlpMusicFieldsWin]' passed (0.000 seconds).
+Test Suite 'StudioSourceTests' passed at 2026-11-08 16:22:37.992.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.014 (0.015) seconds
+Test Suite 'StudioWaveformTests' started at 2026-11-08 16:22:37.992.
+Test Case '-[MLStudioTests.StudioWaveformTests testLevelsAndColumns]' started.
+Test Case '-[MLStudioTests.StudioWaveformTests testLevelsAndColumns]' passed (0.011 seconds).
+Test Case '-[MLStudioTests.StudioWaveformTests testSettingsRoundTripAndCorruptData]' started.
+Test Case '-[MLStudioTests.StudioWaveformTests testSettingsRoundTripAndCorruptData]' passed (0.006 seconds).
+Test Case '-[MLStudioTests.StudioWaveformTests testTimeFormatAndParse]' started.
+Test Case '-[MLStudioTests.StudioWaveformTests testTimeFormatAndParse]' passed (0.000 seconds).
+Test Suite 'StudioWaveformTests' passed at 2026-11-08 16:22:38.011.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.018 (0.019) seconds
+Test Suite 'MusicLibraryPackageTests.xctest' passed at 2026-11-08 16:22:38.011.
+	 Executed 31 tests, with 0 failures (0 unexpected) in 0.318 (0.326) seconds
+Test Suite 'Selected tests' passed at 2026-11-08 16:22:38.011.
+	 Executed 31 tests, with 0 failures (0 unexpected) in 0.318 (0.328) seconds
+◇ Test run started.
+↳ Testing Library Version: 1501
+↳ Target Platform: x86_64-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.
