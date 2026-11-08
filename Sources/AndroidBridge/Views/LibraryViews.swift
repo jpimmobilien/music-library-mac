@@ -24,7 +24,10 @@ struct FavoritesView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 220), spacing: 16)], spacing: 16) {
                         ForEach(Array(favorites.favorites.enumerated()), id: \.element.id) { index, fav in
                             let available = devices.connectedDevices.contains { $0.serial == fav.location.deviceSerial }
-                            FavoriteTile(name: fav.name, detail: "\(fav.location.deviceName) › \(fav.location.displayPath)", available: available) {
+                            FavoriteTile(name: fav.name,
+                                         detail: "\(fav.location.deviceName) › \(fav.location.displayPath)"
+                                            .replacingOccurrences(of: "Interner gemeinsamer Speicher", with: "Interner Speicher"),
+                                         available: available) {
                                 model.openLocation(fav.location)
                             }
                             .contextMenu {

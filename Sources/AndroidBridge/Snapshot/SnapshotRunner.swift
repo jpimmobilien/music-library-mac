@@ -180,7 +180,10 @@ enum SnapshotRunner {
             m.gallery.filter = .media
             if let d = m.devices.connectedDevices.first { m.gallery.attach(d) }
             m.gallery.scan()
-            try? await Task.sleep(nanoseconds: 700_000_000)
+            // warten, bis die Suche fertig ist (höchstens 8 s)
+            for _ in 0..<80 where m.gallery.isScanning || m.gallery.visible.isEmpty {
+                try? await Task.sleep(nanoseconds: 100_000_000)
+            }
             m.gallery.selection = Set(m.gallery.visible.dropFirst(2).prefix(3).map(\.id))
         }
 

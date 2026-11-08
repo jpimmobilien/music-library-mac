@@ -1,6 +1,18 @@
-# Testbericht – Android Bridge 2.0.0
+# Testbericht – Android Bridge 3.0.0
 
-_Version 1.0 bleibt als Rückfall erhalten (Zweig `android-bridge-v1.0`, DMG „AndroidBridge-1.0“)._
+_Rückfallversionen: 2.0 (Zweig `android-bridge` bis Commit 30402af, DMG „AndroidBridge-2.0“) und 1.0 (Zweig `android-bridge-v1.0`)._
+
+## Neu in 3.0 geprüft
+
+| Prüfung | Ergebnis |
+|---|---|
+| Unit-Tests | 93 Tests ohne Fehler (neu: Samsung-SSD/Monitor nicht als Telefon, Akkustand lesen bzw. nicht unterstützt, kurze Speichernamen) |
+| Bildschirmfotos | 21 Ansichten × hell/dunkel, auf macOS 26 (natives Liquid Glass + Rückfall) und macOS 15 Intel; Fenstergrößen 960×640 (kleinstes Fenster), 1280×800, 1512×945 und 1728×1080 (die Build-Maschinen begrenzen die Höhe auf ihren Bildschirm) |
+| Layout-Durchgänge | 3 Durchgänge mit Korrekturen: Telefonuhr skaliert, Werkzeuge rücken bei Platzmangel unter den Titel, Tabellenspalten passen in die Spalten, Speichernamen gekürzt, Bestätigungstext bricht um, Bildfüllungen vergrößern keine Ebenen mehr |
+| Installation aus der DMG | macOS 26 (Apple Silicon, nativ und Intel-Teil über Rosetta) und macOS 15 (Intel) |
+| Nicht geprüft | echte Geräte (Telefon, Samsung-SSD) – die Erkennung ist mit nachgebildeten Schnittstellen getestet; UI-Automatisierung (XCUITest) ist mit dem SwiftPM-Projekt nicht eingerichtet, die Prüfung erfolgt über Bildschirmfotos |
+
+## Aus Version 2.0
 
 Alle Prüfungen laufen automatisch in der Build-Pipeline (`.github/workflows/android-bridge.yml`) auf echten
 macOS-Rechnern von GitHub. Ergebnisse, Protokolle und Bildschirmfotos liegen im Zweig `ci-ergebnisse-android-bridge`.

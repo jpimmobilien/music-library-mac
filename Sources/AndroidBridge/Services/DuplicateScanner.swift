@@ -113,7 +113,7 @@ final class DuplicateScanner: ObservableObject {
     }
 
     private func defaultScopes(_ device: DeviceConnection) -> Set<DuplicateScope> {
-        Set(device.storages.map { DuplicateScope(storageID: $0.id, storageName: $0.displayName, path: []) })
+        Set(device.storages.map { DuplicateScope(storageID: $0.id, storageName: $0.shortName, path: []) })
     }
 
     func detach() {
@@ -127,11 +127,11 @@ final class DuplicateScanner: ObservableObject {
         guard let device else { return [] }
         var list: [DuplicateScope] = []
         for s in device.storages {
-            list.append(DuplicateScope(storageID: s.id, storageName: s.displayName, path: []))
+            list.append(DuplicateScope(storageID: s.id, storageName: s.shortName, path: []))
         }
         if let primary = device.storages.first(where: { !$0.isRemovable }) ?? device.storages.first {
             for folder in ["DCIM", "Pictures", "Movies", "Download", "Documents"] {
-                list.append(DuplicateScope(storageID: primary.id, storageName: primary.displayName, path: [folder]))
+                list.append(DuplicateScope(storageID: primary.id, storageName: primary.shortName, path: [folder]))
             }
         }
         if let loc = currentFolder, !loc.path.isEmpty, loc.deviceSerial == device.serial {
