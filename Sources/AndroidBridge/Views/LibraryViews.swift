@@ -20,39 +20,24 @@ struct FavoritesView: View {
                     }
                 }
             } else {
-                List {
-                    ForEach(favorites.favorites) { fav in
-                        let available = devices.connectedDevices.contains { $0.serial == fav.location.deviceSerial }
-                        Button {
-                            model.openLocation(fav.location)
-                        } label: {
-                            HStack(spacing: 12) {
-                                IconTile(symbol: "star.fill", tint: available ? Palette.warning : .gray, size: 30)
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text(fav.name).font(.inter(13.5, .medium))
-                                    Text("\(fav.location.deviceName) › \(fav.location.displayPath)")
-                                        .font(.inter(11.5)).foregroundStyle(.secondary).lineLimit(1)
-                                }
-                                Spacer()
-                                if !available {
-                                    Text("Gerät nicht verbunden").font(.inter(11)).foregroundStyle(.secondary)
-                                }
+                ScrollView {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 220), spacing: 16)], spacing: 16) {
+                        ForEach(Array(favorites.favorites.enumerated()), id: \.element.id) { index, fav in
+                            let available = devices.connectedDevices.contains { $0.serial == fav.location.deviceSerial }
+                            FavoriteTile(name: fav.name, detail: "\(fav.location.deviceName) › \(fav.location.displayPath)", available: available) {
+                                model.openLocation(fav.location)
                             }
-                            .contentShape(Rectangle())
+                            .contextMenu {
+                                if index > 0 {
+                                    Button("An den Anfang") { favorites.move(from: IndexSet(integer: index), to: 0) }
+                                }
+                                Button("Entfernen", role: .destructive) { favorites.remove(fav) }
+                            }
                         }
-                        .buttonStyle(.plain)
-                        .disabled(!available)
-                        .contextMenu {
-                            Button("Entfernen", role: .destructive) { favorites.remove(fav) }
-                        }
-                        .padding(.vertical, 4)
                     }
-                    .onMove { favorites.move(from: $0, to: $1) }
+                    .padding(.horizontal, Spacing.gutter)
+                    .padding(.bottom, 30)
                 }
-                .scrollContentBackground(.hidden)
-                .glassCard(cornerRadius: Radius.panel)
-                .padding(.horizontal, Spacing.gutter - 6)
-                .padding(.bottom, 18)
             }
         }
         }
@@ -94,16 +79,16 @@ struct RecentsView: View {
                         model.openLocation(r.location)
                     } label: {
                         HStack(spacing: 12) {
-                            FileGlyph(kind: FileKind.of(name: r.name, isFolder: false), size: 22)
+                            TypeIcon(name: r.name, size: 28)
                             VStack(alignment: .leading, spacing: 2) {
-                                Text(r.name).font(.inter(13, .medium)).lineLimit(1)
+                                Text(r.name).font(.ui(13, .medium)).lineLimit(1)
                                 Text("\(r.location.deviceName) › \(r.location.displayPath)")
-                                    .font(.inter(11.5)).foregroundStyle(.secondary).lineLimit(1)
+                                    .font(.ui(11.5)).foregroundStyle(.secondary).lineLimit(1)
                             }
                             Spacer()
                             VStack(alignment: .trailing, spacing: 2) {
-                                Text(ByteFormat.string(r.size)).font(.inter(11.5)).monospacedDigit()
-                                Text(r.date.formatted(date: .abbreviated, time: .shortened)).font(.inter(11)).foregroundStyle(.secondary)
+                                Text(ByteFormat.string(r.size)).font(.ui(11.5)).monospacedDigit()
+                                Text(r.date.formatted(date: .abbreviated, time: .shortened)).font(.ui(11)).foregroundStyle(.secondary)
                             }
                         }
                         .contentShape(Rectangle())
@@ -131,7 +116,7 @@ struct DiagnosticsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack {
-                Text("Diagnose").font(.inter(17, .semibold))
+                Text("Diagnose").font(.ui(17, .semibold))
                 Spacer()
                 Button("In Zwischenablage kopieren") {
                     NSPasteboard.general.clearContents()
@@ -140,7 +125,7 @@ struct DiagnosticsView: View {
                 Button("Fertig") { dismiss() }.keyboardShortcut(.defaultAction)
             }
             Text("Enthält keine Dateinamen oder Inhalte – nur Geräte, Schnittstellen und Vorgänge.")
-                .font(.inter(11.5)).foregroundStyle(.secondary)
+                .font(.ui(11.5)).foregroundStyle(.secondary)
             GroupBox("USB-Geräte") {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 8) {
@@ -148,9 +133,9 @@ struct DiagnosticsView: View {
                         ForEach(devices.allUSBDevices) { r in
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("\(r.productName ?? "Unbekannt") – \(r.vendorName ?? USBDeviceClassifier.vendorName(r.vendorID) ?? "?") [\(r.idString)]")
-                                    .font(.inter(12, .medium))
+                                    .font(.ui(12, .medium))
                                 Text("Modus: \(modeText(r.mode))\(r.speedDescription.map { " · \($0)" } ?? "")")
-                                    .font(.inter(11)).foregroundStyle(.secondary)
+                                    .font(.ui(11)).foregroundStyle(.secondary)
                                 ForEach(r.interfaces, id: \.self) { i in
                                     Text("  Schnittstelle \(i.number): Klasse \(hex(i.interfaceClass))/\(hex(i.subClass))/\(hex(i.interfaceProtocol)) \(i.name ?? "")")
                                         .font(.system(size: 11, design: .monospaced)).foregroundStyle(.secondary)
@@ -222,5 +207,48 @@ enum SystemInfo {
             return native + " über Rosetta"
         }
         return native
+    }
+}
+
+/// Favoritenordner als Kachel.
+struct FavoriteTile: View {
+    let name: String
+    let detail: String
+    let available: Bool
+    let open: () -> Void
+    @State private var hovering = false
+
+    var body: some View {
+        Button(action: open) {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack(alignment: .top) {
+                    TypeIcon(name: name, isFolder: true, size: 58)
+                        .shadow(color: Palette.shadow, radius: 6, y: 3)
+                    Spacer()
+                    Image(systemName: "star.fill")
+                        .font(.ui(13))
+                        .foregroundStyle(available ? Palette.warning : Palette.textTertiary)
+                }
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(name).font(.ui(15, .semibold)).foregroundStyle(Palette.textPrimary).lineLimit(1)
+                    Text(detail).font(Typo.caption).foregroundStyle(Palette.textSecondary).lineLimit(2).truncationMode(.middle)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                HStack(spacing: 6) {
+                    Circle().fill(available ? Palette.success : Palette.textTertiary).frame(width: 7, height: 7)
+                    Text(available ? "Bereit" : "Gerät nicht verbunden").font(.ui(11, .medium)).foregroundStyle(Palette.textSecondary)
+                }
+            }
+            .padding(18)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .disabled(!available)
+        .glassCard(cornerRadius: Radius.card, elevated: hovering && available)
+        .opacity(available ? 1 : 0.6)
+        .offset(y: hovering && available ? -2 : 0)
+        .onHover { hovering = $0 }
+        .animation(.bridgeQuick, value: hovering)
     }
 }

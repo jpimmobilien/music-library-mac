@@ -24,7 +24,7 @@ struct FileGlyph: View {
 
     var body: some View {
         Image(systemName: kind.symbolName)
-            .font(.inter(size * 0.82, .medium))
+            .font(.ui(size * 0.82, .medium))
             .foregroundStyle(kind.tint)
             .frame(width: size + 4, height: size + 4)
     }
@@ -43,7 +43,7 @@ struct IconTile: View {
             RoundedRectangle(cornerRadius: size * 0.3, style: .continuous)
                 .strokeBorder(Color.white.opacity(0.25), lineWidth: 0.6)
             Image(systemName: symbol)
-                .font(.inter(size * 0.46, .semibold))
+                .font(.ui(size * 0.46, .semibold))
                 .foregroundStyle(.white)
         }
         .frame(width: size, height: size)
@@ -74,7 +74,7 @@ struct StatusPill: View {
                 Circle().fill(color).frame(width: 7, height: 7)
             }
             Text(state.title)
-                .font(.inter(11.5, .semibold))
+                .font(.ui(11.5, .semibold))
                 .foregroundStyle(state == .disconnected ? .secondary : .primary)
         }
         .padding(.horizontal, 10)
@@ -137,16 +137,16 @@ struct StorageCard: View {
                     IconTile(symbol: storage.symbolName, tint: storage.isRemovable ? Palette.bridgeBlue : Palette.bridgeGreen, size: compact ? 30 : 38)
                     VStack(alignment: .leading, spacing: 2) {
                         Text(storage.displayName)
-                            .font(.inter(compact ? 13 : 15, .semibold))
+                            .font(.ui(compact ? 13 : 15, .semibold))
                             .lineLimit(1)
                         Text(storage.typeName + (storage.isReadOnly ? " · schreibgeschützt" : ""))
-                            .font(.inter(11.5))
+                            .font(.ui(11.5))
                             .foregroundStyle(.secondary)
                     }
                     Spacer(minLength: 0)
                     if action != nil {
                         Image(systemName: "chevron.right")
-                            .font(.inter(12, .semibold))
+                            .font(.ui(12, .semibold))
                             .foregroundStyle(.tertiary)
                             .opacity(hovering ? 1 : 0.5)
                     }
@@ -158,12 +158,12 @@ struct StorageCard: View {
                         Spacer()
                         Text("\(ByteFormat.string(storage.free)) frei von \(ByteFormat.string(storage.capacity))")
                     }
-                    .font(.inter(11, .medium))
+                    .font(.ui(11, .medium))
                     .foregroundStyle(.secondary)
                     .monospacedDigit()
                 } else {
                     Text("Kapazität nicht verfügbar")
-                        .font(.inter(11))
+                        .font(.ui(11))
                         .foregroundStyle(.secondary)
                 }
             }
@@ -185,26 +185,44 @@ struct EmptyStateView<Actions: View>: View {
     let title: String
     let message: String
     @ViewBuilder var actions: () -> Actions
+    @State private var glow = false
+    @Environment(\.animationsEnabled) private var animations
 
     var body: some View {
-        VStack(spacing: 14) {
-            Image(systemName: symbol)
-                .font(.inter(30, .regular))
-                .foregroundStyle(Palette.bridgeGreen)
-                .frame(width: 76, height: 76)
-                .glassSurface(Circle(), strong: true)
+        VStack(spacing: 16) {
+            ZStack {
+                Circle()
+                    .fill(RadialGradient(colors: [Palette.bridgeGreen.opacity(0.35), .clear], center: .center, startRadius: 0, endRadius: 90))
+                    .frame(width: 180, height: 180)
+                    .scaleEffect(glow ? 1.08 : 0.94)
+                    .opacity(glow ? 1 : 0.7)
+                Image(systemName: symbol)
+                    .font(.ui(36, .light))
+                    .foregroundStyle(Palette.bridgeGreen)
+                    .frame(width: 92, height: 92)
+                    .glassSurface(Circle(), strong: true, elevated: true)
+            }
+            .frame(height: 150)
             Text(title)
-                .font(Typo.title2)
+                .font(Typo.title)
+                .tracking(-0.3)
                 .foregroundStyle(Palette.textPrimary)
+                .multilineTextAlignment(.center)
             Text(message)
-                .font(Typo.body)
+                .font(.ui(14))
                 .foregroundStyle(Palette.textSecondary)
                 .multilineTextAlignment(.center)
-                .frame(maxWidth: 420)
+                .frame(maxWidth: 440)
+                .fixedSize(horizontal: false, vertical: true)
             actions()
+                .padding(.top, 4)
         }
         .padding(30)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear {
+            guard animations, !SnapshotMode.isActive else { return }
+            withAnimation(.easeInOut(duration: 3).repeatForever(autoreverses: true)) { glow = true }
+        }
     }
 }
 
@@ -227,15 +245,15 @@ struct IssueBanner: View {
     var body: some View {
         HStack(alignment: .top, spacing: 14) {
             Image(systemName: issue.symbolName)
-                .font(.inter(22, .semibold))
+                .font(.ui(22, .semibold))
                 .foregroundStyle(Palette.warning)
                 .frame(width: 30)
             VStack(alignment: .leading, spacing: 6) {
-                Text(issue.title).font(.inter(14, .semibold))
-                Text(issue.message).font(.inter(12.5)).foregroundStyle(.secondary)
+                Text(issue.title).font(.ui(14, .semibold))
+                Text(issue.message).font(.ui(12.5)).foregroundStyle(.secondary)
                 if let r = issue.recommendation {
                     Label(r, systemImage: "lightbulb")
-                        .font(.inter(12.5))
+                        .font(.ui(12.5))
                         .labelStyle(.titleAndIcon)
                 }
                 HStack(spacing: 8) {
@@ -248,7 +266,7 @@ struct IssueBanner: View {
                     if issue.technical != nil {
                         Button(showDetails ? "Details ausblenden" : "Technische Details") { showDetails.toggle() }
                             .buttonStyle(.link)
-                            .font(.inter(11.5))
+                            .font(.ui(11.5))
                     }
                 }
                 .padding(.top, 2)
@@ -280,7 +298,7 @@ struct SectionTitle: View {
         VStack(alignment: .leading, spacing: 2) {
             Text(title.uppercased()).font(Typo.sectionLabel).foregroundStyle(Palette.textSecondary)
                 .tracking(0.7)
-            if let subtitle { Text(subtitle).font(.inter(12)).foregroundStyle(.tertiary) }
+            if let subtitle { Text(subtitle).font(.ui(12)).foregroundStyle(.tertiary) }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }

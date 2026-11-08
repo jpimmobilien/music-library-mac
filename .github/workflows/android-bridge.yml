@@ -58,7 +58,7 @@ jobs:
           swift test 2>&1 | tee logs/test-output.txt
       - name: App bauen (arm64 + x86_64)
         env:
-          VERSION: "2.0.0"
+          VERSION: "3.0.0"
           BUILD_NUMBER: ${{ github.run_number }}
         run: |
           set -o pipefail

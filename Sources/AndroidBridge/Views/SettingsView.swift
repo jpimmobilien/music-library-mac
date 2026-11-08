@@ -347,11 +347,9 @@ struct AboutSettings: View {
     }
 
     static let licenses = """
-    Android Bridge verwendet Apple-Systemframeworks (SwiftUI, AppKit, IOKit, IOUSBHost, QuickLook, AVKit, CryptoKit) \
-    und eine eigene Implementierung des Media Transfer Protocol (MTP) nach der öffentlichen USB-IF-Spezifikation \
-    „Media Transfer Protocol v1.1“ und ISO 15740 (PTP).
-
-    Schrift: Inter und Inter Display – © The Inter Project Authors (rsms.me/inter), lizenziert unter der \
-    SIL Open Font License 1.1. Der vollständige Lizenztext liegt im Programmpaket (Resources/Licenses/Inter-OFL.txt).
+    Android Bridge verwendet ausschließlich Apple-Systemframeworks (SwiftUI, AppKit, IOKit, IOUSBHost, QuickLook, AVKit, \
+    CryptoKit) und die Systemschrift SF Pro, dazu eine eigene Implementierung des Media Transfer Protocol (MTP) nach der \
+    öffentlichen USB-IF-Spezifikation „Media Transfer Protocol v1.1“ und ISO 15740 (PTP). \
+    Alle Grafiken der App sind eigens gezeichnet.
     """
 }

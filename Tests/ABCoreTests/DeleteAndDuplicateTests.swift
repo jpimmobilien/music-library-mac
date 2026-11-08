@@ -371,3 +371,19 @@ final class LetterboxTests: XCTestCase {
         XCTAssertNil(Letterbox.contentRect(gray: px, width: 160, height: 120))
     }
 }
+
+final class BatteryLevelTests: XCTestCase {
+    func testBatteryLevelIsRead() throws {
+        let d = SimulatedMTPDevice(); d.batteryLevel = 64
+        let s = MTPSession(transport: d); try s.openSession()
+        XCTAssertEqual(try s.batteryLevel(), 64)
+    }
+
+    func testBatteryLevelUnsupportedThrowsResponse() throws {
+        let d = SimulatedMTPDevice(); d.batteryLevel = nil
+        let s = MTPSession(transport: d); try s.openSession()
+        XCTAssertThrowsError(try s.batteryLevel())
+        // Sitzung bleibt danach nutzbar
+        XCTAssertFalse(try s.storageIDs().isEmpty)
+    }
+}

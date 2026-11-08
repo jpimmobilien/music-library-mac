@@ -55,6 +55,8 @@ final class DeviceConnection: ObservableObject, Identifiable {
     @Published private(set) var info: MTPDeviceInfo?
     @Published var issue: ABIssue?
     @Published private(set) var connectedAt: Date?
+    /// Akkustand in Prozent, sofern das Telefon ihn über MTP meldet.
+    @Published private(set) var batteryLevel: Int?
 
     private(set) var backend: DeviceBackend?
     private weak var settings: SettingsStore?
@@ -87,6 +89,7 @@ final class DeviceConnection: ObservableObject, Identifiable {
         self.storages = storages
         self.state = state
         self.connectedAt = Date()
+        self.batteryLevel = state == .connected ? 82 : nil
     }
 
     // MARK: - Identität
@@ -288,6 +291,7 @@ final class DeviceConnection: ObservableObject, Identifiable {
             issue = nil
             connectedAt = Date()
             Diagnostics.shared.log(.mtp, "Verbunden: \(list.count) Speicher")
+            await refreshBattery()
         } catch {
             let mapped = (error as? MTPError) ?? .transport("\(error)")
             if mapped.responseCode == PTPResponse.accessDenied.rawValue || mapped.responseCode == PTPResponse.storeNotAvailable.rawValue {
@@ -324,6 +328,13 @@ final class DeviceConnection: ObservableObject, Identifiable {
     func refreshStorages() async {
         guard let backend, state == .connected else { return }
         if let list = try? await backend.storages() { storages = list }
+        await refreshBattery()
+    }
+
+    /// Akkustand lesen (Fehler werden ignoriert – nicht jedes Gerät meldet ihn).
+    func refreshBattery() async {
+        guard let backend, state == .connected else { return }
+        batteryLevel = await backend.batteryLevel()
     }
 
     /// Fehler während der Nutzung (z. B. Kabel gezogen) – Verbindung als unterbrochen markieren.

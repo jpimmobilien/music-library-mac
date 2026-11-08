@@ -41,6 +41,19 @@ final class ClassificationTests: XCTestCase {
         XCTAssertEqual(USBDeviceClassifier.classify(vendorID: 0x18D1, interfaces: ifaces), .androidWithoutFileTransfer)
     }
 
+    func testSamsungSSDIsNotAPhone() {
+        // Samsung PSSD T5 EVO: Samsung-Hersteller-ID, aber Massenspeicher (UAS/BOT)
+        let ssd = [USBInterfaceDescriptor(number: 0, interfaceClass: 0x08, subClass: 0x06, interfaceProtocol: 0x62)]
+        XCTAssertEqual(USBDeviceClassifier.classify(vendorID: 0x04E8, interfaces: ssd), .unrelated)
+        XCTAssertEqual(USBDeviceClassifier.classify(vendorID: 0x04E8, interfaces: [], productName: "PSSD T5 EVO"), .unrelated)
+        XCTAssertEqual(USBDeviceClassifier.classify(vendorID: 0x04E8, interfaces: ssd, productName: "Portable SSD T7"), .unrelated)
+        // Samsung-Monitor mit Hub/HID
+        let monitor = [USBInterfaceDescriptor(number: 0, interfaceClass: 0x03, subClass: 0, interfaceProtocol: 0)]
+        XCTAssertEqual(USBDeviceClassifier.classify(vendorID: 0x04E8, interfaces: monitor), .unrelated)
+        // Galaxy-Telefon im Lademodus bleibt erkannt
+        XCTAssertEqual(USBDeviceClassifier.classify(vendorID: 0x04E8, interfaces: [], productName: "SAMSUNG_Android"), .androidWithoutFileTransfer)
+    }
+
     func testOtherDevicesIgnored() {
         let keyboard = [USBInterfaceDescriptor(number: 0, interfaceClass: 3, subClass: 1, interfaceProtocol: 1)]
         XCTAssertEqual(USBDeviceClassifier.classify(vendorID: 0x046D, interfaces: keyboard), .unrelated)

@@ -33,7 +33,7 @@ final class USBDeviceRecord: Identifiable {
 
     deinit { IOObjectRelease(service) }
 
-    var mode: USBDeviceMode { USBDeviceClassifier.classify(vendorID: vendorID, interfaces: interfaces) }
+    var mode: USBDeviceMode { USBDeviceClassifier.classify(vendorID: vendorID, interfaces: interfaces, productName: productName) }
 
     var idString: String { String(format: "%04X:%04X", vendorID, productID) }
 

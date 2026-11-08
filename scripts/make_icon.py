@@ -1,199 +1,164 @@
 #!/usr/bin/env python3
-"""Erzeugt das App-Symbol von Android Bridge (Resources/AppIcon.iconset + AppIcon-1024.png).
+"""Erzeugt das App-Symbol von Android Bridge 3.0 (Resources/AppIcon.iconset + AppIcon-1024.png).
 
-Motiv: ein Telefon und ein Mac-Laptop, verbunden durch einen leuchtenden Brückenbogen,
-auf einer glasigen Fläche im Verlauf Bridge-Grün → Türkis → Blau (macOS-Symbolraster, 1024 px).
+Motiv „Midnight Glass“: auf einer tiefen Graphitfläche steht ein Telefon, dessen Bildschirm im Signal-Grün
+leuchtet; ein Lichtbogen führt zu einem kleinen Notebook. Weiches Licht statt Linien, Glasreflex oben.
+macOS-Symbolraster (1024 px, Fläche 824 px, Eckenradius ≈ 185 px). Eigene Zeichnung, keine fremden Motive.
 Aufruf:  python3 scripts/make_icon.py
 """
 import math
 import os
-from PIL import Image, ImageDraw, ImageFilter, ImageChops
+from PIL import Image, ImageDraw, ImageFilter
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 OUT = os.path.join(ROOT, "Resources")
-S = 4  # Überabtastung für glatte Kanten
+S = 4                     # Überabtastung
 N = 1024 * S
+
+
+def px(v):
+    return int(round(v * S))
 
 
 def lerp(a, b, t):
     return tuple(int(round(a[i] + (b[i] - a[i]) * t)) for i in range(len(a)))
 
 
-def rounded_mask(size, box, radius):
-    m = Image.new("L", size, 0)
-    ImageDraw.Draw(m).rounded_rectangle(box, radius=radius, fill=255)
-    return m
-
-
-def diagonal_gradient(size, stops):
+def vertical_gradient(size, top, bottom):
     w, h = size
-    grad = Image.new("RGB", (256, 1))
-    px = grad.load()
-    for x in range(256):
-        t = x / 255
-        for i in range(len(stops) - 1):
-            t0, c0 = stops[i]
-            t1, c1 = stops[i + 1]
-            if t0 <= t <= t1:
-                px[x, 0] = lerp(c0, c1, (t - t0) / (t1 - t0))
-                break
-    grad = grad.resize((w * 2, h * 2), Image.BILINEAR).rotate(-38, resample=Image.BICUBIC, expand=False)
-    left = (grad.width - w) // 2
-    top = (grad.height - h) // 2
-    return grad.crop((left, top, left + w, top + h))
+    g = Image.new("RGBA", (1, 256))
+    for y in range(256):
+        g.putpixel((0, y), lerp(top, bottom, y / 255))
+    return g.resize((w, h), Image.BILINEAR)
+
+
+def radial(size, center, radius, color, alpha):
+    w, h = size
+    layer = Image.new("RGBA", size, color + (0,))
+    mask = Image.new("L", size, 0)
+    d = ImageDraw.Draw(mask)
+    steps = 60
+    for i in range(steps, 0, -1):
+        r = radius * i / steps
+        a = int(alpha * (1 - i / steps) ** 1.6)
+        d.ellipse([center[0] - r, center[1] - r, center[0] + r, center[1] + r], fill=a)
+    layer.putalpha(mask)
+    return layer
+
+
+def rounded(size, box, radius, fill):
+    layer = Image.new("RGBA", size, (0, 0, 0, 0))
+    ImageDraw.Draw(layer).rounded_rectangle(box, radius=radius, fill=fill)
+    return layer
 
 
 def main():
     canvas = Image.new("RGBA", (N, N), (0, 0, 0, 0))
-    # macOS-Raster: Körper 824 px mit 100 px Rand, Radius ≈ 185 px
-    margin = 100 * S
-    body = (margin, margin, N - margin, N - margin)
-    radius = 186 * S
+    x0, y0, x1, y1 = px(100), px(100), px(924), px(924)
+    radius = px(185)
+    size = (N, N)
 
-    # Schatten
-    shadow = Image.new("RGBA", (N, N), (0, 0, 0, 0))
-    sm = rounded_mask((N, N), (body[0], body[1] + 18 * S, body[2], body[3] + 18 * S), radius)
-    shadow.putalpha(sm.point(lambda v: int(v * 0.34)))
-    shadow = shadow.filter(ImageFilter.GaussianBlur(28 * S))
-    canvas = Image.alpha_composite(canvas, shadow)
+    # Grundfläche
+    base = vertical_gradient((x1 - x0, y1 - y0), (34, 40, 46, 255), (5, 7, 9, 255))
+    plate = Image.new("RGBA", size, (0, 0, 0, 0))
+    plate.paste(base, (x0, y0))
+    mask = Image.new("L", size, 0)
+    ImageDraw.Draw(mask).rounded_rectangle([x0, y0, x1, y1], radius=radius, fill=255)
 
-    # Fläche mit Verlauf
-    mask = rounded_mask((N, N), body, radius)
-    fill = diagonal_gradient((N, N), [(0.0, (52, 205, 140)), (0.45, (28, 168, 186)), (1.0, (44, 104, 236))]).convert("RGBA")
-    layer = Image.new("RGBA", (N, N), (0, 0, 0, 0))
-    layer.paste(fill, (0, 0), mask)
+    # Lichtfelder
+    plate = Image.alpha_composite(plate, radial(size, (px(300), px(760)), px(560), (40, 220, 160), 150))
+    plate = Image.alpha_composite(plate, radial(size, (px(820), px(200)), px(420), (60, 110, 255), 110))
+    plate = Image.alpha_composite(plate, radial(size, (px(700), px(900)), px(380), (130, 90, 255), 70))
 
-    # Glanz oben (Liquid-Glass-Anmutung)
-    sheen = Image.new("L", (N, N), 0)
-    d = ImageDraw.Draw(sheen)
-    d.ellipse((body[0] - 220 * S, body[1] - 560 * S, body[2] + 220 * S, body[1] + 330 * S), fill=48)
-    sheen = sheen.filter(ImageFilter.GaussianBlur(40 * S))
-    sheen = ImageChops.multiply(sheen, mask)
-    white = Image.new("RGBA", (N, N), (255, 255, 255, 0))
-    white.putalpha(sheen)
-    layer = Image.alpha_composite(layer, white)
-
-    # Lichtkante
-    edge = Image.new("RGBA", (N, N), (0, 0, 0, 0))
-    ImageDraw.Draw(edge).rounded_rectangle(body, radius=radius, outline=(255, 255, 255, 90), width=5 * S)
-    layer = Image.alpha_composite(layer, edge)
-    canvas = Image.alpha_composite(canvas, layer)
-
-    art = Image.new("RGBA", (N, N), (0, 0, 0, 0))
-    a = ImageDraw.Draw(art)
-    white_c = (255, 255, 255, 255)
-
-    # Telefon (links)
-    px0, py0 = 268 * S, 452 * S
-    pw, ph = 158 * S, 300 * S
-    a.rounded_rectangle((px0, py0, px0 + pw, py0 + ph), radius=34 * S, fill=white_c)
-    a.rounded_rectangle((px0 + 14 * S, py0 + 26 * S, px0 + pw - 14 * S, py0 + ph - 26 * S), radius=20 * S, fill=(40, 150, 190, 255))
-    a.ellipse((px0 + pw / 2 - 7 * S, py0 + 9 * S, px0 + pw / 2 + 7 * S, py0 + 23 * S), fill=(40, 150, 190, 255))
-
-    # Laptop (rechts)
-    lx0, ly0 = 560 * S, 540 * S
-    lw, lh = 230 * S, 150 * S
-    a.rounded_rectangle((lx0, ly0, lx0 + lw, ly0 + lh), radius=18 * S, fill=white_c)
-    a.rounded_rectangle((lx0 + 13 * S, ly0 + 13 * S, lx0 + lw - 13 * S, ly0 + lh - 9 * S), radius=8 * S, fill=(36, 120, 214, 255))
-    a.rounded_rectangle((lx0 - 34 * S, ly0 + lh + 4 * S, lx0 + lw + 34 * S, ly0 + lh + 30 * S), radius=13 * S, fill=white_c)
-
-    # Brückenbogen vom Telefon zum Laptop
-    start = (px0 + pw / 2, py0 - 18 * S)
-    end = (lx0 + lw / 2, ly0 - 18 * S)
-    ctrl = ((start[0] + end[0]) / 2, 170 * S)
+    # Lichtbogen Telefon → Notebook (unter den Geräten)
+    beam = Image.new("RGBA", size, (0, 0, 0, 0))
+    bd = ImageDraw.Draw(beam)
     pts = []
-    for i in range(241):
-        t = i / 240
-        x = (1 - t) ** 2 * start[0] + 2 * (1 - t) * t * ctrl[0] + t ** 2 * end[0]
-        y = (1 - t) ** 2 * start[1] + 2 * (1 - t) * t * ctrl[1] + t ** 2 * end[1]
-        pts.append((x, y))
-    def stroke(draw, radius, fill):
-        # dichte Kreise entlang der Kurve: glatter Strich ohne Gehrungsartefakte
-        dense = []
-        for i in range(len(pts) - 1):
-            (x0, y0), (x1, y1) = pts[i], pts[i + 1]
-            steps = max(1, int(math.hypot(x1 - x0, y1 - y0) / (2 * S)))
-            for k in range(steps):
-                t = k / steps
-                dense.append((x0 + (x1 - x0) * t, y0 + (y1 - y0) * t))
-        dense.append(pts[-1])
-        for (x, y) in dense:
-            draw.ellipse((x - radius, y - radius, x + radius, y + radius), fill=fill)
+    for i in range(101):
+        t = i / 100
+        # kubische Bézier
+        p0, p1, p2, p3 = (455, 640), (560, 760), (640, 560), (740, 590)
+        x = (1 - t) ** 3 * p0[0] + 3 * (1 - t) ** 2 * t * p1[0] + 3 * (1 - t) * t ** 2 * p2[0] + t ** 3 * p3[0]
+        y = (1 - t) ** 3 * p0[1] + 3 * (1 - t) ** 2 * t * p1[1] + 3 * (1 - t) * t ** 2 * p2[1] + t ** 3 * p3[1]
+        pts.append((px(x), px(y)))
+    glow = Image.new("RGBA", size, (0, 0, 0, 0))
+    ImageDraw.Draw(glow).line(pts, fill=(62, 227, 168, 230), width=px(60), joint="curve")
+    glow = glow.filter(ImageFilter.GaussianBlur(px(30)))
+    plate = Image.alpha_composite(plate, glow)
+    bd.line(pts, fill=(200, 255, 230, 255), width=px(9), joint="curve")
+    plate = Image.alpha_composite(plate, beam)
 
-    glow = Image.new("RGBA", (N, N), (0, 0, 0, 0))
-    stroke(ImageDraw.Draw(glow), 30 * S, (255, 255, 255, 120))
-    glow = glow.filter(ImageFilter.GaussianBlur(28 * S))
-    art = Image.alpha_composite(glow, art)
-    a = ImageDraw.Draw(art)
-    stroke(a, 15 * S, white_c)
-    for p in (pts[0], pts[-1]):
-        r = 15 * S
-        a.ellipse((p[0] - r, p[1] - r, p[0] + r, p[1] + r), fill=white_c)
-    # Datenpunkte auf dem Bogen
-    for t in (0.3, 0.5, 0.7):
-        i = int(t * 240)
-        x, y = pts[i]
-        r = 21 * S
-        a.ellipse((x - r, y - r, x + r, y + r), fill=(255, 255, 255, 255))
-        r2 = 11 * S
-        a.ellipse((x - r2, y - r2, x + r2, y + r2), fill=(34, 176, 160, 255))
+    # Notebook (rechts, klein)
+    lx0, ly0, lx1, ly1 = px(600), px(400), px(870), px(580)
+    plate = Image.alpha_composite(plate, rounded(size, [lx0, ly0, lx1, ly1], px(14), (70, 78, 88, 255)))
+    plate = Image.alpha_composite(plate, rounded(size, [lx0 + px(7), ly0 + px(7), lx1 - px(7), ly1 - px(4)], px(9), (8, 10, 13, 255)))
+    screen = vertical_gradient((lx1 - lx0 - px(22), ly1 - ly0 - px(22)), (24, 70, 80, 255), (20, 24, 60, 255))
+    sc = Image.new("RGBA", size, (0, 0, 0, 0))
+    sc.paste(screen, (lx0 + px(11), ly0 + px(11)))
+    plate = Image.alpha_composite(plate, sc)
+    plate = Image.alpha_composite(plate, rounded(size, [lx0 - px(26), ly1, lx1 + px(26), ly1 + px(16)], px(8), (150, 158, 168, 255)))
 
-    # leichter Schatten der Motive
-    sh = art.split()[3].filter(ImageFilter.GaussianBlur(10 * S))
-    shadow_art = Image.new("RGBA", (N, N), (10, 40, 70, 0))
-    shadow_art.putalpha(sh.point(lambda v: int(v * 0.28)))
-    shadow_art = ImageChops.offset(shadow_art, 0, 10 * S)
-    canvas = Image.alpha_composite(canvas, shadow_art)
-    canvas = Image.alpha_composite(canvas, art)
+    # Telefon (links, groß) mit Schatten
+    fx0, fy0, fx1, fy1 = px(250), px(230), px(470), px(760)
+    shadow = rounded(size, [fx0 + px(10), fy0 + px(30), fx1 + px(10), fy1 + px(30)], px(46), (0, 0, 0, 170))
+    shadow = shadow.filter(ImageFilter.GaussianBlur(px(30)))
+    plate = Image.alpha_composite(plate, shadow)
+    plate = Image.alpha_composite(plate, rounded(size, [fx0, fy0, fx1, fy1], px(46), (120, 128, 138, 255)))
+    plate = Image.alpha_composite(plate, rounded(size, [fx0 + px(5), fy0 + px(5), fx1 - px(5), fy1 - px(5)], px(42), (10, 12, 15, 255)))
+    sx0, sy0, sx1, sy1 = fx0 + px(16), fy0 + px(16), fx1 - px(16), fy1 - px(16)
+    scr = vertical_gradient((sx1 - sx0, sy1 - sy0), (70, 240, 180, 255), (12, 120, 150, 255))
+    smask = Image.new("L", (sx1 - sx0, sy1 - sy0), 0)
+    ImageDraw.Draw(smask).rounded_rectangle([0, 0, sx1 - sx0 - 1, sy1 - sy0 - 1], radius=px(32), fill=255)
+    scr.putalpha(smask)
+    sl = Image.new("RGBA", size, (0, 0, 0, 0))
+    sl.paste(scr, (sx0, sy0), scr)
+    plate = Image.alpha_composite(plate, sl)
+    # Lichtpunkt auf dem Bildschirm
+    plate = Image.alpha_composite(plate, radial(size, (px(330), px(360)), px(200), (255, 255, 255), 110))
+    # Kameraloch
+    cam = Image.new("RGBA", size, (0, 0, 0, 0))
+    ImageDraw.Draw(cam).ellipse([px(352), px(258), px(368), px(274)], fill=(8, 10, 12, 255))
+    plate = Image.alpha_composite(plate, cam)
+    # Pfeilsymbol (Übertragung) auf dem Bildschirm
+    arrow = Image.new("RGBA", size, (0, 0, 0, 0))
+    ad = ImageDraw.Draw(arrow)
+    ad.line([(px(300), px(500)), (px(392), px(500))], fill=(255, 255, 255, 240), width=px(24))
+    ad.polygon([(px(380), px(450)), (px(380), px(550)), (px(432), px(500))], fill=(255, 255, 255, 240))
+    plate = Image.alpha_composite(plate, arrow)
 
-    icon = canvas.resize((1024, 1024), Image.LANCZOS)
-    icon.save(os.path.join(OUT, "AppIcon-1024.png"))
+    # Glasreflex oben und feine Lichtkante
+    sheen = Image.new("RGBA", size, (255, 255, 255, 0))
+    sm = Image.new("L", size, 0)
+    sd = ImageDraw.Draw(sm)
+    for i in range(80):
+        a = int(46 * (1 - i / 80))
+        sd.rectangle([x0, y0 + px(i * 4), x1, y0 + px(i * 4 + 4)], fill=a)
+    sheen.putalpha(sm)
+    plate = Image.alpha_composite(plate, sheen)
+    edge = Image.new("RGBA", size, (0, 0, 0, 0))
+    ImageDraw.Draw(edge).rounded_rectangle([x0, y0, x1, y1], radius=radius, outline=(255, 255, 255, 60), width=px(3))
+    plate = Image.alpha_composite(plate, edge)
 
+    plate.putalpha(Image.composite(plate.getchannel("A"), Image.new("L", size, 0), mask))
+
+    # Schlagschatten des Symbols
+    drop = Image.new("RGBA", size, (0, 0, 0, 0))
+    ImageDraw.Draw(drop).rounded_rectangle([x0, y0 + px(14), x1, y1 + px(14)], radius=radius, fill=(0, 0, 0, 120))
+    drop = drop.filter(ImageFilter.GaussianBlur(px(18)))
+    canvas = Image.alpha_composite(canvas, drop)
+    canvas = Image.alpha_composite(canvas, plate)
+
+    final = canvas.resize((1024, 1024), Image.LANCZOS)
+    final.save(os.path.join(OUT, "AppIcon-1024.png"))
     iconset = os.path.join(OUT, "AppIcon.iconset")
     os.makedirs(iconset, exist_ok=True)
-    for size in (16, 32, 128, 256, 512):
-        icon.resize((size, size), Image.LANCZOS).save(os.path.join(iconset, f"icon_{size}x{size}.png"))
-        icon.resize((size * 2, size * 2), Image.LANCZOS).save(os.path.join(iconset, f"icon_{size}x{size}@2x.png"))
-    # Rückfall-ICNS (auf macOS erzeugt build_app.sh die Datei mit iconutil neu)
-    icon.save(os.path.join(OUT, "AppIcon.icns"), sizes=[(16, 16), (32, 32), (64, 64), (128, 128), (256, 256), (512, 512), (1024, 1024)])
-    print("App-Symbol erzeugt")
-
-
-def dmg_background():
-    for scale, name in ((1, "background.png"), (2, "background@2x.png")):
-        w, h = 660 * scale, 420 * scale
-        img = diagonal_gradient((w, h), [(0.0, (246, 250, 249)), (1.0, (231, 240, 247))]).convert("RGBA")
-        blobs = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-        d = ImageDraw.Draw(blobs)
-        d.ellipse((-120 * scale, -160 * scale, 300 * scale, 220 * scale), fill=(52, 205, 140, 60))
-        d.ellipse((420 * scale, 200 * scale, 820 * scale, 560 * scale), fill=(44, 104, 236, 45))
-        blobs = blobs.filter(ImageFilter.GaussianBlur(70 * scale))
-        img = Image.alpha_composite(img, blobs)
-        d = ImageDraw.Draw(img)
-        # Pfeil zwischen App (170, 205) und Programme (490, 205)
-        y = 205 * scale
-        x0, x1 = 262 * scale, 398 * scale
-        d.line([(x0, y), (x1, y)], fill=(60, 140, 150, 200), width=5 * scale)
-        d.polygon([(x1 + 18 * scale, y), (x1 - 6 * scale, y - 15 * scale), (x1 - 6 * scale, y + 15 * scale)], fill=(60, 140, 150, 200))
-        try:
-            from PIL import ImageFont
-            font = None
-            for path in ("/System/Library/Fonts/SFNS.ttf", "/System/Library/Fonts/Helvetica.ttc",
-                         "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"):
-                if os.path.exists(path):
-                    font = ImageFont.truetype(path, 17 * scale)
-                    break
-            text = "Android Bridge in den Ordner „Programme“ ziehen"
-            if font:
-                tw = d.textlength(text, font=font)
-                d.text(((w - tw) / 2, 330 * scale), text, fill=(70, 86, 98, 255), font=font)
-        except Exception as exc:  # noqa: BLE001
-            print("Schrift nicht verfügbar:", exc)
-        img.convert("RGB").save(os.path.join(OUT, "DMG", name))
-    print("DMG-Hintergrund erzeugt")
+    for base in (16, 32, 128, 256, 512):
+        for scale in (1, 2):
+            dim = base * scale
+            name = f"icon_{base}x{base}{'@2x' if scale == 2 else ''}.png"
+            final.resize((dim, dim), Image.LANCZOS).save(os.path.join(iconset, name))
+    print("AppIcon erzeugt.")
 
 
 if __name__ == "__main__":
-    os.makedirs(os.path.join(OUT, "DMG"), exist_ok=True)
     main()
-    dmg_background()

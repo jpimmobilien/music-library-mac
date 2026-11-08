@@ -36,6 +36,11 @@ struct TransferCenterView: View {
                 } else {
                     ScrollView {
                         LazyVStack(spacing: 12) {
+                            if let fraction = engine.overallFraction {
+                                TransferHero(fraction: fraction, active: engine.activeJobs)
+                                    .padding(.bottom, 8)
+                                    .transition(.opacity.combined(with: .move(edge: .top)))
+                            }
                             ForEach(engine.jobs) { job in
                                 TransferJobRow(job: job, engine: engine)
                                     .transition(.asymmetric(insertion: .move(edge: .top).combined(with: .opacity), removal: .opacity))
@@ -71,14 +76,14 @@ struct TransferCenterView: View {
                             .foregroundStyle(r.succeeded ? Palette.success : Palette.warning)
                             .frame(width: 22)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(r.title).font(.inter(13, .medium)).lineLimit(1)
-                            Text(r.detail).font(.inter(11.5)).foregroundStyle(.secondary).lineLimit(1).truncationMode(.middle)
+                            Text(r.title).font(.ui(13, .medium)).lineLimit(1)
+                            Text(r.detail).font(.ui(11.5)).foregroundStyle(.secondary).lineLimit(1).truncationMode(.middle)
                         }
                         Spacer()
                         VStack(alignment: .trailing, spacing: 2) {
                             Text("\(r.fileCount) \(r.fileCount == 1 ? "Datei" : "Dateien") · \(ByteFormat.string(r.bytes))")
-                                .font(.inter(12)).monospacedDigit()
-                            Text(r.date.formatted(date: .abbreviated, time: .shortened)).font(.inter(11)).foregroundStyle(.secondary)
+                                .font(.ui(12)).monospacedDigit()
+                            Text(r.date.formatted(date: .abbreviated, time: .shortened)).font(.ui(11)).foregroundStyle(.secondary)
                         }
                     }
                     .padding(.vertical, 3)
@@ -113,21 +118,21 @@ struct TransferJobRow: View {
                 ZStack {
                     ProgressRing(fraction: job.fraction, lineWidth: 3.5, tint: tint)
                     Image(systemName: statusSymbol)
-                        .font(.inter(13, .bold))
+                        .font(.ui(13, .bold))
                         .foregroundStyle(tint)
                 }
                 .frame(width: 38, height: 38)
 
                 VStack(alignment: .leading, spacing: 4) {
                     HStack(spacing: 6) {
-                        Text(job.title).font(.inter(14, .semibold)).lineLimit(1).truncationMode(.middle)
+                        Text(job.title).font(.ui(14, .semibold)).lineLimit(1).truncationMode(.middle)
                         Text(job.direction.verb)
-                            .font(.inter(10.5, .semibold))
+                            .font(.ui(10.5, .semibold))
                             .padding(.horizontal, 6).padding(.vertical, 2)
                             .background(Capsule().fill(Color.primary.opacity(0.07)))
                     }
                     Text("\(job.sourceDescription)  →  \(job.destinationDescription)")
-                        .font(.inter(11.5))
+                        .font(.ui(11.5))
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
                         .truncationMode(.middle)
@@ -143,12 +148,12 @@ struct TransferJobRow: View {
                             if job.bytesPerSecond > 0 { Text(ByteFormat.rate(job.bytesPerSecond)) }
                             if let r = job.remainingSeconds, r > 0 { Text("noch \(DurationFormat.string(r))") }
                         }
-                        .font(.inter(11.5))
+                        .font(.ui(11.5))
                         .foregroundStyle(.secondary)
                         .monospacedDigit()
                     } else {
                         Text(statusLine)
-                            .font(.inter(12))
+                            .font(.ui(12))
                             .foregroundStyle(job.status == .completed ? Palette.success : .secondary)
                     }
                 }
@@ -217,7 +222,7 @@ struct TransferJobRow: View {
 
     private func iconButton(_ symbol: String, help: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            Image(systemName: symbol).font(.inter(11, .bold)).frame(width: 26, height: 26)
+            Image(systemName: symbol).font(.ui(11, .bold)).frame(width: 26, height: 26)
         }
         .buttonStyle(.plain)
         .glassSurface(Circle(), interactive: true)
@@ -239,10 +244,10 @@ struct TransferJobRow: View {
                         Text(reason).foregroundStyle(Palette.danger).lineLimit(1)
                     }
                 }
-                .font(.inter(11.5))
+                .font(.ui(11.5))
             }
             if job.items.count > 400 {
-                Text("… und \(job.items.count - 400) weitere").font(.inter(11)).foregroundStyle(.secondary)
+                Text("… und \(job.items.count - 400) weitere").font(.ui(11)).foregroundStyle(.secondary)
             }
         }
         .padding(.leading, 52)
@@ -280,10 +285,10 @@ struct ConflictSheet: View {
                 IconTile(symbol: "doc.on.doc", tint: Palette.warning, size: 44)
                 VStack(alignment: .leading, spacing: 3) {
                     Text("„\(prompt.fileName)“ ist bereits vorhanden")
-                        .font(.inter(15, .semibold))
+                        .font(.ui(15, .semibold))
                         .lineLimit(2)
                     Text("Im Ziel „\(prompt.destination)“ gibt es bereits ein Objekt mit diesem Namen.")
-                        .font(.inter(12.5))
+                        .font(.ui(12.5))
                         .foregroundStyle(.secondary)
                 }
             }
@@ -294,7 +299,7 @@ struct ConflictSheet: View {
             }
             if prompt.remainingCount > 0 {
                 Toggle("Für alle weiteren Konflikte dieser Übertragung übernehmen (\(prompt.remainingCount) Dateien folgen)", isOn: $applyToAll)
-                    .font(.inter(12.5))
+                    .font(.ui(12.5))
             }
             HStack {
                 Button("Überspringen") { prompt.resolve(.skip, applyToAll) }
@@ -311,12 +316,55 @@ struct ConflictSheet: View {
 
     private func compareCard(title: String, size: UInt64?, date: Date?) -> some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(title).font(.inter(11, .semibold)).foregroundStyle(.secondary).textCase(.uppercase)
-            Text(size.map { ByteFormat.string($0) } ?? "–").font(.inter(13, .medium))
-            Text(date.map { $0.formatted(date: .abbreviated, time: .shortened) } ?? "Datum unbekannt").font(.inter(11.5)).foregroundStyle(.secondary)
+            Text(title).font(.ui(11, .semibold)).foregroundStyle(.secondary).textCase(.uppercase)
+            Text(size.map { ByteFormat.string($0) } ?? "–").font(.ui(13, .medium))
+            Text(date.map { $0.formatted(date: .abbreviated, time: .shortened) } ?? "Datum unbekannt").font(.ui(11.5)).foregroundStyle(.secondary)
         }
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard(cornerRadius: 12)
+    }
+}
+
+/// Gesamtfortschritt groß: Ring, Tempo, Restzeit.
+struct TransferHero: View {
+    let fraction: Double
+    let active: [TransferJob]
+
+    private var speed: Double { active.reduce(0) { $0 + $1.bytesPerSecond } }
+    private var remaining: Double? { active.compactMap(\.remainingSeconds).max() }
+    private var done: UInt64 { active.reduce(0) { $0 + $1.transferredBytes } }
+    private var total: UInt64 { active.reduce(0) { $0 + $1.totalBytes } }
+
+    var body: some View {
+        HStack(spacing: 26) {
+            ZStack {
+                ProgressRing(fraction: fraction, lineWidth: 9, tint: Palette.bridgeGreen)
+                    .shadow(color: Palette.bridgeGreen.opacity(0.45), radius: 10)
+                Text("\(Int(fraction * 100)) %").font(.display(24, .bold)).monospacedDigit()
+            }
+            .frame(width: 104, height: 104)
+            VStack(alignment: .leading, spacing: 6) {
+                Text(active.count == 1 ? "1 Übertragung läuft" : "\(active.count) Übertragungen laufen")
+                    .font(Typo.title2)
+                Text("\(ByteFormat.string(done)) von \(ByteFormat.string(total))")
+                    .font(Typo.body).foregroundStyle(Palette.textSecondary).monospacedDigit()
+                HStack(spacing: 16) {
+                    if speed > 0 {
+                        Label("\(ByteFormat.string(UInt64(speed)))/s", systemImage: "speedometer")
+                    }
+                    if let remaining, remaining.isFinite, remaining > 0 {
+                        Label("noch \(Duration.seconds(remaining).formatted(.units(allowed: [.hours, .minutes, .seconds], width: .abbreviated, maximumUnitCount: 2)))",
+                              systemImage: "clock")
+                    }
+                }
+                .font(.ui(12.5, .semibold))
+                .foregroundStyle(Palette.textPrimary)
+                .monospacedDigit()
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(22)
+        .glassCard(cornerRadius: Radius.panel, elevated: true)
     }
 }

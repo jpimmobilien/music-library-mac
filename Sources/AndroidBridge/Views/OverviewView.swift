@@ -2,242 +2,407 @@ import SwiftUI
 import AppKit
 import ABCore
 
-/// Übersicht: Anleitung ohne Gerät, sonst Gerätekarten mit Speichern.
+/// Übersicht: Bühne mit Telefon und Mac, Speicher, Schnellzugriffe – oder ohne Gerät: Anleitung.
 struct OverviewView: View {
     @EnvironmentObject private var model: AppModel
     @ObservedObject var devices: DeviceManager
+    @StateObject private var showcase = DeviceShowcase()
+    @StateObject private var thumbs = ThumbLoader()
     @Environment(\.animationsEnabled) private var animations
 
+    private var primary: DeviceConnection? {
+        if let selected = model.selectedDevice, selected.state == .connected { return selected }
+        return devices.connectedDevices.first ?? devices.devices.first(where: { $0.state != .disconnected }) ?? devices.devices.first
+    }
+
     var body: some View {
-        PageScaffold(title: "Übersicht", subtitle: subtitle) {
-            if let device = devices.connectedDevices.first {
-                ToolbarCapsule {
-                    ToolbarIconButton(symbol: "folder", help: "Dateimanager öffnen") { model.openFiles(device: device) }
-                    ToolbarIconButton(symbol: "photo.on.rectangle.angled", help: "Fotos & Videos") { model.selection = .media }
-                    ToolbarIconButton(symbol: "doc.on.doc", help: "Duplikate finden") { model.selection = .duplicates }
+        ZStack(alignment: .top) {
+            ScrollView {
+                VStack(alignment: .leading, spacing: Spacing.section) {
+                    if let device = primary {
+                        DeviceHero(device: device, showcase: showcase, thumbs: thumbs)
+                        DeviceSections(device: device, showcase: showcase)
+                        if devices.devices.count > 1 {
+                            OtherDevicesRow(devices: devices.devices.filter { $0.id != device.id })
+                        }
+                    } else {
+                        WelcomeHero()
+                        ConnectSteps()
+                    }
+                    PrivacyNote()
                 }
+                .padding(.horizontal, Spacing.gutter)
+                .padding(.top, 52)
+                .padding(.bottom, 40)
+                .frame(maxWidth: 1240, alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .animation(animations ? .bridgeSpring : nil, value: primary?.state)
             }
-        } content: {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 26) {
-                if devices.devices.isEmpty {
-                    NoDeviceHero()
-                        .transition(.opacity.combined(with: .scale(scale: 0.98)))
-                } else {
-                    ForEach(devices.devices) { device in
-                        DeviceHeroCard(device: device)
-                            .transition(.asymmetric(insertion: .move(edge: .top).combined(with: .opacity),
-                                                    removal: .opacity.combined(with: .scale(scale: 0.96))))
+            WindowDragArea().frame(height: 40)
+        }
+        .onAppear(perform: loadShowcase)
+        .onChange(of: primary?.state) { _ in loadShowcase() }
+        .onChange(of: showcase.photos.map(\.id)) { _ in
+            if let d = primary { thumbs.load(showcase.photos, device: d, limit: 8) }
+        }
+    }
+
+    private func loadShowcase() {
+        guard let device = primary else { showcase.reset(); return }
+        if device.state == .connected {
+            showcase.load(for: device, gallery: model.gallery)
+            if !showcase.photos.isEmpty { thumbs.load(showcase.photos, device: device, limit: 8) }
+        }
+    }
+}
+
+// MARK: - Bühne
+
+/// Großer Kopfbereich mit Gerät, Zustand und Hauptaktionen.
+struct DeviceHero: View {
+    @EnvironmentObject private var model: AppModel
+    @ObservedObject var device: DeviceConnection
+    @ObservedObject var showcase: DeviceShowcase
+    @ObservedObject var thumbs: ThumbLoader
+    @Environment(\.openWindow) private var openWindow
+
+    private var connected: Bool { device.state == .connected }
+
+    var body: some View {
+        ViewThatFits(in: .horizontal) {
+            HStack(alignment: .center, spacing: 36) {
+                text.frame(minWidth: 360, maxWidth: 480, alignment: .leading)
+                stage.frame(width: 540, height: 360)
+            }
+            VStack(alignment: .leading, spacing: 24) {
+                stage.frame(width: 460, height: 310).frame(maxWidth: .infinity)
+                text
+            }
+        }
+        .padding(.vertical, 8)
+    }
+
+    private var stage: some View {
+        DeviceStage(connected: connected,
+                    wallpaper: thumbs.images.first,
+                    macPhotos: Array(thumbs.images.prefix(8)),
+                    stateSymbol: connected ? "cable.connector" : device.state.symbolName,
+                    stateText: connected ? "USB · Dateiübertragung" : device.state.title)
+    }
+
+    private var text: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            StateEyebrow(state: device.state)
+            VStack(alignment: .leading, spacing: 8) {
+                Text(heroTitle)
+                    .font(Typo.hero)
+                    .tracking(-0.8)
+                    .foregroundStyle(Palette.textPrimary)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.7)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text(heroSubtitle)
+                    .font(.ui(15))
+                    .foregroundStyle(Palette.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            if connected {
+                HStack(spacing: 22) {
+                    if let level = device.batteryLevel { BatteryGauge(level: level) }
+                    Label("\(ByteFormat.string(device.totalFree)) frei", systemImage: "internaldrive")
+                        .font(.ui(13, .semibold))
+                    if device.storages.count > 1 {
+                        Label("\(device.storages.count) Speicher", systemImage: "sdcard")
+                            .font(.ui(13, .semibold))
                     }
                 }
-                PrivacyNote()
+                .foregroundStyle(Palette.textPrimary)
+                HStack(spacing: 10) {
+                    Button {
+                        model.select(device: device)
+                        model.gallery.filter = .media
+                        model.selection = .media
+                    } label: {
+                        Label("Fotos & Videos", systemImage: "photo.on.rectangle.angled")
+                    }
+                    .buttonStyle(GlassButtonStyle(prominent: true))
+                    Button {
+                        model.openFiles(device: device)
+                    } label: {
+                        Label("Dateien", systemImage: "folder")
+                    }
+                    .buttonStyle(GlassButtonStyle())
+                    Button {
+                        openWindow(value: device.id)
+                    } label: {
+                        Image(systemName: "macwindow.badge.plus")
+                    }
+                    .buttonStyle(GlassButtonStyle())
+                    .help("In eigenem Fenster öffnen")
+                }
+            } else {
+                stateActions
             }
-            .padding(.horizontal, Spacing.gutter)
-            .padding(.bottom, 28)
-            .frame(maxWidth: 1100, alignment: .leading)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .animation(animations ? .bridgeSpring : nil, value: devices.devices.map(\.id))
-        }
         }
     }
 
-    private var subtitle: String {
-        devices.devices.isEmpty ? "Fotos, Videos und Dateien zwischen Android und Mac – per USB, ganz ohne Cloud."
-            : "\(devices.connectedDevices.count) von \(devices.devices.count) \(devices.devices.count == 1 ? "Gerät" : "Geräten") bereit"
-    }
-}
-
-/// Markenzeichen: das App-Symbol (im Bundle), sonst eine gezeichnete Rückfallform.
-struct AppMark: View {
-    var size: CGFloat = 40
-
-    var body: some View {
-        if Bundle.main.url(forResource: "AppIcon", withExtension: "icns") != nil {
-            Image(nsImage: NSApp.applicationIconImage)
-                .resizable()
-                .interpolation(.high)
-                .frame(width: size * 1.22, height: size * 1.22)
-                .frame(width: size, height: size)
-        } else {
-            drawnMark
+    private var heroTitle: String {
+        switch device.state {
+        case .connected: return device.displayName
+        case .waitingForFileTransfer: return "Dateiübertragung einschalten"
+        case .waitingForAuthorization: return "Telefon entsperren"
+        case .busy: return "Gerät ist belegt"
+        case .interrupted: return "Verbindung unterbrochen"
+        case .disconnected: return "Gerät getrennt"
+        case .detected, .connecting, .readingStorage: return device.displayName
         }
     }
 
-    private var drawnMark: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: size * 0.27, style: .continuous)
-                .fill(LinearGradient(colors: [Palette.bridgeGreen, Palette.bridgeTeal, Palette.bridgeBlue], startPoint: .topLeading, endPoint: .bottomTrailing))
-            RoundedRectangle(cornerRadius: size * 0.27, style: .continuous)
-                .strokeBorder(Color.white.opacity(0.35), lineWidth: 0.8)
-            BridgeArcShape()
-                .stroke(Color.white, style: StrokeStyle(lineWidth: size * 0.07, lineCap: .round))
-                .frame(width: size * 0.62, height: size * 0.4)
-                .offset(y: -size * 0.02)
-            HStack(spacing: size * 0.32) {
-                RoundedRectangle(cornerRadius: size * 0.05).fill(Color.white).frame(width: size * 0.12, height: size * 0.22)
-                RoundedRectangle(cornerRadius: size * 0.04).fill(Color.white).frame(width: size * 0.2, height: size * 0.14)
+    private var heroSubtitle: String {
+        switch device.state {
+        case .connected:
+            var parts = [device.manufacturer, device.model].filter { !$0.isEmpty && $0 != device.displayName }
+            if let since = device.connectedAt { parts.append("verbunden seit \(since.formatted(date: .omitted, time: .shortened))") }
+            return parts.joined(separator: " · ")
+        case .waitingForFileTransfer:
+            return "„\(device.displayName)“ lädt gerade nur. Wählen Sie auf dem Telefon „Dateiübertragung / Android Auto“."
+        case .waitingForAuthorization:
+            return "Android gibt die Speicher von „\(device.displayName)“ erst frei, wenn das Telefon entsperrt ist."
+        case .busy:
+            return device.issue?.message ?? "Ein anderes Programm verwendet die USB-Verbindung."
+        case .interrupted:
+            return device.issue?.message ?? "Das Telefon antwortet nicht mehr."
+        case .disconnected:
+            return "Schließen Sie das Telefon erneut an."
+        case .detected: return "Gerät erkannt – Verbindung wird vorbereitet …"
+        case .connecting: return "Verbindung wird hergestellt …"
+        case .readingStorage: return "Speicher werden gelesen …"
+        }
+    }
+
+    @ViewBuilder
+    private var stateActions: some View {
+        switch device.state {
+        case .busy:
+            HStack(spacing: 10) {
+                Button("Freigeben und verbinden") { Task { await device.releasePhotoServiceAndRetry() } }
+                    .buttonStyle(GlassButtonStyle(prominent: true))
+                Button("Erneut versuchen") { device.reconnect() }
+                    .buttonStyle(GlassButtonStyle())
             }
-            .offset(y: size * 0.19)
+        case .interrupted, .waitingForAuthorization:
+            Button("Erneut verbinden") { device.reconnect() }
+                .buttonStyle(GlassButtonStyle(prominent: true))
+        case .detected:
+            if model.settings.autoConnect == false, case .fileTransfer? = device.record?.mode {
+                Button("Verbinden") { device.connect() }.buttonStyle(GlassButtonStyle(prominent: true))
+            } else {
+                ProgressView().controlSize(.small)
+            }
+        case .connecting, .readingStorage:
+            ProgressView().controlSize(.small)
+        default:
+            EmptyView()
         }
-        .frame(width: size, height: size)
-        .shadow(color: Palette.bridgeTeal.opacity(0.35), radius: 8, y: 3)
     }
 }
 
-struct BridgeArcShape: Shape {
-    func path(in rect: CGRect) -> Path {
-        var p = Path()
-        p.move(to: CGPoint(x: rect.minX, y: rect.maxY))
-        p.addCurve(to: CGPoint(x: rect.maxX, y: rect.maxY),
-                   control1: CGPoint(x: rect.minX + rect.width * 0.2, y: rect.minY - rect.height * 0.25),
-                   control2: CGPoint(x: rect.maxX - rect.width * 0.2, y: rect.minY - rect.height * 0.25))
-        return p
-    }
-}
-
-/// Ohne Gerät: Anleitung zum Anschließen.
-struct NoDeviceHero: View {
-    @State private var cableOffset: CGFloat = 14
+/// Zustand als leuchtende Zeile über dem Titel.
+struct StateEyebrow: View {
+    let state: ConnectionState
+    @State private var pulse = false
     @Environment(\.animationsEnabled) private var animations
 
+    private var color: Color {
+        switch state {
+        case .connected: return Palette.success
+        case .interrupted: return Palette.danger
+        case .disconnected: return Palette.textTertiary
+        case .detected, .connecting, .readingStorage: return Palette.bridgeBlue
+        default: return Palette.warning
+        }
+    }
+
     var body: some View {
-        HStack(alignment: .center, spacing: 40) {
+        HStack(spacing: 8) {
             ZStack {
-                PulseRings(active: true)
-                    .frame(width: 210, height: 210)
-                PhoneShapeView(width: 88) {
-                    ZStack {
-                        LinearGradient(colors: [Palette.bridgeGreen.opacity(0.5), Palette.bridgeBlue.opacity(0.5)], startPoint: .top, endPoint: .bottom)
-                        Image(systemName: "cable.connector")
-                            .font(.inter(30, .light))
-                            .foregroundStyle(.white.opacity(0.9))
-                    }
-                }
-                Capsule()
-                    .fill(Color.secondary.opacity(0.6))
-                    .frame(width: 10, height: 46)
-                    .offset(y: 118 + cableOffset)
+                Circle().fill(color.opacity(0.35)).frame(width: 14, height: 14).scaleEffect(pulse ? 1.6 : 1).opacity(pulse ? 0 : 1)
+                Circle().fill(color).frame(width: 8, height: 8).shadow(color: color, radius: 4)
             }
-            .frame(width: 230, height: 270)
-            .onAppear {
-                guard animations else { cableOffset = 0; return }
-                withAnimation(.easeInOut(duration: 1.4).repeatForever(autoreverses: true)) { cableOffset = 0 }
-            }
-
-            VStack(alignment: .leading, spacing: 18) {
-                Text("Android-Telefon anschließen")
-                    .font(.display(22, .semibold))
-                StepRow(number: 1, title: "Mit USB-Kabel verbinden", detail: "Verwenden Sie ein Kabel, das Daten überträgt – manche Ladekabel können nur laden.")
-                StepRow(number: 2, title: "Telefon entsperren", detail: "Android gibt den Speicher erst frei, wenn das Telefon entsperrt ist.")
-                StepRow(number: 3, title: "„Dateiübertragung“ wählen", detail: "Tippen Sie auf die Mitteilung „USB-Verbindung“ und wählen Sie „Dateiübertragung / Android Auto“.")
-                Text("Android Bridge erkennt das Gerät automatisch – unabhängig vom Hersteller.")
-                    .font(.inter(12))
-                    .foregroundStyle(.secondary)
-            }
-            Spacer(minLength: 0)
+            Text(state == .connected ? "Verbunden über USB" : (state == .disconnected ? "Kein Telefon verbunden" : state.title))
+                .font(Typo.eyebrow)
+                .foregroundStyle(state == .disconnected ? Palette.textSecondary : color)
         }
-        .padding(30)
-        .glassCard(cornerRadius: 26, elevated: true)
+        .onAppear {
+            guard animations, !SnapshotMode.isActive, state != .disconnected else { return }
+            withAnimation(.easeOut(duration: 1.6).repeatForever(autoreverses: false)) { pulse = true }
+        }
     }
 }
 
-struct StepRow: View {
+/// Telefon, Lichtverbindung, Notebook.
+struct DeviceStage: View {
+    var connected: Bool
+    var wallpaper: NSImage?
+    var macPhotos: [NSImage] = []
+    var stateSymbol: String?
+    var stateText: String?
+
+    var body: some View {
+        GeometryReader { geo in
+            let w = geo.size.width, h = geo.size.height
+            let laptopW = w * 0.62
+            let phoneW = min(w * 0.22, h * 0.36)
+            ZStack {
+                // Bodenlicht
+                Ellipse()
+                    .fill(RadialGradient(colors: [Palette.bridgeGreen.opacity(connected ? 0.35 : 0.08), .clear],
+                                         center: .center, startRadius: 0, endRadius: w * 0.45))
+                    .frame(width: w * 0.95, height: h * 0.32)
+                    .offset(y: h * 0.38)
+                    .blur(radius: 10)
+                LaptopRender(width: laptopW) {
+                    LaptopScreenContent(photos: connected ? macPhotos : [])
+                        .opacity(connected ? 1 : 0.45)
+                }
+                .offset(x: w * 0.17, y: -h * 0.02)
+                ConnectionBeam(active: connected)
+                    .frame(width: w * 0.42, height: h * 0.34)
+                    .offset(x: -w * 0.02, y: h * 0.22)
+                PhoneRender(width: phoneW, glowAmount: connected ? 0.7 : 0.15) {
+                    PhoneScreenContent(wallpaper: connected ? wallpaper : nil, stateSymbol: stateSymbol, stateText: stateText,
+                                       dimmed: !connected)
+                }
+                .rotation3DEffect(.degrees(-8), axis: (x: 0, y: 1, z: 0), perspective: 0.6)
+                .offset(x: -w * 0.3, y: h * 0.04)
+            }
+            .frame(width: w, height: h)
+        }
+    }
+}
+
+/// Ohne Gerät: großer Einstieg.
+struct WelcomeHero: View {
+    var body: some View {
+        ViewThatFits(in: .horizontal) {
+            HStack(alignment: .center, spacing: 36) {
+                text.frame(minWidth: 360, maxWidth: 480, alignment: .leading)
+                DeviceStage(connected: false, stateSymbol: "cable.connector", stateText: "Nicht verbunden").frame(width: 540, height: 360)
+            }
+            VStack(alignment: .leading, spacing: 24) {
+                DeviceStage(connected: false, stateSymbol: "cable.connector", stateText: "Nicht verbunden")
+                    .frame(width: 460, height: 310).frame(maxWidth: .infinity)
+                text
+            }
+        }
+        .padding(.vertical, 8)
+    }
+
+    private var text: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            StateEyebrow(state: .disconnected)
+            Text("Ihr Android.\nDirekt auf Ihrem Mac.")
+                .font(Typo.hero)
+                .tracking(-0.8)
+                .foregroundStyle(Palette.textPrimary)
+                .fixedSize(horizontal: false, vertical: true)
+            Text("Fotos, Videos und Dateien per USB – ohne Cloud, ohne Konto, mit voller Geschwindigkeit.")
+                .font(.ui(15))
+                .foregroundStyle(Palette.textSecondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+}
+
+/// Drei Schritte zum Verbinden – mit kleinen Illustrationen.
+struct ConnectSteps: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: Spacing.l) {
+            SectionHeading(title: "So verbinden Sie Ihr Telefon", subtitle: "Android Bridge erkennt das Gerät automatisch – unabhängig vom Hersteller.")
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 230), spacing: 14)], spacing: 14) {
+                StepCard(number: 1, symbol: "cable.connector", tint: Palette.bridgeBlue, title: "Mit USB verbinden",
+                         detail: "Am besten mit einem Kabel, das Daten überträgt – manche Ladekabel können nur laden.")
+                StepCard(number: 2, symbol: "lock.open", tint: Palette.violet, title: "Telefon entsperren",
+                         detail: "Android gibt den Speicher erst frei, wenn das Telefon entsperrt ist.")
+                StepCard(number: 3, symbol: "arrow.left.arrow.right", tint: Palette.bridgeGreen, title: "„Dateiübertragung“ wählen",
+                         detail: "In der Mitteilung „USB-Verbindung“ auf „Dateiübertragung / Android Auto“ tippen.")
+            }
+        }
+    }
+}
+
+struct StepCard: View {
     let number: Int
+    let symbol: String
+    let tint: Color
     let title: String
     let detail: String
 
     var body: some View {
-        HStack(alignment: .top, spacing: 12) {
-            Text("\(number)")
-                .font(.display(13, .bold))
-                .foregroundStyle(.white)
-                .frame(width: 24, height: 24)
-                .background(Circle().fill(LinearGradient(colors: [Palette.bridgeGreen, Palette.bridgeTeal], startPoint: .top, endPoint: .bottom)))
-            VStack(alignment: .leading, spacing: 2) {
-                Text(title).font(.inter(14, .semibold))
-                Text(detail).font(.inter(12.5)).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+        VStack(alignment: .leading, spacing: 14) {
+            ZStack(alignment: .topLeading) {
+                RoundedRectangle(cornerRadius: Radius.tile, style: .continuous)
+                    .fill(LinearGradient(colors: [tint.opacity(0.35), tint.opacity(0.08)], startPoint: .topLeading, endPoint: .bottomTrailing))
+                Image(systemName: symbol)
+                    .font(.ui(40, .light))
+                    .foregroundStyle(tint)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                Text("\(number)")
+                    .font(.ui(12, .bold))
+                    .foregroundStyle(Palette.onAccent)
+                    .frame(width: 22, height: 22)
+                    .background(Circle().fill(tint))
+                    .padding(10)
             }
+            .frame(height: 110)
+            Text(title).font(.ui(15, .semibold)).foregroundStyle(Palette.textPrimary)
+            Text(detail).font(Typo.callout).foregroundStyle(Palette.textSecondary).fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .glassCard(cornerRadius: Radius.card)
+    }
+}
+
+/// Abschnittsüberschrift (Titel groß, Untertitel dezent).
+struct SectionHeading<Trailing: View>: View {
+    let title: String
+    var subtitle: String?
+    @ViewBuilder var trailing: () -> Trailing
+
+    var body: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 12) {
+            VStack(alignment: .leading, spacing: 3) {
+                Text(title).font(Typo.title).tracking(-0.3).foregroundStyle(Palette.textPrimary)
+                if let subtitle {
+                    Text(subtitle).font(Typo.callout).foregroundStyle(Palette.textSecondary).fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            Spacer(minLength: 8)
+            trailing()
         }
     }
 }
 
-/// Karte eines Geräts in der Übersicht.
-struct DeviceHeroCard: View {
+extension SectionHeading where Trailing == EmptyView {
+    init(title: String, subtitle: String? = nil) {
+        self.init(title: title, subtitle: subtitle, trailing: { EmptyView() })
+    }
+}
+
+// MARK: - Abschnitte bei verbundenem Gerät
+
+struct DeviceSections: View {
     @EnvironmentObject private var model: AppModel
     @ObservedObject var device: DeviceConnection
-    @Environment(\.openWindow) private var openWindow
+    @ObservedObject var showcase: DeviceShowcase
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 18) {
-            HStack(alignment: .center, spacing: 18) {
-                ZStack {
-                    PulseRings(active: device.state.isWorking || device.state == .waitingForAuthorization)
-                        .frame(width: 92, height: 92)
-                    PhoneShapeView(width: 40) {
-                        ZStack {
-                            LinearGradient(colors: [Palette.bridgeGreen.opacity(0.6), Palette.bridgeBlue.opacity(0.6)], startPoint: .top, endPoint: .bottom)
-                            Image(systemName: device.state == .connected ? "checkmark" : device.state.symbolName)
-                                .font(.inter(14, .bold))
-                                .foregroundStyle(.white)
-                        }
-                    }
-                }
-                .frame(width: 96, height: 96)
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(device.displayName)
-                        .font(.display(20, .semibold))
-                    HStack(spacing: 8) {
-                        StatusPill(state: device.state)
-                        if device.state == .connected {
-                            Text("\(ByteFormat.string(device.totalFree)) frei")
-                                .font(.inter(12))
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                }
-                Spacer()
-                if device.state == .connected {
-                    GlassGroup {
-                        HStack(spacing: 8) {
-                            Button {
-                                model.openFiles(device: device)
-                            } label: {
-                                Label("Dateien", systemImage: "folder")
-                            }
-                            .buttonStyle(GlassButtonStyle(prominent: true))
-                            Button {
-                                model.select(device: device)
-                                model.selection = .media
-                            } label: {
-                                Label("Fotos & Videos", systemImage: "photo.on.rectangle")
-                            }
-                            .buttonStyle(GlassButtonStyle())
-                            Button {
-                                openWindow(value: device.id)
-                            } label: {
-                                Image(systemName: "macwindow.badge.plus")
-                            }
-                            .buttonStyle(GlassButtonStyle())
-                            .help("In eigenem Fenster öffnen")
-                        }
-                    }
-                }
-            }
-
-            stateContent
-        }
-        .padding(24)
-        .glassCard(cornerRadius: 24, elevated: true)
-    }
-
-    @ViewBuilder
-    private var stateContent: some View {
         switch device.state {
         case .connected:
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 260), spacing: 14)], spacing: 14) {
-                ForEach(device.storages) { storage in
-                    StorageCard(storage: storage) { model.openFiles(device: device, storageID: storage.id) }
-                }
+            VStack(alignment: .leading, spacing: Spacing.section) {
+                StorageOverview(device: device)
+                QuickActions(device: device, showcase: showcase)
             }
         case .waitingForFileTransfer:
             ConnectionGuideView()
@@ -255,18 +420,277 @@ struct DeviceHeroCard: View {
             if let issue = device.issue {
                 IssueBanner(issue: issue, primaryTitle: "Erneut verbinden", primaryAction: { device.reconnect() })
             }
-        case .detected:
-            if model.settings.autoConnect == false, case .fileTransfer? = device.record?.mode {
-                Button("Verbinden") { device.connect() }.buttonStyle(GlassButtonStyle(prominent: true))
-            } else {
-                Text("Gerät wird erkannt …").font(.inter(13)).foregroundStyle(.secondary)
+        default:
+            EmptyView()
+        }
+    }
+}
+
+/// Speicher als Ringe.
+struct StorageOverview: View {
+    @EnvironmentObject private var model: AppModel
+    @ObservedObject var device: DeviceConnection
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: Spacing.l) {
+            SectionHeading(title: "Speicher", subtitle: "\(ByteFormat.string(device.totalFree)) frei auf \(device.storages.count == 1 ? "1 Speicher" : "\(device.storages.count) Speichern")") {
+                Button("Speicher verwalten") { model.selection = .device(device.id) }
+                    .buttonStyle(GlassButtonStyle(compact: true))
             }
-        case .connecting, .readingStorage:
-            Text(device.state == .connecting ? "Verbindung wird hergestellt …" : "Speicher werden gelesen …")
-                .font(.inter(13))
-                .foregroundStyle(.secondary)
-        case .disconnected:
-            Text("Das Gerät wurde getrennt.").font(.inter(13)).foregroundStyle(.secondary)
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 320), spacing: 14)], spacing: 14) {
+                ForEach(device.storages) { storage in
+                    StorageTile(storage: storage) { model.openFiles(device: device, storageID: storage.id) }
+                }
+            }
+        }
+    }
+}
+
+struct StorageTile: View {
+    let storage: DeviceStorage
+    let open: () -> Void
+    @State private var hovering = false
+
+    var body: some View {
+        Button(action: open) {
+            HStack(spacing: 22) {
+                StorageRing(storage: storage, size: 112)
+                VStack(alignment: .leading, spacing: 6) {
+                    HStack(spacing: 6) {
+                        Image(systemName: storage.symbolName)
+                        Text(storage.displayName).lineLimit(2).fixedSize(horizontal: false, vertical: true)
+                    }
+                    .font(.ui(15, .semibold))
+                    .foregroundStyle(Palette.textPrimary)
+                    Text("\(ByteFormat.string(storage.free)) frei")
+                        .font(.display(22, .bold))
+                        .foregroundStyle(Palette.textPrimary)
+                        .monospacedDigit()
+                    Text("von \(ByteFormat.string(storage.capacity)) · \(ByteFormat.string(storage.used)) belegt")
+                        .font(Typo.callout)
+                        .foregroundStyle(Palette.textSecondary)
+                        .monospacedDigit()
+                        .fixedSize(horizontal: false, vertical: true)
+                    if storage.isReadOnly {
+                        TagLabel(text: "Nur lesen", symbol: "lock", tint: Palette.warning)
+                    }
+                }
+                Spacer(minLength: 0)
+                Image(systemName: "chevron.right")
+                    .font(.ui(13, .semibold))
+                    .foregroundStyle(Palette.textTertiary)
+                    .opacity(hovering ? 1 : 0.4)
+            }
+            .padding(20)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .glassCard(cornerRadius: Radius.card, elevated: hovering)
+        .scaleEffect(hovering ? 1.01 : 1)
+        .animation(.bridgeQuick, value: hovering)
+        .onHover { hovering = $0 }
+        .help("\(storage.displayName) im Dateimanager öffnen")
+    }
+}
+
+/// Schnellzugriffe mit echten Vorschaubildern.
+struct QuickActions: View {
+    @EnvironmentObject private var model: AppModel
+    @ObservedObject var device: DeviceConnection
+    @ObservedObject var showcase: DeviceShowcase
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: Spacing.l) {
+            SectionHeading(title: "Was möchten Sie tun?")
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 250), spacing: 16)], spacing: 16) {
+                FeatureTile(title: "Fotos importieren", subtitle: "Auswählen und auf den Mac übertragen", symbol: "photo.on.rectangle.angled",
+                            tint: FileKind.photo.tint) {
+                    if showcase.photos.isEmpty {
+                        tileArt(symbol: "photo.stack", tint: FileKind.photo.tint)
+                    } else {
+                        ThumbnailMosaic(items: showcase.photos, device: device, columns: 3, rows: 2)
+                    }
+                } action: { openGallery(.photos) }
+                FeatureTile(title: "Videos importieren", subtitle: "Große Dateien bequem übertragen", symbol: "film",
+                            tint: FileKind.video.tint) {
+                    if let video = showcase.videos.first {
+                        ZStack {
+                            DeviceThumb(entry: video.entry, device: device, size: 260, corner: 0)
+                            Image(systemName: "play.circle.fill")
+                                .font(.ui(38))
+                                .foregroundStyle(.white, Color.black.opacity(0.35))
+                                .shadow(radius: 6)
+                        }
+                    } else {
+                        tileArt(symbol: "film.stack", tint: FileKind.video.tint)
+                    }
+                } action: { openGallery(.videos) }
+                FeatureTile(title: "Dateien durchsuchen", subtitle: "Alle Ordner und Speicher des Telefons", symbol: "folder",
+                            tint: FileKind.folder.tint) {
+                    tileArt(symbol: "folder.fill", tint: FileKind.folder.tint)
+                } action: {
+                    model.files.layout = .single
+                    model.openFiles(device: device)
+                }
+                FeatureTile(title: "Dateien übertragen", subtitle: "Mac und Telefon nebeneinander – ziehen und ablegen", symbol: "arrow.left.arrow.right",
+                            tint: Palette.bridgeTeal) {
+                    tileArt(symbol: "arrow.left.arrow.right.square.fill", tint: Palette.bridgeTeal)
+                } action: {
+                    model.files.layout = .dual
+                    model.openFiles(device: device)
+                }
+                FeatureTile(title: "Duplikate finden", subtitle: "Exakte Kopien per Inhaltsvergleich", symbol: "doc.on.doc",
+                            tint: Palette.violet) {
+                    tileArt(symbol: "square.on.square.fill", tint: Palette.violet)
+                } action: {
+                    model.select(device: device)
+                    model.selection = .duplicates
+                }
+                FeatureTile(title: "Speicherplatz verwalten", subtitle: "Belegung nach Art und größte Dateien", symbol: "chart.pie",
+                            tint: Palette.bridgeGreen) {
+                    tileArt(symbol: "chart.pie.fill", tint: Palette.bridgeGreen)
+                } action: { model.selection = .device(device.id) }
+            }
+        }
+    }
+
+    private func openGallery(_ filter: MediaFilter) {
+        model.select(device: device)
+        model.gallery.filter = filter
+        model.selection = .media
+    }
+
+    private func tileArt(symbol: String, tint: Color) -> some View {
+        ZStack {
+            LinearGradient(colors: [tint.opacity(0.42), tint.opacity(0.10)], startPoint: .topLeading, endPoint: .bottomTrailing)
+            RadialGradient(colors: [Color.white.opacity(0.35), .clear], center: UnitPoint(x: 0.2, y: 0.1), startRadius: 0, endRadius: 140)
+            Image(systemName: symbol)
+                .font(.ui(46, .regular))
+                .foregroundStyle(tint)
+                .shadow(color: tint.opacity(0.6), radius: 14)
+        }
+    }
+}
+
+/// Große Kachel mit Bildfläche oben.
+struct FeatureTile<Preview: View>: View {
+    let title: String
+    let subtitle: String
+    let symbol: String
+    let tint: Color
+    @ViewBuilder var preview: () -> Preview
+    let action: () -> Void
+    @State private var hovering = false
+
+    var body: some View {
+        Button(action: action) {
+            VStack(alignment: .leading, spacing: 0) {
+                preview()
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 132)
+                    .scaleEffect(hovering ? 1.04 : 1)
+                    .clipped()
+                    .clipShape(TopRoundedRectangle(radius: Radius.card - 4))
+                    .padding([.top, .horizontal], 6)
+                HStack(alignment: .center, spacing: 10) {
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(title).font(.ui(15, .semibold)).foregroundStyle(Palette.textPrimary).lineLimit(1)
+                        Text(subtitle).font(Typo.caption).foregroundStyle(Palette.textSecondary).lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    Spacer(minLength: 4)
+                    Image(systemName: "arrow.right")
+                        .font(.ui(12, .bold))
+                        .foregroundStyle(hovering ? Palette.onAccent : tint)
+                        .frame(width: 28, height: 28)
+                        .background(Circle().fill(hovering ? tint : tint.opacity(0.14)))
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 14)
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .glassCard(cornerRadius: Radius.card, elevated: hovering)
+        .offset(y: hovering ? -2 : 0)
+        .animation(.bridgeQuick, value: hovering)
+        .onHover { hovering = $0 }
+        .accessibilityLabel(title)
+        .accessibilityHint(subtitle)
+    }
+}
+
+/// Oben gerundetes Rechteck (UnevenRoundedRectangle gibt es erst ab macOS 14).
+struct TopRoundedRectangle: Shape {
+    var radius: CGFloat
+
+    func path(in rect: CGRect) -> Path {
+        let r = min(radius, rect.height / 2, rect.width / 2)
+        var p = Path()
+        p.move(to: CGPoint(x: rect.minX, y: rect.maxY))
+        p.addLine(to: CGPoint(x: rect.minX, y: rect.minY + r))
+        p.addQuadCurve(to: CGPoint(x: rect.minX + r, y: rect.minY), control: CGPoint(x: rect.minX, y: rect.minY))
+        p.addLine(to: CGPoint(x: rect.maxX - r, y: rect.minY))
+        p.addQuadCurve(to: CGPoint(x: rect.maxX, y: rect.minY + r), control: CGPoint(x: rect.maxX, y: rect.minY))
+        p.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+        p.closeSubpath()
+        return p
+    }
+}
+
+/// Weitere angeschlossene Geräte.
+struct OtherDevicesRow: View {
+    @EnvironmentObject private var model: AppModel
+    let devices: [DeviceConnection]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: Spacing.m) {
+            SectionHeading(title: "Weitere Geräte")
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 12) {
+                    ForEach(devices) { d in
+                        Button {
+                            model.select(device: d)
+                            model.selection = .device(d.id)
+                        } label: {
+                            HStack(spacing: 10) {
+                                Image(systemName: "smartphone").font(.ui(18))
+                                VStack(alignment: .leading, spacing: 1) {
+                                    Text(d.displayName).font(.ui(13, .semibold)).lineLimit(1)
+                                    Text(d.state.title).font(Typo.caption).foregroundStyle(Palette.textSecondary).lineLimit(1)
+                                }
+                            }
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 12)
+                        }
+                        .buttonStyle(.plain)
+                        .glassCard(cornerRadius: Radius.tile)
+                    }
+                }
+                .padding(.vertical, 6)
+            }
+        }
+    }
+}
+
+// MARK: - Bestehende Bausteine
+
+/// Markenzeichen: das App-Symbol (im Bundle), sonst eine gezeichnete Rückfallform.
+struct AppMark: View {
+    var size: CGFloat = 40
+
+    var body: some View {
+        if Bundle.main.url(forResource: "AppIcon", withExtension: "icns") != nil {
+            Image(nsImage: NSApp.applicationIconImage)
+                .resizable()
+                .interpolation(.high)
+                .frame(width: size * 1.22, height: size * 1.22)
+                .frame(width: size, height: size)
+        } else {
+            RoundedRectangle(cornerRadius: size * 0.27, style: .continuous)
+                .fill(LinearGradient(colors: [Color(hex: 0x10261F), Color(hex: 0x050708)], startPoint: .top, endPoint: .bottom))
+                .overlay(Image(systemName: "smartphone").font(.ui(size * 0.45, .semibold)).foregroundStyle(Palette.bridgeGreen))
+                .frame(width: size, height: size)
         }
     }
 }
@@ -279,58 +703,60 @@ struct ConnectionGuideView: View {
     private let options = ["Dateiübertragung / Android Auto", "USB-Tethering", "MIDI", "PTP", "Kein Datentransfer"]
 
     var body: some View {
-        HStack(alignment: .center, spacing: 30) {
-            PhoneShapeView(width: 120) {
+        HStack(alignment: .center, spacing: 34) {
+            PhoneRender(width: 140, glowAmount: 0.4) {
                 ZStack(alignment: .top) {
-                    Color(nsColor: .windowBackgroundColor)
-                    VStack(alignment: .leading, spacing: 6) {
+                    Color(hex: 0x16191D)
+                    VStack(alignment: .leading, spacing: 7) {
                         Text("USB-Einstellungen")
-                            .font(.inter(10, .semibold))
-                            .padding(.top, 22)
+                            .font(.ui(11.5, .semibold))
+                            .foregroundStyle(.white)
+                            .padding(.top, 30)
                         Text("USB verwenden für")
-                            .font(.inter(7.5))
-                            .foregroundStyle(.secondary)
+                            .font(.ui(8.5))
+                            .foregroundStyle(.white.opacity(0.6))
                         ForEach(Array(options.enumerated()), id: \.offset) { index, option in
-                            HStack(spacing: 5) {
+                            HStack(spacing: 6) {
                                 ZStack {
-                                    Circle().strokeBorder(index == 0 ? Palette.bridgeGreen : Color.secondary, lineWidth: 1.2)
+                                    Circle().strokeBorder(index == 0 ? Palette.bridgeGreen : Color.white.opacity(0.5), lineWidth: 1.2)
                                     if index == 0 && highlight { Circle().fill(Palette.bridgeGreen).padding(2.5) }
                                 }
-                                .frame(width: 10, height: 10)
+                                .frame(width: 11, height: 11)
                                 Text(option)
-                                    .font(.inter(7.2, index == 0 ? .semibold : .regular))
+                                    .font(.ui(8.2, index == 0 ? .semibold : .regular))
+                                    .foregroundStyle(.white)
                                     .lineLimit(2)
                                     .fixedSize(horizontal: false, vertical: true)
                             }
-                            .padding(.vertical, 3)
-                            .padding(.horizontal, 4)
-                            .background(RoundedRectangle(cornerRadius: 5).fill(index == 0 && highlight ? Palette.bridgeGreen.opacity(0.15) : .clear))
+                            .padding(.vertical, 4)
+                            .padding(.horizontal, 5)
+                            .background(RoundedRectangle(cornerRadius: 6).fill(index == 0 && highlight ? Palette.bridgeGreen.opacity(0.22) : .clear))
                         }
                     }
-                    .padding(.horizontal, 9)
+                    .padding(.horizontal, 11)
                 }
             }
-            VStack(alignment: .leading, spacing: 10) {
-                Label("Dateiübertragung einschalten", systemImage: "hand.tap")
-                    .font(.inter(16, .semibold))
+            VStack(alignment: .leading, spacing: 12) {
+                Label("So geht’s", systemImage: "hand.tap")
+                    .font(Typo.title2)
                 Text("Entsperren Sie Ihr Android-Gerät und wählen Sie in den USB-Verbindungseinstellungen „Dateiübertragung / Android Auto“.")
-                    .font(.inter(13))
+                    .font(.ui(14))
                     .fixedSize(horizontal: false, vertical: true)
                 Text("Die Einstellung finden Sie in der Mitteilung „Gerät wird über USB aufgeladen“ – oder unter Einstellungen → Verbundene Geräte → USB.")
-                    .font(.inter(12))
-                    .foregroundStyle(.secondary)
+                    .font(Typo.callout)
+                    .foregroundStyle(Palette.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
                 Text("Erscheint nichts? Dann überträgt das Kabel möglicherweise keine Daten – probieren Sie ein anderes.")
-                    .font(.inter(12))
-                    .foregroundStyle(.secondary)
+                    .font(Typo.callout)
+                    .foregroundStyle(Palette.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
             Spacer(minLength: 0)
         }
-        .padding(18)
-        .glassCard(cornerRadius: 18, strong: true)
+        .padding(28)
+        .glassCard(cornerRadius: Radius.panel)
         .onAppear {
-            if animations {
+            if animations && !SnapshotMode.isActive {
                 withAnimation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true).delay(0.3)) { highlight = true }
             } else {
                 highlight = true
@@ -346,21 +772,28 @@ struct PrivacyNote: View {
             Image(systemName: "lock.shield")
                 .foregroundStyle(Palette.bridgeGreen)
             Text("Alles bleibt lokal: Übertragungen laufen direkt per USB zwischen Telefon und Mac. Kein Konto, keine Cloud, keine Telemetrie.")
-                .font(.inter(12))
-                .foregroundStyle(.secondary)
+                .font(Typo.caption)
+                .foregroundStyle(Palette.textSecondary)
+                .fixedSize(horizontal: false, vertical: true)
         }
         .padding(.horizontal, 4)
     }
 }
 
-/// Detailseite eines Geräts.
+// MARK: - Speicher & Gerät
+
+/// „Speicherplatz verwalten“: Belegung je Speicher, Aufschlüsselung nach Art, größte Dateien, Gerätedaten.
 struct DeviceDetailView: View {
     @EnvironmentObject private var model: AppModel
     @ObservedObject var device: DeviceConnection
+    @ObservedObject var gallery: GalleryModel
+    @StateObject private var emptyShowcase = DeviceShowcase()
     @State private var customName = ""
 
+    private var analysed: Bool { gallery.device?.id == device.id && !gallery.items.isEmpty && !gallery.isScanning }
+
     var body: some View {
-        PageScaffold(title: device.displayName, subtitle: "\(device.manufacturer) · \(device.state.title)") {
+        PageScaffold(title: device.displayName, subtitle: "Speicher & Gerät · \(device.state.title)") {
             if device.state == .connected {
                 ToolbarCapsule {
                     ToolbarIconButton(symbol: "folder", help: "Im Dateimanager öffnen") { model.openFiles(device: device) }
@@ -368,55 +801,110 @@ struct DeviceDetailView: View {
                         model.select(device: device)
                         model.selection = .duplicates
                     }
+                    ToolbarIconButton(symbol: "arrow.clockwise", help: "Speicher neu lesen") {
+                        Task { await device.refreshStorages() }
+                    }
                 }
             }
         } content: {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 22) {
-                DeviceHeroCard(device: device)
-                VStack(alignment: .leading, spacing: 12) {
-                    SectionTitle(title: "Gerät")
-                    Grid(alignment: .leading, horizontalSpacing: 18, verticalSpacing: 8) {
-                        infoRow("Hersteller", device.manufacturer)
-                        infoRow("Modell", device.model)
-                        if let v = device.info?.deviceVersion, !v.isEmpty { infoRow("Version", v) }
-                        if let r = device.record {
-                            infoRow("USB-Kennung", r.idString)
-                            if let s = r.speedDescription { infoRow("Verbindung", s) }
+            ScrollView {
+                VStack(alignment: .leading, spacing: Spacing.section) {
+                    if device.state == .connected {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 320), spacing: 14)], spacing: 14) {
+                            ForEach(device.storages) { storage in
+                                StorageTile(storage: storage) { model.openFiles(device: device, storageID: storage.id) }
+                            }
                         }
-                        if let info = device.info {
-                            infoRow("Protokoll", info.isMTP ? "MTP (Media Transfer Protocol)" : "PTP (nur Fotos und Videos)")
-                        }
-                        infoRow("Seriennummer", maskedSerial)
+                        analysis
+                    } else {
+                        DeviceSections(device: device, showcase: emptyShowcase)
                     }
-                    .font(.inter(13))
+                    deviceInfo
                 }
-                .padding(20)
-                .glassCard(cornerRadius: 20)
-
-                VStack(alignment: .leading, spacing: 12) {
-                    SectionTitle(title: "Für dieses Gerät")
-                    HStack {
-                        Text("Anzeigename")
-                        TextField(device.model, text: $customName, onCommit: saveName)
-                            .textFieldStyle(.roundedBorder)
-                            .frame(maxWidth: 280)
-                        Button("Übernehmen", action: saveName)
-                    }
-                    Text("Ordnerposition und Speicherwahl merkt sich Android Bridge je Gerät (abschaltbar in den Einstellungen).")
-                        .font(.inter(12))
-                        .foregroundStyle(.secondary)
-                }
-                .padding(20)
-                .glassCard(cornerRadius: 20)
+                .padding(.horizontal, Spacing.gutter)
+                .padding(.bottom, 40)
+                .frame(maxWidth: 1180, alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding(.horizontal, Spacing.gutter)
-            .padding(.bottom, 30)
-            .frame(maxWidth: 1100, alignment: .leading)
-            .frame(maxWidth: .infinity, alignment: .leading)
-        }
         }
         .onAppear { customName = model.settings.preferences(forSerial: device.serial).customName ?? "" }
+    }
+
+    @ViewBuilder
+    private var analysis: some View {
+        VStack(alignment: .leading, spacing: Spacing.l) {
+            SectionHeading(title: "Belegung nach Art",
+                           subtitle: analysed ? "Aus der letzten Suche über alle Ordner" : "Android Bridge liest dafür nur die Ordnerlisten – keine Dateiinhalte.") {
+                if gallery.isScanning && gallery.device?.id == device.id {
+                    HStack(spacing: 8) {
+                        ProgressView().controlSize(.small)
+                        Text("\(gallery.scannedFolders) Ordner …").font(Typo.caption).foregroundStyle(Palette.textSecondary).monospacedDigit()
+                    }
+                } else {
+                    Button(analysed ? "Neu analysieren" : "Speicher analysieren") {
+                        model.select(device: device)
+                        if gallery.device?.id != device.id { gallery.attach(device) }
+                        gallery.scan()
+                    }
+                    .buttonStyle(GlassButtonStyle(prominent: !analysed, compact: true))
+                }
+            }
+            if analysed {
+                let breakdown = StorageBreakdown(items: gallery.items)
+                BreakdownBar(breakdown: breakdown)
+                VStack(alignment: .leading, spacing: Spacing.m) {
+                    Text("Größte Dateien").font(Typo.title2)
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 170), spacing: 12)], spacing: 12) {
+                        ForEach(breakdown.largest) { item in
+                            LargeFileCard(item: item, device: device)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private var deviceInfo: some View {
+        VStack(alignment: .leading, spacing: Spacing.l) {
+            SectionHeading(title: "Gerät")
+            VStack(alignment: .leading, spacing: 16) {
+                Grid(alignment: .leading, horizontalSpacing: 24, verticalSpacing: 9) {
+                    infoRow("Hersteller", device.manufacturer)
+                    infoRow("Modell", device.model)
+                    if let level = device.batteryLevel { infoRow("Akku", "\(level) %") }
+                    if let v = device.info?.deviceVersion, !v.isEmpty { infoRow("Version", v) }
+                    if let r = device.record {
+                        infoRow("USB-Kennung", r.idString)
+                        if let s = r.speedDescription { infoRow("Verbindung", s) }
+                    }
+                    if let info = device.info {
+                        infoRow("Protokoll", info.isMTP ? "MTP (Media Transfer Protocol)" : "PTP (nur Fotos und Videos)")
+                    }
+                    infoRow("Seriennummer", maskedSerial)
+                }
+                .font(Typo.body)
+                Divider().opacity(0.5)
+                ViewThatFits(in: .horizontal) {
+                    HStack(spacing: 10) { nameEditor }
+                    VStack(alignment: .leading, spacing: 8) { nameEditor }
+                }
+                Text("Ordnerposition und Speicherwahl merkt sich Android Bridge je Gerät (abschaltbar in den Einstellungen).")
+                    .font(Typo.caption)
+                    .foregroundStyle(Palette.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(22)
+            .glassCard(cornerRadius: Radius.card)
+        }
+    }
+
+    @ViewBuilder
+    private var nameEditor: some View {
+        Text("Anzeigename").font(Typo.bodyMedium)
+        TextField(device.model, text: $customName, onCommit: saveName)
+            .textFieldStyle(.roundedBorder)
+            .frame(minWidth: 180, maxWidth: 280)
+        Button("Übernehmen", action: saveName).buttonStyle(GlassButtonStyle(compact: true))
     }
 
     private var maskedSerial: String {
@@ -434,8 +922,108 @@ struct DeviceDetailView: View {
     @ViewBuilder
     private func infoRow(_ label: String, _ value: String) -> some View {
         GridRow {
-            Text(label).foregroundStyle(.secondary)
+            Text(label).foregroundStyle(Palette.textSecondary)
             Text(value).textSelection(.enabled)
+        }
+    }
+}
+
+/// Farbiger Balken mit Legende.
+struct BreakdownBar: View {
+    let breakdown: StorageBreakdown
+    @State private var shown = false
+    @Environment(\.animationsEnabled) private var animations
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            GeometryReader { geo in
+                let available = geo.size.width - CGFloat(max(breakdown.slices.count - 1, 0)) * 3
+                HStack(spacing: 3) {
+                    ForEach(breakdown.slices) { slice in
+                        let f = breakdown.total > 0 ? CGFloat(Double(slice.bytes) / Double(breakdown.total)) : 0
+                        RoundedRectangle(cornerRadius: 6, style: .continuous)
+                            .fill(LinearGradient(colors: [slice.color.opacity(0.8), slice.color], startPoint: .top, endPoint: .bottom))
+                            .frame(width: max(4, available * f * (shown ? 1 : 0)))
+                    }
+                    Spacer(minLength: 0)
+                }
+            }
+            .frame(height: 22)
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 170), spacing: 12)], alignment: .leading, spacing: 10) {
+                ForEach(breakdown.slices) { slice in
+                    HStack(spacing: 10) {
+                        Image(systemName: slice.symbol)
+                            .font(.ui(13, .semibold))
+                            .foregroundStyle(slice.color)
+                            .frame(width: 30, height: 30)
+                            .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(slice.color.opacity(0.14)))
+                        VStack(alignment: .leading, spacing: 1) {
+                            Text(slice.title).font(Typo.bodyMedium).lineLimit(1)
+                            Text("\(ByteFormat.string(slice.bytes)) · \(slice.count)")
+                                .font(Typo.caption).foregroundStyle(Palette.textSecondary).monospacedDigit().lineLimit(1)
+                        }
+                    }
+                }
+            }
+        }
+        .padding(22)
+        .glassCard(cornerRadius: Radius.card)
+        .onAppear {
+            if animations && !SnapshotMode.isActive { withAnimation(Motion.reveal.delay(0.1)) { shown = true } } else { shown = true }
+        }
+    }
+}
+
+/// Große Datei mit Vorschau und Aktionen.
+struct LargeFileCard: View {
+    @EnvironmentObject private var model: AppModel
+    let item: MediaItem
+    let device: DeviceConnection
+    @State private var hovering = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            ZStack(alignment: .bottomLeading) {
+                DeviceThumb(entry: item.entry, device: device, size: 170, corner: 0)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 110)
+                    .clipped()
+                Text(ByteFormat.string(item.entry.size))
+                    .font(.ui(12, .bold))
+                    .monospacedDigit()
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(Capsule().fill(Color.black.opacity(0.5)))
+                    .padding(8)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: Radius.tile, style: .continuous))
+            Text(item.entry.name).font(Typo.captionMedium).lineLimit(1).truncationMode(.middle)
+            Text(item.path.joined(separator: " › ")).font(.ui(10.5)).foregroundStyle(Palette.textSecondary).lineLimit(1).truncationMode(.middle)
+        }
+        .padding(8)
+        .glassCard(cornerRadius: Radius.card - 2, elevated: hovering)
+        .onHover { hovering = $0 }
+        .help("\(item.entry.name) – \(ByteFormat.string(item.entry.size))")
+        .contextMenu {
+            if item.entry.kind.isMedia {
+                Button("Öffnen") {
+                    model.viewerItem = MediaViewerItem(deviceID: device.id, items: [item.entry], index: 0)
+                }
+            }
+            Button("Auf den Mac übertragen") {
+                model.transfers.download([item.entry], from: device, sourcePath: [],
+                                         to: model.settings.destination(for: item.entry.kind))
+            }
+            Button("Im Dateimanager zeigen") {
+                model.selection = .files
+                Task { await model.files.device.navigate(storageID: item.entry.storageID, path: item.path) }
+            }
+            Divider()
+            Button("Auf dem Telefon löschen …", role: .destructive) {
+                model.requestDeletion([item.entry], on: device,
+                                      locations: [device.location(storageID: item.entry.storageID, path: item.path).displayPath])
+            }
         }
     }
 }

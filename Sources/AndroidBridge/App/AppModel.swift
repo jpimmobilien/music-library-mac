@@ -58,6 +58,8 @@ final class AppModel: ObservableObject {
     /// Ergebnis mit Fehlern (wird als Bericht gezeigt).
     @Published var deletionReport: DeletionOutcomeBox?
     @Published var toast: ToastMessage?
+    /// Informationsfenster zu einer Telefondatei.
+    @Published var infoEntry: EntryInfoBox?
     private var toastTask: Task<Void, Never>?
     let launchMode: LaunchMode
 

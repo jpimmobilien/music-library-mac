@@ -53,34 +53,63 @@ final class PreviewBackend: DeviceBackend {
         throw MTPError.response(PTPResponse.invalidObjectHandle.rawValue)
     }
 
-    func thumbnail(handle: UInt32) async throws -> Data? {
+    func thumbnail(handle: UInt32) async throws -> Data? { Self.previewImage(handle: handle, scale: 1) }
+
+    /// Erzeugtes Beispielbild (Vorschaugerät): `scale` 1 = 160×120 wie Android-Vorschaubilder, größer für die Großansicht.
+    static func previewImage(handle: UInt32, scale: CGFloat) -> Data? {
         let hues: [CGFloat] = [0.02, 0.08, 0.13, 0.33, 0.52, 0.58, 0.62, 0.75, 0.9]
         let h = hues[Int(handle) % hues.count]
         // Wie echte Android-Vorschaubilder: 160×120, Hochformat mit schwarzen Balken links/rechts.
         let portrait = handle % 3 == 0
-        let size = NSSize(width: 160, height: 120)
+        let size = NSSize(width: 160 * scale, height: 120 * scale)
         let image = NSImage(size: size)
         image.lockFocus()
+        NSGraphicsContext.current?.cgContext.scaleBy(x: 1, y: 1)
         NSColor.black.setFill()
         NSRect(origin: .zero, size: size).fill()
-        let content = portrait ? NSRect(x: 35, y: 0, width: 90, height: 120) : NSRect(origin: .zero, size: size)
+        let content = portrait ? NSRect(x: 35 * scale, y: 0, width: 90 * scale, height: 120 * scale)
+            : NSRect(origin: .zero, size: size)
+        if scale > 1 && portrait {
+            // Großansicht: echtes Hochformat ohne Balken
+            image.unlockFocus()
+            return previewPortrait(handle: handle, hue: h, scale: scale)
+        }
         NSBezierPath(rect: content).setClip()
         let g = NSGradient(colors: [NSColor(hue: h, saturation: 0.55, brightness: 0.95, alpha: 1),
                                     NSColor(hue: (h + 0.08).truncatingRemainder(dividingBy: 1), saturation: 0.7, brightness: 0.55, alpha: 1)])
         g?.draw(in: content, angle: CGFloat(Int(handle) % 4) * 45 + 30)
         NSColor(white: 1, alpha: 0.25).setFill()
-        NSBezierPath(ovalIn: NSRect(x: 30 + CGFloat(handle % 5) * 12, y: 80, width: 46, height: 46)).fill()
+        NSBezierPath(ovalIn: NSRect(x: (30 + CGFloat(handle % 5) * 12) * scale, y: 80 * scale, width: 46 * scale, height: 46 * scale)).fill()
         NSColor(white: 0, alpha: 0.18).setFill()
         let hill = NSBezierPath()
-        hill.move(to: NSPoint(x: 0, y: 0)); hill.line(to: NSPoint(x: 0, y: 50)); hill.curve(to: NSPoint(x: 160, y: 40), controlPoint1: NSPoint(x: 60, y: 95), controlPoint2: NSPoint(x: 100, y: 20)); hill.line(to: NSPoint(x: 160, y: 0)); hill.close()
+        hill.move(to: NSPoint(x: 0, y: 0)); hill.line(to: NSPoint(x: 0, y: 50 * scale))
+        hill.curve(to: NSPoint(x: 160 * scale, y: 40 * scale), controlPoint1: NSPoint(x: 60 * scale, y: 95 * scale), controlPoint2: NSPoint(x: 100 * scale, y: 20 * scale))
+        hill.line(to: NSPoint(x: 160 * scale, y: 0)); hill.close()
         hill.fill()
         image.unlockFocus()
         guard let tiff = image.tiffRepresentation, let rep = NSBitmapImageRep(data: tiff) else { return nil }
-        return rep.representation(using: .jpeg, properties: [.compressionFactor: 0.8])
+        return rep.representation(using: .jpeg, properties: [.compressionFactor: 0.85])
+    }
+
+    private static func previewPortrait(handle: UInt32, hue h: CGFloat, scale: CGFloat) -> Data? {
+        let size = NSSize(width: 90 * scale, height: 120 * scale)
+        let image = NSImage(size: size)
+        image.lockFocus()
+        let g = NSGradient(colors: [NSColor(hue: h, saturation: 0.55, brightness: 0.95, alpha: 1),
+                                    NSColor(hue: (h + 0.08).truncatingRemainder(dividingBy: 1), saturation: 0.7, brightness: 0.55, alpha: 1)])
+        g?.draw(in: NSRect(origin: .zero, size: size), angle: 60)
+        NSColor(white: 1, alpha: 0.25).setFill()
+        NSBezierPath(ovalIn: NSRect(x: 20 * scale, y: 80 * scale, width: 40 * scale, height: 40 * scale)).fill()
+        image.unlockFocus()
+        guard let tiff = image.tiffRepresentation, let rep = NSBitmapImageRep(data: tiff) else { return nil }
+        return rep.representation(using: .jpeg, properties: [.compressionFactor: 0.85])
     }
 
     func download(handle: UInt32, sink: @escaping (Data) throws -> Void, progress: @escaping (UInt64) -> Bool) async throws {
-        throw MTPError.notSupported("Vorschau")
+        // Nur für die Großansicht im Bildschirmfoto: erzeugtes Bild statt Dateiinhalt.
+        guard let data = Self.previewImage(handle: handle, scale: 10) else { throw MTPError.notSupported("Vorschau") }
+        try sink(data)
+        _ = progress(UInt64(data.count))
     }
 
     func downloadSegment(handle: UInt32, offset: UInt64, length: UInt32, sink: @escaping (Data) throws -> Void) async throws -> UInt64 {
@@ -96,6 +125,7 @@ final class PreviewBackend: DeviceBackend {
     func delete(handle: UInt32) async throws { throw MTPError.notSupported("Vorschau") }
     func deleteTree(handle: UInt32, storage: UInt32, isFolder: Bool) async throws -> MTPSession.DeleteTreeResult { throw MTPError.notSupported("Vorschau") }
     func rename(handle: UInt32, to name: String) async throws { throw MTPError.notSupported("Vorschau") }
+    func batteryLevel() async -> Int? { 82 }
     func close(graceful: Bool) {}
 }
 
@@ -128,56 +158,92 @@ enum SnapshotRunner {
         NSApp.setActivationPolicy(.regular)
         NSApp.activate(ignoringOtherApps: true)
 
-        // Szenen ohne Gerät zuerst, danach mit Vorschaugerät
+        SnapshotMode.isActive = true
+        // Fenstergrößen: kleinstes Fenster, 13" (1280×800), 14" (1512×945), 16" (1728×1117)
+        let small = CGSize(width: 960, height: 640)
+        let mb13 = CGSize(width: 1280, height: 800)
+        let mb14 = CGSize(width: 1512, height: 945)
+        let mb16 = CGSize(width: 1728, height: 1080)
+
+        func files(_ m: AppModel, layout: FileManagerLayout, grid: Bool) async {
+            await installPreview(m, state: .connected)
+            UserDefaults.standard.set(grid ? PaneStyle.grid.rawValue : PaneStyle.list.rawValue, forKey: "filePaneStyle")
+            m.files.layout = layout
+            m.selection = .files
+            await m.files.device.navigate(storageID: 0x10001, path: ["DCIM", "Camera"], recordHistory: false)
+            m.files.device.selection = Set(m.files.device.visible.prefix(3).map(\.id))
+            m.files.activePane = .device
+        }
+        func gallery(_ m: AppModel) async {
+            await installPreview(m, state: .connected)
+            m.selection = .media
+            m.gallery.filter = .media
+            m.gallery.scan()
+            try? await Task.sleep(nanoseconds: 700_000_000)
+            m.gallery.selection = Set(m.gallery.visible.dropFirst(2).prefix(3).map(\.id))
+        }
+
         let scenarios: [Scenario] = [
-            Scenario(name: "01-uebersicht-ohne-geraet", size: CGSize(width: 1320, height: 840)) { m in
+            Scenario(name: "01-uebersicht-ohne-geraet", size: mb14) { m in
                 m.devices.installPreviewDevices([])
                 m.selection = .overview
             },
-            Scenario(name: "02-uebersicht-geraet", size: CGSize(width: 1320, height: 840)) { m in
+            Scenario(name: "02-uebersicht-verbunden", size: mb14) { m in
                 await installPreview(m, state: .connected)
                 m.selection = .overview
             },
-            Scenario(name: "03-dateimanager-zwei-spalten", size: CGSize(width: 1320, height: 840)) { m in
+            Scenario(name: "02b-uebersicht-verbunden", size: mb16) { m in
                 await installPreview(m, state: .connected)
-                m.files.layout = .dual
-                m.selection = .files
-                await m.files.device.navigate(storageID: 0x10001, path: ["DCIM", "Camera"], recordHistory: false)
-                m.files.device.selection = Set(m.files.device.visible.prefix(5).map(\.id))
-                m.files.activePane = .device
+                m.selection = .overview
             },
-            Scenario(name: "04-galerie", size: CGSize(width: 1320, height: 840)) { m in
+            Scenario(name: "02c-uebersicht-verbunden", size: small) { m in
                 await installPreview(m, state: .connected)
-                m.selection = .media
-                m.gallery.scan()
-                try? await Task.sleep(nanoseconds: 600_000_000)
-                m.gallery.selection = Set(m.gallery.visible.prefix(3).map(\.id))
+                m.selection = .overview
             },
-            Scenario(name: "05-dateiuebertragung-einschalten", size: CGSize(width: 1320, height: 840)) { m in
+            Scenario(name: "03-dateimanager-zwei-spalten", size: mb14) { m in await files(m, layout: .dual, grid: false) },
+            Scenario(name: "03b-dateimanager-raster", size: mb14) { m in await files(m, layout: .dual, grid: true) },
+            Scenario(name: "03c-dateimanager-zwei-spalten", size: small) { m in await files(m, layout: .dual, grid: false) },
+            Scenario(name: "03d-dateimanager-eine-spalte-raster", size: mb13) { m in await files(m, layout: .single, grid: true) },
+            Scenario(name: "04-galerie", size: mb14) { m in await gallery(m) },
+            Scenario(name: "04b-galerie", size: small) { m in await gallery(m) },
+            Scenario(name: "04c-galerie", size: mb16) { m in await gallery(m) },
+            Scenario(name: "05-grossansicht", size: mb14) { m in
+                await gallery(m)
+                m.gallery.selection = []
+                let media = m.gallery.visible.filter { $0.entry.kind == .photo }.map(\.entry)
+                if !media.isEmpty, let device = m.gallery.device {
+                    m.viewerItem = MediaViewerItem(deviceID: device.id, items: media, index: min(3, media.count - 1))
+                }
+            },
+            Scenario(name: "06-dateiuebertragung-einschalten", size: mb13) { m in
+                m.viewerItem = nil
                 await installPreview(m, state: .waitingForFileTransfer)
                 m.selection = .overview
             },
-            Scenario(name: "06-uebertragungen-leer", size: CGSize(width: 1320, height: 840)) { m in
-                m.selection = .transfers
+            Scenario(name: "07-speicher-verwalten", size: mb14) { m in
+                await gallery(m)
+                m.gallery.selection = []
+                if let d = m.gallery.device { m.selection = .device(d.id) }
             },
-            Scenario(name: "07-kleines-fenster", size: CGSize(width: 1000, height: 660)) { m in
-                await installPreview(m, state: .connected)
-                m.files.layout = .dual
-                m.selection = .files
-            },
-            Scenario(name: "08-duplikate-bereich", size: CGSize(width: 1320, height: 840)) { m in
+            Scenario(name: "08-duplikate-bereich", size: mb13) { m in
                 await installPreview(m, state: .connected)
                 m.duplicates.reset()
                 m.selection = .duplicates
             },
-            Scenario(name: "09-duplikate-ergebnisse", size: CGSize(width: 1320, height: 840)) { m in
+            Scenario(name: "09-duplikate-ergebnisse", size: mb14) { m in
                 await installPreview(m, state: .connected)
                 let (identical, similar) = previewDuplicateGroups()
                 let marked = Set(identical.prefix(2).flatMap { DuplicateSelection.suggested(for: $0) })
                 m.duplicates.showPreviewResults(identical: identical, similar: similar, marked: marked)
                 m.selection = .duplicates
             },
-            Scenario(name: "10-loeschen-bestaetigen", size: CGSize(width: 560, height: 700), custom: { m in
+            Scenario(name: "09b-duplikate-ergebnisse", size: small) { m in
+                await installPreview(m, state: .connected)
+                let (identical, similar) = previewDuplicateGroups()
+                m.duplicates.showPreviewResults(identical: identical, similar: similar, marked: [])
+                m.selection = .duplicates
+            },
+            Scenario(name: "10-loeschen-bestaetigen", size: CGSize(width: 560, height: 720), custom: { m in
                 AnyView(DeleteConfirmationSheet(request: previewDeletionRequest(), onConfirm: {}, onCancel: {})
                     .environment(\.glassEnabled, m.settings.glassEffects)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -185,14 +251,21 @@ enum SnapshotRunner {
             }) { m in
                 await installPreview(m, state: .connected)
             },
-            Scenario(name: "11-einstellungen", size: CGSize(width: 1320, height: 840)) { m in
+            Scenario(name: "11-einstellungen", size: mb13) { m in
                 m.selection = .settings
             },
-            Scenario(name: "12-dateimanager-eine-spalte", size: CGSize(width: 1320, height: 840)) { m in
+            Scenario(name: "12-favoriten", size: mb13) { m in
                 await installPreview(m, state: .connected)
-                m.files.layout = .single
-                m.selection = .files
-                await m.files.device.navigate(storageID: 0x10001, path: ["Download"], recordHistory: false)
+                if let d = m.devices.connectedDevices.first {
+                    for path in [["DCIM", "Camera"], ["Pictures"], ["Download"], ["Documents"]] {
+                        let loc = d.location(storageID: 0x10001, path: path)
+                        if !m.favorites.contains(loc) { m.favorites.toggle(loc) }
+                    }
+                }
+                m.selection = .favorites
+            },
+            Scenario(name: "13-uebertragungen-leer", size: mb13) { m in
+                m.selection = .transfers
             },
         ]
 
@@ -202,6 +275,7 @@ enum SnapshotRunner {
                 fflush(stdout)
                 model.settings.appearance = dark ? .dark : .light
                 NSApp.appearance = NSAppearance(named: dark ? .darkAqua : .aqua)
+                model.viewerItem = nil
                 await scenario.prepare(model)
                 // nie größer als der sichtbare Bildschirm der Build-Maschine (sonst schneidet macOS das Fenster ab)
                 var size = scenario.size

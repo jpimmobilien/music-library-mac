@@ -405,6 +405,13 @@ public final class MTPSession {
 
     // MARK: - Speicher
 
+    /// Akkustand in Prozent (PTP-Geräteeigenschaft „BatteryLevel“, 0x5001) – `nil`, wenn das Gerät ihn nicht meldet.
+    public func batteryLevel() throws -> Int? {
+        let data = try fetch(.getDevicePropValue, params: [0x5001], timeout: 5)
+        guard let b = data.first, b <= 100 else { return nil }
+        return Int(b)
+    }
+
     public func storageIDs() throws -> [UInt32] {
         var r = PTPReader(try fetch(.getStorageIDs))
         // Speicher-IDs mit unterem Wort 0 sind „nicht eingelegt“ (z. B. leerer SD-Kartenschacht).

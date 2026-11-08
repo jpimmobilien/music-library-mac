@@ -12,7 +12,7 @@ struct AndroidBridgeApp: App {
         WindowGroup("Android Bridge", id: "main") {
             RootView(settings: model.settings, transfers: model.transfers, deletion: model.deletion)
                 .environmentObject(model)
-                .frame(minWidth: 1000, minHeight: 660)
+                .frame(minWidth: 960, minHeight: 640)
                 .onAppear {
                     appDelegate.attach(model)
                 }
@@ -121,6 +121,12 @@ struct AppCommands: Commands {
             .keyboardShortcut("f")
         }
         CommandGroup(after: .sidebar) {
+            Button("Seitenleiste ein-/ausklappen") {
+                let d = UserDefaults.standard
+                d.set(!d.bool(forKey: "sidebarCollapsed"), forKey: "sidebarCollapsed")
+            }
+            .keyboardShortcut("s", modifiers: [.command, .control])
+            Divider()
             Button("Aktualisieren") { files.refresh() }
                 .keyboardShortcut("r")
             Divider()

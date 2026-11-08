@@ -34,6 +34,8 @@ public struct USBInterfaceDescriptor: Equatable, Hashable, Codable, Sendable {
         (interfaceClass == 0xE0 && subClass == 0x01 && interfaceProtocol == 0x03) || interfaceClass == 0x02 || interfaceClass == 0x0A
     }
     public var isMIDI: Bool { interfaceClass == 0x01 && subClass == 0x03 }
+    /// Schnittstellen, die ein Telefon im Lade-, Debug- oder Netzwerkmodus anbietet.
+    public var isPhoneLike: Bool { isADB || isAccessory || isTethering || isMIDI || isStillImage || interfaceClass == 0xFF }
 }
 
 /// Was das angeschlossene Gerät gerade anbietet.
@@ -74,7 +76,16 @@ public enum USBDeviceClassifier {
     public static func isKnownAndroidVendor(_ vendorID: Int) -> Bool { androidVendors[vendorID] != nil }
 
     /// Bestimmt den Modus anhand der Schnittstellen (protokollbasiert, ohne Modelllisten).
-    public static func classify(vendorID: Int, interfaces: [USBInterfaceDescriptor]) -> USBDeviceMode {
+    /// Produktnamen, die sicher kein Telefon sind (Speicher, Monitore, Eingabegeräte desselben Herstellers).
+    public static func isClearlyNotAPhone(productName: String?) -> Bool {
+        guard let n = productName?.lowercased() else { return false }
+        let markers = ["ssd", "flash", "drive", "card reader", "cardreader", "usb3.", "monitor", "display", "keyboard",
+                       "mouse", "hub", "dock", "portable", "storage", "disk", "webcam", "headset", "dongle"]
+        return markers.contains { n.contains($0) }
+    }
+
+    public static func classify(vendorID: Int, interfaces: [USBInterfaceDescriptor], productName: String? = nil) -> USBDeviceMode {
+        if isClearlyNotAPhone(productName: productName) { return .unrelated }
         // Apple-Geräte (iPhone/iPad bieten ebenfalls PTP an) gehören nicht hierher.
         if vendorID == 0x05AC { return .unrelated }
         // 1. ausdrücklich „MTP“ benannte Schnittstelle
@@ -92,7 +103,11 @@ public enum USBDeviceClassifier {
             let named = ptp.name?.uppercased() ?? ""
             return .fileTransfer(interface: ptp.number, isPTPOnly: named == "PTP" && androidHint)
         }
-        if androidHint { return .androidWithoutFileTransfer }
+        // Nur als „Telefon ohne Dateiübertragung“ werten, wenn das Gerät nach Telefon aussieht – nicht z. B.
+        // eine Samsung-SSD (Massenspeicher), ein Monitor-Hub oder eine Tastatur desselben Herstellers.
+        if androidHint && (interfaces.isEmpty || interfaces.contains(where: { $0.isPhoneLike })) {
+            return .androidWithoutFileTransfer
+        }
         return .unrelated
     }
 }

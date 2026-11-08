@@ -3,13 +3,13 @@ import AppKit
 import UniformTypeIdentifiers
 import ABCore
 
-/// Fotos & Videos: Raster mit Vorschaubildern, Filtern und Mehrfachauswahl.
+/// Fotos & Videos: große Vorschaubilder, nach Monaten gruppiert, mit Mosaik zum Auftakt jedes Monats.
 struct GalleryView: View {
     @EnvironmentObject private var model: AppModel
     @ObservedObject var gallery: GalleryModel
     @ObservedObject var devices: DeviceManager
     @State private var anchor: String?
-    @State private var thumbSize: CGFloat = 150
+    @AppStorage("galleryThumbSize") private var thumbSize: Double = 190
     @Environment(\.animationsEnabled) private var animations
 
     private var connectedDevice: DeviceConnection? {
@@ -22,10 +22,10 @@ struct GalleryView: View {
             HStack(spacing: 10) {
                 GlassSearchField(text: $gallery.search, prompt: "In Medien suchen", width: 200, focusToken: model.files.focusSearchToken)
                 ToolbarCapsule {
-                    ToolbarIconButton(symbol: "minus.magnifyingglass", help: "Kleinere Vorschaubilder") { thumbSize = max(96, thumbSize - 26) }
-                        .disabled(thumbSize <= 96)
-                    ToolbarIconButton(symbol: "plus.magnifyingglass", help: "Größere Vorschaubilder") { thumbSize = min(260, thumbSize + 26) }
-                        .disabled(thumbSize >= 260)
+                    ToolbarIconButton(symbol: "minus.magnifyingglass", help: "Kleinere Vorschaubilder") { thumbSize = max(120, thumbSize - 35) }
+                        .disabled(thumbSize <= 120)
+                    ToolbarIconButton(symbol: "plus.magnifyingglass", help: "Größere Vorschaubilder") { thumbSize = min(330, thumbSize + 35) }
+                        .disabled(thumbSize >= 330)
                     ToolbarDivider()
                     ToolbarMenu(symbol: "arrow.up.arrow.down", help: "Sortieren") {
                         Picker("Sortieren nach", selection: $gallery.sort) {
@@ -50,28 +50,24 @@ struct GalleryView: View {
                 VStack(spacing: 0) {
                     filters
                     ZStack(alignment: .bottom) {
-                        grid(device: device)
                         if gallery.visible.isEmpty {
                             if gallery.isScanning {
-                                VStack(spacing: 12) {
-                                    ProgressView()
-                                    Text("Medien werden gesucht … (\(gallery.scannedFolders) Ordner)")
-                                        .font(Typo.callout).foregroundStyle(Palette.textSecondary).monospacedDigit()
-                                }
-                                .frame(maxHeight: .infinity)
+                                GalleryLoadingView(folders: gallery.scannedFolders)
                             } else {
                                 EmptyStateView(symbol: gallery.filter.symbolName, title: "Nichts gefunden",
                                                message: "In den Ordnern des Telefons gibt es keine passenden Dateien für „\(gallery.filter.title)“.")
                             }
+                        } else {
+                            grid(device: device)
                         }
                         actionBar(device: device)
-                            .padding(.bottom, 20)
+                            .padding(.bottom, 22)
                     }
                 }
             } else {
                 EmptyStateView(symbol: "photo.on.rectangle.angled", title: "Kein Telefon verbunden",
-                               message: "Schließen Sie Ihr Android-Gerät an, um Fotos und Videos zu sehen.") {
-                    Button("Zur Übersicht") { model.selection = .overview }.buttonStyle(GlassButtonStyle())
+                               message: "Schließen Sie Ihr Android-Gerät an – hier erscheinen dann alle Fotos und Videos, nach Monaten geordnet.") {
+                    Button("Zur Übersicht") { model.selection = .overview }.buttonStyle(GlassButtonStyle(prominent: true))
                 }
             }
         }
@@ -105,40 +101,69 @@ struct GalleryView: View {
                 .padding(.horizontal, Spacing.gutter)
             }
         }
-        .padding(.bottom, 10)
+        .padding(.bottom, 8)
     }
 
+    private var groupedByDate: Bool { gallery.sort == .newest || gallery.sort == .oldest }
+
     private func grid(device: DeviceConnection) -> some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: thumbSize, maximum: thumbSize * 1.35), spacing: 12)], spacing: 12) {
-                ForEach(gallery.visible) { item in
-                    GalleryCell(item: item, device: device, size: thumbSize, selected: gallery.selection.contains(item.id),
-                                selectionActive: !gallery.selection.isEmpty) {
-                        toggle(item)
-                    }
-                    .onTapGesture(count: 2) { open(item, device: device) }
-                    .onTapGesture { select(item) }
-                    .onDrag { makeDeviceDragProvider(entry: item.entry, list: dragList(for: item), device: device, path: item.path) }
-                    .contextMenu {
-                        Button("Öffnen") { open(item, device: device) }
-                        Button(gallery.selection.contains(item.id) ? "Aus Auswahl entfernen" : "Zur Auswahl hinzufügen") { toggle(item) }
-                        Divider()
-                        Button("Auf den Mac übertragen") { transfer(dragList(for: item), device: device) }
-                        Button("Im Dateimanager zeigen") {
-                            model.selection = .files
-                            Task { await model.files.device.navigate(storageID: item.entry.storageID, path: item.path) }
-                        }
-                        Divider()
-                        Button(dragList(for: item).count > 1 ? "\(dragList(for: item).count) Objekte löschen …" : "Auf dem Telefon löschen …",
-                               role: .destructive) {
-                            let list = gallery.selection.contains(item.id) ? gallery.selectedItems : [item]
-                            model.deleteGallerySelection(list)
+        GeometryReader { geo in
+            let spacing: CGFloat = 8
+            let width = max(200, geo.size.width - Spacing.gutter * 2)
+            let columns = max(2, Int((width + spacing) / (CGFloat(thumbSize) + spacing)))
+            let cell = floor((width - spacing * CGFloat(columns - 1)) / CGFloat(columns))
+            let sections = GallerySection.make(gallery.visible, byMonth: groupedByDate)
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 26, pinnedViews: [.sectionHeaders]) {
+                    ForEach(sections) { section in
+                        Section {
+                            SectionMosaic(items: section.items, columns: columns, cell: cell, spacing: spacing,
+                                          feature: groupedByDate && section.items.count >= 5 && columns >= 4) { item, w, h in
+                                cellView(item, device: device, width: w, height: h)
+                            }
+                        } header: {
+                            if let title = section.title {
+                                MonthHeader(title: title, count: section.items.count,
+                                            allSelected: section.items.allSatisfy { gallery.selection.contains($0.id) }) {
+                                    let ids = Set(section.items.map(\.id))
+                                    if ids.isSubset(of: gallery.selection) { gallery.selection.subtract(ids) } else { gallery.selection.formUnion(ids) }
+                                }
+                            }
                         }
                     }
                 }
+                .padding(.horizontal, Spacing.gutter)
+                .padding(.bottom, 110)
             }
-            .padding(.horizontal, Spacing.gutter)
-            .padding(.bottom, 100)
+        }
+    }
+
+    private func cellView(_ item: MediaItem, device: DeviceConnection, width: CGFloat, height: CGFloat) -> some View {
+        GalleryCell(item: item, device: device, width: width, height: height, selected: gallery.selection.contains(item.id),
+                    selectionActive: !gallery.selection.isEmpty) {
+            toggle(item)
+        }
+        .onTapGesture(count: 2) { open(item, device: device) }
+        .onTapGesture { select(item) }
+        .onDrag { makeDeviceDragProvider(entry: item.entry, list: dragList(for: item), device: device, path: item.path) }
+        .contextMenu {
+            Button("Öffnen") { open(item, device: device) }
+            Button(gallery.selection.contains(item.id) ? "Aus Auswahl entfernen" : "Zur Auswahl hinzufügen") { toggle(item) }
+            Button("Informationen") {
+                model.infoEntry = EntryInfoBox(deviceID: device.id, entry: item.entry, path: item.path)
+            }
+            Divider()
+            Button("Auf den Mac übertragen") { transfer(dragList(for: item), device: device) }
+            Button("Im Dateimanager zeigen") {
+                model.selection = .files
+                Task { await model.files.device.navigate(storageID: item.entry.storageID, path: item.path) }
+            }
+            Divider()
+            Button(dragList(for: item).count > 1 ? "\(dragList(for: item).count) Objekte löschen …" : "Auf dem Telefon löschen …",
+                   role: .destructive) {
+                let list = gallery.selection.contains(item.id) ? gallery.selectedItems : [item]
+                model.deleteGallerySelection(list)
+            }
         }
     }
 
@@ -220,13 +245,159 @@ struct GalleryView: View {
                     }
                     .buttonStyle(GlassButtonStyle(destructive: true, compact: true))
                     .help("Auf dem Telefon endgültig löschen (⌘⌫)")
-                    Button("Alle") { gallery.selection = Set(gallery.visible.map(\.id)) }
-                        .buttonStyle(GlassButtonStyle(compact: true))
                     ToolbarIconButton(symbol: "xmark", help: "Auswahl aufheben") { gallery.selection = [] }
                 }
             }
         }
         .animation(animations ? .bridgeSpring : nil, value: count)
+    }
+}
+
+/// Ein Monat (bzw. alles, wenn nicht nach Datum sortiert).
+struct GallerySection: Identifiable {
+    let id: String
+    let title: String?
+    let items: [MediaItem]
+
+    static func make(_ items: [MediaItem], byMonth: Bool) -> [GallerySection] {
+        guard byMonth else { return [GallerySection(id: "all", title: nil, items: items)] }
+        var sections: [GallerySection] = []
+        var currentKey: Int?
+        var bucket: [MediaItem] = []
+        var currentTitle = ""
+        let calendar = Calendar.current
+        func flush() {
+            if let key = currentKey, !bucket.isEmpty {
+                sections.append(GallerySection(id: "m\(key)", title: currentTitle, items: bucket))
+            }
+        }
+        for item in items {
+            let key: Int
+            let title: String
+            if let date = item.entry.bestDate {
+                let c = calendar.dateComponents([.year, .month], from: date)
+                key = (c.year ?? 0) * 100 + (c.month ?? 0)
+                title = date.formatted(.dateTime.month(.wide).year())
+            } else {
+                key = -1
+                title = "Ohne Datum"
+            }
+            if key != currentKey {
+                flush()
+                currentKey = key
+                currentTitle = title
+                bucket = []
+            }
+            bucket.append(item)
+        }
+        flush()
+        return sections
+    }
+}
+
+/// Monatskopf (bleibt beim Scrollen oben stehen).
+struct MonthHeader: View {
+    let title: String
+    let count: Int
+    let allSelected: Bool
+    let toggleAll: () -> Void
+
+    var body: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 10) {
+            Text(title)
+                .font(Typo.title)
+                .tracking(-0.3)
+                .foregroundStyle(Palette.textPrimary)
+            Text("\(count)")
+                .font(Typo.callout)
+                .foregroundStyle(Palette.textSecondary)
+                .monospacedDigit()
+            Spacer()
+            Button(allSelected ? "Auswahl aufheben" : "Auswählen", action: toggleAll)
+                .buttonStyle(GlassButtonStyle(compact: true))
+        }
+        .padding(.vertical, 8)
+        .padding(.horizontal, 14)
+        .glassSurface(Capsule(), strong: true)
+        .padding(.vertical, 4)
+    }
+}
+
+/// Raster eines Monats: auf Wunsch zuerst ein Mosaik (neuestes Bild groß), dann gleichmäßige Kacheln.
+struct SectionMosaic<Cell: View>: View {
+    let items: [MediaItem]
+    let columns: Int
+    let cell: CGFloat
+    let spacing: CGFloat
+    let feature: Bool
+    let make: (MediaItem, CGFloat, CGFloat) -> Cell
+
+    init(items: [MediaItem], columns: Int, cell: CGFloat, spacing: CGFloat, feature: Bool,
+         @ViewBuilder make: @escaping (MediaItem, CGFloat, CGFloat) -> Cell) {
+        self.items = items
+        self.columns = columns
+        self.cell = cell
+        self.spacing = spacing
+        self.feature = feature
+        self.make = make
+    }
+
+    private var featureCount: Int { feature ? min(items.count, 1 + 2 * (columns - 2)) : 0 }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: spacing) {
+            if feature {
+                let big = cell * 2 + spacing
+                let side = Array(items[1..<featureCount])
+                HStack(alignment: .top, spacing: spacing) {
+                    make(items[0], big, big)
+                    VStack(alignment: .leading, spacing: spacing) {
+                        HStack(spacing: spacing) {
+                            ForEach(Array(side.prefix(columns - 2))) { item in make(item, cell, cell) }
+                        }
+                        HStack(spacing: spacing) {
+                            ForEach(Array(side.dropFirst(columns - 2))) { item in make(item, cell, cell) }
+                        }
+                    }
+                }
+            }
+            let rest = Array(items.dropFirst(featureCount))
+            if !rest.isEmpty {
+                LazyVGrid(columns: Array(repeating: GridItem(.fixed(cell), spacing: spacing), count: columns),
+                          alignment: .leading, spacing: spacing) {
+                    ForEach(rest) { item in make(item, cell, cell) }
+                }
+            }
+        }
+    }
+}
+
+/// Lädt noch: schimmernde Platzhalter statt leerer Fläche.
+struct GalleryLoadingView: View {
+    let folders: Int
+    @State private var phase = false
+    @Environment(\.animationsEnabled) private var animations
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            HStack(spacing: 10) {
+                ProgressView().controlSize(.small)
+                Text("Medien werden gesucht … \(folders) Ordner")
+                    .font(Typo.callout).foregroundStyle(Palette.textSecondary).monospacedDigit()
+            }
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 8)], spacing: 8) {
+                ForEach(0..<18, id: \.self) { i in
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .fill(Palette.fieldFill)
+                        .aspectRatio(1, contentMode: .fit)
+                        .opacity(phase ? 0.45 : 1)
+                        .animation(animations ? .easeInOut(duration: 1).repeatForever().delay(Double(i % 6) * 0.08) : nil, value: phase)
+                }
+            }
+        }
+        .padding(.horizontal, Spacing.gutter)
+        .frame(maxHeight: .infinity, alignment: .top)
+        .onAppear { phase = animations && !SnapshotMode.isActive }
     }
 }
 
@@ -241,18 +412,19 @@ struct FilterChip: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: 6) {
-                Image(systemName: symbol).font(.inter(11.5, .semibold))
-                Text(title).font(.inter(12.5, selected ? .semibold : .medium))
+                Image(systemName: symbol).font(.ui(11.5, .semibold))
+                Text(title).font(.ui(12.5, selected ? .semibold : .medium)).lineLimit(1)
                 if count > 0 {
                     Text("\(count)")
-                        .font(.inter(10.5, .semibold))
-                        .foregroundStyle(selected ? Color.white.opacity(0.85) : Palette.textTertiary)
+                        .font(.ui(10.5, .semibold))
+                        .foregroundStyle(selected ? Palette.onAccent.opacity(0.75) : Palette.textTertiary)
                         .monospacedDigit()
                 }
             }
+            .fixedSize()
             .padding(.horizontal, 13)
             .frame(height: 30)
-            .foregroundStyle(selected ? Color.white : Palette.textPrimary)
+            .foregroundStyle(selected ? Palette.onAccent : Palette.textPrimary)
             .background {
                 if selected {
                     Capsule().fill(LinearGradient(colors: [Palette.bridgeGreen, Palette.bridgeTeal], startPoint: .topLeading, endPoint: .bottomTrailing))
@@ -271,67 +443,73 @@ struct FilterChip: View {
 struct GalleryCell: View {
     let item: MediaItem
     let device: DeviceConnection
-    let size: CGFloat
+    let width: CGFloat
+    let height: CGFloat
     let selected: Bool
     var selectionActive = false
     var onToggle: (() -> Void)?
     @State private var image: NSImage?
     @State private var hovering = false
 
+    private var corner: CGFloat { min(16, max(10, width * 0.07)) }
+
     var body: some View {
         ZStack(alignment: .topLeading) {
             ZStack {
-                RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Palette.fieldFill)
+                Palette.mediaWell
                 if let image {
                     Image(nsImage: image)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                        .frame(width: size, height: size)
+                        .frame(width: width, height: height)
                         .clipped()
+                        .scaleEffect(hovering ? 1.035 : 1)
                         .transition(.opacity)
                 } else {
-                    VStack(spacing: 6) {
-                        FileGlyph(kind: item.entry.kind, size: 28)
-                        if !item.entry.kind.isMedia {
-                            Text(item.entry.name).font(.inter(10.5)).lineLimit(2).multilineTextAlignment(.center).padding(.horizontal, 6)
+                    VStack(spacing: 8) {
+                        TypeIcon(name: item.entry.name, isFolder: false, size: min(width * 0.36, 72))
+                        if !item.entry.kind.isMedia || width > 220 {
+                            Text(item.entry.name).font(.ui(10.5)).lineLimit(2).multilineTextAlignment(.center)
+                                .foregroundStyle(Palette.textSecondary)
+                                .padding(.horizontal, 8)
                         }
                     }
                 }
                 if item.entry.kind == .video {
                     VStack {
                         Spacer()
-                        HStack(spacing: 4) {
-                            Image(systemName: "play.fill").font(.inter(9.5, .bold))
-                            Text(ByteFormat.string(item.entry.size)).font(.inter(10, .semibold))
+                        HStack(spacing: 5) {
+                            Image(systemName: "play.fill").font(.ui(9.5, .bold))
+                            Text(ByteFormat.string(item.entry.size)).font(.ui(10.5, .semibold)).monospacedDigit()
                             Spacer()
                         }
                         .foregroundStyle(.white)
                         .shadow(radius: 2)
-                        .padding(8)
+                        .padding(9)
                     }
-                    .frame(width: size, height: size)
-                    .background(LinearGradient(colors: [.clear, .black.opacity(0.5)], startPoint: .center, endPoint: .bottom))
+                    .frame(width: width, height: height)
+                    .background(LinearGradient(colors: [.clear, .black.opacity(0.55)], startPoint: .center, endPoint: .bottom))
                 }
                 if selected {
-                    RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Palette.bridgeGreen.opacity(0.14))
+                    RoundedRectangle(cornerRadius: corner, style: .continuous).fill(Palette.bridgeGreen.opacity(0.16))
                 }
             }
-            .frame(width: size, height: size)
-            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .frame(width: width, height: height)
+            .clipShape(RoundedRectangle(cornerRadius: corner, style: .continuous))
             .overlay(
-                RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .strokeBorder(selected ? Palette.bridgeGreen : Color.white.opacity(hovering ? 0.35 : 0.12), lineWidth: selected ? 3 : 1)
+                RoundedRectangle(cornerRadius: corner, style: .continuous)
+                    .strokeBorder(selected ? Palette.bridgeGreen : Color.white.opacity(hovering ? 0.35 : 0.08), lineWidth: selected ? 3 : 1)
             )
-            .scaleEffect(selected ? 0.94 : (hovering ? 1.015 : 1))
-            .shadow(color: Palette.shadow.opacity(hovering ? 1 : 0.5), radius: hovering ? 10 : 4, y: hovering ? 4 : 2)
+            .scaleEffect(selected ? 0.95 : 1)
+            .shadow(color: Palette.shadow.opacity(hovering ? 1 : 0.4), radius: hovering ? 14 : 4, y: hovering ? 6 : 2)
 
             if selected || hovering || selectionActive {
                 Button { onToggle?() } label: {
                     Image(systemName: selected ? "checkmark.circle.fill" : "circle")
-                        .font(.inter(20, .medium))
-                        .foregroundStyle(selected ? Color.white : Color.white.opacity(0.9), selected ? Palette.bridgeGreen : Color.black.opacity(0.25))
+                        .font(.ui(21, .medium))
+                        .foregroundStyle(selected ? Color.white : Color.white.opacity(0.95), selected ? Palette.bridgeGreen : Color.black.opacity(0.28))
                         .shadow(color: .black.opacity(0.35), radius: 2)
-                        .padding(8)
+                        .padding(9)
                         .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
@@ -339,11 +517,15 @@ struct GalleryCell: View {
                 .transition(.scale(scale: 0.6).combined(with: .opacity))
             }
         }
+        .frame(width: width, height: height)
         .animation(.bridgeQuick, value: selected)
-        .animation(.bridgeQuick, value: hovering)
-        .animation(.easeOut(duration: 0.2), value: image != nil)
+        .animation(Motion.easeOut(0.35), value: hovering)
+        .animation(.easeOut(duration: 0.25), value: image != nil)
         .onHover { hovering = $0 }
         .help("\(item.entry.name) · \(ByteFormat.string(item.entry.size))")
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(item.entry.name)
+        .accessibilityAddTraits(selected ? .isSelected : [])
         .task(id: item.id) {
             guard item.entry.kind.isMedia else { return }
             if let cached = ThumbnailService.shared.cached(ThumbnailService.key(device: device, entry: item.entry)) {

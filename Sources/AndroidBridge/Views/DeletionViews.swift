@@ -60,7 +60,7 @@ struct DeleteConfirmationSheet: View {
             VStack(alignment: .leading, spacing: 0) {
                 ForEach(Array(request.entries.prefix(6).enumerated()), id: \.offset) { index, e in
                     HStack(spacing: 10) {
-                        FileGlyph(kind: e.kind, size: 16)
+                        TypeIcon(name: e.name, isFolder: e.isFolder, size: 20)
                         Text(e.name).font(Typo.body).lineLimit(1).truncationMode(.middle)
                         Spacer(minLength: 8)
                         Text(e.isFolder ? "Ordner" : ByteFormat.string(e.size))
@@ -133,7 +133,7 @@ struct DeletionResultSheet: View {
                 VStack(alignment: .leading, spacing: 0) {
                     ForEach(Array(outcome.failed.enumerated()), id: \.offset) { index, f in
                         HStack(alignment: .top, spacing: 10) {
-                            FileGlyph(kind: f.entry.kind, size: 16)
+                            TypeIcon(name: f.entry.name, isFolder: f.entry.isFolder, size: 20)
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(f.entry.name).font(Typo.bodyMedium).lineLimit(1).truncationMode(.middle)
                                 Text(f.reason).font(Typo.caption).foregroundStyle(Palette.danger)

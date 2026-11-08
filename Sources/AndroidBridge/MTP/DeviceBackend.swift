@@ -21,6 +21,8 @@ protocol DeviceBackend: AnyObject {
     /// Löscht eine Datei bzw. einen Ordner samt Inhalt (echte MTP-Löschung, kein Papierkorb).
     func deleteTree(handle: UInt32, storage: UInt32, isFolder: Bool) async throws -> MTPSession.DeleteTreeResult
     func rename(handle: UInt32, to name: String) async throws
+    /// Akkustand in Prozent oder `nil`.
+    func batteryLevel() async -> Int?
     func close(graceful: Bool)
 }
 
@@ -28,10 +30,12 @@ protocol DeviceBackend: AnyObject {
 final class MTPBackend: DeviceBackend {
     let worker: MTPWorker
     private(set) var supportsPartialDownload = false
+    private(set) var supportsBattery = false
 
     init(worker: MTPWorker, info: MTPDeviceInfo) {
         self.worker = worker
         supportsPartialDownload = info.supports(.getPartialObject64) || info.supports(.getPartialObject)
+        supportsBattery = info.supports(.getDevicePropValue) && info.devicePropertiesSupported.contains(0x5001)
     }
 
     func storages() async throws -> [DeviceStorage] {
@@ -112,6 +116,11 @@ final class MTPBackend: DeviceBackend {
 
     func rename(handle: UInt32, to name: String) async throws {
         try await worker.withSession(priority: .high) { s, _ in try s.rename(handle, to: name) }
+    }
+
+    func batteryLevel() async -> Int? {
+        guard supportsBattery else { return nil }
+        return try? await worker.withSession(priority: .low) { s, _ in try s.batteryLevel() }
     }
 
     func close(graceful: Bool) { worker.close(graceful: graceful) }

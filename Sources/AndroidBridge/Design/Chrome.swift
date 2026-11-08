@@ -7,8 +7,9 @@ import ABCore
 // Suchfeld, Segmente, schwebende Aktionsleiste, Hinweise, Dialogkopf, Einstellungsabschnitte.
 // =============================================================================================
 
-/// Gerüst einer Seite: großer Titel (Inter Display) mit Untertitel links, Werkzeugkapsel rechts.
-/// Die Kopfzeile verschiebt das Fenster (verdeckte Titelleiste).
+/// Gerüst einer Seite: großer Titel mit Untertitel links, Werkzeugkapsel rechts.
+/// Die Kopfzeile verschiebt das Fenster (verdeckte Titelleiste). Wird es eng, rücken die Werkzeuge unter den Titel –
+/// nichts wird abgeschnitten.
 struct PageScaffold<Toolbar: View, Content: View>: View {
     let title: String
     var subtitle: String?
@@ -36,29 +37,42 @@ struct PageHeader<Toolbar: View>: View {
     @ViewBuilder var toolbar: () -> Toolbar
 
     var body: some View {
-        HStack(alignment: .center, spacing: Spacing.l) {
-            VStack(alignment: .leading, spacing: 3) {
-                Text(title)
-                    .font(Typo.largeTitle)
-                    .foregroundStyle(Palette.textPrimary)
-                    .lineLimit(1)
-                if let subtitle, !subtitle.isEmpty {
-                    Text(subtitle)
-                        .font(Typo.callout)
-                        .foregroundStyle(Palette.textSecondary)
-                        .lineLimit(1)
-                        .truncationMode(.middle)
+        ViewThatFits(in: .horizontal) {
+            HStack(alignment: .center, spacing: Spacing.l) {
+                titles(singleLineSubtitle: true)
+                Spacer(minLength: Spacing.m)
+                toolbar()
+            }
+            VStack(alignment: .leading, spacing: Spacing.m) {
+                titles(singleLineSubtitle: false)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    toolbar().padding(.vertical, 2)
                 }
             }
-            .layoutPriority(1)
-            Spacer(minLength: Spacing.m)
-            toolbar()
         }
         .padding(.horizontal, Spacing.gutter)
         .padding(.top, Metrics.headerTop)
         .padding(.bottom, Spacing.l)
-        .frame(minHeight: 92, alignment: .bottom)
+        .frame(maxWidth: .infinity, minHeight: 96, alignment: .bottomLeading)
         .background(WindowDragArea())
+    }
+
+    private func titles(singleLineSubtitle: Bool) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(title)
+                .font(Typo.largeTitle)
+                .tracking(-0.4)
+                .foregroundStyle(Palette.textPrimary)
+                .lineLimit(1)
+                .fixedSize(horizontal: true, vertical: false)
+            if let subtitle, !subtitle.isEmpty {
+                Text(subtitle)
+                    .font(Typo.callout)
+                    .foregroundStyle(Palette.textSecondary)
+                    .lineLimit(singleLineSubtitle ? 1 : 2)
+                    .fixedSize(horizontal: singleLineSubtitle, vertical: !singleLineSubtitle)
+            }
+        }
     }
 }
 
@@ -94,7 +108,7 @@ struct ToolbarIconButton: View {
     var body: some View {
         Button(action: action) {
             Image(systemName: symbol)
-                .font(.inter(14, .medium))
+                .font(.ui(14, .medium))
                 .foregroundStyle(isOn ? Palette.bridgeGreen : (tint ?? Palette.textPrimary))
                 .frame(width: Metrics.toolbarButton, height: Metrics.toolbarButton)
                 .background(Circle().fill(isOn ? Palette.selectionFill : (hovering && isEnabled ? Palette.hoverFill : .clear)))
@@ -120,7 +134,7 @@ struct ToolbarMenu<Items: View>: View {
             items()
         } label: {
             Image(systemName: symbol)
-                .font(.inter(14, .medium))
+                .font(.ui(14, .medium))
                 .frame(width: Metrics.toolbarButton, height: Metrics.toolbarButton)
         }
         .menuStyle(.borderlessButton)
@@ -144,7 +158,7 @@ struct GlassSearchField: View {
     var body: some View {
         HStack(spacing: 7) {
             Image(systemName: "magnifyingglass")
-                .font(.inter(12.5, .medium))
+                .font(.ui(12.5, .medium))
                 .foregroundStyle(Palette.textSecondary)
             TextField(prompt, text: $text)
                 .textFieldStyle(.plain)
@@ -191,8 +205,8 @@ struct GlassSegmented<Value: Hashable>: View {
                     withAnimation(animations ? Motion.lens : nil) { selection = option.value }
                 } label: {
                     HStack(spacing: 5) {
-                        if let symbol = option.symbol { Image(systemName: symbol).font(.inter(12.5, .medium)) }
-                        if let title = option.title { Text(title).font(.inter(12.5, selected ? .semibold : .medium)) }
+                        if let symbol = option.symbol { Image(systemName: symbol).font(.ui(12.5, .medium)) }
+                        if let title = option.title { Text(title).font(.ui(12.5, selected ? .semibold : .medium)) }
                     }
                     .foregroundStyle(selected ? Palette.textPrimary : Palette.textSecondary)
                     .padding(.horizontal, option.title == nil ? 9 : 12)
@@ -240,7 +254,7 @@ struct SelectionSummary: View {
     var body: some View {
         HStack(spacing: 6) {
             Text("\(count)")
-                .font(.inter(13, .bold))
+                .font(.ui(13, .bold))
                 .foregroundStyle(Palette.onAccent)
                 .padding(.horizontal, 8)
                 .frame(minWidth: 24, minHeight: 22)
@@ -269,7 +283,7 @@ struct ToastView: View {
     var body: some View {
         HStack(spacing: 10) {
             Image(systemName: toast.symbol)
-                .font(.inter(16, .semibold))
+                .font(.ui(16, .semibold))
                 .foregroundStyle(toast.tint)
             VStack(alignment: .leading, spacing: 1) {
                 Text(toast.title).font(Typo.headline).foregroundStyle(Palette.textPrimary)
@@ -334,7 +348,7 @@ struct GlassSection<Content: View>: View {
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.s) {
             HStack(spacing: 6) {
-                if let symbol { Image(systemName: symbol).font(.inter(11.5, .semibold)) }
+                if let symbol { Image(systemName: symbol).font(.ui(11.5, .semibold)) }
                 Text(title.uppercased()).font(Typo.sectionLabel).tracking(0.7)
             }
             .foregroundStyle(Palette.textSecondary)
@@ -381,7 +395,7 @@ struct StatTile: View {
     var body: some View {
         HStack(spacing: 12) {
             Image(systemName: symbol)
-                .font(.inter(15, .semibold))
+                .font(.ui(15, .semibold))
                 .foregroundStyle(tint)
                 .frame(width: 34, height: 34)
                 .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(tint.opacity(0.14)))
@@ -405,8 +419,8 @@ struct TagLabel: View {
 
     var body: some View {
         HStack(spacing: 4) {
-            if let symbol { Image(systemName: symbol).font(.inter(9.5, .bold)) }
-            Text(text).font(.inter(10.5, .semibold))
+            if let symbol { Image(systemName: symbol).font(.ui(9.5, .bold)) }
+            Text(text).font(.ui(10.5, .semibold))
         }
         .foregroundStyle(tint)
         .padding(.horizontal, 7)

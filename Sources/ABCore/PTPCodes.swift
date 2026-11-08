@@ -21,6 +21,7 @@ public enum PTPOperation: UInt16, Sendable {
     case deleteObject = 0x100B
     case sendObjectInfo = 0x100C
     case sendObject = 0x100D
+    case getDevicePropValue = 0x1015
     case getPartialObject = 0x101B
     // MTP-Erweiterungen
     case getObjectPropsSupported = 0x9801

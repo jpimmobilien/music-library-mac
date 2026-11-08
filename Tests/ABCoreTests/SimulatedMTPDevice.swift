@@ -162,6 +162,9 @@ final class SimulatedMTPDevice: MTPBulkTransport {
         }
     }
 
+    /// Akkustand, den das simulierte Gerät meldet (`nil` = Eigenschaft nicht unterstützt).
+    var batteryLevel: UInt8? = 76
+
     private func handleCommand(code: UInt16, tid: UInt32, params: [UInt32]) {
         guard let op = PTPOperation(rawValue: code) else {
             respond(.operationNotSupported, tid: tid)
@@ -266,6 +269,10 @@ final class SimulatedMTPDevice: MTPBulkTransport {
                 if blocked { respond(.partialDeletion, tid: tid); return }
             }
             objects[h] = nil
+            respond(.ok, tid: tid)
+        case .getDevicePropValue:
+            guard params.first == 0x5001, let level = batteryLevel else { respond(.devicePropNotSupported, tid: tid); return }
+            sendData(Data([level]), op: code, tid: tid)
             respond(.ok, tid: tid)
         case .sendObjectInfo, .sendObject, .setObjectPropValue:
             pendingCommand = (code, tid, params)

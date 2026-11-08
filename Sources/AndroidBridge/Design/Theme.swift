@@ -2,18 +2,17 @@ import SwiftUI
 import AppKit
 
 // =============================================================================================
-// Designsystem von Android Bridge 2.0
+// Designsystem von Android Bridge 3.0 – „Midnight Glass“
 //
-// Grundsätze (übernommen aus der Musikbibliothek, eigenständig umgesetzt):
-// – Inhalt bis an den Fensterrand, verdeckte Titelleiste, schwebende Glasflächen über einem
-//   getönten Atmosphäre-Hintergrund.
-// – Große Titel in Inter Display, ruhige Inter-Texte, klare Hierarchie.
-// – Werkzeuge in Glaskapseln rechts neben dem Titel, Auswahlaktionen in einer schwebenden Leiste unten.
-// – Feste Abstände (4-pt-Raster), wenige Radien, weiche Federn.
+// Grundsätze (abgeleitet aus Apples Produktpräsentationen, eigenständig umgesetzt):
+// – Licht statt Linien: tiefe Flächen, auf denen weiches, farbiges Licht Tiefe erzeugt. Keine Rahmen,
+//   wo Licht und Schatten trennen können.
+// – Inhalt zuerst: Bilder groß, Text knapp. Große Titel in der Systemschrift (SF Pro), ruhige Metadaten.
+// – Glas in Schichten: Unschärfe + Tönung + Innenlicht + Lichtkante + weicher Schatten.
+//   macOS 26: natives Liquid Glass. macOS 13–15: gleichwertige Nachbildung mit Systemmaterialien.
+// – Bewegung erklärt: Federn für Zustandswechsel, ruhige Lichtfelder im Hintergrund, nichts Hektisches.
 //
-// Eigene Identität: kühles Schiefer-Weiß bzw. tiefes Petrol-Schwarz, Akzent „Bridge-Mint“, Atmosphäre aus
-// Mint, Himmelblau und Flieder. macOS 26: natives Liquid Glass. macOS 13–15: Nachbildung mit echter
-// Hintergrundunschärfe, Lichtkante, Glanz und weichem Schatten.
+// Identität: „Signal“-Grün (Android ↔ Mac) als einziges kräftiges Licht; Nebenlichter Tiefblau und Violett.
 // =============================================================================================
 
 enum LiquidGlass {
@@ -58,61 +57,67 @@ extension NSColor {
     }
 }
 
-/// Farbpalette (Hell und Dunkel eigenständig abgestimmt, nicht invertiert).
+/// Farbpalette. Hell und Dunkel sind eigenständig abgestimmt (nicht invertiert).
 enum Palette {
-    // Akzente
-    static let bridgeGreen = Color.adaptive(0x12A27E, dark: 0x3DD5A7)
-    static let bridgeTeal = Color.adaptive(0x128FA6, dark: 0x3BBAD0)
-    static let bridgeBlue = Color.adaptive(0x2F72E6, dark: 0x5C9CFF)
-    static let accentSoft = Color.adaptive(0x12A27E, 0.13, dark: 0x3DD5A7, 0.17)
-    static let onAccent = Color.adaptive(0xFFFFFF, dark: 0x062019)
+    // Licht / Akzente
+    static let bridgeGreen = Color.adaptive(0x0E9F74, dark: 0x3EE3A8)   // „Signal“
+    static let bridgeTeal = Color.adaptive(0x0B8EA6, dark: 0x3CC7DE)
+    static let bridgeBlue = Color.adaptive(0x2F6BE0, dark: 0x6A9BFF)
+    static let violet = Color.adaptive(0x7A5BE0, dark: 0x9B85FF)
+    static let accentSoft = Color.adaptive(0x0E9F74, 0.12, dark: 0x3EE3A8, 0.16)
+    static let onAccent = Color.adaptive(0xFFFFFF, dark: 0x02150E)
 
     // Flächen
-    static let background = Color.adaptive(0xEEF3F2, dark: 0x0B1012)
-    static let backgroundTop = Color.adaptive(0xF8FAFA, dark: 0x10171A)
-    static let surface = Color.adaptive(0xFFFFFF, dark: 0x172024)
-    static let surfaceMuted = Color.adaptive(0xEAF0EF, dark: 0x1C262A)
+    static let background = Color.adaptive(0xF2F4F7, dark: 0x040506)
+    static let backgroundTop = Color.adaptive(0xFAFBFC, dark: 0x0A0D10)
+    static let surface = Color.adaptive(0xFFFFFF, dark: 0x15191D)
+    static let surfaceMuted = Color.adaptive(0xEBEEF2, dark: 0x1B2025)
+    static let mediaWell = Color.adaptive(0xE4E8EE, dark: 0x101317)
 
     // Text
-    static let textPrimary = Color.adaptive(0x111A19, dark: 0xF1F6F5)
-    static let textSecondary = Color.adaptive(0x5A6866, dark: 0xA3B1AF)
-    static let textTertiary = Color.adaptive(0x7D8A88, dark: 0x7E8C8A)
+    static let textPrimary = Color.adaptive(0x0B0F14, dark: 0xF5F7FA)
+    static let textSecondary = Color.adaptive(0x5B6470, dark: 0xA0A8B3)
+    static let textTertiary = Color.adaptive(0x8A929C, dark: 0x6D7580)
     static let secondaryText = textSecondary
 
     // Glas
-    static let glassTint = Color.adaptive(0xFFFFFF, 0.60, dark: 0x182226, 0.62)
-    static let glassTintStrong = Color.adaptive(0xFFFFFF, 0.80, dark: 0x1B262A, 0.82)
-    static let glassEdgeLight = Color.adaptive(0xFFFFFF, 0.92, dark: 0xFFFFFF, 0.20)
-    static let glassEdgeDark = Color.adaptive(0xFFFFFF, 0.28, dark: 0xFFFFFF, 0.04)
-    static let glassSheen = Color.adaptive(0xFFFFFF, 0.50, dark: 0xFFFFFF, 0.06)
-    static let shadow = Color.adaptive(0x0D2B25, 0.13, dark: 0x000000, 0.55)
-    static let hairline = Color.adaptive(0x0E1A18, 0.08, dark: 0xFFFFFF, 0.08)
-    static let fieldFill = Color.adaptive(0x0E1A18, 0.05, dark: 0xFFFFFF, 0.07)
-    static let hoverFill = Color.adaptive(0x0E1A18, 0.05, dark: 0xFFFFFF, 0.06)
-    static let selectionFill = Color.adaptive(0x12A27E, 0.15, dark: 0x3DD5A7, 0.20)
-    static let scrim = Color.adaptive(0x081311, 0.30, dark: 0x000000, 0.55)
+    static let glassTint = Color.adaptive(0xFFFFFF, 0.58, dark: 0x161A1F, 0.58)
+    static let glassTintStrong = Color.adaptive(0xFFFFFF, 0.78, dark: 0x1A1F25, 0.80)
+    static let glassEdgeLight = Color.adaptive(0xFFFFFF, 0.95, dark: 0xFFFFFF, 0.22)
+    static let glassEdgeDark = Color.adaptive(0xFFFFFF, 0.25, dark: 0xFFFFFF, 0.03)
+    static let glassSheen = Color.adaptive(0xFFFFFF, 0.55, dark: 0xFFFFFF, 0.07)
+    static let shadow = Color.adaptive(0x0B1A2A, 0.14, dark: 0x000000, 0.65)
+    static let hairline = Color.adaptive(0x0B0F14, 0.08, dark: 0xFFFFFF, 0.08)
+    static let fieldFill = Color.adaptive(0x0B0F14, 0.05, dark: 0xFFFFFF, 0.07)
+    static let hoverFill = Color.adaptive(0x0B0F14, 0.05, dark: 0xFFFFFF, 0.07)
+    static let selectionFill = Color.adaptive(0x0E9F74, 0.14, dark: 0x3EE3A8, 0.18)
+    static let scrim = Color.adaptive(0x05080C, 0.35, dark: 0x000000, 0.6)
+    static let sidebarTint = Color.adaptive(0xF7F8FA, 0.62, dark: 0x0B0E11, 0.62)
 
-    // Atmosphäre
-    static let ambientA = Color.adaptive(0x7EDFC1, 0.55, dark: 0x16735B, 0.42)
-    static let ambientB = Color.adaptive(0x9CC6F7, 0.50, dark: 0x1C4680, 0.40)
-    static let ambientC = Color.adaptive(0xD8CCF4, 0.45, dark: 0x3D2D6E, 0.32)
+    // Lichtfelder des Hintergrunds
+    static let lightA = Color.adaptive(0x6FE3BF, 0.50, dark: 0x0F7A58, 0.55)   // Signal
+    static let lightB = Color.adaptive(0x9DBDF7, 0.45, dark: 0x1A3D86, 0.50)   // Tiefblau
+    static let lightC = Color.adaptive(0xD3C6F5, 0.40, dark: 0x3A2470, 0.42)   // Violett
+    static let ambientA = lightA
+    static let ambientB = lightB
+    static let ambientC = lightC
 
     // Zustände
-    static let warning = Color.adaptive(0xD98A0B, dark: 0xF5B13D)
-    static let danger = Color.adaptive(0xD3333F, dark: 0xFF6B6E)
-    static let dangerSoft = Color.adaptive(0xD3333F, 0.11, dark: 0xFF6B6E, 0.16)
-    static let success = Color.adaptive(0x18A765, dark: 0x3FD58A)
+    static let warning = Color.adaptive(0xD38306, dark: 0xF8B640)
+    static let danger = Color.adaptive(0xD12F3D, dark: 0xFF6268)
+    static let dangerSoft = Color.adaptive(0xD12F3D, 0.10, dark: 0xFF6268, 0.15)
+    static let success = Color.adaptive(0x12A15F, dark: 0x3EE38A)
 
     static func tint(for kind: FileKindTint) -> Color {
         switch kind {
-        case .folder: return Color.adaptive(0x3A86F0, dark: 0x5EA0FF)
-        case .photo: return Color.adaptive(0xEB8A35, dark: 0xF7A35A)
-        case .video: return Color.adaptive(0xE04650, dark: 0xFF6B73)
-        case .audio: return Color.adaptive(0xB24ED0, dark: 0xD27BEC)
-        case .document: return Color.adaptive(0x4C72E6, dark: 0x7B9DFF)
-        case .archive: return Color.adaptive(0x7D8A88, dark: 0x9AA7A5)
+        case .folder: return Color.adaptive(0x2F7CEB, dark: 0x5EA2FF)
+        case .photo: return Color.adaptive(0xE8822D, dark: 0xFFA552)
+        case .video: return Color.adaptive(0xDE3E52, dark: 0xFF6A7A)
+        case .audio: return Color.adaptive(0xB14BD0, dark: 0xD67EF0)
+        case .document: return Color.adaptive(0x4A6FE3, dark: 0x82A2FF)
+        case .archive: return Color.adaptive(0x8B6B3E, dark: 0xC9A06A)
         case .apk: return bridgeGreen
-        case .other: return Color.adaptive(0x7D8A88, dark: 0x9AA7A5)
+        case .other: return Color.adaptive(0x7D8793, dark: 0x9AA4B0)
         }
     }
 }
@@ -132,31 +137,36 @@ enum Spacing {
     static let xl: CGFloat = 20
     static let xxl: CGFloat = 24
     static let xxxl: CGFloat = 32
+    static let section: CGFloat = 40
     /// Seitenrand der Inhalte.
-    static let gutter: CGFloat = 28
+    static let gutter: CGFloat = 32
 }
 
 /// Eckenradien.
 enum Radius {
-    static let thumb: CGFloat = 8
-    static let tile: CGFloat = 12
+    static let thumb: CGFloat = 10
+    static let tile: CGFloat = 14
     static let control: CGFloat = 10
-    static let card: CGFloat = 18
-    static let panel: CGFloat = 24
-    static let sheet: CGFloat = 28
+    static let card: CGFloat = 20
+    static let panel: CGFloat = 26
+    static let sheet: CGFloat = 30
+    static let hero: CGFloat = 34
 }
 
 /// Feste Maße.
 enum Metrics {
-    static let sidebarWidth: CGFloat = 236
-    static let sidebarInset: CGFloat = 10
+    static let sidebarWidth: CGFloat = 232
+    static let sidebarRailWidth: CGFloat = 72
+    /// Unterhalb dieser Fensterbreite wird die Seitenleiste zur Symbolleiste.
+    static let railBreakpoint: CGFloat = 1100
+    static let sidebarInset: CGFloat = 0
     /// Platz für die Ampel-Knöpfe über der Seitenleiste.
-    static let trafficLights: CGFloat = 44
-    static let sidebarRow: CGFloat = 32
-    static let toolbarButton: CGFloat = 30
-    static let toolbarHeight: CGFloat = 38
-    static let searchHeight: CGFloat = 32
-    static let headerTop: CGFloat = 22
+    static let trafficLights: CGFloat = 46
+    static let sidebarRow: CGFloat = 34
+    static let toolbarButton: CGFloat = 32
+    static let toolbarHeight: CGFloat = 40
+    static let searchHeight: CGFloat = 34
+    static let headerTop: CGFloat = 26
 }
 
 /// Bewegung: weiche Federn, Apple-artige Ausklingkurven.
@@ -165,6 +175,7 @@ enum Motion {
     static let spring = Animation.interpolatingSpring(stiffness: 380, damping: 2 * 0.86 * sqrt(380))
     static let gentle = Animation.interpolatingSpring(stiffness: 200, damping: 2 * 0.9 * sqrt(200))
     static let lens = Animation.interpolatingSpring(stiffness: 360, damping: 2 * 0.78 * sqrt(360))
+    static let reveal = Animation.timingCurve(0.16, 1, 0.3, 1, duration: 0.7)
 }
 
 extension Animation {
@@ -172,47 +183,34 @@ extension Animation {
     static let bridgeQuick = Animation.timingCurve(0.22, 1, 0.36, 1, duration: 0.18)
 }
 
-// MARK: - Typografie (Inter, im Programmpaket enthalten; Rückfall: Systemschrift)
+// MARK: - Typografie (Systemschrift SF Pro)
 
 enum Typo {
-    /// Wurden die Inter-Schriften registriert (ATSApplicationFontsPath)?
-    static let interAvailable: Bool = NSFont(name: "Inter-Regular", size: 12) != nil
-    static let displayAvailable: Bool = NSFont(name: "InterDisplay-Bold", size: 12) != nil
-
-    static func faceName(_ weight: Font.Weight) -> String {
-        switch weight {
-        case .bold, .heavy, .black: return "Inter-Bold"
-        case .semibold: return "Inter-SemiBold"
-        case .medium: return "Inter-Medium"
-        default: return "Inter-Regular"
-        }
-    }
-
     // Stufen
-    static let largeTitle = Font.display(30, .bold)
-    static let title = Font.display(21, .bold)
+    static let hero = Font.display(44, .bold)
+    static let largeTitle = Font.display(32, .bold)
+    static let title = Font.display(22, .bold)
     static let title2 = Font.display(17, .semibold)
-    static let headline = Font.inter(13.5, .semibold)
-    static let body = Font.inter(13)
-    static let bodyMedium = Font.inter(13, .medium)
-    static let callout = Font.inter(12.5)
-    static let caption = Font.inter(11.5)
-    static let captionMedium = Font.inter(11.5, .medium)
-    static let micro = Font.inter(10.5, .medium)
-    static let sectionLabel = Font.inter(11, .semibold)
+    static let headline = Font.ui(13.5, .semibold)
+    static let body = Font.ui(13)
+    static let bodyMedium = Font.ui(13, .medium)
+    static let callout = Font.ui(12.5)
+    static let caption = Font.ui(11.5)
+    static let captionMedium = Font.ui(11.5, .medium)
+    static let micro = Font.ui(10.5, .medium)
+    static let sectionLabel = Font.ui(11, .semibold)
+    static let eyebrow = Font.ui(12, .semibold)
 }
 
 extension Font {
-    /// Inter im gewünschten Gewicht (Symbole übernehmen Größe und Gewicht).
-    static func inter(_ size: CGFloat, _ weight: Font.Weight = .regular) -> Font {
-        guard Typo.interAvailable else { return .system(size: size, weight: weight) }
-        return .custom(Typo.faceName(weight), fixedSize: size).weight(weight)
+    /// Systemschrift (SF Pro Text) – Symbole übernehmen Größe und Gewicht.
+    static func ui(_ size: CGFloat, _ weight: Font.Weight = .regular) -> Font {
+        .system(size: size, weight: weight)
     }
 
-    /// Inter Display für große Titel.
+    /// Systemschrift für Titel (SF Pro Display wird ab 20 pt automatisch gewählt).
     static func display(_ size: CGFloat, _ weight: Font.Weight = .bold) -> Font {
-        guard Typo.displayAvailable else { return .system(size: size, weight: weight) }
-        return .custom(weight == .semibold ? "InterDisplay-SemiBold" : "InterDisplay-Bold", fixedSize: size)
+        .system(size: size, weight: weight, design: .default)
     }
 }
 
@@ -220,6 +218,7 @@ extension Font {
 
 private struct GlassEnabledKey: EnvironmentKey { static let defaultValue = true }
 private struct AnimationsEnabledKey: EnvironmentKey { static let defaultValue = true }
+private struct LightIntensityKey: EnvironmentKey { static let defaultValue: Double = 0.6 }
 
 extension EnvironmentValues {
     var glassEnabled: Bool {
@@ -229,6 +228,11 @@ extension EnvironmentValues {
     var animationsEnabled: Bool {
         get { self[AnimationsEnabledKey.self] }
         set { self[AnimationsEnabledKey.self] = newValue }
+    }
+    /// Stärke des Signal-Lichts (verbunden = hell, getrennt = gedämpft).
+    var lightIntensity: Double {
+        get { self[LightIntensityKey.self] }
+        set { self[LightIntensityKey.self] = newValue }
     }
 }
 
@@ -279,7 +283,7 @@ struct GlassBackground<S: InsettableShape>: ViewModifier {
             let base = tint.map { Glass.regular.tint($0) } ?? (strong ? Glass.regular.tint(Palette.glassTint) : Glass.regular)
             content
                 .glassEffect(interactive ? base.interactive() : base, in: shape)
-                .shadow(color: elevated ? Palette.shadow.opacity(0.6) : .clear, radius: elevated ? 18 : 0, y: elevated ? 6 : 0)
+                .shadow(color: elevated ? Palette.shadow.opacity(0.7) : .clear, radius: elevated ? 24 : 0, y: elevated ? 10 : 0)
         } else {
             fallback(content)
         }
@@ -288,6 +292,7 @@ struct GlassBackground<S: InsettableShape>: ViewModifier {
         #endif
     }
 
+    /// Fünf Schichten: Unschärfe, Tönung, Innenlicht (oben), Lichtkante, Schatten.
     private func fallback(_ content: Content) -> some View {
         content
             .background(
@@ -295,7 +300,8 @@ struct GlassBackground<S: InsettableShape>: ViewModifier {
                     if glass {
                         BackdropBlur(material: scheme == .dark ? .hudWindow : .popover)
                         shape.fill(tint ?? (strong ? Palette.glassTintStrong : Palette.glassTint))
-                        LinearGradient(stops: [.init(color: Palette.glassSheen, location: 0), .init(color: .clear, location: 0.5)],
+                        LinearGradient(stops: [.init(color: Palette.glassSheen, location: 0),
+                                               .init(color: .clear, location: 0.45)],
                                        startPoint: .top, endPoint: .bottom)
                     } else {
                         shape.fill(tint ?? Palette.surface)
@@ -304,12 +310,12 @@ struct GlassBackground<S: InsettableShape>: ViewModifier {
                 .clipShape(shape)
             )
             .overlay(
-                shape.strokeBorder(LinearGradient(colors: [Palette.glassEdgeLight, Palette.glassEdgeDark, Palette.glassEdgeLight.opacity(0.5)],
+                shape.strokeBorder(LinearGradient(colors: [Palette.glassEdgeLight, Palette.glassEdgeDark, Palette.glassEdgeLight.opacity(0.35)],
                                                   startPoint: .topLeading, endPoint: .bottomTrailing),
                                    lineWidth: 0.8)
             )
             .compositingGroup()
-            .shadow(color: elevated ? Palette.shadow : Palette.shadow.opacity(0.35), radius: elevated ? 18 : 6, x: 0, y: elevated ? 7 : 2)
+            .shadow(color: elevated ? Palette.shadow : Palette.shadow.opacity(0.4), radius: elevated ? 24 : 8, x: 0, y: elevated ? 10 : 3)
     }
 }
 
@@ -326,6 +332,25 @@ extension View {
     /// Animation nur, wenn in den Einstellungen eingeschaltet.
     func bridgeAnimation<V: Equatable>(_ animation: Animation = .bridgeSpring, value: V, enabled: Bool) -> some View {
         self.animation(enabled ? animation : nil, value: value)
+    }
+
+    /// Weiches Einblenden beim ersten Erscheinen (von unten, leicht vergrößert).
+    func revealOnAppear(delay: Double = 0) -> some View { modifier(RevealOnAppear(delay: delay)) }
+}
+
+struct RevealOnAppear: ViewModifier {
+    let delay: Double
+    @State private var shown = false
+    @Environment(\.animationsEnabled) private var animations
+
+    func body(content: Content) -> some View {
+        content
+            .opacity(shown ? 1 : 0)
+            .offset(y: shown ? 0 : 14)
+            .onAppear {
+                guard animations else { shown = true; return }
+                withAnimation(Motion.reveal.delay(delay)) { shown = true }
+            }
     }
 }
 
@@ -351,20 +376,42 @@ struct GlassGroup<Content: View>: View {
     }
 }
 
-/// Atmosphärischer Fensterhintergrund: getönte, sehr weiche Farbinseln (statisch, keine Echtzeit-Unschärfe).
-struct AmbientBackground: View {
+/// Fensterhintergrund: tiefe Fläche mit weichen Lichtfeldern, die sich sehr langsam bewegen.
+/// Pausiert ohne Animationen und bei „Bewegung reduzieren“; zeichnet höchstens 20× pro Sekunde.
+struct CinematicBackground: View {
     @Environment(\.glassEnabled) private var glass
+    @Environment(\.animationsEnabled) private var animations
+    @Environment(\.lightIntensity) private var intensity
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        GeometryReader { geo in
-            let r = max(geo.size.width, geo.size.height) * 0.7
-            ZStack {
-                LinearGradient(colors: [Palette.backgroundTop, Palette.background], startPoint: .top, endPoint: .bottom)
-                if glass {
-                    RadialGradient(colors: [Palette.ambientA, .clear], center: UnitPoint(x: 0.0, y: 0.0), startRadius: 0, endRadius: r)
-                    RadialGradient(colors: [Palette.ambientB, .clear], center: UnitPoint(x: 1.0, y: 0.25), startRadius: 0, endRadius: r * 0.85)
-                    RadialGradient(colors: [Palette.ambientC, .clear], center: UnitPoint(x: 0.45, y: 1.1), startRadius: 0, endRadius: r * 0.8)
+        let animate = animations && !reduceMotion && glass && !SnapshotMode.isActive
+        TimelineView(.animation(minimumInterval: 1.0 / 20.0, paused: !animate)) { context in
+            let t = animate ? context.date.timeIntervalSinceReferenceDate : 0
+            GeometryReader { geo in
+                let w = geo.size.width, h = geo.size.height
+                let r = max(w, h)
+                ZStack {
+                    LinearGradient(colors: [Palette.backgroundTop, Palette.background], startPoint: .top, endPoint: .bottom)
+                    if glass {
+                        // Signal-Licht oben links, atmet mit der Verbindung
+                        RadialGradient(colors: [Palette.lightA.opacity(0.35 + 0.65 * intensity), .clear],
+                                       center: UnitPoint(x: 0.08 + 0.05 * sin(t / 11), y: -0.05 + 0.06 * cos(t / 13)),
+                                       startRadius: 0, endRadius: r * 0.62)
+                        RadialGradient(colors: [Palette.lightB, .clear],
+                                       center: UnitPoint(x: 0.95 + 0.04 * cos(t / 17), y: 0.18 + 0.08 * sin(t / 19)),
+                                       startRadius: 0, endRadius: r * 0.55)
+                        RadialGradient(colors: [Palette.lightC, .clear],
+                                       center: UnitPoint(x: 0.5 + 0.12 * sin(t / 23), y: 1.15),
+                                       startRadius: 0, endRadius: r * 0.6)
+                        // feine Vignette für Tiefe
+                        RadialGradient(colors: [.clear, Color.black.opacity(0.18)], center: .center,
+                                       startRadius: r * 0.35, endRadius: r * 0.85)
+                            .blendMode(.multiply)
+                    }
                 }
+                .frame(width: w, height: h)
+                .drawingGroup()
             }
         }
         .ignoresSafeArea()
@@ -372,7 +419,15 @@ struct AmbientBackground: View {
     }
 }
 
-/// Kapselknopf: `prominent` = Akzentfläche, sonst tonales Glas; `destructive` = Rot.
+/// Alter Name (Dialoge und Nebenfenster).
+typealias AmbientBackground = CinematicBackground
+
+/// Bildschirmfoto-Modus des Builds (statisches Licht, damit Bilder vergleichbar bleiben).
+enum SnapshotMode {
+    static var isActive = false
+}
+
+/// Kapselknopf: `prominent` = Signal-Fläche, sonst tonales Glas; `destructive` = Rot.
 struct GlassButtonStyle: ButtonStyle {
     var prominent = false
     var destructive = false
@@ -393,33 +448,36 @@ private struct GlassButtonBody: View {
 
     var body: some View {
         configuration.label
-            .font(.inter(compact ? 12 : 13, .semibold))
+            .font(.ui(compact ? 12 : 13, .semibold))
             .lineLimit(1)
-            .padding(.horizontal, compact ? 11 : 15)
-            .frame(height: compact ? 28 : 32)
+            .fixedSize()
+            .padding(.horizontal, compact ? 12 : 16)
+            .frame(height: compact ? 28 : 34)
             .foregroundStyle(foreground)
             .background {
                 if prominent {
                     Capsule().fill(destructive ? AnyShapeStyle(Palette.danger)
                                    : AnyShapeStyle(LinearGradient(colors: [Palette.bridgeGreen, Palette.bridgeTeal], startPoint: .topLeading, endPoint: .bottomTrailing)))
+                    Capsule().fill(LinearGradient(colors: [Color.white.opacity(0.28), .clear], startPoint: .top, endPoint: .center))
                     Capsule().fill(Color.white.opacity(hovering && isEnabled ? 0.12 : 0))
                 } else {
                     Capsule().fill(destructive ? Palette.dangerSoft : Palette.fieldFill)
                     Capsule().fill(hovering && isEnabled ? Palette.hoverFill : Color.clear)
                 }
             }
-            .overlay(Capsule().strokeBorder(Color.white.opacity(prominent ? 0.22 : 0), lineWidth: 0.6))
+            .overlay(Capsule().strokeBorder(Color.white.opacity(prominent ? 0.25 : 0.0), lineWidth: 0.6))
             .contentShape(Capsule())
-            .opacity(isEnabled ? (configuration.isPressed ? 0.78 : 1) : 0.42)
+            .opacity(isEnabled ? (configuration.isPressed ? 0.8 : 1) : 0.4)
             .scaleEffect(configuration.isPressed ? 0.97 : 1)
-            .shadow(color: prominent && isEnabled ? (destructive ? Palette.danger : Palette.bridgeGreen).opacity(0.28) : .clear, radius: 8, y: 3)
+            .shadow(color: prominent && isEnabled ? (destructive ? Palette.danger : Palette.bridgeGreen).opacity(hovering ? 0.45 : 0.3) : .clear,
+                    radius: hovering ? 14 : 9, y: 3)
             .animation(.bridgeQuick, value: configuration.isPressed)
             .animation(.bridgeQuick, value: hovering)
             .onHover { hovering = $0 }
     }
 
     private var foreground: Color {
-        if prominent { return .white }
+        if prominent { return destructive ? .white : Palette.onAccent }
         return destructive ? Palette.danger : Palette.textPrimary
     }
 }
@@ -428,7 +486,7 @@ private struct GlassButtonBody: View {
 
 /// Verdeckte Titelleiste, Inhalt bis an den oberen Fensterrand.
 struct WindowConfigurator: NSViewRepresentable {
-    var minSize = NSSize(width: 1000, height: 660)
+    var minSize = NSSize(width: 960, height: 640)
 
     func makeNSView(context: Context) -> NSView {
         let view = NSView()
@@ -437,6 +495,7 @@ struct WindowConfigurator: NSViewRepresentable {
             window.titlebarAppearsTransparent = true
             window.titleVisibility = .hidden
             window.styleMask.insert(.fullSizeContentView)
+            window.titlebarSeparatorStyle = .none
             window.isMovableByWindowBackground = false
             window.minSize = minSize
             window.tabbingMode = .disallowed

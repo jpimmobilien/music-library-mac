@@ -90,11 +90,9 @@ struct DuplicatesView: View {
         let groups = showSimilar ? scanner.similar : scanner.identical
         ScrollView {
             VStack(alignment: .leading, spacing: Spacing.xl) {
-                HStack(spacing: 12) {
-                    StatTile(value: "\(scanner.identical.count)", label: "Gruppen identischer Dateien", symbol: "square.stack.3d.up")
-                    StatTile(value: "\(scanner.redundantTotal)", label: "Doppelte Dateien", symbol: "doc.on.doc", tint: Palette.bridgeTeal)
-                    StatTile(value: ByteFormat.string(scanner.reclaimableTotal), label: "Freigebbar", symbol: "externaldrive.badge.minus", tint: Palette.bridgeBlue)
-                }
+                DuplicateSummaryHero(groups: scanner.identical.count, duplicates: scanner.redundantTotal,
+                                     reclaimable: scanner.reclaimableTotal, similar: scanner.similar.count,
+                                     marked: scanner.marked.count, markedBytes: scanner.markedBytes)
                 if let freed = scanner.lastFreed {
                     LastDeletionNote(freed: freed, failures: scanner.lastFailures)
                 }
@@ -174,7 +172,7 @@ private struct ScanSetupPanel: View {
                 GlassSection(title: "Vergleich", symbol: "equal.square") {
                     LabeledRow(title: "Exakte Duplikate (immer)",
                                detail: "Dateien gelten nur dann als Duplikat, wenn ihr Inhalt byte-genau übereinstimmt (SHA-256) – unabhängig von Name, Ordner oder Speicher. Gleicher Name oder gleiche Größe allein genügt nie.") {
-                        Image(systemName: "checkmark.seal.fill").foregroundStyle(Palette.bridgeGreen).font(.inter(18))
+                        Image(systemName: "checkmark.seal.fill").foregroundStyle(Palette.bridgeGreen).font(.ui(18))
                     }
                     Divider().opacity(0.5)
                     LabeledRow(title: "Ähnliche Bilder finden",
@@ -214,7 +212,7 @@ private struct ScanSetupPanel: View {
     private func step(_ n: String, _ text: String) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: 10) {
             Text(n)
-                .font(.inter(11, .bold))
+                .font(.ui(11, .bold))
                 .foregroundStyle(Palette.bridgeGreen)
                 .frame(width: 20, height: 20)
                 .background(Circle().fill(Palette.accentSoft))
@@ -233,7 +231,7 @@ private struct ScopeChip: View {
         Button(action: action) {
             HStack(spacing: 10) {
                 Image(systemName: scope.symbolName)
-                    .font(.inter(15, .medium))
+                    .font(.ui(15, .medium))
                     .foregroundStyle(selected ? Palette.bridgeGreen : Palette.textSecondary)
                     .frame(width: 30, height: 30)
                     .background(RoundedRectangle(cornerRadius: 9, style: .continuous).fill(selected ? Palette.accentSoft : Palette.fieldFill))
@@ -243,7 +241,7 @@ private struct ScopeChip: View {
                 }
                 Spacer(minLength: 0)
                 Image(systemName: selected ? "checkmark.circle.fill" : "circle")
-                    .font(.inter(16))
+                    .font(.ui(16))
                     .foregroundStyle(selected ? Palette.bridgeGreen : Palette.textTertiary)
             }
             .padding(10)
@@ -358,6 +356,60 @@ private struct LastDeletionNote: View {
 }
 
 /// Eine Gruppe gleicher bzw. ähnlicher Dateien.
+/// Zusammenfassung: freigebbarer Speicher groß, Gruppen und Kopien daneben.
+struct DuplicateSummaryHero: View {
+    let groups: Int
+    let duplicates: Int
+    let reclaimable: UInt64
+    let similar: Int
+    let marked: Int
+    let markedBytes: UInt64
+
+    var body: some View {
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: 14) { main; stats }
+            VStack(alignment: .leading, spacing: 14) { main; stats }
+        }
+    }
+
+    private var main: some View {
+        HStack(spacing: 20) {
+            ZStack {
+                Circle().fill(Palette.bridgeGreen.opacity(0.15))
+                Image(systemName: "sparkles")
+                    .font(.ui(28, .semibold))
+                    .foregroundStyle(Palette.bridgeGreen)
+            }
+            .frame(width: 70, height: 70)
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Freigebbar").font(Typo.eyebrow).foregroundStyle(Palette.bridgeGreen)
+                Text(ByteFormat.string(reclaimable))
+                    .font(.display(40, .bold))
+                    .tracking(-0.8)
+                    .foregroundStyle(Palette.textPrimary)
+                    .monospacedDigit()
+                Text(marked > 0 ? "\(marked) markiert · \(ByteFormat.string(markedBytes)) würden frei"
+                                : "Wenn je Gruppe eine Datei bleibt")
+                    .font(Typo.callout).foregroundStyle(Palette.textSecondary)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(22)
+        .frame(minWidth: 360, maxWidth: .infinity, alignment: .leading)
+        .glassCard(cornerRadius: Radius.card, elevated: true)
+    }
+
+    private var stats: some View {
+        HStack(spacing: 14) {
+            StatTile(value: "\(groups)", label: "Gruppen", symbol: "square.stack.3d.up", tint: Palette.bridgeTeal)
+            StatTile(value: "\(duplicates)", label: "Doppelte Dateien", symbol: "doc.on.doc", tint: Palette.bridgeBlue)
+            StatTile(value: "\(similar)", label: "Ähnliche Gruppen", symbol: "photo.on.rectangle", tint: Palette.violet)
+        }
+        .frame(minWidth: 420)
+    }
+}
+
+/// Eine Gruppe: Dateien nebeneinander als große Vorschauen – behalten oder löschen per Klick.
 struct DuplicateGroupCard: View {
     @EnvironmentObject private var model: AppModel
     let group: DuplicateGroup
@@ -368,43 +420,59 @@ struct DuplicateGroupCard: View {
     private var markedInGroup: Int { group.files.filter { scanner.marked.contains($0.id) }.count }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            HStack(spacing: 10) {
-                if group.kind == .identical {
-                    TagLabel(text: "Identisch · SHA-256", symbol: "equal", tint: Palette.bridgeGreen)
-                } else {
-                    TagLabel(text: "Ähnlich – nicht identisch", symbol: "exclamationmark.triangle.fill", tint: Palette.warning)
-                }
-                Text("\(group.files.count) Dateien · \(ByteFormat.string(group.files[0].entry.size)) je Datei")
-                    .font(Typo.callout).foregroundStyle(Palette.textSecondary).monospacedDigit()
-                if skipped { TagLabel(text: "Übersprungen", tint: Palette.textSecondary) }
-                Spacer()
-                if markedInGroup > 0 {
-                    Text("\(markedInGroup) zum Löschen markiert").font(Typo.captionMedium).foregroundStyle(Palette.danger)
-                }
-                Button("Vorschlag übernehmen") { scanner.applySuggestion(group) }
-                    .buttonStyle(GlassButtonStyle(compact: true))
-                Button(skipped ? "Einbeziehen" : "Überspringen") {
-                    if skipped { scanner.skipped.remove(group.id) } else { scanner.skip(group) }
-                }
-                .buttonStyle(GlassButtonStyle(compact: true))
+        VStack(alignment: .leading, spacing: 14) {
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: 10) { headerInfo; Spacer(minLength: 8); headerActions }
+                VStack(alignment: .leading, spacing: 10) { headerInfo; headerActions }
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-
-            Divider().opacity(0.5)
-
-            ForEach(Array(group.files.enumerated()), id: \.element.id) { index, file in
-                DuplicateFileRow(file: file, group: group, scanner: scanner, device: device)
-                if index < group.files.count - 1 { Divider().opacity(0.4).padding(.leading, 112) }
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(alignment: .top, spacing: 14) {
+                    ForEach(group.files) { file in
+                        DuplicateFileCard(file: file, group: group, scanner: scanner, device: device)
+                    }
+                }
+                .padding(.vertical, 4)
+                .padding(.horizontal, 2)
             }
         }
-        .glassCard(cornerRadius: Radius.card)
-        .opacity(skipped ? 0.6 : 1)
+        .padding(18)
+        .glassCard(cornerRadius: Radius.panel)
+        .opacity(skipped ? 0.55 : 1)
+        .animation(.bridgeQuick, value: skipped)
+    }
+
+    private var headerInfo: some View {
+        HStack(spacing: 10) {
+            if group.kind == .identical {
+                TagLabel(text: "Identisch · SHA-256", symbol: "equal", tint: Palette.bridgeGreen)
+            } else {
+                TagLabel(text: "Ähnlich – nicht identisch", symbol: "exclamationmark.triangle.fill", tint: Palette.warning)
+            }
+            Text("\(group.files.count) Dateien · \(ByteFormat.string(group.files[0].entry.size))\(group.kind == .identical ? " je Datei" : "")")
+                .font(Typo.callout).foregroundStyle(Palette.textSecondary).monospacedDigit()
+                .fixedSize()
+            if skipped { TagLabel(text: "Übersprungen", tint: Palette.textSecondary) }
+            if markedInGroup > 0 {
+                Text("\(markedInGroup) zum Löschen markiert").font(Typo.captionMedium).foregroundStyle(Palette.danger).fixedSize()
+            }
+        }
+    }
+
+    private var headerActions: some View {
+        HStack(spacing: 8) {
+            Button("Vorschlag übernehmen") { scanner.applySuggestion(group) }
+                .buttonStyle(GlassButtonStyle(compact: true))
+                .help(group.suggestionReason)
+            Button(skipped ? "Einbeziehen" : "Überspringen") {
+                if skipped { scanner.skipped.remove(group.id) } else { scanner.skip(group) }
+            }
+            .buttonStyle(GlassButtonStyle(compact: true))
+        }
     }
 }
 
-private struct DuplicateFileRow: View {
+/// Eine Datei einer Gruppe als Karte mit großer Vorschau.
+private struct DuplicateFileCard: View {
     @EnvironmentObject private var model: AppModel
     let file: DuplicateFile
     let group: DuplicateGroup
@@ -414,64 +482,96 @@ private struct DuplicateFileRow: View {
 
     private var marked: Bool { scanner.marked.contains(file.id) }
     private var suggested: Bool { group.suggestedKeep == file.id }
+    private let width: CGFloat = 220
 
     var body: some View {
-        HStack(spacing: 14) {
-            Button {
-                scanner.toggle(file, in: group)
-            } label: {
-                Image(systemName: marked ? "trash.circle.fill" : "checkmark.circle")
-                    .font(.inter(22))
-                    .foregroundStyle(marked ? Palette.danger : Palette.bridgeGreen)
-                    .frame(width: 32, height: 32)
-                    .contentShape(Circle())
+        VStack(alignment: .leading, spacing: 10) {
+            ZStack(alignment: .topLeading) {
+                DeviceThumb(entry: file.entry, device: device, size: width, corner: 0)
+                    .frame(width: width - 16, height: 150)
+                    .clipShape(RoundedRectangle(cornerRadius: Radius.tile, style: .continuous))
+                    .overlay {
+                        if marked {
+                            RoundedRectangle(cornerRadius: Radius.tile, style: .continuous).fill(Color.black.opacity(0.45))
+                            Image(systemName: "trash.fill").font(.ui(30, .semibold)).foregroundStyle(.white.opacity(0.9))
+                        }
+                    }
+                    .overlay(alignment: .bottomLeading) {
+                        if file.entry.kind == .video {
+                            Image(systemName: "play.circle.fill").font(.ui(24)).foregroundStyle(.white, .black.opacity(0.35)).padding(8)
+                        }
+                    }
+                Button {
+                    scanner.toggle(file, in: group)
+                } label: {
+                    HStack(spacing: 5) {
+                        Image(systemName: marked ? "trash.fill" : "checkmark")
+                        Text(marked ? "Löschen" : "Behalten")
+                    }
+                    .font(.ui(11.5, .bold))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 10)
+                    .frame(height: 26)
+                    .background(Capsule().fill(marked ? Palette.danger : Palette.bridgeGreen))
+                    .shadow(color: .black.opacity(0.3), radius: 4, y: 1)
+                    .padding(8)
+                }
+                .buttonStyle(.plain)
+                .help(marked ? "Wird gelöscht – klicken, um zu behalten" : "Wird behalten – klicken, um zum Löschen zu markieren")
             }
-            .buttonStyle(.plain)
-            .help(marked ? "Wird gelöscht – klicken, um zu behalten" : "Wird behalten – klicken, um zum Löschen zu markieren")
-
-            DeviceThumb(entry: file.entry, device: device, size: 52)
-                .frame(width: 52, height: 52)
-                .clipShape(RoundedRectangle(cornerRadius: Radius.thumb, style: .continuous))
-                .overlay(RoundedRectangle(cornerRadius: Radius.thumb, style: .continuous).strokeBorder(Palette.hairline))
-
-            VStack(alignment: .leading, spacing: 3) {
-                HStack(spacing: 6) {
+            VStack(alignment: .leading, spacing: 4) {
+                HStack(spacing: 5) {
+                    if suggested {
+                        Image(systemName: "star.fill").font(.ui(10)).foregroundStyle(Palette.bridgeGreen).help("Vorschlag: behalten – \(group.suggestionReason)")
+                    }
                     Text(file.entry.name)
                         .font(Typo.bodyMedium)
                         .strikethrough(marked, color: Palette.danger)
                         .foregroundStyle(marked ? Palette.textSecondary : Palette.textPrimary)
                         .lineLimit(1).truncationMode(.middle)
-                    if suggested {
-                        TagLabel(text: "Vorschlag: behalten", symbol: "star.fill", tint: Palette.bridgeGreen)
-                            .help(group.suggestionReason)
+                }
+                Text(file.path.isEmpty ? "Hauptordner" : file.path.joined(separator: " › "))
+                    .font(Typo.caption).foregroundStyle(Palette.textSecondary)
+                    .lineLimit(2).truncationMode(.middle)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(height: 30, alignment: .top)
+                HStack(spacing: 6) {
+                    Text(ByteFormat.string(file.entry.size)).monospacedDigit()
+                    Text("·")
+                    Text(formatName)
+                    if file.entry.imageWidth > 0 {
+                        Text("·")
+                        Text("\(file.entry.imageWidth)×\(file.entry.imageHeight)").monospacedDigit()
                     }
                 }
-                Text(file.displayPath)
-                    .font(Typo.caption).foregroundStyle(Palette.textSecondary)
-                    .lineLimit(1).truncationMode(.middle)
-            }
-            .frame(minWidth: 140, maxWidth: .infinity, alignment: .leading)
-
-            HStack(spacing: 16) {
-                detail(ByteFormat.string(file.entry.size), "Größe")
-                if file.entry.imageWidth > 0 && file.entry.imageHeight > 0 {
-                    detail("\(file.entry.imageWidth)×\(file.entry.imageHeight)", "Pixel")
+                .font(Typo.caption).foregroundStyle(Palette.textSecondary).lineLimit(1)
+                HStack(spacing: 6) {
+                    TagLabel(text: file.storageName, symbol: file.storageName.lowercased().contains("sd") ? "sdcard" : "internaldrive",
+                             tint: Palette.bridgeBlue)
+                    if let date = file.entry.bestDate {
+                        Text(date.formatted(date: .numeric, time: .omitted)).font(.ui(10.5)).foregroundStyle(Palette.textTertiary).monospacedDigit()
+                    }
                 }
-                detail(formatName, "Format")
-                detail(file.entry.bestDate.map { $0.formatted(date: .numeric, time: .omitted) } ?? "–", "Datum")
-                detail(file.storageName, "Speicher")
             }
-            .fixedSize()
-
+            .padding(.horizontal, 4)
             Button("Nur diese behalten") { scanner.keepOnly(file, in: group) }
                 .buttonStyle(GlassButtonStyle(compact: true))
-                .opacity(hovering ? 1 : 0)
+                .opacity(hovering ? 1 : 0.0)
+                .frame(maxWidth: .infinity)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 10)
-        .background(marked ? Palette.dangerSoft.opacity(0.6) : (hovering ? Palette.hoverFill : Color.clear))
-        .contentShape(Rectangle())
+        .padding(8)
+        .frame(width: width)
+        .background(
+            RoundedRectangle(cornerRadius: Radius.card, style: .continuous)
+                .fill(marked ? Palette.dangerSoft : (suggested ? Palette.accentSoft : Palette.fieldFill))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: Radius.card, style: .continuous)
+                .strokeBorder(marked ? Palette.danger.opacity(0.5) : (suggested ? Palette.bridgeGreen.opacity(0.45) : Color.clear), lineWidth: 1.5)
+        )
         .onHover { hovering = $0 }
+        .animation(.bridgeQuick, value: marked)
+        .animation(.bridgeQuick, value: hovering)
         .contextMenu {
             Button(marked ? "Behalten" : "Zum Löschen markieren") { scanner.toggle(file, in: group) }
             Button("Nur diese behalten") { scanner.keepOnly(file, in: group) }
@@ -481,6 +581,9 @@ private struct DuplicateFileRow: View {
                     let media = group.files.map(\.entry).filter { $0.kind.isMedia }
                     model.viewerItem = MediaViewerItem(deviceID: device.id, items: media, index: media.firstIndex(of: file.entry) ?? 0)
                 }
+            }
+            Button("Informationen") {
+                model.infoEntry = EntryInfoBox(deviceID: device.id, entry: file.entry, path: file.path)
             }
             Button("Im Dateimanager zeigen") {
                 model.selection = .files
@@ -492,13 +595,5 @@ private struct DuplicateFileRow: View {
     private var formatName: String {
         let ext = FileKind.fileExtension(of: file.entry.name)
         return ext.isEmpty ? kindName(file.entry.kind, name: file.entry.name) : ext.uppercased()
-    }
-
-    private func detail(_ value: String, _ label: String) -> some View {
-        VStack(alignment: .trailing, spacing: 1) {
-            Text(value).font(Typo.callout).foregroundStyle(Palette.textPrimary).monospacedDigit().lineLimit(1)
-            Text(label).font(.inter(10)).foregroundStyle(Palette.textTertiary)
-        }
-        .frame(minWidth: 44, alignment: .trailing)
     }
 }

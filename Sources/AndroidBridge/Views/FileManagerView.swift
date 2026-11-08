@@ -23,6 +23,10 @@ struct FileManagerView: View {
     @ObservedObject var settings: SettingsStore
     @ObservedObject private var deviceBrowser: DeviceBrowserModel
     @ObservedObject private var localBrowser: LocalBrowserModel
+    @AppStorage("fileSplitFraction") private var splitFraction: Double = 0.44
+    @AppStorage("filePaneStyle") private var paneStyleRaw: String = PaneStyle.list.rawValue
+
+    private var paneStyle: PaneStyle { PaneStyle(rawValue: paneStyleRaw) ?? .list }
 
     init(files: FileManagerModel, settings: SettingsStore) {
         self.files = files
@@ -100,18 +104,15 @@ struct FileManagerView: View {
     private var content: some View {
         switch files.layout {
         case .dual:
-            HSplitView {
-                LocalPaneView(browser: files.local, files: files)
+            SplitPanes(fraction: $splitFraction, minLeading: 300, minTrailing: 340) {
+                LocalPaneView(browser: files.local, files: files, style: paneStyle)
                     .glassCard(cornerRadius: Radius.panel)
-                    .padding(.trailing, 5)
-                    .frame(minWidth: 300, idealWidth: 460)
-                DevicePaneView(browser: files.device, files: files)
+            } trailing: {
+                DevicePaneView(browser: files.device, files: files, style: paneStyle)
                     .glassCard(cornerRadius: Radius.panel)
-                    .padding(.leading, 5)
-                    .frame(minWidth: 340, idealWidth: 560)
             }
         case .single, .gallery:
-            DevicePaneView(browser: files.device, files: files)
+            DevicePaneView(browser: files.device, files: files, style: paneStyle)
                 .glassCard(cornerRadius: Radius.panel)
         }
     }
@@ -130,6 +131,10 @@ struct FileManagerView: View {
             GlassSegmented(selection: Binding(get: { files.layout == .gallery ? .single : files.layout }, set: { files.layout = $0 }), options: [
                 SegmentOption(value: FileManagerLayout.dual, symbol: FileManagerLayout.dual.symbolName, help: "Zwei Spalten: Mac und Telefon"),
                 SegmentOption(value: FileManagerLayout.single, symbol: FileManagerLayout.single.symbolName, help: "Eine Spalte: nur Telefon"),
+            ])
+            GlassSegmented(selection: $paneStyleRaw, options: [
+                SegmentOption(value: PaneStyle.list.rawValue, symbol: "list.bullet", help: "Liste"),
+                SegmentOption(value: PaneStyle.grid.rawValue, symbol: "square.grid.2x2", help: "Raster mit Vorschaubildern"),
             ])
             ToolbarCapsule {
                 ToolbarMenu(symbol: "arrow.up.arrow.down", help: "Sortieren") {
@@ -202,8 +207,8 @@ struct NameSheet: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text(title).font(.inter(15, .semibold))
-            if let subtitle { Text(subtitle).font(.inter(12)).foregroundStyle(.secondary) }
+            Text(title).font(.ui(15, .semibold))
+            if let subtitle { Text(subtitle).font(.ui(12)).foregroundStyle(.secondary) }
             TextField("Name", text: $text)
                 .textFieldStyle(.roundedBorder)
                 .focused($focused)
@@ -234,30 +239,110 @@ struct NameSheet: View {
 
 // MARK: - Kopfzeile einer Spalte
 
+/// Darstellung der Spalten.
+enum PaneStyle: String { case list, grid }
+
+/// Belegung eines Speichers für die Kopfzeile.
+struct CapacityInfo {
+    let used: Double
+    let label: String
+}
+
+/// Kopf einer Spalte – als „Speicherfläche“: Gerät bzw. Mac, Suche, Pfad und Füllstand.
 struct PaneHeader<Leading: View, Crumbs: View>: View {
     let isActive: Bool
     @Binding var search: String
     let focusToken: UUID
+    var tint: Color = Palette.bridgeGreen
+    var capacity: CapacityInfo?
     @ViewBuilder var leading: () -> Leading
     @ViewBuilder var crumbs: () -> Crumbs
 
     var body: some View {
-        VStack(spacing: 8) {
-            HStack(spacing: 10) {
-                leading()
-                Spacer(minLength: 8)
-                GlassSearchField(text: $search, prompt: "Suchen", width: 200, focusToken: focusToken, focusEnabled: isActive)
+        VStack(alignment: .leading, spacing: 9) {
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: 10) {
+                    leading()
+                    Spacer(minLength: 8)
+                    GlassSearchField(text: $search, prompt: "Suchen", width: 190, focusToken: focusToken, focusEnabled: isActive)
+                }
+                VStack(alignment: .leading, spacing: 8) {
+                    leading()
+                    GlassSearchField(text: $search, prompt: "Suchen", width: 190, focusToken: focusToken, focusEnabled: isActive)
+                }
             }
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 2) { crumbs() }
             }
+            if let capacity {
+                HStack(spacing: 10) {
+                    CapacityBar(fraction: capacity.used, tint: tint, height: 5)
+                    Text(capacity.label)
+                        .font(.ui(10.5, .medium))
+                        .foregroundStyle(Palette.textSecondary)
+                        .monospacedDigit()
+                        .lineLimit(1)
+                        .fixedSize()
+                }
+            }
         }
         .padding(.horizontal, 14)
-        .padding(.top, 12)
-        .padding(.bottom, 8)
+        .padding(.top, 13)
+        .padding(.bottom, 10)
+        .background(
+            LinearGradient(colors: [tint.opacity(isActive ? 0.10 : 0.04), .clear], startPoint: .top, endPoint: .bottom)
+        )
         .overlay(alignment: .bottom) {
-            Rectangle().fill(isActive ? Palette.bridgeGreen.opacity(0.75) : Palette.hairline).frame(height: isActive ? 2 : 1)
-                .padding(.horizontal, 14)
+            Rectangle().fill(isActive ? tint.opacity(0.7) : Palette.hairline).frame(height: isActive ? 2 : 1)
+        }
+    }
+}
+
+/// Zwei Spalten mit verschiebbarem Trenner (ersetzt die Systemteilung, die unter macOS 26 einen Titelleistenstreifen erzeugt).
+struct SplitPanes<Leading: View, Trailing: View>: View {
+    @Binding var fraction: Double
+    var minLeading: CGFloat = 280
+    var minTrailing: CGFloat = 320
+    @ViewBuilder var leading: () -> Leading
+    @ViewBuilder var trailing: () -> Trailing
+    @State private var dragStart: Double?
+    @State private var hovering = false
+
+    var body: some View {
+        GeometryReader { geo in
+            let total = geo.size.width
+            let handle: CGFloat = 12
+            let usable = max(total - handle, 1)
+            let lower = min(minLeading / usable, 0.5)
+            let upper = max(1 - minTrailing / usable, 0.5)
+            let f = min(max(fraction, lower), upper)
+            HStack(spacing: 0) {
+                leading().frame(width: usable * f)
+                ZStack {
+                    Color.clear
+                    Capsule()
+                        .fill(hovering || dragStart != nil ? Palette.bridgeGreen.opacity(0.7) : Palette.textTertiary.opacity(0.35))
+                        .frame(width: 4, height: 44)
+                }
+                .frame(width: handle)
+                .contentShape(Rectangle())
+                .onHover { inside in
+                    hovering = inside
+                    if inside { NSCursor.resizeLeftRight.push() } else { NSCursor.pop() }
+                }
+                .gesture(
+                    DragGesture(minimumDistance: 1)
+                        .onChanged { value in
+                            if dragStart == nil { dragStart = f }
+                            let next = (dragStart ?? f) + Double(value.translation.width / usable)
+                            fraction = min(max(next, lower), upper)
+                        }
+                        .onEnded { _ in dragStart = nil }
+                )
+                .onTapGesture(count: 2) { fraction = 0.44 }
+                .help("Ziehen, um die Spalten anzupassen (Doppelklick: zurücksetzen)")
+                trailing().frame(width: usable * (1 - f))
+            }
         }
     }
 }
@@ -272,10 +357,10 @@ struct CrumbButton: View {
         HStack(spacing: 2) {
             Button(action: action) {
                 HStack(spacing: 4) {
-                    if let symbol { Image(systemName: symbol).font(.inter(11)) }
+                    if let symbol { Image(systemName: symbol).font(.ui(11)) }
                     Text(title).lineLimit(1)
                 }
-                .font(.inter(12, isLast ? .semibold : .regular))
+                .font(.ui(12, isLast ? .semibold : .regular))
                 .padding(.horizontal, 7)
                 .padding(.vertical, 3)
                 .contentShape(Rectangle())
@@ -283,7 +368,7 @@ struct CrumbButton: View {
             .buttonStyle(.plain)
             .foregroundStyle(isLast ? .primary : .secondary)
             if !isLast {
-                Image(systemName: "chevron.right").font(.inter(9, .semibold)).foregroundStyle(.tertiary)
+                Image(systemName: "chevron.right").font(.ui(9, .semibold)).foregroundStyle(.tertiary)
             }
         }
     }
@@ -295,14 +380,17 @@ struct DevicePaneView: View {
     @EnvironmentObject private var model: AppModel
     @ObservedObject var browser: DeviceBrowserModel
     @ObservedObject var files: FileManagerModel
+    var style: PaneStyle = .list
     @State private var dropTargeted = false
+    @State private var gridAnchor: String?
     @FocusState private var tableFocused: Bool
 
     private var isActive: Bool { files.activePane == .device }
 
     var body: some View {
         VStack(spacing: 0) {
-            PaneHeader(isActive: isActive, search: $browser.search, focusToken: files.focusSearchToken) {
+            PaneHeader(isActive: isActive, search: $browser.search, focusToken: files.focusSearchToken,
+                       tint: Palette.bridgeGreen, capacity: deviceCapacity) {
                 deviceAndStoragePicker
             } crumbs: {
                 if let storage = browser.storage {
@@ -318,7 +406,7 @@ struct DevicePaneView: View {
             }
             ZStack {
                 if let device = browser.device, device.state == .connected {
-                    table(device: device)
+                    if style == .grid { grid(device: device) } else { table(device: device) }
                     if browser.isLoading && browser.visible.isEmpty {
                         ProgressView("Dateien werden geladen …").controlSize(.small)
                     } else if !browser.isLoading && browser.visible.isEmpty && browser.issue == nil {
@@ -355,6 +443,48 @@ struct DevicePaneView: View {
         .simultaneousGesture(TapGesture().onEnded { files.activePane = .device })
     }
 
+    private var deviceCapacity: CapacityInfo? {
+        guard let s = browser.storage, s.capacity > 0, browser.device?.state == .connected else { return nil }
+        return CapacityInfo(used: s.usedFraction, label: "\(ByteFormat.string(s.free)) frei von \(ByteFormat.string(s.capacity))")
+    }
+
+    private func grid(device: DeviceConnection) -> some View {
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 116, maximum: 160), spacing: 12)], spacing: 14) {
+                ForEach(browser.visible) { e in
+                    FileTile(name: e.name, detail: e.isFolder ? "Ordner" : ByteFormat.string(e.size), selected: browser.selection.contains(e.id)) {
+                        DeviceThumb(entry: e, device: device, size: 92, corner: 12)
+                    }
+                    .onTapGesture(count: 2) { open(ids: [e.id], device: device) }
+                    .onTapGesture { selectInGrid(e.id) }
+                    .onDrag { dragProvider(for: e, device: device) }
+                    .contextMenu {
+                        rowMenu(ids: browser.selection.contains(e.id) ? browser.selection : [e.id], device: device)
+                    }
+                }
+            }
+            .padding(14)
+            .padding(.bottom, 80)
+        }
+        .contentShape(Rectangle())
+        .onTapGesture { browser.selection = []; files.activePane = .device }
+    }
+
+    private func selectInGrid(_ id: String) {
+        files.activePane = .device
+        let flags = NSEvent.modifierFlags
+        if flags.contains(.command) {
+            if browser.selection.contains(id) { browser.selection.remove(id) } else { browser.selection.insert(id) }
+        } else if flags.contains(.shift), let anchor = gridAnchor,
+                  let a = browser.visible.firstIndex(where: { $0.id == anchor }), let b = browser.visible.firstIndex(where: { $0.id == id }) {
+            browser.selection.formUnion(browser.visible[min(a, b)...max(a, b)].map(\.id))
+            return
+        } else {
+            browser.selection = [id]
+        }
+        gridAnchor = id
+    }
+
     private var deviceAndStoragePicker: some View {
         HStack(spacing: 8) {
             Image(systemName: "smartphone").foregroundStyle(Palette.bridgeGreen)
@@ -364,13 +494,13 @@ struct DevicePaneView: View {
                         Button(d.displayName) { model.select(device: d) }
                     }
                 } label: {
-                    Text(browser.device?.displayName ?? "Gerät").font(.inter(13, .semibold))
+                    Text(browser.device?.displayName ?? "Gerät").font(.ui(13, .semibold))
                 }
                 .menuStyle(.borderlessButton)
                 .fixedSize()
             } else {
                 Text(browser.device?.displayName ?? "Telefon")
-                    .font(.inter(13, .semibold))
+                    .font(.ui(13, .semibold))
                     .lineLimit(1)
                     .fixedSize()
                     .layoutPriority(2)
@@ -467,6 +597,9 @@ struct DevicePaneView: View {
                     Button("Vorschau") { preview(e) }
                 }
                 Button("Umbenennen …") { browser.selection = [e.id]; files.renamePane = .device }
+                Button("Informationen") {
+                    model.infoEntry = EntryInfoBox(deviceID: device.id, entry: e, path: browser.pathNames)
+                }
             }
             Divider()
             Button("Auf dem Telefon löschen …", role: .destructive) {
@@ -595,18 +728,34 @@ struct DeviceThumb: View {
     let entry: DeviceEntry
     let device: DeviceConnection
     var size: CGFloat = 22
+    /// `0` = füllt den umgebenden Rahmen (Kacheln, Mosaike); sonst Eckenradius des Quadrats.
+    var corner: CGFloat?
     @State private var image: NSImage?
+
+    private var fills: Bool { corner == 0 }
 
     var body: some View {
         Group {
             if let image {
-                Image(nsImage: image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: size, height: size)
-                    .clipShape(RoundedRectangle(cornerRadius: size * 0.2, style: .continuous))
+                if fills {
+                    Color.clear
+                        .overlay(Image(nsImage: image).resizable().aspectRatio(contentMode: .fill))
+                        .clipped()
+                } else {
+                    Image(nsImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: size, height: size)
+                        .clipShape(RoundedRectangle(cornerRadius: corner ?? size * 0.2, style: .continuous))
+                }
+            } else if fills {
+                ZStack {
+                    LinearGradient(colors: [entry.kind.tint.opacity(0.22), entry.kind.tint.opacity(0.06)],
+                                   startPoint: .topLeading, endPoint: .bottomTrailing)
+                    TypeIcon(name: entry.name, isFolder: entry.isFolder, size: min(size * 0.42, 96))
+                }
             } else {
-                FileGlyph(kind: entry.kind, size: size - 4)
+                TypeIcon(name: entry.name, isFolder: entry.isFolder, size: size)
                     .frame(width: size, height: size)
             }
         }
@@ -621,12 +770,52 @@ struct DeviceThumb: View {
     }
 }
 
+/// macOS-Symbol des Dateityps (wie im Finder) – hochwertiger als ein generisches Zeichen.
+struct TypeIcon: View {
+    let name: String
+    var isFolder = false
+    var size: CGFloat = 32
+
+    var body: some View {
+        Image(nsImage: TypeIconCache.icon(name: name, isFolder: isFolder))
+            .resizable()
+            .interpolation(.high)
+            .aspectRatio(contentMode: .fit)
+            .frame(width: size, height: size)
+            .accessibilityHidden(true)
+    }
+}
+
+@MainActor
+enum TypeIconCache {
+    private static var cache: [String: NSImage] = [:]
+
+    static func icon(name: String, isFolder: Bool) -> NSImage {
+        let ext = isFolder ? "/folder" : FileKind.fileExtension(of: name).lowercased()
+        if let hit = cache[ext] { return hit }
+        let type: UTType
+        if isFolder {
+            type = .folder
+        } else if ext == "apk" {
+            type = UTType(filenameExtension: "apk") ?? .archive
+        } else {
+            type = UTType(filenameExtension: ext) ?? .data
+        }
+        let image = NSWorkspace.shared.icon(for: type)
+        image.size = NSSize(width: 256, height: 256)
+        cache[ext] = image
+        return image
+    }
+}
+
 // MARK: - Mac-Spalte
 
 struct LocalPaneView: View {
     @ObservedObject var browser: LocalBrowserModel
     @ObservedObject var files: FileManagerModel
+    var style: PaneStyle = .list
     @State private var dropTargeted = false
+    @State private var gridAnchor: URL?
     @State private var quickLookURL: URL?
     @FocusState private var tableFocused: Bool
 
@@ -634,7 +823,8 @@ struct LocalPaneView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            PaneHeader(isActive: isActive, search: $browser.search, focusToken: files.focusSearchToken) {
+            PaneHeader(isActive: isActive, search: $browser.search, focusToken: files.focusSearchToken,
+                       tint: Palette.bridgeBlue, capacity: macCapacity) {
                 placesMenu
             } crumbs: {
                 let crumbs = browser.crumbs
@@ -647,7 +837,7 @@ struct LocalPaneView: View {
                 }
             }
             ZStack {
-                table
+                if style == .grid { grid } else { table }
                 if browser.visible.isEmpty {
                     EmptyStateView(symbol: "folder", title: browser.search.isEmpty ? "Ordner ist leer" : "Keine Treffer",
                                    message: browser.search.isEmpty ? "Ziehen Sie Dateien vom Telefon hierher." : "Kein Objekt passt zu „\(browser.search)“.")
@@ -676,6 +866,65 @@ struct LocalPaneView: View {
         .quickLookPreview($quickLookURL)
     }
 
+    private var macCapacity: CapacityInfo? {
+        guard let values = try? browser.folder.resourceValues(forKeys: [.volumeAvailableCapacityForImportantUsageKey, .volumeTotalCapacityKey]),
+              let total = values.volumeTotalCapacity, total > 0,
+              let free = values.volumeAvailableCapacityForImportantUsage else { return nil }
+        let used = Double(Int64(total) - free) / Double(total)
+        return CapacityInfo(used: min(max(used, 0), 1),
+                            label: "\(ByteFormat.string(UInt64(max(free, 0)))) frei von \(ByteFormat.string(UInt64(total)))")
+    }
+
+    private var grid: some View {
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 116, maximum: 160), spacing: 12)], spacing: 14) {
+                ForEach(browser.visible) { e in
+                    FileTile(name: e.name, detail: e.isFolder && !e.isPackage ? "Ordner" : ByteFormat.string(e.size),
+                             selected: browser.selection.contains(e.url)) {
+                        LocalThumb(url: e.url, size: 92)
+                    }
+                    .onTapGesture(count: 2) {
+                        if e.isFolder && !e.isPackage { browser.enter(e) } else { quickLookURL = e.url }
+                    }
+                    .onTapGesture { selectInGrid(e.url) }
+                    .onDrag { NSItemProvider(object: e.url as NSURL) }
+                    .contextMenu {
+                        Button("Auf das Telefon übertragen") { files.uploadToDevice([e.url]) }
+                            .disabled(files.device.device == nil)
+                        Button("Vorschau") { quickLookURL = e.url }
+                        Button("Im Finder zeigen") { NSWorkspace.shared.activateFileViewerSelecting([e.url]) }
+                        Button("Umbenennen …") { browser.selection = [e.url]; files.renamePane = .local }
+                        Divider()
+                        Button("In den Papierkorb legen …", role: .destructive) {
+                            browser.selection = [e.url]
+                            files.activePane = .local
+                            files.requestDelete()
+                        }
+                    }
+                }
+            }
+            .padding(14)
+            .padding(.bottom, 80)
+        }
+        .contentShape(Rectangle())
+        .onTapGesture { browser.selection = []; files.activePane = .local }
+    }
+
+    private func selectInGrid(_ url: URL) {
+        files.activePane = .local
+        let flags = NSEvent.modifierFlags
+        if flags.contains(.command) {
+            if browser.selection.contains(url) { browser.selection.remove(url) } else { browser.selection.insert(url) }
+        } else if flags.contains(.shift), let anchor = gridAnchor,
+                  let a = browser.visible.firstIndex(where: { $0.url == anchor }), let b = browser.visible.firstIndex(where: { $0.url == url }) {
+            browser.selection.formUnion(browser.visible[min(a, b)...max(a, b)].map(\.url))
+            return
+        } else {
+            browser.selection = [url]
+        }
+        gridAnchor = url
+    }
+
     private var placesMenu: some View {
         Menu {
             Section("Orte") {
@@ -700,7 +949,7 @@ struct LocalPaneView: View {
         } label: {
             HStack(spacing: 6) {
                 Image(systemName: "laptopcomputer").foregroundStyle(Palette.bridgeBlue)
-                Text("Mac").font(.inter(13, .semibold))
+                Text("Mac").font(.ui(13, .semibold))
             }
         }
         .menuStyle(.borderlessButton)
@@ -808,6 +1057,20 @@ struct SelectionActionBar: View {
                                   systemImage: "arrow.down.to.line")
                         }
                         .buttonStyle(GlassButtonStyle(prominent: true, compact: true))
+                        if deviceCount == 1, let e = device.selectedEntries.first, let d = device.device {
+                            ToolbarIconButton(symbol: "pencil", help: "Umbenennen …") { files.activePane = .device; files.renamePane = .device }
+                            ToolbarIconButton(symbol: "info.circle", help: "Informationen") {
+                                model.infoEntry = EntryInfoBox(deviceID: d.id, entry: e, path: device.pathNames)
+                            }
+                            if e.isFolder, let loc = device.location {
+                                let folderLoc = DeviceLocation(deviceSerial: loc.deviceSerial, deviceName: loc.deviceName, storageID: loc.storageID,
+                                                               storageName: loc.storageName, path: loc.path + [e.name])
+                                ToolbarIconButton(symbol: model.favorites.contains(folderLoc) ? "star.fill" : "star",
+                                                  help: model.favorites.contains(folderLoc) ? "Aus Favoriten entfernen" : "Zu Favoriten hinzufügen") {
+                                    model.favorites.toggle(folderLoc)
+                                }
+                            }
+                        }
                         Button {
                             model.deleteDeviceSelection(in: files)
                         } label: {
@@ -824,11 +1087,92 @@ struct SelectionActionBar: View {
                         }
                         .buttonStyle(GlassButtonStyle(prominent: true, compact: true))
                         .disabled(device.device == nil)
+                        if localCount == 1 {
+                            ToolbarIconButton(symbol: "pencil", help: "Umbenennen …") { files.activePane = .local; files.renamePane = .local }
+                        }
+                        ToolbarIconButton(symbol: "magnifyingglass", help: "Im Finder zeigen") {
+                            NSWorkspace.shared.activateFileViewerSelecting(local.selectedEntries.map(\.url))
+                        }
+                        ToolbarIconButton(symbol: "trash", help: "In den Papierkorb legen …", tint: Palette.danger) {
+                            files.activePane = .local
+                            files.requestDelete()
+                        }
                     }
                     ToolbarIconButton(symbol: "xmark", help: "Auswahl aufheben") { files.deselectAll() }
                 }
             }
         }
         .animation(animations ? .bridgeSpring : nil, value: files.activePane == .device ? deviceCount : localCount)
+    }
+}
+
+/// Kachel im Raster (Vorschaubild, Name, Größe).
+struct FileTile<Thumb: View>: View {
+    let name: String
+    let detail: String
+    let selected: Bool
+    @ViewBuilder var thumb: () -> Thumb
+    @State private var hovering = false
+
+    var body: some View {
+        VStack(spacing: 7) {
+            thumb()
+                .frame(width: 92, height: 92)
+                .shadow(color: Palette.shadow.opacity(hovering ? 1 : 0.4), radius: hovering ? 8 : 3, y: 2)
+                .scaleEffect(hovering ? 1.04 : 1)
+            Text(name)
+                .font(.ui(11.5, .medium))
+                .foregroundStyle(selected ? Palette.onAccent : Palette.textPrimary)
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
+                .truncationMode(.middle)
+                .padding(.horizontal, 6)
+                .padding(.vertical, 2)
+                .background(RoundedRectangle(cornerRadius: 6, style: .continuous).fill(selected ? Palette.bridgeGreen : .clear))
+            Text(detail)
+                .font(.ui(10.5))
+                .foregroundStyle(Palette.textSecondary)
+                .monospacedDigit()
+                .lineLimit(1)
+        }
+        .padding(8)
+        .frame(maxWidth: .infinity)
+        .background(
+            RoundedRectangle(cornerRadius: Radius.tile, style: .continuous)
+                .fill(selected ? Palette.selectionFill : (hovering ? Palette.hoverFill : .clear))
+        )
+        .contentShape(Rectangle())
+        .onHover { hovering = $0 }
+        .animation(.bridgeQuick, value: hovering)
+        .help(name)
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(selected ? .isSelected : [])
+    }
+}
+
+/// Vorschaubild einer Mac-Datei (Quick Look), sonst Finder-Symbol.
+struct LocalThumb: View {
+    let url: URL
+    var size: CGFloat = 92
+    @State private var image: NSImage?
+
+    var body: some View {
+        Group {
+            if let image {
+                Image(nsImage: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: size, height: size)
+            } else {
+                Image(nsImage: NSWorkspace.shared.icon(forFile: url.path))
+                    .resizable()
+                    .interpolation(.high)
+                    .frame(width: size * 0.86, height: size * 0.86)
+                    .frame(width: size, height: size)
+            }
+        }
+        .task(id: url) {
+            image = await ThumbnailService.shared.localThumbnail(for: url, size: size)
+        }
     }
 }
