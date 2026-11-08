@@ -141,7 +141,10 @@ final class StudioModel: ObservableObject {
     let defaults: UserDefaults
     /// Ersatz für `app` (Tests).
     let libraryOverride: StudioLibraryAccess?
-    var lib: StudioLibraryAccess? { libraryOverride ?? app }
+    var lib: StudioLibraryAccess? {
+        if let libraryOverride { return libraryOverride }
+        return app
+    }
 
     var cacheRoot: URL { supportDirectory.appendingPathComponent("Cache", isDirectory: true) }
     var backupsRoot: URL { supportDirectory.appendingPathComponent("Backups", isDirectory: true) }

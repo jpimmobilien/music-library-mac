@@ -16,7 +16,7 @@ extension StudioModel {
     /// Anhalten: Laden → Prozess beenden (Teil-Datei bleibt, Fortsetzen lädt weiter); Umwandeln → `PauseGate`;
     /// wartend → wird übersprungen. Während ein Auftrag angehalten ist, läuft der nächste.
     func pause(_ id: UUID) {
-        guard let job = job(id), StudioQueueLogic.canPause(job) else { return }
+        guard let job = self.job(id), StudioQueueLogic.canPause(job) else { return }
         switch job.phase {
         case .waiting:
             if let gate = jobGates[id] { gate.pause() }
@@ -35,7 +35,7 @@ extension StudioModel {
     }
 
     func resume(_ id: UUID) {
-        guard let job = job(id), StudioQueueLogic.canResume(job) else { return }
+        guard let job = self.job(id), StudioQueueLogic.canResume(job) else { return }
         if jobTasks[id] != nil, let gate = jobGates[id] {
             // Angehaltene Umwandlung: sofort weiter, wenn nichts anderes läuft – sonst danach.
             if runningJobID == nil {
@@ -52,7 +52,7 @@ extension StudioModel {
     }
 
     func cancel(_ id: UUID) {
-        guard let job = job(id), StudioQueueLogic.canCancel(job) else { return }
+        guard let job = self.job(id), StudioQueueLogic.canCancel(job) else { return }
         pauseRequested.remove(id)
         if let task = jobTasks[id] {
             task.cancel()
@@ -68,7 +68,7 @@ extension StudioModel {
     }
 
     func retry(_ id: UUID) {
-        guard let job = job(id), StudioQueueLogic.canRetry(job), jobTasks[id] == nil else { return }
+        guard let job = self.job(id), StudioQueueLogic.canRetry(job), jobTasks[id] == nil else { return }
         updateJob(id) {
             $0.phase = .waiting
             $0.progress = 0
@@ -81,7 +81,7 @@ extension StudioModel {
     }
 
     func remove(_ id: UUID) {
-        guard let job = job(id), StudioQueueLogic.canRemove(job) else { return }
+        guard let job = self.job(id), StudioQueueLogic.canRemove(job) else { return }
         if let task = jobTasks[id] {
             task.cancel()
             jobGates[id]?.resume()
@@ -106,7 +106,7 @@ extension StudioModel {
 
     /// Format eines wartenden Auftrags ändern (unterschiedliche Formate je Datei).
     func setFormat(_ format: StudioFormat, for id: UUID) {
-        guard let job = job(id), job.phase == .waiting || job.phase == .paused, jobTasks[id] == nil,
+        guard let job = self.job(id), job.phase == .waiting || job.phase == .paused, jobTasks[id] == nil,
               !job.destination.replacesOriginal, job.options.format != format else { return }
         updateJob(id) { j in
             j.options = settings.options(for: format)
@@ -200,7 +200,7 @@ extension StudioModel {
     private func runJob(_ id: UUID, gate: PauseGate) async {
         let workDir = jobWorkDirectory(id)
         do {
-            guard var job = job(id) else { throw StudioError.cancelled }
+            guard var job = self.job(id) else { throw StudioError.cancelled }
             try FileManager.default.createDirectory(at: workDir, withIntermediateDirectories: true)
 
             // 1. Abfrage (Aufträge aus mehreren Adressen, Playlists oder Dateien)

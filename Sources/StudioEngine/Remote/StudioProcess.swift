@@ -67,6 +67,9 @@ public enum StudioProcess {
                 } catch {
                     outPipe.fileHandleForReading.readabilityHandler = nil
                     errPipe.fileHandleForReading.readabilityHandler = nil
+                    // Gruppen ausgleichen (eine „betretene“ DispatchGroup darf nicht freigegeben werden)
+                    for s in [Stream.stdout, .stderr] where state.markEOF(s) { eof.leave() }
+                    exit.leave()
                     let name = (executable as NSString).lastPathComponent
                     cont.resume(throwing: StudioError.other("„\(name)“ konnte nicht gestartet werden: \(error.localizedDescription)"))
                     return
@@ -90,6 +93,8 @@ public enum StudioProcess {
                         guard state.claimFinish() else { return }
                         outPipe.fileHandleForReading.readabilityHandler = nil
                         errPipe.fileHandleForReading.readabilityHandler = nil
+                        // Kam kein Dateiende (Enkelprozess hält die Ausgabe offen), die Gruppe trotzdem ausgleichen.
+                        for s in [Stream.stdout, .stderr] where state.markEOF(s) { eof.leave() }
                         state.flush()
                         ProcessRegistry.shared.remove(process)
                         if state.isCancelled {
