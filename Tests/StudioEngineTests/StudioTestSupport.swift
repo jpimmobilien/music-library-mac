@@ -37,7 +37,7 @@ enum TS {
         switch s {
         case .sweep:
             let (f0, f1, amp): (Double, Double, Double) = ch % 2 == 0 ? (30, 16_000, 0.5) : (12_000, 40, 0.35)
-            let k = log(f1 / f0) / length
+            let k = Foundation.log(f1 / f0) / length
             let phase = 2 * Double.pi * f0 * (exp(k * t) - 1) / k
             return Float(amp * sin(phase + Double(ch) * 0.3))
         case .clicks(let frames):

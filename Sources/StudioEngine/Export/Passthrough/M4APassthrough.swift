@@ -49,19 +49,20 @@ enum M4APassthrough {
         } else {
             session.outputURL = dest
             session.outputFileType = .m4a
+            let box = SessionBox(session)
             let poll = Task {
                 while !Task.isCancelled {
-                    progress(Double(session.progress))
+                    progress(Double(box.session.progress))
                     try? await Task.sleep(nanoseconds: 100_000_000)
                 }
             }
             defer { poll.cancel() }
             await withTaskCancellationHandler {
                 await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
-                    session.exportAsynchronously { c.resume() }
+                    box.session.exportAsynchronously { c.resume() }
                 }
             } onCancel: {
-                session.cancelExport()
+                box.session.cancelExport()
             }
             if Task.isCancelled || session.status == .cancelled { throw StudioError.cancelled }
             guard session.status == .completed else {
@@ -69,4 +70,10 @@ enum M4APassthrough {
             }
         }
     }
+}
+
+/// AVAssetExportSession über Task-Grenzen reichen (die Sitzung ist intern threadsicher).
+private final class SessionBox: @unchecked Sendable {
+    let session: AVAssetExportSession
+    init(_ session: AVAssetExportSession) { self.session = session }
 }

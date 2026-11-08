@@ -53,8 +53,9 @@ final class AACEncoder: PCMEncoder {
             status = AudioConverterSetProperty(converter, kAudioConverterEncodeBitRate, UInt32(MemoryLayout<UInt32>.size), &rate)
             if status == noErr { bitRate = rate }
             // ExtAudioFile mitteilen, dass sich die Einstellungen des Konverters geändert haben
-            var config: CFPropertyList? = nil
-            ExtAudioFileSetProperty(ref, kExtAudioFileProperty_ConverterConfig, UInt32(MemoryLayout<CFPropertyList?>.size), &config)
+            // (Wert: ein CFPropertyListRef, hier NULL)
+            var config: OpaquePointer? = nil
+            ExtAudioFileSetProperty(ref, kExtAudioFileProperty_ConverterConfig, UInt32(MemoryLayout<OpaquePointer?>.size), &config)
         }
     }
 

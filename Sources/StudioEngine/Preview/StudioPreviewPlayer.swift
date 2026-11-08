@@ -158,7 +158,7 @@ public final class StudioPreviewPlayer: StudioPreviewing {
                     buffer.frameLength = AVAudioFrameCount(n)
                     remaining = remaining.map { $0 - Int64(n) }
                     pending.increment()
-                    node.scheduleBuffer(buffer) { pending.decrement() }
+                    Self.schedule(buffer, on: node) { pending.decrement() }
                 }
                 if Task.isCancelled { return }
                 // Ende: nach dem letzten Puffer melden
@@ -171,6 +171,11 @@ public final class StudioPreviewPlayer: StudioPreviewing {
                 await MainActor.run { [weak self] in self?.finish(gen) }
             }
         }
+    }
+
+    /// Puffer einplanen (synchron; die Rückmeldung kommt auf einem Audio-Thread).
+    nonisolated private static func schedule(_ buffer: AVAudioPCMBuffer, on node: AVAudioPlayerNode, done: @escaping @Sendable () -> Void) {
+        node.scheduleBuffer(buffer, completionHandler: done)
     }
 
     private func reconnect(rate: Double, channels: Int, duration: Double, restartFrom start: Double, to end: Double?, generation gen: Int) {
