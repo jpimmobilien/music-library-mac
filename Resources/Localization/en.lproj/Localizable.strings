@@ -476,6 +476,7 @@
 "Measurement time per source (smoothed)" = "Measurement time per source (smoothed)";
 "Measurement time per tick" = "Measurement time per tick";
 "Measurements pause automatically" = "Measurements pause automatically";
+"Measurements per second" = "Measurements per second";
 "Measures at most every 5 seconds and skips everything that isn’t visible." = "Measures at most every 5 seconds and skips everything that isn’t visible.";
 "Measuring…" = "Measuring…";
 "Media and data integrity errors" = "Media and data integrity errors";
@@ -679,6 +680,7 @@
 "Record long-term history" = "Record long-term history";
 "Red share: system." = "Red share: system.";
 "Reduced" = "Reduced";
+"Regular ticks plus immediate measurements (e.g. after macOS reports a power change)." = "Regular ticks plus immediate measurements (e.g. after macOS reports a power change).";
 "Reliability degraded (media or internal errors)" = "Reliability degraded (media or internal errors)";
 "Remaining time" = "Remaining time";
 "Remaining time estimated by macOS from the current consumption." = "Remaining time estimated by macOS from the current consumption.";

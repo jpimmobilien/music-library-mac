@@ -61,6 +61,7 @@ final class MonitorEngine {
     }
 
     private func powerSourcesChanged() {
+        diagnostics.powerNotifications += 1
         queue.async { [samplers] in samplers.batteryDirty = true }
         if isRunning { refreshNow() }
     }

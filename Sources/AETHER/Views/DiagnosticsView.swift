@@ -26,6 +26,8 @@ struct DiagnosticsPanel: View {
                     help: tr("Time on the main thread to hand the results to the views."))
                 row(tr("Timer delay"), milliseconds(s.lateMs),
                     help: tr("How late the tick started compared with the schedule."))
+                row(tr("Measurements per second"), fmt.number(s.ticksPerSecond, fractionDigits: 1),
+                    help: tr("Regular ticks plus immediate measurements (e.g. after macOS reports a power change)."))
                 row(tr("Sources per tick (max.)"), fmt.integer(s.activeSources))
                 row(tr("Display updates per second"), fmt.number(s.publishesPerSecond, fractionDigits: 1),
                     help: tr("Large numbers are only redrawn when their rounded value changes."))

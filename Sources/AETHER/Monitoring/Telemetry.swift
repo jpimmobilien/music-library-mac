@@ -200,6 +200,10 @@ final class EngineDiagnostics: ObservableObject {
         var publishesPerSecond: Double = 0
         var processesActive = false
         var sources: [String: Double] = [:]
+        /// Ausgewertete Messungen pro Sekunde (Takt + Sofortmessungen)
+        var ticksPerSecond: Double = 0
+        /// Meldungen von macOS über geänderte Stromquellen seit dem Start
+        var powerNotifications = 0
     }
 
     @Published private(set) var snapshot = Snapshot()
@@ -212,6 +216,9 @@ final class EngineDiagnostics: ObservableObject {
     private var sourceMs: [String: AsymmetricEMA] = [:]
     private var lastPublish: Double = 0
     private var draft = Snapshot()
+    private var records = 0
+    /// Von der Messmaschine gezählt (Stromquellen-Meldungen).
+    var powerNotifications = 0
 
     func record(_ timing: TickTiming, applyMs apply: Double, publishes count: Int, ownUsage: SelfUsage.Sample?,
                 interval: Double, processesActive: Bool) {
@@ -232,7 +239,11 @@ final class EngineDiagnostics: ObservableObject {
             draft.ownCPU = ownUsage.cpu
             draft.ownMemory = ownUsage.footprint
         }
+        records += 1
         guard enabled, now - lastPublish >= 1 else { return }
+        draft.ticksPerSecond = lastPublish > 0 ? Double(records) / (now - lastPublish) : 0
+        draft.powerNotifications = powerNotifications
+        records = 0
         lastPublish = now
         snapshot = draft
         draft.activeSources = 0

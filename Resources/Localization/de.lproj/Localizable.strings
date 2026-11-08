@@ -482,6 +482,7 @@
 "Measurement time per source (smoothed)" = "Messzeit je Quelle (geglättet)";
 "Measurement time per tick" = "Messzeit je Takt";
 "Measurements pause automatically" = "Die Messungen pausieren automatisch";
+"Measurements per second" = "Messungen je Sekunde";
 "Measures at most every 5 seconds and skips everything that isn’t visible." = "Misst höchstens alle 5 Sekunden und lässt alles aus, was nicht sichtbar ist.";
 "Measuring…" = "Wird gemessen …";
 "Media and data integrity errors" = "Medien- und Datenintegritätsfehler";
@@ -687,6 +688,7 @@
 "Record long-term history" = "Langzeitverlauf aufzeichnen";
 "Red share: system." = "Roter Anteil: System.";
 "Reduced" = "Reduziert";
+"Regular ticks plus immediate measurements (e.g. after macOS reports a power change)." = "Reguläre Takte und Sofortmessungen (z. B. nachdem macOS eine Änderung der Stromversorgung meldet).";
 "Reliability degraded (media or internal errors)" = "Zuverlässigkeit beeinträchtigt (Medien- oder interne Fehler)";
 "Remaining time" = "Restzeit";
 "Remaining time estimated by macOS from the current consumption." = "Restzeit, von macOS aus dem aktuellen Verbrauch geschätzt.";

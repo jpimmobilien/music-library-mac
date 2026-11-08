@@ -27,6 +27,14 @@ if [ $STATUS -ne 0 ]; then
     exit $STATUS
 fi
 test -f "$OUT_ABS" || { echo "✗ Ergebnisdatei fehlt"; exit 1; }
+# Stichprobenprofil der Übersicht (vom Selbsttest mit /usr/bin/sample aufgenommen): heißeste Stellen ins Protokoll
+SAMPLE="${OUT_ABS%.json}-sample-overview.txt"
+if [ -f "$SAMPLE" ]; then
+    echo "── Profil der Übersicht (5 s, heißeste Stellen)"
+    sed -n '/Sort by top of stack/,/^$/p' "$SAMPLE" | head -40 || true
+    echo "── Profil: Threads (Anteil der Stichproben)"
+    grep -E "^ +[0-9]+ Thread_|^    [0-9]+ " "$SAMPLE" | head -30 || true
+fi
 cat "$OUT_ABS"
 python3 -c "import json,sys; d=json.load(open(sys.argv[1])); bad=[c['name'] for c in d['checks'] if not c['ok']]; print('Fehlgeschlagen:', bad) if bad else None; sys.exit(0 if d.get('ok') else 1)" "$OUT_ABS"
 echo "✓ Selbsttest bestanden ($(python3 -c "import json,sys; d=json.load(open(sys.argv[1])); print(d['process'], 'Rosetta' if d['translated'] else 'nativ', d['macOS'])" "$OUT_ABS"))"

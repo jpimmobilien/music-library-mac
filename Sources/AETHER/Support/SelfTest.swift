@@ -259,8 +259,9 @@ enum SelfTest {
         let perSection = sectionCPU.sorted { $0.key < $1.key }.map { String(format: "%@ %.1f %%", $0.key, $0.value * 100) }
             .joined(separator: ", ")
         check("performance.ownCPU", ownShare < 0.5,
-              String(format: "Übersicht: eigene CPU %.1f %% eines Kerns · Messung %.2f ms/Takt · Hauptthread %.2f ms/Takt · Verzug %.1f ms · %.1f Anzeige-Aktualisierungen/s · je Bereich: %@",
-                     ownShare * 100, diag.tickMs, diag.applyMs, diag.lateMs, diag.publishesPerSecond, perSection))
+              String(format: "Übersicht: eigene CPU %.1f %% eines Kerns · Messung %.2f ms/Takt · Hauptthread %.2f ms/Takt · Verzug %.1f ms · %.1f Anzeige-Aktualisierungen/s · %.1f Messungen/s · %ld Stromquellen-Meldungen · je Bereich: %@",
+                     ownShare * 100, diag.tickMs, diag.applyMs, diag.lateMs, diag.publishesPerSecond, diag.ticksPerSecond,
+                     diag.powerNotifications, perSection))
         let own = engine.system.ownUsage
 
         let info = Bundle.main.infoDictionary ?? [:]
@@ -288,6 +289,7 @@ enum SelfTest {
             "engine": [
                 "tickMs": diag.tickMs, "applyMs": diag.applyMs, "lateMs": diag.lateMs,
                 "publishesPerSecond": diag.publishesPerSecond, "sources": diag.sources,
+                "ticksPerSecond": diag.ticksPerSecond, "powerNotifications": diag.powerNotifications,
             ] as [String: Any],
             "ownFootprint": jsonValue(own?.footprint),
             "seconds": Date().timeIntervalSince(started),
