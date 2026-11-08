@@ -111,7 +111,9 @@ final class RemoteWebCheckTests: XCTestCase {
             report.add("OK", "\(name): Analyse in \(Int(Date().timeIntervalSince(t0))) s – „\(info.title)“, Interpret „\(info.suggested.artist)“, "
                        + "\(Int(info.duration ?? 0)) s, Codec \(info.codec ?? "?"), \(info.bitrateKbps ?? 0) kbit/s, \(info.sampleRate ?? 0) Hz")
         } catch {
-            record(error, step: "Analyse", name: name, report: report)
+            if record(error, step: "Analyse", name: name, report: report), let raw = await rawError(sample, tools: provider.tools) {
+                report.add("INFO", "\(name): yt-dlp meldet wörtlich: \(raw)")
+            }
             return
         }
 
@@ -135,7 +137,7 @@ final class RemoteWebCheckTests: XCTestCase {
             let size = (try? FileManager.default.attributesOfItem(atPath: file.path)[.size] as? NSNumber)?.int64Value ?? 0
             report.add("OK", "\(name): geladen in \(Int(Date().timeIntervalSince(t0))) s – \(file.lastPathComponent), \(size) Bytes")
         } catch {
-            record(error, step: "Download", name: name, report: report)
+            _ = record(error, step: "Download", name: name, report: report)
             return
         }
 
@@ -167,20 +169,31 @@ final class RemoteWebCheckTests: XCTestCase {
     }
 
     /// Sperren durch den Dienst (Bot-Prüfung, Land) sind ehrliche Ergebnisse, keine Programmfehler.
-    private func record(_ error: Error, step: String, name: String, report: Report) {
+    /// - Returns: true, wenn der Dienst den Rechner blockiert hat.
+    private func record(_ error: Error, step: String, name: String, report: Report) -> Bool {
         let text = Self.message(error)
         if let e = error as? StudioError {
             switch e {
             case .unavailable(let detail) where detail.contains("Bot"):
                 report.add("BLOCKIERT", "\(name): \(step) – \(text)")
-                return
+                return true
             case .geoBlocked, .loginRequired:
                 report.add("BLOCKIERT", "\(name): \(step) – \(text)")
-                return
+                return true
             default:
                 break
             }
         }
         report.add("FEHLER", "\(name): \(step) – \(text)")
+        return false
+    }
+
+    /// Wörtliche Fehlerzeile von yt-dlp (gleicher Aufruf wie die Analyse) – für einen genauen Bericht.
+    private func rawError(_ sample: Sample, tools: StudioToolManager) async -> String? {
+        let paths = await tools.paths()
+        guard let ytDlp = paths.ytDlp, let url = URL(string: sample.url) else { return nil }
+        let args = YtDlpOutput.analyzeArguments(url: url, kind: sample.kind, cacheDirectory: paths.cacheDirectory, denoPath: paths.deno)
+        guard let r = try? await StudioProcess.run(ytDlp, args, environment: StudioProcess.environment(), timeout: 120) else { return nil }
+        return r.stderr.split(whereSeparator: \.isNewline).last(where: { $0.hasPrefix("ERROR:") }).map(String.init)
     }
 }
