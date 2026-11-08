@@ -1,0 +1,65 @@
+[32m==>[0m [1mDownloading bottle manifests[0m
+✔︎ Bottle Manifest ffmpeg (9.0.1)
+[34m==>[0m [1mWould install 1 formula:[0m
+ffmpeg
+[34m==>[0m [1mWould install 9 dependencies for ffmpeg:[0m
+mpg123
+lame
+libvpx
+opus
+sdl3
+sdl2-compat
+svt-av1
+x264
+x265
+[32m==>[0m [1mFetching downloads for: [32mffmpeg[39m[0m
+✔︎ Bottle Manifest mpg123 (1.33.7)
+✔︎ Bottle Manifest lame (4.0)
+✔︎ Bottle Manifest libvpx (1.16.0)
+✔︎ Bottle Manifest opus (1.6.1)
+✔︎ Bottle mpg123 (1.33.7)
+✔︎ Bottle Manifest sdl2-compat (2.32.70)
+✔︎ Bottle lame (4.0)
+✔︎ Bottle Manifest sdl3 (3.4.14)
+✔︎ Bottle opus (1.6.1)
+✔︎ Bottle Manifest svt-av1 (4.2.0)
+✔︎ Bottle libvpx (1.16.0)
+✔︎ Bottle Manifest x264 (r3222)
+✔︎ Bottle Manifest x265 (4.2)
+✔︎ Bottle svt-av1 (4.2.0)
+✔︎ Bottle sdl3 (3.4.14)
+✔︎ Bottle x264 (r3222)
+✔︎ Bottle sdl2-compat (2.32.70)
+✔︎ Bottle x265 (4.2)
+✔︎ Bottle ffmpeg (9.0.1)
+[32m==>[0m [1mInstalling dependencies for ffmpeg:[0m [32mmpg123[39m, [32mlame[39m, [32mlibvpx[39m, [32mopus[39m, [32msdl3[39m, [32msdl2-compat[39m, [32msvt-av1[39m, [32mx264[39m and [32mx265[39m[0m
+[32m==>[0m [1mInstalling ffmpeg dependency: [32mmpg123[39m[0m
+[34m==>[0m [1mPouring mpg123--1.33.7.sonoma.bottle.tar.gz[0m
+🍺  /usr/local/Cellar/mpg123/1.33.7: 34 files, 1.8MB
+[32m==>[0m [1mInstalling ffmpeg dependency: [32mlame[39m[0m
+[34m==>[0m [1mPouring lame--4.0.sonoma.bottle.tar.gz[0m
+🍺  /usr/local/Cellar/lame/4.0: 29 files, 1.9MB
+[32m==>[0m [1mInstalling ffmpeg dependency: [32mlibvpx[39m[0m
+[34m==>[0m [1mPouring libvpx--1.16.0.sonoma.bottle.tar.gz[0m
+🍺  /usr/local/Cellar/libvpx/1.16.0: 22 files, 5.8MB
+[32m==>[0m [1mInstalling ffmpeg dependency: [32mopus[39m[0m
+[34m==>[0m [1mPouring opus--1.6.1.sonoma.bottle.tar.gz[0m
+🍺  /usr/local/Cellar/opus/1.6.1: 16 files, 1.2MB
+[32m==>[0m [1mInstalling ffmpeg dependency: [32msdl3[39m[0m
+[34m==>[0m [1mPouring sdl3--3.4.14.sonoma.bottle.tar.gz[0m
+🍺  /usr/local/Cellar/sdl3/3.4.14: 103 files, 6.4MB
+[32m==>[0m [1mInstalling ffmpeg dependency: [32msdl2-compat[39m[0m
+[34m==>[0m [1mPouring sdl2-compat--2.32.70.sonoma.bottle.tar.gz[0m
+🍺  /usr/local/Cellar/sdl2-compat/2.32.70: 117 files, 3.2MB
+[32m==>[0m [1mInstalling ffmpeg dependency: [32msvt-av1[39m[0m
+[34m==>[0m [1mPouring svt-av1--4.2.0.sonoma.bottle.tar.gz[0m
+🍺  /usr/local/Cellar/svt-av1/4.2.0: 23 files, 5.7MB
+[32m==>[0m [1mInstalling ffmpeg dependency: [32mx264[39m[0m
+[34m==>[0m [1mPouring x264--r3222.sonoma.bottle.tar.gz[0m
+🍺  /usr/local/Cellar/x264/r3222: 12 files, 5.9MB
+[32m==>[0m [1mInstalling ffmpeg dependency: [32mx265[39m[0m
+[34m==>[0m [1mPouring x265--4.2.sonoma.bottle.tar.gz[0m
+🍺  /usr/local/Cellar/x265/4.2: 12 files, 38.5MB
+[32m==>[0m [1mInstalling [32mffmpeg[39m[0m
+[34m==>[0m [1mPouring ffmpeg--9.0.1.sonoma.bottle.tar.gz[0m
+🍺  /usr/local/Cellar/ffmpeg/9.0.1: 290 files, 57.3MB
