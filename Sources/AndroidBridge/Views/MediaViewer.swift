@@ -73,9 +73,9 @@ struct MediaViewer: View {
         ZStack {
             Color.black
             if let backdrop {
-                Image(nsImage: backdrop)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
+                Color.clear
+                    .overlay(Image(nsImage: backdrop).resizable().aspectRatio(contentMode: .fill))
+                    .clipped()
                     .blur(radius: 60)
                     .opacity(0.55)
                     .transition(.opacity)

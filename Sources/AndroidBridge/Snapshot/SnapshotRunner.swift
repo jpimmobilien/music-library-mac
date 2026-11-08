@@ -178,6 +178,7 @@ enum SnapshotRunner {
             await installPreview(m, state: .connected)
             m.selection = .media
             m.gallery.filter = .media
+            if let d = m.devices.connectedDevices.first { m.gallery.attach(d) }
             m.gallery.scan()
             try? await Task.sleep(nanoseconds: 700_000_000)
             m.gallery.selection = Set(m.gallery.visible.dropFirst(2).prefix(3).map(\.id))
@@ -211,7 +212,7 @@ enum SnapshotRunner {
                 await gallery(m)
                 m.gallery.selection = []
                 let media = m.gallery.visible.filter { $0.entry.kind == .photo }.map(\.entry)
-                if !media.isEmpty, let device = m.gallery.device {
+                if !media.isEmpty, let device = m.devices.connectedDevices.first {
                     m.viewerItem = MediaViewerItem(deviceID: device.id, items: media, index: min(3, media.count - 1))
                 }
             },
@@ -223,7 +224,7 @@ enum SnapshotRunner {
             Scenario(name: "07-speicher-verwalten", size: mb14) { m in
                 await gallery(m)
                 m.gallery.selection = []
-                if let d = m.gallery.device { m.selection = .device(d.id) }
+                if let d = m.devices.connectedDevices.first { m.selection = .device(d.id) }
             },
             Scenario(name: "08-duplikate-bereich", size: mb13) { m in
                 await installPreview(m, state: .connected)
@@ -235,12 +236,6 @@ enum SnapshotRunner {
                 let (identical, similar) = previewDuplicateGroups()
                 let marked = Set(identical.prefix(2).flatMap { DuplicateSelection.suggested(for: $0) })
                 m.duplicates.showPreviewResults(identical: identical, similar: similar, marked: marked)
-                m.selection = .duplicates
-            },
-            Scenario(name: "09b-duplikate-ergebnisse", size: small) { m in
-                await installPreview(m, state: .connected)
-                let (identical, similar) = previewDuplicateGroups()
-                m.duplicates.showPreviewResults(identical: identical, similar: similar, marked: [])
                 m.selection = .duplicates
             },
             Scenario(name: "10-loeschen-bestaetigen", size: CGSize(width: 560, height: 720), custom: { m in
@@ -266,6 +261,12 @@ enum SnapshotRunner {
             },
             Scenario(name: "13-uebertragungen-leer", size: mb13) { m in
                 m.selection = .transfers
+            },
+            Scenario(name: "14-duplikate-ergebnisse-klein", size: small) { m in
+                await installPreview(m, state: .connected)
+                let (identical, similar) = previewDuplicateGroups()
+                m.duplicates.showPreviewResults(identical: identical, similar: similar, marked: [])
+                m.selection = .duplicates
             },
         ]
 

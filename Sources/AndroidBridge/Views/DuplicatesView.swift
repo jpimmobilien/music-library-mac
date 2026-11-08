@@ -402,10 +402,10 @@ struct DuplicateSummaryHero: View {
     private var stats: some View {
         HStack(spacing: 14) {
             StatTile(value: "\(groups)", label: "Gruppen", symbol: "square.stack.3d.up", tint: Palette.bridgeTeal)
-            StatTile(value: "\(duplicates)", label: "Doppelte Dateien", symbol: "doc.on.doc", tint: Palette.bridgeBlue)
-            StatTile(value: "\(similar)", label: "Ähnliche Gruppen", symbol: "photo.on.rectangle", tint: Palette.violet)
+            StatTile(value: "\(duplicates)", label: "Kopien", symbol: "doc.on.doc", tint: Palette.bridgeBlue)
+            StatTile(value: "\(similar)", label: "Ähnlich", symbol: "photo.on.rectangle", tint: Palette.violet)
         }
-        .frame(minWidth: 420)
+        .frame(minWidth: 450)
     }
 }
 

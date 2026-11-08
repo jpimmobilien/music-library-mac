@@ -173,7 +173,8 @@ struct PhoneScreenContent: View {
     var body: some View {
         ZStack {
             if let wallpaper {
-                Image(nsImage: wallpaper).resizable().aspectRatio(contentMode: .fill)
+                // Füllt die Fläche, ohne den Stapel zu vergrößern (sonst würde die Uhr zu groß gezeichnet)
+                Color.clear.overlay(Image(nsImage: wallpaper).resizable().aspectRatio(contentMode: .fill)).clipped()
             } else {
                 LinearGradient(colors: [Color(hex: 0x0F5B49), Color(hex: 0x10254F), Color(hex: 0x2A1650)], startPoint: .top, endPoint: .bottom)
                 RadialGradient(colors: [Color(hex: 0x3EE3A8).opacity(0.55), .clear], center: UnitPoint(x: 0.3, y: 0.25), startRadius: 0, endRadius: 140)

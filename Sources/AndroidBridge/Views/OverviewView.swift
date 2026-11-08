@@ -470,7 +470,8 @@ struct StorageTile: View {
                         .font(Typo.callout)
                         .foregroundStyle(Palette.textSecondary)
                         .monospacedDigit()
-                        .fixedSize(horizontal: false, vertical: true)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
                     if storage.isReadOnly {
                         TagLabel(text: "Nur lesen", symbol: "lock", tint: Palette.warning)
                     }
