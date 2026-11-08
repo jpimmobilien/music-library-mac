@@ -225,18 +225,42 @@ enum SelfTest {
         let windows = NSApp.windows.filter { $0.isVisible }
         check("window", !windows.isEmpty, "sichtbare Fenster=\(windows.count)")
 
-        // Leistung: 12 s im normalen Betrieb (Grundtakt 1 s, Übersicht sichtbar) – CPU-Zeit des eigenen Prozesses
+        // Leistung im normalen Betrieb (Grundtakt 1 s): CPU-Zeit des eigenen Prozesses je sichtbarem Bereich, je 8 s nach
+        // 2 s Eingewöhnung. Für die Übersicht zusätzlich ein Stichprobenprofil (`/usr/bin/sample`, 5 s) im Protokollordner.
         engine.diagnostics.enabled = true
         model.start()
+        var sectionCPU: [String: Double] = [:]
+        var overviewDiag = engine.diagnostics.snapshot
+        for section in [AppSection.overview, .settings, .cpuGPU, .memory, .network, .activity] {
+            model.select(section)
+            try? await Task.sleep(nanoseconds: 2_000_000_000)
+            if section == .overview {
+                startSample(seconds: 5, output: output.deletingLastPathComponent()
+                    .appendingPathComponent(output.deletingPathExtension().lastPathComponent + "-sample-overview.txt"))
+            }
+            let cpu0 = processCPUSeconds()
+            let wall0 = ProcessInfo.processInfo.systemUptime
+            try? await Task.sleep(nanoseconds: 8_000_000_000)
+            sectionCPU[section.rawValue] = (processCPUSeconds() - cpu0) / max(1, ProcessInfo.processInfo.systemUptime - wall0)
+            if section == .overview { overviewDiag = engine.diagnostics.snapshot }
+        }
+        // Gegenprobe: Übersicht ohne Bewegung (Datenströme stehen still) – zeigt, was die Animationen kosten
+        model.select(.overview)
+        let motion = model.settings.motion
+        model.settings.motion = .off
         try? await Task.sleep(nanoseconds: 2_000_000_000)
-        let cpu0 = processCPUSeconds()
-        let wall0 = ProcessInfo.processInfo.systemUptime
-        try? await Task.sleep(nanoseconds: 12_000_000_000)
-        let ownShare = (processCPUSeconds() - cpu0) / max(1, ProcessInfo.processInfo.systemUptime - wall0)
-        let diag = engine.diagnostics.snapshot
+        let still0 = processCPUSeconds()
+        let stillWall0 = ProcessInfo.processInfo.systemUptime
+        try? await Task.sleep(nanoseconds: 6_000_000_000)
+        sectionCPU["overview-motion-off"] = (processCPUSeconds() - still0) / max(1, ProcessInfo.processInfo.systemUptime - stillWall0)
+        model.settings.motion = motion
+        let ownShare = sectionCPU[AppSection.overview.rawValue] ?? 0
+        let diag = overviewDiag
+        let perSection = sectionCPU.sorted { $0.key < $1.key }.map { String(format: "%@ %.1f %%", $0.key, $0.value * 100) }
+            .joined(separator: ", ")
         check("performance.ownCPU", ownShare < 0.5,
-              String(format: "eigene CPU %.1f %% eines Kerns · Messung %.2f ms/Takt · Hauptthread %.2f ms/Takt · Verzug %.1f ms · %.1f Anzeige-Aktualisierungen/s",
-                     ownShare * 100, diag.tickMs, diag.applyMs, diag.lateMs, diag.publishesPerSecond))
+              String(format: "Übersicht: eigene CPU %.1f %% eines Kerns · Messung %.2f ms/Takt · Hauptthread %.2f ms/Takt · Verzug %.1f ms · %.1f Anzeige-Aktualisierungen/s · je Bereich: %@",
+                     ownShare * 100, diag.tickMs, diag.applyMs, diag.lateMs, diag.publishesPerSecond, perSection))
         let own = engine.system.ownUsage
 
         let info = Bundle.main.infoDictionary ?? [:]
@@ -260,6 +284,7 @@ enum SelfTest {
             "clusters": hw.clusters.map { "\($0.systemName):\($0.physicalCores)/\($0.logicalCores)" },
             "ownCPU": jsonValue(own?.cpu),
             "ownCPUSteady": ownShare,
+            "ownCPUBySection": sectionCPU,
             "engine": [
                 "tickMs": diag.tickMs, "applyMs": diag.applyMs, "lateMs": diag.lateMs,
                 "publishesPerSecond": diag.publishesPerSecond, "sources": diag.sources,
@@ -275,6 +300,16 @@ enum SelfTest {
             print("\((c["ok"] as? Bool) == true ? "✓" : "✗") \(c["name"] ?? "") – \(c["detail"] ?? "")")
         }
     }
+}
+
+/// Stichprobenprofil des eigenen Prozesses (Diagnose der Leistung im Build) – läuft im Hintergrund.
+private func startSample(seconds: Int, output: URL) {
+    let process = Process()
+    process.executableURL = URL(fileURLWithPath: "/usr/bin/sample")
+    process.arguments = [String(getpid()), String(seconds), "-file", output.path]
+    process.standardOutput = FileHandle.nullDevice
+    process.standardError = FileHandle.nullDevice
+    try? process.run()
 }
 
 /// Verbrauchte CPU-Zeit des eigenen Prozesses (alle Threads) in Sekunden.

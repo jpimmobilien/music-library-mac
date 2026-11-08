@@ -308,8 +308,9 @@ struct InteractiveVisual<Content: View>: View {
                     .opacity(hovering ? 1 : 0)
                     .padding(10)
                 }
+                // Kein Farbfilter (brightness): eingebettete Ebenen (z. B. Datenströme) müssten sonst gefiltert
+                // neu zusammengesetzt werden. Rückmeldung: Hinweis „Details“ und leichte Vergrößerung.
                 .scaleEffect(hovering && !reduceMotion && theme.motion == .full ? 1.008 : 1)
-                .brightness(hovering ? (theme.isDark ? 0.03 : -0.01) : 0)
         }
         .buttonStyle(.plain)
         .onHover { inside in
