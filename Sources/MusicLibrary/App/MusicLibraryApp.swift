@@ -234,7 +234,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             if event.window?.isSheet == true || event.window?.attachedSheet != nil { return event }
             // Pfeiltasten tragen zusätzlich .numericPad/.function – für den Vergleich entfernen
             let flags = event.modifierFlags.intersection(.deviceIndependentFlagsMask).subtracting([.numericPad, .function])
-            let list = KeyboardFocus.shared.activeList
+            // Im Audio Studio sind die Listen der Bibliothek nicht sichtbar: Eingabe, Löschen, Pfeile und ⌘A gehen nicht an sie
+            let list = model.studioOpen && !model.playerOpen ? nil : KeyboardFocus.shared.activeList
             // Audio Studio: Leertaste steuert das Vorhören (nicht den Hauptplayer), I/O setzen Start/Ende am Abspielkopf
             if model.studioOpen && !model.playerOpen && flags.isEmpty, model.studio.waveform != nil {
                 switch event.keyCode {
