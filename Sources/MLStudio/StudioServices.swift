@@ -136,6 +136,10 @@ public protocol RemoteSourceProviding: Sendable {
     func download(_ source: SourceInfo, into directory: URL, progress: @escaping @Sendable (DownloadProgress) -> Void) async throws -> URL
     /// Vorschaubild laden (JPEG/PNG), falls vorhanden.
     func thumbnail(for source: SourceInfo) async -> Data?
+    /// Adresse abfragen: einzelner Titel oder Playlist/Set (additiv; Standard: `analyze`, siehe StudioRemoteLookup.swift).
+    func lookup(url: URL, kind: SourceKind) async throws -> RemoteLookup
+    /// Adressen der einzelnen Titel einer Playlist/eines Sets (höchstens 200); bei einem einzelnen Titel `[url]`.
+    func expandPlaylist(url: URL) async throws -> [URL]
 }
 
 /// Zustand der Hilfswerkzeuge für Internet-Quellen.
