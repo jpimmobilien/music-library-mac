@@ -204,6 +204,7 @@
 "Counted interfaces: only network adapters with a routable address – internal connections (e.g. to the T2 chip) are excluded." = "Counted interfaces: only network adapters with a routable address – internal connections (e.g. to the T2 chip) are excluded.";
 "Country code" = "Country code";
 "CPU" = "CPU";
+"CPU %@" = "CPU %@";
 "CPU & GPU" = "CPU & GPU";
 "CPU (share of one core, smoothed)" = "CPU (share of one core, smoothed)";
 "CPU and memory values of other users’ and system processes are only available to programs with administrator rights. AETHER deliberately doesn’t ask for them." = "CPU and memory values of other users’ and system processes are only available to programs with administrator rights. AETHER deliberately doesn’t ask for them.";
@@ -859,6 +860,7 @@
 "Thunderbolt" = "Thunderbolt";
 "Tick" = "Tick";
 "Time on the main thread to hand the results to the views." = "Time on the main thread to hand the results to the views.";
+"Time range" = "Time range";
 "Time since the last startup, from the kernel’s boot time." = "Time since the last startup, from the kernel’s boot time.";
 "Time the background measurement needs per tick (all sources due in this tick)." = "Time the background measurement needs per tick (all sources due in this tick).";
 "Timer delay" = "Timer delay";

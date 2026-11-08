@@ -172,6 +172,19 @@ final class AppModel: ObservableObject {
         updateRunning()
     }
 
+    /// Fenster öffnen von außerhalb einer SwiftUI-Szene (Menüleisten-Feld). Die Aktion stammt aus der Umgebung des
+    /// Hauptfensters (`openWindow`) und bleibt nach dessen Schließen gültig.
+    var openWindowHandler: (@MainActor (String) -> Void)?
+
+    func openWindow(id: String) {
+        if let openWindowHandler {
+            openWindowHandler(id)
+        } else if let window = NSApp.windows.first(where: { $0.identifier?.rawValue.contains(id) == true }) {
+            window.makeKeyAndOrderFront(nil)
+        }
+        NSApp.activate(ignoringOtherApps: true)
+    }
+
     func setMenuBarPanelVisible(_ visible: Bool) {
         guard menuBarPanelVisible != visible else { return }
         menuBarPanelVisible = visible

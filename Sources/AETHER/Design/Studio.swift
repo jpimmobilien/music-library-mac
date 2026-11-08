@@ -321,19 +321,42 @@ struct InteractiveVisual<Content: View>: View {
     }
 }
 
-/// Zeitraumwahl der Verlaufsdiagramme.
+/// Zeitraumwahl der Verlaufsdiagramme – reines SwiftUI mit fester Größe. (Ein `Picker(.segmented)` ist ein
+/// AppKit-Steuerelement, das bei jedem Layout-Durchgang seine Segmentbeschriftungen neu vermisst – im Profil ~5 % der
+/// Hauptthread-Zeit der Übersicht.)
 struct RangePicker: View {
+    @Environment(\.aether) private var theme
     @Binding var range: ChartRange
 
     var body: some View {
-        Picker("", selection: $range) {
+        HStack(spacing: 2) {
             ForEach(ChartRange.allCases) { r in
-                Text(rangeName(r)).tag(r)
+                let selected = r == range
+                Button {
+                    range = r
+                } label: {
+                    Text(rangeName(r))
+                        .font(.system(size: 11.5, weight: selected ? .semibold : .medium))
+                        .foregroundStyle(selected ? theme.textPrimary : theme.textSecondary)
+                        .frame(width: 54, height: 22)
+                        .background {
+                            if selected {
+                                Capsule().fill(theme.selectionFill)
+                                    .overlay(Capsule().strokeBorder(theme.edgeLight.opacity(0.35), lineWidth: 0.5))
+                            }
+                        }
+                        .contentShape(Capsule())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(rangeName(r))
+                .accessibilityAddTraits(selected ? .isSelected : [])
             }
         }
-        .pickerStyle(.segmented)
-        .labelsHidden()
-        .frame(width: 260)
+        .padding(2)
+        .background(Capsule().fill(theme.fieldFill))
+        .frame(width: 4 * 54 + 3 * 2 + 4, height: 26)
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel(tr("Time range"))
     }
 }
 

@@ -209,6 +209,7 @@
 "Counted interfaces: only network adapters with a routable address – internal connections (e.g. to the T2 chip) are excluded." = "Gezählte Schnittstellen: nur Netzwerkadapter mit routbarer Adresse – interne Verbindungen (z. B. zum T2-Chip) sind ausgenommen.";
 "Country code" = "Ländercode";
 "CPU" = "CPU";
+"CPU %@" = "CPU %@";
 "CPU & GPU" = "CPU & GPU";
 "CPU (share of one core, smoothed)" = "CPU (Anteil eines Kerns, geglättet)";
 "CPU and memory values of other users’ and system processes are only available to programs with administrator rights. AETHER deliberately doesn’t ask for them." = "CPU- und Speicherwerte von Prozessen anderer Benutzer und des Systems gibt macOS nur an Programme mit Administratorrechten heraus. AETHER fordert sie bewusst nicht an.";
@@ -868,6 +869,7 @@
 "Thunderbolt" = "Thunderbolt";
 "Tick" = "Takt";
 "Time on the main thread to hand the results to the views." = "Zeit im Hauptthread, um die Ergebnisse an die Ansichten zu übergeben.";
+"Time range" = "Zeitraum";
 "Time since the last startup, from the kernel’s boot time." = "Zeit seit dem letzten Start, aus der Startzeit des Kernels.";
 "Time the background measurement needs per tick (all sources due in this tick)." = "Zeit, die die Messung im Hintergrund je Takt braucht (alle in diesem Takt fälligen Quellen).";
 "Timer delay" = "Verzögerung des Takts";

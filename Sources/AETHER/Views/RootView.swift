@@ -8,6 +8,7 @@ struct RootView: View {
     @EnvironmentObject private var settings: AppSettings
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+    @Environment(\.openWindow) private var openWindow
     /// Für Fotos im Build: feste Fenstergröße ohne Fensterkonfiguration.
     var embedded = false
 
@@ -45,6 +46,12 @@ struct RootView: View {
         .tint(theme.accent)
         .foregroundStyle(theme.textPrimary)
         .animation(theme.motion == .off ? nil : .easeInOut(duration: 0.25), value: settings.theme)
+        .onAppear {
+            if !embedded {
+                let action = openWindow
+                model.openWindowHandler = { id in action(id: id) }
+            }
+        }
         .onDisappear {
             // Fenster geschlossen (z. B. bei Menüleisten-Anzeige): nicht mehr im vollen Takt messen
             if !embedded { model.setWindowVisible(false) }

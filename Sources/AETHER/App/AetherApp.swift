@@ -27,21 +27,7 @@ struct AetherApp: App {
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
         .defaultPosition(.topTrailing)
-
-        MenuBarExtra(isInserted: menuBarBinding) {
-            MenuBarPanel()
-                .environmentObject(model)
-                .environmentObject(model.settings)
-        } label: {
-            MenuBarLabel(cpu: model.engine.cpu)
-        }
-        .menuBarExtraStyle(.window)
-    }
-
-    /// Menüleiste nur auf Wunsch (Einstellungen) und nie in den Automatikmodi des Builds.
-    private var menuBarBinding: Binding<Bool> {
-        Binding(get: { model.settings.menuBarEnabled && !model.launchMode.isAutomated },
-                set: { model.settings.menuBarEnabled = $0 })
+        // Menüleisten-Anzeige: AppKit-Statusobjekt (StatusItemController) – bewusst kein `MenuBarExtra`, siehe dort.
     }
 }
 
@@ -51,6 +37,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private weak var model: AppModel?
     private var attached = false
     private var cancellables: Set<AnyCancellable> = []
+    private var statusItem: StatusItemController?
 
     func attach(_ model: AppModel) {
         guard !attached else { return }
@@ -93,6 +80,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             .sink { [weak model] _ in
                 Task { @MainActor in model?.menuBarSettingChanged() }
             }
+            .store(in: &cancellables)
+        // Menüleiste nur auf Wunsch (Einstellungen) und nie in den Automatikmodi des Builds
+        let statusItem = StatusItemController(model: model)
+        self.statusItem = statusItem
+        let automated = model.launchMode.isAutomated
+        model.settings.$menuBarEnabled
+            .removeDuplicates()
+            .sink { [weak statusItem] enabled in statusItem?.setEnabled(enabled && !automated) }
             .store(in: &cancellables)
         NotificationCenter.default.publisher(for: NSApplication.didHideNotification)
             .sink { [weak model] _ in model?.setAppActive(false) }

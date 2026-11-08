@@ -212,24 +212,11 @@ private struct FloatingWindowConfigurator: NSViewRepresentable {
 // MARK: - Menüleiste
 
 /// Anzeige in der Menüleiste: CPU-Auslastung (nur wenn in den Einstellungen eingeschaltet).
-struct MenuBarLabel: View {
-    @ObservedObject var cpu: CPUStore
-
-    var body: some View {
-        let busy = cpu.snapshot?.total.value?.busy
-        HStack(spacing: 3) {
-            Image(systemName: "waveform.path.ecg")
-            Text(busy.map { fmt.percent($0) } ?? "–").monospacedDigit()
-        }
-    }
-}
-
 /// Fenster unter dem Menüleistensymbol.
 struct MenuBarPanel: View {
     @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var settings: AppSettings
     @Environment(\.colorScheme) private var colorScheme
-    @Environment(\.openWindow) private var openWindow
 
     var body: some View {
         let theme = AetherTheme.resolve(settings: settings, systemIsDark: colorScheme == .dark, reduceTransparency: false)
@@ -244,13 +231,11 @@ struct MenuBarPanel: View {
             Divider()
             HStack(spacing: Spacing.s) {
                 Button(tr("Open AETHER")) {
-                    openWindow(id: "main")
-                    NSApp.activate(ignoringOtherApps: true)
+                    model.openWindow(id: "main")
                 }
                 .buttonStyle(CapsuleButtonStyle(prominent: true))
                 Button(tr("Live Monitor")) {
-                    openWindow(id: "live-monitor")
-                    NSApp.activate(ignoringOtherApps: true)
+                    model.openWindow(id: "live-monitor")
                 }
                 .buttonStyle(CapsuleButtonStyle())
                 Spacer()
