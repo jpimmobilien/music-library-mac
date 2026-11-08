@@ -75,11 +75,46 @@ var targets: [Target] = [
 ]
 
 #if os(macOS)
+// MP3-Encoder LAME 3.100 (LGPL, Quelltext unverändert, siehe Sources/CLame/README.md) – ohne Assembler/SSE/Decoder.
+// -O2 auch im Debug-Build: gleicher Maschinencode wie im Release, Tests langer Dateien bleiben schnell.
+targets.append(
+    .target(
+        name: "CLame",
+        path: "Sources/CLame",
+        exclude: ["README.md"],
+        publicHeadersPath: "include",
+        cSettings: [
+            .headerSearchPath("config"),
+            .headerSearchPath("libmp3lame"),
+            .define("HAVE_CONFIG_H"),
+            .define("NDEBUG"),
+            .unsafeFlags(["-w", "-O2"]),
+        ]
+    )
+)
+// FLAC-Encoder libFLAC 1.5.0 (BSD-3, Quelltext unverändert, siehe Sources/CFLAC/README.md) – ohne Ogg und ohne Intrinsics.
+targets.append(
+    .target(
+        name: "CFLAC",
+        path: "Sources/CFLAC",
+        exclude: ["README.md", "vendor/src/libFLAC/deduplication"],
+        publicHeadersPath: "include",
+        cSettings: [
+            .headerSearchPath("config"),
+            .headerSearchPath("vendor/include"),
+            .headerSearchPath("vendor/src/libFLAC/include"),
+            .define("HAVE_CONFIG_H"),
+            .define("NDEBUG"),
+            .define("FLAC__NO_DLL"),
+            .unsafeFlags(["-w", "-O2"]),
+        ]
+    )
+)
 // Audio Studio: Verarbeitung getrennt von der Oberfläche
 targets.append(
     .target(
         name: "StudioEngine",
-        dependencies: ["MLCore", "MLStudio", "MLTags", "OggVorbis"],
+        dependencies: ["MLCore", "MLStudio", "MLTags", "OggVorbis", "CLame", "CFLAC"],
         path: "Sources/StudioEngine",
         linkerSettings: [
             .linkedFramework("AVFoundation"),
