@@ -42,10 +42,27 @@ Datenbank bleiben unverändert. Neu ist der Bereich **Studio** in der Navigation
 - Keine Datenbankänderung. Verlauf (`history.json`), Werkzeuge, Zwischenspeicher und Sicherungen unter
   `~/Library/Application Support/Music Library/Audio Studio`; Einstellungen unter einem eigenen Schlüssel.
 
-## Tests
+## Durchgeführte Tests
 
-Siehe [STATUS.md](STATUS.md).
+Alles auf echten Macs über GitHub Actions (Einzelheiten in [STATUS.md](STATUS.md)):
+
+- **577 automatische Tests ohne Fehler** auf macOS 26 (Apple Silicon) und macOS 15 (Intel), davon rund 100 neu für
+  das Audio Studio: jedes Format und jede MP3-Bitrate (Dauer, Abtastrate, Bitrate, Tags, Cover, Klang),
+  Schnittgenauigkeit (0 Frames), Schneiden ohne Neukodierung, lange Dateien, beschädigte Dateien, Abbruch, Pause,
+  Warteschlange, Ersetzen mit Sicherung und Rückgängig, Werkzeug-Installation mit Prüfsumme.
+- **Echte Internet-Quellen:** SoundCloud (CC-lizenzierter Titel) bis zum fertigen MP3 mit Tags und Cover;
+  Spotify liefert Titel und Cover und lehnt den Download ab. **YouTube** wurde auf den GitHub-Rechnern von YouTube
+  blockiert (Anmeldung verlangt) – nicht umgangen, daher **nicht nachgewiesen**.
+- **125 Ansichten** in Hell und Dunkel mit echtem Liquid Glass (davon 28 neu), angesehen.
+- **Abnahme der DMG:** installiert und gestartet auf Apple Silicon (nativ und Rosetta) und Intel; Aktualisierung
+  2.1 → 2.2 → 2.1 mit echten Dateien ohne Datenverlust; Geschwindigkeit wie 2.1 (innerhalb der Messstreuung).
 
 ## Einschränkungen
 
-Siehe [NICHT_UMGESETZT.md](NICHT_UMGESETZT.md).
+- YouTube nicht nachgewiesen (s. o.); Spotify-Audio bewusst nicht (DRM); keine Anmeldung/Cookies.
+- Bedienung (Ziehen, Zoom, Ablegen, Tastatur) nicht von Hand geprüft; Klang gemessen, nicht angehört.
+- Rohes AAC (.aac) ohne Tags und ≈ 60 ms länger – für die Bibliothek M4A verwenden.
+- Opus/WebM/MKV-Dateien nur mit installiertem FFmpeg.
+- Sicherungen ersetzter Originale werden nicht automatisch gelöscht.
+
+Vollständige Liste: [NICHT_UMGESETZT.md](NICHT_UMGESETZT.md).

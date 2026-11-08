@@ -16,6 +16,17 @@ Werkzeugleiste, Zufall nach Alben, Mehrfachauswahl mit Aufziehen, größere Cove
 „Sehr groß“ und „Riesig“, Format/Bitrate/Hinzufügedatum im großen Player – siehe
 [docs/V2_1_AENDERUNGEN.md](docs/V2_1_AENDERUNGEN.md).
 
+**Version 2.2** bringt das **Audio Studio** (Navigation „Studio“, ⌘7): Audio aus YouTube und SoundCloud laden
+(über yt-dlp, auf Wunsch installiert) oder lokale Audio-/Videodateien öffnen, Ausschnitt in der Wellenform wählen,
+nach MP3, WAV, FLAC, AAC, M4A oder AIFF umwandeln, Metadaten und Cover setzen, direkt in die Bibliothek übernehmen,
+Warteschlange und Verlauf – und **vorhandene Songs schneiden** (neue Datei oder Original ersetzen mit Sicherung und
+Rückgängig). Spotify liefert nur Titel und Cover (DRM). Siehe [docs/V2_2_AENDERUNGEN.md](docs/V2_2_AENDERUNGEN.md).
+
+> **Stand 2.2:** Universal-DMG (Xcode 26), 577 Tests ohne Fehler auf macOS 26 (Apple Silicon) und macOS 15 (Intel),
+> 125 Ansichten in Hell und Dunkel mit echtem Liquid Glass, Abnahme aus der DMG mit Aktualisierung 2.1 → 2.2 → 2.1
+> ohne Befund. YouTube auf GitHub-Rechnern blockiert (nicht nachgewiesen), Bedienung nicht von Hand geprüft –
+> Details: [docs/STATUS.md](docs/STATUS.md).
+
 > **Stand 2.1:** gebaut und geprüft mit GitHub Actions: Universal-DMG (Xcode 26, macOS-26-SDK), 470 von 470 Tests
 > auf macOS 26 (Apple Silicon) und macOS 15 (Intel), alle 97 Ansichten in Hell und Dunkel mit echtem Liquid Glass,
 > Messlauf mit 10.000 Titeln. Nicht von Hand bedient, nicht auf macOS 13 und nicht auf echter Intel-Hardware mit
@@ -30,6 +41,7 @@ Werkzeugleiste, Zufall nach Alben, Mehrfachauswahl mit Aufziehen, größere Cove
 ## Inhalt
 
 - [docs/INSTALLATION.md](docs/INSTALLATION.md) – Installation, Update, erster Start, Signieren/Beglaubigen
+- [docs/V2_2_AENDERUNGEN.md](docs/V2_2_AENDERUNGEN.md) – Audio Studio (Version 2.2)
 - [docs/V2_1_AENDERUNGEN.md](docs/V2_1_AENDERUNGEN.md) – Änderungen in Version 2.1
 - [docs/V2_FUNKTIONEN.md](docs/V2_FUNKTIONEN.md) – Funktionsmatrix Android → macOS mit Prüfstand je Funktion
 - [docs/STATUS.md](docs/STATUS.md) – Testbericht: was gebaut und getestet ist

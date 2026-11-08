@@ -176,3 +176,28 @@ Hinweis, kein sicherer Befund.
 Die höheren Leerlaufwerte im Messlauf auf macOS 26 (Apple Silicon, 22 %) gegenüber Version 2.0 auf macOS 14
 (5 %) liegen damit überwiegend am System (Liquid Glass auf einem virtuellen Mac ohne echte Grafikkarte), nicht an
 Version 2.1: auf demselben Rechner liegen 2.0 und 2.1 nahe beieinander.
+
+## 5. Version 2.2 (Audio Studio)
+
+Vergleich 2.1 ↔ 2.2 auf demselben Rechner (Abnahme-Lauf 42532032184, je zwei Durchgänge abwechselnd, 10.000 Titel,
+`ML_BENCH_QUICK`) und ein zusätzlicher Profil-Lauf (42534509522) mit Stichproben (`/usr/bin/sample`) während
+„Leerlauf mit Wiedergabe“. Mittelwerte in ms bzw. % (Runde 1 / Runde 2).
+
+| Messung | Rechner | 2.1 | 2.2 |
+|---|---|---|---|
+| Bereich wechseln | Apple Silicon | 367 / 220 | 684 / 218 |
+| Titel-Liste scrollen | Apple Silicon | 47,5 / 40,9 | 56,0 / 33,8 |
+| Alben-Raster scrollen | Apple Silicon | 47,6 / 41,4 | 39,1 / 28,8 |
+| Leerlauf mit Wiedergabe, Hauptthread | Apple Silicon | 21,0 / 15,3 | 22,6 / 22,5 |
+| Bereich wechseln | Intel | 706 / 409 | 484 / 374 |
+| Titel-Liste scrollen | Intel | 57,3 / 58,0 | 56,9 / 61,3 |
+| Alben-Raster scrollen | Intel | 61,7 / 53,3 | 50,2 / 57,4 |
+| Leerlauf mit Wiedergabe, Hauptthread | Intel | 12,1 / 12,4 | 29,4 / 22,5 |
+| Leerlauf mit Wiedergabe, Hauptthread (Profil-Lauf) | Intel | 27,0 / 14,3 | 15,1 / 14,6 |
+
+Bewertung: Scrollen und Bereichswechsel sind innerhalb der Streuung unverändert. Der Leerlauf streut auf den
+virtuellen Macs stark (dieselbe Version 2.1 zwischen 12 % und 27 %). Im Profil-Lauf liegen 2.1 und 2.2 gleichauf,
+und in den Stichproben von 2.2 kommt im Leerlauf **keine Funktion des Audio Studios** vor – das Studio arbeitet nur,
+solange es benutzt wird. Ein Nachteil von 2.2 ist damit nicht belegt; mit nur wenigen Durchgängen auf geteilten
+virtuellen Rechnern ist das aber auch kein Beweis für Gleichstand.
+
