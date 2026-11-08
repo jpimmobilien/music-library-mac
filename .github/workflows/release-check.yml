@@ -1,9 +1,10 @@
 # Abnahme einer fertigen DMG aus einem Build-Lauf (Eingabe: Lauf-Nummer), je Rechner:
 #  1. DMG prüfen (Prüfsumme, hdiutil), App installieren, Architekturen und Signatur prüfen
-#  2. Aktualisierungstest im normalen Modus: 2.0 liest einen Musikordner ein, 2.1 übernimmt die Datenbank,
-#     2.1 erneut, 2.0 wieder (scripts/upgrade_test.sh)
+#  2. Aktualisierungstest im normalen Modus: die Vorgängerversion (DMG aus `old_run_id`, Standard 2.1.0) liest
+#     einen Musikordner ein, die neue Version übernimmt die Datenbank, startet erneut, dann wieder die alte
+#     (scripts/upgrade_test.sh)
 #  3. Vorschaubilder aller Ansichten (nur Apple Silicon – Intel-Rechner von GitHub haben kein Metal)
-#  4. Vergleichsmessung 2.0 ↔ 2.1 auf demselben Rechner (je zwei Durchgänge, abwechselnd)
+#  4. Vergleichsmessung alt ↔ neu auf demselben Rechner (je zwei Durchgänge, abwechselnd)
 # Ergebnisse in Zweigen „ci-abnahme-*“. macOS 14 wird von GitHub nicht mehr angeboten; Apple-Silicon-Rechner
 # wurden am 06.11.2026 zeitweise nicht zugeteilt – daher zusätzlich Intel mit macOS 15 und 26.
 name: Abnahme
@@ -16,6 +17,9 @@ on:
       run_id:
         description: Lauf-Nummer des Build-Workflows mit der DMG
         required: true
+      old_run_id:
+        description: Lauf-Nummer mit der DMG der Vorgängerversion (Standard 2.1.0)
+        default: "42223937971"
 
 permissions:
   contents: write
@@ -23,6 +27,7 @@ permissions:
 
 env:
   RUN_ID: ${{ inputs.run_id || '42223937971' }}
+  OLD_RUN_ID: ${{ inputs.old_run_id || '42223937971' }}
 
 jobs:
   abnahme:
@@ -63,11 +68,6 @@ jobs:
     timeout-minutes: 110
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/checkout@v4
-        if: matrix.upgrade || matrix.ab
-        with:
-          ref: release-2.0
-          path: v20
       - uses: actions/download-artifact@v4
         with:
           name: Music-Library-dmg
@@ -96,19 +96,25 @@ jobs:
             echo "Version: $(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$HOME/Applications/Music Library.app/Contents/Info.plist")"
           } 2>&1 | tee out/dmg.txt
           test "${PIPESTATUS[0]}" -eq 0
-      - name: Version 2.0 bauen (zum Vergleich)
+      - uses: actions/download-artifact@v4
+        if: matrix.upgrade || matrix.ab
+        with:
+          name: Music-Library-dmg
+          path: dist-old
+          run-id: ${{ env.OLD_RUN_ID }}
+          github-token: ${{ github.token }}
+      - name: Vorgängerversion aus ihrer DMG holen
         if: matrix.upgrade || matrix.ab
         run: |
-          X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
-          if [ -n "$X" ]; then sudo xcode-select -s "$X"; fi
-          xcodebuild -version | head -1
-          (cd v20 && scripts/build_app.sh > ../build20.log 2>&1) || (tail -30 build20.log; exit 1)
-          ditto "v20/build/Music Library.app" "v20.app"
-          /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" v20.app/Contents/Info.plist
-      - name: Aktualisierungstest 2.0 → 2.1 → 2.0 (normaler Start)
+          MNT="$(mktemp -d)"
+          hdiutil attach "dist-old/Music Library.dmg" -nobrowse -readonly -mountpoint "$MNT" | tail -1
+          ditto "$MNT/Music Library.app" "v-alt.app"
+          hdiutil detach "$MNT" | tail -1
+          echo "Vorgänger: $(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" v-alt.app/Contents/Info.plist)" | tee -a out/dmg.txt
+      - name: Aktualisierungstest alt → neu → alt (normaler Start)
         if: matrix.upgrade
         continue-on-error: true
-        run: scripts/upgrade_test.sh v20.app "$HOME/Applications/Music Library.app" out/aktualisierung
+        run: scripts/upgrade_test.sh v-alt.app "$HOME/Applications/Music Library.app" out/aktualisierung
       - name: Vorschaubilder aller Ansichten
         if: matrix.snapshots
         continue-on-error: true
@@ -118,14 +124,14 @@ jobs:
         run: |
           mkdir -p out/snapshots
           scripts/run_snapshots.sh "$HOME/Applications/Music Library.app" out/snapshots
-      - name: Vergleichsmessung 2.0 ↔ 2.1 (abwechselnd, 10.000 Titel)
+      - name: Vergleichsmessung alt ↔ neu (abwechselnd, 10.000 Titel)
         if: matrix.ab
         continue-on-error: true
         run: |
-          ditto "$HOME/Applications/Music Library.app" v21.app
+          ditto "$HOME/Applications/Music Library.app" v-neu.app
           mkdir -p out/ab
           for round in 1 2; do
-            for v in v20 v21; do
+            for v in v-alt v-neu; do
               ML_BENCH_QUICK=1 BENCHMARK_TIMEOUT=600 scripts/run_benchmark.sh "$v.app" "out/ab/$v-$round" 10000 > "out/ab/$v-$round.out" 2>&1 || true
               echo "== $v Runde $round"; grep -E "Scrollschritt|Bereich wechseln|Suche tippen|Leerlauf.*%|Großer" "out/ab/$v-$round/benchmark.txt" || tail -5 "out/ab/$v-$round.out"
             done
@@ -135,7 +141,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          cp build20.log out/ 2>/dev/null || true
           cd out
           find . -name "*.png" | while read -r f; do sips -s format jpeg -s formatOptions 82 "$f" --out "${f%.png}.jpg" >/dev/null 2>&1 && rm "$f"; done
           git init -q -b "ci-abnahme-${{ matrix.name }}"

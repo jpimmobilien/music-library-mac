@@ -1,5 +1,5 @@
 #!/bin/bash
-# Echter Start mit vorhandenen Daten von Version 2.0 (Aktualisierungstest, normaler Modus – kein Vorschaumodus):
+# Echter Start mit vorhandenen Daten der Vorgängerversion (Aktualisierungstest, normaler Modus – kein Vorschaumodus):
 #
 #   scripts/upgrade_test.sh "v20.app" "v21.app" abnahme/upgrade
 #
@@ -100,7 +100,7 @@ check() { # Beschreibung, Befehl …
 
 # --- 2. Version 2.0 ---------------------------------------------------------------------------------
 log ""
-log "== Version 2.0: Datenbank anlegen und Ordner einlesen"
+log "== Alte Version: Datenbank anlegen und Ordner einlesen"
 start_app "$OLD" "v20-erststart"
 wait_for 60 "SELECT count(*) FROM sqlite_master WHERE name='folders'" 1 || log "  ✗ Datenbank nicht angelegt"
 sleep 3
@@ -134,11 +134,11 @@ json.dump({
     "resume": q("SELECT * FROM resume_points ORDER BY trackUid"),
 }, open(sys.argv[2], "w"), indent=1)
 EOF
-log "  Stand 2.0: $(sqlite3 "$DB" 'SELECT count(*) FROM tracks') Titel, alle mit demselben Hinzufügedatum: $(sqlite3 "$DB" 'SELECT count(DISTINCT dateAdded) FROM tracks') verschiedene Werte"
+log "  Stand alte Version: $(sqlite3 "$DB" 'SELECT count(*) FROM tracks') Titel, alle mit demselben Hinzufügedatum: $(sqlite3 "$DB" 'SELECT count(DISTINCT dateAdded) FROM tracks') verschiedene Werte"
 
 # --- 3. Version 2.1 ---------------------------------------------------------------------------------
 log ""
-log "== Version 2.1: erster Start mit den Daten von 2.0"
+log "== Neue Version: erster Start mit den Daten der alten Version"
 start_app "$NEW" "v21-erststart"
 if wait_for 180 "SELECT count(*) FROM tracks WHERE dateAddedSource = 0" 0; then log "  ✓ Hinzufügedatum für alle Titel bestimmt"; else log "  ✗ Hinzufügedatum nicht bestimmt"; FAIL=1; fi
 sleep 8
@@ -189,13 +189,13 @@ for p in problems: print("    ✗ " + p)
 sys.exit(1 if problems else 0)
 EOF
 )
-log "  Prüfung der Datenbank nach dem ersten Start von 2.1:"
+log "  Prüfung der Datenbank nach dem ersten Start der neuen Version:"
 "${PY[@]}" -c "$CHECK_PY" save "$DB" "$OUT/stand-v20.json" "$OUT/stand-v21.json" 2>&1 | tee -a "$REPORT"
 [ "${PIPESTATUS[0]}" -eq 0 ] && log "  ✓ Schema ergänzt (user_version 1), alle Titel, Favoriten, Playlist, Bewertung, Statistik und Wiedergabeposition unverändert, Hinzufügedatum = Erstellungsdatum der Datei" || FAIL=1
 
 # --- 4. Erneuter Start von 2.1 mit einer neuen Datei ------------------------------------------------
 log ""
-log "== Version 2.1: erneuter Start, dazu eine neue Datei (erstellt 2021)"
+log "== Neue Version: erneuter Start, dazu eine neue Datei (erstellt 2021)"
 make_file "$MUSIC/Einzeltitel/Neu hinzugefuegt.m4a" 550 202107040900
 start_app "$NEW" "v21-zweitstart"
 if wait_for 120 "SELECT count(*) FROM tracks WHERE dateAddedSource <> 0" 9; then log "  ✓ neue Datei eingelesen"; else log "  ✗ neue Datei nicht eingelesen ($(sqlite3 "$DB" 'SELECT count(*) FROM tracks'))"; FAIL=1; fi
@@ -206,13 +206,13 @@ stop_app "v21-zweitstart"
 
 # --- 5. Zurück zu 2.0 -------------------------------------------------------------------------------
 log ""
-log "== Version 2.0: erneuter Start mit der ergänzten Datenbank"
+log "== Alte Version: erneuter Start mit der Datenbank der neuen Version"
 start_app "$OLD" "v20-rueckweg"
 sleep 20
 stop_app "v20-rueckweg"
 check "Datenbank nicht beiseitegelegt (keine „Library-defekt“-Datei)" bash -c "! ls \"$SUPPORT\"/Library-defekt-* >/dev/null 2>&1"
 "${PY[@]}" -c "$CHECK_PY" same "$DB" "$OUT/stand-v20.json" "$OUT/stand-v21.json" > "$OUT/rueckweg.txt" 2>&1 \
-    && log "  ✓ 2.0 öffnet die ergänzte Datenbank; alle Daten und Hinzufügedaten erhalten" \
+    && log "  ✓ Die alte Version öffnet die Datenbank weiterhin; alle Daten und Hinzufügedaten erhalten" \
     || { log "  ✗ nach dem Rückweg verändert:"; tee -a "$REPORT" < "$OUT/rueckweg.txt"; FAIL=1; }
 
 sleep 5
@@ -220,5 +220,5 @@ for f in "$HOME"/Library/Logs/DiagnosticReports/MusicLibrary*; do
     [ -e "$f" ] && cp "$f" "$OUT/" && log "  Absturzbericht: $(basename "$f")" && FAIL=1
 done
 log ""
-if [ $FAIL -eq 0 ]; then log "ERGEBNIS: Aktualisierung 2.0 → 2.1 → 2.0 ohne Befund"; else log "ERGEBNIS: Befunde siehe oben"; fi
+if [ $FAIL -eq 0 ]; then log "ERGEBNIS: Aktualisierung alt → neu → alt ohne Befund"; else log "ERGEBNIS: Befunde siehe oben"; fi
 exit $FAIL

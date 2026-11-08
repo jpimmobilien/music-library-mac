@@ -59,6 +59,23 @@ macOS fragt beim ersten Zugriff ggf. nach der Erlaubnis für die Ordner *Dokumen
 *Downloads* oder für **Wechselmedien** (externe Laufwerke) – bitte erlauben, sonst sieht die App die
 Dateien nicht.
 
+## 3a. Audio Studio (ab 2.2)
+
+Das Audio Studio (Navigation „Studio“ oder ⌘7) wandelt lokale Audio- und Videodateien um und schneidet Titel
+der Bibliothek – dafür ist nichts weiter nötig.
+
+**Internet-Quellen (YouTube, SoundCloud):** Dafür braucht das Studio das Open-Source-Werkzeug **yt-dlp**, für
+YouTube zusätzlich die JavaScript-Laufzeit **Deno**. Beide sind nicht in der App enthalten. Im Studio oben rechts
+„Werkzeuge einrichten“ → „Installieren“: Die App lädt sie von den offiziellen GitHub-Veröffentlichungen, prüft die
+SHA-256-Prüfsummen und legt sie unter `~/Library/Application Support/Music Library/Audio Studio/Tools` ab
+(„Entfernen“ löscht sie wieder). Sind yt-dlp und Deno schon über Homebrew installiert, werden diese verwendet.
+Ohne deinen Klick lädt die App nichts. Lade nur Inhalte, für die du die Rechte hast; Spotify-Audio ist
+kopiergeschützt und wird nicht geladen (nur Titel, Interpret und Cover).
+
+**Ersetzte Originale** (Schneiden → „Original ersetzen“) werden vorher gesichert unter
+`~/Library/Application Support/Music Library/Audio Studio/Backups` und lassen sich im Verlauf rückgängig machen.
+Die Sicherungen werden nicht automatisch gelöscht.
+
 ## 4. Daten und Deinstallation
 
 - Bibliothek, Playlists, Favoriten, Zähler, Verlauf: `~/Library/Application Support/Music Library/`
