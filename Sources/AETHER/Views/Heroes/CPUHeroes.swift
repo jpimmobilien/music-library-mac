@@ -397,7 +397,7 @@ struct ProcessLandscapeHero: View {
     let selected: Int32?
     let onSelect: (Int32) -> Void
 
-    private let towerHeight: CGFloat = 104
+    private var towerHeight: CGFloat { 104 }
 
     var body: some View {
         let top = store.top(by: \ProcessRow.cpuSort, limit: 12).filter { ($0.cpu ?? 0) >= 0.001 }

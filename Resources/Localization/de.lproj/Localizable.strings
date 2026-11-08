@@ -13,9 +13,12 @@
 "%@ received · %@ sent since AETHER started" = "%@ empfangen · %@ gesendet seit Start von AETHER";
 "%@ remaining" = "noch %@";
 "%@ s" = "%@ s";
+"%@ total" = "%@ insgesamt";
 "%@ unified memory" = "%@ gemeinsamer Arbeitsspeicher";
 "%@ unified memory – shared by CPU, GPU and Neural Engine" = "%@ Unified Memory – gemeinsam für CPU, GPU und Neural Engine";
 "%@ used of %@" = "%@ von %@ belegt";
+"%@ – CPU %@, memory %@" = "%@ – CPU %@, Speicher %@";
+"%@: highest %@, average %@ (%ld sensors)" = "%@: höchstens %@, im Mittel %@ (%ld Sensoren)";
 "%ld active" = "%ld aktiv";
 "%ld charge cycles" = "%ld Ladezyklen";
 "%ld copies · %@ each" = "%ld Kopien · je %@";
@@ -121,6 +124,7 @@
 "At least %@" = "Mindestens %@";
 "At least %@ of one core" = "Mindestens %@ eines Kerns";
 "Audio" = "Audio";
+"Available" = "Verfügbar";
 "available incl. %@ purgeable" = "inkl. %@ löschbar";
 "Available on “%@”" = "Verfügbar auf „%@“";
 "Available spare" = "Verfügbare Reserve";
@@ -133,6 +137,7 @@
 "Base interval" = "Grundtakt";
 "Battery" = "Batterie";
 "Battery charge" = "Ladestand";
+"Battery charge: %@" = "Ladestand: %@";
 "Battery condition and maximum capacity as shown in System Information." = "Batteriezustand und maximale Kapazität wie in den Systeminformationen.";
 "Battery details" = "Batteriedetails";
 "Battery power" = "Batterieleistung";
@@ -143,6 +148,7 @@
 "Belongs to another user – quitting needs administrator rights." = "Gehört einem anderen Benutzer – Beenden nur mit Administratorrechten.";
 "Bridge" = "Brücke";
 "Bring to front" = "In den Vordergrund";
+"Build %@" = "Build %@";
 "Built-in" = "Eingebaut";
 "Byte counters of the physical network interfaces (64 bit)." = "Bytezähler der physischen Netzwerkschnittstellen (64 Bit).";
 "Cached" = "Cache";
@@ -188,6 +194,7 @@
 "Connected" = "Verbunden";
 "Connected displays" = "Angeschlossene Displays";
 "Connected displays as macOS reports them." = "Angeschlossene Bildschirme, wie macOS sie meldet.";
+"Connected via %@" = "Verbunden über %@";
 "Connection list" = "Verbindungsliste";
 "Connections" = "Verbindungen";
 "Contains" = "Enthält";
@@ -203,8 +210,10 @@
 "Country code" = "Ländercode";
 "CPU" = "CPU";
 "CPU & GPU" = "CPU & GPU";
+"CPU (share of one core, smoothed)" = "CPU (Anteil eines Kerns, geglättet)";
 "CPU and memory values of other users’ and system processes are only available to programs with administrator rights. AETHER deliberately doesn’t ask for them." = "CPU- und Speicherwerte von Prozessen anderer Benutzer und des Systems gibt macOS nur an Programme mit Administratorrechten heraus. AETHER fordert sie bewusst nicht an.";
 "CPU area" = "CPU-Bereich";
+"CPU cores" = "CPU-Kerne";
 "CPU die" = "CPU-Chip";
 "CPU heatsink" = "CPU-Kühlkörper";
 "CPU PECI" = "CPU (PECI)";
@@ -315,9 +324,11 @@
 "Format" = "Format";
 "Forward" = "Vorwärts";
 "Free" = "Frei";
+"Free + cached files" = "Frei + zwischengespeicherte Dateien";
 "Full" = "Voll";
 "Full charge capacity" = "Volle Ladekapazität";
 "Full charge capacity divided by design capacity. Not identical to Apple’s “Maximum Capacity”." = "Volle Ladekapazität geteilt durch Designkapazität. Nicht identisch mit Apples „Maximale Kapazität“.";
+"Full height = %@ of one core" = "Volle Höhe = %@ eines Kerns";
 "Full in %@" = "Voll in %@";
 "Fully charged" = "Vollständig geladen";
 "Glass intensity" = "Glasintensität";
@@ -327,6 +338,7 @@
 "GPU die" = "GPU-Chip";
 "GPU heatsink" = "GPU-Kühlkörper";
 "GPU proximity" = "GPU-Umgebung";
+"GPU utilization as reported by the graphics driver" = "GPU-Auslastung, wie sie der Grafiktreiber meldet";
 "Graphics" = "Grafik";
 "Graphics memory" = "Grafikspeicher";
 "Graphics processors as listed in System Information." = "Grafikprozessoren laut Systeminformationen.";
@@ -340,6 +352,7 @@
 "Health log the NVMe drive reports about itself (SMART), read through Apple’s public interface." = "Zustandsprotokoll, das das NVMe-Laufwerk über sich selbst meldet (SMART), gelesen über Apples öffentliche Schnittstelle.";
 "Hidden" = "Verborgen";
 "Hide" = "Ausblenden";
+"Hide process landscape" = "Prozesslandschaft ausblenden";
 "Hide Sidebar" = "Seitenleiste ausblenden";
 "High CPU" = "Hohe CPU";
 "High CPU usage detected." = "Hohe CPU-Auslastung erkannt.";
@@ -358,6 +371,8 @@
 "How the status is determined" = "So entsteht der Status";
 "Icons" = "Symbole";
 "Idle" = "Leerlauf";
+"Illustration of the model family – not a photo of this Mac." = "Illustration der Modellfamilie – kein Foto dieses Mac.";
+"Illustration – capacity values and disk activity are measured." = "Illustration – Kapazitätswerte und Datenträgeraktivität sind gemessen.";
 "Illustration – the screen shows the measured load of each core." = "Illustration – der Bildschirm zeigt die gemessene Last jedes Kerns.";
 "Images" = "Bilder";
 "Inactive" = "Inaktiv";
@@ -481,6 +496,8 @@
 "Memory pressure as reported by macOS" = "Speicherdruck laut macOS";
 "Memory pressure is critical." = "Speicherdruck kritisch.";
 "Memory pressure: %@" = "Speicherdruck: %@";
+"Memory pressure: %@ – as reported by macOS." = "Speicherdruck: %@ – so meldet es macOS.";
+"Memory pressure: not available – %@" = "Speicherdruck: nicht verfügbar – %@";
 "Memory proximity" = "Speicher-Umgebung";
 "Memory together" = "Speicher zusammen";
 "Memory used" = "Belegter Arbeitsspeicher";
@@ -537,7 +554,10 @@
 "No identical files of 1 MB or more found." = "Keine identischen Dateien ab 1 MB gefunden.";
 "No matching connections" = "Keine passenden Verbindungen";
 "No power adapter connected" = "Kein Netzteil angeschlossen";
+"No process is using measurable CPU time right now." = "Gerade nutzt kein Prozess messbar CPU-Zeit.";
 "No results" = "Keine Treffer";
+"No sensor temperatures" = "Keine Sensortemperaturen";
+"No startup volume found" = "Kein Startvolume gefunden";
 "No swap file in use." = "Keine Auslagerungsdatei in Gebrauch.";
 "No telemetry, no accounts, no passwords." = "Keine Telemetrie, keine Konten, keine Passwörter.";
 "No temperature sensors available" = "Keine Temperatursensoren verfügbar";
@@ -713,6 +733,7 @@
 "Share of one CPU core used by AETHER itself (all threads)." = "Anteil eines CPU-Kerns, den AETHER selbst nutzt (alle Threads).";
 "Shared by CPU, GPU and Neural Engine – there is no separate graphics memory." = "Gemeinsam für CPU, GPU und Neural Engine – es gibt keinen getrennten Grafikspeicher.";
 "Share…" = "Teilen …";
+"Short spikes stay visible: the large numbers show the peak of the last 10 seconds, the history band the lowest and highest value of each time slice." = "Kurze Spitzen bleiben sichtbar: Die großen Zahlen zeigen die Spitze der letzten 10 Sekunden, das Band im Verlauf den niedrigsten und höchsten Wert jedes Zeitabschnitts.";
 "Shorter intervals react faster but cost a little more energy." = "Kürzere Intervalle reagieren schneller, kosten aber etwas mehr Energie.";
 "Show" = "Anzeigen";
 "Show all %ld" = "Alle %ld anzeigen";
@@ -725,6 +746,7 @@
 "Show in the menu bar" = "In der Menüleiste zeigen";
 "Show Info" = "Informationen einblenden";
 "Show Package Contents" = "Paketinhalt zeigen";
+"Show process landscape" = "Prozesslandschaft einblenden";
 "Show raw values" = "Rohwerte zeigen";
 "Show Sidebar" = "Seitenleiste einblenden";
 "Showing the 100 groups that free the most space." = "Die 100 Gruppen, die am meisten Platz freigeben, werden gezeigt.";
@@ -758,6 +780,7 @@
 "Startup disk" = "Startvolume";
 "Startup disk: less than %@ or %@ available" = "Startvolume: weniger als %@ oder %@ verfügbar";
 "State" = "Zustand";
+"Status" = "Status";
 "Stop" = "Stoppen";
 "Stopped" = "Angehalten";
 "Storage" = "Speicher";
@@ -793,6 +816,7 @@
 "The file system reports that this file may share its data with other files. Moving it to the Trash may free less space than its size." = "Laut Dateisystem kann diese Datei ihre Daten mit anderen Dateien teilen. Wenn Sie sie in den Papierkorb legen, wird eventuell weniger Platz frei, als sie groß ist.";
 "The folder couldn’t be read" = "Der Ordner konnte nicht gelesen werden";
 "The folder was moved or deleted." = "Der Ordner wurde bewegt oder gelöscht.";
+"The glow appears only while macOS reports that the battery is charging." = "Das Leuchten erscheint nur, solange macOS meldet, dass die Batterie lädt.";
 "The history files couldn’t be removed completely." = "Die Verlaufsdateien konnten nicht vollständig entfernt werden.";
 "The Live Monitor (⌥⌘M) floats above other windows." = "Der Live-Monitor (⌥⌘M) schwebt über anderen Fenstern.";
 "The memory pressure level macOS itself reports." = "Die Speicherdruck-Stufe, die macOS selbst meldet.";
@@ -809,13 +833,18 @@
 "The serial number is only read when you ask for it (Hardware → Show) and is never stored." = "Die Seriennummer wird nur auf Ihren Wunsch gelesen (Hardware → Anzeigen) und nie gespeichert.";
 "The serial number stored in the Mac’s firmware. Only read when you ask for it." = "Die in der Firmware des Mac gespeicherte Seriennummer. Wird nur auf Ihren Wunsch gelesen.";
 "The source answered, but the value wasn’t plausible, so it isn’t shown." = "Die Quelle hat geantwortet, aber der Wert war nicht plausibel – deshalb wird er nicht gezeigt.";
+"The state comes from macOS. Temperatures and fan speeds are read from the System Management Controller – Apple doesn’t publish limits, so temperatures alone never trigger a warning." = "Der Status kommt von macOS. Temperaturen und Lüfterdrehzahlen werden aus dem System Management Controller gelesen – Apple veröffentlicht keine Grenzwerte, deshalb lösen Temperaturen allein nie einen Hinweis aus.";
 "The System Management Controller reports no fans – the Mac is cooled passively." = "Der System Management Controller meldet keine Lüfter – der Mac wird passiv gekühlt.";
 "The system setting “Reduce motion” always takes precedence." = "Die Systemeinstellung „Bewegung reduzieren“ hat immer Vorrang.";
 "The thermal state macOS reports. It’s a classification, not a temperature." = "Der Thermalstatus laut macOS. Eine Einstufung, keine Temperatur.";
 "The utilization comes from the graphics driver. Not every driver reports it – AETHER never estimates it." = "Die Auslastung stammt vom Grafiktreiber. Nicht jeder Treiber meldet sie – AETHER schätzt sie nie.";
+"There is no battery charge to show – power comes from the mains." = "Es gibt keinen Ladestand anzuzeigen – der Strom kommt aus dem Netz.";
 "Thermal" = "Thermik";
 "Thermal state" = "Thermalstatus";
+"Thermal state (macOS)" = "Thermalstatus (macOS)";
+"Thermal state not available" = "Thermalstatus nicht verfügbar";
 "Thermal state reported by macOS" = "Thermalstatus laut macOS";
+"Thermal state: %@" = "Thermalstatus: %@";
 "Thermal: %@" = "Thermik: %@";
 "Thermal: state “serious” or “critical” as reported by macOS. Sensor temperatures alone never trigger a warning – Apple doesn’t publish limits." = "Thermik: Status „ernst“ oder „kritisch“ laut macOS. Sensortemperaturen allein lösen nie eine Warnung aus – Apple veröffentlicht keine Grenzwerte.";
 "This folder" = "Diesem Ordner";
@@ -833,6 +862,7 @@
 "This theme uses solid surfaces." = "Dieses Theme nutzt deckende Flächen.";
 "Threads" = "Threads";
 "Throughput" = "Durchsatz";
+"Throughput counts only network adapters with a routable address (Ethernet, Wi‑Fi). VPN tunnels and internal links are listed separately, so nothing counts twice." = "Der Durchsatz zählt nur Netzwerkadapter mit routbarer Adresse (Ethernet, WLAN). VPN-Tunnel und interne Verbindungen stehen getrennt darunter – so zählt nichts doppelt.";
 "Thunderbolt" = "Thunderbolt";
 "Tick" = "Takt";
 "Time on the main thread to hand the results to the views." = "Zeit im Hauptthread, um die Ergebnisse an die Ansichten zu übergeben.";
@@ -858,6 +888,7 @@
 "Unknown" = "Unbekannt";
 "Unsafe shutdowns" = "Unsichere Abschaltungen";
 "Unsaved changes will be lost. The process ends immediately." = "Nicht gesicherte Änderungen gehen verloren. Der Prozess endet sofort.";
+"Until full" = "Bis voll";
 "untitled folder" = "Neuer Ordner";
 "up %@" = "seit %@ in Betrieb";
 "Upd./s" = "Akt./s";
@@ -891,6 +922,7 @@
 "Warning" = "Warnung";
 "Warning below %@" = "Warnung unter %@";
 "Wear (percentage used)" = "Abnutzung (laut Laufwerk)";
+"What your Mac is working on" = "Woran dein Mac gerade arbeitet";
 "When the window isn’t visible" = "Wenn das Fenster nicht sichtbar ist";
 "Where" = "Ort";
 "Why?" = "Warum?";
@@ -904,6 +936,7 @@
 "Your Mac is running smoothly." = "Dein Mac arbeitet ruhig.";
 "°C max" = "°C max.";
 "Ø %@" = "Ø %@";
+"“%@”" = "„%@“";
 "“%@” belongs to another user (%@). macOS only allows quitting it with administrator rights." = "„%@“ gehört einem anderen Benutzer (%@). macOS erlaubt das Beenden nur mit Administratorrechten.";
 "“%@” can’t be placed inside itself." = "„%@“ kann nicht in sich selbst abgelegt werden.";
 "“%@” couldn’t be ejected: %@" = "„%@“ konnte nicht ausgeworfen werden: %@";
