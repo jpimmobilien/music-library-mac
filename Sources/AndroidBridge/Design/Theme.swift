@@ -411,7 +411,6 @@ struct CinematicBackground: View {
                     }
                 }
                 .frame(width: w, height: h)
-                .drawingGroup()
             }
         }
         .ignoresSafeArea()
