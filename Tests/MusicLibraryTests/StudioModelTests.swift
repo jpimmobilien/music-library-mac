@@ -50,17 +50,21 @@ final class FakeExporter: AudioExporting, @unchecked Sendable {
     func isHeld(_ t: String) -> Bool { lock.lock(); defer { lock.unlock() }; return holdEverything || held.contains(t) }
     var allRequests: [ExportRequest] { lock.lock(); defer { lock.unlock() }; return requests }
 
-    func export(_ request: ExportRequest, pause: PauseGate?, progress: @escaping @Sendable (Double) -> Void) async throws -> ExportResult {
-        let title = request.metadata.title
-        lock.lock()
+    /// Sperre nur in synchronen Hilfen (in `async`-Funktionen ist `NSLock.lock()` nicht erlaubt).
+    private func begin(_ request: ExportRequest) -> (fail: Bool, data: Data, duration: Double?) {
+        lock.lock(); defer { lock.unlock() }
         requests.append(request)
         active += 1
         maxActive = max(maxActive, active)
-        let shouldFail = failing.contains(title)
-        let data = content
-        let duration = resultDuration
-        lock.unlock()
-        defer { lock.lock(); active -= 1; lock.unlock() }
+        return (failing.contains(request.metadata.title), content, resultDuration)
+    }
+
+    private func end() { lock.lock(); active -= 1; lock.unlock() }
+
+    func export(_ request: ExportRequest, pause: PauseGate?, progress: @escaping @Sendable (Double) -> Void) async throws -> ExportResult {
+        let title = request.metadata.title
+        let (shouldFail, data, duration) = begin(request)
+        defer { end() }
         for i in 0..<10 {
             await pause?.waitIfPaused()
             if Task.isCancelled { throw StudioError.cancelled }
@@ -119,8 +123,17 @@ final class FakeRemote: RemoteSourceProviding, @unchecked Sendable {
                           suggested: StudioMetadata(title: "Lied \(name)", artist: "Band"), codec: "mp4a.40.2", bitrateKbps: 128)
     }
 
+    private func record(_ url: URL) { lock.lock(); analyzed.append(url.absoluteString); lock.unlock() }
+
+    /// Zählt den Aufruf; true, wenn schon eine Teil-Datei vorlag.
+    private func countDownload(part: URL) {
+        lock.lock(); defer { lock.unlock() }
+        downloadCalls += 1
+        if FileManager.default.fileExists(atPath: part.path) { sawPartialFile = true }
+    }
+
     func analyze(url: URL, kind: SourceKind) async throws -> SourceInfo {
-        lock.lock(); analyzed.append(url.absoluteString); lock.unlock()
+        record(url)
         return info(url, kind: kind)
     }
 
@@ -133,10 +146,7 @@ final class FakeRemote: RemoteSourceProviding, @unchecked Sendable {
         if source.kind == .spotify { throw StudioError.spotifyDRM }
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         let part = directory.appendingPathComponent("audio.m4a.part")
-        lock.lock()
-        downloadCalls += 1
-        if FileManager.default.fileExists(atPath: part.path) { sawPartialFile = true }
-        lock.unlock()
+        countDownload(part: part)
         if !FileManager.default.fileExists(atPath: part.path) { try Data("TEIL".utf8).write(to: part) }
         progress(DownloadProgress(fraction: 0.5, bytesDone: 50, bytesTotal: 100))
         while isHeld {
@@ -249,6 +259,9 @@ final class StudioModelTests: XCTestCase {
         XCTAssertEqual(model.history.entries.count, 3)
         XCTAssertTrue(model.history.entries.allSatisfy(\.succeeded))
         XCTAssertEqual(StudioQueueLogic.summary(model.jobs), "3 von 3 fertig")
+        // eine Zusammenfassung statt einer Mitteilung je Auftrag
+        XCTAssertTrue(library.toasts.contains { $0.text == "3 Aufträge fertig" && $0.action == "Im Finder zeigen" && !$0.isError })
+        XCTAssertFalse(library.toasts.contains { $0.text.contains("gespeichert") })
     }
 
     func testPauseResumeCancelRetry() async throws {
@@ -323,6 +336,7 @@ final class StudioModelTests: XCTestCase {
         XCTAssertEqual(model.history.entries.count, 2)
         XCTAssertEqual(model.history.entries.filter(\.succeeded).count, 1)
         XCTAssertEqual(StudioQueueLogic.summary(model.jobs), "1 von 2 fertig · 1 Fehler")
+        XCTAssertTrue(library.toasts.contains { $0.text == "1 von 2 Aufträgen fertig · 1 Fehler" && $0.isError })
     }
 
     func testSetFormatOfWaitingJob() async throws {

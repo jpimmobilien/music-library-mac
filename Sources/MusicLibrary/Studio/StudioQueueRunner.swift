@@ -306,7 +306,9 @@ extension StudioModel {
                                            duration: result.duration > 0 ? result.duration : (job.trim?.length ?? job.source.duration),
                                            imported: job.destination.importsIntoLibrary, succeeded: true, backupPath: backupPath)
             addHistory(entry)
-            notifySuccess(job, path: finalPath, historyID: entry.id)
+            if job.destination.replacesOriginal { notifyReplaced(path: finalPath, historyID: entry.id) }
+            queueRun.done += 1
+            queueRun.last = (job, finalPath)
             removeWorkDirectory(id)
         } catch {
             if Self.isCancellation(error) || Task.isCancelled {
@@ -320,7 +322,9 @@ extension StudioModel {
             } else {
                 let message = Self.message(error)
                 updateJob(id) { $0.phase = .failed; $0.error = message; $0.detail = nil; $0.finished = Date() }
+                queueRun.failed += 1
                 if let job = self.job(id) {
+                    queueRun.lastFailure = (job.metadata.title.studioTrimmed.isEmpty ? job.source.title : job.metadata.title, message)
                     addHistory(StudioHistoryEntry(sourceKind: job.source.kind, source: Self.historyKey(job.source),
                                                   title: job.metadata.title.studioTrimmed.isEmpty ? job.source.title : job.metadata.title,
                                                   artist: job.metadata.artist, outputPath: "", formatSummary: job.options.summary(),
@@ -335,6 +339,35 @@ extension StudioModel {
         pauseRequested.remove(id)
         if runningJobID == id { runningJobID = nil }
         scheduleNext()
+        if runningJobID == nil { finishQueueRun() }
+    }
+
+    /// Warteschlange leer gelaufen: ein Auftrag → eigene Mitteilung, mehrere → eine Zusammenfassung
+    /// (keine Flut von Mitteilungen bei Playlists).
+    private func finishQueueRun() {
+        let run = queueRun
+        queueRun = StudioQueueRun()
+        let total = run.done + run.failed
+        guard total > 0 else { return }
+        if total == 1 {
+            if let last = run.last {
+                if !last.job.destination.replacesOriginal { notifySuccess(last.job, path: last.path) }
+            } else if let failure = run.lastFailure {
+                lib?.studioToast("„\(failure.title)“: \(failure.message)", action: nil, isError: true, perform: nil)
+            }
+            return
+        }
+        let text = run.failed == 0 ? "\(run.done) Aufträge fertig" : "\(run.done) von \(total) Aufträgen fertig · \(run.failed) Fehler"
+        guard let path = run.last?.path else {
+            lib?.studioToast(text, action: nil, isError: true, perform: nil)
+            return
+        }
+        if settings.revealAfterExport {
+            revealInFinder(path)
+            lib?.studioToast(text, action: nil, isError: run.failed > 0, perform: nil)
+        } else {
+            lib?.studioToast(text, action: "Im Finder zeigen", isError: run.failed > 0) { [weak self] in self?.revealInFinder(path) }
+        }
     }
 
     /// Lokale Datei des Auftrags: Datei bzw. Bibliothekstitel direkt; Internet-Quelle aus dem Zwischenspeicher
@@ -416,13 +449,18 @@ extension StudioModel {
         try await Task.detached(priority: .utility) { try work() }.value
     }
 
-    private func notifySuccess(_ job: StudioJob, path: String, historyID: UUID) {
+    /// Original ersetzt: sofort melden, mit „Rückgängig“.
+    private func notifyReplaced(path: String, historyID: UUID) {
+        let name = (path as NSString).lastPathComponent
+        lib?.studioToast("Original ersetzt: „\(name)“ (Sicherung angelegt)", action: "Rückgängig", isError: false) { [weak self] in
+            self?.undoReplace(historyID)
+        }
+    }
+
+    private func notifySuccess(_ job: StudioJob, path: String) {
         let name = (path as NSString).lastPathComponent
         switch job.destination {
         case .replaceOriginal:
-            lib?.studioToast("Original ersetzt: „\(name)“ (Sicherung angelegt)", action: "Rückgängig", isError: false) { [weak self] in
-                self?.undoReplace(historyID)
-            }
             return
         case .library:
             let text = "„\(name)“ in die Bibliothek übernommen"

@@ -175,6 +175,8 @@ final class StudioModel: ObservableObject {
     /// Aufträge aus mehreren Adressen, Playlists oder Dateien: Quelle wird erst beim Start abgefragt.
     var pendingAnalysis: Set<UUID> = []
     var historyLoaded = false
+    /// Ergebnisse seit die Warteschlange zuletzt leer war (für die Mitteilung am Ende).
+    var queueRun = StudioQueueRun()
 
     // Doppel-Erkennung
     private var dupIndex: StudioDuplicateIndex?
@@ -1030,6 +1032,14 @@ final class StudioModel: ObservableObject {
         }
         return types
     }
+}
+
+/// Ergebnisse eines Durchlaufs der Warteschlange (bis sie wieder leer ist).
+struct StudioQueueRun {
+    var done = 0
+    var failed = 0
+    var last: (job: StudioJob, path: String)?
+    var lastFailure: (title: String, message: String)?
 }
 
 /// Bibliothekstitel nach normalisiertem Titel und Pfad (für `DuplicateCheck`).
