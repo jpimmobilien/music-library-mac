@@ -1,0 +1,234 @@
+▸ Swift: swift-driver version: 1.148.6 Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+▸ Baue arm64 (arm64-apple-macosx13.0) …
+Building for production...
+[0/160] Write swift-version-7974D3F7F03D5E95.txt
+[1/160] Compiling xmproperties.cpp
+[2/160] Compiling wavpackproperties.cpp
+[3/160] Compiling xmfile.cpp
+[4/160] Compiling trueaudioproperties.cpp
+[5/160] Compiling wavpackfile.cpp
+[6/160] Compiling trueaudiofile.cpp
+[7/160] Compiling tzlib.cpp
+[8/160] Compiling tversionnumber.cpp
+[9/160] Compiling tstringlist.cpp
+[10/160] Compiling tstring.cpp
+[11/160] Compiling tvariant.cpp
+[12/160] Compiling tpropertymap.cpp
+[13/160] Compiling tpicturetype.cpp
+[14/160] Compiling tiostream.cpp
+[15/160] Compiling tfilestream.cpp
+[16/160] Compiling tdebug.cpp
+[17/160] Compiling tfile.cpp
+[18/160] Compiling tdebuglistener.cpp
+[19/160] Compiling tbytevectorstream.cpp
+[20/160] Compiling tbytevectorlist.cpp
+[21/160] Compiling tagutils.cpp
+[22/160] Compiling tbytevector.cpp
+[23/160] Compiling tagunion.cpp
+[24/160] Compiling shortenproperties.cpp
+[25/160] Compiling tag.cpp
+[26/160] Compiling shortentag.cpp
+[27/160] Compiling s3mproperties.cpp
+[28/160] Compiling shortenfile.cpp
+[29/160] Compiling s3mfile.cpp
+[30/160] Compiling wavproperties.cpp
+[31/160] Compiling wavfile.cpp
+[32/160] Compiling rifffile.cpp
+[33/160] Compiling infotag.cpp
+[34/160] Compiling aiffproperties.cpp
+[35/160] Compiling aifffile.cpp
+[36/160] Compiling vorbisproperties.cpp
+[37/160] Compiling vorbisfile.cpp
+[38/160] Compiling xiphcomment.cpp
+[39/160] Compiling speexproperties.cpp
+[40/160] Compiling speexfile.cpp
+[41/160] Compiling opusproperties.cpp
+[42/160] Compiling opusfile.cpp
+[43/160] Compiling oggpageheader.cpp
+[44/160] Compiling oggpage.cpp
+[45/160] Compiling oggfile.cpp
+[46/160] Compiling oggflacfile.cpp
+[47/160] Compiling xingheader.cpp
+[48/160] Compiling mpegproperties.cpp
+[49/160] Compiling mpegheader.cpp
+[50/160] Compiling mpegfile.cpp
+[51/160] Compiling id3v2synchdata.cpp
+[52/160] Compiling id3v2header.cpp
+[53/160] Compiling id3v2tag.cpp
+[54/160] Compiling id3v2framefactory.cpp
+[55/160] Compiling id3v2frame.cpp
+[56/160] Compiling id3v2footer.cpp
+[57/160] Compiling id3v2extendedheader.cpp
+[58/160] Compiling urllinkframe.cpp
+[59/160] Compiling unknownframe.cpp
+[60/160] Compiling unsynchronizedlyricsframe.cpp
+[61/160] Compiling uniquefileidentifierframe.cpp
+[62/160] Compiling textidentificationframe.cpp
+[63/160] Compiling synchronizedlyricsframe.cpp
+[64/160] Compiling tableofcontentsframe.cpp
+[65/160] Compiling relativevolumeframe.cpp
+[66/160] Compiling popularimeterframe.cpp
+[67/160] Compiling privateframe.cpp
+[68/160] Compiling podcastframe.cpp
+[69/160] Compiling generalencapsulatedobjectframe.cpp
+[70/160] Compiling ownershipframe.cpp
+[71/160] Compiling eventtimingcodesframe.cpp
+[72/160] Compiling commentsframe.cpp
+[73/160] Compiling chapterframe.cpp
+[74/160] Compiling attachedpictureframe.cpp
+[75/160] Compiling id3v1tag.cpp
+[76/160] Compiling id3v1genres.cpp
+[77/160] Compiling mpcproperties.cpp
+[78/160] Compiling mpcfile.cpp
+[79/160] Compiling mp4stem.cpp
+[80/160] Compiling mp4tag.cpp
+[81/160] Compiling mp4qtchapterlist.cpp
+[82/160] Compiling mp4properties.cpp
+[83/160] Compiling mp4nerochapterlist.cpp
+[84/160] Compiling mp4item.cpp
+[85/160] Compiling mp4itemfactory.cpp
+[86/160] Compiling mp4file.cpp
+[87/160] Compiling mp4coverart.cpp
+[88/160] Compiling mp4chapter.cpp
+[89/160] Compiling modtag.cpp
+[90/160] Compiling modproperties.cpp
+[91/160] Compiling mp4atom.cpp
+[92/160] Compiling modfilebase.cpp
+[93/160] Compiling modfile.cpp
+[94/160] Compiling matroskasegment.cpp
+[95/160] Compiling matroskasimpletag.cpp
+[96/160] Compiling matroskatag.cpp
+[97/160] Compiling matroskaproperties.cpp
+[98/160] Compiling matroskaseekhead.cpp
+[99/160] Compiling matroskaelement.cpp
+[100/160] Compiling matroskacues.cpp
+[101/160] Compiling matroskafile.cpp
+[102/160] Compiling matroskachapters.cpp
+[103/160] Compiling matroskachapteredition.cpp
+[104/160] Compiling matroskachapter.cpp
+[105/160] Compiling matroskaattachedfile.cpp
+[106/160] Compiling matroskaattachments.cpp
+[107/160] Compiling ebmlvoidelement.cpp
+[108/160] Compiling ebmluintelement.cpp
+[109/160] Compiling ebmlutils.cpp
+[110/160] Compiling ebmlstringelement.cpp
+[111/160] Compiling ebmlmktracks.cpp
+[112/160] Compiling ebmlmktags.cpp
+[113/160] Compiling ebmlmkseekhead.cpp
+[114/160] Compiling ebmlmksegment.cpp
+[115/160] Compiling ebmlmkinfo.cpp
+[116/160] Compiling ebmlmkcues.cpp
+[117/160] Compiling ebmlmkattachments.cpp
+[118/160] Compiling ebmlmkchapters.cpp
+[119/160] Compiling ebmlmasterelement.cpp
+[120/160] Compiling ebmlfloatelement.cpp
+[121/160] Compiling ebmlelement.cpp
+[122/160] Compiling itproperties.cpp
+[123/160] Compiling ebmldeferredbinaryelement.cpp
+[124/160] Compiling ebmlbinaryelement.cpp
+[125/160] Compiling flacunknownmetadatablock.cpp
+[126/160] Compiling itfile.cpp
+[127/160] Compiling flacproperties.cpp
+[128/160] Compiling flacpicture.cpp
+[129/160] Compiling flacmetadatablock.cpp
+[130/160] Compiling dsfproperties.cpp
+[131/160] Compiling flacfile.cpp
+[132/160] Compiling fileref.cpp
+[133/160] Compiling dsffile.cpp
+[134/160] Compiling dsdiffproperties.cpp
+[135/160] Compiling audioproperties.cpp
+[136/160] Compiling dsdiffdiintag.cpp
+[137/160] Compiling dsdifffile.cpp
+[138/160] Compiling asfproperties.cpp
+[139/160] Compiling asfpicture.cpp
+[140/160] Compiling asftag.cpp
+[141/160] Compiling asffile.cpp
+[142/160] Compiling asfattribute.cpp
+[143/160] Compiling apeitem.cpp
+[144/160] Compiling apeproperties.cpp
+[145/160] Compiling apetag.cpp
+[146/160] Compiling apefooter.cpp
+[147/160] Write sources
+[155/161] Compiling apefile.cpp
+[156/162] Compiling TagBridge.cpp
+[157/162] Compiling CVorbis cvorbis.c
+[159/163] Compiling OggVorbis VorbisDecoder.swift
+[160/163] Compiling MLRender CassetteRenderer.swift
+[161/163] Compiling MLCore EqualizerModel.swift
+[162/166] Compiling MLStore LibraryStore.swift
+[163/166] Compiling MLStudio StudioFormat.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:89:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 87 |     /// Wartet, solange angehalten ist. Kehrt sofort zurück, wenn nicht angehalten.
+ 88 |     public func waitIfPaused() async {
+ 89 |         lock.lock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 90 |         if !paused { lock.unlock(); return }
+ 91 |         lock.unlock()
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:90:27: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 88 |     public func waitIfPaused() async {
+ 89 |         lock.lock()
+ 90 |         if !paused { lock.unlock(); return }
+    |                           `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 91 |         lock.unlock()
+ 92 |         await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:91:14: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 89 |         lock.lock()
+ 90 |         if !paused { lock.unlock(); return }
+ 91 |         lock.unlock()
+    |              `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 92 |         await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+ 93 |             lock.lock()
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+[164/166] Compiling MLTags BridgeFile.swift
+[165/167] Compiling StudioEngine LocalSourceAnalyzer.swift
+[166/168] Compiling MusicLibrary AppModel.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[166/168] Write Objects.LinkFileList
+[167/168] Linking MusicLibrary
+Build of product 'MusicLibrary' complete! (212.46s)
+▸ Erstelle App-Bundle …
+▸ Prüfe Architekturen …
+Architectures in the fat file: build/Music Library.app/Contents/MacOS/MusicLibrary are: arm64 
+▸ Mindest-macOS je Architektur:
+    minos 13.0
+error: /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/otool-classic: file: build/Music Library.app/Contents/MacOS/MusicLibrary does not contain architecture: x86_64
+▸ Ad-hoc-Signatur …
+build/Music Library.app: replacing existing signature
+build/Music Library.app: valid on disk
+build/Music Library.app: satisfies its Designated Requirement
+✓ build/Music Library.app

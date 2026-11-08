@@ -1,0 +1,6 @@
+ProductName:		macOS
+ProductVersion:		26.7.2
+BuildVersion:		25G332
+arm64
+Xcode 26.6
+ffprobe version 9.0.2 Copyright (c) 2007-2026 the FFmpeg developers

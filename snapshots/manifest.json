@@ -1,0 +1,513 @@
+{
+  "architecture" : "arm64",
+  "images" : [
+    {
+      "elapsedMs" : "2267",
+      "file" : "60-studio-leer-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "14",
+      "mainThreadLagMaxMs" : "27.8",
+      "mainThreadLagMeanMs" : "13.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2239",
+      "file" : "60-studio-leer-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "22.8",
+      "mainThreadLagMeanMs" : "13.5",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2256",
+      "file" : "60-studio-leer-schmal-hell-940x660.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "30.1",
+      "mainThreadLagMeanMs" : "14.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2213",
+      "file" : "60-studio-leer-schmal-dunkel-940x660.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "23.3",
+      "mainThreadLagMeanMs" : "7.2",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2295",
+      "file" : "60-studio-quelle-hell-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "12",
+      "mainThreadLagMaxMs" : "145.5",
+      "mainThreadLagMeanMs" : "71.1",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2233",
+      "file" : "60-studio-quelle-dunkel-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "4",
+      "mainThreadLagMaxMs" : "152.4",
+      "mainThreadLagMeanMs" : "77.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2209",
+      "file" : "60-studio-quelle-standard-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "132.8",
+      "mainThreadLagMeanMs" : "46.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2252",
+      "file" : "60-studio-quelle-standard-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "135.5",
+      "mainThreadLagMeanMs" : "86.2",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2222",
+      "file" : "60-studio-zoom-blenden-hell-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "2",
+      "mainThreadLagMaxMs" : "148.9",
+      "mainThreadLagMeanMs" : "57.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2245",
+      "file" : "60-studio-zoom-blenden-dunkel-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "6",
+      "mainThreadLagMaxMs" : "139.7",
+      "mainThreadLagMeanMs" : "74.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2292",
+      "file" : "60-studio-export-mp3-hell-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "5",
+      "mainThreadLagMaxMs" : "130.2",
+      "mainThreadLagMeanMs" : "79.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2311",
+      "file" : "60-studio-export-mp3-dunkel-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "9",
+      "mainThreadLagMaxMs" : "142.0",
+      "mainThreadLagMeanMs" : "56.7",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2254",
+      "file" : "60-studio-export-wav-hell-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "3",
+      "mainThreadLagMaxMs" : "131.7",
+      "mainThreadLagMeanMs" : "50.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2315",
+      "file" : "60-studio-export-wav-dunkel-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "4",
+      "mainThreadLagMaxMs" : "150.6",
+      "mainThreadLagMeanMs" : "67.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2202",
+      "file" : "60-studio-export-flac-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "9",
+      "mainThreadLagMaxMs" : "155.3",
+      "mainThreadLagMeanMs" : "79.5",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2238",
+      "file" : "60-studio-export-flac-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "5",
+      "mainThreadLagMaxMs" : "147.1",
+      "mainThreadLagMeanMs" : "72.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2269",
+      "file" : "60-studio-metadaten-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "15",
+      "mainThreadLagMaxMs" : "114.7",
+      "mainThreadLagMeanMs" : "73.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2339",
+      "file" : "60-studio-metadaten-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "2",
+      "mainThreadLagMaxMs" : "139.5",
+      "mainThreadLagMeanMs" : "97.1",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2244",
+      "file" : "60-studio-ziel-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "4",
+      "mainThreadLagMaxMs" : "150.9",
+      "mainThreadLagMeanMs" : "119.2",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2215",
+      "file" : "60-studio-ziel-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "145.3",
+      "mainThreadLagMeanMs" : "65.5",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2282",
+      "file" : "60-studio-warteschlange-hell-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "150.4",
+      "mainThreadLagMeanMs" : "96.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2311",
+      "file" : "60-studio-warteschlange-dunkel-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "138.4",
+      "mainThreadLagMeanMs" : "75.1",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2312",
+      "file" : "60-studio-verlauf-hell-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "145.6",
+      "mainThreadLagMeanMs" : "73.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2315",
+      "file" : "60-studio-verlauf-dunkel-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "2",
+      "mainThreadLagMaxMs" : "109.6",
+      "mainThreadLagMeanMs" : "64.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2311",
+      "file" : "60-studio-werkzeuge-hell-560x500.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "154.0",
+      "mainThreadLagMeanMs" : "92.2",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2288",
+      "file" : "60-studio-werkzeuge-dunkel-560x500.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "155.1",
+      "mainThreadLagMeanMs" : "72.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2223",
+      "file" : "60-studio-werkzeuge-installation-hell-560x540.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "160.3",
+      "mainThreadLagMeanMs" : "97.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2344",
+      "file" : "60-studio-werkzeuge-installation-dunkel-560x540.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "150.7",
+      "mainThreadLagMeanMs" : "89.2",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2315",
+      "file" : "60-studio-werkzeuge-fehlen-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "138.1",
+      "mainThreadLagMeanMs" : "82.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2317",
+      "file" : "60-studio-werkzeuge-fehlen-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "146.4",
+      "mainThreadLagMeanMs" : "86.7",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2246",
+      "file" : "60-studio-spotify-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "136.3",
+      "mainThreadLagMeanMs" : "98.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2299",
+      "file" : "60-studio-spotify-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "154.4",
+      "mainThreadLagMeanMs" : "98.7",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2317",
+      "file" : "60-studio-doppelt-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "5",
+      "mainThreadLagMaxMs" : "143.7",
+      "mainThreadLagMeanMs" : "110.5",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2259",
+      "file" : "60-studio-doppelt-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "4",
+      "mainThreadLagMaxMs" : "127.8",
+      "mainThreadLagMeanMs" : "59.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2240",
+      "file" : "60-studio-analyse-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "150.1",
+      "mainThreadLagMeanMs" : "104.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2380",
+      "file" : "60-studio-analyse-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "150.8",
+      "mainThreadLagMeanMs" : "88.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2220",
+      "file" : "60-studio-laden-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "2",
+      "mainThreadLagMaxMs" : "159.6",
+      "mainThreadLagMeanMs" : "98.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2309",
+      "file" : "60-studio-laden-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "132.6",
+      "mainThreadLagMeanMs" : "70.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2376",
+      "file" : "60-studio-laden-noetig-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "152.4",
+      "mainThreadLagMeanMs" : "102.5",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2358",
+      "file" : "60-studio-laden-noetig-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "152.1",
+      "mainThreadLagMeanMs" : "128.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2350",
+      "file" : "60-studio-wellenform-berechnung-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "150.2",
+      "mainThreadLagMeanMs" : "96.1",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2323",
+      "file" : "60-studio-wellenform-berechnung-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "145.7",
+      "mainThreadLagMeanMs" : "75.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2270",
+      "file" : "60-studio-schneiden-hell-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "6",
+      "mainThreadLagMaxMs" : "146.0",
+      "mainThreadLagMeanMs" : "89.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2217",
+      "file" : "60-studio-schneiden-dunkel-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "150.4",
+      "mainThreadLagMeanMs" : "84.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2226",
+      "file" : "60-studio-schneiden-speichern-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "132.7",
+      "mainThreadLagMeanMs" : "70.7",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2322",
+      "file" : "60-studio-schneiden-speichern-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "155.5",
+      "mainThreadLagMeanMs" : "64.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2208",
+      "file" : "60-studio-schneiden-bestaetigen-hell-480x372.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "160.4",
+      "mainThreadLagMeanMs" : "96.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2340",
+      "file" : "60-studio-schneiden-bestaetigen-dunkel-480x372.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "143.3",
+      "mainThreadLagMeanMs" : "67.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2224",
+      "file" : "60-studio-verlauf-loeschen-hell-440x210.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "134.0",
+      "mainThreadLagMeanMs" : "81.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2324",
+      "file" : "60-studio-verlauf-loeschen-dunkel-440x210.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "147.2",
+      "mainThreadLagMeanMs" : "93.3",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2228",
+      "file" : "60-studio-schmal-hell-940x660.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "4",
+      "mainThreadLagMaxMs" : "150.8",
+      "mainThreadLagMeanMs" : "95.3",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2229",
+      "file" : "60-studio-schmal-dunkel-940x660.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "150.1",
+      "mainThreadLagMeanMs" : "101.5",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2205",
+      "file" : "60-studio-schmal-export-hell-940x660.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "152.6",
+      "mainThreadLagMeanMs" : "124.1",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2254",
+      "file" : "60-studio-schmal-export-dunkel-940x660.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "150.1",
+      "mainThreadLagMeanMs" : "102.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2227",
+      "file" : "60-studio-einstellungen-hell-860x760.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "158.6",
+      "mainThreadLagMeanMs" : "96.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2215",
+      "file" : "60-studio-einstellungen-dunkel-860x760.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "152.3",
+      "mainThreadLagMeanMs" : "69.1",
+      "method" : "window-server"
+    }
+  ],
+  "interFont" : true,
+  "liquidGlass" : true,
+  "macOS" : "Version 26.7.2 (Build 25G332)",
+  "screen" : "1024x768 @1.0x, sichtbar 1024x677"
+}
