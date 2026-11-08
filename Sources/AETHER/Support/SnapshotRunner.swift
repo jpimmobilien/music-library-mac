@@ -33,6 +33,10 @@ enum SnapshotRunner {
         var liveMonitor = false
         /// Diagnose: nur einen Baustein zeichnen (siehe SnapshotProbes.swift).
         var probe: SnapshotProbe? = nil
+        /// Entwickler-Diagnose (Fensteranzeige) einschalten.
+        var diagnostics = false
+        /// Rohwerte statt geglätteter Werte.
+        var rawValues = false
     }
 
     /// Diagnose-Szenarien: jeder Baustein hell und dunkel.
@@ -68,6 +72,14 @@ enum SnapshotRunner {
         Scenario(name: "22-netzwerk", size: CGSize(width: 1320, height: 1000), theme: .liquidGlassLight, section: .network),
         Scenario(name: "23-dateien-hell", size: CGSize(width: 1320, height: 900), theme: .liquidGlassLight, section: .files),
         Scenario(name: "24-live-monitor", size: CGSize(width: 340, height: 600), theme: .liquidGlassDark, liveMonitor: true),
+        // Studio: ganze Übersicht in einem hohen Fenster, Diagnose-Anzeige, Rohwerte
+        Scenario(name: "25-uebersicht-ganz-dark", size: CGSize(width: 1320, height: 2200), theme: .liquidGlassDark),
+        Scenario(name: "26-uebersicht-ganz-graphite-roh", size: CGSize(width: 1440, height: 2200), theme: .graphite,
+                 rawValues: true),
+        Scenario(name: "27-cpu-gpu-diagnose", size: CGSize(width: 1320, height: 1000), theme: .minimalDark, section: .cpuGPU,
+                 diagnostics: true),
+        Scenario(name: "28-einstellungen-diagnose", size: CGSize(width: 1320, height: 1400), theme: .liquidGlassDark,
+                 section: .settings, diagnostics: true),
     ]
 
     static func run(model: AppModel, output: URL) async {
@@ -98,6 +110,8 @@ enum SnapshotRunner {
             settings.theme = scenario.theme
             settings.density = scenario.density
             settings.glassIntensity = scenario.glassIntensity
+            settings.diagnosticsEnabled = scenario.diagnostics
+            settings.showRawValues = scenario.rawValues
             model.selection = scenario.section
             model.editingDashboard = scenario.editing
             let spec = ThemeCatalog.spec(scenario.theme)

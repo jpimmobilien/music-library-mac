@@ -208,9 +208,35 @@ enum SelfTest {
         let germanOverview = germanBundle?.localizedString(forKey: "Overview", value: nil, table: nil)
         check("localization.de", germanOverview == "Übersicht", "Overview → \(germanOverview ?? "fehlt")")
 
+        // Monitoring 2.0: geglättete Anzeigewerte und Verläufe
+        let telemetry = engine.telemetry
+        let cpuValue = telemetry.value(.cpuTotal)
+        check("telemetry.cpu", cpuValue.isAvailable && cpuValue.value.map { (0...1).contains($0.smoothed) && (0...1).contains($0.raw) } == true
+                                && telemetry.series(.cpuTotal).raw.count >= 2,
+              "geglättet=\(cpuValue.value.map { String(format: "%.3f", $0.smoothed) } ?? "n. v.") roh=\(cpuValue.value.map { String(format: "%.3f", $0.raw) } ?? "n. v.") Verlauf=\(telemetry.series(.cpuTotal).raw.count)")
+        check("telemetry.cores", telemetry.cores.levels.count == (hw.logicalCores ?? -1),
+              "Kerne=\(telemetry.cores.levels.count) logisch=\(hw.logicalCores ?? -1)")
+        check("telemetry.network", telemetry.value(.networkDown, unit: .bytesPerSecond).isAvailable,
+              "↓ \(telemetry.value(.networkDown, unit: .bytesPerSecond).value.map { fmt.rate($0.raw) } ?? "n. v.")")
+        check("telemetry.memory", telemetry.value(.memoryUsed, unit: .bytes).isAvailable,
+              "belegt=\(telemetry.value(.memoryUsed, unit: .bytes).value.map { fmt.bytes($0.raw, style: .memory) } ?? "n. v.")")
+
         // Fenster und Eigenverbrauch
         let windows = NSApp.windows.filter { $0.isVisible }
         check("window", !windows.isEmpty, "sichtbare Fenster=\(windows.count)")
+
+        // Leistung: 12 s im normalen Betrieb (Grundtakt 1 s, Übersicht sichtbar) – CPU-Zeit des eigenen Prozesses
+        engine.diagnostics.enabled = true
+        model.start()
+        try? await Task.sleep(nanoseconds: 2_000_000_000)
+        let cpu0 = processCPUSeconds()
+        let wall0 = ProcessInfo.processInfo.systemUptime
+        try? await Task.sleep(nanoseconds: 12_000_000_000)
+        let ownShare = (processCPUSeconds() - cpu0) / max(1, ProcessInfo.processInfo.systemUptime - wall0)
+        let diag = engine.diagnostics.snapshot
+        check("performance.ownCPU", ownShare < 0.5,
+              String(format: "eigene CPU %.1f %% eines Kerns · Messung %.2f ms/Takt · Hauptthread %.2f ms/Takt · Verzug %.1f ms · %.1f Anzeige-Aktualisierungen/s",
+                     ownShare * 100, diag.tickMs, diag.applyMs, diag.lateMs, diag.publishesPerSecond))
         let own = engine.system.ownUsage
 
         let info = Bundle.main.infoDictionary ?? [:]
@@ -233,6 +259,11 @@ enum SelfTest {
             ] as [String: Any],
             "clusters": hw.clusters.map { "\($0.systemName):\($0.physicalCores)/\($0.logicalCores)" },
             "ownCPU": jsonValue(own?.cpu),
+            "ownCPUSteady": ownShare,
+            "engine": [
+                "tickMs": diag.tickMs, "applyMs": diag.applyMs, "lateMs": diag.lateMs,
+                "publishesPerSecond": diag.publishesPerSecond, "sources": diag.sources,
+            ] as [String: Any],
             "ownFootprint": jsonValue(own?.footprint),
             "seconds": Date().timeIntervalSince(started),
             "checks": checks,
@@ -244,6 +275,13 @@ enum SelfTest {
             print("\((c["ok"] as? Bool) == true ? "✓" : "✗") \(c["name"] ?? "") – \(c["detail"] ?? "")")
         }
     }
+}
+
+/// Verbrauchte CPU-Zeit des eigenen Prozesses (alle Threads) in Sekunden.
+private func processCPUSeconds() -> Double {
+    var spec = timespec()
+    guard clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &spec) == 0 else { return 0 }
+    return Double(spec.tv_sec) + Double(spec.tv_nsec) / 1_000_000_000
 }
 
 /// Optionaler Wert für JSON (`nil` → `null`).

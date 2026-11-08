@@ -32,12 +32,12 @@ geänderte Anzeigewerte) → Darstellen.
 | CPU gesamt und je Kern | 1× Grundtakt | τ 0,5 s / 2,5 s | Maximum der letzten 10 s |
 | Netz ↓/↑ | 1× | τ 0,6 s / 3 s | Maximum der letzten 10 s (bleibt sichtbar) |
 | SSD lesen/schreiben | 1× | τ 0,6 s / 3 s | Maximum der letzten 10 s |
-| GPU (Treiber) | 2× | τ 1 s / 3 s | Maximum der letzten 10 s |
-| Arbeitsspeicher | 2× | τ 4 s symmetrisch, Anzeige-Hysterese 0,05 GB | – |
+| GPU (Treiber) | 2 s | τ 1 s / 3 s | Maximum der letzten 10 s |
+| Arbeitsspeicher | 2 s | τ 4 s symmetrisch, Anzeigeraster 0,01 GB | – |
 | Temperatur, Lüfter (SMC) | 3 s | τ 6 s / 4 s | – |
 | Batterie | 10 s **und** sofort bei Netzteilwechsel (IOPS-Benachrichtigung) | keine – nur echte Änderungen | – |
 | Volumes | 30 s und bei Ein-/Aushängen | – | – |
-| Prozesse | 2 s, nur wenn sichtbar | CPU je Prozess τ 2 s | – |
+| Prozesse | 2 s, nur wenn sichtbar | CPU je Prozess τ 0,8 s / 2,5 s, Sortierung auf 0,5 % gerundet | – |
 
 - Glättung: `alpha = 1 − exp(−Δt / τ)`, **asymmetrisch**. Anstiege erscheinen schnell (Lastspitzen werden nicht
   verschluckt), Abfälle beruhigen sich.
@@ -52,8 +52,12 @@ geänderte Anzeigewerte) → Darstellen.
   Hysterese, Zeilenumstellungen ohne Animation, Filterzählungen einmal je Messung.
 - Glas: **eine** Unschärfeebene für die schwebende Seitenleiste; Inhaltsflächen sind getönte Schichten mit Licht-
   kante und Schatten, ohne eigene Unschärfe (auf macOS 26 natives Liquid Glass nur für schwebende Bedienelemente).
-- Diagnosemodus (Einstellungen → Entwickler): Eigenverbrauch CPU/RAM, aktive Messaufgaben, Takt, Verarbeitungsdauer
-  je Quelle, Verzögerung des Takts, Veröffentlichungen pro Sekunde.
+- Diagnosemodus (Einstellungen → Messung → „Entwickler-Diagnose“): Eigenverbrauch CPU/RAM, Messquellen je Takt,
+  Grundtakt, Messzeit je Takt und je Quelle, Zeit im Hauptthread, Verzögerung des Takts, Anzeige-Aktualisierungen
+  pro Sekunde, Zustand der Prozessliste – als Tafel in den Einstellungen und als kleine Anzeige unten rechts im Fenster.
+- Verläufe mit Quellen, die seltener messen, als ein Diagrammabschnitt breit ist (Speicher 2 s, Thermik 3 s, Batterie
+  10 s), werden zwischen zwei Messungen verbunden (bis 25 s); ausdrücklich fehlende Werte und längere Pausen bleiben
+  Lücken.
 
 ## 3. Designsprache „Studio“ (Schritt 3)
 
@@ -88,9 +92,10 @@ Kein Neon, kein RGB.
 **Bewegung:**
 - Werte gleiten (Federn 0,6 s) statt zu springen.
 - Dauerhafte Bewegung nur dort, wo sie Daten zeigt: Netzströme, deren Dichte und Tempo dem gemessenen Durchsatz
-  folgen (0 B/s → Stillstand), und Lüfterrotoren nach Drehzahl.
+  folgen (0 B/s → keine Partikel).
 - Alles respektiert „Bewegung reduzieren“ und die Einstellung „Bewegung“.
-- Bewegte Teile laufen mit höchstens 30 Bildern/s und nur, solange sie sichtbar sind.
+- Netzströme laufen als Core-Animation-Ebene im Fensterserver (CAReplicatorLayer): Die App berechnet dafür keine
+  Einzelbilder; neu gestartet wird die Animation nur, wenn sich Partikelzahl oder Tempostufe ändern.
 
 **Visualisierungen** (nur Vektorformen und Verläufe – keine Shader, damit sie auch auf Intel-Grafik ohne Last laufen):
 
@@ -112,8 +117,8 @@ Kein Neon, kein RGB.
 - Zeigeranzeige mit Hover-Licht; Bereichswechsel mit weichem Überblenden und leichter Skalierung.
 
 **Navigation:**
-- schlanke, schwebende Glasleiste (Breite 212 pt), Gruppen ohne Überschriften-Lärm;
-- aktiver Bereich als ruhige Lichtkapsel;
+- schlanke, schwebende Glasleiste (Breite 216 pt);
+- aktiver Bereich als ruhige Lichtfläche in der Bereichsfarbe mit feiner Lichtkante links;
 - Mini-Werte unten bleiben.
 
 **Ehrlichkeit:**

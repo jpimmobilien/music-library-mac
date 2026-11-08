@@ -14,10 +14,19 @@ struct NetworkView: View {
 
     var body: some View {
         let engine = model.engine
+        let primary = details.primary
         ScrollView(.vertical) {
             VStack(alignment: .leading, spacing: theme.density.cardSpacing + 4) {
-                PageHeader(title: tr("Network"), subtitle: subtitle)
-                ThroughputPanel(store: engine.network, interval: settings.effectiveInterval.seconds)
+                StudioHero(section: .network, eyebrow: tr("Network"), headline: headline,
+                           lead: tr("Throughput counts only network adapters with a routable address (Ethernet, Wi‑Fi). VPN tunnels and internal links are listed separately, so nothing counts twice."),
+                           height: 250) {
+                    NetworkHero(telemetry: engine.telemetry, network: engine.network,
+                                deviceKind: engine.system.hardware.kind,
+                                interfaceName: primary.map { $0.displayName ?? interfaceKindName($0.kind) },
+                                interfaceSymbol: primary.map { interfaceSymbol($0.kind) } ?? "network",
+                                address: primary?.ipv4.first?.address)
+                }
+                ThroughputPanel(store: engine.network, telemetry: engine.telemetry)
                 InterfacesPanel(details: details, traffic: engine.network)
                 WiFiPanel(details: details, location: location, isSnapshot: model.launchMode.isSnapshot)
                 ConnectionsPanel(details: details)
@@ -31,13 +40,12 @@ struct NetworkView: View {
         .task { await details.run() }
     }
 
-    private var subtitle: String {
+    /// Aussage: über welche Schnittstelle der Mac verbunden ist – oder ehrlich, dass keine aktiv ist.
+    private var headline: String {
         guard let primary = details.primary else {
             return details.interfacesLoaded ? tr("No active connection") : tr("Interfaces, Wi‑Fi and connections")
         }
-        let name = primary.displayName ?? interfaceKindName(primary.kind)
-        if let address = primary.ipv4.first?.address { return "\(name) · \(address)" }
-        return name
+        return tr("Connected via %@", primary.displayName ?? interfaceKindName(primary.kind))
     }
 }
 
@@ -71,55 +79,52 @@ func interfaceSymbol(_ kind: InterfaceKind) -> String {
 
 private struct ThroughputPanel: View {
     @ObservedObject var store: NetworkStore
-    let interval: Double
+    let telemetry: Telemetry
     @Environment(\.aether) private var theme
+    @AppStorage("aether.network.range") private var range: ChartRange = .fiveMinutes
 
     var body: some View {
-        let snapshot = store.snapshot
-        let down = store.longDown.elements
-        let up = store.longUp.elements
+        let down = telemetry.series(.networkDown, unit: .bytesPerSecond)
+        let up = telemetry.series(.networkUp, unit: .bytesPerSecond)
         Panel {
-            PanelTitle(title: tr("Throughput"), symbol: "arrow.up.arrow.down", trailing: tr("Ethernet and Wi‑Fi"))
+            HStack(alignment: .center, spacing: Spacing.l) {
+                PanelTitle(title: tr("Throughput"), symbol: "arrow.up.arrow.down")
+                RangePicker(range: $range)
+            }
+            LiveChart(series: down, secondary: up, range: range, color: theme.networkDown, secondaryColor: theme.networkUp,
+                      scale: .auto(minimum: 10_000), height: 150, label: { fmt.rate($0) })
+                .help(tr("Short spikes stay visible: the large numbers show the peak of the last 10 seconds, the history band the lowest and highest value of each time slice."))
             HStack(alignment: .top, spacing: Spacing.xxl) {
-                rateBlock(tr("Download"), symbol: "arrow.down", color: theme.networkDown, reading: snapshot?.download)
-                rateBlock(tr("Upload"), symbol: "arrow.up", color: theme.networkUp, reading: snapshot?.upload)
+                SeriesLegend(items: [(tr("Download"), theme.networkDown), (tr("Upload"), theme.networkUp)])
                 Spacer(minLength: Spacing.l)
                 VStack(alignment: .leading, spacing: 5) {
-                    InfoRow(label: tr("Received since AETHER started"), value: fmt.bytes(snapshot?.sessionDownloaded ?? 0),
+                    InfoRow(label: tr("Received since AETHER started"), value: fmt.bytes(store.snapshot?.sessionDownloaded ?? 0),
                             source: .interfaceCounters)
-                    InfoRow(label: tr("Sent since AETHER started"), value: fmt.bytes(snapshot?.sessionUploaded ?? 0),
+                    InfoRow(label: tr("Sent since AETHER started"), value: fmt.bytes(store.snapshot?.sessionUploaded ?? 0),
                             source: .interfaceCounters)
-                    InfoRow(label: tr("Peak in this window ↓ / ↑"),
-                            value: "\(fmt.rate(down.max() ?? 0)) / \(fmt.rate(up.max() ?? 0))")
+                    WindowPeakRow(down: down, up: up, range: range)
                 }
                 .frame(maxWidth: 360)
             }
-            let scale = max(down.max() ?? 0, up.max() ?? 0, 10_000)
-            HistoryChart(series: [.init(values: down, color: theme.networkDown),
-                                  .init(values: up, color: theme.networkUp, fill: false, lineWidth: 1.3)],
-                         capacity: detailCapacity, maxValue: scale, height: 130, label: { fmt.rate($0) },
-                         spanLabel: historySpanLabel(samples: detailCapacity, interval: interval))
             Text(tr("Adds up Ethernet and Wi‑Fi interfaces. VPN tunnels, AirDrop links and loopback are listed separately below and not added – otherwise the same traffic would count twice."))
                 .font(Typo.caption)
                 .foregroundStyle(theme.textTertiary)
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
+}
 
-    private func rateBlock(_ label: String, symbol: String, color: Color, reading: Reading<Double>?) -> some View {
-        VStack(alignment: .leading, spacing: 3) {
-            HStack(spacing: 4) {
-                Image(systemName: symbol).font(.system(size: 10, weight: .bold)).foregroundStyle(color)
-                Text(label).font(Typo.caption).foregroundStyle(theme.textSecondary)
-                if let reading { ProvenanceBadge(source: reading.source, timestamp: reading.timestamp, reason: reading.reason) }
-            }
-            if let value = reading?.value {
-                let parts = fmt.rateParts(value)
-                ValueText(value: parts.value, unit: parts.unit, font: Typo.metricLarge)
-            } else {
-                Text("–").font(Typo.metricLarge).foregroundStyle(theme.textTertiary)
-            }
-        }
+/// Höchste gemessene Rohwerte im gewählten Zeitraum.
+private struct WindowPeakRow: View {
+    @ObservedObject var down: MetricSeries
+    @ObservedObject var up: MetricSeries
+    let range: ChartRange
+
+    var body: some View {
+        let downPeak = down.raw.maximum(window: range.seconds, now: down.now)
+        let upPeak = up.raw.maximum(window: range.seconds, now: up.now)
+        InfoRow(label: tr("Peak in this window ↓ / ↑"),
+                value: "\(downPeak.map { fmt.rate($0) } ?? "–") / \(upPeak.map { fmt.rate($0) } ?? "–")")
     }
 }
 

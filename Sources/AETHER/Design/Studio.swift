@@ -102,6 +102,46 @@ extension StudioPage where Tools == EmptyView {
     }
 }
 
+/// Kopf einer Detailseite: Überzeile, Aussage, Erklärung und Werkzeuge – darunter die Hero-Visualisierung auf
+/// Bühnenlicht. Ersetzt `PageHeader` am Anfang der Seite; die Tafeln mit allen Funktionen folgen darunter.
+struct StudioHero<Tools: View, Hero: View>: View {
+    @Environment(\.aether) private var theme
+    let section: AppSection
+    let eyebrow: String
+    let headline: String
+    var lead: String? = nil
+    var height: CGFloat = 300
+    @ViewBuilder var tools: () -> Tools
+    @ViewBuilder var hero: () -> Hero
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 26) {
+            HStack(alignment: .top, spacing: Spacing.xl) {
+                StudioHeadline(eyebrow: eyebrow, headline: headline, lead: lead, tint: section.tint(theme))
+                Spacer(minLength: Spacing.l)
+                tools()
+            }
+            .padding(.top, Metrics.headerTop + 6)
+            ZStack {
+                StageLight(color: section.tint(theme))
+                    .padding(.horizontal, -Spacing.gutter)
+                    .padding(.vertical, -30)
+                hero()
+            }
+            .frame(height: height)
+            .padding(.bottom, 8)
+        }
+    }
+}
+
+extension StudioHero where Tools == EmptyView {
+    init(section: AppSection, eyebrow: String, headline: String, lead: String? = nil, height: CGFloat = 300,
+         @ViewBuilder hero: @escaping () -> Hero) {
+        self.init(section: section, eyebrow: eyebrow, headline: headline, lead: lead, height: height,
+                  tools: { EmptyView() }, hero: hero)
+    }
+}
+
 /// Überzeile, Aussage und Erklärung.
 struct StudioHeadline: View {
     @Environment(\.aether) private var theme
