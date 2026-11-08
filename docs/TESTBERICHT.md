@@ -6,7 +6,7 @@ _Rückfallversionen: 2.0 (Zweig `android-bridge` bis Commit 30402af, DMG „Andr
 
 | Prüfung | Ergebnis |
 |---|---|
-| Unit-Tests | 93 Tests ohne Fehler (neu: Samsung-SSD/Monitor nicht als Telefon, Akkustand lesen bzw. nicht unterstützt, kurze Speichernamen) |
+| Unit-Tests | 90 Tests ohne Fehler (neu: Samsung-SSD/Monitor nicht als Telefon, Akkustand lesen bzw. nicht unterstützt, kurze Speichernamen) |
 | Bildschirmfotos | 21 Ansichten × hell/dunkel, auf macOS 26 (natives Liquid Glass + Rückfall) und macOS 15 Intel; Fenstergrößen 960×640 (kleinstes Fenster), 1280×800, 1512×945 und 1728×1080 (die Build-Maschinen begrenzen die Höhe auf ihren Bildschirm) |
 | Layout-Durchgänge | 3 Durchgänge mit Korrekturen: Telefonuhr skaliert, Werkzeuge rücken bei Platzmangel unter den Titel, Tabellenspalten passen in die Spalten, Speichernamen gekürzt, Bestätigungstext bricht um, Bildfüllungen vergrößern keine Ebenen mehr |
 | Installation aus der DMG | macOS 26 (Apple Silicon, nativ und Intel-Teil über Rosetta) und macOS 15 (Intel) |

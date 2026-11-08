@@ -74,10 +74,9 @@ struct MediaViewer: View {
             Color.black
             if let backdrop {
                 Color.clear
-                    .overlay(Image(nsImage: backdrop).resizable().aspectRatio(contentMode: .fill))
+                    .overlay(Image(nsImage: BackdropImage.tiny(backdrop)).resizable().interpolation(.high).aspectRatio(contentMode: .fill))
                     .clipped()
-                    .blur(radius: 60)
-                    .opacity(0.55)
+                    .opacity(0.5)
                     .transition(.opacity)
             }
             Color.black.opacity(0.35)
@@ -367,6 +366,7 @@ struct ZoomableImageView: NSViewRepresentable {
 
     func makeNSView(context: Context) -> NSScrollView {
         let scroll = NSScrollView()
+        scroll.contentView = CenteringClipView()
         scroll.allowsMagnification = true
         scroll.minMagnification = 0.05
         scroll.maxMagnification = 10
@@ -395,6 +395,9 @@ struct ZoomableImageView: NSViewRepresentable {
             let size = NSSize(width: max(w, 1), height: max(h, 1))
             imageView.frame = NSRect(origin: .zero, size: size)
             DispatchQueue.main.async { context.coordinator.fit() }
+        } else if context.coordinator.isFitted, context.coordinator.fittedSize != scroll.frame.size {
+            // Fenstergröße geändert: weiterhin ganz zeigen
+            DispatchQueue.main.async { context.coordinator.fit() }
         }
     }
 
@@ -402,6 +405,8 @@ struct ZoomableImageView: NSViewRepresentable {
 
     final class Coordinator: NSObject {
         weak var scrollView: NSScrollView?
+        var fittedSize: NSSize = .zero
+        var isFitted = true
 
         func fit() {
             guard let scroll = scrollView, let doc = scroll.documentView else { return }
@@ -409,6 +414,8 @@ struct ZoomableImageView: NSViewRepresentable {
             guard doc.frame.width > 0, doc.frame.height > 0, visible.width > 0 else { return }
             let scale = min(visible.width / doc.frame.width, visible.height / doc.frame.height, 1)
             scroll.magnification = max(scale, scroll.minMagnification)
+            fittedSize = scroll.frame.size
+            isFitted = true
             centre()
         }
 
@@ -425,10 +432,35 @@ struct ZoomableImageView: NSViewRepresentable {
             guard let scroll = scrollView else { return }
             if scroll.magnification < 0.99 {
                 let point = sender.location(in: scroll.documentView)
+                isFitted = false
                 scroll.animator().setMagnification(1, centeredAt: point)
             } else {
                 fit()
             }
         }
+    }
+}
+
+/// Hält ein kleineres Bild in der Mitte (statt unten links).
+final class CenteringClipView: NSClipView {
+    override func constrainBoundsRect(_ proposedBounds: NSRect) -> NSRect {
+        var rect = super.constrainBoundsRect(proposedBounds)
+        guard let doc = documentView else { return rect }
+        if rect.width > doc.frame.width { rect.origin.x = (doc.frame.width - rect.width) / 2 }
+        if rect.height > doc.frame.height { rect.origin.y = (doc.frame.height - rect.height) / 2 }
+        return rect
+    }
+}
+
+/// Stark verkleinertes Bild – vergrößert wirkt es weich wie unscharf, ohne teuren Unschärfefilter.
+enum BackdropImage {
+    static func tiny(_ image: NSImage) -> NSImage {
+        let size = NSSize(width: 24, height: 18)
+        let out = NSImage(size: size)
+        out.lockFocus()
+        NSGraphicsContext.current?.imageInterpolation = .high
+        image.draw(in: NSRect(origin: .zero, size: size), from: .zero, operation: .copy, fraction: 1)
+        out.unlockFocus()
+        return out
     }
 }
