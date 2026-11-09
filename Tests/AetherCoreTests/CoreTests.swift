@@ -293,7 +293,9 @@ final class HardwareTests: XCTestCase {
         XCTAssertEqual(DeviceKind.from(machineName: nil, modelIdentifier: "Macmini9,1"), .macMini)
         XCTAssertEqual(DeviceKind.from(machineName: nil, modelIdentifier: "VirtualMac2,1"), .virtualMachine)
         XCTAssertEqual(DeviceKind.from(machineName: "Apple Virtual Machine 1", modelIdentifier: nil), .virtualMachine)
-        XCTAssertEqual(DeviceKind.from(machineName: nil, modelIdentifier: "Mac14,9"), .unknown)
+        // Neue Kennungen („MacNN,N“) kennt der Modellkatalog; unbekannte bleiben offen, bis der Modellname vorliegt
+        XCTAssertEqual(DeviceKind.from(machineName: nil, modelIdentifier: "Mac14,9"), .macBookPro)
+        XCTAssertEqual(DeviceKind.from(machineName: nil, modelIdentifier: "Mac99,1"), .unknown)
         XCTAssertTrue(DeviceKind.macBookAir.isPortable)
         XCTAssertFalse(DeviceKind.macStudio.isPortable)
     }
