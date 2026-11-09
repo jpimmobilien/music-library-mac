@@ -302,7 +302,11 @@ enum SnapshotRunner {
             }) { _ in },
         ]
 
-        for scenario in scenarios {
+        // SNAPSHOT_ONLY=„04,05“: nur Szenarien mit diesen Anfängen (je Gruppe ein eigener Prozess – die virtuelle
+        // Grafik der Intel-Build-Rechner hält nur eine begrenzte Zahl Aufnahmen pro Prozess durch).
+        let only = (ProcessInfo.processInfo.environment["SNAPSHOT_ONLY"] ?? "")
+            .split(separator: ",").map { String($0).trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
+        for scenario in scenarios where only.isEmpty || only.contains(where: { scenario.name.hasPrefix($0) }) {
             for dark in [false, true] {
                 print("[Snapshot] ▸ \(scenario.name) \(dark ? "dunkel" : "hell")")
                 fflush(stdout)
@@ -359,7 +363,7 @@ enum SnapshotRunner {
             "images": manifest,
         ]
         if let data = try? JSONSerialization.data(withJSONObject: info, options: [.prettyPrinted, .sortedKeys]) {
-            try? data.write(to: output.appendingPathComponent("manifest.json"))
+            try? data.write(to: output.appendingPathComponent(only.isEmpty ? "manifest.json" : "manifest-\(only.joined(separator: "_")).json"))
         }
     }
 
