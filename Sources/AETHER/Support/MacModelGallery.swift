@@ -33,6 +33,8 @@ struct MacModelGalleryHost: View {
             }
             .padding(20)
         }
+        // feste Mindestgröße: sonst verkleinert NSHostingView das Fenster auf die kleinste passende Breite
+        .frame(minWidth: 1600, maxWidth: .infinity, minHeight: 1800, maxHeight: .infinity)
         .background(theme.backgroundTop)
         .environment(\.aether, theme)
         .foregroundStyle(theme.textPrimary)
