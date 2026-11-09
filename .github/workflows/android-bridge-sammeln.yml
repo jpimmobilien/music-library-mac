@@ -1,0 +1,42 @@
+# Sammelt die Artefakte eines bereits gelaufenen Android-Bridge-Laufs in den Zweig „ci-ergebnisse-android-bridge“
+# (falls der Ergebnis-Job des Laufs nicht gestartet wurde). Lauf-Nummer steht in .github/sammeln-lauf.txt.
+name: Android Bridge – Ergebnisse nachträglich sichern
+on:
+  push:
+    branches: [android-bridge-sammeln]
+permissions:
+  contents: write
+  actions: read
+jobs:
+  sammeln:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "RUN_ID=$(cat .github/sammeln-lauf.txt)" >> "$GITHUB_ENV"
+      - uses: actions/download-artifact@v4
+        with:
+          path: ergebnisse
+          run-id: ${{ env.RUN_ID }}
+          github-token: ${{ github.token }}
+      - name: Bilder verkleinern
+        run: |
+          python3 -m pip install --quiet --user --break-system-packages pillow
+          python3 - <<'PY'
+          import pathlib
+          from PIL import Image
+          for p in pathlib.Path("ergebnisse").rglob("*.png"):
+              Image.open(p).convert("RGB").save(p.with_suffix(".jpg"), quality=86, optimize=True)
+              p.unlink()
+          PY
+      - name: Schreiben
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd ergebnisse
+          { echo "Lauf-ID: ${RUN_ID} (nachträglich gesammelt)"; ls -d AndroidBridge-dmg-* | sed 's/^/dmg: /'; date -u; } > ERGEBNIS.txt
+          git init -q -b ci-ergebnisse-android-bridge
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "CI-Ergebnisse Android Bridge (Lauf ${RUN_ID}, nachträglich)"
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" ci-ergebnisse-android-bridge
