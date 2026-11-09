@@ -1,8 +1,20 @@
-# Testbericht – Android Bridge 4.0.0
+# Testbericht – Android Bridge 4.2.0
 
-_Rückfallversionen: 3.0 (Commit 27de89b, DMG „AndroidBridge-3.0“), 2.0 (Commit 30402af) und 1.0 (Zweig `android-bridge-v1.0`)._
+_Rückfallversionen: 4.0 (Commit 962b36b), 3.0 (Commit 27de89b), 2.0 (Commit 30402af) und 1.0 (Zweig `android-bridge-v1.0`)._
 
-## Neu in 4.0 geprüft
+## Neu in 4.2 geprüft (Lauf 34, Commit 3414b1f)
+
+| Prüfung | Ergebnis |
+|---|---|
+| Unit-Tests | 96 Tests ohne Fehler auf macOS 26 (arm64) und macOS 15 (x86_64) |
+| Universal Binary | x86_64 + arm64, gebaut mit Xcode 26 auf macOS 26 (Apple Silicon) |
+| Installation aus der DMG + Start | macOS 26 Apple Silicon nativ und über Rosetta (Liquid Glass aktiv), macOS 15 Intel (Rückfall-Glas) |
+| Bildschirmfotos | alle 22 Ansichten × hell/dunkel auf macOS 26 Apple Silicon (natives Liquid Glass + Rückfall) und macOS 15 Apple Silicon; Intel-VMs nur Seiten ohne Fotos (deren virtuelle Grafik bricht bei Fotoseiten in Metal ab: `MTLLoader … Target device architecture is nil`) |
+| Layout-Durchgang | Navigationsleiste oben, Gerätekapsel unten, Galerie, Großansicht, Dateimanager, Duplikate mit Löschleiste, Speicher, Favoriten, Übertragungen, Einstellungen; korrigiert: leere Zustände ragten im kleinsten Fenster unter die Gerätekapsel – sie wählen jetzt je nach Höhe große, kleine oder keine Illustration |
+| Bekannte Aufnahme-Artefakte der Build-Maschinen | einzelne Aufnahmen direkt nach dem Fensterwechsel unvollständig (z. B. ein verkleinertes Dateimanager-Foto); nicht reproduzierbar, die jeweils andere Aufnahme derselben Seite ist vollständig |
+| Nicht geprüft | echte Telefone und echte Mac-Hardware außer den Build-Maschinen |
+
+## Aus Version 4.0
 
 | Prüfung | Ergebnis |
 |---|---|
