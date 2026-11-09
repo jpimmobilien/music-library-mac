@@ -28,6 +28,7 @@ struct SettingsPage: View {
                     case .about: AboutSettings()
                     }
                 }
+                .reportsScrollEdge()
                 .padding(.horizontal, Spacing.gutter)
                 .padding(.bottom, 40)
                 .frame(maxWidth: 780, alignment: .leading)
@@ -154,6 +155,26 @@ struct GeneralSettings: View {
 
 struct AppearanceSettings: View {
     @ObservedObject var settings: SettingsStore
+    @AppStorage(MacAppearance.storageKey) private var macFinish = "auto"
+    private let mac = MacHardware.current
+
+    private func finishButton(_ f: MacFinish?) -> some View {
+        let selected = f.map { MacAppearance.finish(for: mac, stored: macFinish) == $0 && macFinish != "auto" } ?? (macFinish == "auto")
+        return Button { macFinish = f?.rawValue ?? "auto" } label: {
+            Group {
+                if let f {
+                    Circle().fill(LinearGradient(colors: [f.metal.0, f.metal.1], startPoint: .top, endPoint: .bottom))
+                } else {
+                    Circle().fill(Palette.fieldFill).overlay(Text("A").font(.ui(10, .bold)).foregroundStyle(Palette.textSecondary))
+                }
+            }
+            .frame(width: 22, height: 22)
+            .overlay(Circle().strokeBorder(Palette.accent, lineWidth: selected ? 2 : 0).padding(-3))
+            .overlay(Circle().strokeBorder(Palette.hairline, lineWidth: 1))
+        }
+        .buttonStyle(.plain)
+        .help(f?.title ?? "Automatisch (\(mac.suggestedFinish.title))")
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.xl) {
@@ -176,6 +197,24 @@ struct AppearanceSettings: View {
                             .help(a.title)
                         }
                     }
+                }
+            }
+            GlassSection(title: "Ihr Mac", symbol: "laptopcomputer",
+                         footer: "Android Bridge erkennt das Modell (\(mac.identifier)) und zeichnet seine Bauform. Die Gehäusefarbe lässt sich nicht auslesen – wählen Sie sie hier.") {
+                HStack(alignment: .center, spacing: 20) {
+                    MacRender(width: 150, hardware: mac) { LaptopScreenContent() }
+                        .frame(width: 170, height: 130)
+                    VStack(alignment: .leading, spacing: 10) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(mac.familyName).font(.ui(15, .semibold)).foregroundStyle(Palette.textPrimary)
+                            if let d = mac.detailName { Text(d).font(Typo.callout).foregroundStyle(Palette.textSecondary) }
+                        }
+                        HStack(spacing: 8) {
+                            finishButton(nil)
+                            ForEach(MacFinish.options(for: mac.form)) { f in finishButton(f) }
+                        }
+                    }
+                    Spacer(minLength: 0)
                 }
             }
             GlassSection(title: "Effekte", symbol: "sparkles",

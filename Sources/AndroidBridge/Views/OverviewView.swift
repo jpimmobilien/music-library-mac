@@ -58,7 +58,7 @@ struct OverviewView: View {
 
 // MARK: - Bühne
 
-/// Großer Kopfbereich mit Gerät, Zustand und Hauptaktionen.
+/// Großer Kopfbereich: dunkle Kino-Bühne mit Telefon und Mac, darüber Zustand, Titel und Hauptaktionen.
 struct DeviceHero: View {
     @EnvironmentObject private var model: AppModel
     @ObservedObject var device: DeviceConnection
@@ -69,17 +69,33 @@ struct DeviceHero: View {
     private var connected: Bool { device.state == .connected }
 
     var body: some View {
-        ViewThatFits(in: .horizontal) {
-            HStack(alignment: .center, spacing: 36) {
-                text.frame(minWidth: 360, maxWidth: 480, alignment: .leading)
-                stage.frame(width: 540, height: 360)
-            }
-            VStack(alignment: .leading, spacing: 24) {
-                stage.frame(width: 460, height: 310).frame(maxWidth: .infinity)
-                text
+        CinemaStage(connected: connected) {
+            VStack(spacing: 14) {
+                StateEyebrow(state: device.state, onDark: true)
+                Text(heroTitle)
+                    .font(.display(50, .bold))
+                    .tracking(-1.2)
+                    .foregroundStyle(.white)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.6)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text(heroSubtitle)
+                    .font(.ui(16))
+                    .foregroundStyle(.white.opacity(0.66))
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: 560)
+                    .fixedSize(horizontal: false, vertical: true)
+                if connected {
+                    stats.padding(.top, 2)
+                    actions.padding(.top, 6)
+                } else {
+                    stateActions.padding(.top, 4)
+                }
+                stage
+                    .padding(.top, 8)
             }
         }
-        .padding(.vertical, 8)
     }
 
     private var stage: some View {
@@ -87,62 +103,47 @@ struct DeviceHero: View {
                     wallpaper: thumbs.images.first,
                     macPhotos: Array(thumbs.images.prefix(8)),
                     stateSymbol: connected ? "cable.connector" : device.state.symbolName,
-                    stateText: connected ? "USB · Dateiübertragung" : device.state.title)
+                    stateText: connected ? "USB · Dateiübertragung" : device.state.title,
+                    phoneCaption: device.displayName)
+            .aspectRatio(1.75, contentMode: .fit)
+            .frame(maxWidth: 820)
     }
 
-    private var text: some View {
-        VStack(alignment: .leading, spacing: 18) {
-            StateEyebrow(state: device.state)
-            VStack(alignment: .leading, spacing: 8) {
-                Text(heroTitle)
-                    .font(Typo.hero)
-                    .tracking(-0.8)
-                    .foregroundStyle(Palette.textPrimary)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.7)
-                    .fixedSize(horizontal: false, vertical: true)
-                Text(heroSubtitle)
-                    .font(.ui(15))
-                    .foregroundStyle(Palette.textSecondary)
-                    .fixedSize(horizontal: false, vertical: true)
+    private var stats: some View {
+        HStack(spacing: 22) {
+            if let level = device.batteryLevel { BatteryGauge(level: level, outline: .white.opacity(0.6)) }
+            Label("\(ByteFormat.string(device.totalFree)) frei", systemImage: "internaldrive")
+            if device.storages.count > 1 {
+                Label("\(device.storages.count) Speicher", systemImage: "sdcard")
             }
-            if connected {
-                HStack(spacing: 22) {
-                    if let level = device.batteryLevel { BatteryGauge(level: level) }
-                    Label("\(ByteFormat.string(device.totalFree)) frei", systemImage: "internaldrive")
-                        .font(.ui(13, .semibold))
-                    if device.storages.count > 1 {
-                        Label("\(device.storages.count) Speicher", systemImage: "sdcard")
-                            .font(.ui(13, .semibold))
-                    }
-                }
-                .foregroundStyle(Palette.textPrimary)
-                HStack(spacing: 10) {
-                    Button {
-                        model.select(device: device)
-                        model.gallery.filter = .media
-                        model.selection = .media
-                    } label: {
-                        Label("Fotos & Videos", systemImage: "photo.on.rectangle.angled")
-                    }
-                    .buttonStyle(GlassButtonStyle(prominent: true))
-                    Button {
-                        model.openFiles(device: device)
-                    } label: {
-                        Label("Dateien", systemImage: "folder")
-                    }
-                    .buttonStyle(GlassButtonStyle())
-                    Button {
-                        openWindow(value: device.id)
-                    } label: {
-                        Image(systemName: "macwindow.badge.plus")
-                    }
-                    .buttonStyle(GlassButtonStyle())
-                    .help("In eigenem Fenster öffnen")
-                }
-            } else {
-                stateActions
+        }
+        .font(.ui(13, .semibold))
+        .foregroundStyle(.white.opacity(0.9))
+    }
+
+    private var actions: some View {
+        HStack(spacing: 10) {
+            Button {
+                model.select(device: device)
+                model.gallery.filter = .media
+                model.selection = .media
+            } label: {
+                Label("Fotos & Videos", systemImage: "photo.on.rectangle.angled")
             }
+            .buttonStyle(GlassButtonStyle(prominent: true))
+            Button {
+                model.openFiles(device: device)
+            } label: {
+                Label("Dateien", systemImage: "folder")
+            }
+            .buttonStyle(GlassButtonStyle())
+            Button {
+                openWindow(value: device.id)
+            } label: {
+                Image(systemName: "macwindow.badge.plus")
+            }
+            .buttonStyle(GlassButtonStyle())
+            .help("In eigenem Fenster öffnen")
         }
     }
 
@@ -207,9 +208,78 @@ struct DeviceHero: View {
     }
 }
 
+/// Dunkle Bühne wie in einer Produktpräsentation – in Hell und Dunkel gleich: tiefes Schwarz,
+/// ein Lichtband von oben, farbige Lichtfelder in Blau und Violett, die sehr langsam wandern.
+struct CinemaStage<Content: View>: View {
+    var connected: Bool
+    @ViewBuilder var content: () -> Content
+
+    var body: some View {
+        content()
+            .padding(.top, 44)
+            .padding(.bottom, 28)
+            .padding(.horizontal, 28)
+            .frame(maxWidth: .infinity)
+            .background(CinemaBackdrop(connected: connected))
+            .clipShape(RoundedRectangle(cornerRadius: Radius.hero, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: Radius.hero, style: .continuous)
+                    .strokeBorder(LinearGradient(colors: [.white.opacity(0.22), .white.opacity(0.04), .white.opacity(0.08)],
+                                                 startPoint: .top, endPoint: .bottom), lineWidth: 0.8)
+            )
+            .shadow(color: .black.opacity(0.28), radius: 30, y: 16)
+            .environment(\.colorScheme, .dark)
+    }
+}
+
+struct CinemaBackdrop: View {
+    var connected: Bool
+    @Environment(\.animationsEnabled) private var animations
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    var body: some View {
+        let animate = animations && !reduceMotion && !SnapshotMode.isActive
+        TimelineView(.animation(minimumInterval: 1.0 / 20.0, paused: !animate)) { context in
+            let t = animate ? context.date.timeIntervalSinceReferenceDate : 0
+            GeometryReader { geo in
+                let w = geo.size.width, h = geo.size.height
+                let power = connected ? 1.0 : 0.55
+                ZStack {
+                    LinearGradient(colors: [Color(hex: 0x0C0E14), Color(hex: 0x040406), Color.black], startPoint: .top, endPoint: .bottom)
+                    // Lichtkegel von oben
+                    RadialGradient(colors: [Color.white.opacity(0.13), .clear], center: UnitPoint(x: 0.5, y: -0.05),
+                                   startRadius: 0, endRadius: max(w, h) * 0.55)
+                    // farbige Lichtfelder
+                    RadialGradient(colors: [Color(hex: 0x2A6BFF).opacity(0.5 * power), .clear],
+                                   center: UnitPoint(x: 0.18 + 0.05 * sin(t / 9), y: 0.92 + 0.04 * cos(t / 11)),
+                                   startRadius: 0, endRadius: w * 0.48)
+                    RadialGradient(colors: [Color(hex: 0x8C5BFF).opacity(0.42 * power), .clear],
+                                   center: UnitPoint(x: 0.84 + 0.05 * cos(t / 13), y: 0.8 + 0.05 * sin(t / 10)),
+                                   startRadius: 0, endRadius: w * 0.42)
+                    RadialGradient(colors: [Color(hex: 0xFF5FA8).opacity(0.12 * power), .clear],
+                                   center: UnitPoint(x: 0.55, y: 1.05), startRadius: 0, endRadius: w * 0.35)
+                    // Lichtband an der Oberkante
+                    Capsule()
+                        .fill(LinearGradient(colors: [.clear, .white.opacity(0.75), .clear], startPoint: .leading, endPoint: .trailing))
+                        .frame(width: w * 0.55, height: 1.2)
+                        .position(x: w / 2, y: 0.6)
+                    Ellipse()
+                        .fill(Color.white.opacity(0.06))
+                        .frame(width: w * 0.6, height: 70)
+                        .blur(radius: 30)
+                        .position(x: w / 2, y: 0)
+                }
+                .frame(width: w, height: h)
+            }
+        }
+        .allowsHitTesting(false)
+    }
+}
+
 /// Zustand als leuchtende Zeile über dem Titel.
 struct StateEyebrow: View {
     let state: ConnectionState
+    var onDark = false
     @State private var pulse = false
     @Environment(\.animationsEnabled) private var animations
 
@@ -217,8 +287,8 @@ struct StateEyebrow: View {
         switch state {
         case .connected: return Palette.success
         case .interrupted: return Palette.danger
-        case .disconnected: return Palette.textTertiary
-        case .detected, .connecting, .readingStorage: return Palette.bridgeBlue
+        case .disconnected: return onDark ? Color.white.opacity(0.55) : Palette.textTertiary
+        case .detected, .connecting, .readingStorage: return Palette.accent
         default: return Palette.warning
         }
     }
@@ -231,8 +301,11 @@ struct StateEyebrow: View {
             }
             Text(state == .connected ? "Verbunden über USB" : (state == .disconnected ? "Kein Telefon verbunden" : state.title))
                 .font(Typo.eyebrow)
-                .foregroundStyle(state == .disconnected ? Palette.textSecondary : color)
+                .foregroundStyle(state == .disconnected ? (onDark ? Color.white.opacity(0.7) : Palette.textSecondary) : color)
         }
+        .padding(.horizontal, onDark ? 12 : 0)
+        .padding(.vertical, onDark ? 6 : 0)
+        .background { if onDark { Capsule().fill(Color.white.opacity(0.08)).overlay(Capsule().strokeBorder(Color.white.opacity(0.1), lineWidth: 0.6)) } }
         .onAppear {
             guard animations, !SnapshotMode.isActive, state != .disconnected else { return }
             withAnimation(.easeOut(duration: 1.6).repeatForever(autoreverses: false)) { pulse = true }
@@ -240,76 +313,98 @@ struct StateEyebrow: View {
     }
 }
 
-/// Telefon, Lichtverbindung, Notebook.
+/// Telefon, Lichtverbindung und dieser Mac – in seiner echten Bauform (siehe MacRender).
 struct DeviceStage: View {
     var connected: Bool
     var wallpaper: NSImage?
     var macPhotos: [NSImage] = []
     var stateSymbol: String?
     var stateText: String?
+    var phoneCaption: String?
+    var hardware: MacHardware = .current
 
     var body: some View {
         GeometryReader { geo in
             let w = geo.size.width, h = geo.size.height
-            let laptopW = w * 0.62
-            let phoneW = min(w * 0.22, h * 0.36)
+            let laptop = hardware.form.isLaptop
+            let macW = min(w * (laptop ? 0.6 : 0.46), h * (laptop ? 1.12 : 0.82))
+            let phoneW = min(w * 0.17, h * 0.34)
+            let phoneX = w * 0.2, macX = w * 0.62
             ZStack {
-                // Bodenlicht
+                // Bodenlicht unter beiden Geräten
                 Ellipse()
-                    .fill(RadialGradient(colors: [Palette.bridgeGreen.opacity(connected ? 0.35 : 0.08), .clear],
-                                         center: .center, startRadius: 0, endRadius: w * 0.45))
-                    .frame(width: w * 0.95, height: h * 0.32)
-                    .offset(y: h * 0.38)
-                    .blur(radius: 10)
-                LaptopRender(width: laptopW) {
-                    LaptopScreenContent(photos: connected ? macPhotos : [])
-                        .opacity(connected ? 1 : 0.45)
+                    .fill(RadialGradient(colors: [Palette.accent.opacity(connected ? 0.55 : 0.18), Palette.accent2.opacity(connected ? 0.2 : 0.06), .clear],
+                                         center: .center, startRadius: 0, endRadius: w * 0.42))
+                    .frame(width: w * 0.92, height: h * 0.22)
+                    .blur(radius: 14)
+                    .position(x: w * 0.47, y: h * 0.86)
+                // Spiegelung auf dem „Boden“
+                Rectangle()
+                    .fill(LinearGradient(colors: [.white.opacity(0.07), .clear], startPoint: .top, endPoint: .bottom))
+                    .frame(width: w * 0.8, height: 1)
+                    .position(x: w * 0.47, y: h * 0.84)
+                VStack(spacing: 12) {
+                    MacRender(width: macW, hardware: hardware) {
+                        LaptopScreenContent(photos: connected ? macPhotos : [])
+                            .opacity(connected ? 1 : 0.5)
+                    }
+                    MacCaption(hardware: hardware)
                 }
-                .offset(x: w * 0.17, y: -h * 0.02)
+                .position(x: macX, y: h * 0.46)
                 ConnectionBeam(active: connected)
-                    .frame(width: w * 0.42, height: h * 0.34)
-                    .offset(x: -w * 0.02, y: h * 0.22)
-                PhoneRender(width: phoneW, glowAmount: connected ? 0.7 : 0.15) {
-                    PhoneScreenContent(wallpaper: connected ? wallpaper : nil, stateSymbol: stateSymbol, stateText: stateText,
-                                       dimmed: !connected)
+                    .frame(width: w * 0.2, height: h * 0.26)
+                    .position(x: w * 0.36, y: h * 0.66)
+                VStack(spacing: 12) {
+                    PhoneRender(width: phoneW, glow: Palette.accent, glowAmount: connected ? 0.75 : 0.15) {
+                        PhoneScreenContent(wallpaper: connected ? wallpaper : nil, stateSymbol: stateSymbol, stateText: stateText,
+                                           dimmed: !connected)
+                    }
+                    .rotation3DEffect(.degrees(-10), axis: (x: 0, y: 1, z: 0), perspective: 0.6)
+                    if let phoneCaption {
+                        HStack(spacing: 6) {
+                            Image(systemName: "smartphone")
+                            Text(phoneCaption).fontWeight(.semibold)
+                        }
+                        .font(.ui(11.5))
+                        .foregroundStyle(.white.opacity(0.7))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                        .frame(maxWidth: w * 0.3)
+                    }
                 }
-                .rotation3DEffect(.degrees(-8), axis: (x: 0, y: 1, z: 0), perspective: 0.6)
-                .offset(x: -w * 0.3, y: h * 0.04)
+                .position(x: phoneX, y: h * 0.5)
             }
             .frame(width: w, height: h)
         }
     }
 }
 
-/// Ohne Gerät: großer Einstieg.
+/// Ohne Gerät: großer Einstieg auf der Kino-Bühne.
 struct WelcomeHero: View {
     var body: some View {
-        ViewThatFits(in: .horizontal) {
-            HStack(alignment: .center, spacing: 36) {
-                text.frame(minWidth: 360, maxWidth: 480, alignment: .leading)
-                DeviceStage(connected: false, stateSymbol: "cable.connector", stateText: "Nicht verbunden").frame(width: 540, height: 360)
+        CinemaStage(connected: false) {
+            VStack(spacing: 14) {
+                StateEyebrow(state: .disconnected, onDark: true)
+                Text("Ihr Android.\nDirekt auf Ihrem Mac.")
+                    .font(.display(52, .bold))
+                    .tracking(-1.3)
+                    .foregroundStyle(
+                        LinearGradient(colors: [.white, Color(hex: 0xC9D6FF)], startPoint: .top, endPoint: .bottom)
+                    )
+                    .multilineTextAlignment(.center)
+                    .minimumScaleFactor(0.6)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text("Fotos, Videos und Dateien per USB – ohne Cloud, ohne Konto, mit voller Geschwindigkeit.")
+                    .font(.ui(16))
+                    .foregroundStyle(.white.opacity(0.66))
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: 520)
+                    .fixedSize(horizontal: false, vertical: true)
+                DeviceStage(connected: false, stateSymbol: "cable.connector", stateText: "Nicht verbunden", phoneCaption: "Ihr Android-Telefon")
+                    .aspectRatio(1.75, contentMode: .fit)
+                    .frame(maxWidth: 820)
+                    .padding(.top, 8)
             }
-            VStack(alignment: .leading, spacing: 24) {
-                DeviceStage(connected: false, stateSymbol: "cable.connector", stateText: "Nicht verbunden")
-                    .frame(width: 460, height: 310).frame(maxWidth: .infinity)
-                text
-            }
-        }
-        .padding(.vertical, 8)
-    }
-
-    private var text: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            StateEyebrow(state: .disconnected)
-            Text("Ihr Android.\nDirekt auf Ihrem Mac.")
-                .font(Typo.hero)
-                .tracking(-0.8)
-                .foregroundStyle(Palette.textPrimary)
-                .fixedSize(horizontal: false, vertical: true)
-            Text("Fotos, Videos und Dateien per USB – ohne Cloud, ohne Konto, mit voller Geschwindigkeit.")
-                .font(.ui(15))
-                .foregroundStyle(Palette.textSecondary)
-                .fixedSize(horizontal: false, vertical: true)
         }
     }
 }
@@ -324,7 +419,7 @@ struct ConnectSteps: View {
                          detail: "Am besten mit einem Kabel, das Daten überträgt – manche Ladekabel können nur laden.")
                 StepCard(number: 2, symbol: "lock.open", tint: Palette.violet, title: "Telefon entsperren",
                          detail: "Android gibt den Speicher erst frei, wenn das Telefon entsperrt ist.")
-                StepCard(number: 3, symbol: "arrow.left.arrow.right", tint: Palette.bridgeGreen, title: "„Dateiübertragung“ wählen",
+                StepCard(number: 3, symbol: "arrow.left.arrow.right", tint: Palette.accent, title: "„Dateiübertragung“ wählen",
                          detail: "In der Mitteilung „USB-Verbindung“ auf „Dateiübertragung / Android Auto“ tippen.")
             }
         }
@@ -361,6 +456,7 @@ struct StepCard: View {
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard(cornerRadius: Radius.card)
+        .interactiveCard(pressable: false)
     }
 }
 
@@ -485,8 +581,9 @@ struct StorageTile: View {
             .padding(20)
             .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(GelButtonStyle())
         .glassCard(cornerRadius: Radius.card, elevated: hovering)
+        .interactiveCard()
         .scaleEffect(hovering ? 1.01 : 1)
         .animation(.bridgeQuick, value: hovering)
         .onHover { hovering = $0 }
@@ -534,8 +631,8 @@ struct QuickActions: View {
                     model.openFiles(device: device)
                 }
                 FeatureTile(title: "Dateien übertragen", subtitle: "Mac und Telefon nebeneinander – ziehen und ablegen", symbol: "arrow.left.arrow.right",
-                            tint: Palette.bridgeTeal) {
-                    tileArt(symbol: "arrow.left.arrow.right.square.fill", tint: Palette.bridgeTeal)
+                            tint: Palette.accent2) {
+                    tileArt(symbol: "arrow.left.arrow.right.square.fill", tint: Palette.accent2)
                 } action: {
                     model.files.layout = .dual
                     model.openFiles(device: device)
@@ -548,8 +645,8 @@ struct QuickActions: View {
                     model.selection = .duplicates
                 }
                 FeatureTile(title: "Speicherplatz verwalten", subtitle: "Belegung nach Art und größte Dateien", symbol: "chart.pie",
-                            tint: Palette.bridgeGreen) {
-                    tileArt(symbol: "chart.pie.fill", tint: Palette.bridgeGreen)
+                            tint: Palette.accent) {
+                    tileArt(symbol: "chart.pie.fill", tint: Palette.accent)
                 } action: { model.selection = .device(device.id) }
             }
         }
@@ -611,8 +708,9 @@ struct FeatureTile<Preview: View>: View {
             }
             .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(GelButtonStyle())
         .glassCard(cornerRadius: Radius.card, elevated: hovering)
+        .interactiveCard()
         .offset(y: hovering ? -2 : 0)
         .animation(.bridgeQuick, value: hovering)
         .onHover { hovering = $0 }
@@ -690,7 +788,7 @@ struct AppMark: View {
         } else {
             RoundedRectangle(cornerRadius: size * 0.27, style: .continuous)
                 .fill(LinearGradient(colors: [Color(hex: 0x10261F), Color(hex: 0x050708)], startPoint: .top, endPoint: .bottom))
-                .overlay(Image(systemName: "smartphone").font(.ui(size * 0.45, .semibold)).foregroundStyle(Palette.bridgeGreen))
+                .overlay(Image(systemName: "smartphone").font(.ui(size * 0.45, .semibold)).foregroundStyle(Palette.accent))
                 .frame(width: size, height: size)
         }
     }
@@ -719,8 +817,8 @@ struct ConnectionGuideView: View {
                         ForEach(Array(options.enumerated()), id: \.offset) { index, option in
                             HStack(spacing: 6) {
                                 ZStack {
-                                    Circle().strokeBorder(index == 0 ? Palette.bridgeGreen : Color.white.opacity(0.5), lineWidth: 1.2)
-                                    if index == 0 && highlight { Circle().fill(Palette.bridgeGreen).padding(2.5) }
+                                    Circle().strokeBorder(index == 0 ? Palette.accent : Color.white.opacity(0.5), lineWidth: 1.2)
+                                    if index == 0 && highlight { Circle().fill(Palette.accent).padding(2.5) }
                                 }
                                 .frame(width: 11, height: 11)
                                 Text(option)
@@ -731,7 +829,7 @@ struct ConnectionGuideView: View {
                             }
                             .padding(.vertical, 4)
                             .padding(.horizontal, 5)
-                            .background(RoundedRectangle(cornerRadius: 6).fill(index == 0 && highlight ? Palette.bridgeGreen.opacity(0.22) : .clear))
+                            .background(RoundedRectangle(cornerRadius: 6).fill(index == 0 && highlight ? Palette.accent.opacity(0.22) : .clear))
                         }
                     }
                     .padding(.horizontal, 11)
@@ -771,7 +869,7 @@ struct PrivacyNote: View {
     var body: some View {
         HStack(spacing: 10) {
             Image(systemName: "lock.shield")
-                .foregroundStyle(Palette.bridgeGreen)
+                .foregroundStyle(Palette.accent)
             Text("Alles bleibt lokal: Übertragungen laufen direkt per USB zwischen Telefon und Mac. Kein Konto, keine Cloud, keine Telemetrie.")
                 .font(Typo.caption)
                 .foregroundStyle(Palette.textSecondary)
@@ -822,6 +920,7 @@ struct DeviceDetailView: View {
                     }
                     deviceInfo
                 }
+                .reportsScrollEdge()
                 .padding(.horizontal, Spacing.gutter)
                 .padding(.bottom, 40)
                 .frame(maxWidth: 1180, alignment: .leading)

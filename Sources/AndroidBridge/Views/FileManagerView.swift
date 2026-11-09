@@ -253,7 +253,7 @@ struct PaneHeader<Leading: View, Crumbs: View>: View {
     let isActive: Bool
     @Binding var search: String
     let focusToken: UUID
-    var tint: Color = Palette.bridgeGreen
+    var tint: Color = Palette.accent
     var capacity: CapacityInfo?
     @ViewBuilder var leading: () -> Leading
     @ViewBuilder var crumbs: () -> Crumbs
@@ -321,7 +321,7 @@ struct SplitPanes<Leading: View, Trailing: View>: View {
                 ZStack {
                     Color.clear
                     Capsule()
-                        .fill(hovering || dragStart != nil ? Palette.bridgeGreen.opacity(0.7) : Palette.textTertiary.opacity(0.35))
+                        .fill(hovering || dragStart != nil ? Palette.accent.opacity(0.7) : Palette.textTertiary.opacity(0.35))
                         .frame(width: 4, height: 44)
                 }
                 .frame(width: handle)
@@ -390,7 +390,7 @@ struct DevicePaneView: View {
     var body: some View {
         VStack(spacing: 0) {
             PaneHeader(isActive: isActive, search: $browser.search, focusToken: files.focusSearchToken,
-                       tint: Palette.bridgeGreen, capacity: deviceCapacity) {
+                       tint: Palette.accent, capacity: deviceCapacity) {
                 deviceAndStoragePicker
             } crumbs: {
                 if let storage = browser.storage {
@@ -430,7 +430,7 @@ struct DevicePaneView: View {
         }
         .overlay(
             RoundedRectangle(cornerRadius: Radius.panel - 3, style: .continuous)
-                .strokeBorder(Palette.bridgeGreen, lineWidth: 2.5)
+                .strokeBorder(Palette.accent, lineWidth: 2.5)
                 .padding(3)
                 .opacity(dropTargeted ? 1 : 0)
                 .allowsHitTesting(false)
@@ -463,6 +463,7 @@ struct DevicePaneView: View {
                     }
                 }
             }
+            .reportsScrollEdge()
             .padding(14)
             .padding(.bottom, 80)
         }
@@ -487,7 +488,7 @@ struct DevicePaneView: View {
 
     private var deviceAndStoragePicker: some View {
         HStack(spacing: 8) {
-            Image(systemName: "smartphone").foregroundStyle(Palette.bridgeGreen)
+            Image(systemName: "smartphone").foregroundStyle(Palette.accent)
             if model.devices.connectedDevices.count > 1 {
                 Menu {
                     ForEach(model.devices.connectedDevices) { d in
@@ -905,6 +906,7 @@ struct LocalPaneView: View {
                     }
                 }
             }
+            .reportsScrollEdge()
             .padding(14)
             .padding(.bottom, 80)
         }
@@ -962,9 +964,8 @@ struct LocalPaneView: View {
         Table(of: LocalEntry.self, selection: $browser.selection) {
             TableColumn("Name") { e in
                 HStack(spacing: 8) {
-                    Image(nsImage: NSWorkspace.shared.icon(forFile: e.url.path))
-                        .resizable()
-                        .frame(width: 20, height: 20)
+                    // Echte Vorschau (Fotos, PDFs, Dokumente) – sonst das Finder-Symbol
+                    LocalThumb(url: e.url, size: 22)
                     Text(e.name).lineLimit(1).truncationMode(.middle)
                 }
             }
@@ -1131,7 +1132,7 @@ struct FileTile<Thumb: View>: View {
                 .truncationMode(.middle)
                 .padding(.horizontal, 6)
                 .padding(.vertical, 2)
-                .background(RoundedRectangle(cornerRadius: 6, style: .continuous).fill(selected ? Palette.bridgeGreen : .clear))
+                .background(RoundedRectangle(cornerRadius: 6, style: .continuous).fill(selected ? Palette.accent : .clear))
             Text(detail)
                 .font(.ui(10.5))
                 .foregroundStyle(Palette.textSecondary)

@@ -33,7 +33,7 @@ struct FileGlyph: View {
 /// Runde Kachel mit Symbol.
 struct IconTile: View {
     let symbol: String
-    var tint: Color = Palette.bridgeGreen
+    var tint: Color = Palette.accent
     var size: CGFloat = 36
 
     var body: some View {
@@ -88,7 +88,7 @@ struct StatusPill: View {
 /// Belegungsbalken.
 struct CapacityBar: View {
     let fraction: Double
-    var tint: Color = Palette.bridgeGreen
+    var tint: Color = Palette.accent
     var height: CGFloat = 8
     @State private var shown: Double = 0
     @Environment(\.animationsEnabled) private var animations
@@ -134,7 +134,7 @@ struct StorageCard: View {
         } label: {
             VStack(alignment: .leading, spacing: compact ? 8 : 12) {
                 HStack(spacing: 12) {
-                    IconTile(symbol: storage.symbolName, tint: storage.isRemovable ? Palette.bridgeBlue : Palette.bridgeGreen, size: compact ? 30 : 38)
+                    IconTile(symbol: storage.symbolName, tint: storage.isRemovable ? Palette.bridgeBlue : Palette.accent, size: compact ? 30 : 38)
                     VStack(alignment: .leading, spacing: 2) {
                         Text(storage.displayName)
                             .font(.ui(compact ? 13 : 15, .semibold))
@@ -152,7 +152,7 @@ struct StorageCard: View {
                     }
                 }
                 if storage.capacity > 0 {
-                    CapacityBar(fraction: storage.usedFraction, tint: storage.isRemovable ? Palette.bridgeBlue : Palette.bridgeGreen)
+                    CapacityBar(fraction: storage.usedFraction, tint: storage.isRemovable ? Palette.bridgeBlue : Palette.accent)
                     HStack {
                         Text("\(ByteFormat.string(storage.used)) belegt")
                         Spacer()
@@ -185,44 +185,127 @@ struct EmptyStateView<Actions: View>: View {
     let title: String
     let message: String
     @ViewBuilder var actions: () -> Actions
-    @State private var glow = false
-    @Environment(\.animationsEnabled) private var animations
 
     var body: some View {
-        VStack(spacing: 16) {
-            ZStack {
-                Circle()
-                    .fill(RadialGradient(colors: [Palette.bridgeGreen.opacity(0.35), .clear], center: .center, startRadius: 0, endRadius: 90))
-                    .frame(width: 180, height: 180)
-                    .scaleEffect(glow ? 1.08 : 0.94)
-                    .opacity(glow ? 1 : 0.7)
-                Image(systemName: symbol)
-                    .font(.ui(36, .light))
-                    .foregroundStyle(Palette.bridgeGreen)
-                    .frame(width: 92, height: 92)
-                    .glassSurface(Circle(), strong: true, elevated: true)
-            }
-            .frame(height: 150)
+        VStack(spacing: 18) {
+            EmptyIllustration(symbol: symbol)
+                .frame(width: 280, height: 200)
             Text(title)
-                .font(Typo.title)
-                .tracking(-0.3)
+                .font(.display(28, .bold))
+                .tracking(-0.6)
                 .foregroundStyle(Palette.textPrimary)
                 .multilineTextAlignment(.center)
             Text(message)
-                .font(.ui(14))
+                .font(.ui(14.5))
                 .foregroundStyle(Palette.textSecondary)
                 .multilineTextAlignment(.center)
-                .frame(maxWidth: 440)
+                .frame(maxWidth: 460)
                 .fixedSize(horizontal: false, vertical: true)
             actions()
                 .padding(.top, 4)
         }
         .padding(30)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .revealOnAppear()
+    }
+}
+
+/// Eigene Illustration für leere Zustände: aufgefächerte Glaskarten mit farbigem Licht, vorne das Motiv.
+/// Ohne Telefon zeigt sie ein kleines, abgedunkeltes Telefon.
+struct EmptyIllustration: View {
+    let symbol: String
+    @State private var float = false
+    @Environment(\.animationsEnabled) private var animations
+    @Environment(\.colorScheme) private var scheme
+
+    private var showsPhone: Bool { symbol.hasPrefix("cable.connector") }
+    private var photoLike: Bool { symbol.contains("photo") || symbol.contains("star") || symbol.contains("doc.on.doc") }
+
+    var body: some View {
+        ZStack {
+            // Licht
+            Ellipse()
+                .fill(RadialGradient(colors: [Palette.accent.opacity(scheme == .dark ? 0.45 : 0.3), Palette.accent2.opacity(0.15), .clear],
+                                     center: .center, startRadius: 0, endRadius: 130))
+                .frame(width: 280, height: 200)
+                .scaleEffect(float ? 1.06 : 0.96)
+            // Karten im Hintergrund
+            card(index: 0)
+                .rotationEffect(.degrees(-13))
+                .offset(x: -62, y: float ? 8 : 12)
+            card(index: 1)
+                .rotationEffect(.degrees(11))
+                .offset(x: 62, y: float ? 4 : 0)
+            // Vorne: Motiv
+            if showsPhone {
+                PhoneRender(width: 66, glow: Palette.accent, glowAmount: 0.35) {
+                    PhoneScreenContent(wallpaper: nil, stateSymbol: nil, stateText: nil, dimmed: true)
+                }
+                .offset(y: float ? -4 : 0)
+                Image(systemName: "cable.connector")
+                    .font(.ui(20, .semibold))
+                    .foregroundStyle(.white)
+                    .frame(width: 38, height: 38)
+                    .background(Circle().fill(LinearGradient(colors: [Palette.accent, Palette.accent2], startPoint: .topLeading, endPoint: .bottomTrailing)))
+                    .shadow(color: Palette.accent.opacity(0.5), radius: 10, y: 4)
+                    .offset(x: 40, y: 52)
+            } else {
+                ZStack {
+                    Image(systemName: symbol)
+                        .font(.ui(46, .light))
+                        .foregroundStyle(LinearGradient(colors: [Palette.accent, Palette.accent2], startPoint: .topLeading, endPoint: .bottomTrailing))
+                }
+                .frame(width: 112, height: 112)
+                .glassSurface(RoundedRectangle(cornerRadius: 30, style: .continuous), strong: true, elevated: true)
+                .offset(y: float ? -5 : 0)
+            }
+            // kleine Lichtpunkte
+            Circle().fill(Palette.accent2.opacity(0.7)).frame(width: 8, height: 8).blur(radius: 0.5)
+                .offset(x: -104, y: -58).opacity(float ? 1 : 0.5)
+            Circle().fill(Palette.accent.opacity(0.7)).frame(width: 6, height: 6)
+                .offset(x: 112, y: -40).opacity(float ? 0.5 : 1)
+        }
+        .accessibilityHidden(true)
         .onAppear {
             guard animations, !SnapshotMode.isActive else { return }
-            withAnimation(.easeInOut(duration: 3).repeatForever(autoreverses: true)) { glow = true }
+            withAnimation(.easeInOut(duration: 3.2).repeatForever(autoreverses: true)) { float = true }
         }
+    }
+
+    private func card(index: Int) -> some View {
+        let palettes: [[Color]] = [[Color(hex: 0x5B8CFF), Color(hex: 0x8C6BFF)], [Color(hex: 0xFF8FB8), Color(hex: 0x9C7BFF)]]
+        let colors = palettes[index % palettes.count]
+        return ZStack {
+            LinearGradient(colors: colors.map { $0.opacity(scheme == .dark ? 0.75 : 0.55) }, startPoint: .topLeading, endPoint: .bottomTrailing)
+            if photoLike {
+                // angedeutetes Motiv: Hügel und Sonne
+                Circle().fill(Color.white.opacity(0.75)).frame(width: 16, height: 16).offset(x: 18, y: -22)
+                HillShape().fill(Color.white.opacity(0.35)).frame(height: 40).offset(y: 22)
+            } else {
+                VStack(alignment: .leading, spacing: 6) {
+                    ForEach(0..<4, id: \.self) { i in
+                        Capsule().fill(Color.white.opacity(0.5)).frame(width: CGFloat(56 - i * 9), height: 5)
+                    }
+                }
+            }
+        }
+        .frame(width: 96, height: 120)
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).strokeBorder(Color.white.opacity(0.45), lineWidth: 0.8))
+        .shadow(color: Palette.shadow, radius: 14, y: 8)
+    }
+}
+
+private struct HillShape: Shape {
+    func path(in r: CGRect) -> Path {
+        var p = Path()
+        p.move(to: CGPoint(x: r.minX, y: r.maxY))
+        p.addLine(to: CGPoint(x: r.minX, y: r.midY + 6))
+        p.addQuadCurve(to: CGPoint(x: r.midX, y: r.midY), control: CGPoint(x: r.width * 0.25, y: r.minY))
+        p.addQuadCurve(to: CGPoint(x: r.maxX, y: r.midY - 4), control: CGPoint(x: r.width * 0.75, y: r.maxY))
+        p.addLine(to: CGPoint(x: r.maxX, y: r.maxY))
+        p.closeSubpath()
+        return p
     }
 }
 
@@ -308,7 +391,7 @@ struct SectionTitle: View {
 struct ProgressRing: View {
     let fraction: Double
     var lineWidth: CGFloat = 4
-    var tint: Color = Palette.bridgeGreen
+    var tint: Color = Palette.accent
 
     var body: some View {
         ZStack {
@@ -325,7 +408,7 @@ struct ProgressRing: View {
 /// Gezeichnetes Telefon (eigene, neutrale Form) – für Verbindungsanimation und Anleitung.
 struct PhoneShapeView<Screen: View>: View {
     var width: CGFloat = 92
-    var tint: Color = Palette.bridgeGreen
+    var tint: Color = Palette.accent
     @ViewBuilder var screen: () -> Screen
 
     var body: some View {
@@ -348,7 +431,7 @@ struct PhoneShapeView<Screen: View>: View {
 
 /// Pulsierende Ringe während der Verbindung.
 struct PulseRings: View {
-    var tint: Color = Palette.bridgeGreen
+    var tint: Color = Palette.accent
     var active: Bool
     @State private var phase = false
     @Environment(\.animationsEnabled) private var animations

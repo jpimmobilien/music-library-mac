@@ -139,6 +139,7 @@ struct GalleryView: View {
                         }
                     }
                 }
+                .reportsScrollEdge()
                 .padding(.horizontal, Spacing.gutter)
                 .padding(.bottom, 110)
             }
@@ -150,6 +151,12 @@ struct GalleryView: View {
                     selectionActive: !gallery.selection.isEmpty) {
             toggle(item)
         }
+        .background(GeometryReader { geo in
+            let frame = geo.frame(in: .global)
+            Color.clear
+                .onAppear { ViewerOrigins.shared.frames[item.id] = frame }
+                .onChange(of: frame) { ViewerOrigins.shared.frames[item.id] = $0 }
+        })
         .onTapGesture(count: 2) { open(item, device: device) }
         .onTapGesture { select(item) }
         .onDrag { makeDeviceDragProvider(entry: item.entry, list: dragList(for: item), device: device, path: item.path) }
@@ -201,7 +208,8 @@ struct GalleryView: View {
         if item.entry.kind.isMedia {
             let media = gallery.visible.filter { $0.entry.kind.isMedia }.map(\.entry)
             let index = media.firstIndex(of: item.entry) ?? 0
-            model.viewerItem = MediaViewerItem(deviceID: device.id, items: media, index: index)
+            model.viewerItem = MediaViewerItem(deviceID: device.id, items: media, index: index,
+                                               origin: ViewerOrigins.shared.frames[item.id])
             model.recents.add(name: item.entry.name, size: item.entry.size, location: device.location(storageID: item.entry.storageID, path: item.path))
         } else {
             transfer([item.entry], device: device)
@@ -434,7 +442,7 @@ struct FilterChip: View {
             .foregroundStyle(selected ? Palette.onAccent : Palette.textPrimary)
             .background {
                 if selected {
-                    Capsule().fill(LinearGradient(colors: [Palette.bridgeGreen, Palette.bridgeTeal], startPoint: .topLeading, endPoint: .bottomTrailing))
+                    Capsule().fill(LinearGradient(colors: [Palette.accent, Palette.accent2], startPoint: .topLeading, endPoint: .bottomTrailing))
                 } else if hovering {
                     Capsule().fill(Palette.hoverFill)
                 }
@@ -442,7 +450,7 @@ struct FilterChip: View {
             .contentShape(Capsule())
         }
         .buttonStyle(.plain)
-        .glassSurface(Capsule(), strong: !selected, tint: selected ? Palette.bridgeGreen.opacity(0.35) : nil, interactive: true)
+        .glassSurface(Capsule(), strong: !selected, tint: selected ? Palette.accent.opacity(0.35) : nil, interactive: true)
         .onHover { hovering = $0 }
     }
 }
@@ -498,14 +506,14 @@ struct GalleryCell: View {
                     .background(LinearGradient(colors: [.clear, .black.opacity(0.55)], startPoint: .center, endPoint: .bottom))
                 }
                 if selected {
-                    RoundedRectangle(cornerRadius: corner, style: .continuous).fill(Palette.bridgeGreen.opacity(0.16))
+                    RoundedRectangle(cornerRadius: corner, style: .continuous).fill(Palette.accent.opacity(0.16))
                 }
             }
             .frame(width: width, height: height)
             .clipShape(RoundedRectangle(cornerRadius: corner, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: corner, style: .continuous)
-                    .strokeBorder(selected ? Palette.bridgeGreen : Color.white.opacity(hovering ? 0.35 : 0.08), lineWidth: selected ? 3 : 1)
+                    .strokeBorder(selected ? Palette.accent : Color.white.opacity(hovering ? 0.35 : 0.08), lineWidth: selected ? 3 : 1)
             )
             .scaleEffect(selected ? 0.95 : 1)
             .shadow(color: Palette.shadow.opacity(hovering ? 1 : 0.4), radius: hovering ? 14 : 4, y: hovering ? 6 : 2)
@@ -514,7 +522,7 @@ struct GalleryCell: View {
                 Button { onToggle?() } label: {
                     Image(systemName: selected ? "checkmark.circle.fill" : "circle")
                         .font(.ui(21, .medium))
-                        .foregroundStyle(selected ? Color.white : Color.white.opacity(0.95), selected ? Palette.bridgeGreen : Color.black.opacity(0.28))
+                        .foregroundStyle(selected ? Color.white : Color.white.opacity(0.95), selected ? Palette.accent : Color.black.opacity(0.28))
                         .shadow(color: .black.opacity(0.35), radius: 2)
                         .padding(9)
                         .contentShape(Rectangle())

@@ -630,6 +630,14 @@ struct MediaViewerItem: Identifiable, Equatable {
     let deviceID: UInt64
     let items: [DeviceEntry]
     var index: Int
+    /// Wo das Vorschaubild im Fenster lag – von dort zoomt die Großansicht auf.
+    var origin: CGRect? = nil
+}
+
+/// Merkt sich die Lage der sichtbaren Galeriekacheln (für das Aufzoomen der Großansicht).
+final class ViewerOrigins {
+    static let shared = ViewerOrigins()
+    var frames: [String: CGRect] = [:]
 }
 
 /// Galerie: durchsucht die üblichen Medienordner aller Speicher.

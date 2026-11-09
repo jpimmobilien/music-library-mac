@@ -10,7 +10,7 @@ import ABCore
 /// Ein modernes Telefon: dünner Rahmen, Kameraloch, Seitentasten, Glasreflex. Der Bildschirm zeigt echte Inhalte.
 struct PhoneRender<Screen: View>: View {
     var width: CGFloat = 150
-    var glow: Color = Palette.bridgeGreen
+    var glow: Color = Palette.accent
     var glowAmount: Double = 0.6
     @ViewBuilder var screen: () -> Screen
 
@@ -68,7 +68,7 @@ struct PhoneRender<Screen: View>: View {
     }
 }
 
-/// Neutrales Notebook (eigene Form, kein Markenzeichen) – steht für „Ihr Mac“.
+/// Neutrales Notebook (eigene Form, kein Markenzeichen) – nur noch für kleine Symbole; die Bühne nutzt MacRender.
 struct LaptopRender<Screen: View>: View {
     var width: CGFloat = 320
     @ViewBuilder var screen: () -> Screen
@@ -125,8 +125,8 @@ struct LaptopScreenContent: View {
 
     var body: some View {
         ZStack {
-            LinearGradient(colors: [Color(hex: 0x0D2A2A), Color(hex: 0x0A1426), Color(hex: 0x1B1035)], startPoint: .topLeading, endPoint: .bottomTrailing)
-            RadialGradient(colors: [Color(hex: 0x3EE3A8).opacity(0.45), .clear], center: UnitPoint(x: 0.1, y: 0.0), startRadius: 0, endRadius: 160)
+            LinearGradient(colors: [Color(hex: 0x0A1A3A), Color(hex: 0x0A0F24), Color(hex: 0x24104A)], startPoint: .topLeading, endPoint: .bottomTrailing)
+            RadialGradient(colors: [Color(hex: 0x4D93FF).opacity(0.5), .clear], center: UnitPoint(x: 0.1, y: 0.0), startRadius: 0, endRadius: 160)
             // Mini-Fenster
             GeometryReader { geo in
                 let w = geo.size.width * 0.78, h = geo.size.height * 0.7
@@ -176,8 +176,8 @@ struct PhoneScreenContent: View {
                 // Füllt die Fläche, ohne den Stapel zu vergrößern (sonst würde die Uhr zu groß gezeichnet)
                 Color.clear.overlay(Image(nsImage: wallpaper).resizable().aspectRatio(contentMode: .fill)).clipped()
             } else {
-                LinearGradient(colors: [Color(hex: 0x0F5B49), Color(hex: 0x10254F), Color(hex: 0x2A1650)], startPoint: .top, endPoint: .bottom)
-                RadialGradient(colors: [Color(hex: 0x3EE3A8).opacity(0.55), .clear], center: UnitPoint(x: 0.3, y: 0.25), startRadius: 0, endRadius: 140)
+                LinearGradient(colors: [Color(hex: 0x10307A), Color(hex: 0x0E1640), Color(hex: 0x3A1A6E)], startPoint: .top, endPoint: .bottom)
+                RadialGradient(colors: [Color(hex: 0x6FA8FF).opacity(0.55), .clear], center: UnitPoint(x: 0.3, y: 0.25), startRadius: 0, endRadius: 140)
             }
             LinearGradient(colors: [Color.black.opacity(0.35), .clear, Color.black.opacity(0.45)], startPoint: .top, endPoint: .bottom)
             GeometryReader { geo in
@@ -222,7 +222,7 @@ struct PhoneScreenContent: View {
 /// Lichtverbindung zwischen zwei Punkten: weich leuchtende Kurve, auf der Lichtpunkte wandern.
 struct ConnectionBeam: View {
     var active: Bool
-    var color: Color = Palette.bridgeGreen
+    var color: Color = Palette.accent
     @Environment(\.animationsEnabled) private var animations
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -235,7 +235,7 @@ struct ConnectionBeam: View {
                     .stroke(color.opacity(active ? 0.35 : 0.12), style: StrokeStyle(lineWidth: 10, lineCap: .round))
                     .blur(radius: 8)
                 BeamPath()
-                    .stroke(LinearGradient(colors: [color.opacity(active ? 0.9 : 0.25), Palette.bridgeTeal.opacity(active ? 0.8 : 0.2)],
+                    .stroke(LinearGradient(colors: [color.opacity(active ? 0.9 : 0.25), Palette.accent2.opacity(active ? 0.8 : 0.2)],
                                            startPoint: .leading, endPoint: .trailing),
                             style: StrokeStyle(lineWidth: active ? 2 : 1.4, lineCap: .round, dash: active ? [] : [4, 6]))
                 if active {
@@ -277,7 +277,7 @@ struct StorageRing: View {
         let f = storage.usedFraction
         if f > 0.92 { return Palette.danger }
         if f > 0.8 { return Palette.warning }
-        return storage.isRemovable ? Palette.bridgeBlue : Palette.bridgeGreen
+        return storage.isRemovable ? Palette.accent2 : Palette.accent
     }
 
     var body: some View {
@@ -317,6 +317,7 @@ struct StorageRing: View {
 /// Akkuanzeige.
 struct BatteryGauge: View {
     let level: Int
+    var outline: Color = Palette.textSecondary.opacity(0.6)
 
     private var color: Color { level <= 15 ? Palette.danger : (level <= 30 ? Palette.warning : Palette.success) }
 
@@ -324,14 +325,14 @@ struct BatteryGauge: View {
         HStack(spacing: 6) {
             ZStack(alignment: .leading) {
                 RoundedRectangle(cornerRadius: 3.5, style: .continuous)
-                    .strokeBorder(Palette.textSecondary.opacity(0.6), lineWidth: 1.2)
+                    .strokeBorder(outline, lineWidth: 1.2)
                     .frame(width: 26, height: 13)
                 RoundedRectangle(cornerRadius: 2, style: .continuous)
                     .fill(color)
                     .frame(width: max(2, 22 * CGFloat(level) / 100), height: 9)
                     .padding(.leading, 2)
             }
-            RoundedRectangle(cornerRadius: 1).fill(Palette.textSecondary.opacity(0.6)).frame(width: 2, height: 5).offset(x: -5)
+            RoundedRectangle(cornerRadius: 1).fill(outline).frame(width: 2, height: 5).offset(x: -5)
             Text("\(level) %").font(.ui(13, .semibold)).monospacedDigit()
         }
         .accessibilityElement(children: .ignore)

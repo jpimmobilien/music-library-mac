@@ -47,7 +47,7 @@ struct RootView: View {
                 if let item = model.viewerItem, let device = model.devices.device(id: item.deviceID) {
                     MediaViewer(device: device, item: item)
                         .id(item.id)
-                        .transition(.asymmetric(insertion: .opacity.combined(with: .scale(scale: 0.96)),
+                        .transition(.asymmetric(insertion: item.origin == nil ? .opacity.combined(with: .scale(scale: 0.96)) : .opacity,
                                                 removal: .opacity.combined(with: .scale(scale: 0.98))))
                         .zIndex(10)
                 }
@@ -266,7 +266,7 @@ struct SidebarRow: View {
                                 .foregroundStyle(Palette.onAccent)
                                 .padding(.horizontal, 4)
                                 .frame(minWidth: 15, minHeight: 15)
-                                .background(Capsule().fill(Palette.bridgeGreen))
+                                .background(Capsule().fill(Palette.accent))
                                 .offset(x: 2, y: 1)
                         }
                     }
@@ -284,7 +284,7 @@ struct SidebarRow: View {
                                 .foregroundStyle(Palette.onAccent)
                                 .padding(.horizontal, 6)
                                 .frame(minWidth: 18, minHeight: 17)
-                                .background(Capsule().fill(Palette.bridgeGreen))
+                                .background(Capsule().fill(Palette.accent))
                         }
                     }
                     .padding(.horizontal, 10)
@@ -307,7 +307,7 @@ struct SidebarRow: View {
 
     private var icon: some View {
         Image(systemName: selected && filledSymbol ? symbol + ".fill" : symbol)
-            .foregroundStyle(selected ? Palette.bridgeGreen : Palette.textSecondary)
+            .foregroundStyle(selected ? Palette.accent : Palette.textSecondary)
     }
 }
 
@@ -327,7 +327,7 @@ struct DeviceSidebarRow: View {
                 ZStack(alignment: .bottomTrailing) {
                     Image(systemName: "smartphone")
                         .font(.ui(rail ? 17 : 15, .medium))
-                        .foregroundStyle(selected ? Palette.bridgeGreen : Palette.textSecondary)
+                        .foregroundStyle(selected ? Palette.accent : Palette.textSecondary)
                         .frame(width: 22)
                     Circle()
                         .fill(dotColor)

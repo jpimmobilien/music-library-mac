@@ -30,20 +30,10 @@ struct DuplicatesView: View {
         } content: {
             ZStack(alignment: .bottom) {
                 content
-                if scanner.state == .finished && !scanner.marked.isEmpty {
-                    FloatingActionBar {
-                        SelectionSummary(count: scanner.marked.count, bytes: scanner.markedBytes)
-                        Button("Aufheben") { scanner.clearSelection() }
-                            .buttonStyle(GlassButtonStyle(compact: true))
-                        Button {
-                            model.deleteMarkedDuplicates()
-                        } label: {
-                            Label("Ausgewählte Duplikate löschen", systemImage: "trash")
-                        }
-                        .buttonStyle(GlassButtonStyle(prominent: true, destructive: true, compact: true))
-                        .help("Öffnet die Bestätigung (⌘⌫)")
-                    }
-                    .padding(.bottom, 20)
+                if scanner.state == .finished && !scanner.allGroups.isEmpty {
+                    DuplicateDock(scanner: scanner, includeSimilar: showSimilar) { model.deleteMarkedDuplicates() }
+                        .padding(.bottom, 20)
+                        .padding(.horizontal, Spacing.gutter)
                 }
             }
             .animation(animations ? .bridgeSpring : nil, value: scanner.marked.isEmpty)
@@ -133,6 +123,7 @@ struct DuplicatesView: View {
                     }
                 }
             }
+            .reportsScrollEdge()
             .padding(.horizontal, Spacing.gutter)
             .padding(.bottom, 100)
             .frame(maxWidth: 1100, alignment: .leading)
@@ -172,7 +163,7 @@ private struct ScanSetupPanel: View {
                 GlassSection(title: "Vergleich", symbol: "equal.square") {
                     LabeledRow(title: "Exakte Duplikate (immer)",
                                detail: "Dateien gelten nur dann als Duplikat, wenn ihr Inhalt byte-genau übereinstimmt (SHA-256) – unabhängig von Name, Ordner oder Speicher. Gleicher Name oder gleiche Größe allein genügt nie.") {
-                        Image(systemName: "checkmark.seal.fill").foregroundStyle(Palette.bridgeGreen).font(.ui(18))
+                        Image(systemName: "checkmark.seal.fill").foregroundStyle(Palette.accent).font(.ui(18))
                     }
                     Divider().opacity(0.5)
                     LabeledRow(title: "Ähnliche Bilder finden",
@@ -202,6 +193,7 @@ private struct ScanSetupPanel: View {
                     .disabled(scanner.selectedScopes.isEmpty)
                 }
             }
+            .reportsScrollEdge()
             .padding(.horizontal, Spacing.gutter)
             .padding(.bottom, 40)
             .frame(maxWidth: 860, alignment: .leading)
@@ -213,7 +205,7 @@ private struct ScanSetupPanel: View {
         HStack(alignment: .firstTextBaseline, spacing: 10) {
             Text(n)
                 .font(.ui(11, .bold))
-                .foregroundStyle(Palette.bridgeGreen)
+                .foregroundStyle(Palette.accent)
                 .frame(width: 20, height: 20)
                 .background(Circle().fill(Palette.accentSoft))
             Text(text).font(Typo.body).foregroundStyle(Palette.textPrimary)
@@ -232,7 +224,7 @@ private struct ScopeChip: View {
             HStack(spacing: 10) {
                 Image(systemName: scope.symbolName)
                     .font(.ui(15, .medium))
-                    .foregroundStyle(selected ? Palette.bridgeGreen : Palette.textSecondary)
+                    .foregroundStyle(selected ? Palette.accent : Palette.textSecondary)
                     .frame(width: 30, height: 30)
                     .background(RoundedRectangle(cornerRadius: 9, style: .continuous).fill(selected ? Palette.accentSoft : Palette.fieldFill))
                 VStack(alignment: .leading, spacing: 1) {
@@ -242,7 +234,7 @@ private struct ScopeChip: View {
                 Spacer(minLength: 0)
                 Image(systemName: selected ? "checkmark.circle.fill" : "circle")
                     .font(.ui(16))
-                    .foregroundStyle(selected ? Palette.bridgeGreen : Palette.textTertiary)
+                    .foregroundStyle(selected ? Palette.accent : Palette.textTertiary)
             }
             .padding(10)
             .background(
@@ -251,7 +243,7 @@ private struct ScopeChip: View {
             )
             .overlay(
                 RoundedRectangle(cornerRadius: Radius.tile, style: .continuous)
-                    .strokeBorder(selected ? Palette.bridgeGreen.opacity(0.45) : Palette.hairline, lineWidth: 1)
+                    .strokeBorder(selected ? Palette.accent.opacity(0.45) : Palette.hairline, lineWidth: 1)
             )
             .contentShape(Rectangle())
         }
@@ -375,14 +367,14 @@ struct DuplicateSummaryHero: View {
     private var main: some View {
         HStack(spacing: 20) {
             ZStack {
-                Circle().fill(Palette.bridgeGreen.opacity(0.15))
+                Circle().fill(Palette.accent.opacity(0.15))
                 Image(systemName: "sparkles")
                     .font(.ui(28, .semibold))
-                    .foregroundStyle(Palette.bridgeGreen)
+                    .foregroundStyle(Palette.accent)
             }
             .frame(width: 70, height: 70)
             VStack(alignment: .leading, spacing: 4) {
-                Text("Freigebbar").font(Typo.eyebrow).foregroundStyle(Palette.bridgeGreen)
+                Text("Freigebbar").font(Typo.eyebrow).foregroundStyle(Palette.accent)
                 Text(ByteFormat.string(reclaimable))
                     .font(.display(40, .bold))
                     .tracking(-0.8)
@@ -401,7 +393,7 @@ struct DuplicateSummaryHero: View {
 
     private var stats: some View {
         HStack(spacing: 14) {
-            StatTile(value: "\(groups)", label: "Gruppen", symbol: "square.stack.3d.up", tint: Palette.bridgeTeal)
+            StatTile(value: "\(groups)", label: "Gruppen", symbol: "square.stack.3d.up", tint: Palette.accent2)
             StatTile(value: "\(duplicates)", label: "Kopien", symbol: "doc.on.doc", tint: Palette.bridgeBlue)
             StatTile(value: "\(similar)", label: "Ähnlich", symbol: "photo.on.rectangle", tint: Palette.violet)
         }
@@ -444,7 +436,7 @@ struct DuplicateGroupCard: View {
     private var headerInfo: some View {
         HStack(spacing: 10) {
             if group.kind == .identical {
-                TagLabel(text: "Identisch · SHA-256", symbol: "equal", tint: Palette.bridgeGreen)
+                TagLabel(text: "Identisch · SHA-256", symbol: "equal", tint: Palette.accent)
             } else {
                 TagLabel(text: "Ähnlich – nicht identisch", symbol: "exclamationmark.triangle.fill", tint: Palette.warning)
             }
@@ -512,7 +504,7 @@ private struct DuplicateFileCard: View {
                     .foregroundStyle(.white)
                     .padding(.horizontal, 10)
                     .frame(height: 26)
-                    .background(Capsule().fill(marked ? Palette.danger : Palette.bridgeGreen))
+                    .background(Capsule().fill(marked ? Palette.danger : Palette.accent))
                     .shadow(color: .black.opacity(0.3), radius: 4, y: 1)
                     .padding(8)
                 }
@@ -522,7 +514,7 @@ private struct DuplicateFileCard: View {
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 5) {
                     if suggested {
-                        Image(systemName: "star.fill").font(.ui(10)).foregroundStyle(Palette.bridgeGreen).help("Vorschlag: behalten – \(group.suggestionReason)")
+                        Image(systemName: "star.fill").font(.ui(10)).foregroundStyle(Palette.accent).help("Vorschlag: behalten – \(group.suggestionReason)")
                     }
                     Text(file.entry.name)
                         .font(Typo.bodyMedium)
@@ -569,7 +561,7 @@ private struct DuplicateFileCard: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: Radius.card, style: .continuous)
-                .strokeBorder(marked ? Palette.danger.opacity(0.5) : (suggested ? Palette.bridgeGreen.opacity(0.45) : Color.clear), lineWidth: 1.5)
+                .strokeBorder(marked ? Palette.danger.opacity(0.5) : (suggested ? Palette.accent.opacity(0.45) : Color.clear), lineWidth: 1.5)
         )
         .onHover { hovering = $0 }
         .animation(.bridgeQuick, value: marked)
@@ -597,5 +589,81 @@ private struct DuplicateFileCard: View {
     private var formatName: String {
         let ext = FileKind.fileExtension(of: file.entry.name)
         return ext.isEmpty ? kindName(file.entry.kind, name: file.entry.name) : ext.uppercased()
+    }
+}
+
+
+/// Zusammenfassung unten: was gefunden wurde, was markiert ist – und der große Knopf zum Löschen.
+/// Gelöscht wird erst nach der Bestätigung im folgenden Dialog.
+struct DuplicateDock: View {
+    @ObservedObject var scanner: DuplicateScanner
+    var includeSimilar: Bool
+    let delete: () -> Void
+
+    var body: some View {
+        GlassGroup {
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: Spacing.l) { summary; Spacer(minLength: 8); buttons }
+                VStack(alignment: .leading, spacing: 10) { summary; buttons }
+            }
+            .padding(.leading, 20)
+            .padding(.trailing, 10)
+            .padding(.vertical, 10)
+            .frame(minHeight: 60)
+            .frame(maxWidth: 900)
+            .glassSurface(RoundedRectangle(cornerRadius: 26, style: .continuous), strong: true, elevated: true)
+        }
+        .transition(.move(edge: .bottom).combined(with: .opacity))
+    }
+
+    private var summary: some View {
+        HStack(spacing: 14) {
+            Image(systemName: scanner.marked.isEmpty ? "doc.on.doc" : "trash")
+                .font(.ui(17, .semibold))
+                .foregroundStyle(.white)
+                .frame(width: 38, height: 38)
+                .background(Circle().fill(scanner.marked.isEmpty
+                                          ? AnyShapeStyle(LinearGradient(colors: [Palette.accent, Palette.accent2], startPoint: .topLeading, endPoint: .bottomTrailing))
+                                          : AnyShapeStyle(Palette.danger)))
+            VStack(alignment: .leading, spacing: 2) {
+                if scanner.marked.isEmpty {
+                    Text("\(scanner.redundantTotal) Kopien in \(scanner.identical.count) Gruppen")
+                        .font(.ui(14, .semibold)).foregroundStyle(Palette.textPrimary)
+                    Text("Bis zu \(ByteFormat.string(scanner.reclaimableTotal)) freigebbar – noch nichts markiert")
+                        .font(Typo.caption).foregroundStyle(Palette.textSecondary)
+                } else {
+                    Text("\(scanner.marked.count) \(scanner.marked.count == 1 ? "Datei" : "Dateien") zum Löschen markiert")
+                        .font(.ui(14, .semibold)).foregroundStyle(Palette.textPrimary)
+                    Text("Gibt \(ByteFormat.string(scanner.markedBytes)) auf dem Telefon frei")
+                        .font(Typo.caption).foregroundStyle(Palette.textSecondary)
+                }
+            }
+            .lineLimit(1)
+        }
+    }
+
+    @ViewBuilder
+    private var buttons: some View {
+        HStack(spacing: 8) {
+            if scanner.marked.isEmpty {
+                Button {
+                    scanner.applyAllSuggestions(includeSimilar: includeSimilar)
+                } label: {
+                    Label("Vorschläge übernehmen", systemImage: "wand.and.stars")
+                }
+                .buttonStyle(GlassButtonStyle(prominent: true))
+                .help("Markiert in jeder Gruppe alle Kopien außer der vorgeschlagenen – Sie können danach jede Datei ändern.")
+            } else {
+                Button("Aufheben") { scanner.clearSelection() }
+                    .buttonStyle(GlassButtonStyle())
+                Button(action: delete) {
+                    Label("Duplikate löschen", systemImage: "trash")
+                        .font(.ui(14, .semibold))
+                        .padding(.horizontal, 6)
+                }
+                .buttonStyle(GlassButtonStyle(prominent: true, destructive: true))
+                .help("Öffnet zuerst die Bestätigung (⌘⌫)")
+            }
+        }
     }
 }

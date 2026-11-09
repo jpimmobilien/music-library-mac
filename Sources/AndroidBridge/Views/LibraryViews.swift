@@ -38,6 +38,7 @@ struct FavoritesView: View {
                             }
                         }
                     }
+                    .reportsScrollEdge()
                     .padding(.horizontal, Spacing.gutter)
                     .padding(.bottom, 30)
                 }
@@ -246,9 +247,10 @@ struct FavoriteTile: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(GelButtonStyle())
         .disabled(!available)
         .glassCard(cornerRadius: Radius.card, elevated: hovering && available)
+        .interactiveCard()
         .opacity(available ? 1 : 0.6)
         .offset(y: hovering && available ? -2 : 0)
         .onHover { hovering = $0 }

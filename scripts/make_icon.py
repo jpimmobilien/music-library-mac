@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Erzeugt das App-Symbol von Android Bridge 3.0 (Resources/AppIcon.iconset + AppIcon-1024.png).
+"""Erzeugt das App-Symbol von Android Bridge 4.0 (Resources/AppIcon.iconset + AppIcon-1024.png).
 
 Motiv „Midnight Glass“: auf einer tiefen Graphitfläche steht ein Telefon, dessen Bildschirm im Signal-Grün
 leuchtet; ein Lichtbogen führt zu einem kleinen Notebook. Weiches Licht statt Linien, Glasreflex oben.
@@ -66,9 +66,9 @@ def main():
     ImageDraw.Draw(mask).rounded_rectangle([x0, y0, x1, y1], radius=radius, fill=255)
 
     # Lichtfelder
-    plate = Image.alpha_composite(plate, radial(size, (px(300), px(760)), px(560), (40, 220, 160), 150))
-    plate = Image.alpha_composite(plate, radial(size, (px(820), px(200)), px(420), (60, 110, 255), 110))
-    plate = Image.alpha_composite(plate, radial(size, (px(700), px(900)), px(380), (130, 90, 255), 70))
+    plate = Image.alpha_composite(plate, radial(size, (px(300), px(760)), px(560), (50, 120, 255), 150))
+    plate = Image.alpha_composite(plate, radial(size, (px(820), px(200)), px(420), (140, 90, 255), 110))
+    plate = Image.alpha_composite(plate, radial(size, (px(700), px(900)), px(380), (255, 95, 170), 55))
 
     # Lichtbogen Telefon → Notebook (unter den Geräten)
     beam = Image.new("RGBA", size, (0, 0, 0, 0))
@@ -82,17 +82,17 @@ def main():
         y = (1 - t) ** 3 * p0[1] + 3 * (1 - t) ** 2 * t * p1[1] + 3 * (1 - t) * t ** 2 * p2[1] + t ** 3 * p3[1]
         pts.append((px(x), px(y)))
     glow = Image.new("RGBA", size, (0, 0, 0, 0))
-    ImageDraw.Draw(glow).line(pts, fill=(62, 227, 168, 230), width=px(60), joint="curve")
+    ImageDraw.Draw(glow).line(pts, fill=(90, 150, 255, 230), width=px(60), joint="curve")
     glow = glow.filter(ImageFilter.GaussianBlur(px(30)))
     plate = Image.alpha_composite(plate, glow)
-    bd.line(pts, fill=(200, 255, 230, 255), width=px(9), joint="curve")
+    bd.line(pts, fill=(215, 230, 255, 255), width=px(9), joint="curve")
     plate = Image.alpha_composite(plate, beam)
 
     # Notebook (rechts, klein)
     lx0, ly0, lx1, ly1 = px(600), px(400), px(870), px(580)
     plate = Image.alpha_composite(plate, rounded(size, [lx0, ly0, lx1, ly1], px(14), (70, 78, 88, 255)))
     plate = Image.alpha_composite(plate, rounded(size, [lx0 + px(7), ly0 + px(7), lx1 - px(7), ly1 - px(4)], px(9), (8, 10, 13, 255)))
-    screen = vertical_gradient((lx1 - lx0 - px(22), ly1 - ly0 - px(22)), (24, 70, 80, 255), (20, 24, 60, 255))
+    screen = vertical_gradient((lx1 - lx0 - px(22), ly1 - ly0 - px(22)), (20, 50, 110, 255), (40, 20, 90, 255))
     sc = Image.new("RGBA", size, (0, 0, 0, 0))
     sc.paste(screen, (lx0 + px(11), ly0 + px(11)))
     plate = Image.alpha_composite(plate, sc)
@@ -106,7 +106,7 @@ def main():
     plate = Image.alpha_composite(plate, rounded(size, [fx0, fy0, fx1, fy1], px(46), (120, 128, 138, 255)))
     plate = Image.alpha_composite(plate, rounded(size, [fx0 + px(5), fy0 + px(5), fx1 - px(5), fy1 - px(5)], px(42), (10, 12, 15, 255)))
     sx0, sy0, sx1, sy1 = fx0 + px(16), fy0 + px(16), fx1 - px(16), fy1 - px(16)
-    scr = vertical_gradient((sx1 - sx0, sy1 - sy0), (70, 240, 180, 255), (12, 120, 150, 255))
+    scr = vertical_gradient((sx1 - sx0, sy1 - sy0), (90, 160, 255, 255), (120, 80, 240, 255))
     smask = Image.new("L", (sx1 - sx0, sy1 - sy0), 0)
     ImageDraw.Draw(smask).rounded_rectangle([0, 0, sx1 - sx0 - 1, sy1 - sy0 - 1], radius=px(32), fill=255)
     scr.putalpha(smask)

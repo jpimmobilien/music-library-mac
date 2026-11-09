@@ -2,7 +2,7 @@ import SwiftUI
 import AppKit
 
 // =============================================================================================
-// Designsystem von Android Bridge 3.0 – „Midnight Glass“
+// Designsystem von Android Bridge 4.0 – „Midnight Glass“
 //
 // Grundsätze (abgeleitet aus Apples Produktpräsentationen, eigenständig umgesetzt):
 // – Licht statt Linien: tiefe Flächen, auf denen weiches, farbiges Licht Tiefe erzeugt. Keine Rahmen,
@@ -12,7 +12,7 @@ import AppKit
 //   macOS 26: natives Liquid Glass. macOS 13–15: gleichwertige Nachbildung mit Systemmaterialien.
 // – Bewegung erklärt: Federn für Zustandswechsel, ruhige Lichtfelder im Hintergrund, nichts Hektisches.
 //
-// Identität: „Signal“-Grün (Android ↔ Mac) als einziges kräftiges Licht; Nebenlichter Tiefblau und Violett.
+// Identität 4.0: tiefes Schwarz bzw. weiches Weiß, Licht in Blau und Violett; Grün nur für „verbunden“.
 // =============================================================================================
 
 enum LiquidGlass {
@@ -59,45 +59,46 @@ extension NSColor {
 
 /// Farbpalette. Hell und Dunkel sind eigenständig abgestimmt (nicht invertiert).
 enum Palette {
-    // Licht / Akzente
-    static let bridgeGreen = Color.adaptive(0x0E9F74, dark: 0x3EE3A8)   // „Signal“
-    static let bridgeTeal = Color.adaptive(0x0B8EA6, dark: 0x3CC7DE)
+    // Licht / Akzente – 4.0: Blau als Hauptlicht, Violett als Nebenlicht (Grün nur noch für „verbunden“)
+    static let accent = Color.adaptive(0x0A6CF5, dark: 0x4D93FF)
+    static let accent2 = Color.adaptive(0x6E56E8, dark: 0xA08CFF)
+    static let bridgeGreen = Color.adaptive(0x0E9F74, dark: 0x3EE3A8)   // Android-Grün (Dateityp APK, Verbunden)
     static let bridgeBlue = Color.adaptive(0x2F6BE0, dark: 0x6A9BFF)
     static let violet = Color.adaptive(0x7A5BE0, dark: 0x9B85FF)
-    static let accentSoft = Color.adaptive(0x0E9F74, 0.12, dark: 0x3EE3A8, 0.16)
-    static let onAccent = Color.adaptive(0xFFFFFF, dark: 0x02150E)
+    static let accentSoft = Color.adaptive(0x0A6CF5, 0.11, dark: 0x4D93FF, 0.16)
+    static let onAccent = Color.white
 
-    // Flächen
-    static let background = Color.adaptive(0xF2F4F7, dark: 0x040506)
-    static let backgroundTop = Color.adaptive(0xFAFBFC, dark: 0x0A0D10)
-    static let surface = Color.adaptive(0xFFFFFF, dark: 0x15191D)
-    static let surfaceMuted = Color.adaptive(0xEBEEF2, dark: 0x1B2025)
-    static let mediaWell = Color.adaptive(0xE4E8EE, dark: 0x101317)
+    // Flächen – Hell: weiches Weiß; Dunkel: tiefes Schwarz
+    static let background = Color.adaptive(0xF2F2F5, dark: 0x000000)
+    static let backgroundTop = Color.adaptive(0xFBFBFD, dark: 0x07080B)
+    static let surface = Color.adaptive(0xFFFFFF, dark: 0x111216)
+    static let surfaceMuted = Color.adaptive(0xEDEDF1, dark: 0x191A1F)
+    static let mediaWell = Color.adaptive(0xE6E7EC, dark: 0x0C0D10)
 
     // Text
-    static let textPrimary = Color.adaptive(0x0B0F14, dark: 0xF5F7FA)
-    static let textSecondary = Color.adaptive(0x5B6470, dark: 0xA0A8B3)
-    static let textTertiary = Color.adaptive(0x8A929C, dark: 0x6D7580)
+    static let textPrimary = Color.adaptive(0x1D1D1F, dark: 0xF5F5F7)
+    static let textSecondary = Color.adaptive(0x5E5E66, dark: 0xA1A1AA)
+    static let textTertiary = Color.adaptive(0x8A8A93, dark: 0x6E6E78)
     static let secondaryText = textSecondary
 
     // Glas
-    static let glassTint = Color.adaptive(0xFFFFFF, 0.58, dark: 0x161A1F, 0.58)
-    static let glassTintStrong = Color.adaptive(0xFFFFFF, 0.78, dark: 0x1A1F25, 0.80)
-    static let glassEdgeLight = Color.adaptive(0xFFFFFF, 0.95, dark: 0xFFFFFF, 0.22)
+    static let glassTint = Color.adaptive(0xFFFFFF, 0.6, dark: 0x15161B, 0.55)
+    static let glassTintStrong = Color.adaptive(0xFFFFFF, 0.8, dark: 0x18191F, 0.8)
+    static let glassEdgeLight = Color.adaptive(0xFFFFFF, 0.95, dark: 0xFFFFFF, 0.24)
     static let glassEdgeDark = Color.adaptive(0xFFFFFF, 0.25, dark: 0xFFFFFF, 0.03)
-    static let glassSheen = Color.adaptive(0xFFFFFF, 0.55, dark: 0xFFFFFF, 0.07)
-    static let shadow = Color.adaptive(0x0B1A2A, 0.14, dark: 0x000000, 0.65)
-    static let hairline = Color.adaptive(0x0B0F14, 0.08, dark: 0xFFFFFF, 0.08)
-    static let fieldFill = Color.adaptive(0x0B0F14, 0.05, dark: 0xFFFFFF, 0.07)
-    static let hoverFill = Color.adaptive(0x0B0F14, 0.05, dark: 0xFFFFFF, 0.07)
-    static let selectionFill = Color.adaptive(0x0E9F74, 0.14, dark: 0x3EE3A8, 0.18)
+    static let glassSheen = Color.adaptive(0xFFFFFF, 0.6, dark: 0xFFFFFF, 0.08)
+    static let shadow = Color.adaptive(0x101830, 0.13, dark: 0x000000, 0.7)
+    static let hairline = Color.adaptive(0x1D1D1F, 0.08, dark: 0xFFFFFF, 0.08)
+    static let fieldFill = Color.adaptive(0x1D1D1F, 0.05, dark: 0xFFFFFF, 0.075)
+    static let hoverFill = Color.adaptive(0x1D1D1F, 0.05, dark: 0xFFFFFF, 0.07)
+    static let selectionFill = Color.adaptive(0x0A6CF5, 0.12, dark: 0x4D93FF, 0.2)
     static let scrim = Color.adaptive(0x05080C, 0.35, dark: 0x000000, 0.6)
-    static let sidebarTint = Color.adaptive(0xF7F8FA, 0.62, dark: 0x0B0E11, 0.62)
+    static let sidebarTint = Color.adaptive(0xF8F8FA, 0.62, dark: 0x08090C, 0.62)
 
-    // Lichtfelder des Hintergrunds
-    static let lightA = Color.adaptive(0x6FE3BF, 0.50, dark: 0x0F7A58, 0.55)   // Signal
-    static let lightB = Color.adaptive(0x9DBDF7, 0.45, dark: 0x1A3D86, 0.50)   // Tiefblau
-    static let lightC = Color.adaptive(0xD3C6F5, 0.40, dark: 0x3A2470, 0.42)   // Violett
+    // Lichtfelder des Hintergrunds: Blau, Violett, ein Hauch Rosé
+    static let lightA = Color.adaptive(0x9EC3FF, 0.55, dark: 0x0F3A9A, 0.55)
+    static let lightB = Color.adaptive(0xCDBDFF, 0.5, dark: 0x3A1F86, 0.5)
+    static let lightC = Color.adaptive(0xFFD3E6, 0.42, dark: 0x5B1E63, 0.34)
     static let ambientA = lightA
     static let ambientB = lightB
     static let ambientC = lightC
@@ -443,9 +444,11 @@ private struct GlassButtonBody: View {
     let destructive: Bool
     let compact: Bool
     @Environment(\.isEnabled) private var isEnabled
+    @Environment(\.colorScheme) private var scheme
     @State private var hovering = false
 
     var body: some View {
+        let pressed = configuration.isPressed
         configuration.label
             .font(.ui(compact ? 12 : 13, .semibold))
             .lineLimit(1)
@@ -456,28 +459,91 @@ private struct GlassButtonBody: View {
             .background {
                 if prominent {
                     Capsule().fill(destructive ? AnyShapeStyle(Palette.danger)
-                                   : AnyShapeStyle(LinearGradient(colors: [Palette.bridgeGreen, Palette.bridgeTeal], startPoint: .topLeading, endPoint: .bottomTrailing)))
-                    Capsule().fill(LinearGradient(colors: [Color.white.opacity(0.28), .clear], startPoint: .top, endPoint: .center))
-                    Capsule().fill(Color.white.opacity(hovering && isEnabled ? 0.12 : 0))
+                                   : AnyShapeStyle(LinearGradient(colors: [Palette.accent, Palette.accent2], startPoint: .leading, endPoint: .trailing)))
+                    Capsule().fill(LinearGradient(colors: [Color.white.opacity(0.3), .clear], startPoint: .top, endPoint: .center))
+                    Capsule().fill(Color.white.opacity(pressed ? 0.22 : (hovering && isEnabled ? 0.12 : 0)))
                 } else {
-                    Capsule().fill(destructive ? Palette.dangerSoft : Palette.fieldFill)
-                    Capsule().fill(hovering && isEnabled ? Palette.hoverFill : Color.clear)
+                    Capsule().fill(destructive ? Palette.dangerSoft : (scheme == .dark ? Color.white.opacity(0.1) : Palette.fieldFill))
+                    Capsule().fill(hovering && isEnabled ? (scheme == .dark ? Color.white.opacity(0.08) : Palette.hoverFill) : Color.clear)
+                    Capsule().fill(pressed ? (scheme == .dark ? Color.white.opacity(0.12) : Palette.accent.opacity(0.10)) : Color.clear)
                 }
             }
-            .overlay(Capsule().strokeBorder(Color.white.opacity(prominent ? 0.25 : 0.0), lineWidth: 0.6))
+            .overlay(Capsule().strokeBorder(Color.white.opacity(prominent ? 0.28 : (scheme == .dark ? 0.12 : 0)), lineWidth: 0.6))
             .contentShape(Capsule())
-            .opacity(isEnabled ? (configuration.isPressed ? 0.8 : 1) : 0.4)
-            .scaleEffect(configuration.isPressed ? 0.97 : 1)
-            .shadow(color: prominent && isEnabled ? (destructive ? Palette.danger : Palette.bridgeGreen).opacity(hovering ? 0.45 : 0.3) : .clear,
-                    radius: hovering ? 14 : 9, y: 3)
-            .animation(.bridgeQuick, value: configuration.isPressed)
+            .opacity(isEnabled ? 1 : 0.4)
+            // Gel-Reaktion: beim Drücken leicht breiter und flacher, beim Loslassen federt die Fläche zurück
+            .scaleEffect(x: pressed ? 1.04 : 1, y: pressed ? 0.93 : 1)
+            .shadow(color: prominent && isEnabled ? (destructive ? Palette.danger : Palette.accent).opacity(hovering ? 0.5 : 0.32) : .clear,
+                    radius: hovering ? 16 : 9, y: 3)
+            .animation(pressed ? .easeOut(duration: 0.08) : .spring(response: 0.36, dampingFraction: 0.42), value: pressed)
             .animation(.bridgeQuick, value: hovering)
             .onHover { hovering = $0 }
     }
 
     private var foreground: Color {
-        if prominent { return destructive ? .white : Palette.onAccent }
-        return destructive ? Palette.danger : Palette.textPrimary
+        if prominent { return .white }
+        if destructive { return Palette.danger }
+        return scheme == .dark ? Color(hex: 0xF5F5F7) : Palette.textPrimary
+    }
+}
+
+/// Glas, das auf den Zeiger reagiert: ein weiches Licht folgt der Maus, die Kante leuchtet auf.
+/// (Das gelartige Nachgeben beim Drücken übernimmt `GelButtonStyle`.)
+struct InteractiveLight<S: Shape>: ViewModifier {
+    let shape: S
+    var pressable = true
+    @State private var location: CGPoint?
+    @Environment(\.colorScheme) private var scheme
+    @Environment(\.animationsEnabled) private var animations
+
+    func body(content: Content) -> some View {
+        content
+            .overlay {
+                GeometryReader { geo in
+                    if let p = location, animations {
+                        RadialGradient(colors: [(scheme == .dark ? Color.white.opacity(0.14) : Palette.accent.opacity(0.10)), .clear],
+                                       center: UnitPoint(x: p.x / max(geo.size.width, 1), y: p.y / max(geo.size.height, 1)),
+                                       startRadius: 0, endRadius: max(geo.size.width, geo.size.height) * 0.7)
+                            .transition(.opacity)
+                    }
+                }
+                .clipShape(shape)
+                .allowsHitTesting(false)
+            }
+            .overlay {
+                shape.stroke(LinearGradient(colors: [Palette.accent.opacity(0.55), Palette.accent2.opacity(0.35)],
+                                            startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 1)
+                    .opacity(location != nil && animations ? 1 : 0)
+                    .allowsHitTesting(false)
+            }
+            .onContinuousHover { phase in
+                switch phase {
+                case .active(let p): location = p
+                case .ended: location = nil
+                }
+            }
+            .animation(.easeOut(duration: 0.25), value: location == nil)
+    }
+}
+
+/// Schlichter Knopfstil für Karten: gibt beim Drücken gelartig nach und federt zurück.
+struct GelButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(x: configuration.isPressed ? 1.012 : 1, y: configuration.isPressed ? 0.972 : 1)
+            .brightness(configuration.isPressed ? 0.03 : 0)
+            .animation(configuration.isPressed ? .easeOut(duration: 0.08) : .spring(response: 0.4, dampingFraction: 0.45),
+                       value: configuration.isPressed)
+    }
+}
+
+extension View {
+    func interactiveLight<S: Shape>(_ shape: S, pressable: Bool = true) -> some View {
+        modifier(InteractiveLight(shape: shape, pressable: pressable))
+    }
+
+    func interactiveCard(cornerRadius: CGFloat = Radius.card, pressable: Bool = true) -> some View {
+        interactiveLight(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous), pressable: pressable)
     }
 }
 

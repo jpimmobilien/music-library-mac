@@ -37,7 +37,7 @@ enum AccentChoice: String, CaseIterable, Identifiable, Codable {
     }
     var color: Color {
         switch self {
-        case .bridge: return Color(red: 0.16, green: 0.72, blue: 0.52)
+        case .bridge: return Color(red: 0.04, green: 0.42, blue: 0.96)
         case .blue: return Color(red: 0.0, green: 0.48, blue: 1.0)
         case .teal: return Color(red: 0.19, green: 0.69, blue: 0.78)
         case .purple: return Color(red: 0.55, green: 0.36, blue: 0.96)

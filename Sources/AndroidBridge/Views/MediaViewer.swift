@@ -23,6 +23,11 @@ struct MediaViewer: View {
     @State private var showInfo = false
     @State private var backdrop: NSImage?
     @State private var chromeVisible = true
+    /// Aufzoomen aus der Galeriekachel: Vorschaubild fliegt von `item.origin` an seinen Platz.
+    @State private var flying = false
+    @State private var landed = false
+    @Environment(\.animationsEnabled) private var animations
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private var entry: DeviceEntry? {
         guard !items.isEmpty else { return nil }
@@ -37,6 +42,8 @@ struct MediaViewer: View {
                 .padding(.top, 70)
                 .padding(.bottom, items.count > 1 ? 112 : 40)
                 .padding(.trailing, showInfo ? 300 : 0)
+                .opacity(flying ? 0 : 1)
+            if flying { flight }
             navigation
             VStack(spacing: 0) {
                 topBar
@@ -63,23 +70,66 @@ struct MediaViewer: View {
             items = item.items
             index = item.index
             load()
+            startFlight()
         }
         .onDisappear(perform: cleanup)
+    }
+
+    // MARK: Aufzoomen
+
+    private func startFlight() {
+        guard item.origin != nil, backdrop != nil, animations, !reduceMotion, !SnapshotMode.isActive else { return }
+        flying = true
+        landed = false
+        DispatchQueue.main.async {
+            withAnimation(.spring(response: 0.52, dampingFraction: 0.86)) { landed = true }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            withAnimation(.easeOut(duration: 0.15)) { flying = false }
+        }
+    }
+
+    /// Fläche, in der das Foto steht (wie `stage` mit seinen Abständen).
+    private func stageRect(in size: CGSize) -> CGRect {
+        let bottom: CGFloat = items.count > 1 ? 112 : 40
+        let right: CGFloat = 70 + (showInfo ? 300 : 0)
+        return CGRect(x: 70, y: 70, width: max(10, size.width - 70 - right), height: max(10, size.height - 70 - bottom))
+    }
+
+    private var flight: some View {
+        GeometryReader { geo in
+            if let thumb = backdrop, let origin = item.origin {
+                let area = stageRect(in: geo.size)
+                let aspect = thumb.size.width / max(thumb.size.height, 1)
+                let fitW = min(area.width, area.height * aspect)
+                let target = CGRect(x: area.midX - fitW / 2, y: area.midY - fitW / aspect / 2, width: fitW, height: fitW / aspect)
+                let r = landed ? target : origin
+                Image(nsImage: thumb)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: r.width, height: r.height)
+                    .clipShape(RoundedRectangle(cornerRadius: landed ? 2 : 12, style: .continuous))
+                    .shadow(color: .black.opacity(landed ? 0.6 : 0.2), radius: landed ? 30 : 8)
+                    .position(x: r.midX, y: r.midY)
+            }
+        }
+        .allowsHitTesting(false)
     }
 
     // MARK: Ebenen
 
     private var background: some View {
         ZStack {
-            Color.black
+            // Die übrige Oberfläche bleibt dahinter sichtbar – stark weichgezeichnet und abgedunkelt
+            BackdropBlur(material: .fullScreenUI, blending: .withinWindow)
+            Color.black.opacity(0.62)
             if let backdrop {
                 Color.clear
                     .overlay(Image(nsImage: BackdropImage.tiny(backdrop)).resizable().interpolation(.high).aspectRatio(contentMode: .fill))
                     .clipped()
-                    .opacity(0.5)
+                    .opacity(0.32)
                     .transition(.opacity)
             }
-            Color.black.opacity(0.35)
         }
         .ignoresSafeArea()
         .animation(.easeOut(duration: 0.4), value: backdrop != nil)
@@ -104,16 +154,22 @@ struct MediaViewer: View {
                 .shadow(color: .black.opacity(0.6), radius: 30)
                 .onAppear { player.play() }
         } else if loading {
-            VStack(spacing: 18) {
+            ZStack(alignment: .bottom) {
                 if let backdrop {
+                    // Vorschaubild an der Stelle, an der gleich das Foto erscheint
                     Image(nsImage: backdrop).resizable().aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 460, maxHeight: 460)
-                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                        .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Color.black.opacity(0.25)))
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .shadow(color: .black.opacity(0.6), radius: 30)
                 }
-                ProgressView(value: progress).frame(width: 240).tint(Palette.bridgeGreen)
-                Text("Wird vom Telefon geladen … \(Int(progress * 100)) %")
-                    .font(.ui(12.5, .medium)).foregroundStyle(.white.opacity(0.8)).monospacedDigit()
+                VStack(spacing: 8) {
+                    ProgressView(value: progress).frame(width: 220).tint(Palette.accent)
+                    Text("Wird vom Telefon geladen … \(Int(progress * 100)) %")
+                        .font(.ui(12, .medium)).foregroundStyle(.white.opacity(0.85)).monospacedDigit()
+                }
+                .padding(.horizontal, 18)
+                .padding(.vertical, 12)
+                .glassSurface(Capsule())
+                .padding(.bottom, 18)
             }
         } else if let loadError {
             VStack(spacing: 12) {

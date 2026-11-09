@@ -46,6 +46,7 @@ struct TransferCenterView: View {
                                     .transition(.asymmetric(insertion: .move(edge: .top).combined(with: .opacity), removal: .opacity))
                             }
                         }
+                        .reportsScrollEdge()
                         .padding(.horizontal, Spacing.gutter)
                         .padding(.bottom, 22)
                         .animation(animations ? .bridgeSpring : nil, value: engine.jobs.map(\.id))
@@ -108,7 +109,7 @@ struct TransferJobRow: View {
         case .failed: return Palette.danger
         case .cancelled, .skipped: return .secondary
         case .paused: return Palette.warning
-        default: return Palette.bridgeGreen
+        default: return Palette.accent
         }
     }
 
@@ -268,7 +269,7 @@ struct TransferJobRow: View {
         switch status {
         case .completed: return Palette.success
         case .failed: return Palette.danger
-        case .running, .verifying, .preparing: return Palette.bridgeGreen
+        case .running, .verifying, .preparing: return Palette.accent
         default: return .secondary
         }
     }
@@ -339,8 +340,8 @@ struct TransferHero: View {
     var body: some View {
         HStack(spacing: 26) {
             ZStack {
-                ProgressRing(fraction: fraction, lineWidth: 9, tint: Palette.bridgeGreen)
-                    .shadow(color: Palette.bridgeGreen.opacity(0.45), radius: 10)
+                ProgressRing(fraction: fraction, lineWidth: 9, tint: Palette.accent)
+                    .shadow(color: Palette.accent.opacity(0.45), radius: 10)
                 Text("\(Int(fraction * 100)) %").font(.display(24, .bold)).monospacedDigit()
             }
             .frame(width: 104, height: 104)

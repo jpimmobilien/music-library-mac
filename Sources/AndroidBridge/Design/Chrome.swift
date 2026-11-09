@@ -15,13 +15,40 @@ struct PageScaffold<Toolbar: View, Content: View>: View {
     var subtitle: String?
     @ViewBuilder var toolbar: () -> Toolbar
     @ViewBuilder var content: () -> Content
+    @State private var scrolled = false
+    @Environment(\.animationsEnabled) private var animations
 
     var body: some View {
         VStack(spacing: 0) {
-            PageHeader(title: title, subtitle: subtitle, toolbar: toolbar)
+            PageHeader(title: title, subtitle: subtitle, scrolled: scrolled, toolbar: toolbar)
+                .zIndex(1)
             content()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .coordinateSpace(name: ScrollEdge.space)
         }
+        // Scroll-Kante: Sobald Inhalt unter die Kopfleiste läuft, wird sie zur Glasleiste mit Lichtkante.
+        .onPreferenceChange(ScrollEdgeKey.self) { offset in
+            let now = offset < -3
+            guard now != scrolled else { return }
+            withAnimation(animations ? .easeOut(duration: 0.28) : nil) { scrolled = now }
+        }
+    }
+}
+
+/// Meldet, wie weit der Inhalt einer Seite gescrollt ist (für die Scroll-Kante der Kopfleiste).
+enum ScrollEdge { static let space = "pageScroll" }
+
+struct ScrollEdgeKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) { value = min(value, nextValue()) }
+}
+
+extension View {
+    /// Am obersten Inhalt innerhalb einer ScrollView anbringen.
+    func reportsScrollEdge() -> some View {
+        background(GeometryReader { geo in
+            Color.clear.preference(key: ScrollEdgeKey.self, value: geo.frame(in: .named(ScrollEdge.space)).minY)
+        })
     }
 }
 
@@ -34,7 +61,10 @@ extension PageScaffold where Toolbar == EmptyView {
 struct PageHeader<Toolbar: View>: View {
     let title: String
     var subtitle: String?
+    var scrolled = false
     @ViewBuilder var toolbar: () -> Toolbar
+    @Environment(\.glassEnabled) private var glass
+    @Environment(\.colorScheme) private var scheme
 
     var body: some View {
         ViewThatFits(in: .horizontal) {
@@ -58,7 +88,31 @@ struct PageHeader<Toolbar: View>: View {
         .padding(.top, Metrics.headerTop)
         .padding(.bottom, Spacing.l)
         .frame(maxWidth: .infinity, minHeight: 96, alignment: .bottomLeading)
-        .background(WindowDragArea())
+        .background {
+            ZStack {
+                WindowDragArea()
+                if scrolled {
+                    // Glasleiste: Unschärfe, Tönung, Lichtkante unten
+                    ZStack(alignment: .bottom) {
+                        if glass { BackdropBlur(material: scheme == .dark ? .hudWindow : .headerView) }
+                        Palette.glassTint
+                        LinearGradient(colors: [Palette.accent.opacity(0), Palette.accent.opacity(0.55), Palette.accent2.opacity(0.45), Palette.accent2.opacity(0)],
+                                       startPoint: .leading, endPoint: .trailing)
+                            .frame(height: 1)
+                    }
+                    .allowsHitTesting(false)
+                    .transition(.opacity)
+                }
+            }
+        }
+        .overlay(alignment: .bottom) {
+            // weicher Schatten auf die Inhaltskante
+            LinearGradient(colors: [Palette.shadow.opacity(0.9), .clear], startPoint: .top, endPoint: .bottom)
+                .frame(height: 14)
+                .offset(y: 14)
+                .opacity(scrolled ? 1 : 0)
+                .allowsHitTesting(false)
+        }
     }
 
     private func titles(singleLineSubtitle: Bool) -> some View {
@@ -113,7 +167,7 @@ struct ToolbarIconButton: View {
         Button(action: action) {
             Image(systemName: symbol)
                 .font(.ui(14, .medium))
-                .foregroundStyle(isOn ? Palette.bridgeGreen : (tint ?? Palette.textPrimary))
+                .foregroundStyle(isOn ? Palette.accent : (tint ?? Palette.textPrimary))
                 .frame(width: Metrics.toolbarButton, height: Metrics.toolbarButton)
                 .background(Circle().fill(isOn ? Palette.selectionFill : (hovering && isEnabled ? Palette.hoverFill : .clear)))
                 .contentShape(Circle())
@@ -179,7 +233,7 @@ struct GlassSearchField: View {
         .padding(.horizontal, 12)
         .frame(width: width, height: Metrics.searchHeight)
         .glassSurface(Capsule(), strong: true)
-        .overlay(Capsule().strokeBorder(Palette.bridgeGreen.opacity(focused ? 0.55 : 0), lineWidth: 1.5))
+        .overlay(Capsule().strokeBorder(Palette.accent.opacity(focused ? 0.55 : 0), lineWidth: 1.5))
         .animation(.bridgeQuick, value: focused)
         .onChange(of: focusToken) { _ in if focusEnabled { focused = true } }
     }
@@ -262,7 +316,7 @@ struct SelectionSummary: View {
                 .foregroundStyle(Palette.onAccent)
                 .padding(.horizontal, 8)
                 .frame(minWidth: 24, minHeight: 22)
-                .background(Capsule().fill(Palette.bridgeGreen))
+                .background(Capsule().fill(Palette.accent))
             Text("ausgewählt").font(Typo.bodyMedium)
             if let bytes {
                 Text("· \(ByteFormat.string(bytes))").font(Typo.body).foregroundStyle(Palette.textSecondary).monospacedDigit()
@@ -303,7 +357,7 @@ struct ToastView: View {
 /// Kopf eines Dialogs.
 struct SheetHeader: View {
     let symbol: String
-    var tint: Color = Palette.bridgeGreen
+    var tint: Color = Palette.accent
     let title: String
     var subtitle: String?
 
@@ -394,7 +448,7 @@ struct StatTile: View {
     let value: String
     let label: String
     let symbol: String
-    var tint: Color = Palette.bridgeGreen
+    var tint: Color = Palette.accent
 
     var body: some View {
         HStack(spacing: 12) {
@@ -419,7 +473,7 @@ struct StatTile: View {
 struct TagLabel: View {
     let text: String
     var symbol: String?
-    var tint: Color = Palette.bridgeGreen
+    var tint: Color = Palette.accent
 
     var body: some View {
         HStack(spacing: 4) {
