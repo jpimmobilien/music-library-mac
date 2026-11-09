@@ -24,12 +24,12 @@ permissions:
 jobs:
   build:
     name: Tests, Universal-Build, DMG (${{ matrix.os }})
-    # Drei Build-Rechner parallel: macOS 26 (Apple Silicon, Liquid Glass), macOS 26 Intel (Xcode 26) und – falls keine Kapazität frei
-    # ist – Intel (macOS 15). Geliefert wird bevorzugt die DMG vom macOS-26-Rechner.
+    # Vier Build-Rechner parallel: macOS 26 (Apple Silicon, Liquid Glass), macOS 26 Intel (Xcode 26), macOS 15 Apple Silicon
+    # (zuverlässige Grafik für Bildschirmfotos aller Seiten) und Intel (macOS 15). Geliefert wird bevorzugt eine Xcode-26-DMG.
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-26, macos-26-intel, macos-15-intel]
+        os: [macos-26, macos-26-intel, macos-15, macos-15-intel]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 90
     steps:
