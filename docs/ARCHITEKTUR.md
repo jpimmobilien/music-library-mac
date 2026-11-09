@@ -123,3 +123,29 @@ Eigenes Designsystem nach den Prinzipien der Musikbibliothek (nicht kopiert):
   telefontypische Schnittstelle haben (ADB, MTP/PTP, Tethering, MIDI, herstellerspezifisch) – Massenspeicher wie die
   Samsung PSSD T5 EVO, Monitore oder Tastaturen werden ignoriert.
 - Akkustand: PTP-Geräteeigenschaft 0x5001 (`GetDevicePropValue`), nur wenn das Gerät sie anbietet.
+
+## Version 4.0: Kino-Bühne und modellgetreuer Mac
+
+- `ABCore/MacModel.swift`: leitet aus Modellkennung (`hw.model`) und Verkaufsname die Bauform ab (`MacForm`: Kinn
+  2016–2020 inkl. M1/M2 13", Notch seit 2021, MacBook Air mit Notch / mit Kinn / mit Alu-Rahmen, MacBook Pro bis 2015,
+  iMac Intel / iMac 24", Desktop-Mac) und schlägt eine Gehäusefarbe vor. Reine Logik, durch `MacModelTests` geprüft.
+- `Design/MacRender.swift`: liest Kennung (`sysctl hw.model`), Chip (`machdep.cpu.brand_string`) und Verkaufsnamen
+  (Apple Silicon: Gerätebaum `IODeviceTree:/product` „product-name“; Intel: die Namensliste, die auch „Über diesen Mac“
+  nutzt) und zeichnet den Mac in Vorderansicht. Keine Produktfotos, kein Apple-Logo (das sitzt ohnehin auf der
+  Deckelrückseite); der Name steht als Beschriftung darunter. Die Gehäusefarbe ist nicht auslesbar – Vorschlag pro
+  Bauform, änderbar unter Einstellungen → Erscheinungsbild → Ihr Mac.
+- Palette: Blau (`Palette.accent`) und Violett (`accent2`) als Licht, Grün nur noch für „verbunden“; dunkel tiefes
+  Schwarz (#000), hell weiches Weiß mit Pastell-Lichtfeldern.
+- `CinemaStage` / `CinemaBackdrop` (Übersicht): in beiden Modi dunkle Bühne mit Lichtband, farbigen Lichtfeldern
+  (≤ 20 Bilder/s, pausiert ohne Animationen) und Bodenlicht unter den Geräten.
+- Scroll-Kante: Seiteninhalte melden ihre Scrollposition (`reportsScrollEdge` → `ScrollEdgeKey`); die Kopfleiste
+  wird dann zur Glasleiste mit Lichtkante und wirft einen weichen Schatten auf den Inhalt.
+- Interaktives Glas: `InteractiveLight` (Licht folgt dem Zeiger, Kante leuchtet), `GelButtonStyle` bzw.
+  `GlassButtonStyle` (geben beim Drücken gelartig nach und federn zurück). Unter macOS 26 zusätzlich natives
+  `.interactive()` Liquid Glass.
+- Großansicht: Galeriekacheln merken ihre Lage (`ViewerOrigins`); das Vorschaubild fliegt von dort an seinen Platz,
+  danach erscheint das geladene Foto an derselben Stelle. Hintergrund: Systemunschärfe über der übrigen Oberfläche.
+- Leere Zustände: `EmptyIllustration` (aufgefächerte Karten, Licht, Motiv bzw. kleines Telefon).
+- Dateimanager: Mac-Liste zeigt QuickLook-Vorschauen (Fotos, PDFs, Dokumente) statt nur Finder-Symbolen.
+- Duplikate: `DuplicateDock` unten – Zusammenfassung, „Vorschläge übernehmen“ bzw. großer „Duplikate löschen“-Knopf,
+  der nur den Bestätigungsdialog öffnet (Sicherheitslogik unverändert).

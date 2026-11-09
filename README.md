@@ -3,6 +3,14 @@
 Native macOS-App für die Dateiübertragung zwischen Android-Telefonen und dem Mac per USB (MTP) –
 mit Dateimanager in zwei Spalten, Foto- und Videogalerie, Übertragungszentrale und Liquid-Glass-Gestaltung.
 
+**Neu in 4.0:** kinoreife Gestaltung – die Übersicht ist eine dunkle Bühne mit Lichtband, auf der Ihr Telefon und
+**Ihr Mac in seiner echten Bauform** stehen (Modell wird erkannt: z. B. MacBook Pro 2017 mit Kinn, Apple-Silicon-MacBook
+mit Notch, MacBook Air, iMac, Mac mini/Studio; selbst gezeichnet, ohne Produktfotos und Logo; Gehäusefarbe wählbar).
+Akzente in Blau und Violett, tiefes Schwarz im dunklen Modus, Kopfleisten, die beim Scrollen zur Glasleiste werden,
+Glas, das auf den Zeiger reagiert und beim Drücken nachgibt, Fotos, die aus ihrer Kachel aufzoomen (Oberfläche dahinter
+weichgezeichnet), illustrierte leere Zustände, echte Vorschauen auch für Dokumente auf der Mac-Seite und eine
+Zusammenfassung mit großem „Duplikate löschen“-Knopf.
+
 **Neu in 3.0:** vollständig neue Gestaltung „Midnight Glass“ – Übersicht mit eigener Telefon-/Mac-Darstellung,
 Speicherringen und Schnellzugriffen, Galerie mit großen Bildern nach Monaten, Vollbild-Ansicht, Dateimanager mit
 Speicherflächen und Rasteransicht, Duplikate als große Vorschauen, „Speicher verwalten“ (Belegung nach Art,
