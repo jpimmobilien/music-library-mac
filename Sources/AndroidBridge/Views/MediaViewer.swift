@@ -433,8 +433,14 @@ struct ZoomableImageView: NSViewRepresentable {
     let image: NSImage
 
     func makeNSView(context: Context) -> NSScrollView {
-        let scroll = NSScrollView()
+        let scroll = FittingScrollView()
         scroll.contentView = CenteringClipView()
+        // Überlagernde Rollbalken auch mit Maus (sonst verkleinern sie die Fläche und das Bild passt nie ganz)
+        scroll.scrollerStyle = .overlay
+        scroll.onResize = { [weak coordinator = context.coordinator] in
+            guard let coordinator, coordinator.isFitted else { return }
+            coordinator.fit()
+        }
         scroll.allowsMagnification = true
         scroll.minMagnification = 0.05
         scroll.maxMagnification = 10
@@ -478,8 +484,8 @@ struct ZoomableImageView: NSViewRepresentable {
 
         func fit() {
             guard let scroll = scrollView, let doc = scroll.documentView else { return }
-            let visible = scroll.contentSize
-            guard doc.frame.width > 0, doc.frame.height > 0, visible.width > 0 else { return }
+            let visible = scroll.frame.size
+            guard doc.frame.width > 0, doc.frame.height > 0, visible.width > 0, visible.height > 0 else { return }
             let scale = min(visible.width / doc.frame.width, visible.height / doc.frame.height, 1)
             scroll.magnification = max(scale, scroll.minMagnification)
             fittedSize = scroll.frame.size
@@ -505,6 +511,21 @@ struct ZoomableImageView: NSViewRepresentable {
             } else {
                 fit()
             }
+        }
+    }
+}
+
+/// Meldet Größenänderungen (Fenster, Infobereich), damit ein eingepasstes Bild eingepasst bleibt.
+final class FittingScrollView: NSScrollView {
+    var onResize: (() -> Void)?
+    private var lastSize: NSSize = .zero
+
+    override func layout() {
+        super.layout()
+        if scrollerStyle != .overlay { scrollerStyle = .overlay }
+        if frame.size != lastSize {
+            lastSize = frame.size
+            onResize?()
         }
     }
 }

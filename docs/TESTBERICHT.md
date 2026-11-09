@@ -1,8 +1,19 @@
-# Testbericht – Android Bridge 3.0.0
+# Testbericht – Android Bridge 4.0.0
 
-_Rückfallversionen: 2.0 (Zweig `android-bridge` bis Commit 30402af, DMG „AndroidBridge-2.0“) und 1.0 (Zweig `android-bridge-v1.0`)._
+_Rückfallversionen: 3.0 (Commit 27de89b, DMG „AndroidBridge-3.0“), 2.0 (Commit 30402af) und 1.0 (Zweig `android-bridge-v1.0`)._
 
-## Neu in 3.0 geprüft
+## Neu in 4.0 geprüft
+
+| Prüfung | Ergebnis |
+|---|---|
+| Unit-Tests | 96 Tests ohne Fehler auf macOS 26 (arm64) und macOS 15 (x86_64); neu: `MacModelTests` (Bauform aus Modellkennung – MacBook Pro 2017 mit Kinn, Notch-Modelle, M2-13"-Ausnahme, Air, iMac, Desktop, unbekannte Kennung) |
+| Mac-Erkennung auf echter Hardware der Build-Maschinen | Intel-Maschine als „Mac mini · Ende 2012“ erkannt (Namensliste von macOS), virtuelle macOS-26-Maschine fällt korrekt auf „Mac“ mit aktueller Bauform zurück |
+| Bildschirmfotos | 22 Ansichten × hell/dunkel auf macOS 26 (Liquid Glass + Rückfall), dazu eine Tafel aller Mac-Bauformen; macOS 15 Intel in 1512×930, 1728×930, 1280×800 und 960×640 |
+| Layout-Durchgang | Bühne, leere Zustände, Dateimanager im kleinsten Fenster, Duplikate-Leiste geprüft; korrigiert: Fotos im Mac-Bildschirm der Bühne liefen über ihre Kachel, Großansicht auf Intel/macOS 15 nicht eingepasst (Rollbalken) – jetzt passt sich das Bild bei jeder Größenänderung neu ein |
+| Installation aus der DMG | macOS 26 (Apple Silicon) und macOS 15 (Intel) |
+| Nicht geprüft | echte Geräte (Telefon, deine Samsung-SSD), echte Gehäusefarbe (nicht auslesbar – wählbar), Bauformen anderer Macs nur als gezeichnete Tafel (die Zuordnung ist per Unit-Test geprüft) |
+
+## Aus Version 3.0
 
 | Prüfung | Ergebnis |
 |---|---|

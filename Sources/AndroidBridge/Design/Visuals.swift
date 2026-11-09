@@ -138,7 +138,7 @@ struct LaptopScreenContent: View {
                             ForEach(0..<8, id: \.self) { i in
                                 Group {
                                     if i < photos.count {
-                                        Image(nsImage: photos[i]).resizable().aspectRatio(contentMode: .fill)
+                                        Color.clear.overlay(Image(nsImage: photos[i]).resizable().aspectRatio(contentMode: .fill))
                                     } else {
                                         LinearGradient(colors: [Color(hue: Double(i) / 8, saturation: 0.45, brightness: 0.8),
                                                                 Color(hue: Double(i) / 8 + 0.08, saturation: 0.6, brightness: 0.5)],
