@@ -149,3 +149,13 @@ Eigenes Designsystem nach den Prinzipien der Musikbibliothek (nicht kopiert):
 - Dateimanager: Mac-Liste zeigt QuickLook-Vorschauen (Fotos, PDFs, Dokumente) statt nur Finder-Symbolen.
 - Duplikate: `DuplicateDock` unten – Zusammenfassung, „Vorschläge übernehmen“ bzw. großer „Duplikate löschen“-Knopf,
   der nur den Bestätigungsdialog öffnet (Sicherheitslogik unverändert).
+
+## Version 4.1
+
+- Seitenleiste: `SidebarGlassPill` (natives Liquid Glass unter macOS 26, sonst Nachbildung) mit `matchedGeometryEffect`
+  – die Auswahl gleitet federnd; `ThisMacRow` zeigt den eigenen Mac (MacRender) mit Modellname.
+- `DetailView`: Seitenwechsel mit Einblenden + leichtem Federweg (aus, wenn Animationen ausgeschaltet sind).
+- Großansicht: `prefetchNeighbors()` lädt nächstes/voriges Foto (≤ 80 MB) nacheinander über die USB-Warteschlange in
+  den Vorschau-Cache; wird beim Weiterblättern abgebrochen und beim Schließen aufgeräumt.
+- Hinweis: Die native Schnittstelle heißt `glassEffect(_:in:)` (SwiftUI) bzw. `NSGlassEffectView` (AppKit); Namen
+  wie `.liquidGlass()` / `NSLiquidGlassView` gibt es im SDK nicht.

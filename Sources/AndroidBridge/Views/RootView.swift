@@ -22,6 +22,7 @@ struct RootView: View {
                         .frame(width: sidebarWidth)
                     DetailView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .animation(settings.animations ? .spring(response: 0.42, dampingFraction: 0.86) : nil, value: model.selection)
                 }
                 .animation(settings.animations ? .bridgeSpring : nil, value: rail)
 
@@ -85,6 +86,7 @@ struct SidebarView: View {
     @Binding var userCollapsed: Bool
     @Environment(\.animationsEnabled) private var animations
     @Environment(\.glassEnabled) private var glass
+    @Namespace private var navGlass
 
     private struct NavEntry: Identifiable {
         var id: String { title }
@@ -115,7 +117,7 @@ struct SidebarView: View {
                     ForEach(items) { entry in
                         SidebarRow(symbol: entry.symbol, title: entry.title, item: entry.item, rail: rail,
                                    badge: entry.item == .transfers && transfers.activeCount > 0 ? "\(transfers.activeCount)" : nil,
-                                   filledSymbol: entry.fill)
+                                   filledSymbol: entry.fill, glassNamespace: navGlass)
                     }
 
                     if rail {
@@ -151,6 +153,18 @@ struct SidebarView: View {
                             DeviceSidebarRow(device: device, rail: rail)
                         }
                     }
+
+                    // Dieser Mac – in seiner Bauform
+                    if !rail {
+                        Text("DIESER MAC")
+                            .font(Typo.sectionLabel)
+                            .tracking(0.7)
+                            .foregroundStyle(Palette.textTertiary)
+                            .padding(.horizontal, 12)
+                            .padding(.top, 18)
+                            .padding(.bottom, 6)
+                    }
+                    ThisMacRow(rail: rail)
                 }
                 .padding(.horizontal, rail ? 0 : 10)
                 .frame(maxWidth: .infinity, alignment: rail ? .center : .leading)
@@ -247,7 +261,9 @@ struct SidebarRow: View {
     var rail = false
     var badge: String?
     var filledSymbol = true
+    var glassNamespace: Namespace.ID? = nil
     @State private var hovering = false
+    @Environment(\.animationsEnabled) private var animations
 
     private var selected: Bool { (model.selection ?? .overview) == item }
 
@@ -291,13 +307,21 @@ struct SidebarRow: View {
                     .frame(height: Metrics.sidebarRow)
                 }
             }
-            .background(
-                RoundedRectangle(cornerRadius: Radius.control, style: .continuous)
-                    .fill(selected ? Palette.selectionFill : (hovering ? Palette.hoverFill : .clear))
-            )
+            .background {
+                if selected {
+                    // Schwebende Glasfläche, die beim Wechsel federnd zum neuen Eintrag gleitet
+                    SidebarGlassPill(namespace: glassNamespace)
+                } else if hovering {
+                    RoundedRectangle(cornerRadius: Radius.control, style: .continuous)
+                        .fill(Palette.hoverFill)
+                        .overlay(RoundedRectangle(cornerRadius: Radius.control, style: .continuous)
+                            .strokeBorder(Palette.glassEdgeLight.opacity(0.5), lineWidth: 0.6))
+                }
+            }
             .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(GelButtonStyle())
+        .animation(animations ? .spring(response: 0.38, dampingFraction: 0.78) : nil, value: selected)
         .help(rail ? title : "")
         .accessibilityLabel(title)
         .onHover { hovering = $0 }
@@ -399,6 +423,63 @@ struct DetailView: View {
             }
         }
         .id(model.selection)
-        .transition(.opacity)
+        // Seitenwechsel: neue Seite blendet ein und gleitet federnd an ihren Platz
+        .transition(.asymmetric(insertion: .opacity.combined(with: .offset(y: 12)).combined(with: .scale(scale: 0.992, anchor: .top)),
+                                removal: .opacity))
+    }
+}
+
+
+/// Auswahl in der Seitenleiste: kleine Liquid-Glass-Fläche (unter macOS 26 nativ) mit Akzent-Tönung.
+struct SidebarGlassPill: View {
+    var namespace: Namespace.ID?
+
+    var body: some View {
+        let shape = RoundedRectangle(cornerRadius: Radius.control, style: .continuous)
+        let pill = Color.clear
+            .glassSurface(shape, tint: Palette.selectionFill)
+            .overlay(shape.strokeBorder(LinearGradient(colors: [Palette.accent.opacity(0.35), Palette.accent2.opacity(0.15)],
+                                                       startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 0.8))
+        if let namespace {
+            pill.matchedGeometryEffect(id: "sidebar-selection", in: namespace)
+        } else {
+            pill
+        }
+    }
+}
+
+/// „Dieser Mac“: der eigene Mac in seiner Bauform, mit Modellname.
+struct ThisMacRow: View {
+    var rail: Bool
+    private let mac = MacHardware.current
+
+    var body: some View {
+        Group {
+            if rail {
+                MacRender(width: 34, hardware: mac) { LaptopScreenContent() }
+                    .frame(width: 44, height: 36)
+            } else {
+                HStack(spacing: 10) {
+                    MacRender(width: 38, hardware: mac) { LaptopScreenContent() }
+                        .frame(width: 40, height: 32)
+                    VStack(alignment: .leading, spacing: 1) {
+                        Text(mac.familyName)
+                            .font(.ui(12.5, .semibold))
+                            .foregroundStyle(Palette.textPrimary)
+                        Text(mac.detailName ?? (mac.isAppleSilicon ? "Apple Silicon" : "Intel"))
+                            .font(Typo.caption)
+                            .foregroundStyle(Palette.textSecondary)
+                    }
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    Spacer(minLength: 0)
+                }
+                .padding(.horizontal, 8)
+                .padding(.vertical, 6)
+            }
+        }
+        .help("\(mac.marketingName) – Gehäusefarbe unter Einstellungen → Erscheinungsbild")
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Dieser Mac: \(mac.marketingName)")
     }
 }

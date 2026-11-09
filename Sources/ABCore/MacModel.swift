@@ -97,7 +97,7 @@ public struct MacModel: Equatable, Sendable {
             if let gen = chipGeneration(chip), gen >= 3, chip.contains("Pro") || chip.contains("Max") { return .spaceBlack }
             return .spaceGray
         case .notchAir: return .midnight
-        case .retinaChin, .retinaAir: return .spaceGray
+        case .retinaChin, .retinaAir: return .silver
         case .iMacColor: return .blue
         default: return .silver
         }

@@ -24,9 +24,9 @@ struct FileManagerView: View {
     @ObservedObject private var deviceBrowser: DeviceBrowserModel
     @ObservedObject private var localBrowser: LocalBrowserModel
     @AppStorage("fileSplitFraction") private var splitFraction: Double = 0.44
-    @AppStorage("filePaneStyle") private var paneStyleRaw: String = PaneStyle.list.rawValue
+    @AppStorage("filePaneStyle") private var paneStyleRaw: String = PaneStyle.grid.rawValue
 
-    private var paneStyle: PaneStyle { PaneStyle(rawValue: paneStyleRaw) ?? .list }
+    private var paneStyle: PaneStyle { PaneStyle(rawValue: paneStyleRaw) ?? .grid }
 
     init(files: FileManagerModel, settings: SettingsStore) {
         self.files = files
@@ -450,7 +450,7 @@ struct DevicePaneView: View {
 
     private func grid(device: DeviceConnection) -> some View {
         ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 116, maximum: 160), spacing: 12)], spacing: 14) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 132, maximum: 180), spacing: 14)], spacing: 16) {
                 ForEach(browser.visible) { e in
                     FileTile(name: e.name, detail: e.isFolder ? "Ordner" : ByteFormat.string(e.size), selected: browser.selection.contains(e.id)) {
                         DeviceThumb(entry: e, device: device, size: 92, corner: 12)
@@ -880,7 +880,7 @@ struct LocalPaneView: View {
 
     private var grid: some View {
         ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 116, maximum: 160), spacing: 12)], spacing: 14) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 132, maximum: 180), spacing: 14)], spacing: 16) {
                 ForEach(browser.visible) { e in
                     FileTile(name: e.name, detail: e.isFolder && !e.isPackage ? "Ordner" : ByteFormat.string(e.size),
                              selected: browser.selection.contains(e.url)) {
@@ -952,8 +952,8 @@ struct LocalPaneView: View {
             }
         } label: {
             HStack(spacing: 6) {
-                Image(systemName: "laptopcomputer").foregroundStyle(Palette.bridgeBlue)
-                Text("Mac").font(.ui(13, .semibold))
+                Image(systemName: MacHardware.current.symbolName).foregroundStyle(Palette.accent)
+                Text(MacHardware.current.familyName).font(.ui(13, .semibold)).lineLimit(1)
             }
         }
         .menuStyle(.borderlessButton)

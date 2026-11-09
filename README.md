@@ -3,6 +3,11 @@
 Native macOS-App für die Dateiübertragung zwischen Android-Telefonen und dem Mac per USB (MTP) –
 mit Dateimanager in zwei Spalten, Foto- und Videogalerie, Übertragungszentrale und Liquid-Glass-Gestaltung.
 
+**Neu in 4.1:** „Dieser Mac“ mit Modellbild in der Seitenleiste, Auswahl in der Seitenleiste als schwebende
+Liquid-Glass-Fläche, die federnd zum neuen Eintrag gleitet, federnde Seitenwechsel, Dateimanager standardmäßig mit großen
+Vorschauen, „Zuletzt verwendet“ als Kacheln, Großansicht lädt die Nachbarfotos vor (Blättern ohne Wartezeit),
+MacBooks 2016–2020 standardmäßig in Silber.
+
 **Neu in 4.0:** kinoreife Gestaltung – die Übersicht ist eine dunkle Bühne mit Lichtband, auf der Ihr Telefon und
 **Ihr Mac in seiner echten Bauform** stehen (Modell wird erkannt: z. B. MacBook Pro 2017 mit Kinn, Apple-Silicon-MacBook
 mit Notch, MacBook Air, iMac, Mac mini/Studio; selbst gezeichnet, ohne Produktfotos und Logo; Gehäusefarbe wählbar).

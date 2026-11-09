@@ -10,7 +10,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-VERSION="${VERSION:-4.0.0}"
+VERSION="${VERSION:-4.1.0}"
 BUILD_NUMBER="${BUILD_NUMBER:-1}"
 APP="build/Android Bridge.app"
 EXE="AndroidBridge"

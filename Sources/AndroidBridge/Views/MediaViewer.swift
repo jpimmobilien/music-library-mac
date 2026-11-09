@@ -20,6 +20,9 @@ struct MediaViewer: View {
     @State private var tempFiles: [URL] = []
     @State private var transferred = Set<String>()
     @State private var loadTask: Task<Void, Never>?
+    /// Vorgeladene Nachbarfotos (Eintrag → Datei), damit Blättern ohne Wartezeit geht.
+    @State private var prefetched: [DeviceEntry.ID: URL] = [:]
+    @State private var prefetchTask: Task<Void, Never>?
     @State private var showInfo = false
     @State private var backdrop: NSImage?
     @State private var chromeVisible = true
@@ -370,6 +373,14 @@ struct MediaViewer: View {
         if backdrop == nil {
             Task { backdrop = await ThumbnailService.shared.thumbnail(for: current, device: device) }
         }
+        prefetchTask?.cancel()
+        if current.kind == .photo, let url = prefetched[current.id], let img = NSImage(contentsOf: url) {
+            // Schon vorgeladen – sofort zeigen
+            loading = false
+            image = img
+            prefetchNeighbors()
+            return
+        }
         guard let backend = device.backend else {
             loadError = "Das Telefon ist nicht mehr verbunden."
             return
@@ -408,6 +419,8 @@ struct MediaViewer: View {
                     player = AVPlayer(url: url)
                 } else if let img = NSImage(contentsOf: url) {
                     withAnimation(Motion.easeOut(0.35)) { image = img }
+                    prefetched[current.id] = url
+                    prefetchNeighbors()
                 } else {
                     loadError = "Dieses Bildformat kann nicht angezeigt werden."
                 }
@@ -419,7 +432,51 @@ struct MediaViewer: View {
         }
     }
 
+    /// Lädt das nächste und das vorige Foto im Hintergrund (nacheinander, über dieselbe USB-Warteschlange).
+    private func prefetchNeighbors() {
+        guard let backend = device.backend else { return }
+        let neighbors = [index + 1, index - 1, index + 2]
+            .filter { items.indices.contains($0) }
+            .map { items[$0] }
+            .filter { $0.kind == .photo && $0.size < 80_000_000 && prefetched[$0.id] == nil }
+        for e in neighbors where ThumbnailService.shared.cached(ThumbnailService.key(device: device, entry: e)) == nil {
+            Task { _ = await ThumbnailService.shared.thumbnail(for: e, device: device) }
+        }
+        guard !neighbors.isEmpty else { return }
+        let folder = AppPaths.previewCache
+        prefetchTask = Task {
+            for e in neighbors {
+                if Task.isCancelled { return }
+                let url = folder.appendingPathComponent("\(UUID().uuidString)-\(FileNameSanitizer.macSafe(e.name))")
+                do {
+                    FileManager.default.createFile(atPath: url.path, contents: nil)
+                    let handle = try FileHandle(forWritingTo: url)
+                    defer { try? handle.close() }
+                    let flag = CancelFlag()
+                    try await withTaskCancellationHandler {
+                        try await backend.download(handle: e.handle, sink: { data in
+                            try handle.write(contentsOf: data)
+                        }, progress: { _ in !flag.isCancelled })
+                    } onCancel: {
+                        flag.cancel()
+                    }
+                    try handle.synchronize()
+                    if Task.isCancelled {
+                        try? FileManager.default.removeItem(at: url)
+                        return
+                    }
+                    tempFiles.append(url)
+                    prefetched[e.id] = url
+                } catch {
+                    try? FileManager.default.removeItem(at: url)
+                    return
+                }
+            }
+        }
+    }
+
     private func cleanup() {
+        prefetchTask?.cancel()
         loadTask?.cancel()
         player?.pause()
         player = nil

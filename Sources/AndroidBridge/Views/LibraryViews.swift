@@ -77,34 +77,21 @@ struct RecentsView: View {
                 EmptyStateView(symbol: "clock", title: "Noch nichts verwendet",
                                message: "Hier erscheinen Dateien, die Sie zuletzt angesehen oder übertragen haben.")
             } else {
-                List(recents.recents) { r in
-                    let available = devices.connectedDevices.contains { $0.serial == r.location.deviceSerial }
-                    Button {
-                        model.openLocation(r.location)
-                    } label: {
-                        HStack(spacing: 12) {
-                            TypeIcon(name: r.name, size: 28)
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(r.name).font(.ui(13, .medium)).lineLimit(1)
-                                Text("\(r.location.deviceName) › \(r.location.displayPath)")
-                                    .font(.ui(11.5)).foregroundStyle(.secondary).lineLimit(1)
-                            }
-                            Spacer()
-                            VStack(alignment: .trailing, spacing: 2) {
-                                Text(ByteFormat.string(r.size)).font(.ui(11.5)).monospacedDigit()
-                                Text(r.date.formatted(date: .abbreviated, time: .shortened)).font(.ui(11)).foregroundStyle(.secondary)
+                ScrollView {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 168, maximum: 230), spacing: 16)], spacing: 16) {
+                        ForEach(recents.recents) { r in
+                            let available = devices.connectedDevices.contains { $0.serial == r.location.deviceSerial }
+                            RecentTile(name: r.name, place: "\(r.location.deviceName) › \(r.location.displayPath)",
+                                       size: r.size, date: r.date, available: available) {
+                                model.openLocation(r.location)
                             }
                         }
-                        .contentShape(Rectangle())
                     }
-                    .buttonStyle(.plain)
-                    .disabled(!available)
-                    .padding(.vertical, 3)
+                    .padding(.horizontal, Spacing.gutter)
+                    .padding(.top, 4)
+                    .padding(.bottom, 28)
+                    .reportsScrollEdge()
                 }
-                .scrollContentBackground(.hidden)
-                .glassCard(cornerRadius: Radius.panel)
-                .padding(.horizontal, Spacing.gutter - 6)
-                .padding(.bottom, 18)
             }
         }
         }
@@ -253,6 +240,49 @@ struct FavoriteTile: View {
         .interactiveCard()
         .opacity(available ? 1 : 0.6)
         .offset(y: hovering && available ? -2 : 0)
+        .onHover { hovering = $0 }
+        .animation(.bridgeQuick, value: hovering)
+    }
+}
+
+
+/// Kachel für „Zuletzt verwendet“: großes Dateisymbol statt Listenzeile.
+struct RecentTile: View {
+    let name: String
+    let place: String
+    let size: UInt64
+    let date: Date
+    let available: Bool
+    let open: () -> Void
+    @State private var hovering = false
+
+    var body: some View {
+        Button(action: open) {
+            VStack(alignment: .leading, spacing: 10) {
+                ZStack {
+                    LinearGradient(colors: [Palette.accent.opacity(0.10), Palette.accent2.opacity(0.08)], startPoint: .topLeading, endPoint: .bottomTrailing)
+                    TypeIcon(name: name, size: 64)
+                        .shadow(color: Palette.shadow, radius: 8, y: 4)
+                }
+                .frame(height: 112)
+                .clipShape(RoundedRectangle(cornerRadius: Radius.tile, style: .continuous))
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(name).font(.ui(13, .semibold)).foregroundStyle(Palette.textPrimary).lineLimit(1).truncationMode(.middle)
+                    Text(place).font(Typo.caption).foregroundStyle(Palette.textSecondary).lineLimit(1).truncationMode(.middle)
+                    Text("\(ByteFormat.string(size)) · \(date.formatted(date: .abbreviated, time: .omitted))")
+                        .font(Typo.caption).foregroundStyle(Palette.textTertiary).monospacedDigit().lineLimit(1)
+                }
+                .padding(.horizontal, 4)
+            }
+            .padding(10)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(GelButtonStyle())
+        .glassCard(cornerRadius: Radius.card, elevated: hovering)
+        .interactiveCard()
+        .opacity(available ? 1 : 0.55)
+        .disabled(!available)
+        .help(available ? "Öffnen" : "Telefon nicht verbunden")
         .onHover { hovering = $0 }
         .animation(.bridgeQuick, value: hovering)
     }

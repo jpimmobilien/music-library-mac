@@ -28,6 +28,22 @@ struct MacHardware: Equatable {
 
     static let current: MacHardware = detect()
 
+    /// Passendes SF-Symbol (neuere Symbole nur, wenn das System sie kennt).
+    var symbolName: String {
+        func available(_ name: String) -> Bool { NSImage(systemSymbolName: name, accessibilityDescription: nil) != nil }
+        let lower = marketingName.lowercased()
+        let candidates: [String]
+        switch form {
+        case .notchPro, .notchAir: candidates = ["macbook.gen2", "laptopcomputer"]
+        case .retinaChin, .retinaAir, .classicAir, .classicPro: candidates = ["macbook.gen1", "macbook", "laptopcomputer"]
+        case .iMacClassic, .iMacColor: candidates = ["desktopcomputer"]
+        case .desktop:
+            candidates = lower.contains("studio") ? ["macstudio", "macmini", "desktopcomputer"]
+                : lower.contains("mac pro") ? ["macpro.gen3", "desktopcomputer"] : ["macmini", "desktopcomputer"]
+        }
+        return candidates.first(where: available) ?? "desktopcomputer"
+    }
+
     static func preview(_ id: String, _ name: String, chip: String = "") -> MacHardware {
         MacHardware(model: MacModel(identifier: id, rawName: name, chip: chip), isAppleSilicon: chip.hasPrefix("Apple"))
     }
@@ -367,7 +383,7 @@ struct MacCaption: View {
 
     var body: some View {
         HStack(spacing: 6) {
-            Image(systemName: hardware.form.isLaptop ? "laptopcomputer" : (hardware.form == .desktop ? "macmini" : "desktopcomputer"))
+            Image(systemName: hardware.symbolName)
             Text(hardware.familyName).fontWeight(.semibold)
             if let detail = hardware.detailName {
                 Text(detail).foregroundStyle(color.opacity(0.75))
