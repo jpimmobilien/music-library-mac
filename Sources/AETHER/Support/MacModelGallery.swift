@@ -55,7 +55,7 @@ private struct GalleryCell: View {
             HStack(alignment: .center, spacing: 12) {
                 MacTopArt(model: model)
                     .aspectRatio(MacTopArt.aspect(model), contentMode: .fit)
-                    .frame(width: 150, height: 100)
+                    .frame(width: 200, height: 130)
                 VStack(alignment: .leading, spacing: 3) {
                     Text(model.displayName).font(Typo.bodyMedium).lineLimit(2)
                     Text(model.identifier).font(Typo.mono).foregroundStyle(theme.textSecondary)

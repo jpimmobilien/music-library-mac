@@ -26,6 +26,10 @@ Werte, die macOS nicht liefert, heißen „Nicht verfügbar“ mit Begründung. 
 | **Live-Monitor & Menüleiste** | kleines Fenster (⌥⌘M), auf Wunsch im Vordergrund; optionale CPU-Anzeige in der Menüleiste |
 | **Einstellungen** | 6 Themes, Akzent, Glasintensität, Bewegung, Dichte, Intervall, Sparmodus, SMC an/aus, Rohwerte statt geglätteter Werte, Entwickler-Diagnose (Eigenverbrauch, Messzeiten), Verlauf, Menüleiste, Sprache (Englisch/Deutsch), Datenschutz- und Quellenübersicht |
 
+**Seit 1.2:** Gerätebilder passend zum eigenen Mac – alle Modelle seit 2017 (92 Modellkennungen: MacBook Pro, MacBook Air,
+MacBook, iMac, iMac Pro, Mac mini, Mac Studio, Mac Pro) als eigene Zeichnungen nach Apples Maßen, in der Übersicht
+und unter Hardware von vorn, in der Wärmekarte von oben (Touch Bar, Kerbe, Lautsprecher, Trackpad …).
+
 **Seit 1.1 – „Studio“ und Monitoring 2.0:** Jede Detailseite beginnt mit einer großen Visualisierung aus echten
 Messwerten (schematische Darstellungen sind als solche beschriftet). Große Zahlen sind zeitbasiert geglättet (schneller
 Anstieg, langsamer Abfall), Spitzen der letzten 10 s bleiben sichtbar, der Rohwert steht darunter; jede Quelle misst in

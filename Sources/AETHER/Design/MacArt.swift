@@ -860,6 +860,7 @@ struct MacTopArt: View {
     private var fill: Color { theme.fieldFill.opacity(1.4) }
     private var line: Color { theme.hairline }
     private var detail: Color { theme.textTertiary.opacity(theme.isDark ? 0.22 : 0.28) }
+    private var grille: Color { theme.textTertiary.opacity(theme.isDark ? 0.42 : 0.5) }
 
     private func laptopTop(_ model: MacModelInfo, _ w: CGFloat, _ h: CGFloat) -> some View {
         let layout = MacTopLayout(model: model)
@@ -878,10 +879,14 @@ struct MacTopArt: View {
                 .frame(width: w * 0.86, height: max(1, h * 0.012))
                 .offset(x: w * 0.07, y: h * 0.012)
             if layout.hingeVents {
-                DotGridShape(columns: 70, rows: 1, dot: 0.35)
-                    .fill(detail)
-                    .frame(width: w * 0.8, height: h * 0.02)
-                    .offset(x: w * 0.1, y: h * 0.03)
+                // Lüftungsschlitze am Scharnier (MacBook Air ab M2)
+                HStack(spacing: w * 0.006) {
+                    ForEach(0..<40, id: \.self) { _ in
+                        Capsule().fill(grille).frame(height: max(1, h * 0.012))
+                    }
+                }
+                .frame(width: w * 0.8)
+                .offset(x: w * 0.1, y: h * 0.032)
             }
             grilles(layout, w, h, kbY: kbY, kbH: kbH)
             if layout.darkWell {
@@ -912,16 +917,18 @@ struct MacTopArt: View {
         switch layout.grilles {
         case .none: EmptyView()
         case .top:
-            DotGridShape(columns: 90, rows: 3, dot: 0.45)
-                .fill(detail)
-                .frame(width: w * 0.9, height: h * 0.03)
+            // MacBook 12″: Gitter über der ganzen Tastaturbreite
+            DotGridShape(columns: 72, rows: 3, dot: 0.6)
+                .fill(grille)
+                .frame(width: w * 0.9, height: h * 0.034)
                 .offset(x: w * 0.05, y: h * 0.045)
         case .sides(let inset, let width):
+            // Lautsprechergitter links und rechts der Tastatur
             let gw = w * CGFloat(width)
-            let columns = max(3, Int((gw / max(1, kbH)) * 40))
+            let columns = max(3, Int((gw / max(1, kbH)) * 26))
             ForEach(0..<2, id: \.self) { side in
-                DotGridShape(columns: columns, rows: 40, dot: 0.42)
-                    .fill(detail)
+                DotGridShape(columns: columns, rows: 26, dot: 0.58)
+                    .fill(grille)
                     .frame(width: gw, height: kbH)
                     .offset(x: side == 0 ? w * CGFloat(inset) : w - w * CGFloat(inset) - gw, y: kbY)
             }

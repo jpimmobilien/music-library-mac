@@ -83,8 +83,8 @@ enum SnapshotRunner {
         Scenario(name: "28-einstellungen-diagnose", size: CGSize(width: 1320, height: 1400), theme: .liquidGlassDark,
                  section: .settings, diagnostics: true),
         // Alle Mac-Bauformen seit 2017 (die Build-Rechner selbst sind virtuelle Macs)
-        Scenario(name: "29-modellgalerie-dark", size: CGSize(width: 1760, height: 2000), theme: .liquidGlassDark, gallery: true),
-        Scenario(name: "30-modellgalerie-light", size: CGSize(width: 1760, height: 2000), theme: .liquidGlassLight, gallery: true),
+        Scenario(name: "29-modellgalerie-dark", size: CGSize(width: 1760, height: 2400), theme: .liquidGlassDark, gallery: true),
+        Scenario(name: "30-modellgalerie-light", size: CGSize(width: 1760, height: 2400), theme: .liquidGlassLight, gallery: true),
     ]
 
     static func run(model: AppModel, output: URL) async {
