@@ -159,3 +159,12 @@ Eigenes Designsystem nach den Prinzipien der Musikbibliothek (nicht kopiert):
   den Vorschau-Cache; wird beim Weiterblättern abgebrochen und beim Schließen aufgeräumt.
 - Hinweis: Die native Schnittstelle heißt `glassEffect(_:in:)` (SwiftUI) bzw. `NSGlassEffectView` (AppKit); Namen
   wie `.liquidGlass()` / `NSLiquidGlassView` gibt es im SDK nicht.
+
+## Version 4.2: Navigation wie in der Musikbibliothek
+
+- `Views/NavigationChrome.swift`: `NavBar` (schwebende Glasleiste, 8 Bereiche, gleitende Linse), `DeviceDock`
+  (Gerätekapsel unten, Gegenstück zum Mini-Player), `PhotoAmbience` (Leuchtfarbe des neuesten Fotos → Hintergrund),
+  `ChromeEdgeFade`.
+- `RootView`: keine Seitenleiste mehr; Seiten beginnen unter der Navigation (`NavChrome.contentTop`), die Kapsel wird
+  per `safeAreaInset` unten eingeblendet – Inhalte scrollen darunter, Aktionsleisten der Seiten stehen darüber.
+- Die frühere `SidebarView` bleibt im Code, wird aber nicht mehr angezeigt.

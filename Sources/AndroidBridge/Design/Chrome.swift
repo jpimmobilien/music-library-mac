@@ -85,7 +85,7 @@ struct PageHeader<Toolbar: View>: View {
             }
         }
         .padding(.horizontal, Spacing.gutter)
-        .padding(.top, Metrics.headerTop)
+        .padding(.top, NavChrome.contentTop)
         .padding(.bottom, Spacing.l)
         .frame(maxWidth: .infinity, minHeight: 96, alignment: .bottomLeading)
         .background {

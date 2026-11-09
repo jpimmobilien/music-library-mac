@@ -32,7 +32,7 @@ struct OverviewView: View {
                     PrivacyNote()
                 }
                 .padding(.horizontal, Spacing.gutter)
-                .padding(.top, 52)
+                .padding(.top, NavChrome.contentTop + 4)
                 .padding(.bottom, 40)
                 .frame(maxWidth: 1240, alignment: .leading)
                 .frame(maxWidth: .infinity, alignment: .center)
@@ -96,6 +96,9 @@ struct DeviceHero: View {
                     .padding(.top, 8)
             }
         }
+        // Farbe des neuesten Fotos färbt den App-Hintergrund und erscheint in der Gerätekapsel
+        .onAppear { if connected { PhotoAmbience.shared.update(thumbs.images.first) } }
+        .onChange(of: thumbs.images.first) { img in if connected { PhotoAmbience.shared.update(img) } }
     }
 
     private var stage: some View {

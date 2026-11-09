@@ -2,59 +2,56 @@ import SwiftUI
 import AppKit
 import ABCore
 
-/// Hauptfenster: durchgehende Glas-Seitenleiste (Ampel-Knöpfe liegen darauf), rechts die Seiten über dem
-/// Lichtfeld-Hintergrund. In schmalen Fenstern wird die Seitenleiste zur Symbolleiste („Rail“).
+/// Hauptfenster (4.2): schwebende Liquid-Glass-Navigation oben in der Mitte, darunter die Seiten über dem
+/// Lichtfeld-Hintergrund, unten die schwebende Gerätekapsel.
 struct RootView: View {
     @EnvironmentObject private var model: AppModel
     @ObservedObject var settings: SettingsStore
     @ObservedObject var transfers: TransferEngine
     @ObservedObject var deletion: DeletionService
-    @AppStorage("sidebarCollapsed") private var userCollapsed = false
 
     var body: some View {
-        GeometryReader { geo in
-            let rail = userCollapsed || geo.size.width < Metrics.railBreakpoint
-            let sidebarWidth = rail ? Metrics.sidebarRailWidth : Metrics.sidebarWidth
-            ZStack(alignment: .topLeading) {
-                CinematicBackground()
-                HStack(spacing: 0) {
-                    SidebarView(devices: model.devices, transfers: transfers, rail: rail, userCollapsed: $userCollapsed)
-                        .frame(width: sidebarWidth)
-                    DetailView()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .animation(settings.animations ? .spring(response: 0.42, dampingFraction: 0.86) : nil, value: model.selection)
-                }
-                .animation(settings.animations ? .bridgeSpring : nil, value: rail)
+        ZStack(alignment: .top) {
+            CinematicBackground()
+            PhotoAmbienceLight()
+            ChromeHost(devices: model.devices, transfers: transfers, animations: settings.animations)
 
-                VStack {
-                    Spacer()
-                    if let progress = deletion.progress {
-                        DeletionProgressBadge(progress: progress)
-                            .transition(.move(edge: .bottom).combined(with: .opacity))
-                    } else if let toast = model.toast {
-                        ToastView(toast: toast)
-                            .id(toast.id)
-                            .transition(.move(edge: .bottom).combined(with: .opacity))
-                    }
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.bottom, 24)
-                .padding(.leading, sidebarWidth)
-                .animation(settings.animations ? .bridgeSpring : nil, value: deletion.progress == nil)
-                .animation(settings.animations ? .bridgeSpring : nil, value: model.toast?.id)
+            // Oberer Rand: Inhalte laufen weich unter die schwebende Navigation; der Streifen zieht das Fenster
+            ChromeEdgeFade(top: true)
+                .frame(height: NavChrome.contentTop - 8)
                 .allowsHitTesting(false)
+            WindowDragArea()
+                .frame(height: NavChrome.topPadding + NavChrome.barHeight + 4)
+            NavBar(transfers: transfers)
+                .padding(.top, NavChrome.topPadding)
 
-                // Vollbild-Betrachter über allem (Fotos, Videos)
-                if let item = model.viewerItem, let device = model.devices.device(id: item.deviceID) {
-                    MediaViewer(device: device, item: item)
-                        .id(item.id)
-                        .transition(.asymmetric(insertion: item.origin == nil ? .opacity.combined(with: .scale(scale: 0.96)) : .opacity,
-                                                removal: .opacity.combined(with: .scale(scale: 0.98))))
-                        .zIndex(10)
+            VStack {
+                Spacer()
+                if let progress = deletion.progress {
+                    DeletionProgressBadge(progress: progress)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                } else if let toast = model.toast {
+                    ToastView(toast: toast)
+                        .id(toast.id)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
             }
-            .animation(settings.animations ? Motion.gentle : nil, value: model.viewerItem?.id)
+            .frame(maxWidth: .infinity)
+            .padding(.bottom, NavChrome.dockHeight + 34)
+            .animation(settings.animations ? .bridgeSpring : nil, value: deletion.progress == nil)
+            .animation(settings.animations ? .bridgeSpring : nil, value: model.toast?.id)
+            .allowsHitTesting(false)
+
+            // Vollbild-Betrachter über allem (Fotos, Videos)
+            if let item = model.viewerItem, let device = model.devices.device(id: item.deviceID) {
+                MediaViewer(device: device, item: item)
+                    .id(item.id)
+                    .transition(.asymmetric(insertion: item.origin == nil ? .opacity.combined(with: .scale(scale: 0.96)) : .opacity,
+                                            removal: .opacity.combined(with: .scale(scale: 0.98))))
+                    .zIndex(10)
+            }
         }
+        .animation(settings.animations ? Motion.gentle : nil, value: model.viewerItem?.id)
         .ignoresSafeArea(.container, edges: .top)
         .background(WindowConfigurator())
         .environment(\.glassEnabled, settings.glassEffects)
@@ -77,7 +74,36 @@ struct RootView: View {
     }
 }
 
-/// Seitenleiste: durchgehende Glasfläche von oben bis unten.
+/// Seiten und – unten schwebend – die Gerätekapsel. Seiten bekommen unten einen Sicherheitsabstand, so dass
+/// Inhalte unter die Kapsel scrollen und Aktionsleisten der Seiten darüber stehen.
+struct ChromeHost: View {
+    @EnvironmentObject private var model: AppModel
+    @ObservedObject var devices: DeviceManager
+    @ObservedObject var transfers: TransferEngine
+    var animations: Bool
+
+    var body: some View {
+        let hasDevice = model.selectedDevice != nil
+        DetailView()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .animation(animations ? .spring(response: 0.42, dampingFraction: 0.86) : nil, value: model.selection)
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                if hasDevice {
+                    DeviceDock(devices: devices, transfers: transfers)
+                        .padding(.horizontal, 18)
+                        .padding(.top, 8)
+                        .padding(.bottom, 14)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
+            }
+            .animation(animations ? .bridgeSpring : nil, value: hasDevice)
+            .onChange(of: model.selectedDevice?.state) { state in
+                if state != .connected { PhotoAmbience.shared.clear() }
+            }
+    }
+}
+
+/// Frühere Seitenleiste (bis 4.1) – nicht mehr im Hauptfenster verwendet.
 struct SidebarView: View {
     @EnvironmentObject private var model: AppModel
     @ObservedObject var devices: DeviceManager

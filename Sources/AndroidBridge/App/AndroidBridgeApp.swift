@@ -121,11 +121,8 @@ struct AppCommands: Commands {
             .keyboardShortcut("f")
         }
         CommandGroup(after: .sidebar) {
-            Button("Seitenleiste ein-/ausklappen") {
-                let d = UserDefaults.standard
-                d.set(!d.bool(forKey: "sidebarCollapsed"), forKey: "sidebarCollapsed")
-            }
-            .keyboardShortcut("s", modifiers: [.command, .control])
+            Button("Diagnose …") { model.showDiagnostics = true }
+                .keyboardShortcut("d", modifiers: [.command, .option])
             Divider()
             Button("Aktualisieren") { files.refresh() }
                 .keyboardShortcut("r")
