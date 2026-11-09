@@ -187,16 +187,32 @@ struct EmptyStateView<Actions: View>: View {
     @ViewBuilder var actions: () -> Actions
 
     var body: some View {
-        VStack(spacing: 18) {
-            EmptyIllustration(symbol: symbol)
-                .frame(width: 280, height: 200)
+        // Passt sich der Höhe an: große Illustration, kleine Illustration oder nur Text –
+        // so ragt ein leerer Zustand in kleinen Fenstern nie unter die Gerätekapsel.
+        ViewThatFits(in: .vertical) {
+            layout(illustration: CGSize(width: 280, height: 200), titleSize: 28, spacing: 18, padding: 30)
+            layout(illustration: CGSize(width: 168, height: 120), titleSize: 22, spacing: 12, padding: 18)
+            layout(illustration: nil, titleSize: 18, spacing: 8, padding: 12)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .revealOnAppear()
+    }
+
+    private func layout(illustration: CGSize?, titleSize: CGFloat, spacing: CGFloat, padding: CGFloat) -> some View {
+        VStack(spacing: spacing) {
+            if let illustration {
+                EmptyIllustration(symbol: symbol)
+                    .frame(width: 280, height: 200)
+                    .scaleEffect(illustration.width / 280)
+                    .frame(width: illustration.width, height: illustration.height)
+            }
             Text(title)
-                .font(.display(28, .bold))
+                .font(.display(titleSize, .bold))
                 .tracking(-0.6)
                 .foregroundStyle(Palette.textPrimary)
                 .multilineTextAlignment(.center)
             Text(message)
-                .font(.ui(14.5))
+                .font(.ui(illustration == nil ? 13 : 14.5))
                 .foregroundStyle(Palette.textSecondary)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: 460)
@@ -204,9 +220,7 @@ struct EmptyStateView<Actions: View>: View {
             actions()
                 .padding(.top, 4)
         }
-        .padding(30)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .revealOnAppear()
+        .padding(padding)
     }
 }
 

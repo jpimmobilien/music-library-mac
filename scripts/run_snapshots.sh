@@ -15,7 +15,7 @@ GROUPS_LIST="${SNAPSHOT_GROUPS:-01 02 04 05 06 07 08 09 10 11 12 13 14 15 03- 03
 FAILED=0
 for G in $GROUPS_LIST; do
   echo "== Gruppe $G" >> "$OUT_ABS/run.log"
-  SNAPSHOT_ONLY="$G" perl -e 'alarm shift; exec @ARGV' 150 ${RUNNER[@]+"${RUNNER[@]}"} "$BIN" --snapshot "$OUT_ABS" >> "$OUT_ABS/run.log" 2>&1
+  SNAPSHOT_ONLY="$G" perl -e 'alarm shift; exec @ARGV' 120 ${RUNNER[@]+"${RUNNER[@]}"} "$BIN" --snapshot "$OUT_ABS" >> "$OUT_ABS/run.log" 2>&1
   S=$?
   if [ $S -ne 0 ]; then
     FAILED=$((FAILED + 1))
