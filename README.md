@@ -41,7 +41,8 @@ Build- und Testergebnis mit allen Prüfungen und den im Build gefundenen Fehlern
 ![Übersicht – Liquid Glass Dunkel](docs/design/uebersicht-liquid-glass-dunkel.jpg)
 
 Weitere Ansichten: [ganze Übersicht](docs/design/uebersicht-ganz.jpg) · [CPU & GPU](docs/design/cpu-gpu.jpg) ·
-[Arbeitsspeicher](docs/design/arbeitsspeicher.jpg) · [Netzwerk](docs/design/netzwerk.jpg) · [helles Design, großes Fenster](docs/design/grosses-fenster-englisch.jpg)
+[Arbeitsspeicher](docs/design/arbeitsspeicher.jpg) · [Netzwerk](docs/design/netzwerk.jpg) · [helles Design, großes Fenster](docs/design/grosses-fenster-englisch.jpg) ·
+[alle Mac-Modelle](docs/design/modellgalerie.jpg)
 
 ## Installation
 

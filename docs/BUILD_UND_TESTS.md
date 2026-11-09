@@ -1,6 +1,8 @@
 # Build- und Testergebnis
 
-AETHER 1.1.0 („Studio“ und Monitoring 2.0) · Stand 8. November 2026 · Release-Build: Lauf 18 (GitHub-Lauf 42497645629) (`95b30f2`)
+AETHER 1.2.0 (Geräte-Illustrationen je Mac-Modell) · Stand 9. November 2026 · Release-Build: Lauf 22 (GitHub-Lauf 42595664135) (`2e0430b`)
+
+Vorversion 1.1.0: Lauf 18 (`95b30f2`), DMG-SHA-256 `dc42254809329c57494be71ebce06f43d62fe78c6973dec54cfc63f6ad32e223`.
 
 Vorversion 1.0.0: Lauf 13 (`70cb4a6`), DMG-SHA-256 `189c9750aca9cc30da9f1b9417a9d69da5b9c9e833014d2abc31fb12bec47a5a` – bis zum erfolgreichen
 Build von 1.1.0 unverändert gelassen und danach gesichert.
@@ -13,8 +15,8 @@ Bildschirmfotos, Absturzberichte und die DMG liegen im Zweig `ci-ergebnisse-aeth
 
 | Prüfung | Ergebnis |
 |---|---|
-| Datei | `AETHER-macOS-Universal.dmg` · 11 268 068 Bytes (10,7 MB) · SHA-256 `dc42254809329c57494be71ebce06f43d62fe78c6973dec54cfc63f6ad32e223` |
-| Version | 1.1.0 (Build 18), `de.projectaether.macos` |
+| Datei | `AETHER-macOS-Universal.dmg` · 11 587 455 Bytes (11,1 MB) · SHA-256 `e058e355801cdd5e1951545de869ad2c8c73afc0c5f8cce5a39ea909e9e74503` |
+| Version | 1.2.0 (Build 22), `de.projectaether.macos` |
 | Architekturen (`lipo -archs`) | `x86_64 arm64` – beide nativ |
 | Mindest-macOS je Architektur | 13.0 (arm64 und x86_64) |
 | SDK / Compiler | macOS SDK 26.5, Xcode 26.6, Swift 6.3.3 (Intel-Rechner: Xcode 26.3, Swift 6.2.4) |
@@ -31,7 +33,7 @@ Bildschirmfotos, Absturzberichte und die DMG liegen im Zweig `ci-ergebnisse-aeth
 | 2 | Universal-Build arm64 + x86_64 (`swift build --triple …`, `lipo -create`) | beide | ✓ |
 | 3 | Prüfung der Architekturen (`lipo -archs`, `-verify_arch arm64 x86_64`, `otool` minos/sdk) | beide | ✓ |
 | 4 | App-Bundle und Ressourcen (`plutil -lint`, Icon, en/de.lproj inkl. `InfoPlist.strings`, Lokalisierungsabgleich, nur Systembibliotheken, keine Netzwerk-APIs) | beide | ✓ |
-| 5 | Unit-Tests | Linux, macOS 26, macOS 15 Intel | ✓ 127/127 |
+| 5 | Unit-Tests | Linux, macOS 26, macOS 15 Intel | ✓ 132/132 |
 | 6 | Selbsttest der gebauten App mit echten Messwerten, inkl. Leistungsmessung je Bereich | beide | ✓ 34/34 |
 | 7 | DMG erstellen (`dmgbuild`) und Mount-Test (`hdiutil verify/attach`, Inhalt, Link, Architekturen, `codesign --verify --deep --strict`, Byte-Vergleich) | beide | ✓ |
 | 8 | Aus der DMG installieren und starten (Selbsttest) | macOS 26 nativ, macOS 26 über Rosetta, macOS 15 Intel | ✓ 34/34 |
@@ -41,7 +43,7 @@ Bildschirmfotos, Absturzberichte und die DMG liegen im Zweig `ci-ergebnisse-aeth
 
 ## 3. Tests
 
-**Unit-Tests (AetherCore, 127 Tests)** – Linux (x86_64), macOS 26 (arm64), macOS 15 Intel (x86_64), alle bestanden.
+**Unit-Tests (AetherCore, 132 Tests)** – Linux (x86_64), macOS 26 (arm64), macOS 15 Intel (x86_64), alle bestanden.
 Unter anderem:
 
 - CPU- und Speichermathematik, Raten mit Zählerrücksetzung, Puls-Regeln;
@@ -56,7 +58,9 @@ Unter anderem:
 - Formatierung Deutsch/Englisch und WCAG-Kontraste aller Themes;
 - Monitoring 2.0: zeitabhängige Glättung (`alpha = 1 − exp(−Δt/τ)`, unabhängig vom Takt), schneller Anstieg/langsamer
   Abfall, Spitzenfenster 10 s, Anzeigeraster, Ringpuffer mit Überlauf, Min/Max-Bündelung ohne Verlust von Spitzen,
-  Überbrückung seltener Messungen und echte Lücken, „schöne“ Achsenobergrenzen, routbare Adressen (T2-Brücke).
+  Überbrückung seltener Messungen und echte Lücken, „schöne“ Achsenobergrenzen, routbare Adressen (T2-Brücke);
+- Modellkatalog (1.2): alle 92 Modellkennungen seit 2017 eindeutig, Bauform/Diagonale/Maße stimmig, Schätzung für
+  unbekannte neue Modelle (Familie, Chip, Displaydiagonale), Gerätefamilie aus neuen „MacNN,N“-Kennungen.
 
 **Selbsttest der fertigen App** (34 Prüfungen, echte Messwerte des jeweiligen Rechners). Nicht verfügbare Werte
 bestehen nur, wenn sie mit Grund gemeldet werden – erfundene Ersatzwerte würden die Prüfung scheitern lassen.
@@ -95,7 +99,8 @@ bestehen nur, wenn sie mit Grund gemeldet werden – erfundene Ersatzwerte würd
   verfügbar“ mit Grund.
 
 **Bildschirmfotos** – macOS 26 mit Liquid Glass, mit erzwungenem Rückfall und auf Deutsch: je 28 Bilder (neu: ganze
-Übersicht in hohem Fenster, Rohwerte, Diagnose-Anzeige), alle Bereiche
+Übersicht in hohem Fenster, Rohwerte, Diagnose-Anzeige; ab 1.2 die Modellgalerie mit allen Bauformen – die
+Build-Rechner sind virtuelle Macs und zeigen sonst nur die neutrale Form), alle Bereiche
 einschließlich Speicher, Dateien, Netzwerk und Live-Monitor. Die Build-Rechner haben „Transparenz reduzieren“ an; im
 Fotomodus wird das ignoriert, damit das Glasdesign sichtbar ist.
 
