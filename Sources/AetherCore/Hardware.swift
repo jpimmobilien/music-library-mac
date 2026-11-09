@@ -9,6 +9,10 @@ public enum DeviceKind: String, Sendable, Codable, CaseIterable {
     /// „MacBookPro18,3“, „Macmini9,1“, „VirtualMac2,1“). Neuere Apple-Silicon-Kennungen („Mac14,9“) sagen nichts über
     /// die Familie – dann bleibt es `unknown`, bis der Modellname vorliegt.
     public static func from(machineName: String?, modelIdentifier: String?) -> DeviceKind {
+        // Bekannte Modellkennung (auch die neuen „MacNN,N“) → Familie aus dem Modellkatalog
+        if let model = modelIdentifier, let info = MacModelCatalog.all[model] {
+            return DeviceKind(family: info.family)
+        }
         if let name = machineName?.lowercased() {
             if name.contains("virtual") || name.contains("vmware") { return .virtualMachine }
             if name.contains("macbook pro") { return .macBookPro }
@@ -32,6 +36,18 @@ public enum DeviceKind: String, Sendable, Codable, CaseIterable {
     }
 
     public var isPortable: Bool { self == .macBookPro || self == .macBookAir || self == .macBook }
+
+    init(family: MacModelInfo.Family) {
+        switch family {
+        case .macBookPro: self = .macBookPro
+        case .macBookAir: self = .macBookAir
+        case .macBook: self = .macBook
+        case .iMac, .iMacPro: self = .iMac
+        case .macMini: self = .macMini
+        case .macStudio: self = .macStudio
+        case .macPro: self = .macPro
+        }
+    }
 }
 
 /// Prozessorbezeichnung aus `machdep.cpu.brand_string`.

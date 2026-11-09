@@ -130,7 +130,7 @@ private struct OverviewIntro: View {
     }
 
     private func eyebrow(_ hw: HardwareSummary) -> String {
-        var parts = [hw.machineName ?? hw.modelIdentifier ?? tr("This Mac")]
+        var parts = [hw.macModel?.displayName ?? hw.machineName ?? hw.modelIdentifier ?? tr("This Mac")]
         if let chip = system.profiler?.chip ?? hw.processor?.displayName { parts.append(chip) }
         return parts.joined(separator: "  ·  ")
     }

@@ -15,20 +15,26 @@ import AetherCore
 /// Gerätebild passend zum Modell. `screen` wird in den Bildschirm des Geräts gesetzt.
 struct DeviceArt<Screen: View>: View {
     @Environment(\.aether) private var theme
+    /// Erkanntes Modell (siehe MacArt.swift) – ohne Modell (virtueller Mac, unbekannt) eine neutrale Form je Familie.
+    var model: MacModelInfo? = nil
     let kind: DeviceKind
     @ViewBuilder var screen: () -> Screen
 
     var body: some View {
-        GeometryReader { geo in
-            let size = geo.size
-            switch family {
-            case .laptop: laptop(size)
-            case .allInOne: allInOne(size)
-            case .desktop: desktop(size, tower: false)
-            case .tower: desktop(size, tower: true)
+        if let model {
+            MacFrontArt(model: model, screen: screen)
+        } else {
+            GeometryReader { geo in
+                let size = geo.size
+                switch family {
+                case .laptop: laptop(size)
+                case .allInOne: allInOne(size)
+                case .desktop: desktop(size, tower: false)
+                case .tower: desktop(size, tower: true)
+                }
             }
+            .accessibilityHidden(true)
         }
-        .accessibilityHidden(true)
     }
 
     private enum Family { case laptop, allInOne, desktop, tower }

@@ -175,11 +175,12 @@ struct HardwareHero: View, Equatable {
             }
             .frame(width: 210, alignment: .leading)
             VStack(spacing: 10) {
-                DeviceArt(kind: hardware.kind) {
+                DeviceArt(model: hardware.macModel, kind: hardware.kind) {
                     ProductScreen(title: chipName, subtitle: hardware.osVersion.map { "macOS \($0)" })
                 }
                 .frame(height: 250)
-                Label(tr("Illustration of the model family – not a photo of this Mac."), systemImage: "info.circle")
+                Label(hardware.macModel.map { tr("Illustration of %@ – not a photo of this Mac.", $0.displayName) }
+                          ?? tr("Illustration of the model family – not a photo of this Mac."), systemImage: "info.circle")
                     .font(StudioType.caption)
                     .foregroundStyle(theme.textTertiary)
                     .lineLimit(1)

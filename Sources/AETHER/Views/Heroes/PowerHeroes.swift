@@ -33,7 +33,8 @@ struct ThermalHeader: View {
                        if !(thermal?.sensors.value?.isEmpty ?? true) { RangePicker(range: $range) }
                    }) {
             // SystemStore ändert sich alle 2 s (Eigenverbrauch) – der Inhalt nur bei neuen Messwerten.
-            ThermalHeroContent(thermal: thermal, kind: system.hardware.kind, telemetry: telemetry, range: range)
+            ThermalHeroContent(thermal: thermal, kind: system.hardware.kind, model: system.hardware.macModel,
+                               telemetry: telemetry, range: range)
                 .equatable()
         }
     }
@@ -49,11 +50,12 @@ private struct ThermalHeroContent: View, Equatable {
     @Environment(\.aether) private var theme
     let thermal: ThermalSnapshot?
     let kind: DeviceKind
+    let model: MacModelInfo?
     let telemetry: Telemetry
     let range: ChartRange
 
     static func == (a: ThermalHeroContent, b: ThermalHeroContent) -> Bool {
-        a.thermal == b.thermal && a.kind == b.kind && a.telemetry === b.telemetry && a.range == b.range
+        a.thermal == b.thermal && a.kind == b.kind && a.model == b.model && a.telemetry === b.telemetry && a.range == b.range
     }
 
     var body: some View {
@@ -62,10 +64,16 @@ private struct ThermalHeroContent: View, Equatable {
         let reason: UnavailableReason? = list.isEmpty && sensors != nil ? (sensors?.reason ?? .notProvidedByMacOS) : nil
         HStack(alignment: .center, spacing: 30) {
             VStack(alignment: .leading, spacing: 10) {
-                HeatMap(groups: SensorCatalog.aggregate(list), kind: kind, unavailable: reason, measuring: thermal == nil)
+                HeatMap(groups: SensorCatalog.aggregate(list), kind: kind, model: model, unavailable: reason,
+                        measuring: thermal == nil)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 if !list.isEmpty {
                     SchematicNote()
+                }
+                if let model {
+                    Text(tr("Outline: %@", model.displayName))
+                        .font(StudioType.caption)
+                        .foregroundStyle(theme.textTertiary)
                 }
             }
             .frame(maxWidth: .infinity)
@@ -140,10 +148,12 @@ private struct HeatMap: View {
     @Environment(\.aether) private var theme
     let groups: [SensorGroupSummary]
     let kind: DeviceKind
+    let model: MacModelInfo?
     let unavailable: UnavailableReason?
     let measuring: Bool
 
     private var isLaptop: Bool {
+        if let model { return model.design.isPortable }
         switch kind {
         case .macBookPro, .macBookAir, .macBook: return true
         default: return false
@@ -154,7 +164,7 @@ private struct HeatMap: View {
         GeometryReader { geo in
             let rect = outlineRect(in: geo.size)
             ZStack(alignment: .topLeading) {
-                ChassisOutline(laptop: isLaptop)
+                outline
                     .frame(width: rect.width, height: rect.height)
                     .position(x: rect.midX, y: rect.midY)
                     .opacity(groups.isEmpty ? 0.45 : 1)
@@ -173,6 +183,16 @@ private struct HeatMap: View {
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(accessibilityText)
+    }
+
+    /// Gehäuse des erkannten Modells (Aufsicht bzw. Front) – ohne Modell die neutrale Form.
+    @ViewBuilder
+    private var outline: some View {
+        if model != nil {
+            MacTopArt(model: model)
+        } else {
+            ChassisOutline(laptop: isLaptop)
+        }
     }
 
     @ViewBuilder
@@ -197,7 +217,7 @@ private struct HeatMap: View {
     }
 
     private func outlineRect(in size: CGSize) -> CGRect {
-        let aspect: CGFloat = isLaptop ? 1.5 : 1.3
+        let aspect: CGFloat = model.map { MacTopArt.aspect($0) } ?? (isLaptop ? 1.5 : 1.3)
         let maxW = max(0, size.width - 16)
         let maxH = max(0, size.height - 16)
         let width = min(maxW, maxH * aspect)

@@ -74,7 +74,7 @@ private struct StageContent: View, Equatable {
     private var centerColumn: some View {
         VStack(spacing: 12) {
             InteractiveVisual(hint: tr("Cores"), action: { model.select(.cpuGPU) }) {
-                DeviceArt(kind: hardware.kind) {
+                DeviceArt(model: hardware.macModel, kind: hardware.kind) {
                     CoreScreen(cores: telemetry.cores, kinds: hardware.coreKinds ?? [])
                 }
                 .frame(height: 246)
@@ -86,7 +86,7 @@ private struct StageContent: View, Equatable {
                     .padding(.horizontal, 24)
             }
             HStack(spacing: 14) {
-                Label(tr("Illustration – the screen shows the measured load of each core."), systemImage: "info.circle")
+                Label(illustrationCaption, systemImage: "info.circle")
                     .labelStyle(.titleAndIcon)
                 if let kinds = hardware.coreKinds, kinds.contains(.efficiency), kinds.contains(.performance) {
                     legendDot(theme.cpuUser, tr("Performance"))
@@ -126,6 +126,13 @@ private struct StageContent: View, Equatable {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
+    }
+
+    private var illustrationCaption: String {
+        guard let model = hardware.macModel else {
+            return tr("Illustration – the screen shows the measured load of each core.")
+        }
+        return tr("Illustration of %@ – the screen shows the measured load of each core.", model.displayName)
     }
 
     private func legendDot(_ color: Color, _ label: String) -> some View {

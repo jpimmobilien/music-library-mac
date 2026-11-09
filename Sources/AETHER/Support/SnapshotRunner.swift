@@ -37,6 +37,8 @@ enum SnapshotRunner {
         var diagnostics = false
         /// Rohwerte statt geglätteter Werte.
         var rawValues = false
+        /// Galerie aller Geräte-Illustrationen statt des Fensters
+        var gallery = false
     }
 
     /// Diagnose-Szenarien: jeder Baustein hell und dunkel.
@@ -80,6 +82,9 @@ enum SnapshotRunner {
                  diagnostics: true),
         Scenario(name: "28-einstellungen-diagnose", size: CGSize(width: 1320, height: 1400), theme: .liquidGlassDark,
                  section: .settings, diagnostics: true),
+        // Alle Mac-Bauformen seit 2017 (die Build-Rechner selbst sind virtuelle Macs)
+        Scenario(name: "29-modellgalerie-dark", size: CGSize(width: 1760, height: 2000), theme: .liquidGlassDark, gallery: true),
+        Scenario(name: "30-modellgalerie-light", size: CGSize(width: 1760, height: 2000), theme: .liquidGlassLight, gallery: true),
     ]
 
     static func run(model: AppModel, output: URL) async {
@@ -131,7 +136,11 @@ enum SnapshotRunner {
             window.titleVisibility = .hidden
             window.appearance = appearance
             window.isReleasedWhenClosed = false
-            if let probe = scenario.probe {
+            if scenario.gallery {
+                window.contentView = NSHostingView(rootView: MacModelGalleryHost()
+                    .environmentObject(model)
+                    .environmentObject(settings))
+            } else if let probe = scenario.probe {
                 window.contentView = NSHostingView(rootView: ProbeHost(probe: probe)
                     .environmentObject(model)
                     .environmentObject(settings))

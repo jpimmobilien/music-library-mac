@@ -1,5 +1,6 @@
 /* AETHER – Deutsch */
 
+"%@ (estimated)" = "%@ (geschätzt)";
 "%@ available" = "%@ verfügbar";
 "%@ available of %@ on “%@”" = "%@ verfügbar von %@ auf „%@“";
 "%@ bytes" = "%@ Byte";
@@ -373,6 +374,8 @@
 "How the status is determined" = "So entsteht der Status";
 "Icons" = "Symbole";
 "Idle" = "Leerlauf";
+"Illustration of %@ – not a photo of this Mac." = "Illustration: %@ – kein Foto dieses Macs.";
+"Illustration of %@ – the screen shows the measured load of each core." = "Illustration: %@ – der Bildschirm zeigt die gemessene Last jedes Kerns.";
 "Illustration of the model family – not a photo of this Mac." = "Illustration der Modellfamilie – kein Foto dieses Mac.";
 "Illustration – capacity values and disk activity are measured." = "Illustration – Kapazitätswerte und Datenträgeraktivität sind gemessen.";
 "Illustration – the screen shows the measured load of each core." = "Illustration – der Bildschirm zeigt die gemessene Last jedes Kerns.";
@@ -611,6 +614,7 @@
 "Orange" = "Orange";
 "Other" = "Sonstige";
 "Other sensors" = "Weitere Sensoren";
+"Outline: %@" = "Umriss: %@";
 "Overview" = "Übersicht";
 "Owner" = "Eigentümer";
 "Page-ins" = "Einlagerungen";
