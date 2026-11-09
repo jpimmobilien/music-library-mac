@@ -86,7 +86,7 @@ struct ChromeHost: View {
         let hasDevice = model.selectedDevice != nil
         DetailView()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .animation(animations ? .spring(response: 0.42, dampingFraction: 0.86) : nil, value: model.selection)
+            .animation(animations && !SnapshotMode.isActive ? .spring(response: 0.42, dampingFraction: 0.86) : nil, value: model.selection)
             .safeAreaInset(edge: .bottom, spacing: 0) {
                 if hasDevice {
                     DeviceDock(devices: devices, transfers: transfers)
