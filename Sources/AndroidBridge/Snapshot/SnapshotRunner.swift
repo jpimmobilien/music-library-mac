@@ -204,10 +204,6 @@ enum SnapshotRunner {
                 await installPreview(m, state: .connected)
                 m.selection = .overview
             },
-            Scenario(name: "03-dateimanager-zwei-spalten", size: mb14) { m in await files(m, layout: .dual, grid: false) },
-            Scenario(name: "03b-dateimanager-raster", size: mb14) { m in await files(m, layout: .dual, grid: true) },
-            Scenario(name: "03c-dateimanager-zwei-spalten", size: small) { m in await files(m, layout: .dual, grid: false) },
-            Scenario(name: "03d-dateimanager-eine-spalte-raster", size: mb13) { m in await files(m, layout: .single, grid: true) },
             Scenario(name: "04-galerie", size: mb14) { m in await gallery(m) },
             Scenario(name: "04b-galerie", size: small) { m in await gallery(m) },
             Scenario(name: "04c-galerie", size: mb16) { m in await gallery(m) },
@@ -271,6 +267,11 @@ enum SnapshotRunner {
                 m.duplicates.showPreviewResults(identical: identical, similar: similar, marked: [])
                 m.selection = .duplicates
             },
+            // Dateimanager zuletzt: die virtuelle Grafik der Intel-Build-Rechner bricht hier ab (echte Macs nicht)
+            Scenario(name: "03-dateimanager-zwei-spalten", size: mb14) { m in await files(m, layout: .dual, grid: false) },
+            Scenario(name: "03b-dateimanager-raster", size: mb14) { m in await files(m, layout: .dual, grid: true) },
+            Scenario(name: "03c-dateimanager-zwei-spalten", size: small) { m in await files(m, layout: .dual, grid: false) },
+            Scenario(name: "03d-dateimanager-eine-spalte-raster", size: mb13) { m in await files(m, layout: .single, grid: true) },
             Scenario(name: "15-mac-bauformen", size: mb14, custom: { _ in
                 let macs: [MacHardware] = [
                     .preview("MacBookPro14,1", "MacBook Pro (13-inch, 2017, Two Thunderbolt 3 ports)"),
