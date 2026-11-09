@@ -435,10 +435,12 @@ struct MediaViewer: View {
     /// Lädt das nächste und das vorige Foto im Hintergrund (nacheinander, über dieselbe USB-Warteschlange).
     private func prefetchNeighbors() {
         guard let backend = device.backend else { return }
-        let neighbors = [index + 1, index - 1, index + 2]
-            .filter { items.indices.contains($0) }
-            .map { items[$0] }
-            .filter { $0.kind == .photo && $0.size < 80_000_000 && prefetched[$0.id] == nil }
+        var neighbors: [DeviceEntry] = []
+        for i in [index + 1, index - 1, index + 2] where items.indices.contains(i) {
+            let e: DeviceEntry = items[i]
+            guard e.kind == .photo, e.size < 80_000_000, prefetched[e.id] == nil else { continue }
+            neighbors.append(e)
+        }
         for e in neighbors where ThumbnailService.shared.cached(ThumbnailService.key(device: device, entry: e)) == nil {
             Task { _ = await ThumbnailService.shared.thumbnail(for: e, device: device) }
         }
