@@ -282,7 +282,9 @@ struct GlassBackground<S: InsettableShape>: ViewModifier {
     private func modern(_ content: Content) -> some View {
         #if compiler(>=6.2)
         if #available(macOS 26.0, *) {
-            let base = tint.map { Glass.regular.tint($0) } ?? (strong ? Glass.regular.tint(Palette.glassTint) : Glass.regular)
+            // Dunkel: Glas leicht aufhellen, damit Flächen wie in den Systemeinstellungen über dem #1D1D1F-Grund liegen
+            let plain = scheme == .dark ? Glass.regular.tint(Color(hex: 0x48484A).opacity(0.45)) : Glass.regular
+            let base = tint.map { Glass.regular.tint($0) } ?? (strong ? Glass.regular.tint(Palette.glassTint) : plain)
             content
                 .glassEffect(interactive ? base.interactive() : base, in: shape)
                 .shadow(color: elevated ? Palette.shadow.opacity(0.7) : .clear, radius: elevated ? 24 : 0, y: elevated ? 10 : 0)
