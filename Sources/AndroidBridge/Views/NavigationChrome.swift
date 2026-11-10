@@ -171,7 +171,7 @@ private struct DockContent: View {
             if let photo, connected {
                 Color.clear.overlay(Image(nsImage: photo).resizable().aspectRatio(contentMode: .fill)).clipped()
             } else {
-                LinearGradient(colors: [Palette.accent, Palette.accent2], startPoint: .topLeading, endPoint: .bottomTrailing)
+                Palette.accent
                 Image(systemName: "smartphone").font(.ui(24, .medium)).foregroundStyle(.white)
             }
         }
@@ -242,7 +242,7 @@ private struct DockContent: View {
             ZStack(alignment: .leading) {
                 Capsule().fill(Palette.fieldFill)
                 Capsule()
-                    .fill(LinearGradient(colors: [Palette.accent, Palette.accent2], startPoint: .leading, endPoint: .trailing))
+                    .fill(Palette.accent)
                     .frame(width: max(4, geo.size.width * fraction))
             }
         }
@@ -336,9 +336,9 @@ struct PhotoAmbienceLight: View {
             let r = max(geo.size.width, geo.size.height) * 0.62
             ZStack {
                 if let glow = ambience.glow, glass {
-                    RadialGradient(colors: [glow.opacity(scheme == .dark ? 0.34 : 0.24), .clear],
+                    RadialGradient(colors: [glow.opacity(scheme == .dark ? 0.2 : 0.12), .clear],
                                    center: UnitPoint(x: 0.85, y: 0.06), startRadius: 0, endRadius: r)
-                    RadialGradient(colors: [glow.opacity(scheme == .dark ? 0.18 : 0.12), .clear],
+                    RadialGradient(colors: [glow.opacity(scheme == .dark ? 0.1 : 0.06), .clear],
                                    center: UnitPoint(x: 0.08, y: 0.92), startRadius: 0, endRadius: r * 0.9)
                 }
             }

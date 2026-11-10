@@ -623,7 +623,7 @@ struct DuplicateDock: View {
                 .foregroundStyle(.white)
                 .frame(width: 38, height: 38)
                 .background(Circle().fill(scanner.marked.isEmpty
-                                          ? AnyShapeStyle(LinearGradient(colors: [Palette.accent, Palette.accent2], startPoint: .topLeading, endPoint: .bottomTrailing))
+                                          ? AnyShapeStyle(Palette.accent)
                                           : AnyShapeStyle(Palette.danger)))
             VStack(alignment: .leading, spacing: 2) {
                 if scanner.marked.isEmpty {

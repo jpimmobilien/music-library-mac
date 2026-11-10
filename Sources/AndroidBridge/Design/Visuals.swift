@@ -176,8 +176,8 @@ struct PhoneScreenContent: View {
                 // Füllt die Fläche, ohne den Stapel zu vergrößern (sonst würde die Uhr zu groß gezeichnet)
                 Color.clear.overlay(Image(nsImage: wallpaper).resizable().aspectRatio(contentMode: .fill)).clipped()
             } else {
-                LinearGradient(colors: [Color(hex: 0x10307A), Color(hex: 0x0E1640), Color(hex: 0x3A1A6E)], startPoint: .top, endPoint: .bottom)
-                RadialGradient(colors: [Color(hex: 0x6FA8FF).opacity(0.55), .clear], center: UnitPoint(x: 0.3, y: 0.25), startRadius: 0, endRadius: 140)
+                // Ohne Foto: ruhiger, dunkler Sperrbildschirm
+                LinearGradient(colors: [Color(hex: 0x2A2C31), Color(hex: 0x111214), Color.black], startPoint: .top, endPoint: .bottom)
             }
             LinearGradient(colors: [Color.black.opacity(0.35), .clear, Color.black.opacity(0.45)], startPoint: .top, endPoint: .bottom)
             GeometryReader { geo in

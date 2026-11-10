@@ -274,29 +274,27 @@ enum SnapshotRunner {
             Scenario(name: "03d-dateimanager-eine-spalte-raster", size: mb13) { m in await files(m, layout: .single, grid: true) },
             Scenario(name: "15-mac-bauformen", size: mb14, custom: { _ in
                 let macs: [MacHardware] = [
+                    .preview("MacBookPro14,3", "15\" MacBook Pro mit Thunderbolt 3 und Touch ID (Mitte 2017)"),
                     .preview("MacBookPro14,1", "MacBook Pro (13-inch, 2017, Two Thunderbolt 3 ports)"),
                     .preview("Mac15,6", "MacBook Pro (14-inch, Nov 2023)", chip: "Apple M3 Pro"),
                     .preview("Mac14,2", "MacBook Air (M2, 2022)"),
                     .preview("MacBookAir8,1", "MacBook Air (Retina, 13-inch, 2018)"),
                     .preview("MacBookAir7,2", "MacBook Air (13-inch, 2017)"),
                     .preview("MacBookPro11,4", "MacBook Pro (Retina, 15-inch, Mid 2015)"),
-                    .preview("iMac19,1", "iMac (Retina 5K, 27-inch, 2019)"),
                     .preview("iMac21,1", "iMac (24-inch, M1, 2021)"),
                     .preview("Mac13,1", "Mac Studio (2022)"),
                 ]
                 return AnyView(
-                    CinemaStage(connected: true) {
-                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 24), count: 3), spacing: 26) {
-                            ForEach(macs, id: \.identifier) { mac in
-                                VStack(spacing: 10) {
-                                    MacRender(width: 250, hardware: mac) { LaptopScreenContent() }
-                                        .frame(height: 200)
-                                    MacCaption(hardware: mac)
-                                }
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 24), count: 3), spacing: 18) {
+                        ForEach(macs, id: \.identifier) { mac in
+                            VStack(spacing: 8) {
+                                ProductStage(connected: true, photos: [], deviceName: "Pixel", hardware: mac)
+                                    .aspectRatio(2.05, contentMode: .fit)
+                                MacCaption(hardware: mac, color: Palette.textSecondary)
                             }
                         }
                     }
-                    .padding(24)
+                    .padding(28)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Palette.background))
             }) { _ in },

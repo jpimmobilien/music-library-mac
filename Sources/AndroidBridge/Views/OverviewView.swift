@@ -69,59 +69,81 @@ struct DeviceHero: View {
     private var connected: Bool { device.state == .connected }
 
     var body: some View {
-        CinemaStage(connected: connected) {
-            VStack(spacing: 14) {
-                StateEyebrow(state: device.state, onDark: true)
-                Text(heroTitle)
-                    .font(.display(50, .bold))
-                    .tracking(-1.2)
-                    .foregroundStyle(.white)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.6)
-                    .fixedSize(horizontal: false, vertical: true)
-                Text(heroSubtitle)
-                    .font(.ui(16))
-                    .foregroundStyle(.white.opacity(0.66))
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: 560)
-                    .fixedSize(horizontal: false, vertical: true)
-                if connected {
-                    stats.padding(.top, 2)
-                    actions.padding(.top, 6)
-                } else {
-                    stateActions.padding(.top, 4)
-                }
-                stage
-                    .padding(.top, 8)
+        // Aufbau wie eine Produktseite: Zustand, große Überschrift, zwei Knöpfe – darunter die Geräte.
+        VStack(spacing: 0) {
+            StateEyebrow(state: device.state)
+            Text(heroTitle)
+                .font(.display(54, .bold))
+                .tracking(-1.4)
+                .foregroundStyle(Palette.textPrimary)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.6)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, 10)
+            Text(heroSubtitle)
+                .font(.ui(19))
+                .foregroundStyle(Palette.textSecondary)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: 620)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, 6)
+            Group {
+                if connected { actions } else { stateActions }
             }
+            .padding(.top, 18)
+            stage
+                .padding(.top, 22)
+            caption
+                .padding(.top, 10)
         }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 14)
         // Farbe des neuesten Fotos färbt den App-Hintergrund und erscheint in der Gerätekapsel
         .onAppear { if connected { PhotoAmbience.shared.update(thumbs.images.first) } }
         .onChange(of: thumbs.images.first) { img in if connected { PhotoAmbience.shared.update(img) } }
     }
 
     private var stage: some View {
-        DeviceStage(connected: connected,
-                    wallpaper: thumbs.images.first,
-                    macPhotos: Array(thumbs.images.prefix(8)),
-                    stateSymbol: connected ? "cable.connector" : device.state.symbolName,
-                    stateText: connected ? "USB · Dateiübertragung" : device.state.title,
-                    phoneCaption: device.displayName)
-            .aspectRatio(1.75, contentMode: .fit)
-            .frame(maxWidth: 820)
+        ProductStage(connected: connected,
+                     photos: Array(thumbs.images.prefix(8)),
+                     deviceName: device.displayName,
+                     phoneStyle: PhoneStyle(manufacturer: device.manufacturer, model: device.model),
+                     stateSymbol: connected ? "cable.connector" : device.state.symbolName,
+                     stateText: connected ? "USB · Dateiübertragung" : device.state.title)
+            .aspectRatio(2.05, contentMode: .fit)
+            .frame(maxWidth: 940)
     }
 
-    private var stats: some View {
-        HStack(spacing: 22) {
-            if let level = device.batteryLevel { BatteryGauge(level: level, outline: .white.opacity(0.6)) }
-            Label("\(ByteFormat.string(device.totalFree)) frei", systemImage: "internaldrive")
-            if device.storages.count > 1 {
-                Label("\(device.storages.count) Speicher", systemImage: "sdcard")
+    /// Bildunterschrift wie auf einer Produktseite: dieser Mac und das Telefon mit seinen Werten.
+    private var caption: some View {
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: 18) {
+                MacCaption(color: Palette.textSecondary)
+                Text("·").foregroundStyle(Palette.textTertiary)
+                phoneCaption
+            }
+            VStack(spacing: 6) {
+                MacCaption(color: Palette.textSecondary)
+                phoneCaption
             }
         }
-        .font(.ui(13, .semibold))
-        .foregroundStyle(.white.opacity(0.9))
+    }
+
+    private var phoneCaption: some View {
+        HStack(spacing: 14) {
+            Label(device.displayName, systemImage: "smartphone").fontWeight(.semibold)
+            if connected {
+                if let level = device.batteryLevel { BatteryGauge(level: level, outline: Palette.textTertiary) }
+                Label("\(ByteFormat.string(device.totalFree)) frei", systemImage: "internaldrive")
+                if device.storages.count > 1 {
+                    Label("\(device.storages.count) Speicher", systemImage: "sdcard")
+                }
+            }
+        }
+        .font(.ui(11.5))
+        .foregroundStyle(Palette.textSecondary)
+        .lineLimit(1)
     }
 
     private var actions: some View {
@@ -382,33 +404,38 @@ struct DeviceStage: View {
     }
 }
 
-/// Ohne Gerät: großer Einstieg auf der Kino-Bühne.
+/// Ohne Gerät: Einstieg wie eine Produktseite – zweifarbige Überschrift, darunter Mac und Telefon.
 struct WelcomeHero: View {
     var body: some View {
-        CinemaStage(connected: false) {
-            VStack(spacing: 14) {
-                StateEyebrow(state: .disconnected, onDark: true)
-                Text("Ihr Android.\nDirekt auf Ihrem Mac.")
-                    .font(.display(52, .bold))
-                    .tracking(-1.3)
-                    .foregroundStyle(
-                        LinearGradient(colors: [.white, Color(hex: 0xC9D6FF)], startPoint: .top, endPoint: .bottom)
-                    )
-                    .multilineTextAlignment(.center)
-                    .minimumScaleFactor(0.6)
-                    .fixedSize(horizontal: false, vertical: true)
-                Text("Fotos, Videos und Dateien per USB – ohne Cloud, ohne Konto, mit voller Geschwindigkeit.")
-                    .font(.ui(16))
-                    .foregroundStyle(.white.opacity(0.66))
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: 520)
-                    .fixedSize(horizontal: false, vertical: true)
-                DeviceStage(connected: false, stateSymbol: "cable.connector", stateText: "Nicht verbunden", phoneCaption: "Ihr Android-Telefon")
-                    .aspectRatio(1.75, contentMode: .fit)
-                    .frame(maxWidth: 820)
-                    .padding(.top, 8)
+        VStack(spacing: 0) {
+            StateEyebrow(state: .disconnected)
+            VStack(spacing: 0) {
+                Text("Ihr Android.")
+                    .foregroundStyle(Palette.textPrimary)
+                Text("Direkt auf Ihrem Mac.")
+                    .foregroundStyle(Palette.textTertiary)
             }
+            .font(.display(56, .bold))
+            .tracking(-1.5)
+            .multilineTextAlignment(.center)
+            .minimumScaleFactor(0.6)
+            .padding(.top, 10)
+            Text("Fotos, Videos und Dateien per USB – ohne Cloud, ohne Konto, mit voller Geschwindigkeit.")
+                .font(.ui(19))
+                .foregroundStyle(Palette.textSecondary)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: 620)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, 10)
+            ProductStage(connected: false, stateSymbol: "cable.connector", stateText: "Nicht verbunden")
+                .aspectRatio(2.05, contentMode: .fit)
+                .frame(maxWidth: 940)
+                .padding(.top, 26)
+            MacCaption(color: Palette.textSecondary)
+                .padding(.top, 10)
         }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 14)
     }
 }
 
@@ -437,22 +464,17 @@ struct StepCard: View {
     let detail: String
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            ZStack(alignment: .topLeading) {
-                RoundedRectangle(cornerRadius: Radius.tile, style: .continuous)
-                    .fill(LinearGradient(colors: [tint.opacity(0.35), tint.opacity(0.08)], startPoint: .topLeading, endPoint: .bottomTrailing))
-                Image(systemName: symbol)
-                    .font(.ui(40, .light))
-                    .foregroundStyle(tint)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 10) {
                 Text("\(number)")
                     .font(.ui(12, .bold))
                     .foregroundStyle(Palette.onAccent)
                     .frame(width: 22, height: 22)
-                    .background(Circle().fill(tint))
-                    .padding(10)
+                    .background(Circle().fill(Palette.accent))
+                Image(systemName: symbol)
+                    .font(.ui(18))
+                    .foregroundStyle(Palette.accent)
             }
-            .frame(height: 110)
             Text(title).font(.ui(15, .semibold)).foregroundStyle(Palette.textPrimary)
             Text(detail).font(Typo.callout).foregroundStyle(Palette.textSecondary).fixedSize(horizontal: false, vertical: true)
         }

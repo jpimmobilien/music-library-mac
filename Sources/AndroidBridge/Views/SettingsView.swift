@@ -202,8 +202,14 @@ struct AppearanceSettings: View {
             GlassSection(title: "Ihr Mac", symbol: "laptopcomputer",
                          footer: "Android Bridge erkennt das Modell (\(mac.identifier)) und zeichnet seine Bauform. Die Gehäusefarbe lässt sich nicht auslesen – wählen Sie sie hier.") {
                 HStack(alignment: .center, spacing: 20) {
-                    MacRender(width: 150, hardware: mac) { LaptopScreenContent() }
-                        .frame(width: 170, height: 130)
+                    Group {
+                        if mac.form.isLaptop {
+                            PerspectiveLaptop(hardware: mac) { MiniAppScreen(connected: false, deviceName: "") }
+                        } else {
+                            MacRender(width: 150, hardware: mac) { ScaledScreen { MiniAppScreen(connected: false, deviceName: "") } }
+                        }
+                    }
+                    .frame(width: 190, height: 130)
                     VStack(alignment: .leading, spacing: 10) {
                         VStack(alignment: .leading, spacing: 2) {
                             Text(mac.familyName).font(.ui(15, .semibold)).foregroundStyle(Palette.textPrimary)

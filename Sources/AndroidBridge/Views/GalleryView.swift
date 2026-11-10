@@ -442,7 +442,7 @@ struct FilterChip: View {
             .foregroundStyle(selected ? Palette.onAccent : Palette.textPrimary)
             .background {
                 if selected {
-                    Capsule().fill(LinearGradient(colors: [Palette.accent, Palette.accent2], startPoint: .topLeading, endPoint: .bottomTrailing))
+                    Capsule().fill(Palette.accent)
                 } else if hovering {
                     Capsule().fill(Palette.hoverFill)
                 }

@@ -106,14 +106,14 @@ struct FileManagerView: View {
         case .dual:
             SplitPanes(fraction: $splitFraction, minLeading: 300, minTrailing: 340) {
                 LocalPaneView(browser: files.local, files: files, style: paneStyle)
-                    .glassCard(cornerRadius: Radius.panel)
+                    .paneCard()
             } trailing: {
                 DevicePaneView(browser: files.device, files: files, style: paneStyle)
-                    .glassCard(cornerRadius: Radius.panel)
+                    .paneCard()
             }
         case .single, .gallery:
             DevicePaneView(browser: files.device, files: files, style: paneStyle)
-                .glassCard(cornerRadius: Radius.panel)
+                .paneCard()
         }
     }
 
@@ -195,6 +195,14 @@ private struct PaneBox: Identifiable {
 }
 
 /// Eingabe eines Namens (neuer Ordner, Umbenennen).
+extension View {
+    /// Bereich des Dateimanagers: alles – Tabelle, Raster, Rollbalken – folgt den runden Ecken der Karte.
+    func paneCard() -> some View {
+        clipShape(RoundedRectangle(cornerRadius: Radius.panel, style: .continuous))
+            .glassCard(cornerRadius: Radius.panel)
+    }
+}
+
 struct NameSheet: View {
     let title: String
     let subtitle: String?
@@ -427,6 +435,9 @@ struct DevicePaneView: View {
                     }
                 }
             }
+            // Abstand zu den runden Ecken: Zeilen und Rollbalken werden nicht angeschnitten
+            .padding(.horizontal, 6)
+            .padding(.bottom, 10)
         }
         .overlay(
             RoundedRectangle(cornerRadius: Radius.panel - 3, style: .continuous)
@@ -853,6 +864,9 @@ struct LocalPaneView: View {
                     }
                 }
             }
+            // Abstand zu den runden Ecken: Zeilen und Rollbalken werden nicht angeschnitten
+            .padding(.horizontal, 6)
+            .padding(.bottom, 10)
         }
         .overlay(
             RoundedRectangle(cornerRadius: Radius.panel - 3, style: .continuous)

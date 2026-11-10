@@ -59,18 +59,18 @@ extension NSColor {
 
 /// Farbpalette. Hell und Dunkel sind eigenständig abgestimmt (nicht invertiert).
 enum Palette {
-    // Licht / Akzente – 4.0: Blau als Hauptlicht, Violett als Nebenlicht (Grün nur noch für „verbunden“)
-    static let accent = Color.adaptive(0x0A6CF5, dark: 0x4D93FF)
-    static let accent2 = Color.adaptive(0x6E56E8, dark: 0xA08CFF)
+    // Akzente – 5.0: die Akzentfarbe des Systems (Systemeinstellungen › Erscheinungsbild), keine eigenen Verläufe
+    static let accent = Color(nsColor: .controlAccentColor)
+    static let accent2 = Color(nsColor: .systemIndigo)
     static let bridgeGreen = Color.adaptive(0x0E9F74, dark: 0x3EE3A8)   // Android-Grün (Dateityp APK, Verbunden)
     static let bridgeBlue = Color.adaptive(0x2F6BE0, dark: 0x6A9BFF)
     static let violet = Color.adaptive(0x7A5BE0, dark: 0x9B85FF)
-    static let accentSoft = Color.adaptive(0x0A6CF5, 0.11, dark: 0x4D93FF, 0.16)
+    static let accentSoft = Color(nsColor: .controlAccentColor).opacity(0.13)
     static let onAccent = Color.white
 
     // Flächen – Hell: weiches Weiß; Dunkel: tiefes Schwarz
-    static let background = Color.adaptive(0xF2F2F5, dark: 0x000000)
-    static let backgroundTop = Color.adaptive(0xFBFBFD, dark: 0x07080B)
+    static let background = Color.adaptive(0xF5F5F7, dark: 0x000000)
+    static let backgroundTop = Color.adaptive(0xFBFBFD, dark: 0x050506)
     static let surface = Color.adaptive(0xFFFFFF, dark: 0x111216)
     static let surfaceMuted = Color.adaptive(0xEDEDF1, dark: 0x191A1F)
     static let mediaWell = Color.adaptive(0xE6E7EC, dark: 0x0C0D10)
@@ -91,14 +91,15 @@ enum Palette {
     static let hairline = Color.adaptive(0x1D1D1F, 0.08, dark: 0xFFFFFF, 0.08)
     static let fieldFill = Color.adaptive(0x1D1D1F, 0.05, dark: 0xFFFFFF, 0.075)
     static let hoverFill = Color.adaptive(0x1D1D1F, 0.05, dark: 0xFFFFFF, 0.07)
-    static let selectionFill = Color.adaptive(0x0A6CF5, 0.12, dark: 0x4D93FF, 0.2)
+    static let selectionFill = Color(nsColor: .controlAccentColor).opacity(0.16)
     static let scrim = Color.adaptive(0x05080C, 0.35, dark: 0x000000, 0.6)
     static let sidebarTint = Color.adaptive(0xF8F8FA, 0.62, dark: 0x08090C, 0.62)
 
     // Lichtfelder des Hintergrunds: Blau, Violett, ein Hauch Rosé
-    static let lightA = Color.adaptive(0x9EC3FF, 0.55, dark: 0x0F3A9A, 0.55)
-    static let lightB = Color.adaptive(0xCDBDFF, 0.5, dark: 0x3A1F86, 0.5)
-    static let lightC = Color.adaptive(0xFFD3E6, 0.42, dark: 0x5B1E63, 0.34)
+    // 5.0: nur noch ein Hauch Licht – der Hintergrund bleibt ruhig wie bei Finder und Fotos
+    static let lightA = Color.adaptive(0xC9DCFF, 0.22, dark: 0x16336E, 0.22)
+    static let lightB = Color.adaptive(0xE2DAFF, 0.16, dark: 0x2A1F5A, 0.18)
+    static let lightC = Color.adaptive(0xFFE6F0, 0.12, dark: 0x3A1E40, 0.1)
     static let ambientA = lightA
     static let ambientB = lightB
     static let ambientC = lightC
@@ -405,10 +406,6 @@ struct CinematicBackground: View {
                         RadialGradient(colors: [Palette.lightC, .clear],
                                        center: UnitPoint(x: 0.5 + 0.12 * sin(t / 23), y: 1.15),
                                        startRadius: 0, endRadius: r * 0.6)
-                        // feine Vignette für Tiefe
-                        RadialGradient(colors: [.clear, Color.black.opacity(0.18)], center: .center,
-                                       startRadius: r * 0.35, endRadius: r * 0.85)
-                            .blendMode(.multiply)
                     }
                 }
                 .frame(width: w, height: h)
@@ -458,23 +455,20 @@ private struct GlassButtonBody: View {
             .foregroundStyle(foreground)
             .background {
                 if prominent {
-                    Capsule().fill(destructive ? AnyShapeStyle(Palette.danger)
-                                   : AnyShapeStyle(LinearGradient(colors: [Palette.accent, Palette.accent2], startPoint: .leading, endPoint: .trailing)))
-                    Capsule().fill(LinearGradient(colors: [Color.white.opacity(0.3), .clear], startPoint: .top, endPoint: .center))
-                    Capsule().fill(Color.white.opacity(pressed ? 0.22 : (hovering && isEnabled ? 0.12 : 0)))
+                    Capsule().fill(destructive ? Palette.danger : Palette.accent)
+                    Capsule().fill(Color.black.opacity(pressed ? 0.16 : 0))
+                    Capsule().fill(Color.white.opacity(hovering && isEnabled && !pressed ? 0.1 : 0))
                 } else {
                     Capsule().fill(destructive ? Palette.dangerSoft : (scheme == .dark ? Color.white.opacity(0.1) : Palette.fieldFill))
                     Capsule().fill(hovering && isEnabled ? (scheme == .dark ? Color.white.opacity(0.08) : Palette.hoverFill) : Color.clear)
                     Capsule().fill(pressed ? (scheme == .dark ? Color.white.opacity(0.12) : Palette.accent.opacity(0.10)) : Color.clear)
                 }
             }
-            .overlay(Capsule().strokeBorder(Color.white.opacity(prominent ? 0.28 : (scheme == .dark ? 0.12 : 0)), lineWidth: 0.6))
+            .overlay(Capsule().strokeBorder(Color.white.opacity(prominent ? 0 : (scheme == .dark ? 0.1 : 0)), lineWidth: 0.6))
             .contentShape(Capsule())
             .opacity(isEnabled ? 1 : 0.4)
             // Gel-Reaktion: beim Drücken leicht breiter und flacher, beim Loslassen federt die Fläche zurück
             .scaleEffect(x: pressed ? 1.04 : 1, y: pressed ? 0.93 : 1)
-            .shadow(color: prominent && isEnabled ? (destructive ? Palette.danger : Palette.accent).opacity(hovering ? 0.5 : 0.32) : .clear,
-                    radius: hovering ? 16 : 9, y: 3)
             .animation(pressed ? .easeOut(duration: 0.08) : .spring(response: 0.36, dampingFraction: 0.42), value: pressed)
             .animation(.bridgeQuick, value: hovering)
             .onHover { hovering = $0 }
