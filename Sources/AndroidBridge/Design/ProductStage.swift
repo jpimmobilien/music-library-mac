@@ -663,9 +663,13 @@ struct ScaledScreen<Content: View>: View {
 
     var body: some View {
         GeometryReader { g in
+            // Höhe bleibt fest, die Breite folgt dem Seitenverhältnis des Bildschirms –
+            // so füllt die App auch 16:9-Displays (iMac, Studio Display) ohne schwarzen Rand.
+            let scale = g.size.height > 0 ? g.size.height / design.height : 1
+            let width = scale > 0 ? max(design.width * 0.8, g.size.width / scale) : design.width
             content()
-                .frame(width: design.width, height: design.height)
-                .scaleEffect(min(g.size.width / design.width, g.size.height / design.height), anchor: .topLeading)
+                .frame(width: width, height: design.height)
+                .scaleEffect(scale, anchor: .topLeading)
         }
         .clipped()
     }

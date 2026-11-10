@@ -201,6 +201,16 @@ extension View {
         clipShape(RoundedRectangle(cornerRadius: Radius.panel, style: .continuous))
             .glassCard(cornerRadius: Radius.panel)
     }
+
+    /// Leere Tabelle ohne Zebrastreifen, damit „Ordner ist leer“ auf ruhigem Grund steht (macOS 14+).
+    @ViewBuilder
+    func quietRows(when empty: Bool) -> some View {
+        if #available(macOS 14.0, *) {
+            alternatingRowBackgrounds(empty ? .disabled : .enabled)
+        } else {
+            self
+        }
+    }
 }
 
 struct NameSheet: View {
@@ -587,6 +597,7 @@ struct DevicePaneView: View {
             loadFileURLs(providers) { urls in files.uploadToDevice(urls) }
         }
         .scrollContentBackground(.hidden)
+        .quietRows(when: browser.visible.isEmpty)
     }
 
     @ViewBuilder
@@ -1034,6 +1045,7 @@ struct LocalPaneView: View {
             receive(providers)
         }
         .scrollContentBackground(.hidden)
+        .quietRows(when: browser.visible.isEmpty)
     }
 
     private func receive(_ providers: [NSItemProvider]) {
