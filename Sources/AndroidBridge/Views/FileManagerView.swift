@@ -294,7 +294,7 @@ struct PaneHeader<Leading: View, Crumbs: View>: View {
             }
             if let capacity {
                 HStack(spacing: 10) {
-                    CapacityBar(fraction: capacity.used, tint: tint, height: 5)
+                    CapacityBar(fraction: capacity.used, tint: tint, height: 7)
                     Text(capacity.label)
                         .font(.ui(10.5, .medium))
                         .foregroundStyle(Palette.textSecondary)

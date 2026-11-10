@@ -240,11 +240,20 @@ struct PerspectiveLaptop<Screen: View>: View {
         let d = p.dims
         let pts = p.basePolygon(x0: -0.52, x1: 0.52, z0: -0.02, z1: d.depth + 0.03, r: 0.05, y: 0)
         let b = bounds(pts)
-        return Polygon(points: pts)
-            .fill(Color.black.opacity(scheme == .dark ? 0.75 : 0.32))
-            .blur(radius: max(6, b.height * 0.09))
-            .offset(y: b.height * 0.05)
-            .allowsHitTesting(false)
+        let contact = p.basePolygon(x0: -0.49, x1: 0.49, z0: 0.01, z1: d.depth, r: 0.04, y: 0)
+        return ZStack(alignment: .topLeading) {
+            // weicher Umgebungsschatten
+            Polygon(points: pts)
+                .fill(Color.black.opacity(scheme == .dark ? 0.7 : 0.22))
+                .blur(radius: max(8, b.height * 0.12))
+                .offset(y: b.height * 0.07)
+            // Kontaktschatten direkt unter dem Gehäuse
+            Polygon(points: contact)
+                .fill(Color.black.opacity(scheme == .dark ? 0.85 : 0.45))
+                .blur(radius: max(1.5, b.height * 0.012))
+                .offset(y: b.height * 0.012)
+        }
+        .allowsHitTesting(false)
     }
 
     private func lid(_ p: LaptopProjector) -> some View {
@@ -280,13 +289,22 @@ struct PerspectiveLaptop<Screen: View>: View {
                     .frame(width: max(2, fb.width * 0.008), height: max(2, fb.width * 0.008))
                     .position(c)
             }
-            // Spiegelung auf dem Glas
+            // Tiefe: der Bildschirm liegt unter dem Glas (leichte Abdunklung zu den Rändern)
+            Polygon(points: screenPoly)
+                .stroke(Color.black.opacity(0.35), lineWidth: max(1, fb.width * 0.006))
+                .blur(radius: max(0.6, fb.width * 0.004))
+                .mask(Polygon(points: screenPoly))
+                .allowsHitTesting(false)
+            // Spiegelung auf dem Glas: breite, weiche Bahn wie im Studiolicht
             Polygon(points: glass)
-                .fill(LinearGradient(stops: [.init(color: .white.opacity(0.10), location: 0), .init(color: .white.opacity(0.02), location: 0.45),
-                                             .init(color: .clear, location: 0.46)],
+                .fill(LinearGradient(stops: [.init(color: .white.opacity(0.13), location: 0), .init(color: .white.opacity(0.05), location: 0.32),
+                                             .init(color: .white.opacity(0.0), location: 0.5), .init(color: .white.opacity(0.03), location: 0.78),
+                                             .init(color: .clear, location: 1)],
                                      startPoint: UnitPoint(x: 0, y: 0), endPoint: UnitPoint(x: 1, y: 1)))
                 .allowsHitTesting(false)
-            Polygon(points: face).stroke(Color.white.opacity(0.35), lineWidth: 0.6)
+            // Lichtkante am Deckelrand (Fase)
+            Polygon(points: face).stroke(LinearGradient(colors: [.white.opacity(0.7), .white.opacity(0.18), .white.opacity(0.45)],
+                                                        startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 0.8)
         }
     }
 
@@ -301,13 +319,24 @@ struct PerspectiveLaptop<Screen: View>: View {
         }
         let top = p.basePolygon(x0: -0.5, x1: 0.5, z0: 0, z1: d.depth, r: r, y: t)
         return ZStack(alignment: .topLeading) {
+            // Seitenwände: unten dunkler, zur Oberkante hin heller (gerundete Aluminiumkante)
             ForEach(layers.indices, id: \.self) { i in
-                Polygon(points: layers[i]).fill(dark.opacity(0.92))
+                let k = Double(i) / Double(max(layers.count - 1, 1))
+                Polygon(points: layers[i]).fill(dark.opacity(0.75 + 0.2 * (1 - k)))
+                Polygon(points: layers[i]).fill(light.opacity(0.18 * k))
             }
-            Polygon(points: layers[0]).fill(Color.black.opacity(0.18))
+            Polygon(points: layers[0]).fill(Color.black.opacity(0.22))
             Polygon(points: top)
-                .fill(LinearGradient(colors: [light.opacity(0.92), light, dark.opacity(0.75)],
+                .fill(LinearGradient(colors: [light.opacity(0.9), light, dark.opacity(0.7)],
                                      startPoint: UnitPoint(x: 0.5, y: 0), endPoint: UnitPoint(x: 0.5, y: 1)))
+            // Glanzlicht des Studiolichts auf dem Aluminium
+            Polygon(points: top)
+                .fill(RadialGradient(colors: [.white.opacity(scheme == .dark ? 0.16 : 0.42), .clear],
+                                     center: UnitPoint(x: 0.3, y: 0.75), startRadius: 0, endRadius: bounds(top).width * 0.45))
+                .allowsHitTesting(false)
+            // Scharnier: schmale dunkle Fuge hinten
+            Polygon(points: p.basePolygon(x0: -0.4, x1: 0.4, z0: -0.003, z1: 0.012, r: 0.005, y: t + 0.0003))
+                .fill(LinearGradient(colors: [Color.black.opacity(0.75), Color.black.opacity(0.15)], startPoint: .top, endPoint: .bottom))
             keyboard(p)
             trackpad(p)
             // Griffmulde vorn (Modelle mit Kinn)
@@ -465,17 +494,29 @@ struct RealisticPhone<Screen: View>: View {
         let corner = width * style.cornerRatio
         let bezel = width * style.bezel
         let (light, dark) = style.frame
+        let depth = width * 0.075
         ZStack {
-            // Seitentasten (rechts)
-            VStack(spacing: height * 0.02) {
-                Capsule().frame(width: width * 0.022, height: height * 0.05)
-                Capsule().frame(width: width * 0.022, height: height * 0.1)
-            }
-            .foregroundStyle(LinearGradient(colors: [light, dark], startPoint: .top, endPoint: .bottom))
-            .offset(x: width * 0.505, y: -height * 0.14)
-            // Rahmen
+            // Gehäusekante (Tiefe des Telefons) – rechts hinter der Front sichtbar
             RoundedRectangle(cornerRadius: corner, style: .continuous)
-                .fill(LinearGradient(colors: [light, dark, light.opacity(0.9), dark], startPoint: .topLeading, endPoint: .bottomTrailing))
+                .fill(LinearGradient(colors: [dark, light, dark.opacity(0.9), Color.black], startPoint: .top, endPoint: .bottom))
+                .overlay(
+                    RoundedRectangle(cornerRadius: corner, style: .continuous)
+                        .fill(LinearGradient(colors: [.white.opacity(0.0), .white.opacity(0.35), .white.opacity(0.0)],
+                                             startPoint: .leading, endPoint: .trailing))
+                        .blendMode(.screen)
+                )
+                .offset(x: depth)
+            // Seitentasten (auf der Kante)
+            VStack(spacing: height * 0.02) {
+                Capsule().frame(width: width * 0.03, height: height * 0.05)
+                Capsule().frame(width: width * 0.03, height: height * 0.1)
+            }
+            .foregroundStyle(LinearGradient(colors: [light, dark], startPoint: .leading, endPoint: .trailing))
+            .offset(x: width * 0.5 + depth * 0.95, y: -height * 0.14)
+            // Rahmen (poliertes Metall mit Glanzlichtern)
+            RoundedRectangle(cornerRadius: corner, style: .continuous)
+                .fill(AngularGradient(colors: [light, dark, light.opacity(0.95), dark, light.opacity(0.8), dark, light],
+                                      center: .center))
             RoundedRectangle(cornerRadius: corner * 0.92, style: .continuous)
                 .fill(Color.black)
                 .padding(width * 0.012)
@@ -489,10 +530,18 @@ struct RealisticPhone<Screen: View>: View {
                 .overlay(Circle().fill(RadialGradient(colors: [Color(hex: 0x1E3248), .black], center: .center, startRadius: 0, endRadius: width * 0.016)))
                 .frame(width: width * (style == .pixel ? 0.05 : 0.04), height: width * (style == .pixel ? 0.05 : 0.04))
                 .offset(y: -height / 2 + bezel + width * 0.045)
-            // Glas
+            // Tiefe: Bildschirm unter dem Glas
+            RoundedRectangle(cornerRadius: max(2, corner - bezel * 0.8), style: .continuous)
+                .strokeBorder(Color.black.opacity(0.4), lineWidth: width * 0.012)
+                .blur(radius: width * 0.008)
+                .frame(width: width - 2 * bezel, height: height - 2 * bezel)
+                .clipShape(RoundedRectangle(cornerRadius: max(2, corner - bezel * 0.8), style: .continuous))
+                .allowsHitTesting(false)
+            // Glas: weiche Spiegelung des Studiolichts
             RoundedRectangle(cornerRadius: corner, style: .continuous)
-                .fill(LinearGradient(stops: [.init(color: .white.opacity(0.16), location: 0), .init(color: .white.opacity(0.03), location: 0.42),
-                                             .init(color: .clear, location: 0.43)],
+                .fill(LinearGradient(stops: [.init(color: .white.opacity(0.18), location: 0), .init(color: .white.opacity(0.06), location: 0.3),
+                                             .init(color: .clear, location: 0.48), .init(color: .white.opacity(0.04), location: 0.8),
+                                             .init(color: .clear, location: 1)],
                                      startPoint: .topLeading, endPoint: .bottomTrailing))
                 .allowsHitTesting(false)
             RoundedRectangle(cornerRadius: corner, style: .continuous)
@@ -502,11 +551,18 @@ struct RealisticPhone<Screen: View>: View {
         .frame(width: width, height: height)
         .rotation3DEffect(.degrees(yaw), axis: (x: 0, y: 1, z: 0), perspective: 0.5)
         .background(alignment: .bottom) {
-            Ellipse()
-                .fill(Color.black.opacity(scheme == .dark ? 0.8 : 0.35))
-                .frame(width: width * 1.1, height: height * 0.05)
-                .blur(radius: height * 0.025)
-                .offset(y: height * 0.02)
+            ZStack {
+                Ellipse()
+                    .fill(Color.black.opacity(scheme == .dark ? 0.7 : 0.25))
+                    .frame(width: width * 1.25, height: height * 0.07)
+                    .blur(radius: height * 0.03)
+                    .offset(y: height * 0.025)
+                Ellipse()
+                    .fill(Color.black.opacity(scheme == .dark ? 0.85 : 0.45))
+                    .frame(width: width * 0.95, height: height * 0.018)
+                    .blur(radius: height * 0.006)
+                    .offset(y: height * 0.006)
+            }
         }
         .accessibilityHidden(true)
     }
@@ -627,7 +683,7 @@ struct ProductStage: View {
     var body: some View {
         GeometryReader { geo in
             let w = geo.size.width, h = geo.size.height
-            let phoneH = h * 0.74
+            let phoneH = h * 0.66
             ZStack(alignment: .topLeading) {
                 mac
                     .frame(width: w * 0.8, height: h)
@@ -635,7 +691,7 @@ struct ProductStage: View {
                 RealisticPhone(height: phoneH, style: phoneStyle) {
                     PhoneScreenContent(wallpaper: connected ? photos.first : nil, stateSymbol: stateSymbol, stateText: stateText, dimmed: !connected)
                 }
-                .position(x: w * 0.17, y: h - phoneH / 2 - h * 0.015)
+                .position(x: w * 0.19, y: h - phoneH / 2 - h * 0.02)
             }
             .frame(width: w, height: h)
         }

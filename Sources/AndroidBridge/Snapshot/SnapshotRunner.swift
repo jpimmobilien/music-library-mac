@@ -245,6 +245,12 @@ enum SnapshotRunner {
             }) { m in
                 await installPreview(m, state: .connected)
             },
+            Scenario(name: "16-erste-schritte", size: CGSize(width: 760, height: 520), custom: { m in
+                AnyView(FirstStepsView(done: {})
+                    .environment(\.glassEnabled, m.settings.glassEffects)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                    .background(Palette.background))
+            }) { _ in },
             Scenario(name: "11-einstellungen", size: mb13) { m in
                 m.selection = .settings
             },

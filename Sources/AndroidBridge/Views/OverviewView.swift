@@ -27,7 +27,7 @@ struct OverviewView: View {
                         }
                     } else {
                         WelcomeHero()
-                        ConnectSteps()
+                        WelcomeHighlights()
                     }
                     PrivacyNote()
                 }
@@ -406,6 +406,8 @@ struct DeviceStage: View {
 
 /// Ohne Gerät: Einstieg wie eine Produktseite – zweifarbige Überschrift, darunter Mac und Telefon.
 struct WelcomeHero: View {
+    @State private var showSteps = false
+
     var body: some View {
         VStack(spacing: 0) {
             StateEyebrow(state: .disconnected)
@@ -433,9 +435,137 @@ struct WelcomeHero: View {
                 .padding(.top, 26)
             MacCaption(color: Palette.textSecondary)
                 .padding(.top, 10)
+            // Wie auf apple.com: eine klare Hauptaktion unter dem Produktbild
+            Button {
+                showSteps = true
+            } label: {
+                Label("Erste Schritte", systemImage: "play.circle.fill")
+                    .font(.ui(17, .semibold))
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 5)
+            }
+            .buttonStyle(GlassButtonStyle(prominent: true))
+            .padding(.top, 22)
+            .help("Schritt für Schritt: Telefon per USB verbinden")
         }
         .frame(maxWidth: .infinity)
         .padding(.top, 14)
+        .sheet(isPresented: $showSteps) {
+            FirstStepsView { showSteps = false }
+        }
+    }
+}
+
+/// „Erste Schritte“ als eigene Ansicht: drei große Schritte, viel Bild, wenig Text.
+struct FirstStepsView: View {
+    var done: () -> Void
+
+    private let steps: [(String, String, String)] = [
+        ("cable.connector.horizontal", "Mit USB verbinden.",
+         "Ein Kabel, das Daten überträgt – manche Ladekabel können nur laden."),
+        ("lock.open.fill", "Telefon entsperren.",
+         "Android gibt den Speicher erst frei, wenn das Telefon entsperrt ist."),
+        ("arrow.left.arrow.right.circle.fill", "„Dateiübertragung“ wählen.",
+         "In der Mitteilung „USB-Verbindung“ auf „Dateiübertragung / Android Auto“ tippen."),
+    ]
+
+    var body: some View {
+        VStack(spacing: 0) {
+            Text("Erste Schritte")
+                .font(.display(34, .bold))
+                .tracking(-0.8)
+                .foregroundStyle(Palette.textPrimary)
+                .padding(.top, 34)
+            Text("In drei Schritten verbunden – Android Bridge erkennt jedes Android-Telefon automatisch.")
+                .font(.ui(15))
+                .foregroundStyle(Palette.textSecondary)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: 440)
+                .padding(.top, 6)
+            HStack(alignment: .top, spacing: 14) {
+                ForEach(steps.indices, id: \.self) { i in
+                    VStack(alignment: .leading, spacing: 0) {
+                        Image(systemName: steps[i].0)
+                            .font(.system(size: 46, weight: .regular))
+                            .symbolRenderingMode(.hierarchical)
+                            .foregroundStyle(Palette.accent)
+                            .frame(height: 64, alignment: .leading)
+                        Text("Schritt \(i + 1)")
+                            .font(.ui(12, .semibold))
+                            .foregroundStyle(Palette.textTertiary)
+                            .padding(.top, 18)
+                        Text(steps[i].1)
+                            .font(.display(21, .bold))
+                            .tracking(-0.3)
+                            .foregroundStyle(Palette.textPrimary)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.top, 3)
+                        Text(steps[i].2)
+                            .font(Typo.callout)
+                            .foregroundStyle(Palette.textSecondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.top, 6)
+                        Spacer(minLength: 0)
+                    }
+                    .padding(22)
+                    .frame(maxWidth: .infinity, minHeight: 250, alignment: .topLeading)
+                    .glassCard(cornerRadius: 26)
+                }
+            }
+            .padding(.horizontal, 28)
+            .padding(.top, 26)
+            Button("Fertig", action: done)
+                .buttonStyle(GlassButtonStyle(prominent: true))
+                .keyboardShortcut(.defaultAction)
+                .padding(.vertical, 26)
+        }
+        .frame(width: 760)
+        .background(Palette.background)
+    }
+}
+
+/// Unter dem Titelbild: große Kacheln wie die „Highlights“ auf apple.com – ein Satz, ein großes Symbol.
+struct WelcomeHighlights: View {
+    private let items: [(String, String, String, String)] = [
+        ("cable.connector", "Per Kabel.", "Ohne Cloud.", "Ihre Dateien gehen direkt vom Telefon auf den Mac – kein Konto, kein Upload."),
+        ("photo.on.rectangle.angled", "Fotos.", "In Originalqualität.", "Große Vorschauen, Videos direkt abspielen, auswählen und übertragen."),
+        ("rectangle.split.2x1", "Zwei Spalten.", "Wie im Finder.", "Mac und Telefon nebeneinander – ziehen, ablegen, fertig."),
+    ]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: Spacing.l) {
+            Text("Das Wichtigste auf einen Blick.")
+                .font(.display(30, .bold))
+                .tracking(-0.6)
+                .foregroundStyle(Palette.textPrimary)
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 250), spacing: 16)], spacing: 16) {
+                ForEach(items.indices, id: \.self) { i in
+                    VStack(alignment: .leading, spacing: 0) {
+                        Image(systemName: items[i].0)
+                            .font(.system(size: 52, weight: .regular))
+                            .symbolRenderingMode(.hierarchical)
+                            .foregroundStyle(Palette.textPrimary)
+                            .frame(height: 70, alignment: .leading)
+                        Spacer(minLength: 22)
+                        VStack(alignment: .leading, spacing: 0) {
+                            Text(items[i].1).foregroundStyle(Palette.textPrimary)
+                            Text(items[i].2).foregroundStyle(Palette.textTertiary)
+                        }
+                        .font(.display(24, .bold))
+                        .tracking(-0.4)
+                        Text(items[i].3)
+                            .font(Typo.callout)
+                            .foregroundStyle(Palette.textSecondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.top, 8)
+                    }
+                    .padding(26)
+                    .frame(maxWidth: .infinity, minHeight: 250, alignment: .topLeading)
+                    .glassCard(cornerRadius: 28)
+                    .interactiveCard(pressable: false)
+                }
+            }
+        }
     }
 }
 
@@ -494,7 +624,7 @@ struct SectionHeading<Trailing: View>: View {
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: 12) {
             VStack(alignment: .leading, spacing: 3) {
-                Text(title).font(Typo.title).tracking(-0.3).foregroundStyle(Palette.textPrimary)
+                Text(title).font(.display(28, .bold)).tracking(-0.6).foregroundStyle(Palette.textPrimary)
                 if let subtitle {
                     Text(subtitle).font(Typo.callout).foregroundStyle(Palette.textSecondary).fixedSize(horizontal: false, vertical: true)
                 }
@@ -710,7 +840,7 @@ struct FeatureTile<Preview: View>: View {
             VStack(alignment: .leading, spacing: 0) {
                 preview()
                     .frame(maxWidth: .infinity)
-                    .frame(height: 132)
+                    .frame(height: 160)
                     .scaleEffect(hovering ? 1.04 : 1)
                     .clipped()
                     .clipShape(TopRoundedRectangle(radius: Radius.card - 4))

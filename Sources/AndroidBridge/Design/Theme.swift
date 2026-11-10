@@ -68,12 +68,12 @@ enum Palette {
     static let accentSoft = Color(nsColor: .controlAccentColor).opacity(0.13)
     static let onAccent = Color.white
 
-    // Flächen – Hell: weiches Weiß; Dunkel: tiefes Schwarz
-    static let background = Color.adaptive(0xF5F5F7, dark: 0x000000)
-    static let backgroundTop = Color.adaptive(0xFBFBFD, dark: 0x050506)
-    static let surface = Color.adaptive(0xFFFFFF, dark: 0x111216)
-    static let surfaceMuted = Color.adaptive(0xEDEDF1, dark: 0x191A1F)
-    static let mediaWell = Color.adaptive(0xE6E7EC, dark: 0x0C0D10)
+    // Flächen – 5.1 wie apple.com: Hell #F5F5F7 mit weißen Flächen, Dunkel #1D1D1F mit etwas helleren Flächen
+    static let background = Color.adaptive(0xF5F5F7, dark: 0x1D1D1F)
+    static let backgroundTop = Color.adaptive(0xFBFBFD, dark: 0x232325)
+    static let surface = Color.adaptive(0xFFFFFF, dark: 0x2C2C2E)
+    static let surfaceMuted = Color.adaptive(0xEDEDF1, dark: 0x3A3A3C)
+    static let mediaWell = Color.adaptive(0xE6E7EC, dark: 0x161617)
 
     // Text
     static let textPrimary = Color.adaptive(0x1D1D1F, dark: 0xF5F5F7)
@@ -82,8 +82,8 @@ enum Palette {
     static let secondaryText = textSecondary
 
     // Glas
-    static let glassTint = Color.adaptive(0xFFFFFF, 0.6, dark: 0x15161B, 0.55)
-    static let glassTintStrong = Color.adaptive(0xFFFFFF, 0.8, dark: 0x18191F, 0.8)
+    static let glassTint = Color.adaptive(0xFFFFFF, 0.62, dark: 0x2C2C2E, 0.55)
+    static let glassTintStrong = Color.adaptive(0xFFFFFF, 0.82, dark: 0x2C2C2E, 0.82)
     static let glassEdgeLight = Color.adaptive(0xFFFFFF, 0.95, dark: 0xFFFFFF, 0.24)
     static let glassEdgeDark = Color.adaptive(0xFFFFFF, 0.25, dark: 0xFFFFFF, 0.03)
     static let glassSheen = Color.adaptive(0xFFFFFF, 0.6, dark: 0xFFFFFF, 0.08)
@@ -305,6 +305,12 @@ struct GlassBackground<S: InsettableShape>: ViewModifier {
                         LinearGradient(stops: [.init(color: Palette.glassSheen, location: 0),
                                                .init(color: .clear, location: 0.45)],
                                        startPoint: .top, endPoint: .bottom)
+                        // Glanzlicht (Specular Highlight) oben links – wie Licht, das sich im Glas fängt
+                        GeometryReader { g in
+                            RadialGradient(colors: [Palette.glassSheen.opacity(0.9), .clear],
+                                           center: UnitPoint(x: 0.12, y: 0), startRadius: 0,
+                                           endRadius: max(40, min(g.size.width, 360) * 0.55))
+                        }
                     } else {
                         shape.fill(tint ?? Palette.surface)
                     }

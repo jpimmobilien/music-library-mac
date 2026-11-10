@@ -99,10 +99,24 @@ struct CapacityBar: View {
 
     var body: some View {
         GeometryReader { geo in
+            // Glasröhre: vertiefte Rinne mit Innenschatten, Füllung mit Glanzkante oben
             ZStack(alignment: .leading) {
-                Capsule().fill(Color.primary.opacity(0.08))
+                Capsule().fill(Color.primary.opacity(0.07))
+                Capsule()
+                    .strokeBorder(LinearGradient(colors: [Color.black.opacity(0.14), Color.white.opacity(0.35)],
+                                                 startPoint: .top, endPoint: .bottom), lineWidth: 0.6)
                 Capsule()
                     .fill(LinearGradient(colors: [barColor.opacity(0.85), barColor], startPoint: .leading, endPoint: .trailing))
+                    .overlay(
+                        Capsule()
+                            .fill(LinearGradient(stops: [.init(color: .white.opacity(0.55), location: 0),
+                                                         .init(color: .white.opacity(0.0), location: 0.55)],
+                                                 startPoint: .top, endPoint: .bottom))
+                            .padding(.horizontal, height * 0.25)
+                            .padding(.top, height * 0.08)
+                            .padding(.bottom, height * 0.45)
+                    )
+                    .shadow(color: barColor.opacity(0.35), radius: height * 0.5, y: height * 0.15)
                     .frame(width: max(height, geo.size.width * CGFloat(min(max(shown, 0), 1))))
                     .opacity(shown > 0 ? 1 : 0)
             }
