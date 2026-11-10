@@ -1,8 +1,19 @@
-# Testbericht – Android Bridge 5.0.0
+# Testbericht – Android Bridge 5.1.0
 
-_Rückfallversionen: 4.2 (Commit 3414b1f), 4.0 (Commit 962b36b), 3.0 (Commit 27de89b), 2.0 (Commit 30402af) und 1.0 (Zweig `android-bridge-v1.0`)._
+_Rückfallversionen: 5.0 (Commit 7d7a8a5), 4.2 (Commit 3414b1f), 4.0 (Commit 962b36b), 3.0 (Commit 27de89b), 2.0 (Commit 30402af) und 1.0 (Zweig `android-bridge-v1.0`)._
 
-## Neu in 5.0 geprüft
+## Neu in 5.1 geprüft (Lauf 39, Commit 11312ce)
+
+| Prüfung | Ergebnis |
+|---|---|
+| Gestaltung nach apple.com | Geräte mit Kontakt- und Umgebungsschatten, Aluminiumkante, Scharnier, Glanzlichtern und sichtbarer Telefonkante; „Erste Schritte“ als eigene Ansicht über einen großen Knopf; Highlights-Kacheln; Dunkelmodus #1D1D1F mit helleren Flächen; Glas mit Glanzlicht; Speicherbalken als Glasröhre |
+| Unit-Tests | 96 Tests ohne Fehler (macOS 26 Intel, macOS 15 Intel, x86_64) |
+| Universal Binary | x86_64 + arm64, gebaut mit Xcode 26 auf macOS 26 (Intel) |
+| Installation aus der DMG + Start | macOS 26 Intel (Liquid Glass aktiv), macOS 15 Intel |
+| Bildschirmfotos | Intel-Build-Maschinen: Übersicht ohne/mit Gerät, Erste Schritte, Einstellungen, Duplikate, Übertragungen, Mac-Bauformen, hell und dunkel |
+| Nicht geprüft | Apple-Silicon-Läufe fielen aus (GitHub hatte keine freien arm64-Maschinen: „not acquired by Runner … capacity constraints“); Dateimanager und Galerie in 5.1 daher nicht neu fotografiert (Code dort nur Speicherbalken geändert); echte Telefone |
+
+## Aus Version 5.0
 
 | Prüfung | Ergebnis |
 |---|---|
