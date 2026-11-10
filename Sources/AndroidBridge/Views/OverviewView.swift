@@ -465,7 +465,7 @@ struct FirstStepsView: View {
          "Ein Kabel, das Daten überträgt – manche Ladekabel können nur laden."),
         ("lock.open.fill", "Telefon entsperren.",
          "Android gibt den Speicher erst frei, wenn das Telefon entsperrt ist."),
-        ("arrow.left.arrow.right.circle.fill", "„Dateiübertragung“ wählen.",
+        ("arrow.left.arrow.right.circle.fill", "Modus wählen.",
          "In der Mitteilung „USB-Verbindung“ auf „Dateiübertragung / Android Auto“ tippen."),
     ]
 
