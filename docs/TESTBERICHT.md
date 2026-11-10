@@ -1,8 +1,19 @@
-# Testbericht – Android Bridge 4.2.0
+# Testbericht – Android Bridge 5.0.0
 
-_Rückfallversionen: 4.0 (Commit 962b36b), 3.0 (Commit 27de89b), 2.0 (Commit 30402af) und 1.0 (Zweig `android-bridge-v1.0`)._
+_Rückfallversionen: 4.2 (Commit 3414b1f), 4.0 (Commit 962b36b), 3.0 (Commit 27de89b), 2.0 (Commit 30402af) und 1.0 (Zweig `android-bridge-v1.0`)._
 
-## Neu in 4.2 geprüft (Lauf 34, Commit 3414b1f)
+## Neu in 5.0 geprüft
+
+| Prüfung | Ergebnis |
+|---|---|
+| Titelbild | Produktseiten-Aufbau: Status, große Überschrift, Aktionen, darunter der erkannte Mac in echter 3D-Perspektive (Deckel, Tastatur, Touch Bar/Funktionstasten, Trackpad) mit der laufenden App auf dem Bildschirm, davor das Telefon passend zum Hersteller (Pixel, Galaxy Ultra, Galaxy, allgemein). Alle Geräte sind selbst gezeichnet – keine Apple-Fotos, keine Logos |
+| Mac-Bauformen | 9 Modelle (u. a. 15" MacBook Pro 2017 mit Touch Bar, MacBook Air 2017 mit Silberrahmen, MacBook Pro 14" mit Notch, iMac 24", Mac Studio + Studio Display) hell und dunkel geprüft; Bildschirminhalt füllt jetzt auch 16:9-Displays |
+| Dateimanager | beide Spalten mit runden Ecken; Tabelle, Raster und Rollbalken werden an den Ecken beschnitten; leere Tabellen ohne Zebrastreifen (macOS 14+) |
+| Farben | Systemakzentfarbe statt Verläufen, flache Schaltflächen ohne Leuchten, ruhigere Hintergründe; leere Zustände mit SF Symbols statt Illustrationen |
+| Unit-Tests, Universal-Build, DMG, Installation + Start | wie 4.2: macOS 26 Apple Silicon, macOS 15 Apple Silicon, macOS 15/26 Intel |
+| Nicht geprüft | echte Telefone und echte Mac-Hardware außer den Build-Maschinen |
+
+## Aus Version 4.2 (Lauf 34, Commit 3414b1f)
 
 | Prüfung | Ergebnis |
 |---|---|

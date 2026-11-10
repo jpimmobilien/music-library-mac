@@ -3,7 +3,11 @@
 Native macOS-App für die Dateiübertragung zwischen Android-Telefonen und dem Mac per USB (MTP) –
 mit Dateimanager in zwei Spalten, Foto- und Videogalerie, Übertragungszentrale und Liquid-Glass-Gestaltung.
 
-**Neu in 4.2:** Aufbau wie die Musikbibliothek – statt Seitenleiste eine schwebende Liquid-Glass-Navigation oben in
+**Neu in 5.0:** Titelbild wie eine Produktseite – Ihr Mac in echter Perspektive mit der laufenden App auf dem
+Bildschirm, davor Ihr Telefon passend zum Hersteller; runde Ecken im Dateimanager; Systemakzentfarbe statt Verläufen,
+ruhige leere Zustände mit SF Symbols.
+
+**Aus 4.2:** Aufbau wie die Musikbibliothek – statt Seitenleiste eine schwebende Liquid-Glass-Navigation oben in
 der Mitte (Symbol über Beschriftung, gleitende Linse), unten eine schwebende Gerätekapsel (neuestes Foto, Zustand, Akku,
 Speicher bzw. laufende Übertragung, Schnellaktionen; Gerätewechsel per Menü), Inhalte laufen weich unter beide Leisten,
 und der Hintergrund nimmt dezent die Farbe des neuesten Fotos an. Diagnose: ⌥⌘D.
