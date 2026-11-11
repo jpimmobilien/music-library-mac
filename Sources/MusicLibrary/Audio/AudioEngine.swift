@@ -37,9 +37,9 @@ final class AudioEngine {
     /// v2.1: Tonhöhe in Android-Qualität (eigene Audio-Unit vor Apples TimePitch, das nur noch das Tempo übernimmt).
     /// `nil`, wenn die Unit nicht erzeugt werden konnte – dann wie bisher alles über `timePitch`.
     private let pitchUnit: AVAudioUnitEffect?
-    private let pitchAU: PitchShiftAudioUnit?
+    private(set) var pitchAU: PitchShiftAudioUnit?
     /// Für mehr als zwei Kanäle (z. B. 5.1-FLAC) bzw. ohne eigene Unit: Tonhöhe über Apples TimePitch.
-    private var usesNativePitch = false
+    private(set) var usesNativePitch = false
     private let varispeed = AVAudioUnitVarispeed()
     private let eq = AVAudioUnitEQ(numberOfBands: 11)
     private let limiter: AVAudioUnitEffect
