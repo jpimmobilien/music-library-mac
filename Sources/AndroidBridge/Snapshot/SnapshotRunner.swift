@@ -252,7 +252,7 @@ enum SnapshotRunner {
                         ProductStage(connected: false, stateSymbol: "cable.connector", stateText: "Nicht verbunden", hardware: mbp)
                             .aspectRatio(ProductStage.aspect(for: mbp, connected: false), contentMode: .fit)
                             .frame(maxWidth: ProductStage.maxWidth(for: mbp, connected: false))
-                        ProductStage(connected: true, photos: [], deviceName: "Pixel 8", hardware: mbp)
+                        ProductStage(connected: true, photos: [], deviceName: "Pixel 8", phoneStyle: .pixel, hardware: mbp)
                             .aspectRatio(ProductStage.aspect(for: mbp, connected: true), contentMode: .fit)
                             .frame(maxWidth: ProductStage.maxWidth(for: mbp, connected: true))
                     }

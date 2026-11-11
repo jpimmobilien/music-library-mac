@@ -294,10 +294,10 @@ struct PaneHeader<Leading: View, Crumbs: View>: View {
             }
             if let capacity {
                 HStack(spacing: 10) {
-                    CapacityBar(fraction: capacity.used, tint: tint, height: 7)
+                    CapacityBar(fraction: capacity.used, tint: Palette.accent, height: 7)
                     Text(capacity.label)
                         .font(.ui(10.5, .medium))
-                        .foregroundStyle(Palette.textSecondary)
+                        .foregroundStyle(capacity.used > 0.92 ? Palette.warning : Palette.textSecondary)
                         .monospacedDigit()
                         .lineLimit(1)
                         .fixedSize()

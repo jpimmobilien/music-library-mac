@@ -94,7 +94,7 @@ struct CapacityBar: View {
     @Environment(\.animationsEnabled) private var animations
 
     private var barColor: Color {
-        fraction > 0.92 ? Palette.danger : (fraction > 0.8 ? Palette.warning : tint)
+        tint
     }
 
     var body: some View {

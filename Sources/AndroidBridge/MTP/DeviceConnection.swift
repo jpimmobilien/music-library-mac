@@ -292,6 +292,7 @@ final class DeviceConnection: ObservableObject, Identifiable {
             connectedAt = Date()
             Diagnostics.shared.log(.mtp, "Verbunden: \(list.count) Speicher")
             await refreshBattery()
+            startBatteryUpdates()
         } catch {
             let mapped = (error as? MTPError) ?? .transport("\(error)")
             if mapped.responseCode == PTPResponse.accessDenied.rawValue || mapped.responseCode == PTPResponse.storeNotAvailable.rawValue {
@@ -319,6 +320,8 @@ final class DeviceConnection: ObservableObject, Identifiable {
                     }
                     self.issue = nil
                     self.connectedAt = Date()
+                    await self.refreshBattery()
+                    self.startBatteryUpdates()
                     return
                 }
             }
@@ -329,6 +332,21 @@ final class DeviceConnection: ObservableObject, Identifiable {
         guard let backend, state == .connected else { return }
         if let list = try? await backend.storages() { storages = list }
         await refreshBattery()
+    }
+
+    private var batteryTask: Task<Void, Never>?
+
+    /// Akkustand im Minutentakt nachlesen, solange verbunden (Android aktualisiert den Wert laufend,
+    /// das Telefon lädt am USB-Kabel). Niedrige Priorität – Übertragungen gehen vor.
+    private func startBatteryUpdates() {
+        batteryTask?.cancel()
+        batteryTask = Task { [weak self] in
+            while !Task.isCancelled {
+                try? await Task.sleep(nanoseconds: 60_000_000_000)
+                guard let self, self.state == .connected else { return }
+                await self.refreshBattery()
+            }
+        }
     }
 
     /// Akkustand lesen (Fehler werden ignoriert – nicht jedes Gerät meldet ihn).
@@ -353,6 +371,7 @@ final class DeviceConnection: ObservableObject, Identifiable {
     func markDisconnected() {
         connectTask?.cancel()
         unlockTask?.cancel()
+        batteryTask?.cancel()
         gracePeriodTask?.cancel()
         backend?.close(graceful: false)
         backend = nil
@@ -363,6 +382,7 @@ final class DeviceConnection: ObservableObject, Identifiable {
     func disconnectGracefully() {
         connectTask?.cancel()
         unlockTask?.cancel()
+        batteryTask?.cancel()
         backend?.close(graceful: true)
         backend = nil
     }

@@ -113,7 +113,8 @@ struct DeviceHero: View {
                      deviceName: device.displayName,
                      phoneStyle: PhoneStyle(manufacturer: device.manufacturer, model: device.model),
                      stateSymbol: connected ? "cable.connector" : device.state.symbolName,
-                     stateText: connected ? "USB · Dateiübertragung" : device.state.title)
+                     stateText: connected ? "USB · Dateiübertragung" : device.state.title,
+                     connectedAt: connected ? device.connectedAt : nil)
             .aspectRatio(ProductStage.aspect(connected: true), contentMode: .fit)
             .frame(maxWidth: ProductStage.maxWidth(connected: true))
             // dezenter Lichtimpuls, sobald die Verbindung steht

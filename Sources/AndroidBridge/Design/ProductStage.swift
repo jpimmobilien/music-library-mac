@@ -486,16 +486,48 @@ struct RealisticPhone<Screen: View>: View {
     var height: CGFloat
     var style: PhoneStyle = .generic
     var yaw: Double = 14
+    /// Flach auf dem Tisch liegend, von oben gesehen (keine Kante, Schatten rundum).
+    var lying = false
     @ViewBuilder var screen: () -> Screen
     @Environment(\.colorScheme) private var scheme
 
     var body: some View {
+        if lying {
+            phoneBody(depth: 0)
+                .shadow(color: .black.opacity(scheme == .dark ? 0.6 : 0.22), radius: height * 0.03, y: height * 0.018)
+                .accessibilityHidden(true)
+        } else {
+            standing
+        }
+    }
+
+    private var standing: some View {
+        let width = height / 2.12
+        return phoneBody(depth: width * 0.075)
+            .rotation3DEffect(.degrees(yaw), axis: (x: 0, y: 1, z: 0), perspective: 0.5)
+            .background(alignment: .bottom) {
+                ZStack {
+                    Ellipse()
+                        .fill(Color.black.opacity(scheme == .dark ? 0.7 : 0.25))
+                        .frame(width: width * 1.25, height: height * 0.07)
+                        .blur(radius: height * 0.03)
+                        .offset(y: height * 0.025)
+                    Ellipse()
+                        .fill(Color.black.opacity(scheme == .dark ? 0.85 : 0.45))
+                        .frame(width: width * 0.95, height: height * 0.018)
+                        .blur(radius: height * 0.006)
+                        .offset(y: height * 0.006)
+                }
+            }
+            .accessibilityHidden(true)
+    }
+
+    private func phoneBody(depth: CGFloat) -> some View {
         let width = height / 2.12
         let corner = width * style.cornerRatio
         let bezel = width * style.bezel
         let (light, dark) = style.frame
-        let depth = width * 0.075
-        ZStack {
+        return ZStack {
             // Gehäusekante (Tiefe des Telefons) – rechts hinter der Front sichtbar
             RoundedRectangle(cornerRadius: corner, style: .continuous)
                 .fill(LinearGradient(colors: [dark, light, dark.opacity(0.9), Color.black], startPoint: .top, endPoint: .bottom))
@@ -506,6 +538,7 @@ struct RealisticPhone<Screen: View>: View {
                         .blendMode(.screen)
                 )
                 .offset(x: depth)
+                .opacity(depth > 0 ? 1 : 0)
             // Seitentasten (auf der Kante)
             VStack(spacing: height * 0.02) {
                 Capsule().frame(width: width * 0.03, height: height * 0.05)
@@ -513,6 +546,7 @@ struct RealisticPhone<Screen: View>: View {
             }
             .foregroundStyle(LinearGradient(colors: [light, dark], startPoint: .leading, endPoint: .trailing))
             .offset(x: width * 0.5 + depth * 0.95, y: -height * 0.14)
+            .opacity(depth > 0 ? 1 : 0)
             // Rahmen (poliertes Metall mit Glanzlichtern)
             RoundedRectangle(cornerRadius: corner, style: .continuous)
                 .fill(AngularGradient(colors: [light, dark, light.opacity(0.95), dark, light.opacity(0.8), dark, light],
@@ -549,22 +583,6 @@ struct RealisticPhone<Screen: View>: View {
                                              startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 0.8)
         }
         .frame(width: width, height: height)
-        .rotation3DEffect(.degrees(yaw), axis: (x: 0, y: 1, z: 0), perspective: 0.5)
-        .background(alignment: .bottom) {
-            ZStack {
-                Ellipse()
-                    .fill(Color.black.opacity(scheme == .dark ? 0.7 : 0.25))
-                    .frame(width: width * 1.25, height: height * 0.07)
-                    .blur(radius: height * 0.03)
-                    .offset(y: height * 0.025)
-                Ellipse()
-                    .fill(Color.black.opacity(scheme == .dark ? 0.85 : 0.45))
-                    .frame(width: width * 0.95, height: height * 0.018)
-                    .blur(radius: height * 0.006)
-                    .offset(y: height * 0.006)
-            }
-        }
-        .accessibilityHidden(true)
     }
 }
 
@@ -679,22 +697,29 @@ struct ProductStage: View {
     var stateSymbol: String?
     var stateText: String?
     var hardware: MacHardware = .current
+    /// Zeitpunkt der Verbindung – startet die Auftrittsanimation (Telefon wird neben den Mac gelegt).
+    var connectedAt: Date?
 
     /// Seitenverhältnis der Bühne: mit Produktfoto so hoch wie das Foto, sonst breit (Mac + Telefon).
     static func aspect(for hardware: MacHardware = .current, connected: Bool) -> CGFloat {
         if let p = connected ? MacPhoto.front(for: hardware) : MacPhoto.side(for: hardware) {
-            return p.pixelSize.width / p.pixelSize.height
+            // verbunden: rechts neben dem Mac liegt das Telefon
+            return p.pixelSize.width / p.pixelSize.height + (connected ? PhotoDeskStage.phoneArea : 0)
         }
         return 2.05
     }
     static func maxWidth(for hardware: MacHardware = .current, connected: Bool) -> CGFloat {
-        if connected { return MacPhoto.front(for: hardware) != nil ? 640 : 940 }
+        if connected { return MacPhoto.front(for: hardware) != nil ? 860 : 940 }
         return MacPhoto.side(for: hardware) != nil ? 720 : 940
     }
 
     var body: some View {
-        if let photo = connected ? MacPhoto.front(for: hardware) : MacPhoto.side(for: hardware) {
-            // Echtes Produktfoto: der Mac allein, wie auf einer Produktseite – mit der App auf dem Bildschirm
+        if connected, let photo = MacPhoto.front(for: hardware) {
+            // Echtes Produktfoto von oben, daneben liegt das verbundene Telefon
+            PhotoDeskStage(photo: photo, photos: photos, deviceName: deviceName, phoneStyle: phoneStyle,
+                           stateSymbol: stateSymbol, stateText: stateText, connectedAt: connectedAt)
+        } else if !connected, let photo = MacPhoto.side(for: hardware) {
+            // Ohne Telefon: der Mac allein in der Seitenansicht, wie auf einer Produktseite
             PhotoLaptop(photo: photo) { MiniAppScreen(photos: photos, connected: connected, deviceName: deviceName) }
         } else {
             drawnStage
@@ -842,6 +867,77 @@ struct PhotoLaptop<Screen: View>: View {
             }
             .frame(width: w, height: h)
             .position(x: geo.size.width / 2, y: geo.size.height / 2)
+        }
+    }
+}
+
+
+/// Verbunden mit Produktfoto: Mac von oben, das Telefon liegt rechts daneben auf dem Tisch.
+/// Beim Verbinden wird das Telefon hereingelegt, der Mac-Bildschirm geht an, ein Lichtimpuls läuft vom Telefon aus.
+struct PhotoDeskStage: View {
+    /// Zusätzliche Breite (in Höhen der Bühne) für das Telefon.
+    static let phoneArea: CGFloat = 0.36
+
+    let photo: MacPhoto
+    var photos: [NSImage]
+    var deviceName: String
+    var phoneStyle: PhoneStyle
+    var stateSymbol: String?
+    var stateText: String?
+    var connectedAt: Date?
+    @Environment(\.animationsEnabled) private var animations
+    @State private var placed = true
+    @State private var screenOn = true
+    @State private var pulse: CGFloat = 1
+
+    var body: some View {
+        GeometryReader { geo in
+            let H = geo.size.height
+            let lw = H * photo.pixelSize.width / photo.pixelSize.height
+            let phoneH = H * 0.5
+            let phoneW = phoneH / 2.12
+            let phoneCenter = CGPoint(x: min(geo.size.width - phoneW * 0.62, lw + phoneW * 0.42), y: H * 0.66)
+            ZStack(alignment: .topLeading) {
+                PhotoLaptop(photo: photo) {
+                    MiniAppScreen(photos: photos, connected: true, deviceName: deviceName)
+                        .overlay(Color.black.opacity(screenOn ? 0 : 0.92))
+                }
+                .frame(width: lw, height: H)
+                // Lichtimpuls vom Telefon aus
+                Circle()
+                    .fill(RadialGradient(colors: [Palette.accent.opacity(0.35), Palette.accent.opacity(0)], center: .center,
+                                         startRadius: 0, endRadius: phoneH * 0.9))
+                    .frame(width: phoneH * 1.8, height: phoneH * 1.8)
+                    .scaleEffect(0.3 + pulse * 1.1)
+                    .opacity(Double(1 - pulse))
+                    .position(phoneCenter)
+                    .allowsHitTesting(false)
+                RealisticPhone(height: phoneH, style: phoneStyle, lying: true) {
+                    PhoneScreenContent(wallpaper: photos.first, stateSymbol: stateSymbol, stateText: stateText, dimmed: false)
+                }
+                .rotationEffect(.degrees(placed ? -8 : 14))
+                .scaleEffect(placed ? 1 : 1.08)
+                .opacity(placed ? 1 : 0)
+                .position(x: phoneCenter.x + (placed ? 0 : phoneW * 1.6), y: phoneCenter.y + (placed ? 0 : -H * 0.06))
+            }
+            .frame(width: geo.size.width, height: H, alignment: .topLeading)
+        }
+        .onAppear {
+            if let t = connectedAt, Date().timeIntervalSince(t) < 10 { play() }
+        }
+        .onChange(of: connectedAt) { _ in play() }
+    }
+
+    private func play() {
+        guard MotionPolicy.allowed(animations) else { return }
+        // Ausgangslage ohne Animation setzen, im nächsten Durchlauf weich in die Endlage
+        placed = false
+        screenOn = false
+        pulse = 0
+        DispatchQueue.main.async {
+            withAnimation(.spring(response: 0.85, dampingFraction: 0.78)) { placed = true }
+            withAnimation(.easeInOut(duration: 0.7).delay(0.4)) { screenOn = true }
+            withAnimation(.easeOut(duration: 1.3).delay(0.5)) { pulse = 1 }
         }
     }
 }

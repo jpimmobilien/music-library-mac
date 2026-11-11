@@ -32,7 +32,7 @@ struct SettingsPage: View {
                 .padding(.horizontal, Spacing.gutter)
                 .padding(.bottom, 40)
                 .frame(maxWidth: 780, alignment: .leading)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: .center)
             }
         }
     }
