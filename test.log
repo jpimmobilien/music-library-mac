@@ -1,0 +1,210 @@
+[0/1] Planning build
+Test Suite 'Selected tests' started at 2026-11-11 10:12:49.233.
+Test Suite 'MusicLibraryPackageTests.xctest' started at 2026-11-11 10:12:49.235.
+Test Suite 'AudioEngineTests' started at 2026-11-11 10:12:49.235.
+Test Case '-[MusicLibraryTests.AudioEngineTests testBassShelfBoostsLowsOnly]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testBassShelfBoostsLowsOnly]' passed (0.247 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testEffectiveRate]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testEffectiveRate]' passed (0.005 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testEqualizerBandBoostAtCenterFrequency]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testEqualizerBandBoostAtCenterFrequency]' passed (0.074 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testEqualizerLeavesDistantFrequenciesAlone]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testEqualizerLeavesDistantFrequenciesAlone]' passed (0.071 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testEveryBuiltInPresetIsAudible]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testEveryBuiltInPresetIsAudible]' passed (1.828 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testHeadroomCompensatesBoost]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testHeadroomCompensatesBoost]' passed (0.072 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testLevelMeterFollowsRenderedAudio]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testLevelMeterFollowsRenderedAudio]' passed (0.367 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testNeutralChainIsTransparent]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testNeutralChainIsTransparent]' passed (0.043 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchHalfSemitoneFromSettingsIsAudible]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchHalfSemitoneFromSettingsIsAudible]' passed (1.737 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchOneFineStepDownIsAudible]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchOneFineStepDownIsAudible]' passed (3.243 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchQualityStationaryChord]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchQualityStationaryChord]' passed (4.555 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchShiftOctaveUpKeepsDuration]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchShiftOctaveUpKeepsDuration]' passed (2.302 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchTransientsLessSmearedThanAppleTimePitch]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchTransientsLessSmearedThanAppleTimePitch]' passed (7.489 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testPortedPitchAccuracyLowHighAndMono]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testPortedPitchAccuracyLowHighAndMono]' passed (6.457 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testTempoChangeKeepsPitch]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testTempoChangeKeepsPitch]' passed (0.072 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testTrackChangeBetweenFormatsWhileRunning]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testTrackChangeBetweenFormatsWhileRunning]' passed (69.495 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testVarispeedChangesPitchAndSpeed]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testVarispeedChangesPitchAndSpeed]' passed (0.080 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testVolumeBelowFullScalesLinearly]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testVolumeBelowFullScalesLinearly]' passed (0.057 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testVolumeBoostIsLouderButLimited]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testVolumeBoostIsLouderButLimited]' passed (0.166 seconds).
+Test Suite 'AudioEngineTests' passed at 2026-11-11 10:14:27.601.
+	 Executed 19 tests, with 0 failures (0 unexpected) in 98.360 (98.366) seconds
+Test Suite 'LibraryStoreTests' started at 2026-11-11 10:14:27.601.
+Test Case '-[MLStoreTests.LibraryStoreTests testCountPlayAndFinishPlaybackAreSeparate]' started.
+Test Case '-[MLStoreTests.LibraryStoreTests testCountPlayAndFinishPlaybackAreSeparate]' passed (0.008 seconds).
+Test Suite 'LibraryStoreTests' passed at 2026-11-11 10:14:27.609.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.008 (0.009) seconds
+Test Suite 'OggPlaybackTests' started at 2026-11-11 10:14:27.609.
+Test Case '-[MusicLibraryTests.OggPlaybackTests testNonVorbisOggFails]' started.
+Test Case '-[MusicLibraryTests.OggPlaybackTests testNonVorbisOggFails]' passed (0.008 seconds).
+Test Case '-[MusicLibraryTests.OggPlaybackTests testTranscodedFileIsPlayableWithFullLength]' started.
+Test Case '-[MusicLibraryTests.OggPlaybackTests testTranscodedFileIsPlayableWithFullLength]' passed (0.186 seconds).
+Test Suite 'OggPlaybackTests' passed at 2026-11-11 10:14:27.804.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.194 (0.195) seconds
+Test Suite 'PlaybackLogicTests' started at 2026-11-11 10:14:27.804.
+Test Case '-[MLCoreTests.PlaybackLogicTests testAlbumAbTitel_undMischen]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testAlbumAbTitel_undMischen]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testAlsNaechstesEingereiht_folgtImZufallDirektAufDenLaufendenTitel]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testAlsNaechstesEingereiht_folgtImZufallDirektAufDenLaufendenTitel]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testAngetippterTitel_startetDieGanzeListe]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testAngetippterTitel_startetDieGanzeListe]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testEntfernen_ausDerZufallsreihenfolge]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testEntfernen_ausDerZufallsreihenfolge]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testFehlendeTitel_werdenEntfernt_undStartWandertMit]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testFehlendeTitel_werdenEntfernt_undStartWandertMit]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testHoerzeit_nurWaehrendWiedergabe_einmalGezaehlt]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testHoerzeit_nurWaehrendWiedergabe_einmalGezaehlt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testNurDiesenTitel_wirdAlleinAbgespielt]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testNurDiesenTitel_wirdAlleinAbgespielt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testOhneTitel_wirdNichtsGezaehlt]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testOhneTitel_wirdNichtsGezaehlt]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testPitch_tempoUnabhaengigImModusTonhoehe]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testPitch_tempoUnabhaengigImModusTonhoehe]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testPitch_tolerantesLesen]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testPitch_tolerantesLesen]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testPitch_zweiModi]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testPitch_zweiModi]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testPlaylistMitDoppeltemTitel_startetAnDerAngetipptenStelle]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testPlaylistMitDoppeltemTitel_startetAnDerAngetipptenStelle]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testSleepTimer_countdownUndAusblenden]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testSleepTimer_countdownUndAusblenden]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testSleepTimer_endeDesTitelsUndPruefabstand]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testSleepTimer_endeDesTitelsUndPruefabstand]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testStartFirstShuffleOrder_navigation]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testStartFirstShuffleOrder_navigation]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testVorherigerTitel_dreiSekundenRegel]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testVorherigerTitel_dreiSekundenRegel]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testWiedergabeZaehlt_haelfteOderDreissigSekunden]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testWiedergabeZaehlt_haelfteOderDreissigSekunden]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testWiederholenZyklus]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testWiederholenZyklus]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.PlaybackLogicTests testZufallsreihenfolge_starttitelVorn_alleGenauEinmal]' started.
+Test Case '-[MLCoreTests.PlaybackLogicTests testZufallsreihenfolge_starttitelVorn_alleGenauEinmal]' passed (0.003 seconds).
+Test Suite 'PlaybackLogicTests' passed at 2026-11-11 10:14:27.823.
+	 Executed 19 tests, with 0 failures (0 unexpected) in 0.012 (0.019) seconds
+Test Suite 'TimePitchEngineTests' started at 2026-11-11 10:14:27.823.
+Test Case '-[MLCoreTests.TimePitchEngineTests testAkkordNaheVollaussteuerung_keinClipping_pegelWieEingang]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testAkkordNaheVollaussteuerung_keinClipping_pegelWieEingang]' passed (28.052 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testAkkordPlus2Halbtoene_verzerrungsanteil]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testAkkordPlus2Halbtoene_verzerrungsanteil]' passed (7.216 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testAnschlaege_bleibenScharf]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testAnschlaege_bleibenScharf]' passed (11.122 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testAusgabelaenge_istGenauEingangDurchSpeed]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testAusgabelaenge_istGenauEingangDurchSpeed]' passed (11.269 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testErgebnis_unabhaengigVonBlockgroessen]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testErgebnis_unabhaengigVonBlockgroessen]' passed (30.675 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testInPlace_gleichesErgebnis]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testInPlace_gleichesErgebnis]' passed (3.842 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testLatenz_fuerAlleTonhoehenGleich_undOhneUnterlauf]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testLatenz_fuerAlleTonhoehenGleich_undOhneUnterlauf]' passed (7.942 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testLautesMaterial_wirdBegrenztStattGeclippt]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testLautesMaterial_wirdBegrenztStattGeclippt]' passed (8.361 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testNeutraleEinstellungen_reichenBitgenauDurch]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testNeutraleEinstellungen_reichenBitgenauDurch]' passed (0.190 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testRechenaufwand_60SekundenStereo]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testRechenaufwand_60SekundenStereo]' passed (166.154 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testReset_verhaeltSichWieNeueInstanz]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testReset_verhaeltSichWieNeueInstanz]' passed (14.136 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testSchallplatte_unterdruecktSpiegelfrequenzen]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testSchallplatte_unterdruecktSpiegelfrequenzen]' passed (0.502 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testSchallplatte_verschiebtTonSauberUndHaeltPegel]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testSchallplatte_verschiebtTonSauberUndHaeltPegel]' passed (3.314 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testSinus440_frequenzGenauVerschoben]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testSinus440_frequenzGenauVerschoben]' passed (14.431 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testStereobild_bleibtErhalten]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testStereobild_bleibtErhalten]' passed (2.267 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testStilleBleibtStille]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testStilleBleibtStille]' passed (1.909 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testTonhoehe_monoUndAndereAbtastraten]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testTonhoehe_monoUndAndereAbtastraten]' passed (11.519 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testTonhoehe_verschiebtAkkordOhneTempoaenderung]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testTonhoehe_verschiebtAkkordOhneTempoaenderung]' passed (5.667 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testUeberblenden_beimTonhoehenwechselOhneLuecke]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testUeberblenden_beimTonhoehenwechselOhneLuecke]' passed (5.775 seconds).
+Test Case '-[MLCoreTests.TimePitchEngineTests testZeitbezug_anschlagErscheintNachLatenz]' started.
+Test Case '-[MLCoreTests.TimePitchEngineTests testZeitbezug_anschlagErscheintNachLatenz]' passed (3.566 seconds).
+Test Suite 'TimePitchEngineTests' passed at 2026-11-11 10:20:05.737.
+	 Executed 20 tests, with 0 failures (0 unexpected) in 337.907 (337.914) seconds
+Test Suite 'MusicLibraryPackageTests.xctest' passed at 2026-11-11 10:20:05.737.
+	 Executed 61 tests, with 0 failures (0 unexpected) in 436.481 (436.502) seconds
+Test Suite 'Selected tests' passed at 2026-11-11 10:20:05.738.
+	 Executed 61 tests, with 0 failures (0 unexpected) in 436.481 (436.505) seconds
+[Audio] Bass +6 dB: 50 Hz 5.6235447 dB, 5 kHz -7.86937e-05 dB
+[Audio] EQ 1 kHz +12 dB: gemessen 12.000021 dB
+[Audio] EQ 16 kHz +12 dB bei 125 Hz: 0.0016161695 dB
+[Audio] Preset Neutral (gemessen/erwartet dB): 31 Hz +0.0/+0.0 · 125 Hz +0.0/+0.0 · 500 Hz +0.0/+0.0 · 2000 Hz +0.0/+0.0 · 8000 Hz +0.0/+0.0
+[Audio] Preset Bass Boost (gemessen/erwartet dB): 31 Hz +4.2/+4.2 · 125 Hz +3.3/+3.3 · 500 Hz -0.7/-0.7 · 2000 Hz -2.9/-2.9 · 8000 Hz -3.0/-3.0
+[Audio] Preset Rock (gemessen/erwartet dB): 31 Hz +3.0/+3.0 · 125 Hz +0.6/+0.6 · 500 Hz -3.2/-3.2 · 2000 Hz -1.3/-1.5 · 8000 Hz +2.5/+1.3
+[Audio] Preset Pop (gemessen/erwartet dB): 31 Hz -2.7/-2.7 · 125 Hz +0.4/+0.4 · 500 Hz +2.8/+2.8 · 2000 Hz -0.2/-0.2 · 8000 Hz -2.6/-2.3
+[Audio] Preset Klassik (gemessen/erwartet dB): 31 Hz +2.0/+2.0 · 125 Hz +0.6/+0.6 · 500 Hz -1.3/-1.3 · 2000 Hz -1.1/-1.3 · 8000 Hz +1.8/+0.9
+[Audio] Preset Jazz (gemessen/erwartet dB): 31 Hz +1.9/+1.9 · 125 Hz +0.2/+0.2 · 500 Hz -2.3/-2.3 · 2000 Hz -1.4/-1.5 · 8000 Hz +1.6/+0.8
+[Audio] Preset Gesang (gemessen/erwartet dB): 31 Hz -4.0/-4.0 · 125 Hz -2.9/-2.9 · 500 Hz +1.6/+1.6 · 2000 Hz +2.2/+2.2 · 8000 Hz -1.8/-1.5
+[Audio] Preset Elektronisch (gemessen/erwartet dB): 31 Hz +3.3/+3.3 · 125 Hz -0.1/-0.1 · 500 Hz -3.7/-3.7 · 2000 Hz -1.3/-1.5 · 8000 Hz +3.5/+2.1
+[Audio] EQ +12 dB mit −12 dB Aussteuerung: 0.0 dB
+[Audio] Pegel 1 kHz −6 dBFS: Bänder 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.90 0.00 0.00 0.00 0.00 0.00 0.00 0.00, L 0.89982295, R 0.89982295
+[Audio] Pegelanalyse je Bild: 0.862 ms
+[Audio] neutral: Spitze 0.4999968
+[Audio] Tonhöhe +0,5 Halbtöne: 453.33333333333337 Hz (erwartet 452.8929841231365)
+[Audio] Tonhöhe −0,1 Halbtöne: 437.5 Hz (erwartet 437.4657864797208)
+[Pitch] Akkord +2 Halbtöne, Apple TimePitch (2.0): Störanteil -53.0 dB, Spitze 0.567
+[Pitch] Akkord +2 Halbtöne, Android-Verfahren (2.1): Störanteil -48.7 dB, Spitze 0.567
+[Audio] Tonhöhe +12 Halbtöne: 880.0 Hz
+[Pitch] Anschläge +2 Halbtöne, Apple TimePitch (2.0): Vorecho -6.0 dB
+[Pitch] Anschläge -3 Halbtöne, Apple TimePitch (2.0): Vorecho -10.2 dB
+[Pitch] Anschläge +2 Halbtöne, Android-Verfahren (2.1): Vorecho -25.0 dB
+[Pitch] Anschläge -3 Halbtöne, Android-Verfahren (2.1): Vorecho -31.9 dB
+[Pitch] 55.0 Hz −1 Halbton: 51.666666666666664 Hz (erwartet 51.91308719749314)
+[Pitch] 3000.0 Hz −1 Halbton: 2831.6666666666665 Hz (erwartet 2831.6229380450804)
+[Pitch] Mono +3 Halbtöne: 523.6502857565613 Hz (erwartet 523.2511306011972)
+[Audio] Tempo 1,5×: 440.0 Hz, Restpegel 0.0
+[Audio] Titelwechsel auf 44100 Hz, 2 Kanal/Kanäle, Tonhöhe 0 Cent: Beginn nach 0.003 s, Pegel 0.21208835
+[Audio] Titelwechsel auf 48000 Hz, 1 Kanal/Kanäle, Tonhöhe 0 Cent: Beginn nach 0.494 s, Pegel 0.14996983
+[Audio] Titelwechsel auf 96000 Hz, 2 Kanal/Kanäle, Tonhöhe 0 Cent: kein Absturz; Klang im Offline-Modus nicht messbar
+[Audio] Titelwechsel auf 44100 Hz, 1 Kanal/Kanäle, Tonhöhe 0 Cent: Beginn nach 0.003 s, Pegel 0.14996912
+[Audio] Titelwechsel auf 192000 Hz, 2 Kanal/Kanäle, Tonhöhe 0 Cent: kein Absturz; Klang im Offline-Modus nicht messbar
+[Audio] Titelwechsel auf 22050 Hz, 2 Kanal/Kanäle, Tonhöhe 0 Cent: Beginn nach 0.005 s, Pegel 0.21208893
+[Audio] Titelwechsel auf 44100 Hz, 2 Kanal/Kanäle, Tonhöhe 0 Cent: Beginn nach 0.003 s, Pegel 0.21208835
+[Audio] Titelwechsel auf 44100 Hz, 2 Kanal/Kanäle, Tonhöhe 200 Cent: Beginn nach 0.145 s, Pegel 0.21215509
+[Audio] Titelwechsel auf 48000 Hz, 1 Kanal/Kanäle, Tonhöhe 200 Cent: Beginn nach 0.623 s, Pegel 0.1499591
+[Audio] Titelwechsel auf 96000 Hz, 2 Kanal/Kanäle, Tonhöhe 200 Cent: kein Absturz; Klang im Offline-Modus nicht messbar
+[Audio] Titelwechsel auf 44100 Hz, 1 Kanal/Kanäle, Tonhöhe 200 Cent: Beginn nach 0.145 s, Pegel 0.15001632
+[Audio] Titelwechsel auf 192000 Hz, 2 Kanal/Kanäle, Tonhöhe 200 Cent: kein Absturz; Klang im Offline-Modus nicht messbar
+[Audio] Titelwechsel auf 22050 Hz, 2 Kanal/Kanäle, Tonhöhe 200 Cent: Beginn nach 0.149 s, Pegel 0.21215561
+[Audio] Titelwechsel auf 44100 Hz, 2 Kanal/Kanäle, Tonhöhe 200 Cent: Beginn nach 0.145 s, Pegel 0.21215509
+[Audio] Drehzahl 2×: 880.0 Hz, Restpegel 0.0
+[Audio] Lautstärke 50 %: Spitze 0.2499984
+[Audio] Lautstärke 300 %: Spitze 0.95258456, Pegelgewinn 5.598891 dB
+TimePitch Akkord Spitze 0.990 2.0 HT: Ausgang 0.9868 (-0.03 dB)
+TimePitch Akkord Spitze 0.990 -5.0 HT: Ausgang 0.9868 (-0.03 dB)
+TimePitch Akkord Spitze 0.990 12.0 HT: Ausgang 0.9868 (-0.03 dB)
+TimePitch Akkord Spitze 0.990 -12.0 HT: Ausgang 0.9868 (-0.03 dB)
+TimePitch Akkord Spitze 0.500 2.0 HT: Ausgang 0.5005 (0.01 dB)
+TimePitch Akkord Spitze 0.500 -5.0 HT: Ausgang 0.5008 (0.01 dB)
+TimePitch Akkord Spitze 0.500 12.0 HT: Ausgang 0.5001 (0.00 dB)
+TimePitch Akkord Spitze 0.500 -12.0 HT: Ausgang 0.5002 (0.00 dB)
+TimePitch Akkord 2.0 HT: Verzerrungs-/Rauschanteil -59.5 dB
+TimePitch Akkord -2.0 HT: Verzerrungs-/Rauschanteil -60.4 dB
+TimePitch-Latenz: 44,1 kHz 6251 Frames, 48 kHz 6251, 96 kHz 12395
+TimePitch Rechenaufwand 0.5 HT: 60 s Stereo in 64.922 s → 0.9× Echtzeit
+TimePitch Rechenaufwand 12.0 HT: 60 s Stereo in 95.032 s → 0.6× Echtzeit
+TimePitch Sinus 440 Hz 0.5 HT: soll 452.893 Hz, gemessen 452.8930 Hz (Nulldurchgänge) / 452.893 Hz (FFT), Störabstand 107.2 dB
+TimePitch Sinus 440 Hz -0.1 HT: soll 437.466 Hz, gemessen 437.4658 Hz (Nulldurchgänge) / 437.467 Hz (FFT), Störabstand 97.3 dB
+TimePitch Sinus 440 Hz 12.0 HT: soll 880.000 Hz, gemessen 880.0000 Hz (Nulldurchgänge) / 879.998 Hz (FFT), Störabstand 90.8 dB
+TimePitch Sinus 440 Hz -12.0 HT: soll 220.000 Hz, gemessen 220.0000 Hz (Nulldurchgänge) / 219.999 Hz (FFT), Störabstand 100.1 dB
+◇ Test run started.
+↳ Testing Library Version: 1501
+↳ Target Platform: x86_64-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.
