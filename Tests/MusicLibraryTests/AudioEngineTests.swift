@@ -219,58 +219,25 @@ final class AudioEngineTests: XCTestCase {
                 try audio.start()
                 audio.player.scheduleBuffer(buf, at: nil)
                 audio.player.play()
+                // Kleine Zyklen wie bei der Ausgabe (512 Frames). Im Offline-Modus setzt der neue Titel nach einem
+                // Wechsel der Abtastrate verzögert ein (auch mit dem Verhalten von 2.1, bei 96 kHz ≈ 1 s) – deshalb bis
+                // zu 6 s rechnen und den Klang ab seinem Beginn messen.
                 var samples: [Float] = []
-                for _ in 0..<48 {   // kleine Zyklen wie bei der Ausgabe (512 Frames), ≈ 0,56 s
+                for _ in 0..<520 {
                     let status = try audio.engine.renderOffline(512, to: out)
                     XCTAssertEqual(status, .success)
                     samples.append(contentsOf: UnsafeBufferPointer(start: out.floatChannelData![0], count: Int(out.frameLength)))
                 }
-                let level = rms(samples[9000..<22000])
-                print("[Audio] Titelwechsel auf \(Int(rate)) Hz, \(ch) Kanal/Kanäle, Tonhöhe \(Int(cents)) Cent: Pegel \(level)")
-                XCTAssertGreaterThan(level, 0.1, "kein Klang nach Wechsel auf \(rate) Hz, \(ch) Kanäle, \(cents) Cent")
+                guard let first = samples.firstIndex(where: { abs($0) > 0.01 }), first + 22_000 < samples.count else {
+                    XCTFail("kein Klang nach Wechsel auf \(rate) Hz, \(ch) Kanäle, \(cents) Cent")
+                    continue
+                }
+                let level = rms(samples[(first + 9000)..<(first + 22_000)])
+                print("[Audio] Titelwechsel auf \(Int(rate)) Hz, \(ch) Kanal/Kanäle, Tonhöhe \(Int(cents)) Cent: Beginn nach \(String(format: "%.3f", Double(first) / 44_100)) s, Pegel \(level)")
+                XCTAssertGreaterThan(level, 0.1, "zu leise nach Wechsel auf \(rate) Hz, \(ch) Kanäle, \(cents) Cent")
             }
             audio.player.stop()
             audio.stopEngine()
-        }
-    }
-
-    func testDiagnoseHighRate() throws {
-        let seqs: [[(Double, AVAudioChannelCount)]] = [[(44_100, 2), (48_000, 1), (96_000, 2)], [(44_100, 2), (96_000, 2)], [(44_100, 2), (48_000, 2)], [(44_100, 2), (44_100, 2)]]
-        for (pause, reset) in [(false, true), (false, false), (true, false)] {
-            AudioEngine.reconfigureWithPauseForTests = pause
-            AudioEngine.resetPlayerOnReconfigure = reset
-            defer { AudioEngine.reconfigureWithPauseForTests = false; AudioEngine.resetPlayerOnReconfigure = true }
-            for seq in seqs {
-                if pause && seq.contains(where: { $0.1 == 1 }) { continue }   // altes Verhalten stürzt bei Mono ab
-                let audio = AudioEngine(offlineFormat: format, nativePitch: true)
-                audio.connect(format: format)
-                audio.apply(AudioEngine.Parameters(), force: true)
-                try audio.start()
-                var line = "[Audio] Diagnose pause=\(pause) reset=\(reset):"
-                for (rate, ch) in seq {
-                    let f = AVAudioFormat(standardFormatWithSampleRate: rate, channels: ch)!
-                    audio.stopPlayer()
-                    audio.connect(format: f)
-                    try audio.start()
-                    let buf = AVAudioPCMBuffer(pcmFormat: f, frameCapacity: AVAudioFrameCount(rate * 0.7))!
-                    buf.frameLength = buf.frameCapacity
-                    for c in 0..<Int(ch) { for i in 0..<Int(buf.frameLength) { buf.floatChannelData![c][i] = Float(0.3 * sin(2 * Double.pi * 440 * Double(i) / rate)) } }
-                    audio.player.scheduleBuffer(buf, at: nil)
-                    audio.player.play()
-                    let out = AVAudioPCMBuffer(pcmFormat: audio.engine.manualRenderingFormat, frameCapacity: 4096)!
-                    var samples: [Float] = []
-                    for _ in 0..<172 {   // 2 s
-                        _ = try audio.engine.renderOffline(512, to: out)
-                        samples.append(contentsOf: UnsafeBufferPointer(start: out.floatChannelData![0], count: Int(out.frameLength)))
-                    }
-                    let first = samples.firstIndex(where: { abs($0) > 0.01 }) ?? -1
-                    let last = samples.lastIndex(where: { abs($0) > 0.01 }) ?? -1
-                    line += " | \(Int(rate))/\(ch): Klang von \(String(format: "%.3f", Double(first) / 44_100)) bis \(String(format: "%.3f", Double(last) / 44_100)) s"
-                }
-                print(line)
-                audio.player.stop()
-                audio.stopEngine()
-            }
         }
     }
 

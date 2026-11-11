@@ -37,9 +37,9 @@ final class AudioEngine {
     /// v2.1: Tonhöhe in Android-Qualität (eigene Audio-Unit vor Apples TimePitch, das nur noch das Tempo übernimmt).
     /// `nil`, wenn die Unit nicht erzeugt werden konnte – dann wie bisher alles über `timePitch`.
     private let pitchUnit: AVAudioUnitEffect?
-    private(set) var pitchAU: PitchShiftAudioUnit?
+    private let pitchAU: PitchShiftAudioUnit?
     /// Für mehr als zwei Kanäle (z. B. 5.1-FLAC) bzw. ohne eigene Unit: Tonhöhe über Apples TimePitch.
-    private(set) var usesNativePitch = false
+    private var usesNativePitch = false
     private let varispeed = AVAudioUnitVarispeed()
     private let eq = AVAudioUnitEQ(numberOfBands: 11)
     private let limiter: AVAudioUnitEffect
@@ -127,10 +127,6 @@ final class AudioEngine {
     }
 
     /// Verbindet die Kette für das Format der aktuellen Datei (Abtastrate/Kanäle können je Titel wechseln).
-    /// Nur für Tests: altes Verhalten (2.1/2.2.0) zum Vergleich.
-    static var reconfigureWithPauseForTests = false
-    static var resetPlayerOnReconfigure = true
-
     func connect(format: AVAudioFormat?) {
         if let format, let current = connectedFormat,
            current.sampleRate == format.sampleRate, current.channelCount == format.channelCount { return }
@@ -138,13 +134,10 @@ final class AudioEngine {
         let wasRunning = engine.isRunning
         // Neues Format (Abtastrate/Kanäle): Engine ganz anhalten, nicht nur pausieren. Bei einer pausierten Engine
         // initialisiert AVAudioEngine jeden Knoten schon nach dem ersten `connect` neu – die eigene Tonhöhen-Unit
-        // hätte dann kurz Eingang und Ausgang in verschiedenen Formaten. macOS 13 bricht dabei mit einer Ausnahme
-        // ab (Absturz beim Titelwechsel, 2.1/2.2.0). Angehalten werden alle Verbindungen gesetzt und erst beim
-        // nächsten Start gemeinsam vorbereitet. Der Player steht an dieser Stelle ohnehin (Titelwechsel).
-        if Self.reconfigureWithPauseForTests { engine.pause() } else { engine.stop() }
-        // Zeitbasis des Players zurücksetzen: Sonst rechnet er nach dem Wechsel der Abtastrate mit der alten
-        // Zeitleiste weiter, und der nächste Titel setzt verspätet ein (bei 96 kHz ≈ 1 s).
-        if Self.resetPlayerOnReconfigure { player.reset() }
+        // hätte dann kurz Eingang und Ausgang in verschiedenen Formaten, und AVAudioEngine bricht mit einer Ausnahme
+        // ab (Fehler −10868: Absturz beim Titelwechsel zwischen Mono und Stereo, 2.1/2.2.0). Angehalten werden alle
+        // Verbindungen gesetzt und erst beim nächsten Start gemeinsam vorbereitet. Der Player steht hier ohnehin.
+        engine.stop()
         engine.disconnectNodeOutput(player)
         if let pitchUnit { engine.disconnectNodeOutput(pitchUnit) }
         engine.disconnectNodeOutput(timePitch)
