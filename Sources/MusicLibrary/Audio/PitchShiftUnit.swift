@@ -57,6 +57,12 @@ final class PitchShiftAudioUnit: AUAudioUnit {
     /// es dann still (2.1/2.2.0). 32768 Frames reichen auch für 192 kHz bei 4096er Ausgabeblöcken (≈ 17.800).
     static let renderCapacity: AUAudioFrameCount = 32_768
 
+    /// Für Tests: Formate und Zustand.
+    var diagnostics: String {
+        "ein \(inputBus.format.sampleRate)/\(inputBus.format.channelCount), aus \(outputBus.format.sampleRate)/\(outputBus.format.channelCount), "
+            + "max \(maximumFramesToRender), Puffer \(state.capacity), ungleich \(state.mismatch), zugeteilt \(renderResourcesAllocated)"
+    }
+
     override var inputBusses: AUAudioUnitBusArray { _inputBusses }
     override var outputBusses: AUAudioUnitBusArray { _outputBusses }
     override var canProcessInPlace: Bool { false }

@@ -234,6 +234,41 @@ final class AudioEngineTests: XCTestCase {
         }
     }
 
+    func testDiagnoseHighRate() throws {
+        for native in [false, true] {
+            for fresh in [false, true] {
+                let audio = AudioEngine(offlineFormat: format, nativePitch: native)
+                let f = AVAudioFormat(standardFormatWithSampleRate: 96_000, channels: 2)!
+                if fresh {
+                    audio.connect(format: f)
+                    try audio.start()
+                } else {
+                    audio.connect(format: format)
+                    try audio.start()
+                    audio.stopPlayer()
+                    audio.connect(format: f)
+                    try audio.start()
+                }
+                let buf = AVAudioPCMBuffer(pcmFormat: f, frameCapacity: 67_200)!
+                buf.frameLength = buf.frameCapacity
+                for c in 0..<2 { for i in 0..<Int(buf.frameLength) { buf.floatChannelData![c][i] = Float(0.3 * sin(2 * Double.pi * 440 * Double(i) / 96_000)) } }
+                audio.player.scheduleBuffer(buf, at: nil)
+                audio.player.play()
+                let out = AVAudioPCMBuffer(pcmFormat: audio.engine.manualRenderingFormat, frameCapacity: 4096)!
+                var samples: [Float] = []
+                var statuses: Set<Int> = []
+                for _ in 0..<48 {
+                    let st = try audio.engine.renderOffline(512, to: out)
+                    statuses.insert(st.rawValue)
+                    samples.append(contentsOf: UnsafeBufferPointer(start: out.floatChannelData![0], count: Int(out.frameLength)))
+                }
+                print("[Audio] Diagnose 96 kHz native=\(native) frisch=\(fresh): Pegel \(rms(samples[9000..<22000])), Status \(statuses), AU: \(audio.pitchAU?.diagnostics ?? "-"), nativ genutzt \(audio.usesNativePitch)")
+                audio.player.stop()
+                audio.stopEngine()
+            }
+        }
+    }
+
     func testEffectiveRate() {
         let audio = AudioEngine(offlineFormat: format)
         var p = AudioEngine.Parameters()
