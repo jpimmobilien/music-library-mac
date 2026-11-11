@@ -52,9 +52,9 @@ final class PitchShiftAudioUnit: AUAudioUnit {
         maximumFramesToRender = Self.renderCapacity
     }
 
-    /// Größte Blockgröße, die die Unit verarbeitet. Vor der Abtastratenwandlung im Mischer fordert die Engine bei
-    /// hoch aufgelösten Titeln (88,2–192 kHz) ein Vielfaches der Ausgabe-Blockgröße an – mit nur 4096 Frames blieb
-    /// es dann still (2.1/2.2.0). 32768 Frames reichen auch für 192 kHz bei 4096er Ausgabeblöcken (≈ 17.800).
+    /// Mindestgröße der internen Puffer. Die Engine setzt `maximumFramesToRender` vor dem Mischer selbst passend
+    /// (gemessen: 8928 Frames bei 96 kHz und 4096er Ausgabeblöcken); die Reserve verhindert nur, dass ungewöhnlich
+    /// große Blöcke (z. B. 192 kHz) mit „zu viele Frames“ abgewiesen werden.
     static let renderCapacity: AUAudioFrameCount = 32_768
 
     override var inputBusses: AUAudioUnitBusArray { _inputBusses }

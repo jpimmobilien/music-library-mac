@@ -11,7 +11,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-VERSION="${VERSION:-2.2.0}"
+VERSION="${VERSION:-2.2.1}"
 BUILD_NUMBER="${BUILD_NUMBER:-1}"
 APP="build/Music Library.app"
 
