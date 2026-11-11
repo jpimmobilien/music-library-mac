@@ -49,8 +49,13 @@ final class PitchShiftAudioUnit: AUAudioUnit {
         outputBus.maximumChannelCount = 2
         _inputBusses = AUAudioUnitBusArray(audioUnit: self, busType: .input, busses: [inputBus])
         _outputBusses = AUAudioUnitBusArray(audioUnit: self, busType: .output, busses: [outputBus])
-        maximumFramesToRender = 4096
+        maximumFramesToRender = Self.renderCapacity
     }
+
+    /// Mindestgröße der internen Puffer. Die Engine setzt `maximumFramesToRender` vor dem Mischer selbst passend
+    /// (gemessen: 8928 Frames bei 96 kHz und 4096er Ausgabeblöcken); die Reserve verhindert nur, dass ungewöhnlich
+    /// große Blöcke (z. B. 192 kHz) mit „zu viele Frames“ abgewiesen werden.
+    static let renderCapacity: AUAudioFrameCount = 32_768
 
     override var inputBusses: AUAudioUnitBusArray { _inputBusses }
     override var outputBusses: AUAudioUnitBusArray { _outputBusses }
@@ -64,10 +69,14 @@ final class PitchShiftAudioUnit: AUAudioUnit {
     override func allocateRenderResources() throws {
         try super.allocateRenderResources()
         let format = outputBus.format
-        guard format.channelCount >= 1, format.channelCount <= 2, inputBus.format.channelCount == format.channelCount else {
+        guard format.channelCount >= 1, format.channelCount <= 2 else {
             throw NSError(domain: NSOSStatusErrorDomain, code: Int(kAudioUnitErr_FormatNotSupported))
         }
-        state.allocate(channels: Int(format.channelCount), maxFrames: Int(maximumFramesToRender))
+        // Eingang und Ausgang können während einer Umverbindung kurz verschieden sein (z. B. Mono-Titel nach
+        // Stereo-Titel). Kein Fehler werfen – AVAudioEngine würde daraus eine Ausnahme machen –, sondern bis zur
+        // nächsten Vorbereitung Stille ausgeben.
+        state.mismatch = inputBus.format.channelCount != format.channelCount || inputBus.format.sampleRate != format.sampleRate
+        state.allocate(channels: Int(format.channelCount), maxFrames: Int(max(maximumFramesToRender, Self.renderCapacity)))
         state.sampleRate = format.sampleRate
         state.post(nil, latency: 0)
         delayedNeutral = false
@@ -116,7 +125,7 @@ final class PitchShiftAudioUnit: AUAudioUnit {
             return
         }
         let p = TimePitchProcessor(sampleRate: state.sampleRate, channels: state.channels, speed: 1,
-                                   pitch: neutral ? 1 : pitchFactor, maxFramesPerCall: Int(maximumFramesToRender),
+                                   pitch: neutral ? 1 : pitchFactor, maxFramesPerCall: state.capacity,
                                    delaysWhenNeutral: neutral)
         delayedNeutral = true
         state.post(p, latency: p.latencyFrames)
@@ -134,9 +143,13 @@ final class PitchShiftAudioUnit: AUAudioUnit {
 /// Zustand des Render-Blocks (feste Puffer, Briefkasten für den Prozessor).
 private final class RenderState: @unchecked Sendable {
     var channels = 2
+    /// Eingang ≠ Ausgang (nur kurz während einer Umverbindung): Stille ausgeben, nichts anfordern.
+    var mismatch = false
     var sampleRate: Double = 44_100
     private(set) var latencyFrames = 0
     private var maxFrames = 0
+    /// Größte Blockgröße der zugeteilten Puffer.
+    var capacity: Int { maxFrames }
     private var inputList: UnsafeMutableAudioBufferListPointer?
     private var inputMemory: [UnsafeMutablePointer<Float>] = []
     private var outputMemory: [UnsafeMutablePointer<Float>] = []
@@ -239,6 +252,15 @@ private final class RenderState: @unchecked Sendable {
                 output: UnsafeMutablePointer<AudioBufferList>, pull: AURenderPullInputBlock) -> AUAudioUnitStatus {
         let frames = Int(frameCount)
         guard let inputList, frames <= maxFrames else { return kAudioUnitErr_TooManyFramesToProcess }
+        if mismatch {
+            let out = UnsafeMutableAudioBufferListPointer(output)
+            for c in 0..<min(out.count, channels) {
+                if out[c].mData == nil { out[c].mData = UnsafeMutableRawPointer(outputMemory[c]) }
+                if let data = out[c].mData { memset(data, 0, frames * 4) }
+                out[c].mDataByteSize = UInt32(frames * 4)
+            }
+            return noErr
+        }
         for c in 0..<channels {
             inputList[c].mData = UnsafeMutableRawPointer(inputMemory[c])
             inputList[c].mDataByteSize = UInt32(frames * 4)

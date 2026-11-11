@@ -1,5 +1,17 @@
 # Version 2.2 – Audio Studio
 
+## 2.2.1 (11.11.2026) – Fehlerbehebung
+
+- **Absturz beim Übergang zum nächsten Titel behoben** (gemeldet auf einem MacBook Pro 2017 mit macOS 13.7.8, betrifft
+  auch 2.1 und 2.2.0): Wechselte der nächste Titel zwischen Mono und Stereo (bzw. das Format so, dass Knoten der
+  Audio-Kette kurz verschiedene Ein- und Ausgangsformate hatten), brach AVAudioEngine mit einer Ausnahme ab
+  (Fehler −10868). Ursache: Umverbinden bei nur pausierter Engine – dabei meldeten die eigene Tonhöhen-Unit und
+  Apples Limiter einen Formatfehler. Jetzt wird die Engine beim Formatwechsel angehalten, alle Verbindungen werden
+  gesetzt und gemeinsam vorbereitet; die Tonhöhen-Unit nimmt einen kurzzeitig ungleichen Zustand ohne Fehler hin.
+- Neuer Test stellt den Absturz nach (vorher: Fehler −10868 auf macOS 15 und 26) und prüft Titelwechsel zwischen
+  Mono/Stereo und 22,05–192 kHz mit und ohne Tonhöhe.
+
+
 Erweiterung der bestehenden App, kein Neubau: Bibliothek, Player, Equalizer, Tonhöhe, Wiedergabe, Design und
 Datenbank bleiben unverändert. Neu ist der Bereich **Studio** in der Navigation (⌘7). Plan und Architektur:
 [AUDIO_STUDIO_PLAN.md](AUDIO_STUDIO_PLAN.md).
