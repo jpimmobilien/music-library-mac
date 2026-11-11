@@ -1,8 +1,19 @@
-# Testbericht – Android Bridge 5.2.0
+# Testbericht – Android Bridge 5.3.0
 
-_Rückfallversionen: 5.1 (Commit 11312ce), 5.0 (Commit 7d7a8a5), 4.2 (Commit 3414b1f), 4.0 (Commit 962b36b), 3.0 (Commit 27de89b), 2.0 (Commit 30402af) und 1.0 (Zweig `android-bridge-v1.0`)._
+_Rückfallversionen: 5.2 (Commit af2ffc4), 5.1 (Commit 11312ce), 5.0 (Commit 7d7a8a5), 4.2 (Commit 3414b1f), 4.0 (Commit 962b36b), 3.0 (Commit 27de89b), 2.0 (Commit 30402af) und 1.0 (Zweig `android-bridge-v1.0`)._
 
-## Neu in 5.2 geprüft (Lauf 40, Commit af2ffc4)
+## Neu in 5.3 geprüft (Lauf 42, Commit a07d533)
+
+| Prüfung | Ergebnis |
+|---|---|
+| Titelbild verbunden | Mac-Foto von oben, Telefon liegt rechts daneben (nach Hersteller gezeichnet); beim Verbinden wird es hereingelegt, Bildschirm geht an, Lichtimpuls – startet auch, wenn die Übersicht innerhalb von 10 s nach dem Verbinden erscheint. Bildschirmfotos 17/18 hell und dunkel geprüft |
+| Einstellungen | Inhalt mittig im Fenster |
+| Speicherbalken | immer blau; fast voller Speicher als orange Beschriftung |
+| Akku | wird nach dem Verbinden, nach dem Entsperren und dann jede Minute neu gelesen (vorher nur einmal) |
+| Unit-Tests, Universal-Build, Installation + Start | 96 ohne Fehler; x86_64 + arm64; macOS 26 Intel und macOS 15 Intel |
+| Nicht geprüft | Apple Silicon (keine freie GitHub-Maschine), Animationen in Bewegung, echte Telefone |
+
+## Aus Version 5.2 (Lauf 40, Commit af2ffc4)
 
 | Prüfung | Ergebnis |
 |---|---|
