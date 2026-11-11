@@ -235,11 +235,12 @@ final class AudioEngineTests: XCTestCase {
     }
 
     func testDiagnoseHighRate() throws {
-        let seqs: [[(Double, AVAudioChannelCount)]] = [[(48_000, 1), (96_000, 2)], [(44_100, 1), (44_100, 2)], [(44_100, 2), (44_100, 1), (44_100, 2)]]
+        let seqs: [[(Double, AVAudioChannelCount)]] = [[(44_100, 2), (48_000, 1), (96_000, 2)], [(48_000, 1), (96_000, 2)], [(44_100, 2), (96_000, 2)], [(48_000, 2), (96_000, 2)], [(48_000, 1), (44_100, 2)]]
         for native in [false, true] {
             for seq in seqs {
                 let audio = AudioEngine(offlineFormat: format, nativePitch: native)
                 audio.connect(format: format)
+                audio.apply(AudioEngine.Parameters(), force: true)
                 try audio.start()
                 var line = "[Audio] Diagnose native=\(native):"
                 for (rate, ch) in seq {
