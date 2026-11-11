@@ -137,10 +137,8 @@ final class AudioEngine {
         // Eingang und Ausgang in verschiedenen Formaten. Die eigene Tonhöhen-Unit und Apples Limiter melden dabei
         // einen Fehler, und AVAudioEngine bricht mit einer Ausnahme ab (−10868: Absturz beim Titelwechsel zwischen
         // Mono und Stereo, 2.1/2.2.0). Angehalten werden alle Verbindungen gesetzt und beim Start gemeinsam
-        // vorbereitet. Der Player wird neu eingehängt, damit seine Zeitleiste zur neuen Abtastrate passt.
+        // vorbereitet. Der Player steht an dieser Stelle ohnehin (Titelwechsel).
         engine.stop()
-        engine.detach(player)
-        engine.attach(player)
         if let pitchUnit { engine.disconnectNodeOutput(pitchUnit) }
         engine.disconnectNodeOutput(timePitch)
         engine.disconnectNodeOutput(varispeed)
