@@ -11,7 +11,7 @@ OUT_ABS="$(cd "$OUT" && pwd)"
 BIN="$APP/Contents/MacOS/AndroidBridge"
 RUNNER=()
 if [ -n "${SNAPSHOT_ARCH:-}" ]; then RUNNER=(arch "-$SNAPSHOT_ARCH"); fi
-GROUPS_LIST="${SNAPSHOT_GROUPS:-01 02 04 05 06 07 08 09 10 11 12 13 14 15 16 17 03- 03b 03c 03d}"
+GROUPS_LIST="${SNAPSHOT_GROUPS:-01 02 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 03- 03b 03c 03d}"
 FAILED=0
 for G in $GROUPS_LIST; do
   echo "== Gruppe $G" >> "$OUT_ABS/run.log"

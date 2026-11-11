@@ -876,7 +876,7 @@ struct PhotoLaptop<Screen: View>: View {
 /// Beim Verbinden wird das Telefon hereingelegt, der Mac-Bildschirm geht an, ein Lichtimpuls läuft vom Telefon aus.
 struct PhotoDeskStage: View {
     /// Zusätzliche Breite (in Höhen der Bühne) für das Telefon.
-    static let phoneArea: CGFloat = 0.36
+    static let phoneArea: CGFloat = 0.3
 
     let photo: MacPhoto
     var photos: [NSImage]
@@ -896,7 +896,10 @@ struct PhotoDeskStage: View {
             let lw = H * photo.pixelSize.width / photo.pixelSize.height
             let phoneH = H * 0.5
             let phoneW = phoneH / 2.12
-            let phoneCenter = CGPoint(x: min(geo.size.width - phoneW * 0.62, lw + phoneW * 0.42), y: H * 0.66)
+            // Telefon liegt rechts neben der Handballenauflage, leicht schräg
+            let cx = min(geo.size.width - phoneW * 0.6, lw + phoneW * 0.32)
+            let cy = H * 0.68
+            let glow = phoneH * 1.8
             ZStack(alignment: .topLeading) {
                 PhotoLaptop(photo: photo) {
                     MiniAppScreen(photos: photos, connected: true, deviceName: deviceName)
@@ -906,19 +909,20 @@ struct PhotoDeskStage: View {
                 // Lichtimpuls vom Telefon aus
                 Circle()
                     .fill(RadialGradient(colors: [Palette.accent.opacity(0.35), Palette.accent.opacity(0)], center: .center,
-                                         startRadius: 0, endRadius: phoneH * 0.9))
-                    .frame(width: phoneH * 1.8, height: phoneH * 1.8)
+                                         startRadius: 0, endRadius: glow / 2))
+                    .frame(width: glow, height: glow)
                     .scaleEffect(0.3 + pulse * 1.1)
                     .opacity(Double(1 - pulse))
-                    .position(phoneCenter)
+                    .offset(x: cx - glow / 2, y: cy - glow / 2)
                     .allowsHitTesting(false)
                 RealisticPhone(height: phoneH, style: phoneStyle, lying: true) {
                     PhoneScreenContent(wallpaper: photos.first, stateSymbol: stateSymbol, stateText: stateText, dimmed: false)
                 }
+                .frame(width: phoneW, height: phoneH)
                 .rotationEffect(.degrees(placed ? -8 : 14))
                 .scaleEffect(placed ? 1 : 1.08)
                 .opacity(placed ? 1 : 0)
-                .position(x: phoneCenter.x + (placed ? 0 : phoneW * 1.6), y: phoneCenter.y + (placed ? 0 : -H * 0.06))
+                .offset(x: cx - phoneW / 2 + (placed ? 0 : phoneW * 1.6), y: cy - phoneH / 2 + (placed ? 0 : -H * 0.06))
             }
             .frame(width: geo.size.width, height: H, alignment: .topLeading)
         }

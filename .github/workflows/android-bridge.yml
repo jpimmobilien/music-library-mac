@@ -89,14 +89,14 @@ jobs:
         continue-on-error: true
         env:
           # Intel-VMs: deren virtuelle Grafik stürzt bei Seiten mit Fotos ab – dort nur die übrigen Seiten (alle Seiten: Apple Silicon)
-          SNAPSHOT_GROUPS: ${{ contains(matrix.os, 'intel') && '01 02 06 08 10 11 13 15 16 17' || '' }}
+          SNAPSHOT_GROUPS: ${{ contains(matrix.os, 'intel') && '01 02 06 08 10 11 13 15 16 17 18' || '' }}
         run: scripts/run_snapshots.sh "build/Android Bridge.app" snapshots/${{ matrix.os }}-glass
       - name: Bildschirmfotos (Rückfall ohne Liquid Glass)
         continue-on-error: true
         env:
           AB_FORCE_GLASS_FALLBACK: "1"
           # Intel-VMs: deren virtuelle Grafik stürzt bei Seiten mit Fotos ab – dort nur die übrigen Seiten (alle Seiten: Apple Silicon)
-          SNAPSHOT_GROUPS: ${{ contains(matrix.os, 'intel') && '01 02 06 08 10 11 13 15 16 17' || '' }}
+          SNAPSHOT_GROUPS: ${{ contains(matrix.os, 'intel') && '01 02 06 08 10 11 13 15 16 17 18' || '' }}
         run: scripts/run_snapshots.sh "build/Android Bridge.app" snapshots/${{ matrix.os }}-fallback
       - uses: actions/upload-artifact@v4
         with:
@@ -169,7 +169,7 @@ jobs:
         env:
           SNAPSHOT_ARCH: ${{ matrix.arch }}
           # Intel-VMs: deren virtuelle Grafik stürzt bei Seiten mit Fotos ab – dort nur die übrigen Seiten (alle Seiten: Apple Silicon)
-          SNAPSHOT_GROUPS: ${{ contains(matrix.os, 'intel') && '01 02 06 08 10 11 13 15 16 17' || '' }}
+          SNAPSHOT_GROUPS: ${{ contains(matrix.os, 'intel') && '01 02 06 08 10 11 13 15 16 17 18' || '' }}
         run: scripts/run_snapshots.sh "$HOME/Applications/Android Bridge.app" "snapshots/${{ matrix.name }}"
       - uses: actions/upload-artifact@v4
         if: always()
