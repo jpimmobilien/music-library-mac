@@ -132,12 +132,11 @@ final class AudioEngine {
            current.sampleRate == format.sampleRate, current.channelCount == format.channelCount { return }
         let f = format ?? AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 2)!
         let wasRunning = engine.isRunning
-        // Neues Format (Abtastrate/Kanäle): Engine ganz anhalten, nicht nur pausieren. Bei einer pausierten Engine
-        // initialisiert AVAudioEngine jeden Knoten schon nach dem ersten `connect` neu – die eigene Tonhöhen-Unit
-        // hätte dann kurz Eingang und Ausgang in verschiedenen Formaten, und AVAudioEngine bricht mit einer Ausnahme
-        // ab (Fehler −10868: Absturz beim Titelwechsel zwischen Mono und Stereo, 2.1/2.2.0). Angehalten werden alle
-        // Verbindungen gesetzt und erst beim nächsten Start gemeinsam vorbereitet. Der Player steht hier ohnehin.
-        engine.stop()
+        // Bei einer pausierten Engine initialisiert AVAudioEngine jeden Knoten schon nach dem ersten `connect` neu –
+        // die eigene Tonhöhen-Unit hat dann kurz Eingang und Ausgang in verschiedenen Formaten. Bis 2.2.0 meldete sie
+        // dabei einen Fehler, und AVAudioEngine brach mit einer Ausnahme ab (−10868: Absturz beim Titelwechsel
+        // zwischen Mono und Stereo). Seit 2.2.1 nimmt die Unit den Zwischenzustand ohne Fehler hin.
+        if wasRunning { engine.pause() }
         engine.disconnectNodeOutput(player)
         if let pitchUnit { engine.disconnectNodeOutput(pitchUnit) }
         engine.disconnectNodeOutput(timePitch)
@@ -161,10 +160,7 @@ final class AudioEngine {
         levels.sampleRate = f.sampleRate
         // Weg der Tonhöhe kann sich geändert haben (eigene Unit ↔ Apples TimePitch)
         apply(parameters, force: true)
-        if wasRunning {
-            engine.prepare()
-            try? engine.start()
-        }
+        if wasRunning { try? engine.start() }
     }
 
     func start() throws {
