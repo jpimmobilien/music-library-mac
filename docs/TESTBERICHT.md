@@ -1,8 +1,20 @@
-# Testbericht – Android Bridge 5.1.0
+# Testbericht – Android Bridge 5.2.0
 
-_Rückfallversionen: 5.0 (Commit 7d7a8a5), 4.2 (Commit 3414b1f), 4.0 (Commit 962b36b), 3.0 (Commit 27de89b), 2.0 (Commit 30402af) und 1.0 (Zweig `android-bridge-v1.0`)._
+_Rückfallversionen: 5.1 (Commit 11312ce), 5.0 (Commit 7d7a8a5), 4.2 (Commit 3414b1f), 4.0 (Commit 962b36b), 3.0 (Commit 27de89b), 2.0 (Commit 30402af) und 1.0 (Zweig `android-bridge-v1.0`)._
 
-## Neu in 5.1 geprüft (Lauf 39, Commit 11312ce)
+## Neu in 5.2 geprüft (Lauf 40, Commit af2ffc4)
+
+| Prüfung | Ergebnis |
+|---|---|
+| Titelbild | MacBook Pro mit Touch Bar (2016–2020): vom Nutzer gelieferte Produktfotos – ohne Telefon Seitenansicht, verbunden Ansicht von oben mit der laufenden App perspektivisch im Bildschirm; andere Modelle weiter gezeichnet. Bildschirmfoto 17 hell/dunkel geprüft |
+| App-Symbol | vom Nutzer geliefertes Symbol im macOS-Raster (824 px, transparente Ecken, Schatten) |
+| Startseite | Highlights-Kacheln entfernt |
+| Bewegung | Lichtimpuls beim Verbinden, Geräteauftritt/-abgang, Fortschrittsbalken mit Lichtpunkten in Übertragungsrichtung (Tempo = gemessene Geschwindigkeit, steht ohne Datenfluss), Geschwindigkeitsverlauf aus echten Messwerten, Erfolgsring/Schütteln bei Fehler, Scan-Lichtbogen (Duplikate, laufende Übertragungen), Löschanimation der Duplikatgruppen, Ladeschimmer für Vorschaubilder, magnetisches Hover; alles aus bei „Bewegung reduzieren“ oder ausgeschalteten Animationen |
+| Unit-Tests | 96 ohne Fehler (macOS 26 Intel, macOS 15 Intel, x86_64) |
+| Universal-Build, Installation + Start | x86_64 + arm64; installiert und gestartet auf macOS 26 Intel und macOS 15 Intel |
+| Nicht geprüft | Apple-Silicon-Läufe erneut ohne freie GitHub-Maschine abgebrochen; Animationen nur als Code und Standbild geprüft (keine Videoaufnahme in der Build-Umgebung); echte Telefone/Übertragungen |
+
+## Aus Version 5.1 (Lauf 39, Commit 11312ce)
 
 | Prüfung | Ergebnis |
 |---|---|
