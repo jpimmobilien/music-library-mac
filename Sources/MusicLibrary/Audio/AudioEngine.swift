@@ -132,7 +132,12 @@ final class AudioEngine {
            current.sampleRate == format.sampleRate, current.channelCount == format.channelCount { return }
         let f = format ?? AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 2)!
         let wasRunning = engine.isRunning
-        if wasRunning { engine.pause() }
+        // Neues Format (Abtastrate/Kanäle): Engine ganz anhalten, nicht nur pausieren. Bei einer pausierten Engine
+        // initialisiert AVAudioEngine jeden Knoten schon nach dem ersten `connect` neu – die eigene Tonhöhen-Unit
+        // hätte dann kurz Eingang und Ausgang in verschiedenen Formaten. macOS 13 bricht dabei mit einer Ausnahme
+        // ab (Absturz beim Titelwechsel, 2.1/2.2.0). Angehalten werden alle Verbindungen gesetzt und erst beim
+        // nächsten Start gemeinsam vorbereitet. Der Player steht an dieser Stelle ohnehin (Titelwechsel).
+        engine.stop()
         engine.disconnectNodeOutput(player)
         if let pitchUnit { engine.disconnectNodeOutput(pitchUnit) }
         engine.disconnectNodeOutput(timePitch)
@@ -156,7 +161,10 @@ final class AudioEngine {
         levels.sampleRate = f.sampleRate
         // Weg der Tonhöhe kann sich geändert haben (eigene Unit ↔ Apples TimePitch)
         apply(parameters, force: true)
-        if wasRunning { try? engine.start() }
+        if wasRunning {
+            engine.prepare()
+            try? engine.start()
+        }
     }
 
     func start() throws {
