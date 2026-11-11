@@ -236,16 +236,17 @@ final class AudioEngineTests: XCTestCase {
 
     func testDiagnoseHighRate() throws {
         let seqs: [[(Double, AVAudioChannelCount)]] = [[(44_100, 2), (48_000, 1), (96_000, 2)], [(44_100, 2), (96_000, 2)], [(44_100, 2), (48_000, 2)], [(44_100, 2), (44_100, 2)]]
-        for pause in [false, true] {
+        for (pause, reset) in [(false, true), (false, false), (true, false)] {
             AudioEngine.reconfigureWithPauseForTests = pause
-            defer { AudioEngine.reconfigureWithPauseForTests = false }
+            AudioEngine.resetPlayerOnReconfigure = reset
+            defer { AudioEngine.reconfigureWithPauseForTests = false; AudioEngine.resetPlayerOnReconfigure = true }
             for seq in seqs {
                 if pause && seq.contains(where: { $0.1 == 1 }) { continue }   // altes Verhalten stürzt bei Mono ab
                 let audio = AudioEngine(offlineFormat: format, nativePitch: true)
                 audio.connect(format: format)
                 audio.apply(AudioEngine.Parameters(), force: true)
                 try audio.start()
-                var line = "[Audio] Diagnose pause=\(pause):"
+                var line = "[Audio] Diagnose pause=\(pause) reset=\(reset):"
                 for (rate, ch) in seq {
                     let f = AVAudioFormat(standardFormatWithSampleRate: rate, channels: ch)!
                     audio.stopPlayer()

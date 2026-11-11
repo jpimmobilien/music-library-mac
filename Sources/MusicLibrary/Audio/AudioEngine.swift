@@ -129,6 +129,7 @@ final class AudioEngine {
     /// Verbindet die Kette für das Format der aktuellen Datei (Abtastrate/Kanäle können je Titel wechseln).
     /// Nur für Tests: altes Verhalten (2.1/2.2.0) zum Vergleich.
     static var reconfigureWithPauseForTests = false
+    static var resetPlayerOnReconfigure = true
 
     func connect(format: AVAudioFormat?) {
         if let format, let current = connectedFormat,
@@ -141,6 +142,9 @@ final class AudioEngine {
         // ab (Absturz beim Titelwechsel, 2.1/2.2.0). Angehalten werden alle Verbindungen gesetzt und erst beim
         // nächsten Start gemeinsam vorbereitet. Der Player steht an dieser Stelle ohnehin (Titelwechsel).
         if Self.reconfigureWithPauseForTests { engine.pause() } else { engine.stop() }
+        // Zeitbasis des Players zurücksetzen: Sonst rechnet er nach dem Wechsel der Abtastrate mit der alten
+        // Zeitleiste weiter, und der nächste Titel setzt verspätet ein (bei 96 kHz ≈ 1 s).
+        if Self.resetPlayerOnReconfigure { player.reset() }
         engine.disconnectNodeOutput(player)
         if let pitchUnit { engine.disconnectNodeOutput(pitchUnit) }
         engine.disconnectNodeOutput(timePitch)
