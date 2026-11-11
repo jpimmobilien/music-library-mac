@@ -235,34 +235,35 @@ final class AudioEngineTests: XCTestCase {
     }
 
     func testDiagnoseHighRate() throws {
+        let seqs: [[(Double, AVAudioChannelCount)]] = [[(48_000, 1), (96_000, 2)], [(44_100, 1), (44_100, 2)], [(44_100, 2), (44_100, 1), (44_100, 2)]]
         for native in [false, true] {
-            for fresh in [false, true] {
+            for seq in seqs {
                 let audio = AudioEngine(offlineFormat: format, nativePitch: native)
-                let f = AVAudioFormat(standardFormatWithSampleRate: 96_000, channels: 2)!
-                if fresh {
-                    audio.connect(format: f)
-                    try audio.start()
-                } else {
-                    audio.connect(format: format)
-                    try audio.start()
+                audio.connect(format: format)
+                try audio.start()
+                var line = "[Audio] Diagnose native=\(native):"
+                for (rate, ch) in seq {
+                    let f = AVAudioFormat(standardFormatWithSampleRate: rate, channels: ch)!
                     audio.stopPlayer()
                     audio.connect(format: f)
                     try audio.start()
+                    let buf = AVAudioPCMBuffer(pcmFormat: f, frameCapacity: AVAudioFrameCount(rate * 0.7))!
+                    buf.frameLength = buf.frameCapacity
+                    for c in 0..<Int(ch) { for i in 0..<Int(buf.frameLength) { buf.floatChannelData![c][i] = Float(0.3 * sin(2 * Double.pi * 440 * Double(i) / rate)) } }
+                    audio.player.scheduleBuffer(buf, at: nil)
+                    audio.player.play()
+                    let out = AVAudioPCMBuffer(pcmFormat: audio.engine.manualRenderingFormat, frameCapacity: 4096)!
+                    var samples: [Float] = []
+                    var statuses: Set<Int> = []
+                    for _ in 0..<48 {
+                        let st = try audio.engine.renderOffline(512, to: out)
+                        statuses.insert(st.rawValue)
+                        samples.append(contentsOf: UnsafeBufferPointer(start: out.floatChannelData![0], count: Int(out.frameLength)))
+                    }
+                    let pf = audio.player.outputFormat(forBus: 0)
+                    line += " | \(Int(rate))/\(ch): Pegel \(rms(samples[9000..<22000])) St \(statuses) Player \(Int(pf.sampleRate))/\(pf.channelCount) AU \(audio.pitchAU?.diagnostics ?? "-") lastRender \(audio.player.lastRenderTime?.sampleTime ?? -1) playing \(audio.player.isPlaying)"
                 }
-                let buf = AVAudioPCMBuffer(pcmFormat: f, frameCapacity: 67_200)!
-                buf.frameLength = buf.frameCapacity
-                for c in 0..<2 { for i in 0..<Int(buf.frameLength) { buf.floatChannelData![c][i] = Float(0.3 * sin(2 * Double.pi * 440 * Double(i) / 96_000)) } }
-                audio.player.scheduleBuffer(buf, at: nil)
-                audio.player.play()
-                let out = AVAudioPCMBuffer(pcmFormat: audio.engine.manualRenderingFormat, frameCapacity: 4096)!
-                var samples: [Float] = []
-                var statuses: Set<Int> = []
-                for _ in 0..<48 {
-                    let st = try audio.engine.renderOffline(512, to: out)
-                    statuses.insert(st.rawValue)
-                    samples.append(contentsOf: UnsafeBufferPointer(start: out.floatChannelData![0], count: Int(out.frameLength)))
-                }
-                print("[Audio] Diagnose 96 kHz native=\(native) frisch=\(fresh): Pegel \(rms(samples[9000..<22000])), Status \(statuses), AU: \(audio.pitchAU?.diagnostics ?? "-"), nativ genutzt \(audio.usesNativePitch)")
+                print(line)
                 audio.player.stop()
                 audio.stopEngine()
             }
