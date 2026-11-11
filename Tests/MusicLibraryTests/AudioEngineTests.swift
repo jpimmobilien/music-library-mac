@@ -220,8 +220,8 @@ final class AudioEngineTests: XCTestCase {
                 audio.player.scheduleBuffer(buf, at: nil)
                 audio.player.play()
                 var samples: [Float] = []
-                for _ in 0..<6 {
-                    let status = try audio.engine.renderOffline(4096, to: out)
+                for _ in 0..<48 {   // kleine Zyklen wie bei der Ausgabe (512 Frames), ≈ 0,56 s
+                    let status = try audio.engine.renderOffline(512, to: out)
                     XCTAssertEqual(status, .success)
                     samples.append(contentsOf: UnsafeBufferPointer(start: out.floatChannelData![0], count: Int(out.frameLength)))
                 }
