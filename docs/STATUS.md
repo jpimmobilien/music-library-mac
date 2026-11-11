@@ -1,5 +1,17 @@
 # Prüfstand – was gebaut und getestet ist (ehrlich)
 
+## Version 2.2.1 (11.11.2026, Build-Lauf 43004398659, Commit `1f7eb94`)
+
+| Stufe | Ergebnis |
+|---|---|
+| Fehler | Absturz beim Übergang zum nächsten Titel (Formatwechsel, z. B. Mono ↔ Stereo; AVAudioEngine-Ausnahme −10868) – gemeldet auf macOS 13.7.8, nachgestellt auf macOS 15 und 26 |
+| Test | `testTrackChangeBetweenFormatsWhileRunning`: ohne Korrektur Fehler −10868, mit Korrektur bestanden (macOS 15 Intel, macOS 26 Intel, macOS 26 Apple Silicon) |
+| Tests | ✅ 578 Tests, 0 Fehler (4 Zusatzprüfungen übersprungen) auf macOS 26 Apple Silicon und macOS 15 Intel |
+| DMG | ✅ SHA-256 `62f01d11e6c02a8a1947f66ccedb7c34aa38819a986eaf652e4225add1c5941a`, `hdiutil verify` gültig, `x86_64 arm64`, Signatur gültig |
+| Abnahme | ✅ Apple Silicon und Intel (macOS 26): Installation aus der DMG, Aktualisierung 2.2.0 → 2.2.1 → 2.2.0 ohne Befund, Leerlauf gleich (20,5/21,0 % gegenüber 20,5/20,5 %; Intel 12,7/12,1 % gegenüber 12,3/12,0 %); Rosetta: Installation ✅ · Intel macOS 15 (virtuell): Start scheitert wie bei jeder Version am Metal-Fehler der virtuellen Maschine |
+| Nicht geprüft | macOS 13 (keine Testrechner mehr), Starttest aus der DMG auf macOS 15 Apple Silicon (nicht zugeteilt); Titel mit 96/192 kHz setzen im Offline-Testmodus nach Formatwechseln verspätet ein (mit 2.1 genauso) – im Echtbetrieb nicht geprüft |
+
+
 Stand: 09.11.2026 · Version 2.2.0 (Build-Lauf 19, Commit `90af16d`)
 
 Alle Ergebnisse stammen aus echten Läufen auf GitHub-Rechnern (virtuelle Macs). Entwickelt unter Linux; reine
