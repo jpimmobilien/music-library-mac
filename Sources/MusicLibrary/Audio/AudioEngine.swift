@@ -127,6 +127,9 @@ final class AudioEngine {
     }
 
     /// Verbindet die Kette für das Format der aktuellen Datei (Abtastrate/Kanäle können je Titel wechseln).
+    /// Nur für Tests: altes Verhalten (2.1/2.2.0) zum Vergleich.
+    static var reconfigureWithPauseForTests = false
+
     func connect(format: AVAudioFormat?) {
         if let format, let current = connectedFormat,
            current.sampleRate == format.sampleRate, current.channelCount == format.channelCount { return }
@@ -137,7 +140,7 @@ final class AudioEngine {
         // hätte dann kurz Eingang und Ausgang in verschiedenen Formaten. macOS 13 bricht dabei mit einer Ausnahme
         // ab (Absturz beim Titelwechsel, 2.1/2.2.0). Angehalten werden alle Verbindungen gesetzt und erst beim
         // nächsten Start gemeinsam vorbereitet. Der Player steht an dieser Stelle ohnehin (Titelwechsel).
-        engine.stop()
+        if Self.reconfigureWithPauseForTests { engine.pause() } else { engine.stop() }
         engine.disconnectNodeOutput(player)
         if let pitchUnit { engine.disconnectNodeOutput(pitchUnit) }
         engine.disconnectNodeOutput(timePitch)

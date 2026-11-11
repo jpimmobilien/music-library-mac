@@ -235,14 +235,17 @@ final class AudioEngineTests: XCTestCase {
     }
 
     func testDiagnoseHighRate() throws {
-        let seqs: [[(Double, AVAudioChannelCount)]] = [[(44_100, 2), (48_000, 1), (96_000, 2)], [(48_000, 1), (96_000, 2)], [(44_100, 2), (96_000, 2)], [(48_000, 2), (96_000, 2)], [(48_000, 1), (44_100, 2)]]
-        for native in [false, true] {
+        let seqs: [[(Double, AVAudioChannelCount)]] = [[(44_100, 2), (48_000, 1), (96_000, 2)], [(44_100, 2), (96_000, 2)], [(44_100, 2), (48_000, 2)], [(44_100, 2), (44_100, 2)]]
+        for pause in [false, true] {
+            AudioEngine.reconfigureWithPauseForTests = pause
+            defer { AudioEngine.reconfigureWithPauseForTests = false }
             for seq in seqs {
-                let audio = AudioEngine(offlineFormat: format, nativePitch: native)
+                if pause && seq.contains(where: { $0.1 == 1 }) { continue }   // altes Verhalten stürzt bei Mono ab
+                let audio = AudioEngine(offlineFormat: format, nativePitch: true)
                 audio.connect(format: format)
                 audio.apply(AudioEngine.Parameters(), force: true)
                 try audio.start()
-                var line = "[Audio] Diagnose native=\(native):"
+                var line = "[Audio] Diagnose pause=\(pause):"
                 for (rate, ch) in seq {
                     let f = AVAudioFormat(standardFormatWithSampleRate: rate, channels: ch)!
                     audio.stopPlayer()
@@ -255,14 +258,13 @@ final class AudioEngineTests: XCTestCase {
                     audio.player.play()
                     let out = AVAudioPCMBuffer(pcmFormat: audio.engine.manualRenderingFormat, frameCapacity: 4096)!
                     var samples: [Float] = []
-                    var statuses: Set<Int> = []
-                    for _ in 0..<48 {
-                        let st = try audio.engine.renderOffline(512, to: out)
-                        statuses.insert(st.rawValue)
+                    for _ in 0..<172 {   // 2 s
+                        _ = try audio.engine.renderOffline(512, to: out)
                         samples.append(contentsOf: UnsafeBufferPointer(start: out.floatChannelData![0], count: Int(out.frameLength)))
                     }
-                    let pf = audio.player.outputFormat(forBus: 0)
-                    line += " | \(Int(rate))/\(ch): Pegel \(rms(samples[9000..<22000])) St \(statuses) Player \(Int(pf.sampleRate))/\(pf.channelCount) AU \(audio.pitchAU?.diagnostics ?? "-") lastRender \(audio.player.lastRenderTime?.sampleTime ?? -1) playing \(audio.player.isPlaying)"
+                    let first = samples.firstIndex(where: { abs($0) > 0.01 }) ?? -1
+                    let last = samples.lastIndex(where: { abs($0) > 0.01 }) ?? -1
+                    line += " | \(Int(rate))/\(ch): Klang von \(String(format: "%.3f", Double(first) / 44_100)) bis \(String(format: "%.3f", Double(last) / 44_100)) s"
                 }
                 print(line)
                 audio.player.stop()
