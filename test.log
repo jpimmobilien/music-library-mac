@@ -1,0 +1,85 @@
+[0/1] Planning build
+Test Suite 'Selected tests' started at 2026-11-11 08:13:15.860.
+Test Suite 'MusicLibraryPackageTests.xctest' started at 2026-11-11 08:13:15.865.
+Test Suite 'AudioEngineTests' started at 2026-11-11 08:13:15.865.
+Test Case '-[MusicLibraryTests.AudioEngineTests testBassShelfBoostsLowsOnly]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testBassShelfBoostsLowsOnly]' passed (0.207 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testEffectiveRate]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testEffectiveRate]' passed (0.006 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testEqualizerBandBoostAtCenterFrequency]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testEqualizerBandBoostAtCenterFrequency]' passed (0.071 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testEqualizerLeavesDistantFrequenciesAlone]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testEqualizerLeavesDistantFrequenciesAlone]' passed (0.070 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testEveryBuiltInPresetIsAudible]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testEveryBuiltInPresetIsAudible]' passed (1.688 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testHeadroomCompensatesBoost]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testHeadroomCompensatesBoost]' passed (0.069 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testLevelMeterFollowsRenderedAudio]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testLevelMeterFollowsRenderedAudio]' passed (0.340 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testNeutralChainIsTransparent]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testNeutralChainIsTransparent]' passed (0.042 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchHalfSemitoneFromSettingsIsAudible]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchHalfSemitoneFromSettingsIsAudible]' passed (1.649 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchOneFineStepDownIsAudible]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchOneFineStepDownIsAudible]' passed (3.157 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchQualityStationaryChord]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchQualityStationaryChord]' passed (4.436 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchShiftOctaveUpKeepsDuration]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchShiftOctaveUpKeepsDuration]' passed (2.163 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchTransientsLessSmearedThanAppleTimePitch]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testPitchTransientsLessSmearedThanAppleTimePitch]' passed (6.627 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testPortedPitchAccuracyLowHighAndMono]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testPortedPitchAccuracyLowHighAndMono]' passed (5.700 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testTempoChangeKeepsPitch]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testTempoChangeKeepsPitch]' passed (0.068 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testTrackChangeBetweenFormatsWhileRunning]' started.
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Audio/AudioEngine.swift:153: error: -[MusicLibraryTests.AudioEngineTests testTrackChangeBetweenFormatsWhileRunning] : error -10868 (com.apple.coreaudio.avfaudio)
+Test Case '-[MusicLibraryTests.AudioEngineTests testTrackChangeBetweenFormatsWhileRunning]' failed (1.048 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testVarispeedChangesPitchAndSpeed]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testVarispeedChangesPitchAndSpeed]' passed (0.071 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testVolumeBelowFullScalesLinearly]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testVolumeBelowFullScalesLinearly]' passed (0.038 seconds).
+Test Case '-[MusicLibraryTests.AudioEngineTests testVolumeBoostIsLouderButLimited]' started.
+Test Case '-[MusicLibraryTests.AudioEngineTests testVolumeBoostIsLouderButLimited]' passed (0.107 seconds).
+Test Suite 'AudioEngineTests' failed at 2026-11-11 08:13:43.428.
+	 Executed 19 tests, with 1 failure (1 unexpected) in 27.558 (27.563) seconds
+Test Suite 'MusicLibraryPackageTests.xctest' failed at 2026-11-11 08:13:43.428.
+	 Executed 19 tests, with 1 failure (1 unexpected) in 27.558 (27.563) seconds
+Test Suite 'Selected tests' failed at 2026-11-11 08:13:43.428.
+	 Executed 19 tests, with 1 failure (1 unexpected) in 27.558 (27.568) seconds
+[Audio] Bass +6 dB: 50 Hz 5.6235447 dB, 5 kHz -7.86937e-05 dB
+[Audio] EQ 1 kHz +12 dB: gemessen 12.000021 dB
+[Audio] EQ 16 kHz +12 dB bei 125 Hz: 0.0016161695 dB
+[Audio] Preset Neutral (gemessen/erwartet dB): 31 Hz +0.0/+0.0 · 125 Hz +0.0/+0.0 · 500 Hz +0.0/+0.0 · 2000 Hz +0.0/+0.0 · 8000 Hz +0.0/+0.0
+[Audio] Preset Bass Boost (gemessen/erwartet dB): 31 Hz +4.2/+4.2 · 125 Hz +3.3/+3.3 · 500 Hz -0.7/-0.7 · 2000 Hz -2.9/-2.9 · 8000 Hz -3.0/-3.0
+[Audio] Preset Rock (gemessen/erwartet dB): 31 Hz +3.0/+3.0 · 125 Hz +0.6/+0.6 · 500 Hz -3.2/-3.2 · 2000 Hz -1.3/-1.5 · 8000 Hz +2.5/+1.3
+[Audio] Preset Pop (gemessen/erwartet dB): 31 Hz -2.7/-2.7 · 125 Hz +0.4/+0.4 · 500 Hz +2.8/+2.8 · 2000 Hz -0.2/-0.2 · 8000 Hz -2.6/-2.3
+[Audio] Preset Klassik (gemessen/erwartet dB): 31 Hz +2.0/+2.0 · 125 Hz +0.6/+0.6 · 500 Hz -1.3/-1.3 · 2000 Hz -1.1/-1.3 · 8000 Hz +1.8/+0.9
+[Audio] Preset Jazz (gemessen/erwartet dB): 31 Hz +1.9/+1.9 · 125 Hz +0.2/+0.2 · 500 Hz -2.3/-2.3 · 2000 Hz -1.4/-1.5 · 8000 Hz +1.6/+0.8
+[Audio] Preset Gesang (gemessen/erwartet dB): 31 Hz -4.0/-4.0 · 125 Hz -2.9/-2.9 · 500 Hz +1.6/+1.6 · 2000 Hz +2.2/+2.2 · 8000 Hz -1.8/-1.5
+[Audio] Preset Elektronisch (gemessen/erwartet dB): 31 Hz +3.3/+3.3 · 125 Hz -0.1/-0.1 · 500 Hz -3.7/-3.7 · 2000 Hz -1.3/-1.5 · 8000 Hz +3.5/+2.1
+[Audio] EQ +12 dB mit −12 dB Aussteuerung: 0.0 dB
+[Audio] Pegel 1 kHz −6 dBFS: Bänder 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.90 0.00 0.00 0.00 0.00 0.00 0.00 0.00, L 0.89982295, R 0.89982295
+[Audio] Pegelanalyse je Bild: 0.851 ms
+[Audio] neutral: Spitze 0.4999968
+[Audio] Tonhöhe +0,5 Halbtöne: 453.33333333333337 Hz (erwartet 452.8929841231365)
+[Audio] Tonhöhe −0,1 Halbtöne: 437.5 Hz (erwartet 437.4657864797208)
+[Pitch] Akkord +2 Halbtöne, Apple TimePitch (2.0): Störanteil -53.0 dB, Spitze 0.567
+[Pitch] Akkord +2 Halbtöne, Android-Verfahren (2.1): Störanteil -48.7 dB, Spitze 0.567
+[Audio] Tonhöhe +12 Halbtöne: 880.0 Hz
+[Pitch] Anschläge +2 Halbtöne, Apple TimePitch (2.0): Vorecho -6.0 dB
+[Pitch] Anschläge -3 Halbtöne, Apple TimePitch (2.0): Vorecho -10.2 dB
+[Pitch] Anschläge +2 Halbtöne, Android-Verfahren (2.1): Vorecho -25.0 dB
+[Pitch] Anschläge -3 Halbtöne, Android-Verfahren (2.1): Vorecho -31.9 dB
+[Pitch] 55.0 Hz −1 Halbton: 51.666666666666664 Hz (erwartet 51.91308719749314)
+[Pitch] 3000.0 Hz −1 Halbton: 2831.6666666666665 Hz (erwartet 2831.6229380450804)
+[Pitch] Mono +3 Halbtöne: 523.6502857565613 Hz (erwartet 523.2511306011972)
+[Audio] Tempo 1,5×: 440.0 Hz, Restpegel 0.0
+[Audio] Titelwechsel auf 44100 Hz, 2 Kanal/Kanäle, Tonhöhe 0 Cent: Pegel 0.21202788
+[Audio] Drehzahl 2×: 880.0 Hz, Restpegel 0.0
+[Audio] Lautstärke 50 %: Spitze 0.2499984
+[Audio] Lautstärke 300 %: Spitze 0.95258456, Pegelgewinn 5.598891 dB
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: x86_64-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.
