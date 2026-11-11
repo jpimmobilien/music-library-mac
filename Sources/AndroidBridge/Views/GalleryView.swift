@@ -510,6 +510,7 @@ struct GalleryCell: View {
                 }
             }
             .frame(width: width, height: height)
+            .loadingShimmer(image == nil && item.entry.kind.isMedia)
             .clipShape(RoundedRectangle(cornerRadius: corner, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: corner, style: .continuous)

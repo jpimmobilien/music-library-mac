@@ -10,7 +10,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-VERSION="${VERSION:-5.1.0}"
+VERSION="${VERSION:-5.2.0}"
 BUILD_NUMBER="${BUILD_NUMBER:-1}"
 APP="build/Android Bridge.app"
 EXE="AndroidBridge"
@@ -36,6 +36,9 @@ cp "build/$EXE-universal" "$APP/Contents/MacOS/$EXE"
 sed -e "s/__VERSION__/$VERSION/" -e "s/__BUILD__/$BUILD_NUMBER/" Resources/Info.plist > "$APP/Contents/Info.plist"
 plutil -lint "$APP/Contents/Info.plist"
 printf 'APPL????' > "$APP/Contents/PkgInfo"
+# Produktfotos für das Titelbild
+mkdir -p "$APP/Contents/Resources/Photos"
+cp Resources/Photos/*.png "$APP/Contents/Resources/Photos/"
 if command -v iconutil >/dev/null; then
     iconutil -c icns Resources/AppIcon.iconset -o "$APP/Contents/Resources/AppIcon.icns"
 else

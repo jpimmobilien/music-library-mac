@@ -55,7 +55,7 @@ struct RootView: View {
         .ignoresSafeArea(.container, edges: .top)
         .background(WindowConfigurator())
         .environment(\.glassEnabled, settings.glassEffects)
-        .environment(\.animationsEnabled, settings.animations)
+        .environment(\.animationsEnabled, settings.animations && !NSWorkspace.shared.accessibilityDisplayShouldReduceMotion)
         .environment(\.lightIntensity, model.devices.connectedDevices.isEmpty ? 0.25 : 1)
         .tint(settings.accent.color)
         .sheet(item: $transfers.conflict) { prompt in

@@ -203,7 +203,9 @@ struct AppearanceSettings: View {
                          footer: "Android Bridge erkennt das Modell (\(mac.identifier)) und zeichnet seine Bauform. Die Gehäusefarbe lässt sich nicht auslesen – wählen Sie sie hier.") {
                 HStack(alignment: .center, spacing: 20) {
                     Group {
-                        if mac.form.isLaptop {
+                        if let photo = MacPhoto.front(for: mac) {
+                            PhotoLaptop(photo: photo) { MiniAppScreen(connected: false, deviceName: "") }
+                        } else if mac.form.isLaptop {
                             PerspectiveLaptop(hardware: mac) { MiniAppScreen(connected: false, deviceName: "") }
                         } else {
                             MacRender(width: 150, hardware: mac) { ScaledScreen { MiniAppScreen(connected: false, deviceName: "") } }

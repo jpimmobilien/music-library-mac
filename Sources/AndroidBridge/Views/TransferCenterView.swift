@@ -102,6 +102,9 @@ struct TransferJobRow: View {
     @ObservedObject var job: TransferJob
     let engine: TransferEngine
     @State private var expanded = false
+    @State private var speedSamples: [Double] = []
+    @State private var shakes: CGFloat = 0
+    @Environment(\.animationsEnabled) private var animations
 
     private var tint: Color {
         switch job.status {
@@ -117,12 +120,17 @@ struct TransferJobRow: View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .top, spacing: 14) {
                 ZStack {
+                    SuccessBurst(trigger: job.status == .completed)
                     ProgressRing(fraction: job.fraction, lineWidth: 3.5, tint: tint)
                     Image(systemName: statusSymbol)
                         .font(.ui(13, .bold))
                         .foregroundStyle(tint)
+                        .id(statusSymbol)
+                        .transition(.scale(scale: 0.4).combined(with: .opacity))
                 }
                 .frame(width: 38, height: 38)
+                .modifier(ShakeEffect(animatableData: shakes))
+                .animation(MotionPolicy.allowed(animations) ? .spring(response: 0.38, dampingFraction: 0.62) : nil, value: statusSymbol)
 
                 VStack(alignment: .leading, spacing: 4) {
                     HStack(spacing: 6) {
@@ -138,7 +146,15 @@ struct TransferJobRow: View {
                         .lineLimit(1)
                         .truncationMode(.middle)
                     if job.status == .running || job.status == .verifying || job.status == .paused {
-                        ProgressView(value: job.fraction).tint(tint)
+                        HStack(spacing: 10) {
+                            FlowProgressBar(fraction: job.fraction, tint: tint, toMac: job.direction == .toMac,
+                                            bytesPerSecond: job.bytesPerSecond, flowing: job.status == .running)
+                            if speedSamples.count > 2 {
+                                SpeedSparkline(samples: speedSamples, tint: tint)
+                                    .frame(width: 64, height: 18)
+                                    .help("Übertragungsgeschwindigkeit der letzten Sekunden")
+                            }
+                        }
                         HStack(spacing: 12) {
                             if !job.currentName.isEmpty {
                                 Text("\(job.currentIndex)/\(job.items.filter { !$0.name.isEmpty }.count): \(job.currentName)")
@@ -146,7 +162,7 @@ struct TransferJobRow: View {
                             }
                             Spacer()
                             Text("\(ByteFormat.string(job.transferredBytes)) von \(ByteFormat.string(job.totalBytes)) · \(Int(job.fraction * 100)) %")
-                            if job.bytesPerSecond > 0 { Text(ByteFormat.rate(job.bytesPerSecond)) }
+                            if job.bytesPerSecond > 0 { Text(ByteFormat.rate(job.bytesPerSecond)).numericTransition() }
                             if let r = job.remainingSeconds, r > 0 { Text("noch \(DurationFormat.string(r))") }
                         }
                         .font(.ui(11.5))
@@ -170,6 +186,17 @@ struct TransferJobRow: View {
         }
         .padding(16)
         .glassCard(cornerRadius: 18)
+        // echte Messwerte der Übertragung sammeln (nur solange sie läuft)
+        .onChange(of: job.bytesPerSecond) { v in
+            guard job.status == .running, v > 0 else { return }
+            speedSamples.append(v)
+            if speedSamples.count > 40 { speedSamples.removeFirst(speedSamples.count - 40) }
+        }
+        .onChange(of: job.status) { st in
+            if case .failed = st, MotionPolicy.allowed(animations) {
+                withAnimation(.linear(duration: 0.45)) { shakes += 1 }
+            }
+        }
     }
 
     private var statusSymbol: String {
@@ -340,9 +367,11 @@ struct TransferHero: View {
     var body: some View {
         HStack(spacing: 26) {
             ZStack {
+                ScanSweep(active: speed > 0)
                 ProgressRing(fraction: fraction, lineWidth: 9, tint: Palette.accent)
-                    .shadow(color: Palette.accent.opacity(0.45), radius: 10)
-                Text("\(Int(fraction * 100)) %").font(.display(24, .bold)).monospacedDigit()
+                    .shadow(color: Palette.accent.opacity(0.3), radius: 8)
+                Text("\(Int(fraction * 100)) %").font(.display(24, .bold)).monospacedDigit().numericTransition()
+                    .animation(.easeOut(duration: 0.3), value: Int(fraction * 100))
             }
             .frame(width: 104, height: 104)
             VStack(alignment: .leading, spacing: 6) {

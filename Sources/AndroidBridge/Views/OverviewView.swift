@@ -21,13 +21,15 @@ struct OverviewView: View {
                 VStack(alignment: .leading, spacing: Spacing.section) {
                     if let device = primary {
                         DeviceHero(device: device, showcase: showcase, thumbs: thumbs)
+                            .transition(.deviceStage)
                         DeviceSections(device: device, showcase: showcase)
+                            .transition(.opacity.combined(with: .offset(y: 30)))
                         if devices.devices.count > 1 {
                             OtherDevicesRow(devices: devices.devices.filter { $0.id != device.id })
                         }
                     } else {
                         WelcomeHero()
-                        WelcomeHighlights()
+                            .transition(.deviceStage)
                     }
                     PrivacyNote()
                 }
@@ -37,6 +39,7 @@ struct OverviewView: View {
                 .frame(maxWidth: 1240, alignment: .leading)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .animation(animations ? .bridgeSpring : nil, value: primary?.state)
+                .animation(MotionPolicy.allowed(animations) ? .spring(response: 0.7, dampingFraction: 0.82) : nil, value: primary == nil)
             }
             WindowDragArea().frame(height: 40)
         }
@@ -111,8 +114,10 @@ struct DeviceHero: View {
                      phoneStyle: PhoneStyle(manufacturer: device.manufacturer, model: device.model),
                      stateSymbol: connected ? "cable.connector" : device.state.symbolName,
                      stateText: connected ? "USB · Dateiübertragung" : device.state.title)
-            .aspectRatio(2.05, contentMode: .fit)
-            .frame(maxWidth: 940)
+            .aspectRatio(ProductStage.aspect(connected: true), contentMode: .fit)
+            .frame(maxWidth: ProductStage.maxWidth(connected: true))
+            // dezenter Lichtimpuls, sobald die Verbindung steht
+            .background(ConnectionPulse(connected: connected).padding(-80))
     }
 
     /// Bildunterschrift wie auf einer Produktseite: dieser Mac und das Telefon mit seinen Werten.
@@ -430,8 +435,8 @@ struct WelcomeHero: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.top, 10)
             ProductStage(connected: false, stateSymbol: "cable.connector", stateText: "Nicht verbunden")
-                .aspectRatio(2.05, contentMode: .fit)
-                .frame(maxWidth: 940)
+                .aspectRatio(ProductStage.aspect(connected: false), contentMode: .fit)
+                .frame(maxWidth: ProductStage.maxWidth(connected: false))
                 .padding(.top, 26)
             MacCaption(color: Palette.textSecondary)
                 .padding(.top, 10)

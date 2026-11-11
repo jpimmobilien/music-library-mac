@@ -680,7 +680,28 @@ struct ProductStage: View {
     var stateText: String?
     var hardware: MacHardware = .current
 
+    /// Seitenverhältnis der Bühne: mit Produktfoto so hoch wie das Foto, sonst breit (Mac + Telefon).
+    static func aspect(for hardware: MacHardware = .current, connected: Bool) -> CGFloat {
+        if let p = connected ? MacPhoto.front(for: hardware) : MacPhoto.side(for: hardware) {
+            return p.pixelSize.width / p.pixelSize.height
+        }
+        return 2.05
+    }
+    static func maxWidth(for hardware: MacHardware = .current, connected: Bool) -> CGFloat {
+        if connected { return MacPhoto.front(for: hardware) != nil ? 640 : 940 }
+        return MacPhoto.side(for: hardware) != nil ? 720 : 940
+    }
+
     var body: some View {
+        if let photo = connected ? MacPhoto.front(for: hardware) : MacPhoto.side(for: hardware) {
+            // Echtes Produktfoto: der Mac allein, wie auf einer Produktseite – mit der App auf dem Bildschirm
+            PhotoLaptop(photo: photo) { MiniAppScreen(photos: photos, connected: connected, deviceName: deviceName) }
+        } else {
+            drawnStage
+        }
+    }
+
+    private var drawnStage: some View {
         GeometryReader { geo in
             let w = geo.size.width, h = geo.size.height
             let phoneH = h * 0.66
@@ -728,5 +749,99 @@ struct ScaledScreen<Content: View>: View {
                 .scaleEffect(scale, anchor: .topLeading)
         }
         .clipped()
+    }
+}
+
+// MARK: - Produktfotos (5.2)
+
+/// Echte Produktfotos aus dem App-Bundle (Resources/Photos). Für Modelle ohne Foto bleibt die gezeichnete Ansicht.
+enum MacPhoto: String {
+    /// MacBook Pro mit Touch Bar, von oben – Bildschirm wird durch die laufende App ersetzt.
+    case touchBarFront = "macbook-pro-touchbar-front"
+    /// MacBook Pro mit Touch Bar, Seitenansicht (Titelbild ohne Telefon).
+    case touchBarSide = "macbook-pro-touchbar-side"
+
+    /// Pixelgröße des Fotos.
+    var pixelSize: CGSize {
+        switch self {
+        case .touchBarFront: return CGSize(width: 965, height: 895)
+        case .touchBarSide: return CGSize(width: 923, height: 768)
+        }
+    }
+
+    /// Bildschirmfläche im Foto (oben links, oben rechts, unten rechts, unten links) in Pixeln – etwas
+    /// größer als gemessen, damit kein Rest des Originalbildschirms durchscheint.
+    var screenQuad: [CGPoint]? {
+        switch self {
+        case .touchBarFront:
+            return [CGPoint(x: 24.5, y: 26.5), CGPoint(x: 939.5, y: 26.5), CGPoint(x: 873.5, y: 305.5), CGPoint(x: 90.5, y: 305.5)]
+        case .touchBarSide:
+            return nil
+        }
+    }
+
+    var image: NSImage? { MacPhoto.cache(self) }
+
+    private static var store: [MacPhoto: NSImage] = [:]
+    private static func cache(_ p: MacPhoto) -> NSImage? {
+        if let i = store[p] { return i }
+        guard let url = Bundle.main.url(forResource: p.rawValue, withExtension: "png", subdirectory: "Photos")
+                ?? Bundle.main.url(forResource: p.rawValue, withExtension: "png"),
+              let img = NSImage(contentsOf: url) else { return nil }
+        store[p] = img
+        return img
+    }
+
+    /// Passendes Foto für diesen Mac (nur Modelle, für die es ein echtes Foto gibt).
+    static func front(for hw: MacHardware) -> MacPhoto? {
+        guard hw.form.isLaptop, LaptopDims.of(hw).touchBar, MacPhoto.touchBarFront.image != nil else { return nil }
+        return .touchBarFront
+    }
+    static func side(for hw: MacHardware) -> MacPhoto? {
+        guard hw.form.isLaptop, LaptopDims.of(hw).touchBar, MacPhoto.touchBarSide.image != nil else { return nil }
+        return .touchBarSide
+    }
+}
+
+/// Produktfoto mit der laufenden App auf dem Bildschirm (perspektivisch eingepasst).
+struct PhotoLaptop<Screen: View>: View {
+    let photo: MacPhoto
+    var screenSize = CGSize(width: 960, height: 600)
+    @ViewBuilder var screen: () -> Screen
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        GeometryReader { geo in
+            let px = photo.pixelSize
+            let s = min(geo.size.width / px.width, geo.size.height / px.height)
+            let w = px.width * s, h = px.height * s
+            ZStack(alignment: .topLeading) {
+                if let img = photo.image {
+                    Image(nsImage: img)
+                        .resizable()
+                        .interpolation(.high)
+                        .antialiased(true)
+                        .frame(width: w, height: h)
+                        .shadow(color: .black.opacity(scheme == .dark ? 0.55 : 0.16), radius: max(6, h * 0.035), y: h * 0.025)
+                }
+                if let q = photo.screenQuad?.map({ CGPoint(x: $0.x * s, y: $0.y * s) }) {
+                    screen()
+                        .frame(width: screenSize.width, height: screenSize.height)
+                        .clipped()
+                        .projectionEffect(homography(width: screenSize.width, height: screenSize.height,
+                                                     tl: q[0], tr: q[1], br: q[2], bl: q[3]))
+                        .mask(Polygon(points: q))
+                    // Glas über dem Bildschirm: weiche Spiegelung wie im Foto
+                    Polygon(points: q)
+                        .fill(LinearGradient(stops: [.init(color: .white.opacity(0.10), location: 0),
+                                                     .init(color: .white.opacity(0.03), location: 0.35),
+                                                     .init(color: .clear, location: 0.55)],
+                                             startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .allowsHitTesting(false)
+                }
+            }
+            .frame(width: w, height: h)
+            .position(x: geo.size.width / 2, y: geo.size.height / 2)
+        }
     }
 }

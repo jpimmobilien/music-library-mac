@@ -119,8 +119,11 @@ struct DuplicatesView: View {
                     LazyVStack(spacing: 14) {
                         ForEach(groups) { group in
                             DuplicateGroupCard(group: group, scanner: scanner, device: device)
+                                .transition(.asymmetric(insertion: .opacity.combined(with: .offset(y: 18)),
+                                                        removal: .opacity.combined(with: .scale(scale: 0.94))))
                         }
                     }
+                    .animation(MotionPolicy.allowed(true) ? .bridgeSpring : nil, value: groups.map(\.id))
                 }
             }
             .reportsScrollEdge()
@@ -273,6 +276,8 @@ private struct ScanProgressPanel: View {
         VStack(spacing: Spacing.xxl) {
             Spacer(minLength: 0)
             ZStack {
+                ScanSweep(active: progress.phase != .done)
+                    .frame(width: 132, height: 132)
                 ProgressRing(fraction: progress.fraction, lineWidth: 8)
                     .frame(width: 132, height: 132)
                 VStack(spacing: 0) {
@@ -375,7 +380,7 @@ struct DuplicateSummaryHero: View {
             .frame(width: 70, height: 70)
             VStack(alignment: .leading, spacing: 4) {
                 Text("Freigebbar").font(Typo.eyebrow).foregroundStyle(Palette.accent)
-                Text(ByteFormat.string(reclaimable))
+                Text(ByteFormat.string(reclaimable)).numericTransition()
                     .font(.display(40, .bold))
                     .tracking(-0.8)
                     .foregroundStyle(Palette.textPrimary)
@@ -421,8 +426,11 @@ struct DuplicateGroupCard: View {
                 HStack(alignment: .top, spacing: 14) {
                     ForEach(group.files) { file in
                         DuplicateFileCard(file: file, group: group, scanner: scanner, device: device)
+                            .transition(.asymmetric(insertion: .opacity,
+                                                    removal: .opacity.combined(with: .scale(scale: 0.8)).combined(with: .offset(y: 10))))
                     }
                 }
+                .animation(MotionPolicy.allowed(true) ? .bridgeSpring : nil, value: group.files.map(\.id))
                 .padding(.vertical, 4)
                 .padding(.horizontal, 2)
             }

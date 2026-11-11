@@ -213,7 +213,7 @@ private struct DeviceWindowContent: View {
         FileManagerView(files: files, settings: settings)
             .deletionSheets(model: model, origin: files.windowOrigin, glass: settings.glassEffects)
             .environment(\.glassEnabled, settings.glassEffects)
-            .environment(\.animationsEnabled, settings.animations)
+            .environment(\.animationsEnabled, settings.animations && !NSWorkspace.shared.accessibilityDisplayShouldReduceMotion)
             .tint(settings.accent.color)
             .background(AmbientBackground())
             .navigationTitle(device.displayName)

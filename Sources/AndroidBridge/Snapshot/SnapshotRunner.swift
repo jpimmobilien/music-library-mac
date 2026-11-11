@@ -245,6 +245,22 @@ enum SnapshotRunner {
             }) { m in
                 await installPreview(m, state: .connected)
             },
+            Scenario(name: "17-titelbild-foto", size: CGSize(width: 1512, height: 930), custom: { m in
+                let mbp = MacHardware.preview("MacBookPro14,3", "15\" MacBook Pro mit Thunderbolt 3 und Touch ID (Mitte 2017)")
+                return AnyView(
+                    HStack(alignment: .center, spacing: 40) {
+                        ProductStage(connected: false, stateSymbol: "cable.connector", stateText: "Nicht verbunden", hardware: mbp)
+                            .aspectRatio(ProductStage.aspect(for: mbp, connected: false), contentMode: .fit)
+                            .frame(maxWidth: ProductStage.maxWidth(for: mbp, connected: false))
+                        ProductStage(connected: true, photos: [], deviceName: "Pixel 8", hardware: mbp)
+                            .aspectRatio(ProductStage.aspect(for: mbp, connected: true), contentMode: .fit)
+                            .frame(maxWidth: ProductStage.maxWidth(for: mbp, connected: true))
+                    }
+                    .padding(40)
+                    .environment(\.glassEnabled, m.settings.glassEffects)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Palette.background))
+            }) { _ in },
             Scenario(name: "16-erste-schritte", size: CGSize(width: 760, height: 520), custom: { m in
                 AnyView(FirstStepsView(done: {})
                     .environment(\.glassEnabled, m.settings.glassEffects)
@@ -296,6 +312,7 @@ enum SnapshotRunner {
                             VStack(spacing: 8) {
                                 ProductStage(connected: true, photos: [], deviceName: "Pixel", hardware: mac)
                                     .aspectRatio(2.05, contentMode: .fit)
+                                    .frame(maxWidth: .infinity)
                                 MacCaption(hardware: mac, color: Palette.textSecondary)
                             }
                         }

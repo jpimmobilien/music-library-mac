@@ -495,11 +495,19 @@ struct InteractiveLight<S: Shape>: ViewModifier {
     let shape: S
     var pressable = true
     @State private var location: CGPoint?
+    @State private var size: CGSize = .zero
     @Environment(\.colorScheme) private var scheme
     @Environment(\.animationsEnabled) private var animations
 
+    /// „Magnetisch“: die Karte folgt dem Zeiger um wenige Punkte und hebt sich minimal an.
+    private var magnet: CGSize {
+        guard let p = location, size.width > 0, size.height > 0, MotionPolicy.allowed(animations) else { return .zero }
+        return CGSize(width: (p.x / size.width - 0.5) * 5, height: (p.y / size.height - 0.5) * 4)
+    }
+
     func body(content: Content) -> some View {
         content
+            .background(GeometryReader { g in Color.clear.onAppear { size = g.size }.onChange(of: g.size) { size = $0 } })
             .overlay {
                 GeometryReader { geo in
                     if let p = location, animations {
@@ -524,6 +532,9 @@ struct InteractiveLight<S: Shape>: ViewModifier {
                 case .ended: location = nil
                 }
             }
+            .scaleEffect(location != nil && MotionPolicy.allowed(animations) ? 1.012 : 1)
+            .offset(magnet)
+            .animation(.interactiveSpring(response: 0.35, dampingFraction: 0.75), value: magnet)
             .animation(.easeOut(duration: 0.25), value: location == nil)
     }
 }
