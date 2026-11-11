@@ -49,8 +49,13 @@ final class PitchShiftAudioUnit: AUAudioUnit {
         outputBus.maximumChannelCount = 2
         _inputBusses = AUAudioUnitBusArray(audioUnit: self, busType: .input, busses: [inputBus])
         _outputBusses = AUAudioUnitBusArray(audioUnit: self, busType: .output, busses: [outputBus])
-        maximumFramesToRender = 4096
+        maximumFramesToRender = Self.renderCapacity
     }
+
+    /// Größte Blockgröße, die die Unit verarbeitet. Vor der Abtastratenwandlung im Mischer fordert die Engine bei
+    /// hoch aufgelösten Titeln (88,2–192 kHz) ein Vielfaches der Ausgabe-Blockgröße an – mit nur 4096 Frames blieb
+    /// es dann still (2.1/2.2.0). 32768 Frames reichen auch für 192 kHz bei 4096er Ausgabeblöcken (≈ 17.800).
+    static let renderCapacity: AUAudioFrameCount = 32_768
 
     override var inputBusses: AUAudioUnitBusArray { _inputBusses }
     override var outputBusses: AUAudioUnitBusArray { _outputBusses }
@@ -71,7 +76,7 @@ final class PitchShiftAudioUnit: AUAudioUnit {
         // Stereo-Titel). Kein Fehler werfen – AVAudioEngine würde daraus eine Ausnahme machen –, sondern bis zur
         // nächsten Vorbereitung Stille ausgeben.
         state.mismatch = inputBus.format.channelCount != format.channelCount || inputBus.format.sampleRate != format.sampleRate
-        state.allocate(channels: Int(format.channelCount), maxFrames: Int(maximumFramesToRender))
+        state.allocate(channels: Int(format.channelCount), maxFrames: Int(max(maximumFramesToRender, Self.renderCapacity)))
         state.sampleRate = format.sampleRate
         state.post(nil, latency: 0)
         delayedNeutral = false
@@ -120,7 +125,7 @@ final class PitchShiftAudioUnit: AUAudioUnit {
             return
         }
         let p = TimePitchProcessor(sampleRate: state.sampleRate, channels: state.channels, speed: 1,
-                                   pitch: neutral ? 1 : pitchFactor, maxFramesPerCall: Int(maximumFramesToRender),
+                                   pitch: neutral ? 1 : pitchFactor, maxFramesPerCall: state.capacity,
                                    delaysWhenNeutral: neutral)
         delayedNeutral = true
         state.post(p, latency: p.latencyFrames)
@@ -143,6 +148,8 @@ private final class RenderState: @unchecked Sendable {
     var sampleRate: Double = 44_100
     private(set) var latencyFrames = 0
     private var maxFrames = 0
+    /// Größte Blockgröße der zugeteilten Puffer.
+    var capacity: Int { maxFrames }
     private var inputList: UnsafeMutableAudioBufferListPointer?
     private var inputMemory: [UnsafeMutablePointer<Float>] = []
     private var outputMemory: [UnsafeMutablePointer<Float>] = []

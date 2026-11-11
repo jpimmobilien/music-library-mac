@@ -206,7 +206,7 @@ final class AudioEngineTests: XCTestCase {
             audio.apply(p, force: true)
             try audio.start()
             let out = AVAudioPCMBuffer(pcmFormat: audio.engine.manualRenderingFormat, frameCapacity: 4096)!
-            let formats: [(Double, AVAudioChannelCount)] = [(44_100, 2), (48_000, 1), (96_000, 2), (44_100, 1), (22_050, 2), (44_100, 2)]
+            let formats: [(Double, AVAudioChannelCount)] = [(44_100, 2), (48_000, 1), (96_000, 2), (44_100, 1), (192_000, 2), (22_050, 2), (44_100, 2)]
             for (rate, ch) in formats {
                 let f = AVAudioFormat(standardFormatWithSampleRate: rate, channels: ch)!
                 let buf = AVAudioPCMBuffer(pcmFormat: f, frameCapacity: AVAudioFrameCount(rate * 0.7))!
