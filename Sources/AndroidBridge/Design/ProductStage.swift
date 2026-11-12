@@ -488,11 +488,15 @@ struct RealisticPhone<Screen: View>: View {
     var yaw: Double = 14
     /// Flach auf dem Tisch liegend, von oben gesehen (keine Kante, Schatten rundum).
     var lying = false
+    /// Echtes Produktfoto des Telefons (falls vorhanden) statt der Zeichnung.
+    var photo: PhonePhoto? = nil
     @ViewBuilder var screen: () -> Screen
     @Environment(\.colorScheme) private var scheme
 
     var body: some View {
-        if lying {
+        if let photo, photo.image != nil {
+            photoBody(photo)
+        } else if lying {
             phoneBody(depth: 0)
                 .shadow(color: .black.opacity(scheme == .dark ? 0.6 : 0.22), radius: height * 0.03, y: height * 0.018)
                 .accessibilityHidden(true)
@@ -520,6 +524,52 @@ struct RealisticPhone<Screen: View>: View {
                 }
             }
             .accessibilityHidden(true)
+    }
+
+    @ViewBuilder
+    private func photoBody(_ photo: PhonePhoto) -> some View {
+        let px = photo.pixelSize
+        let h = height
+        let w = h * px.width / px.height
+        let k = h / px.height
+        let r = photo.screen
+        let view = ZStack(alignment: .topLeading) {
+            if let img = photo.image {
+                Image(nsImage: img).resizable().interpolation(.high).frame(width: w, height: h)
+            }
+            screen()
+                .frame(width: r.width * k, height: r.height * k)
+                .clipShape(RoundedRectangle(cornerRadius: photo.screenCorner * k, style: .continuous))
+                .offset(x: r.minX * k, y: r.minY * k)
+            // Kamera-Loch wie im Foto
+            Circle()
+                .fill(Color.black)
+                .overlay(Circle().fill(Color(white: 0.18)).padding(photo.punchRadius * k * 0.45))
+                .frame(width: photo.punchRadius * 2 * k, height: photo.punchRadius * 2 * k)
+                .offset(x: (photo.punch.x - photo.punchRadius) * k, y: (photo.punch.y - photo.punchRadius) * k)
+            // Glas: weiche Spiegelung
+            RoundedRectangle(cornerRadius: photo.screenCorner * k, style: .continuous)
+                .fill(LinearGradient(stops: [.init(color: .white.opacity(0.12), location: 0), .init(color: .white.opacity(0.03), location: 0.35),
+                                             .init(color: .clear, location: 0.5)], startPoint: .topLeading, endPoint: .bottomTrailing))
+                .frame(width: r.width * k, height: r.height * k)
+                .offset(x: r.minX * k, y: r.minY * k)
+                .allowsHitTesting(false)
+        }
+        .frame(width: w, height: h, alignment: .topLeading)
+        if lying {
+            view.shadow(color: .black.opacity(scheme == .dark ? 0.6 : 0.22), radius: h * 0.03, y: h * 0.018)
+                .accessibilityHidden(true)
+        } else {
+            view
+                .background(alignment: .bottom) {
+                    Ellipse()
+                        .fill(Color.black.opacity(scheme == .dark ? 0.75 : 0.3))
+                        .frame(width: w * 1.1, height: h * 0.04)
+                        .blur(radius: h * 0.02)
+                        .offset(y: h * 0.015)
+                }
+                .accessibilityHidden(true)
+        }
     }
 
     private func phoneBody(depth: CGFloat) -> some View {
@@ -699,25 +749,29 @@ struct ProductStage: View {
     var hardware: MacHardware = .current
     /// Zeitpunkt der Verbindung – startet die Auftrittsanimation (Telefon wird neben den Mac gelegt).
     var connectedAt: Date?
+    /// Echtes Foto des angeschlossenen Telefons (falls vorhanden).
+    var phonePhoto: PhonePhoto? = nil
 
     /// Seitenverhältnis der Bühne: mit Produktfoto so hoch wie das Foto, sonst breit (Mac + Telefon).
     static func aspect(for hardware: MacHardware = .current, connected: Bool) -> CGFloat {
         if let p = connected ? MacPhoto.front(for: hardware) : MacPhoto.side(for: hardware) {
             // verbunden: rechts neben dem Mac liegt das Telefon
-            return p.pixelSize.width / p.pixelSize.height + (connected ? PhotoDeskStage.phoneArea : 0)
+            return p.pixelSize.width / p.pixelSize.height + (connected ? PhotoDeskStage.phoneArea(p) : 0)
         }
         return 2.05
     }
     static func maxWidth(for hardware: MacHardware = .current, connected: Bool) -> CGFloat {
-        if connected { return MacPhoto.front(for: hardware) != nil ? 860 : 940 }
-        return MacPhoto.side(for: hardware) != nil ? 720 : 940
+        if connected, let p = MacPhoto.front(for: hardware) { return p.isTopDown ? 860 : 940 }
+        if connected { return 940 }
+        if let p = MacPhoto.side(for: hardware) { return p == .notchFront ? 820 : 720 }
+        return 940
     }
 
     var body: some View {
         if connected, let photo = MacPhoto.front(for: hardware) {
             // Echtes Produktfoto von oben, daneben liegt das verbundene Telefon
             PhotoDeskStage(photo: photo, photos: photos, deviceName: deviceName, phoneStyle: phoneStyle,
-                           stateSymbol: stateSymbol, stateText: stateText, connectedAt: connectedAt)
+                           phonePhoto: phonePhoto, stateSymbol: stateSymbol, stateText: stateText, connectedAt: connectedAt)
         } else if !connected, let photo = MacPhoto.side(for: hardware) {
             // Ohne Telefon: der Mac allein in der Seitenansicht, wie auf einer Produktseite
             PhotoLaptop(photo: photo) { MiniAppScreen(photos: photos, connected: connected, deviceName: deviceName) }
@@ -734,7 +788,7 @@ struct ProductStage: View {
                 mac
                     .frame(width: w * 0.8, height: h)
                     .offset(x: w * 0.2)
-                RealisticPhone(height: phoneH, style: phoneStyle) {
+                RealisticPhone(height: phoneH, style: phoneStyle, photo: phonePhoto) {
                     PhoneScreenContent(wallpaper: connected ? photos.first : nil, stateSymbol: stateSymbol, stateText: stateText, dimmed: !connected)
                 }
                 .position(x: w * 0.19, y: h - phoneH / 2 - h * 0.02)
@@ -785,12 +839,37 @@ enum MacPhoto: String {
     case touchBarFront = "macbook-pro-touchbar-front"
     /// MacBook Pro mit Touch Bar, Seitenansicht (Titelbild ohne Telefon).
     case touchBarSide = "macbook-pro-touchbar-side"
+    /// MacBook Pro mit Kerbe (ab 2021, 14"/16"), Silber, frontal.
+    case notchFront = "macbook-pro-notch-front"
 
     /// Pixelgröße des Fotos.
     var pixelSize: CGSize {
         switch self {
         case .touchBarFront: return CGSize(width: 965, height: 895)
         case .touchBarSide: return CGSize(width: 923, height: 768)
+        case .notchFront: return CGSize(width: 1100, height: 667)
+        }
+    }
+
+    /// Von oben fotografiert (Telefon liegt daneben) oder frontal (Telefon steht daneben).
+    var isTopDown: Bool { self == .touchBarFront }
+
+    /// Gestaltungsgröße des Bildschirminhalts – passend zum Seitenverhältnis des Displays im Foto.
+    var screenDesign: CGSize {
+        switch self {
+        case .notchFront: return CGSize(width: 920, height: 600)
+        default: return CGSize(width: 960, height: 600)
+        }
+    }
+
+    /// Rundung der Displayecken im Foto (Pixel).
+    var screenCorner: CGFloat { self == .notchFront ? 10 : 0 }
+
+    /// Kerbe (Kamera) oben im Display, in Pixeln des Fotos.
+    var notch: CGRect? {
+        switch self {
+        case .notchFront: return CGRect(x: 511, y: 11, width: 78, height: 21)
+        default: return nil
         }
     }
 
@@ -802,6 +881,8 @@ enum MacPhoto: String {
             return [CGPoint(x: 24.5, y: 26.5), CGPoint(x: 939.5, y: 26.5), CGPoint(x: 873.5, y: 305.5), CGPoint(x: 90.5, y: 305.5)]
         case .touchBarSide:
             return nil
+        case .notchFront:
+            return [CGPoint(x: 93.5, y: 11.5), CGPoint(x: 1006.5, y: 11.5), CGPoint(x: 1006.5, y: 607.5), CGPoint(x: 93.5, y: 607.5)]
         }
     }
 
@@ -819,10 +900,12 @@ enum MacPhoto: String {
 
     /// Passendes Foto für diesen Mac (nur Modelle, für die es ein echtes Foto gibt).
     static func front(for hw: MacHardware) -> MacPhoto? {
+        if hw.form == .notchPro, MacPhoto.notchFront.image != nil { return .notchFront }
         guard hw.form.isLaptop, LaptopDims.of(hw).touchBar, MacPhoto.touchBarFront.image != nil else { return nil }
         return .touchBarFront
     }
     static func side(for hw: MacHardware) -> MacPhoto? {
+        if hw.form == .notchPro, MacPhoto.notchFront.image != nil { return .notchFront }
         guard hw.form.isLaptop, LaptopDims.of(hw).touchBar, MacPhoto.touchBarSide.image != nil else { return nil }
         return .touchBarSide
     }
@@ -831,7 +914,6 @@ enum MacPhoto: String {
 /// Produktfoto mit der laufenden App auf dem Bildschirm (perspektivisch eingepasst).
 struct PhotoLaptop<Screen: View>: View {
     let photo: MacPhoto
-    var screenSize = CGSize(width: 960, height: 600)
     @ViewBuilder var screen: () -> Screen
     @Environment(\.colorScheme) private var scheme
 
@@ -840,6 +922,7 @@ struct PhotoLaptop<Screen: View>: View {
             let px = photo.pixelSize
             let s = min(geo.size.width / px.width, geo.size.height / px.height)
             let w = px.width * s, h = px.height * s
+            let screenSize = photo.screenDesign
             ZStack(alignment: .topLeading) {
                 if let img = photo.image {
                     Image(nsImage: img)
@@ -855,7 +938,15 @@ struct PhotoLaptop<Screen: View>: View {
                         .clipped()
                         .projectionEffect(homography(width: screenSize.width, height: screenSize.height,
                                                      tl: q[0], tr: q[1], br: q[2], bl: q[3]))
-                        .mask(Polygon(points: q))
+                        .mask(ScreenMask(points: q, corner: photo.screenCorner * s))
+                    if let n = photo.notch {
+                        // Kerbe mit Kamera, wie beim echten Gerät
+                        NotchShape(radius: n.height * 0.38 * s)
+                            .fill(Color.black)
+                            .overlay(Circle().fill(Color(white: 0.16)).frame(width: n.height * 0.3 * s, height: n.height * 0.3 * s))
+                            .frame(width: n.width * s, height: n.height * s)
+                            .offset(x: n.minX * s, y: n.minY * s)
+                    }
                     // Glas über dem Bildschirm: weiche Spiegelung wie im Foto
                     Polygon(points: q)
                         .fill(LinearGradient(stops: [.init(color: .white.opacity(0.10), location: 0),
@@ -876,12 +967,13 @@ struct PhotoLaptop<Screen: View>: View {
 /// Beim Verbinden wird das Telefon hereingelegt, der Mac-Bildschirm geht an, ein Lichtimpuls läuft vom Telefon aus.
 struct PhotoDeskStage: View {
     /// Zusätzliche Breite (in Höhen der Bühne) für das Telefon.
-    static let phoneArea: CGFloat = 0.3
+    static func phoneArea(_ photo: MacPhoto) -> CGFloat { photo.isTopDown ? 0.3 : 0.24 }
 
     let photo: MacPhoto
     var photos: [NSImage]
     var deviceName: String
     var phoneStyle: PhoneStyle
+    var phonePhoto: PhonePhoto? = nil
     var stateSymbol: String?
     var stateText: String?
     var connectedAt: Date?
@@ -894,11 +986,14 @@ struct PhotoDeskStage: View {
         GeometryReader { geo in
             let H = geo.size.height
             let lw = H * photo.pixelSize.width / photo.pixelSize.height
-            let phoneH = H * 0.5
+            let topDown = photo.isTopDown
+            let phoneH = H * (topDown ? 0.5 : 0.6)
             let phoneW = phoneH / 2.12
-            // Telefon liegt rechts neben der Handballenauflage, leicht schräg
-            let cx = min(geo.size.width - phoneW * 0.6, lw + phoneW * 0.32)
-            let cy = H * 0.68
+            // von oben: Telefon liegt rechts neben der Handballenauflage, leicht schräg;
+            // frontal: Telefon steht rechts vorne, leicht vor dem Mac
+            let cx = min(geo.size.width - phoneW * 0.55, lw + phoneW * (topDown ? 0.32 : 0.1))
+            let cy = topDown ? H * 0.68 : H - phoneH / 2 - H * 0.01
+            let finalAngle: Double = topDown ? -8 : 0
             let glow = phoneH * 1.8
             ZStack(alignment: .topLeading) {
                 PhotoLaptop(photo: photo) {
@@ -915,11 +1010,11 @@ struct PhotoDeskStage: View {
                     .opacity(Double(1 - pulse))
                     .offset(x: cx - glow / 2, y: cy - glow / 2)
                     .allowsHitTesting(false)
-                RealisticPhone(height: phoneH, style: phoneStyle, lying: true) {
+                RealisticPhone(height: phoneH, style: phoneStyle, lying: topDown, photo: phonePhoto) {
                     PhoneScreenContent(wallpaper: photos.first, stateSymbol: stateSymbol, stateText: stateText, dimmed: false)
                 }
                 .frame(width: phoneW, height: phoneH)
-                .rotationEffect(.degrees(placed ? -8 : 14))
+                .rotationEffect(.degrees(placed ? finalAngle : finalAngle + 22))
                 .scaleEffect(placed ? 1 : 1.08)
                 .opacity(placed ? 1 : 0)
                 .offset(x: cx - phoneW / 2 + (placed ? 0 : phoneW * 1.6), y: cy - phoneH / 2 + (placed ? 0 : -H * 0.06))
@@ -943,5 +1038,97 @@ struct PhotoDeskStage: View {
             withAnimation(.easeInOut(duration: 0.7).delay(0.4)) { screenOn = true }
             withAnimation(.easeOut(duration: 1.3).delay(0.5)) { pulse = 1 }
         }
+    }
+}
+
+
+/// Displayfläche im Foto: Viereck, bei rechteckigen Displays mit gerundeten Ecken.
+private struct ScreenMask: Shape {
+    var points: [CGPoint]
+    var corner: CGFloat
+    func path(in rect: CGRect) -> Path {
+        guard points.count == 4 else { return Path() }
+        if corner > 0 {
+            let r = CGRect(x: points[0].x, y: points[0].y, width: points[1].x - points[0].x, height: points[3].y - points[0].y)
+            return Path(roundedRect: r, cornerRadius: corner, style: .continuous)
+        }
+        var p = Path()
+        p.move(to: points[0]); points.dropFirst().forEach { p.addLine(to: $0) }; p.closeSubpath()
+        return p
+    }
+}
+
+/// Kerbe oben im Display: oben gerade, unten gerundet.
+struct NotchShape: Shape {
+    var radius: CGFloat
+    func path(in rect: CGRect) -> Path {
+        let r = min(radius, rect.height, rect.width / 2)
+        var p = Path()
+        p.move(to: CGPoint(x: rect.minX, y: rect.minY))
+        p.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+        p.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY - r))
+        p.addQuadCurve(to: CGPoint(x: rect.maxX - r, y: rect.maxY), control: CGPoint(x: rect.maxX, y: rect.maxY))
+        p.addLine(to: CGPoint(x: rect.minX + r, y: rect.maxY))
+        p.addQuadCurve(to: CGPoint(x: rect.minX, y: rect.maxY - r), control: CGPoint(x: rect.minX, y: rect.maxY))
+        p.closeSubpath()
+        return p
+    }
+}
+
+/// Echte Produktfotos von Telefonen (Vorderseite). Der Bildschirm wird durch Inhalte vom Gerät ersetzt.
+enum PhonePhoto: String {
+    case pixel6Pro = "phone-pixel-6-pro"
+    case xiaomi11Lite = "phone-xiaomi-11-lite"
+
+    var pixelSize: CGSize {
+        switch self {
+        case .pixel6Pro: return CGSize(width: 467, height: 997)
+        case .xiaomi11Lite: return CGSize(width: 233, height: 490)
+        }
+    }
+    /// Displayfläche im Foto (Pixel).
+    var screen: CGRect {
+        switch self {
+        case .pixel6Pro: return CGRect(x: 10, y: 11, width: 443, height: 973)
+        case .xiaomi11Lite: return CGRect(x: 9, y: 8, width: 213, height: 468)
+        }
+    }
+    var screenCorner: CGFloat {
+        switch self {
+        case .pixel6Pro: return 34
+        case .xiaomi11Lite: return 18
+        }
+    }
+    /// Kameraloch (Mittelpunkt, Radius) in Pixeln.
+    var punch: CGPoint {
+        switch self {
+        case .pixel6Pro: return CGPoint(x: 232, y: 22)
+        case .xiaomi11Lite: return CGPoint(x: 29, y: 26)
+        }
+    }
+    var punchRadius: CGFloat {
+        switch self {
+        case .pixel6Pro: return 6
+        case .xiaomi11Lite: return 5
+        }
+    }
+
+    var image: NSImage? { PhonePhoto.cache(self) }
+    private static var store: [PhonePhoto: NSImage] = [:]
+    private static func cache(_ p: PhonePhoto) -> NSImage? {
+        if let i = store[p] { return i }
+        guard let url = Bundle.main.url(forResource: p.rawValue, withExtension: "png", subdirectory: "Photos")
+                ?? Bundle.main.url(forResource: p.rawValue, withExtension: "png"),
+              let img = NSImage(contentsOf: url) else { return nil }
+        store[p] = img
+        return img
+    }
+
+    /// Passendes Foto für das angeschlossene Telefon (nur Modelle, für die es ein Foto gibt).
+    static func match(manufacturer: String, model: String) -> PhonePhoto? {
+        let m = (manufacturer + " " + model).lowercased()
+        if m.contains("pixel 6 pro") { return .pixel6Pro }
+        if m.contains("11 lite"), m.contains("xiaomi") || m.contains("mi 11") { return .xiaomi11Lite }
+        return nil
     }
 }

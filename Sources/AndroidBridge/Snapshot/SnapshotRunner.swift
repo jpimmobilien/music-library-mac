@@ -248,13 +248,29 @@ enum SnapshotRunner {
             Scenario(name: "17-titelbild-foto", size: CGSize(width: 1512, height: 930), custom: { m in
                 let mbp = MacHardware.preview("MacBookPro14,3", "15\" MacBook Pro mit Thunderbolt 3 und Touch ID (Mitte 2017)")
                 return AnyView(
-                    ProductStage(connected: true, photos: [], deviceName: "Pixel 8", phoneStyle: .pixel, hardware: mbp)
+                    ProductStage(connected: true, photos: [], deviceName: "Pixel 6 Pro", phoneStyle: .pixel, hardware: mbp, phonePhoto: .pixel6Pro)
                         .aspectRatio(ProductStage.aspect(for: mbp, connected: true), contentMode: .fit)
                         .frame(maxWidth: ProductStage.maxWidth(for: mbp, connected: true))
                         .padding(40)
                         .environment(\.glassEnabled, m.settings.glassEffects)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .background(Palette.background))
+            }) { _ in },
+            Scenario(name: "19-titelbild-notch", size: CGSize(width: 1512, height: 930), custom: { m in
+                let mbp = MacHardware.preview("Mac16,5", "MacBook Pro (16 Zoll, 2024)")
+                return AnyView(
+                    VStack(spacing: 30) {
+                        ProductStage(connected: false, stateSymbol: "cable.connector", stateText: "Nicht verbunden", hardware: mbp)
+                            .aspectRatio(ProductStage.aspect(for: mbp, connected: false), contentMode: .fit)
+                            .frame(maxWidth: 520)
+                        ProductStage(connected: true, photos: [], deviceName: "Xiaomi Mi 11 Lite 5G", hardware: mbp, phonePhoto: .xiaomi11Lite)
+                            .aspectRatio(ProductStage.aspect(for: mbp, connected: true), contentMode: .fit)
+                            .frame(maxWidth: 640)
+                    }
+                    .padding(30)
+                    .environment(\.glassEnabled, m.settings.glassEffects)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Palette.background))
             }) { _ in },
             Scenario(name: "18-titelbild-seite", size: CGSize(width: 1512, height: 930), custom: { m in
                 let mbp = MacHardware.preview("MacBookPro14,3", "15\" MacBook Pro mit Thunderbolt 3 und Touch ID (Mitte 2017)")
