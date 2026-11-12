@@ -956,7 +956,9 @@ struct PhotoLaptop<Screen: View>: View {
                         .allowsHitTesting(false)
                 }
             }
-            .frame(width: w, height: h)
+            // oben links verankern: der Bildschirminhalt ist größer als das Foto gelayoutet
+            // (danach perspektivisch verkleinert) und darf das Foto nicht verschieben
+            .frame(width: w, height: h, alignment: .topLeading)
             .position(x: geo.size.width / 2, y: geo.size.height / 2)
         }
     }
