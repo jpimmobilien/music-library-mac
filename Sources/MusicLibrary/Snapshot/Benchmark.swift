@@ -233,30 +233,32 @@ enum Benchmark {
         record("Suche berechnen (Hintergrund)", searchSamples)
 
         // Abschnitte (2.2.2): Sortierung nach „Hinzugefügt“ mit Monats-/Jahresabschnitten für Titel und Alben
-        var added = model.settings
-        added.trackSort = Sort(TrackSort.dateAdded, descending: true)
-        added.albumSort = Sort(AlbumSort.dateAdded, descending: true)
-        t0 = CACurrentMediaTime()
-        let addedLists = AppModel.computeLists(index: idx, settings: added, stats: model.stats, favorites: model.favoriteTracks,
-                                               favoriteAlbums: model.favoriteAlbums, playlists: model.playlists, queries: [:])
-        record("Alle Listen nach „Hinzugefügt“ (Hintergrund)", [(CACurrentMediaTime() - t0) * 1000])
-        var sectionSamples: [Double] = []
-        var directSamples: [Double] = []
-        let calendar = Calendar.current
-        let nowYear = calendar.component(.year, from: Date())
-        for _ in 0..<5 {
+        do {
+            var added = model.settings
+            added.trackSort = Sort(TrackSort.dateAdded, descending: true)
+            added.albumSort = Sort(AlbumSort.dateAdded, descending: true)
             t0 = CACurrentMediaTime()
-            _ = LibrarySectioning.tracks(addedLists.tracks, sort: added.trackSort)
-            _ = LibrarySectioning.albums(addedLists.albums, sort: added.albumSort)
-            sectionSamples.append((CACurrentMediaTime() - t0) * 1000)
-            // Zum Vergleich: Kalenderrechnung für jeden Eintrag (ohne Zwischenspeicher)
-            t0 = CACurrentMediaTime()
-            _ = LibrarySectioning.runs(addedLists.tracks, unknown: "") { LibrarySectioning.addedKey($0.dateAdded, nowYear: nowYear, calendar: calendar) }
-            _ = LibrarySectioning.runs(addedLists.albums, unknown: "") { LibrarySectioning.addedKey($0.dateAdded, nowYear: nowYear, calendar: calendar) }
-            directSamples.append((CACurrentMediaTime() - t0) * 1000)
+            let addedLists = AppModel.computeLists(index: idx, settings: added, stats: model.stats, favorites: model.favoriteTracks,
+                                                   favoriteAlbums: model.favoriteAlbums, playlists: model.playlists, queries: [:])
+            record("Alle Listen nach „Hinzugefügt“ (Hintergrund)", [(CACurrentMediaTime() - t0) * 1000])
+            var sectionSamples: [Double] = []
+            var directSamples: [Double] = []
+            let calendar = Calendar.current
+            let nowYear = calendar.component(.year, from: Date())
+            for _ in 0..<5 {
+                t0 = CACurrentMediaTime()
+                _ = LibrarySectioning.tracks(addedLists.tracks, sort: added.trackSort)
+                _ = LibrarySectioning.albums(addedLists.albums, sort: added.albumSort)
+                sectionSamples.append((CACurrentMediaTime() - t0) * 1000)
+                // Zum Vergleich: Kalenderrechnung für jeden Eintrag (ohne Zwischenspeicher)
+                t0 = CACurrentMediaTime()
+                _ = LibrarySectioning.runs(addedLists.tracks, unknown: "") { LibrarySectioning.addedKey($0.dateAdded, nowYear: nowYear, calendar: calendar) }
+                _ = LibrarySectioning.runs(addedLists.albums, unknown: "") { LibrarySectioning.addedKey($0.dateAdded, nowYear: nowYear, calendar: calendar) }
+                directSamples.append((CACurrentMediaTime() - t0) * 1000)
+            }
+            record("Abschnitte „Hinzugefügt“ (Titel + Alben)", sectionSamples)
+            record("Abschnitte „Hinzugefügt“ ohne Zwischenspeicher", directSamples)
         }
-        record("Abschnitte „Hinzugefügt“ (Titel + Alben)", sectionSamples)
-        record("Abschnitte „Hinzugefügt“ ohne Zwischenspeicher", directSamples)
 
         // 2. Fenster
         for w in NSApp.windows { w.orderOut(nil) }
