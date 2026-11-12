@@ -1,0 +1,20 @@
+{
+  "architecture" : "Apple Silicon (arm64)",
+  "images" : [
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "03b-dateimanager-raster-hell-984x637.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "03b-dateimanager-raster-dunkel-984x637.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    }
+  ],
+  "liquidGlass" : false,
+  "macOS" : "Version 26.7.2 (Build 25G332)",
+  "note" : "Gerätedarstellungen verwenden ein Vorschaugerät mit erfundenen Ordnern (kein Telefon am Build-Rechner)."
+}

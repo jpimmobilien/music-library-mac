@@ -1,0 +1,20 @@
+{
+  "architecture" : "Apple Silicon (arm64)",
+  "images" : [
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "14-duplikate-ergebnisse-klein-hell-960x640.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "14-duplikate-ergebnisse-klein-dunkel-960x640.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    }
+  ],
+  "liquidGlass" : false,
+  "macOS" : "Version 15.8.2 (Build 24H232)",
+  "note" : "Gerätedarstellungen verwenden ein Vorschaugerät mit erfundenen Ordnern (kein Telefon am Build-Rechner)."
+}

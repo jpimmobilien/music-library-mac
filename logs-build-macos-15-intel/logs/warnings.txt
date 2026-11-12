@@ -1,0 +1,2 @@
+16:Sources/AndroidBridge/Views/GalleryView.swift:578:31: warning: capture of 'backend' with non-Sendable type 'any DeviceBackend' in a '@Sendable' closure [#SendableClosureCaptures]
+8:Sources/AndroidBridge/USB/IOUSBHostTransport.swift:163:47: warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning

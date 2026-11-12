@@ -1,0 +1,35 @@
+Building for production...
+[0/7] Write sources
+[2/7] Write swift-version-1977FEB4D2752686.txt
+[3/8] Compiling ABObjC ABObjC.m
+[4/8] Compiling ABObjC ABLegacyUSB.m
+[6/8] Compiling ABCore Duplicates.swift
+[7/9] Compiling AndroidBridge AndroidBridgeApp.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/USB/IOUSBHostTransport.swift:163:47: warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning
+161 |         _ = try? guarded("Abbruch") { try pipe.__abort(with: .synchronous) }
+162 |         if code == IOKitReturn.pipeStalled { _ = try? guarded("Stillstand aufheben") { try pipe.clearStall() } }
+163 |         if let fresh = try? guarded("Puffer") { try interface.ioData(withCapacity: bufferSize) } {
+    |                                               `- warning: trailing closure in this context is confusable with the body of the statement; pass as a parenthesized argument to silence this warning
+164 |             if isRead { readBuffer = fresh } else { writeBuffer = fresh }
+165 |         }
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/Views/GalleryView.swift:578:31: warning: capture of 'backend' with non-Sendable type 'any DeviceBackend' in a '@Sendable' closure [#SendableClosureCaptures]
+576 |                     FileManager.default.createFile(atPath: url.path, contents: nil)
+577 |                     let handle = try FileHandle(forWritingTo: url)
+578 |                     try await backend.download(handle: entry.handle, sink: { d in try handle.write(contentsOf: d) },
+    |                               `- warning: capture of 'backend' with non-Sendable type 'any DeviceBackend' in a '@Sendable' closure [#SendableClosureCaptures]
+579 |                                                progress: { bytes in progress.completedUnitCount = Int64(bytes); return !progress.isCancelled })
+580 |                     try handle.close()
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/AndroidBridge/MTP/DeviceBackend.swift:6:10: note: protocol 'DeviceBackend' does not conform to the 'Sendable' protocol
+  4 | /// Dateizugriff auf ein verbundenes Gerät. In der App immer echtes MTP über USB;
+  5 | /// die Vorschau-Implementierung existiert ausschließlich für automatische Bildschirmfotos im Build.
+  6 | protocol DeviceBackend: AnyObject {
+    |          `- note: protocol 'DeviceBackend' does not conform to the 'Sendable' protocol
+  7 |     var supportsPartialDownload: Bool { get }
+  8 |     func storages() async throws -> [DeviceStorage]
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[7/9] Write Objects.LinkFileList
+[8/9] Linking AndroidBridge
+Build of product 'AndroidBridge' complete! (193.37s)

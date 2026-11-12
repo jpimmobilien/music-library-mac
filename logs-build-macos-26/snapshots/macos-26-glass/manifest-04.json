@@ -1,0 +1,44 @@
+{
+  "architecture" : "Apple Silicon (arm64)",
+  "images" : [
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "04-galerie-hell-984x637.png",
+      "glass" : "liquid-glass",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "04-galerie-dunkel-984x637.png",
+      "glass" : "liquid-glass",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "04b-galerie-hell-960x637.png",
+      "glass" : "liquid-glass",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "04b-galerie-dunkel-960x637.png",
+      "glass" : "liquid-glass",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "04c-galerie-hell-984x637.png",
+      "glass" : "liquid-glass",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "04c-galerie-dunkel-984x637.png",
+      "glass" : "liquid-glass",
+      "method" : "window-server"
+    }
+  ],
+  "liquidGlass" : true,
+  "macOS" : "Version 26.7.2 (Build 25G332)",
+  "note" : "Gerätedarstellungen verwenden ein Vorschaugerät mit erfundenen Ordnern (kein Telefon am Build-Rechner)."
+}

@@ -1,0 +1,44 @@
+{
+  "architecture" : "Intel (x86_64)",
+  "images" : [
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "02-uebersicht-verbunden-hell-1512x930.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "02-uebersicht-verbunden-dunkel-1512x930.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "02b-uebersicht-verbunden-hell-1728x930.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "02b-uebersicht-verbunden-dunkel-1728x930.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "02c-uebersicht-verbunden-hell-960x640.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "Vorschaugerät (nur Build)",
+      "file" : "02c-uebersicht-verbunden-dunkel-960x640.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    }
+  ],
+  "liquidGlass" : false,
+  "macOS" : "Version 15.7.9 (Build 24G830)",
+  "note" : "Gerätedarstellungen verwenden ein Vorschaugerät mit erfundenen Ordnern (kein Telefon am Build-Rechner)."
+}

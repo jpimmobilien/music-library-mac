@@ -1,0 +1,20 @@
+{
+  "architecture" : "Intel (x86_64)",
+  "images" : [
+    {
+      "deviceData" : "keine",
+      "file" : "01-uebersicht-ohne-geraet-hell-1512x919.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "keine",
+      "file" : "01-uebersicht-ohne-geraet-dunkel-1512x919.png",
+      "glass" : "fallback",
+      "method" : "window-server"
+    }
+  ],
+  "liquidGlass" : false,
+  "macOS" : "Version 26.6.1 (Build 25G76)",
+  "note" : "Gerätedarstellungen verwenden ein Vorschaugerät mit erfundenen Ordnern (kein Telefon am Build-Rechner)."
+}

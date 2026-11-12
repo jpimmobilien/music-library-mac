@@ -1,0 +1,20 @@
+{
+  "architecture" : "Apple Silicon (arm64)",
+  "images" : [
+    {
+      "deviceData" : "keine",
+      "file" : "13-uebertragungen-leer-hell-984x637.png",
+      "glass" : "liquid-glass",
+      "method" : "window-server"
+    },
+    {
+      "deviceData" : "keine",
+      "file" : "13-uebertragungen-leer-dunkel-984x637.png",
+      "glass" : "liquid-glass",
+      "method" : "window-server"
+    }
+  ],
+  "liquidGlass" : true,
+  "macOS" : "Version 26.7.2 (Build 25G332)",
+  "note" : "Gerätedarstellungen verwenden ein Vorschaugerät mit erfundenen Ordnern (kein Telefon am Build-Rechner)."
+}

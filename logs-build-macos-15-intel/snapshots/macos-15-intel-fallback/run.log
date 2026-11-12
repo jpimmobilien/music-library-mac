@@ -1,0 +1,43 @@
+== Gruppe 01
+[Snapshot] ▸ 01-uebersicht-ohne-geraet hell
+[Snapshot] ▸ 01-uebersicht-ohne-geraet dunkel
+== Gruppe 02
+[Snapshot] ▸ 02-uebersicht-verbunden hell
+[Snapshot] ▸ 02-uebersicht-verbunden dunkel
+[Snapshot] ▸ 02b-uebersicht-verbunden hell
+[Snapshot] ▸ 02b-uebersicht-verbunden dunkel
+[Snapshot] ▸ 02c-uebersicht-verbunden hell
+[Snapshot] ▸ 02c-uebersicht-verbunden dunkel
+== Gruppe 06
+[Snapshot] ▸ 06-dateiuebertragung-einschalten hell
+[Snapshot] ▸ 06-dateiuebertragung-einschalten dunkel
+== Gruppe 08
+[Snapshot] ▸ 08-duplikate-bereich hell
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ Gruppe 08: Status 134
+== Gruppe 10
+[Snapshot] ▸ 10-loeschen-bestaetigen hell
+[Snapshot] ▸ 10-loeschen-bestaetigen dunkel
+== Gruppe 11
+[Snapshot] ▸ 11-einstellungen hell
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ Gruppe 11: Status 134
+== Gruppe 13
+[Snapshot] ▸ 13-uebertragungen-leer hell
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ Gruppe 13: Status 134
+== Gruppe 15
+[Snapshot] ▸ 15-mac-bauformen hell
+[Snapshot] ▸ 15-mac-bauformen dunkel
+== Gruppe 16
+[Snapshot] ▸ 16-erste-schritte hell
+[Snapshot] ▸ 16-erste-schritte dunkel
+== Gruppe 17
+[Snapshot] ▸ 17-titelbild-foto hell
+[Snapshot] ▸ 17-titelbild-foto dunkel
+== Gruppe 18
+[Snapshot] ▸ 18-titelbild-seite hell
+[Snapshot] ▸ 18-titelbild-seite dunkel
+== Gruppe 19
+[Snapshot] ▸ 19-titelbild-notch hell
+[Snapshot] ▸ 19-titelbild-notch dunkel

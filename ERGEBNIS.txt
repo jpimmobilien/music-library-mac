@@ -1,0 +1,9 @@
+Lauf: 45 (88ba2f9f1e9dd3cca89880100ba314e3dba08b13)
+build: success
+dmg: AndroidBridge-dmg-macos-15
+dmg: AndroidBridge-dmg-macos-15-intel
+dmg: AndroidBridge-dmg-macos-26
+dmg: AndroidBridge-dmg-macos-26-intel
+smoke: success
+intel: success
+Thu Nov 12 07:44:09 UTC 2026

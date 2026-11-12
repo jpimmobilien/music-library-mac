@@ -1,0 +1,29 @@
+2 images written to build/dmg-background.tiff.
+▸ Prüfe DMG …
+Checksumming Protective Master Boot Record (MBR : 0)…
+Protective Master Boot Record (MBR :: verified   CRC32 $7380DCE3
+Checksumming GPT Header (Primary GPT Header : 1)…
+ GPT Header (Primary GPT Header : 1): verified   CRC32 $8DD4270D
+Checksumming GPT Partition Data (Primary GPT Table : 2)…
+GPT Partition Data (Primary GPT Tabl: verified   CRC32 $D677C5D6
+Checksumming  (Apple_Free : 3)…
+                    (Apple_Free : 3): verified   CRC32 $00000000
+Checksumming disk image (Apple_HFS : 4)…
+          disk image (Apple_HFS : 4): verified   CRC32 $DA8EAA0F
+Checksumming GPT Partition Data (Backup GPT Table : 5)…
+GPT Partition Data (Backup GPT Table: verified   CRC32 $D677C5D6
+Checksumming GPT Header (Backup GPT Header : 6)…
+  GPT Header (Backup GPT Header : 6): verified   CRC32 $0A8C0A0B
+verified   CRC32 $A8B1AEDA
+hdiutil: verify: checksum of "dist/AndroidBridge.dmg" is VALID
+total 2936
+drwxr-xr-x@   7 runner  staff      306 Nov 12 07:33 .
+drwx------@ 144 runner  staff     4608 Nov 12 07:33 ..
+-rw-r--r--    1 runner  staff   194942 Nov 12 07:33 .background.tiff
+-rw-r--r--    1 runner  staff    16388 Nov 12 07:33 .DS_Store
+-rw-r--r--    1 runner  staff  1277978 Nov 12 07:33 .VolumeIcon.icns
+drwxr-xr-x    3 runner  staff      102 Nov 12 07:32 Android Bridge.app
+lrwxr-xr-x    1 runner  staff       13 Nov 12 07:33 Programme -> /Applications
+5.4.0
+5e27a6541fcfb72fd7c60a0182a0cc9e64e93bdcfd9d4b4210ac4984931a86c8  AndroidBridge.dmg
+✓ dist/AndroidBridge.dmg
