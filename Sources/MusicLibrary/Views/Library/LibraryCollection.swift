@@ -72,6 +72,10 @@ struct LibraryCollection<Element: Identifiable, MenuContent: View>: View where E
     let makeItem: (Element) -> LibraryItem
     let actions: CollectionActions
     var table: CollectionTable<Element>? = nil
+    /// Abschnitte (Erscheinungsjahr, Hinzugefügt) – nil = ohne Überschriften.
+    var sections: [LibrarySectionRun]? = nil
+    /// Anzahl je Abschnitt als Text („37 Alben“).
+    var sectionCount: (Int) -> String = Formatting.albums
     @ViewBuilder let menu: (CollectionMenuTarget) -> MenuContent
     @State private var selection: Set<String> = []
     @State private var anchor: Int?
@@ -97,6 +101,28 @@ struct LibraryCollection<Element: Identifiable, MenuContent: View>: View where E
         }
         .onAppear { applySeed() }
         .onDisappear { LibrarySelectionStore.shared.withdraw(owner: owner) }
+        .modifier(SectionRunsPublisher(runs: options.mode == .coverFlow ? nil : sections))
+    }
+
+    /// Einträge – mit Abschnitts-Überschriften, wenn die Sortierung Abschnitte bildet.
+    @ViewBuilder
+    private func entries<V: View>(gridSpacing: CGFloat? = nil, @ViewBuilder _ make: @escaping (Int, Element) -> V) -> some View {
+        if let runs = sections, !runs.isEmpty {
+            let list = elements
+            ForEach(runs) { run in
+                Section {
+                    ForEach(run.slots(count: list.count, id: { list[$0].id })) { slot in
+                        make(slot.index, list[slot.index])
+                    }
+                } header: {
+                    LibrarySectionHeader(run: run, countText: sectionCount(run.count), first: run.range.lowerBound == 0, gridSpacing: gridSpacing)
+                }
+            }
+        } else {
+            ForEach(Array(elements.enumerated()), id: \.element.id) { index, element in
+                make(index, element)
+            }
+        }
     }
 
     // MARK: Raster
@@ -104,7 +130,7 @@ struct LibraryCollection<Element: Identifiable, MenuContent: View>: View where E
     private func grid(_ generation: Int) -> some View {
         let metrics = TileMetrics(options: options, available: TileMetrics.available(viewport), scale: displayScale)
         return LazyVGrid(columns: metrics.columns, alignment: .leading, spacing: metrics.rowSpacing) {
-            ForEach(Array(elements.enumerated()), id: \.element.id) { index, element in
+            entries(gridSpacing: metrics.rowSpacing) { index, element in
                 tile(index, element, metrics.style, generation)
             }
         }
@@ -136,7 +162,7 @@ struct LibraryCollection<Element: Identifiable, MenuContent: View>: View where E
             ? [GridItem(.adaptive(minimum: 330), spacing: 18, alignment: .top)]
             : Array(repeating: GridItem(.flexible(minimum: 200), spacing: 18, alignment: .top), count: count)
         return LazyVGrid(columns: columns, alignment: .leading, spacing: 0) {
-            ForEach(Array(elements.enumerated()), id: \.element.id) { index, element in
+            entries { index, element in
                 row(index, element, generation)
             }
         }
@@ -168,7 +194,7 @@ struct LibraryCollection<Element: Identifiable, MenuContent: View>: View where E
         return VStack(spacing: 0) {
             DetailTableHeader(context: context, columns: columns, widths: widths, sort: table?.sort ?? TableSortSpec.unsorted)
             LazyVStack(spacing: 0) {
-                ForEach(Array(elements.enumerated()), id: \.element.id) { index, element in
+                entries { index, element in
                     tableRow(index, element, columns, widths, generation)
                 }
             }

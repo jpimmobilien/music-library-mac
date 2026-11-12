@@ -16,6 +16,8 @@ struct TrackCollection: View {
     let tracks: [Track]
     let source: PlaybackSource
     let sort: TableSortSpec
+    /// Abschnitte (Erscheinungsjahr, Hinzugefügt) – nil = keine.
+    var sections: [LibrarySectionRun]? = nil
 
     var body: some View {
         LibraryModeHost(context: context) { options in
@@ -27,12 +29,14 @@ struct TrackCollection: View {
     private func content(_ options: LibraryViewOptions) -> some View {
         switch options.mode {
         case .list:
-            TrackListView(items: TrackListItem.plain(tracks), config: listConfig(options))
+            TrackListView(items: TrackListItem.plain(tracks), config: listConfig(options), sections: sections)
         case .detailedList:
-            TrackListView(items: TrackListItem.plain(tracks), config: TrackListConfig(source: source), layout: .table(tableSpec(options)))
+            TrackListView(items: TrackListItem.plain(tracks), config: TrackListConfig(source: source), layout: .table(tableSpec(options)),
+                          sections: sections)
         case .grid, .compactGrid:
             TrackListView(items: TrackListItem.plain(tracks), config: TrackListConfig(source: source),
-                          layout: .tiles(TileMetrics(options: options, available: TileMetrics.available(viewport), scale: displayScale)))
+                          layout: .tiles(TileMetrics(options: options, available: TileMetrics.available(viewport), scale: displayScale)),
+                          sections: sections)
         case .coverFlow:
             coverFlow(options)
         }
@@ -129,6 +133,8 @@ struct AlbumCollection: View {
     let context: LibraryViewContext
     let albums: [AlbumInfo]
     let sort: TableSortSpec
+    /// Abschnitte (Erscheinungsjahr, Hinzugefügt) – nil = keine.
+    var sections: [LibrarySectionRun]? = nil
 
     var body: some View {
         let currentUid = player.current?.uid
@@ -147,6 +153,8 @@ struct AlbumCollection: View {
                 table: CollectionTable(sort: sort, cell: { (album: AlbumInfo, column: DetailColumn) -> String in
                     CollectionCells.album(album, column, index: index, stats: stats)
                 }),
+                sections: sections,
+                sectionCount: Formatting.albums,
                 menu: { (target: CollectionMenuTarget) in
                     AlbumMenuItems(albumKey: target.item.id, uids: target.uids, groups: target.groups, names: target.names,
                                    albumContext: viewAlbums)

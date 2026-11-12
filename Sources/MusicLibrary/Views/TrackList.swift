@@ -130,6 +130,8 @@ struct TrackListView: View {
     let items: [TrackListItem]
     let config: TrackListConfig
     var layout: TrackLayout = .rows
+    /// Abschnitte (Erscheinungsjahr, Hinzugefügt) – nil = ohne Überschriften.
+    var sections: [LibrarySectionRun]? = nil
     @State private var selection: Set<Int64> = []
     @State private var anchor: Int?
     @State private var dropTarget: Int64?
@@ -154,6 +156,28 @@ struct TrackListView: View {
         .onChange(of: SelectionState(ids: selection, explicit: explicitSelection)) { _ in publishSelection() }
         .onAppear { applySeed() }
         .onDisappear { LibrarySelectionStore.shared.withdraw(owner: owner) }
+        .modifier(SectionRunsPublisher(runs: sections))
+    }
+
+    /// Einträge – mit Abschnitts-Überschriften, wenn die Sortierung Abschnitte bildet.
+    @ViewBuilder
+    private func entries<V: View>(gridSpacing: CGFloat? = nil, @ViewBuilder _ make: @escaping (Int, TrackListItem) -> V) -> some View {
+        if let runs = sections, !runs.isEmpty {
+            let list = items
+            ForEach(runs) { run in
+                Section {
+                    ForEach(run.slots(count: list.count, id: { list[$0].id })) { slot in
+                        make(slot.index, list[slot.index])
+                    }
+                } header: {
+                    LibrarySectionHeader(run: run, countText: Formatting.tracks(run.count), first: run.range.lowerBound == 0, gridSpacing: gridSpacing)
+                }
+            }
+        } else {
+            ForEach(Array(items.enumerated()), id: \.element.id) { position, item in
+                make(position, item)
+            }
+        }
     }
 
     // MARK: Anordnungen
@@ -162,7 +186,7 @@ struct TrackListView: View {
         let style = TrackRowStyle(config)
         let currentUid = player.current?.uid
         return LazyVStack(spacing: 0) {
-            ForEach(Array(items.enumerated()), id: \.element.id) { position, item in
+            entries { position, item in
                 let uid = item.track.uid
                 let current = currentUid == uid
                 let row = TrackRowView(
@@ -189,7 +213,7 @@ struct TrackListView: View {
         return VStack(spacing: 0) {
             DetailTableHeader(context: spec.context, columns: spec.columns, widths: widths, sort: spec.sort)
             LazyVStack(spacing: 0) {
-                ForEach(Array(items.enumerated()), id: \.element.id) { position, item in
+                entries { position, item in
                     let track = item.track
                     let current = currentUid == track.uid
                     let stats = model.stats[track.uid]
@@ -215,7 +239,7 @@ struct TrackListView: View {
     private func tiles(_ metrics: TileMetrics, _ generation: Int) -> some View {
         let currentUid = player.current?.uid
         return LazyVGrid(columns: metrics.columns, alignment: .leading, spacing: metrics.rowSpacing) {
-            ForEach(Array(items.enumerated()), id: \.element.id) { position, item in
+            entries(gridSpacing: metrics.rowSpacing) { position, item in
                 let track = item.track
                 let current = currentUid == track.uid
                 let tile = CollectionTile(

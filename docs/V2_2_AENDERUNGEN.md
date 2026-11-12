@@ -1,5 +1,17 @@
 # Version 2.2 – Audio Studio
 
+## 2.2.2 (12.11.2026) – Abschnitte nach Datum
+
+- **Abschnitte in den Übersichten Titel und Alben**, sobald nach **Erscheinungsjahr** oder **Hinzugefügt** sortiert
+  wird – in allen Darstellungen außer Cover Flow (Raster, kompaktes Raster, Liste, ausführliche Liste, Tabelle):
+  - Erscheinungsjahr: ein Abschnitt je Jahr („2024 · 12 Alben“), Einträge ohne Jahr gesammelt unter „Ohne Jahr“.
+  - Hinzugefügt: im laufenden und im vorigen Jahr je Monat („November 2026 · 4 Alben“), ältere Einträge je Jahr,
+    Einträge ohne Datum unter „Unbekannt“.
+  - Beim Scrollen zeigt eine kleine Glaskapsel links neben der Werkzeugleiste den aktuellen Abschnitt.
+- Andere Sortierungen (Titel, Interpret, Dauer …) bleiben wie bisher ohne Abschnitte. Keine Datenbankänderung.
+- Geprüft: 5 neue Tests für die Einteilung; 14 neue Vorschaubilder (Hell/Dunkel) auf macOS 26 Intel angesehen;
+  übersetzt mit Xcode 16 und Xcode 26.
+
 ## 2.2.1 (11.11.2026) – Fehlerbehebung
 
 - **Absturz beim Übergang zum nächsten Titel behoben** (gemeldet auf einem MacBook Pro 2017 mit macOS 13.7.8, betrifft

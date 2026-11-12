@@ -39,7 +39,7 @@ struct TracksView: View {
                 } else if tracks.isEmpty {
                     NoMatchesView(context: .tracks, query: q, noun: "Kein Titel")
                 } else {
-                    TrackCollection(context: .tracks, tracks: tracks, source: source, sort: sortSpec)
+                    TrackCollection(context: .tracks, tracks: tracks, source: source, sort: sortSpec, sections: model.trackSections)
                 }
             }
             .padding(.horizontal, Spacing.gutter)
@@ -107,7 +107,7 @@ struct AlbumsView: View {
                 } else if albums.isEmpty {
                     NoMatchesView(context: .albums, query: q, noun: "Kein Album")
                 } else {
-                    AlbumCollection(context: .albums, albums: albums, sort: sortSpec)
+                    AlbumCollection(context: .albums, albums: albums, sort: sortSpec, sections: model.albumSections)
                 }
             }
             .padding(.horizontal, Spacing.gutter)
