@@ -1,8 +1,18 @@
-# Testbericht – Android Bridge 5.3.0
+# Testbericht – Android Bridge 5.4.0
 
-_Rückfallversionen: 5.2 (Commit af2ffc4), 5.1 (Commit 11312ce), 5.0 (Commit 7d7a8a5), 4.2 (Commit 3414b1f), 4.0 (Commit 962b36b), 3.0 (Commit 27de89b), 2.0 (Commit 30402af) und 1.0 (Zweig `android-bridge-v1.0`)._
+_Rückfallversionen: 5.3 (Commit a07d533), 5.2 (Commit af2ffc4), 5.1 (Commit 11312ce), 5.0 (Commit 7d7a8a5), 4.2 (Commit 3414b1f), 4.0 (Commit 962b36b), 3.0 (Commit 27de89b), 2.0 (Commit 30402af) und 1.0 (Zweig `android-bridge-v1.0`)._
 
-## Neu in 5.3 geprüft (Lauf 42, Commit a07d533)
+## Neu in 5.4 geprüft (Lauf 45, Commit 88ba2f9)
+
+| Prüfung | Ergebnis |
+|---|---|
+| Produktfotos (vom Nutzer geliefert) | MacBook Pro mit Kerbe, Silber, frontal – für alle MacBook Pro ab 2021 (Startseite und verbunden, Telefon steht daneben); Google Pixel 6 Pro und Xiaomi Mi 11 Lite 5G – Bildschirm zeigt Inhalte vom Gerät, Kameraloch wie im Foto; andere Telefone weiter gezeichnet. Bildschirmfotos 17/18/19 hell und dunkel geprüft |
+| Fehler behoben | Mac-Foto verschob sich in kleineren Fenstern (Bildschirminhalt größer als das Foto gelayoutet) |
+| Unit-Tests | 96 ohne Fehler auf macOS 26 und 15, Apple Silicon und Intel |
+| Universal-Build, Installation + Start | x86_64 + arm64; installiert und gestartet auf macOS 26 Apple Silicon und Intel, macOS 15 Intel |
+| Nicht geprüft | Animationen in Bewegung, echte Telefone am Build-Rechner |
+
+## Aus Version 5.3 (Lauf 42, Commit a07d533)
 
 | Prüfung | Ergebnis |
 |---|---|
