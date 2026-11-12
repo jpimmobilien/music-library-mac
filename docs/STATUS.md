@@ -1,5 +1,19 @@
 # Prüfstand – was gebaut und getestet ist (ehrlich)
 
+## Version 2.2.2 (12.11.2026, Build-Lauf 43308096148, Commit `e324bb4`)
+
+| Stufe | Ergebnis |
+|---|---|
+| Neu | Abschnitte nach Erscheinungsjahr und „Hinzugefügt“ in den Übersichten Titel und Alben, mitlaufende Abschnitts-Kapsel |
+| Tests | ✅ 584 Tests, 0 Fehler (4 Zusatzprüfungen übersprungen) auf macOS 26 Intel und macOS 15 Intel; 6 neue Tests zur Einteilung (davon einer mit > 3.000 Zeitpunkten an Monats-/Jahresgrenzen und Zeitumstellungen gegen die direkte Kalenderrechnung) – zusätzlich unter Linux |
+| Übersetzen | ✅ Xcode 16 und Xcode 26 |
+| Vorschaubilder | ✅ 7 neue Ansichten × Hell/Dunkel auf macOS 26 Intel (Liquid Glass), angesehen; nicht auf Apple Silicon (keine Rechner zugeteilt) |
+| DMG | ✅ SHA-256 `96c5d4635a5cf70b378dd054147fb63d8b2b8a601c337a148e7aff0c232ffdff`, `hdiutil verify` gültig, `x86_64 arm64`, Signatur gültig; gebaut auf macOS 26 Intel (Apple-Silicon-Rechner nicht zugeteilt) |
+| Kontrolle Build-Rechner | ✅ 2.2.1 auf Intel gebaut gegen 2.2.1 auf Apple Silicon gebaut: gleiche Messwerte (Listen berechnen 1.215–1.400 ms in beiden) |
+| Abnahme | ✅ Intel macOS 26: Installation aus der DMG, Version 2.2.2, Aktualisierung 2.2.1 → 2.2.2 → 2.2.1 ohne Befund; Geschwindigkeit wie 2.2.1 (Listen 959/1.128 ms gegenüber 1.253 ms, Leerlauf 12,1/11,9 % gegenüber 12,8/12,6 %); Abschnitte „Hinzugefügt“ für 10.000 Titel + Alben 4,5–5,3 ms (ohne Zwischenspeicher 25–28 ms) · Intel macOS 15 (virtuell): Installation ✅, Start scheitert wie bei jeder Version am Metal-Fehler der virtuellen Maschine |
+| Nicht geprüft | Apple Silicon (Abnahme, Starttest, Vorschaubilder – keine Rechner zugeteilt), macOS 13, Bedienung von Hand |
+| Hinweis | Ein erster Vergleichslauf zeigte „Listen berechnen“ bei 2.2.2 um 30 % langsamer; bei Sortierung nach Titel (wie im Messlauf) rechnet die Abschnittseinteilung nicht. Kontroll- und Wiederholungslauf zeigen keinen Unterschied – Streuung des virtuellen Rechners |
+
 ## Version 2.2.1 (11.11.2026, Build-Lauf 43004398659, Commit `1f7eb94`)
 
 | Stufe | Ergebnis |

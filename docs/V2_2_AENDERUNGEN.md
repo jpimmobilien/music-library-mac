@@ -9,8 +9,12 @@
     Einträge ohne Datum unter „Unbekannt“.
   - Beim Scrollen zeigt eine kleine Glaskapsel links neben der Werkzeugleiste den aktuellen Abschnitt.
 - Andere Sortierungen (Titel, Interpret, Dauer …) bleiben wie bisher ohne Abschnitte. Keine Datenbankänderung.
-- Geprüft: 5 neue Tests für die Einteilung; 14 neue Vorschaubilder (Hell/Dunkel) auf macOS 26 Intel angesehen;
-  übersetzt mit Xcode 16 und Xcode 26.
+- Die Einteilung nach „Hinzugefügt“ rechnet den Kalender nur einmal je Monat bzw. Jahr: 10.000 Titel plus Alben
+  in rund 5 ms (Intel, macOS 26).
+- Geprüft: 6 neue Tests für die Einteilung, 584 Tests ohne Fehler auf macOS 26 und 15 (Intel); 14 neue
+  Vorschaubilder (Hell/Dunkel) auf macOS 26 Intel angesehen; übersetzt mit Xcode 16 und Xcode 26; Abnahme aus der
+  DMG mit Aktualisierung 2.2.1 → 2.2.2 → 2.2.1 und Geschwindigkeit wie 2.2.1. Apple Silicon nicht geprüft (keine
+  Rechner zugeteilt). Einzelheiten: [STATUS.md](STATUS.md).
 
 ## 2.2.1 (11.11.2026) – Fehlerbehebung
 
