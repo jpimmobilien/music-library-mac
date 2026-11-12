@@ -106,7 +106,7 @@ struct LibraryCollection<Element: Identifiable, MenuContent: View>: View where E
 
     /// Einträge – mit Abschnitts-Überschriften, wenn die Sortierung Abschnitte bildet.
     @ViewBuilder
-    private func entries<V: View>(@ViewBuilder _ make: @escaping (Int, Element) -> V) -> some View {
+    private func entries<V: View>(gridSpacing: CGFloat? = nil, @ViewBuilder _ make: @escaping (Int, Element) -> V) -> some View {
         if let runs = sections, !runs.isEmpty {
             let list = elements
             ForEach(runs) { run in
@@ -115,7 +115,7 @@ struct LibraryCollection<Element: Identifiable, MenuContent: View>: View where E
                         make(slot.index, list[slot.index])
                     }
                 } header: {
-                    LibrarySectionHeader(run: run, countText: sectionCount(run.count), first: run.range.lowerBound == 0)
+                    LibrarySectionHeader(run: run, countText: sectionCount(run.count), first: run.range.lowerBound == 0, gridSpacing: gridSpacing)
                 }
             }
         } else {
@@ -130,7 +130,7 @@ struct LibraryCollection<Element: Identifiable, MenuContent: View>: View where E
     private func grid(_ generation: Int) -> some View {
         let metrics = TileMetrics(options: options, available: TileMetrics.available(viewport), scale: displayScale)
         return LazyVGrid(columns: metrics.columns, alignment: .leading, spacing: metrics.rowSpacing) {
-            entries { index, element in
+            entries(gridSpacing: metrics.rowSpacing) { index, element in
                 tile(index, element, metrics.style, generation)
             }
         }

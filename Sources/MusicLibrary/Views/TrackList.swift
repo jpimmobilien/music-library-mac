@@ -161,7 +161,7 @@ struct TrackListView: View {
 
     /// Einträge – mit Abschnitts-Überschriften, wenn die Sortierung Abschnitte bildet.
     @ViewBuilder
-    private func entries<V: View>(@ViewBuilder _ make: @escaping (Int, TrackListItem) -> V) -> some View {
+    private func entries<V: View>(gridSpacing: CGFloat? = nil, @ViewBuilder _ make: @escaping (Int, TrackListItem) -> V) -> some View {
         if let runs = sections, !runs.isEmpty {
             let list = items
             ForEach(runs) { run in
@@ -170,7 +170,7 @@ struct TrackListView: View {
                         make(slot.index, list[slot.index])
                     }
                 } header: {
-                    LibrarySectionHeader(run: run, countText: Formatting.tracks(run.count), first: run.range.lowerBound == 0)
+                    LibrarySectionHeader(run: run, countText: Formatting.tracks(run.count), first: run.range.lowerBound == 0, gridSpacing: gridSpacing)
                 }
             }
         } else {
@@ -239,7 +239,7 @@ struct TrackListView: View {
     private func tiles(_ metrics: TileMetrics, _ generation: Int) -> some View {
         let currentUid = player.current?.uid
         return LazyVGrid(columns: metrics.columns, alignment: .leading, spacing: metrics.rowSpacing) {
-            entries { position, item in
+            entries(gridSpacing: metrics.rowSpacing) { position, item in
                 let track = item.track
                 let current = currentUid == track.uid
                 let tile = CollectionTile(

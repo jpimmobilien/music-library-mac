@@ -97,6 +97,9 @@ struct LibrarySectionHeader: View {
     let countText: String
     /// Erste Überschrift der Liste: weniger Abstand nach oben.
     let first: Bool
+    /// Zeilenabstand des umgebenden Rasters (nil = Liste ohne Abstand). Das Raster setzt diesen Abstand auch
+    /// über und unter die Überschrift; er wird hier ausgeglichen, damit die Überschrift nah an ihren Kacheln steht.
+    var gridSpacing: CGFloat? = nil
 
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: 10) {
@@ -114,8 +117,8 @@ struct LibrarySectionHeader: View {
                 .frame(maxWidth: .infinity)
                 .alignmentGuide(.firstTextBaseline) { d in d[.bottom] + 5 }
         }
-        .padding(.top, first ? 6 : 26)
-        .padding(.bottom, 12)
+        .padding(.top, gridSpacing == nil ? (first ? 6 : 26) : (first ? 0 : 6))
+        .padding(.bottom, gridSpacing.map { min(0, 14 - $0) } ?? 10)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(SectionPositionReporter(id: run.id, tracker: tracker))
         .accessibilityElement(children: .combine)
