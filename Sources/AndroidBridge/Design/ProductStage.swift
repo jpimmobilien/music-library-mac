@@ -941,7 +941,7 @@ struct PhotoLaptop<Screen: View>: View {
                         .mask(ScreenMask(points: q, corner: photo.screenCorner * s))
                     if let n = photo.notch {
                         // Kerbe mit Kamera, wie beim echten Gerät
-                        NotchShape(radius: n.height * 0.38 * s)
+                        PhotoNotchShape(radius: n.height * 0.38 * s)
                             .fill(Color.black)
                             .overlay(Circle().fill(Color(white: 0.16)).frame(width: n.height * 0.3 * s, height: n.height * 0.3 * s))
                             .frame(width: n.width * s, height: n.height * s)
@@ -1059,7 +1059,7 @@ private struct ScreenMask: Shape {
 }
 
 /// Kerbe oben im Display: oben gerade, unten gerundet.
-struct NotchShape: Shape {
+private struct PhotoNotchShape: Shape {
     var radius: CGFloat
     func path(in rect: CGRect) -> Path {
         let r = min(radius, rect.height, rect.width / 2)
