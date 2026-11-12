@@ -1,0 +1,29 @@
+[Wächter] Hauptthread reagiert seit über 6 s nicht – Aufnahme haenger-1.txt
+[Snapshot] ▸ 56-alben-abschnitte-jahr hell
+[Snapshot] 56-alben-abschnitte-jahr hell: Aufbau+Warten 2471 ms, Hauptthread-Verzögerung Ø 302.8 ms, max 1327.6 ms, Hauptthread belegt 72 %
+[Snapshot] ▸ 56-alben-abschnitte-jahr dunkel
+[Snapshot] 56-alben-abschnitte-jahr dunkel: Aufbau+Warten 2263 ms, Hauptthread-Verzögerung Ø 355.9 ms, max 1053.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 56-alben-abschnitte-jahr-gescrollt hell
+[Snapshot] 56-alben-abschnitte-jahr-gescrollt hell: Aufbau+Warten 2217 ms, Hauptthread-Verzögerung Ø 7.2 ms, max 17.8 ms, Hauptthread belegt 4 %
+[Snapshot] ▸ 56-alben-abschnitte-jahr-gescrollt dunkel
+[Snapshot] 56-alben-abschnitte-jahr-gescrollt dunkel: Aufbau+Warten 2224 ms, Hauptthread-Verzögerung Ø 7.9 ms, max 23.5 ms, Hauptthread belegt 6 %
+[Snapshot] ▸ 56-alben-abschnitte-hinzugefuegt-liste hell
+[Snapshot] 56-alben-abschnitte-hinzugefuegt-liste hell: Aufbau+Warten 2314 ms, Hauptthread-Verzögerung Ø 1692.6 ms, max 1692.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 56-alben-abschnitte-hinzugefuegt-liste dunkel
+[Snapshot] 56-alben-abschnitte-hinzugefuegt-liste dunkel: Aufbau+Warten 2292 ms, Hauptthread-Verzögerung Ø 31.0 ms, max 104.2 ms, Hauptthread belegt 9 %
+[Snapshot] ▸ 56-alben-abschnitte-jahr-detail hell
+[Snapshot] 56-alben-abschnitte-jahr-detail hell: Aufbau+Warten 2242 ms, Hauptthread-Verzögerung Ø 62.8 ms, max 169.1 ms, Hauptthread belegt 40 %
+[Snapshot] ▸ 56-alben-abschnitte-jahr-detail dunkel
+[Snapshot] 56-alben-abschnitte-jahr-detail dunkel: Aufbau+Warten 2226 ms, Hauptthread-Verzögerung Ø 47.2 ms, max 170.3 ms, Hauptthread belegt 17 %
+[Snapshot] ▸ 56-titel-abschnitte-hinzugefuegt-liste hell
+[Snapshot] 56-titel-abschnitte-hinzugefuegt-liste hell: Aufbau+Warten 2653 ms, Hauptthread-Verzögerung Ø 1276.2 ms, max 1584.1 ms, Hauptthread belegt 93 %
+[Snapshot] ▸ 56-titel-abschnitte-hinzugefuegt-liste dunkel
+[Snapshot] 56-titel-abschnitte-hinzugefuegt-liste dunkel: Aufbau+Warten 2235 ms, Hauptthread-Verzögerung Ø 67.0 ms, max 259.4 ms, Hauptthread belegt 13 %
+[Snapshot] ▸ 56-titel-abschnitte-jahr-raster hell
+[Snapshot] 56-titel-abschnitte-jahr-raster hell: Aufbau+Warten 2225 ms, Hauptthread-Verzögerung Ø 691.7 ms, max 1185.4 ms, Hauptthread belegt 77 %
+[Snapshot] ▸ 56-titel-abschnitte-jahr-raster dunkel
+[Snapshot] 56-titel-abschnitte-jahr-raster dunkel: Aufbau+Warten 2239 ms, Hauptthread-Verzögerung Ø 43.9 ms, max 111.3 ms, Hauptthread belegt 8 %
+[Snapshot] ▸ 56-titel-abschnitte-jahr-klein hell
+[Snapshot] 56-titel-abschnitte-jahr-klein hell: Aufbau+Warten 2255 ms, Hauptthread-Verzögerung Ø 1059.4 ms, max 1059.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 56-titel-abschnitte-jahr-klein dunkel
+[Snapshot] 56-titel-abschnitte-jahr-klein dunkel: Aufbau+Warten 2204 ms, Hauptthread-Verzögerung Ø 295.2 ms, max 659.6 ms, Hauptthread belegt 40 %

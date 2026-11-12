@@ -1,0 +1,135 @@
+{
+  "architecture" : "x86_64",
+  "images" : [
+    {
+      "elapsedMs" : "2471",
+      "file" : "56-alben-abschnitte-jahr-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "72",
+      "mainThreadLagMaxMs" : "1327.6",
+      "mainThreadLagMeanMs" : "302.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2263",
+      "file" : "56-alben-abschnitte-jahr-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "1053.1",
+      "mainThreadLagMeanMs" : "355.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2217",
+      "file" : "56-alben-abschnitte-jahr-gescrollt-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "4",
+      "mainThreadLagMaxMs" : "17.8",
+      "mainThreadLagMeanMs" : "7.2",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2224",
+      "file" : "56-alben-abschnitte-jahr-gescrollt-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "6",
+      "mainThreadLagMaxMs" : "23.5",
+      "mainThreadLagMeanMs" : "7.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2314",
+      "file" : "56-alben-abschnitte-hinzugefuegt-liste-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "1692.6",
+      "mainThreadLagMeanMs" : "1692.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2292",
+      "file" : "56-alben-abschnitte-hinzugefuegt-liste-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "9",
+      "mainThreadLagMaxMs" : "104.2",
+      "mainThreadLagMeanMs" : "31.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2242",
+      "file" : "56-alben-abschnitte-jahr-detail-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "40",
+      "mainThreadLagMaxMs" : "169.1",
+      "mainThreadLagMeanMs" : "62.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2226",
+      "file" : "56-alben-abschnitte-jahr-detail-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "17",
+      "mainThreadLagMaxMs" : "170.3",
+      "mainThreadLagMeanMs" : "47.2",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2653",
+      "file" : "56-titel-abschnitte-hinzugefuegt-liste-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "93",
+      "mainThreadLagMaxMs" : "1584.1",
+      "mainThreadLagMeanMs" : "1276.2",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2235",
+      "file" : "56-titel-abschnitte-hinzugefuegt-liste-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "13",
+      "mainThreadLagMaxMs" : "259.4",
+      "mainThreadLagMeanMs" : "67.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2225",
+      "file" : "56-titel-abschnitte-jahr-raster-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "77",
+      "mainThreadLagMaxMs" : "1185.4",
+      "mainThreadLagMeanMs" : "691.7",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2239",
+      "file" : "56-titel-abschnitte-jahr-raster-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "8",
+      "mainThreadLagMaxMs" : "111.3",
+      "mainThreadLagMeanMs" : "43.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2255",
+      "file" : "56-titel-abschnitte-jahr-klein-hell-940x660.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "1059.4",
+      "mainThreadLagMeanMs" : "1059.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2204",
+      "file" : "56-titel-abschnitte-jahr-klein-dunkel-940x660.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "40",
+      "mainThreadLagMaxMs" : "659.6",
+      "mainThreadLagMeanMs" : "295.2",
+      "method" : "window-server"
+    }
+  ],
+  "interFont" : true,
+  "liquidGlass" : true,
+  "macOS" : "Version 26.6.1 (Build 25G76)",
+  "screen" : "1920x1080 @1.0x, sichtbar 1920x959"
+}

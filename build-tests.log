@@ -1,0 +1,63 @@
+[0/1] Planning build
+Building for debugging...
+[0/16] /Users/runner/work/music-library-mac/music-library-mac/.build/x86_64-apple-macosx/debug/MusicLibraryPackageTests.derived/runner.swift
+[1/16] Write sources
+[7/19] Copying Info.plist
+[10/19] Write sources
+[10/19] Copying Fixtures
+[12/19] Write sources
+[13/19] Copying Fixtures
+[14/19] Write swift-version-7974D3F7F03D5E95.txt
+[16/44] Compiling OggVorbisTests resource_bundle_accessor.swift
+[17/44] Emitting module OggVorbisTests
+[18/44] Compiling OggVorbisTests VorbisDecoderTests.swift
+[19/44] Compiling StudioEngineTests StudioEngineSmokeTests.swift
+[20/44] Compiling StudioEngineTests StudioExactnessTests.swift
+[21/44] Compiling StudioEngineTests StudioFFprobeTests.swift
+[22/44] Compiling StudioEngineTests StudioFormatExportTests.swift
+[23/44] Compiling StudioEngineTests RemoteTests.swift
+[24/44] Compiling StudioEngineTests RemoteWebCheckTests.swift
+[25/44] Emitting module MLTagsTests
+[26/48] Emitting module MLStudioTests
+[27/48] Compiling MLStudioTests MLStudioTests.swift
+[32/52] Compiling MLTagsTests TagFileRoundTripTests.swift
+[33/52] Compiling MLTagsTests resource_bundle_accessor.swift
+[34/57] Compiling MLStoreTests LibraryStoreTests.swift
+[35/57] Compiling MLStoreTests DateAddedStoreTests.swift
+[36/57] Emitting module MLStoreTests
+[37/76] Compiling MLCoreTests AlbumGroupingTests.swift
+[38/76] Compiling MLCoreTests CoverPaletteTests.swift
+[39/76] Compiling MLRenderTests KotlinReferenceTests.swift
+[40/76] Compiling MLRenderTests PortableCdTests.swift
+[41/76] Emitting module MLRenderTests
+[42/77] Emitting module MusicLibraryTests
+[43/77] Compiling MLCoreTests DuplicateFinderTests.swift
+[44/77] Compiling MLCoreTests EqualizerModelTests.swift
+[48/77] Emitting module StudioEngineTests
+[49/79] Compiling MLCoreTests SettingsTests.swift
+[50/79] Compiling MLCoreTests SyncPlannerTests.swift
+[51/79] Compiling MLCoreTests TagMergeTests.swift
+[52/79] Compiling MLRenderTests TurntableTests.swift
+[53/79] Compiling MusicLibraryTests StudioModelTests.swift
+[54/79] Compiling MLCoreTests NaturalOrderJvmTests.swift
+[55/79] Compiling MLCoreTests PlayQueueTests.swift
+[56/79] Compiling MLCoreTests PlaybackLogicTests.swift
+[57/79] Compiling MLCoreTests ResumeAndHistoryTests.swift
+[58/79] Compiling MLCoreTests SVGPathTests.swift
+[59/79] Compiling MLCoreTests SectioningTests.swift
+[60/84] Compiling StudioEngineTests StudioTestSupport.swift
+[61/84] Compiling StudioEngineTests StudioVendorTests.swift
+[63/84] Compiling MLCoreTests LibraryLogicTests.swift
+[64/84] Compiling MLCoreTests LyricsParserTests.swift
+[76/84] Compiling MLCoreTests TimePitchEngineTests.swift
+[77/84] Emitting module MLCoreTests
+[78/84] Compiling MLCoreTests V21LogicTests.swift
+[79/84] Compiling MLCoreTests V2FilterTests.swift
+[80/84] Compiling MLCoreTests V2PerformanceTests.swift
+[81/84] Compiling MLCoreTests V2SettingsTests.swift
+[82/84] Compiling MLCoreTests V2SortingTests.swift
+[83/86] Emitting module MusicLibraryPackageTests
+[84/86] Compiling MusicLibraryPackageTests runner.swift
+[84/86] Write Objects.LinkFileList
+[85/86] Linking MusicLibraryPackageTests
+Build complete! (46.96s)

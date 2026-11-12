@@ -1,0 +1,24 @@
+[0/1] Planning build
+Test Suite 'Selected tests' started at 2026-11-12 18:04:19.699.
+Test Suite 'MusicLibraryPackageTests.xctest' started at 2026-11-12 18:04:19.703.
+Test Suite 'SectioningTests' started at 2026-11-12 18:04:19.703.
+Test Case '-[MLCoreTests.SectioningTests testAddedRecentByMonthOlderByYear]' started.
+Test Case '-[MLCoreTests.SectioningTests testAddedRecentByMonthOlderByYear]' passed (0.004 seconds).
+Test Case '-[MLCoreTests.SectioningTests testAlbumsAndOtherSortsHaveNoSections]' started.
+Test Case '-[MLCoreTests.SectioningTests testAlbumsAndOtherSortsHaveNoSections]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.SectioningTests testImplausibleYearIsUnknown]' started.
+Test Case '-[MLCoreTests.SectioningTests testImplausibleYearIsUnknown]' passed (0.000 seconds).
+Test Case '-[MLCoreTests.SectioningTests testRepeatedKeysGetUniqueIDs]' started.
+Test Case '-[MLCoreTests.SectioningTests testRepeatedKeysGetUniqueIDs]' passed (0.001 seconds).
+Test Case '-[MLCoreTests.SectioningTests testYearRunsDescendingWithUnknownLast]' started.
+Test Case '-[MLCoreTests.SectioningTests testYearRunsDescendingWithUnknownLast]' passed (0.001 seconds).
+Test Suite 'SectioningTests' passed at 2026-11-12 18:04:19.711.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.007 (0.008) seconds
+Test Suite 'MusicLibraryPackageTests.xctest' passed at 2026-11-12 18:04:19.712.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.007 (0.008) seconds
+Test Suite 'Selected tests' passed at 2026-11-12 18:04:19.712.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.007 (0.013) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: x86_64-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.
