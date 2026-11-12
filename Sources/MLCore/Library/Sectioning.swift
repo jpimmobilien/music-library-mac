@@ -43,6 +43,46 @@ public enum LibrarySectioning {
         return y >= nowYear - 1 ? .month(year: y, month: m) : .year(y)
     }
 
+    /// Wie `addedKey`, aber mit Zwischenspeicher: Der Kalender rechnet nur, wenn ein Eintrag den zuletzt
+    /// bestimmten Monat bzw. das zuletzt bestimmte Jahr verlässt. In einer nach „Hinzugefügt“ sortierten Liste
+    /// also einmal je Abschnitt statt einmal je Titel (der Kalender ist vergleichsweise teuer).
+    public struct AddedKeyer {
+        public let nowYear: Int
+        public let calendar: Calendar
+        /// Gültigkeitsbereich des letzten Ergebnisses in ganzen Sekunden: lower ≤ s < upper (anfangs leer).
+        private var lower: Int64 = 1
+        private var upper: Int64 = 0
+        private var cached: Key = .unknown
+
+        public init(nowYear: Int, calendar: Calendar) {
+            self.nowYear = nowYear
+            self.calendar = calendar
+        }
+
+        public mutating func key(_ seconds: Int64) -> Key {
+            guard seconds > 0 else { return .unknown }
+            if seconds >= lower && seconds < upper { return cached }
+            let k = LibrarySectioning.addedKey(seconds, nowYear: nowYear, calendar: calendar)
+            let unit: Calendar.Component
+            switch k {
+            case .month: unit = .month
+            case .year: unit = .year
+            case .unknown: return k
+            }
+            if let iv = calendar.dateInterval(of: unit, for: Date(timeIntervalSince1970: TimeInterval(seconds))) {
+                // Ganze Sekunden: s ≥ start ⇔ s ≥ ⌈start⌉ und s < end ⇔ s < ⌈end⌉
+                let lo = Int64(iv.start.timeIntervalSince1970.rounded(.up))
+                let hi = Int64(iv.end.timeIntervalSince1970.rounded(.up))
+                if lo <= seconds && seconds < hi {
+                    lower = lo
+                    upper = hi
+                    cached = k
+                }
+            }
+            return k
+        }
+    }
+
     public static func title(_ key: Key, unknown: String) -> String {
         switch key {
         case .year(let y): return String(y)
@@ -95,8 +135,8 @@ public enum LibrarySectioning {
         case .year:
             return runs(tracks, unknown: "Ohne Jahr") { yearKey($0.year) }
         case .dateAdded:
-            let nowYear = calendar.component(.year, from: now)
-            return runs(tracks, unknown: "Unbekannt") { addedKey($0.dateAdded, nowYear: nowYear, calendar: calendar) }
+            var keyer = AddedKeyer(nowYear: calendar.component(.year, from: now), calendar: calendar)
+            return runs(tracks, unknown: "Unbekannt") { keyer.key($0.dateAdded) }
         default:
             return nil
         }
@@ -108,8 +148,8 @@ public enum LibrarySectioning {
         case .year:
             return runs(albums, unknown: "Ohne Jahr") { yearKey($0.year) }
         case .dateAdded:
-            let nowYear = calendar.component(.year, from: now)
-            return runs(albums, unknown: "Unbekannt") { addedKey($0.dateAdded, nowYear: nowYear, calendar: calendar) }
+            var keyer = AddedKeyer(nowYear: calendar.component(.year, from: now), calendar: calendar)
+            return runs(albums, unknown: "Unbekannt") { keyer.key($0.dateAdded) }
         default:
             return nil
         }

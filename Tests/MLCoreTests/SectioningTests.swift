@@ -48,6 +48,38 @@ final class SectioningTests: XCTestCase {
         XCTAssertEqual(Set(runs.map(\.id)).count, 3)
     }
 
+    /// Der Zwischenspeicher liefert für jede Sekunde dasselbe wie die direkte Rechnung – an Monats- und
+    /// Jahresgrenzen, über Zeitumstellungen hinweg, auf- und absteigend sortiert und durcheinander.
+    func testCachedAddedKeyMatchesDirectCalculation() {
+        let nowYear = 2026
+        var probes: [Int64] = [0, -5, 1]
+        for y in 2017...2027 {
+            for m in 1...12 {
+                let start = Int64(berlin.date(from: DateComponents(year: y, month: m, day: 1))!.timeIntervalSince1970)
+                probes += [start - 3601, start - 3600, start - 1, start, start + 1, start + 3600, start + 86_400 * 14]
+            }
+            // Zeitumstellung (letzter Sonntag im März und Oktober, Europe/Berlin)
+            for m in [3, 10] {
+                let d = berlin.date(from: DateComponents(year: y, month: m, day: 31, hour: 1))!
+                let t = Int64(d.timeIntervalSince1970)
+                probes += [t - 7200, t - 3600, t, t + 3600, t + 7200]
+            }
+        }
+        var lcg: UInt64 = 0x9E37_79B9_7F4A_7C15
+        for _ in 0..<2000 {
+            lcg = lcg &* 6_364_136_223_846_793_005 &+ 1_442_695_040_888_963_407
+            probes.append(1_480_000_000 + Int64(lcg >> 35) % 340_000_000)
+        }
+        for order in [probes.sorted(), probes.sorted(by: >), probes] {
+            for cal in [berlin, Calendar(identifier: .gregorian)] {
+                var keyer = LibrarySectioning.AddedKeyer(nowYear: nowYear, calendar: cal)
+                for s in order {
+                    XCTAssertEqual(keyer.key(s), LibrarySectioning.addedKey(s, nowYear: nowYear, calendar: cal), "Sekunde \(s)")
+                }
+            }
+        }
+    }
+
     func testImplausibleYearIsUnknown() {
         XCTAssertEqual(LibrarySectioning.yearKey(0), .unknown)
         XCTAssertEqual(LibrarySectioning.yearKey(12_345), .unknown)
