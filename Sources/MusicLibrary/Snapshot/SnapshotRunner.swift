@@ -451,6 +451,39 @@ enum SnapshotRunner {
                 view(.tracks, .tracks, .list)(m)
                 LibraryScrollSeed.pendingOffset = 900
             }, view: main),
+            // 2.2.2: Abschnitte nach Erscheinungsjahr / Hinzugefügt (oben und gescrollt mit Abschnitts-Kapsel)
+            Scenario(name: "56-alben-abschnitte-jahr", size: big, prepare: { m in
+                view(.albums, .albums, .grid)(m)
+                m.settings.albumSort = Sort(AlbumSort.year, descending: true)
+            }, view: main),
+            Scenario(name: "56-alben-abschnitte-jahr-gescrollt", size: big, prepare: { m in
+                view(.albums, .albums, .grid)(m)
+                m.settings.albumSort = Sort(AlbumSort.year, descending: true)
+                LibraryScrollSeed.pendingOffset = 900
+            }, view: main),
+            Scenario(name: "56-alben-abschnitte-hinzugefuegt-liste", size: big, prepare: { m in
+                view(.albums, .albums, .list)(m)
+                m.settings.albumSort = Sort(AlbumSort.dateAdded, descending: true)
+                LibraryScrollSeed.pendingOffset = 500
+            }, view: main),
+            Scenario(name: "56-alben-abschnitte-jahr-detail", size: big, prepare: { m in
+                view(.albums, .albums, .detailedList)(m)
+                m.settings.albumSort = Sort(AlbumSort.year, descending: true)
+            }, view: main),
+            Scenario(name: "56-titel-abschnitte-hinzugefuegt-liste", size: big, prepare: { m in
+                view(.tracks, .tracks, .list)(m)
+                m.settings.trackSort = Sort(TrackSort.dateAdded, descending: true)
+                LibraryScrollSeed.pendingOffset = 900
+            }, view: main),
+            Scenario(name: "56-titel-abschnitte-jahr-raster", size: big, prepare: { m in
+                view(.tracks, .tracks, .grid)(m)
+                m.settings.trackSort = Sort(TrackSort.year, descending: true)
+            }, view: main),
+            Scenario(name: "56-titel-abschnitte-jahr-klein", size: small, prepare: { m in
+                view(.tracks, .tracks, .list)(m)
+                m.settings.trackSort = Sort(TrackSort.year, descending: true)
+                LibraryScrollSeed.pendingOffset = 600
+            }, view: main),
             Scenario(name: "26-alben-raster-max", size: big, prepare: { m in
                 view(.albums, .albums, .grid)(m)
                 var o = m.viewOptions(.albums)
@@ -569,39 +602,6 @@ enum SnapshotRunner {
                 for c in LibraryViewContext.allCases { m.setViewOptions(.defaults(for: c), for: c) }
                 library(.tracks, nil, nil, false, .vinylStudio)(m)
                 m.settings.trackSort = Sort(TrackSort.dateAdded, descending: false)
-            }, view: main),
-            // 2.2.2: Abschnitte nach Erscheinungsjahr / Hinzugefügt (oben und gescrollt mit Abschnitts-Kapsel)
-            Scenario(name: "56-alben-abschnitte-jahr", size: big, prepare: { m in
-                view(.albums, .albums, .grid)(m)
-                m.settings.albumSort = Sort(AlbumSort.year, descending: true)
-            }, view: main),
-            Scenario(name: "56-alben-abschnitte-jahr-gescrollt", size: big, prepare: { m in
-                view(.albums, .albums, .grid)(m)
-                m.settings.albumSort = Sort(AlbumSort.year, descending: true)
-                LibraryScrollSeed.pendingOffset = 900
-            }, view: main),
-            Scenario(name: "56-alben-abschnitte-hinzugefuegt-liste", size: big, prepare: { m in
-                view(.albums, .albums, .list)(m)
-                m.settings.albumSort = Sort(AlbumSort.dateAdded, descending: true)
-                LibraryScrollSeed.pendingOffset = 500
-            }, view: main),
-            Scenario(name: "56-alben-abschnitte-jahr-detail", size: big, prepare: { m in
-                view(.albums, .albums, .detailedList)(m)
-                m.settings.albumSort = Sort(AlbumSort.year, descending: true)
-            }, view: main),
-            Scenario(name: "56-titel-abschnitte-hinzugefuegt-liste", size: big, prepare: { m in
-                view(.tracks, .tracks, .list)(m)
-                m.settings.trackSort = Sort(TrackSort.dateAdded, descending: true)
-                LibraryScrollSeed.pendingOffset = 900
-            }, view: main),
-            Scenario(name: "56-titel-abschnitte-jahr-raster", size: big, prepare: { m in
-                view(.tracks, .tracks, .grid)(m)
-                m.settings.trackSort = Sort(TrackSort.year, descending: true)
-            }, view: main),
-            Scenario(name: "56-titel-abschnitte-jahr-klein", size: small, prepare: { m in
-                view(.tracks, .tracks, .list)(m)
-                m.settings.trackSort = Sort(TrackSort.year, descending: true)
-                LibraryScrollSeed.pendingOffset = 600
             }, view: main),
         ]
         return list
