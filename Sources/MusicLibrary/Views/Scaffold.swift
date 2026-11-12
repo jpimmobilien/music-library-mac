@@ -51,6 +51,7 @@ struct LibraryScaffold<Content: View, Actions: View, Toolbar: View>: View {
     @State private var collapsed = false
     @State private var titleWidth: CGFloat = 0
     @State private var chrome = ScrollChromeState()
+    @StateObject private var sectionTracker = LibrarySectionTracker()
 
     init(title: String, onBack: (() -> Void)? = nil, edgeToEdgeTop: Bool = false,
          @ViewBuilder actions: @escaping () -> Actions, @ViewBuilder toolbar: @escaping () -> Toolbar,
@@ -72,11 +73,14 @@ struct LibraryScaffold<Content: View, Actions: View, Toolbar: View>: View {
                 if pinsToolbar {
                     ToolbarFadeBand(state: chrome)
                     toolbarRow(width: outer.size.width)
+                    sectionPill
                 }
                 topRow
             }
             .environment(\.libraryViewport, Self.quantized(outer.size))
             .environment(\.libraryTopChrome, pinsToolbar ? Chrome.contentTop + Chrome.toolbarRow : Chrome.contentTop)
+            .environment(\.librarySectionTracker, pinsToolbar ? sectionTracker : nil)
+            .onAppear { sectionTracker.threshold = Chrome.contentTop + Chrome.toolbarRow }
         }
     }
 
@@ -125,6 +129,16 @@ struct LibraryScaffold<Content: View, Actions: View, Toolbar: View>: View {
             .padding(.trailing, inset)
             .padding(.top, Chrome.contentTop + LargeTitleMetrics.topPadding)
             .frame(maxWidth: .infinity, alignment: .topTrailing)
+    }
+
+    /// Aktueller Abschnitt (Erscheinungsjahr, Hinzugefügt) links in der Zeile der Werkzeugleiste – dort stand der
+    /// große Titel, der beim Scrollen verschwunden ist.
+    private var sectionPill: some View {
+        LibrarySectionPill(tracker: sectionTracker)
+            .frame(height: LargeTitleMetrics.rowHeight)
+            .padding(.leading, Spacing.gutter + 4)
+            .padding(.top, Chrome.contentTop + LargeTitleMetrics.topPadding)
+            .frame(maxWidth: .infinity, alignment: .topLeading)
     }
 
     /// Zeile der Navigation: links Zurück + kompakter Titel, rechts Aktionen (die Navigation liegt mittig darüber).

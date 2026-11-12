@@ -37,6 +37,9 @@ final class AppModel: ObservableObject {
     @Published private(set) var lists = Lists()
     var trackList: [Track] { lists.tracks }
     var albumList: [AlbumInfo] { lists.albums }
+    /// Abschnitte bei Sortierung nach Erscheinungsjahr oder „Hinzugefügt“ (sonst nil).
+    var trackSections: [LibrarySectionRun]? { lists.trackSections }
+    var albumSections: [LibrarySectionRun]? { lists.albumSections }
     var artistList: [ArtistInfo] { lists.artists }
     var genreList: [GenreInfo] { lists.genres }
     var smartPlaylists: [SmartPlaylist] { lists.smart }
@@ -315,6 +318,8 @@ final class AppModel: ObservableObject {
     struct Lists {
         var tracks: [Track] = []
         var albums: [AlbumInfo] = []
+        var trackSections: [LibrarySectionRun]?
+        var albumSections: [LibrarySectionRun]?
         var artists: [ArtistInfo] = []
         var genres: [GenreInfo] = []
         /// Automatische Playlists passend zur Suche im Bereich Playlists.
@@ -348,12 +353,14 @@ final class AppModel: ObservableObject {
         var filteredTracks = tt.isEmpty ? available : available.filter { TextNorm.matchesAll(tt, idx.trackSearchText[$0.uid] ?? "") }
         if let f = active(.tracks) { filteredTracks = LibraryFiltering.tracks(filteredTracks, f, ctx) }
         out.tracks = Sorting.tracks(filteredTracks, sort: s.trackSort, stats: st)
+        out.trackSections = LibrarySectioning.tracks(out.tracks, sort: s.trackSort)
 
         out.unfilteredCount[.albums] = idx.albums.count
         let at = terms(.albums)
         var albums = at.isEmpty ? idx.albums : idx.albums.filter { TextNorm.matchesAll(at, idx.albumSearchText[$0.key] ?? "") }
         if let f = active(.albums) { albums = LibraryFiltering.albums(albums, f, index: idx, ctx) }
         out.albums = Sorting.albums(albums, sort: s.albumSort, stats: st)
+        out.albumSections = LibrarySectioning.albums(out.albums, sort: s.albumSort)
 
         out.unfilteredCount[.artists] = idx.artists.count
         let rt = terms(.artists)
