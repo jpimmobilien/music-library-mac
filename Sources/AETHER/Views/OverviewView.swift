@@ -58,8 +58,10 @@ private struct OverviewIntro: View {
                     .foregroundStyle(theme.accent)
                     .lineLimit(1)
                 HStack(alignment: .firstTextBaseline, spacing: 12) {
-                    StatusDot(color: measuring ? theme.statusUnavailable : theme.color(for: pulse.level), size: 12)
-                        .alignmentGuide(.firstTextBaseline) { $0[.bottom] + 8 }
+                    // ORBIT: animierter Symbolwechsel bei echtem Zustandswechsel (Form trägt die Aussage, nicht nur die Farbe)
+                    OrbitStatusSymbol(symbol: statusSymbol(measuring: measuring, level: pulse.level),
+                                      color: measuring ? theme.statusUnavailable : theme.color(for: pulse.level), size: 18)
+                        .alignmentGuide(.firstTextBaseline) { $0[.bottom] - 4 }
                     Text(measuring ? tr("Measuring…") : headline(pulse))
                         .font(StudioType.headline)
                         .tracking(-0.5)
@@ -127,6 +129,15 @@ private struct OverviewIntro: View {
             }
             .padding(.horizontal, 4)
             .glassSurface(Capsule(), interactive: true)
+        }
+    }
+
+    private func statusSymbol(measuring: Bool, level: PulseSeverity?) -> String {
+        if measuring { return "hourglass" }
+        switch level {
+        case .none, .some(.info): return "checkmark.circle.fill"
+        case .some(.elevated): return "exclamationmark.circle.fill"
+        case .some(.critical): return "exclamationmark.triangle.fill"
         }
     }
 

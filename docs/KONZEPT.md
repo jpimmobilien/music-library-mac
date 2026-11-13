@@ -1,4 +1,4 @@
-# PROJECT AETHER – macOS Edition · Produkt- und Machbarkeitskonzept
+# ORBIT – macOS Edition · Produkt- und Machbarkeitskonzept
 
 *System Intelligence & File Explorer* · Phase 1 · Stand 7. November 2026
 
@@ -22,7 +22,7 @@ Rückfall für macOS 13–15 sowie Selbsttest und Bildschirmfotos im Build.
 > **Ein Ort, an dem man seinen Mac versteht – und jeder Zahl trauen kann.**
 
 Die Aktivitätsanzeige zeigt Tabellen, die Systeminformationen zeigen Listen, der Finder zeigt Dateien. Keines der drei
-sagt, *wie es dem Mac geht*. AETHER beantwortet diese Frage in einem Satz und lässt jede Antwort bis zum Messwert und
+sagt, *wie es dem Mac geht*. ORBIT beantwortet diese Frage in einem Satz und lässt jede Antwort bis zum Messwert und
 seiner Quelle zurückverfolgen.
 
 ### Drei Leitideen
@@ -31,12 +31,12 @@ seiner Quelle zurückverfolgen.
    öffnen sich dort, wo man hinsieht. Warnfarben erscheinen nur, wenn ein Messwert sie begründet.
 2. **Herkunft jeder Zahl.** Jeder Wert trägt eine Herkunftsangabe. Ein Klick auf das kleine Herkunftssymbol zeigt
    Quelle, Art und Zeitpunkt: *gemessen*, *berechnet*, *Systemangabe*, *Schätzung* oder *nicht verfügbar*, jeweils mit
-   Begründung. Das ist das Markenzeichen von AETHER. Es setzt die Regel „keine erfundenen Werte“ so um, dass man sie
+   Begründung. Das ist das Markenzeichen von ORBIT. Es setzt die Regel „keine erfundenen Werte“ so um, dass man sie
    sehen kann.
-3. **Ein Werkzeug, keine Last.** AETHER misst nur, was gerade jemand ansieht oder was der Verlauf aufzeichnen soll. Im
+3. **Ein Werkzeug, keine Last.** ORBIT misst nur, was gerade jemand ansieht oder was der Verlauf aufzeichnen soll. Im
    Hintergrund und im Sparmodus ruhen die Messungen.
 
-### Was AETHER zusätzlich mitbringt
+### Was ORBIT zusätzlich mitbringt
 
 | Idee | Nutzen |
 |---|---|
@@ -276,7 +276,7 @@ Legende:
 ### 6.1 Module (Swift Package, für Xcode und Kommandozeile)
 
 ```
-AETHER (Swift Package, swift-tools 5.9, macOS 13+)
+ORBIT (Swift Package, swift-tools 5.9, macOS 13+)
 ├─ AetherCore        reine Swift-Logik, ohne Apple-Frameworks – auch unter Linux getestet
 │   Measurement & Provenance · Ringpuffer/Verlauf · CPU-Tick-Mathematik · Speicheraufteilung
 │   Raten mit Zählerüberlauf/-rücksetzung · Batterie-Mathematik · Puls-Regeln · Formatierung
@@ -285,7 +285,7 @@ AETHER (Swift Package, swift-tools 5.9, macOS 13+)
 ├─ AetherSystem      nur macOS: Provider über Darwin, IOKit, Metal, SystemConfiguration,
 │   CoreWLAN, DiskArbitration, Network – jeweils hinter einem Protokoll mit Fähigkeitserkennung
 ├─ AetherC           nur macOS, minimal C: SMC-Strukturen, NVMe-SMART-Plugin (COM-Schnittstelle)
-└─ AETHER            die App: SwiftUI + AppKit · Designsystem · Bereiche · Stores · Selbsttest/Fotos
+└─ ORBIT            die App: SwiftUI + AppKit · Designsystem · Bereiche · Stores · Selbsttest/Fotos
 ```
 
 Die Xcode-Datei wird aus `project.yml` (XcodeGen) im Build erzeugt und mit `xcodebuild` geprüft. Alternativ öffnet
@@ -305,7 +305,7 @@ Xcode `Package.swift` direkt.
         ▼
  SwiftUI-Ansichten  ── lesen nur Stores, rufen nie selbst Systemfunktionen auf
         ▲
- HistoryRecorder (optional) ── SQLite (System-libsqlite3) in ~/Library/Application Support/AETHER
+ HistoryRecorder (optional) ── SQLite (System-libsqlite3) in ~/Library/Application Support/ORBIT
 ```
 
 - **Abonnements:** Ein Bereich meldet beim Erscheinen an, was er braucht (`.cpu`, `.processes(detail: true)` …),
@@ -318,7 +318,7 @@ Xcode `Package.swift` direkt.
     Mount-Ereignisse.
 - **Sparmodus:** Mindestintervall 5 s, keine Prozessdetails außerhalb der Aktivität, Diagramme ohne Animation,
   Sensoren alle 10 s.
-- **Eigenverbrauch:** Er wird im Selbsttest gemessen und unter Einstellungen → Info angezeigt („AETHER selbst:
+- **Eigenverbrauch:** Er wird im Selbsttest gemessen und unter Einstellungen → Info angezeigt („ORBIT selbst:
   0,4 % CPU, 62 MB“).
 - **Fehlermodell:** Jeder Wert ist `Reading<T>`, also `.value(T, Provenance)` oder `.unavailable(Reason)`. Gründe sind
   lokalisierte Erklärungen, etwa „Für Prozesse anderer Benutzer gibt macOS diesen Wert nur Programmen mit
@@ -471,7 +471,7 @@ SSD-Temperatur verfügbar.
 | `ps`, `system_profiler` starten | erben die Sandbox – teilweise unbrauchbar |
 | Finder Plus (freie Navigation, Kopieren, Löschen) | nur über einzelne Freigaben und Security-Scoped Bookmarks |
 
-**Entscheidung:** AETHER ist **nicht gesandboxt** und wird außerhalb des Mac App Store vertrieben.
+**Entscheidung:** ORBIT ist **nicht gesandboxt** und wird außerhalb des Mac App Store vertrieben.
 
 - Ziel ist Developer ID mit Notarisierung und Hardened Runtime. Die Hardened Runtime ist mit allen genannten
   Zugriffen vereinbar; Ausnahme-Berechtigungen (`allow-jit`, `disable-library-validation` o. Ä.) werden nicht benötigt.
@@ -516,7 +516,7 @@ Jede Phase endet mit einem echten Build auf macOS-Rechnern und einer prüfbaren 
 | 6 | Finder Plus und Storage: Dateien, Operationen, Quick Look, Suche, große Dateien, Duplikate, Bereinigung | |
 | 7 | Netzwerk komplett, lokaler Verlauf (SQLite) mit Zeitachse, Exporte | |
 | 8 | Feinschliff: Leistung (Eigenverbrauch), Barrierefreiheit, Intel-/ARM-Tests, Kontrastprüfung | |
-| 9 | Release: Universal-Build, Xcode-Projekt, Signatur/Notarisierung (falls Zugangsdaten vorhanden), DMG, Prüfung, Release-Notiz | `AETHER-macOS-Universal.dmg` |
+| 9 | Release: Universal-Build, Xcode-Projekt, Signatur/Notarisierung (falls Zugangsdaten vorhanden), DMG, Prüfung, Release-Notiz | `ORBIT-macOS-Universal.dmg` |
 
 ---
 
@@ -535,11 +535,11 @@ genauso: `Build.command` doppelklicken oder `scripts/build_app.sh && scripts/mak
 | **intel** | macOS 15 · Intel | Unit-Tests in x86_64 |
 | **results** | Ubuntu | DMG, Prüfsumme, Protokolle, Bildschirmfotos → Zweig `ci-ergebnisse-aether-macos` |
 
-### 10.2 Inhalt der DMG `AETHER-macOS-Universal.dmg`
+### 10.2 Inhalt der DMG `ORBIT-macOS-Universal.dmg`
 
-- Volume „AETHER“: HFS+, UDZO komprimiert.
+- Volume „ORBIT“: HFS+, UDZO komprimiert.
 - Hintergrundbild in 1× und 2× (TIFF), das Volume-Symbol.
-- `AETHER.app`.
+- `ORBIT.app`.
 - Verknüpfung „Programme“ → `/Applications`.
 - Pfeil-Gestaltung zum Hineinziehen.
 - App-Icon als eigenes Motiv: eine schwebende Glaslinse über einem leuchtenden Äther-Ring. Erzeugt als `.icns` mit
@@ -559,7 +559,7 @@ genauso: `Build.command` doppelklicken oder `scripts/build_app.sh && scripts/mak
 Eine DMG gilt erst als fertig, wenn alle Punkte erfüllt sind:
 
 1. Die DMG lässt sich einhängen.
-2. `AETHER.app` ist enthalten, und `lipo -archs` meldet `x86_64 arm64`.
+2. `ORBIT.app` ist enthalten, und `lipo -archs` meldet `x86_64 arm64`.
 3. Die Signatur ist gültig.
 4. Der Selbsttest der *installierten* App hat auf Apple Silicon (nativ und Rosetta) und auf Intel bestanden.
 5. Prüfsumme und Größe sind dokumentiert.

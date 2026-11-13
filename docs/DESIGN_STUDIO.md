@@ -1,6 +1,6 @@
-# AETHER Studio – visuelle Neuausrichtung und Monitoring 2.0
+# ORBIT Studio – visuelle Neuausrichtung und Monitoring 2.0
 
-Stand 8. November 2026 · Grundlage: Bildschirmaufnahmen von AETHER 1.0 auf einem MacBook Pro 14,3 (Intel Core i7,
+Stand 8. November 2026 · Grundlage: Bildschirmaufnahmen von ORBIT 1.0 auf einem MacBook Pro 14,3 (Intel Core i7,
 macOS 13.7.8) und die Produktseite des MacBook Pro als Referenz für die Designhaltung (nicht zum Nachbauen).
 
 ---
@@ -11,7 +11,7 @@ Gemessen bzw. abgelesen in den Aufnahmen und im Code:
 
 | # | Beobachtung | Ursache im Code |
 |---|---|---|
-| 1 | AETHER selbst **106–118 % CPU** auf „Aktivität“, 7–21 % auf der Übersicht; WindowServer ≈ 32 % | siehe 2–5 |
+| 1 | ORBIT selbst **106–118 % CPU** auf „Aktivität“, 7–21 % auf der Übersicht; WindowServer ≈ 32 % | siehe 2–5 |
 | 2 | Zahlen springen (CPU, GPU, Netz, RAM), kleine Diagramme „nervös“ | Anzeige = Rohwert der letzten Differenz; keine Glättung; Text mit wechselnder Stellenzahl; Ringe und Balken animieren bei jedem Takt neu, die Verlaufslinie springt um eine Stützstelle |
 | 3 | Aktivität: Hauptthread ausgelastet | 530 Zeilen werden je Takt im Hauptthread neu gebaut (Schutzprüfung, App-Namen, `FileManager.displayName` je Familie), nach CPU neu sortiert (Zeilen tauschen ständig die Plätze), 6 Filterzählungen und Filterung/Sortierung bei **jedem** Neuzeichnen |
 | 4 | Ruckeln auf Intel-Grafik | jede Karte hat ein eigenes `NSVisualEffectView` (Hintergrundunschärfe). Bei jeder Wertänderung muss WindowServer 10–14 Unschärfeflächen neu zusammensetzen |

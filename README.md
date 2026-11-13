@@ -1,9 +1,9 @@
-# PROJECT AETHER – macOS Edition
+# ORBIT – macOS Edition (früher AETHER)
 
 *System Intelligence & File Explorer* · Universal App für Intel und Apple Silicon · macOS 13 Ventura oder neuer,
 Liquid Glass auf macOS 26 Tahoe.
 
-AETHER vereint Systemmonitor, Prozessmanager, Hardware- und Energieanalyse, Speicheranalyse und einen erweiterten
+ORBIT vereint Systemmonitor, Prozessmanager, Hardware- und Energieanalyse, Speicheranalyse und einen erweiterten
 Dateimanager. Das Markenzeichen: **Jede Zahl trägt ihre Herkunft.** Das kleine Symbol neben einem Wert zeigt auf Klick,
 ob der Wert gemessen, berechnet, von macOS angegeben oder geschätzt ist – und aus welcher Schnittstelle er stammt.
 Werte, die macOS nicht liefert, heißen „Nicht verfügbar“ mit Begründung. Erfunden wird nichts.
@@ -26,6 +26,15 @@ Werte, die macOS nicht liefert, heißen „Nicht verfügbar“ mit Begründung. 
 | **Live-Monitor & Menüleiste** | kleines Fenster (⌥⌘M), auf Wunsch im Vordergrund; optionale CPU-Anzeige in der Menüleiste |
 | **Einstellungen** | 6 Themes, Akzent, Glasintensität, Bewegung, Dichte, Intervall, Sparmodus, SMC an/aus, Rohwerte statt geglätteter Werte, Entwickler-Diagnose (Eigenverbrauch, Messzeiten), Verlauf, Menüleiste, Sprache (Englisch/Deutsch), Datenschutz- und Quellenübersicht |
 
+**Neu in 2.0 – ORBIT, „Spatial Liquid Glass“:** neuer Name und neues Symbol; Designsystem mit den ORBIT-Farben
+(Deep Ocean, Pearl White, Arctic Blue, Electric Cyan, Soft Violet …) und wählbaren **Effektprofilen Minimal /
+Ausgewogen / Immersiv**; kurzer Auftakt beim Start; Lichtfelder, die beim Bereichswechsel weitergleiten (Immersiv:
+sehr langsame Drift, Core Animation, gedrosselt); Glasreflexion unter dem Zeiger und magnetisches Schweben; räumliche
+Übergänge; **ORBIT Core** – Kern mit sechs Bahnen (CPU, GPU, Arbeitsspeicher, Massenspeicher, Netzwerk, Akku) aus
+echten Messwerten, mit verwandelbaren Detailkarten; Lichtfluss in der Akku-Zelle nur beim echten Laden; flüssiger
+Fortschritt bei Dateivorgängen; eigene Illustrationen für leere Zustände; animierte Statussymbole. Alles abschaltbar,
+„Bewegung reduzieren“ hat immer Vorrang. Einzelheiten: [docs/ORBIT.md](docs/ORBIT.md).
+
 **Seit 1.2:** Gerätebilder passend zum eigenen Mac – alle Modelle seit 2017 (92 Modellkennungen: MacBook Pro, MacBook Air,
 MacBook, iMac, iMac Pro, Mac mini, Mac Studio, Mac Pro) als eigene Zeichnungen nach Apples Maßen, in der Übersicht
 und unter Hardware von vorn, in der Wärmekarte von oben (Touch Bar, Kerbe, Lautsprecher, Trackpad …).
@@ -46,8 +55,12 @@ Weitere Ansichten: [ganze Übersicht](docs/design/uebersicht-ganz.jpg) · [CPU &
 
 ## Installation
 
-`AETHER-macOS-Universal.dmg` öffnen, AETHER auf „Programme“ ziehen. Die App ist ad-hoc signiert und nicht notariell
+`ORBIT-macOS-Universal.dmg` öffnen, ORBIT auf „Programme“ ziehen. Die App ist ad-hoc signiert und nicht notariell
 beglaubigt – beim ersten Start einmal „Dennoch öffnen“. Einzelheiten: [docs/INSTALLATION.md](docs/INSTALLATION.md).
+
+**Von AETHER 1.x kommend:** ORBIT verwendet dieselbe Bundle-ID – Einstellungen bleiben erhalten, der Verlaufsordner
+wird beim ersten Start einmalig von `…/Application Support/AETHER` nach `…/ORBIT` umbenannt. Die alte `AETHER.app`
+danach bitte selbst aus „Programme“ in den Papierkorb legen (zwei Apps mit derselben Bundle-ID verwirren macOS).
 
 ## Bauen
 
@@ -55,13 +68,13 @@ Auf einem Mac mit Xcode 16 oder neuer (bzw. den Befehlszeilenwerkzeugen): `Build
 
 ```
 swift test
-CLEAN=1 scripts/build_app.sh     # build/AETHER.app – Universal, geprüft
-scripts/make_dmg.sh              # AETHER-macOS-Universal.dmg im Projektverzeichnis, eingehängt und geprüft
+CLEAN=1 scripts/build_app.sh     # build/ORBIT.app – Universal, geprüft
+scripts/make_dmg.sh              # ORBIT-macOS-Universal.dmg im Projektverzeichnis, eingehängt und geprüft
 ```
 
-**In Xcode:** `AETHER.xcodeproj` öffnen, Schema „AETHER-App“ (baut `AETHER.app` für arm64 + x86_64). Kommen
+**In Xcode:** `ORBIT.xcodeproj` öffnen, Schema „ORBIT“ (baut `ORBIT.app` für arm64 + x86_64). Kommen
 Quelldateien hinzu, erzeugt `scripts/make_xcodeproj.sh` das Projekt aus `project.yml` neu (XcodeGen:
-`brew install xcodegen`). Alternativ `Package.swift` direkt in Xcode öffnen, Schema „AETHER“.
+`brew install xcodegen`). Alternativ `Package.swift` direkt in Xcode öffnen, Schema „AETHER“ (interner Produktname).
 
 **Automatisch:** Jeder Push in den Zweig `aether-macos` baut und prüft auf echten macOS-Rechnern
 ([Workflow](.github/workflows/aether-macos.yml)):
@@ -90,13 +103,14 @@ Sources/AetherCore     reine Logik, auch unter Linux getestet: Herkunft, CPU-/Sp
 Sources/AetherSystem   Messquellen (Darwin, IOKit, IOPowerSources, SystemConfiguration, CoreWLAN, SQLite,
                        Systemwerkzeuge) mit Fähigkeitserkennung
 Sources/AetherC        kleine C-Hilfen mit exaktem Speicherlayout (SMC und NVMe-SMART nur lesend, Klon-Hinweis)
-Sources/AETHER         die App: App/, Design/, Monitoring/, Files/, Storage/, Network/, History/, Views/, Support/
+Sources/AETHER         die App (Ordnername aus der Zeit vor ORBIT): App/, Design/ (inkl. Orbit.swift), Monitoring/,
+                       Files/, Storage/, Network/, History/, Views/ (inkl. OrbitCoreView.swift), Support/
 Tests/AetherCoreTests
 Resources/             Info.plist, Icon, DMG-Hintergrund, Localization/{en,de}.lproj
 scripts/               build_app.sh, make_dmg.sh, dmg_settings.py, notarize.sh, run_selftest.sh, run_snapshots.sh,
                        make_xcodeproj.sh
 project.yml            Xcode-Projekt (XcodeGen)
-tools/                 check_l10n.py (Lokalisierungsprüfung), art/ (Icon und DMG-Grafik)
+tools/                 check_l10n.py (Lokalisierungsprüfung), art/ (ORBIT-Symbol aus der Vorlage, DMG-Grafik)
 ```
 
 ## Datenschutz
