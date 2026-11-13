@@ -31,6 +31,8 @@ final class StudioHEAACTests: XCTestCase {
         var openMs = 0.0
         var readMs = 0.0
         var reader = ""
+        /// Frames ab Sekunde 3 nach einem Sprung (prüft, dass Sprünge die richtige Abtastrate verwenden).
+        var afterSeek = 0
     }
 
     static var afconvert: String? {
@@ -138,6 +140,12 @@ final class StudioHEAACTests: XCTestCase {
         }
         m.readMs = Date().timeIntervalSince(t1) * 1000
         m.pitch = pitch(left, rate: m.rate)
+        try reader.seek(to: Int64(reader.sampleRate * 3))
+        while true {
+            let n = try reader.read(into: block, maxFrames: block.capacity)
+            if n == 0 || m.afterSeek > Int(reader.sampleRate * 60) { break }
+            m.afterSeek += n
+        }
         return m
     }
 
@@ -151,9 +159,11 @@ final class StudioHEAACTests: XCTestCase {
         for v in variants {
             do {
                 let m = try await Self.measure(v.file)
+                let rest = Double(m.afterSeek) / max(m.rate, 1)
                 let ok = m.rate == v.rate && m.channels == v.channels && abs(m.seconds - Self.seconds) < 0.2 && abs(m.pitch - Self.frequency) < 15
-                TS.log(String(format: "HE-AAC %@ %@: %@ – %.0f Hz (erwartet %.0f), %d Kanäle (erwartet %d), Dauer %.3f s, Tonhöhe %.1f Hz, Öffnen %.0f ms, Lesen %.0f ms",
-                              ok ? "OK" : "FEHLER", v.name, m.reader, m.rate, v.rate, m.channels, v.channels, m.seconds, m.pitch, m.openMs, m.readMs))
+                    && abs(rest - (m.seconds - 3)) < 0.05
+                TS.log(String(format: "HE-AAC %@ %@: %@ – %.0f Hz (erwartet %.0f), %d Kanäle (erwartet %d), Dauer %.3f s, Tonhöhe %.1f Hz, ab 3 s noch %.3f s, Öffnen %.0f ms, Lesen %.0f ms",
+                              ok ? "OK" : "FEHLER", v.name, m.reader, m.rate, v.rate, m.channels, v.channels, m.seconds, m.pitch, rest, m.openMs, m.readMs))
                 if !ok {
                     failures.append(String(format: "%@: %.0f Hz, %d Kanäle, %.2f s, %.0f Hz Tonhöhe", v.name, m.rate, m.channels, m.seconds, m.pitch))
                 }

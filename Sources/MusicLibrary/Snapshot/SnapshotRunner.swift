@@ -269,6 +269,15 @@ enum SnapshotRunner {
                 }
                 StudioDemo.askDuplicates = true
             }, view: main),
+            Scenario(name: "61-studio-instagram", size: big, prepare: studio { _, s in
+                StudioDemo.load(s, StudioDemo.instagramSource())
+                s.urlText = "https://www.instagram.com/reel/Beispiel01/"
+                s.exportWholeFile = true
+            }, view: main),
+            Scenario(name: "61-studio-instagram-analyse", size: big, prepare: studio { _, s in
+                s.urlText = "https://www.instagram.com/reel/Beispiel01/"
+                s.sourceState = .analyzing(StudioModel.analyzingText(.web, url: URL(string: "https://www.instagram.com/reel/Beispiel01/")))
+            }, view: main),
             Scenario(name: "60-studio-analyse", size: big, prepare: studio { _, s in
                 s.urlText = "https://soundcloud.com/beispiel/velvet-rain"
                 s.sourceState = .analyzing("SoundCloud wird abgefragt …")

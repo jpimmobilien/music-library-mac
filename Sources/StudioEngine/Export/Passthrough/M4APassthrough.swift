@@ -11,7 +11,7 @@ enum M4APassthrough {
         guard let video = try? await asset.loadTracks(withMediaType: .video), video.isEmpty,
               let audio = try? await asset.loadTracks(withMediaType: .audio), audio.count == 1,
               let descs = try? await audio[0].load(.formatDescriptions), let desc = descs.first,
-              let asbd = CMAudioFormatDescriptionGetStreamBasicDescription(desc)?.pointee,
+              let asbd = AudioTrackFormat.decoded(desc),   // HE-AAC: Rate des dekodierten Tons
               AVFileReader.codecName(asbd.mFormatID) == "AAC",
               let duration = try? await asset.load(.duration), duration.seconds.isFinite, duration.seconds > 0 else { return nil }
         return (Int(asbd.mSampleRate.rounded()), duration.seconds)

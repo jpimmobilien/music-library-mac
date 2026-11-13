@@ -36,6 +36,20 @@ public enum SourceURL {
         if h == "open.spotify.com" || h == "spotify.com" || h == "spotify.link" { return (.spotify, url) }
         return (.web, url)
     }
+
+    /// Instagram-Adresse (Reels, Videos, Beiträge). Geführt als Web-Quelle – derselbe gespeicherte Typ wie bisher,
+    /// damit ältere Versionen Verlauf und Einstellungen weiter lesen –, aber in der Oberfläche eigens benannt.
+    public static func isInstagram(_ url: URL) -> Bool {
+        guard let host = url.host?.lowercased() else { return false }
+        let h = host.hasPrefix("www.") ? String(host.dropFirst(4)) : host
+        return h == "instagram.com" || h.hasSuffix(".instagram.com") || h == "instagr.am"
+    }
+
+    /// Anzeigename der Herkunft („Instagram“ statt „Web“).
+    public static func label(kind: SourceKind, url: URL?) -> String {
+        if kind == .web, let url, isInstagram(url) { return "Instagram" }
+        return kind.label
+    }
 }
 
 /// Ergebnis der Analyse einer Quelle (Datei oder Adresse).
@@ -156,6 +170,8 @@ public struct YtDlpInfo: Decodable, Sendable {
     public var id: String?
     public var title: String?
     public var fulltitle: String?
+    /// Beschreibung bzw. Beitragstext (Instagram: Bildunterschrift).
+    public var description: String?
     public var uploader: String?
     public var channel: String?
     public var creator: String?
@@ -195,10 +211,19 @@ public struct YtDlpInfo: Decodable, Sendable {
     /// In `SourceInfo` umwandeln. Titel im Format „Interpret - Titel“ werden aufgeteilt, wenn keine
     /// eigenen Musikfelder vorhanden sind.
     public func sourceInfo(kind: SourceKind, requestedURL: URL) -> SourceInfo {
-        let shownTitle = (title ?? fulltitle ?? track ?? "Ohne Titel").trimmingCharacters(in: .whitespacesAndNewlines)
+        var shownTitle = (title ?? fulltitle ?? track ?? "Ohne Titel").trimmingCharacters(in: .whitespacesAndNewlines)
         var meta = StudioMetadata()
         let artistField = artists?.first ?? artist ?? creator
-        if let track, !track.isEmpty {
+        // Instagram & Co.: Titel ist nur „Video by konto“ – die erste Zeile des Beitragstexts sagt mehr.
+        var fromCaption = false
+        if (track ?? "").isEmpty, Self.isGenericPostTitle(shownTitle), let caption = description.flatMap(Self.captionTitle) {
+            shownTitle = caption
+            fromCaption = true
+        }
+        if fromCaption {
+            meta.title = shownTitle
+            meta.artist = artistField ?? Self.cleanChannel(uploader ?? channel ?? "")
+        } else if let track, !track.isEmpty {
             meta.title = track
             meta.artist = artistField ?? uploader ?? channel ?? ""
         } else if let split = Self.splitArtistTitle(shownTitle) {
@@ -253,6 +278,32 @@ public struct YtDlpInfo: Decodable, Sendable {
             t = result
         }
         return t.trimmingCharacters(in: .whitespaces)
+    }
+
+    /// „Video by nasa“, „Post by …“, „Reel by …“: Ersatztitel von yt-dlp ohne eigenen Inhalt.
+    public static func isGenericPostTitle(_ text: String) -> Bool {
+        let parts = text.split(separator: " ", omittingEmptySubsequences: true)
+        guard parts.count == 3, parts[1].lowercased() == "by" else { return false }
+        return ["video", "post", "reel", "clip", "photo"].contains(parts[0].lowercased())
+    }
+
+    /// Erste aussagekräftige Zeile eines Beitragstexts als Titel: ohne Links, ohne Hashtags und Erwähnungen am Ende,
+    /// höchstens 80 Zeichen (an einer Wortgrenze gekürzt). nil, wenn nichts übrig bleibt.
+    public static func captionTitle(_ caption: String) -> String? {
+        for rawLine in caption.split(whereSeparator: \.isNewline) {
+            var words = rawLine.split(separator: " ", omittingEmptySubsequences: true).map(String.init)
+                .filter { !$0.lowercased().hasPrefix("http://") && !$0.lowercased().hasPrefix("https://") }
+            while let last = words.last, last.hasPrefix("#") || last.hasPrefix("@") { words.removeLast() }
+            var line = words.joined(separator: " ").trimmingCharacters(in: .whitespaces)
+            guard line.contains(where: { $0.isLetter || $0.isNumber }) else { continue }
+            if line.count > 80 {
+                let cut = line.prefix(80)
+                let end = cut.lastIndex(of: " ").map { cut[..<$0] } ?? cut
+                line = end.trimmingCharacters(in: CharacterSet(charactersIn: " ,;:–-")) + " …"
+            }
+            return line
+        }
+        return nil
     }
 
     /// „Künstler - Topic“ / „KünstlerVEVO“ → „Künstler“.

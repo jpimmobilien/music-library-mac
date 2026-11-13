@@ -127,7 +127,7 @@ public struct LocalSourceAnalyzer: LocalSourceAnalyzing {
         let asset = AVURLAsset(url: url, options: [AVURLAssetPreferPreciseDurationAndTimingKey: true])
         guard let tracks = try? await asset.loadTracks(withMediaType: .audio), let track = tracks.first,
               let descs = try? await track.load(.formatDescriptions), let desc = descs.first,
-              let asbd = CMAudioFormatDescriptionGetStreamBasicDescription(desc)?.pointee else { return nil }
+              let asbd = AudioTrackFormat.decoded(desc) else { return nil }   // HE-AAC: dekodierte Rate/Kanäle
         let format = AVFileReader.describe(asbd)
         var d = AVDetails(codec: format.codec, lossless: format.isLossless)
         if let range = try? await track.load(.timeRange), range.duration.seconds.isFinite, range.duration.seconds > 0 {
