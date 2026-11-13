@@ -1,0 +1,135 @@
+{
+  "architecture" : "x86_64",
+  "images" : [
+    {
+      "elapsedMs" : "2266",
+      "file" : "70-ki-einrichten-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "33",
+      "mainThreadLagMaxMs" : "118.5",
+      "mainThreadLagMeanMs" : "32.7",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2216",
+      "file" : "70-ki-einrichten-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "18.6",
+      "mainThreadLagMeanMs" : "9.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2237",
+      "file" : "70-ki-einrichten-laeuft-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "2",
+      "mainThreadLagMaxMs" : "18.6",
+      "mainThreadLagMeanMs" : "5.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2206",
+      "file" : "70-ki-einrichten-laeuft-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "124.2",
+      "mainThreadLagMeanMs" : "80.1",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2276",
+      "file" : "70-ki-bereit-hell-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "9",
+      "mainThreadLagMaxMs" : "132.9",
+      "mainThreadLagMeanMs" : "52.3",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2380",
+      "file" : "70-ki-bereit-dunkel-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "151.8",
+      "mainThreadLagMeanMs" : "62.5",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2332",
+      "file" : "70-ki-erzeugt-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "3",
+      "mainThreadLagMaxMs" : "136.7",
+      "mainThreadLagMeanMs" : "61.7",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2279",
+      "file" : "70-ki-erzeugt-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "4",
+      "mainThreadLagMaxMs" : "227.3",
+      "mainThreadLagMeanMs" : "93.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2252",
+      "file" : "70-ki-laeuft-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "19",
+      "mainThreadLagMaxMs" : "112.3",
+      "mainThreadLagMeanMs" : "38.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2365",
+      "file" : "70-ki-laeuft-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "3",
+      "mainThreadLagMaxMs" : "144.9",
+      "mainThreadLagMeanMs" : "62.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2274",
+      "file" : "70-ki-schmal-hell-940x660.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "121.6",
+      "mainThreadLagMeanMs" : "59.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2293",
+      "file" : "70-ki-schmal-dunkel-940x660.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "143.7",
+      "mainThreadLagMeanMs" : "83.3",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2237",
+      "file" : "70-ki-einstellungen-hell-860x900.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "145.0",
+      "mainThreadLagMeanMs" : "60.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2224",
+      "file" : "70-ki-einstellungen-dunkel-860x900.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "119.1",
+      "mainThreadLagMeanMs" : "69.3",
+      "method" : "window-server"
+    }
+  ],
+  "interFont" : true,
+  "liquidGlass" : true,
+  "macOS" : "Version 26.6.1 (Build 25G76)",
+  "screen" : "1920x1080 @1.0x, sichtbar 1920x959"
+}

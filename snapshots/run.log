@@ -1,0 +1,28 @@
+[Snapshot] ▸ 70-ki-einrichten hell
+[Snapshot] 70-ki-einrichten hell: Aufbau+Warten 2266 ms, Hauptthread-Verzögerung Ø 32.7 ms, max 118.5 ms, Hauptthread belegt 33 %
+[Snapshot] ▸ 70-ki-einrichten dunkel
+[Snapshot] 70-ki-einrichten dunkel: Aufbau+Warten 2216 ms, Hauptthread-Verzögerung Ø 9.4 ms, max 18.6 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 70-ki-einrichten-laeuft hell
+[Snapshot] 70-ki-einrichten-laeuft hell: Aufbau+Warten 2237 ms, Hauptthread-Verzögerung Ø 5.9 ms, max 18.6 ms, Hauptthread belegt 2 %
+[Snapshot] ▸ 70-ki-einrichten-laeuft dunkel
+[Snapshot] 70-ki-einrichten-laeuft dunkel: Aufbau+Warten 2206 ms, Hauptthread-Verzögerung Ø 80.1 ms, max 124.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 70-ki-bereit hell
+[Snapshot] 70-ki-bereit hell: Aufbau+Warten 2276 ms, Hauptthread-Verzögerung Ø 52.3 ms, max 132.9 ms, Hauptthread belegt 9 %
+[Snapshot] ▸ 70-ki-bereit dunkel
+[Snapshot] 70-ki-bereit dunkel: Aufbau+Warten 2380 ms, Hauptthread-Verzögerung Ø 62.5 ms, max 151.8 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 70-ki-erzeugt hell
+[Snapshot] 70-ki-erzeugt hell: Aufbau+Warten 2332 ms, Hauptthread-Verzögerung Ø 61.7 ms, max 136.7 ms, Hauptthread belegt 3 %
+[Snapshot] ▸ 70-ki-erzeugt dunkel
+[Snapshot] 70-ki-erzeugt dunkel: Aufbau+Warten 2279 ms, Hauptthread-Verzögerung Ø 93.4 ms, max 227.3 ms, Hauptthread belegt 4 %
+[Snapshot] ▸ 70-ki-laeuft hell
+[Snapshot] 70-ki-laeuft hell: Aufbau+Warten 2252 ms, Hauptthread-Verzögerung Ø 38.9 ms, max 112.3 ms, Hauptthread belegt 19 %
+[Snapshot] ▸ 70-ki-laeuft dunkel
+[Snapshot] 70-ki-laeuft dunkel: Aufbau+Warten 2365 ms, Hauptthread-Verzögerung Ø 62.8 ms, max 144.9 ms, Hauptthread belegt 3 %
+[Snapshot] ▸ 70-ki-schmal hell
+[Snapshot] 70-ki-schmal hell: Aufbau+Warten 2274 ms, Hauptthread-Verzögerung Ø 59.6 ms, max 121.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 70-ki-schmal dunkel
+[Snapshot] 70-ki-schmal dunkel: Aufbau+Warten 2293 ms, Hauptthread-Verzögerung Ø 83.3 ms, max 143.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 70-ki-einstellungen hell
+[Snapshot] 70-ki-einstellungen hell: Aufbau+Warten 2237 ms, Hauptthread-Verzögerung Ø 60.0 ms, max 145.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 70-ki-einstellungen dunkel
+[Snapshot] 70-ki-einstellungen dunkel: Aufbau+Warten 2224 ms, Hauptthread-Verzögerung Ø 69.3 ms, max 119.1 ms, Hauptthread belegt 0 %

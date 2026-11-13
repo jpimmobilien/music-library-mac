@@ -1,0 +1,104 @@
+[0/1] Planning build
+Test Suite 'Selected tests' started at 2026-11-13 14:55:36.045.
+Test Suite 'MusicLibraryPackageTests.xctest' started at 2026-11-13 14:55:36.052.
+Test Suite 'KIMusicModelTests' started at 2026-11-13 14:55:36.053.
+Test Case '-[MusicLibraryTests.KIMusicModelTests testAIWritesGermanLyricsWithoutTranslation]' started.
+Test Case '-[MusicLibraryTests.KIMusicModelTests testAIWritesGermanLyricsWithoutTranslation]' passed (0.076 seconds).
+Test Case '-[MusicLibraryTests.KIMusicModelTests testBlockers]' started.
+Test Case '-[MusicLibraryTests.KIMusicModelTests testBlockers]' passed (0.042 seconds).
+Test Case '-[MusicLibraryTests.KIMusicModelTests testCreationActions]' started.
+Test Case '-[MusicLibraryTests.KIMusicModelTests testCreationActions]' passed (0.135 seconds).
+Test Case '-[MusicLibraryTests.KIMusicModelTests testFailureAndCancel]' started.
+Test Case '-[MusicLibraryTests.KIMusicModelTests testFailureAndCancel]' passed (0.321 seconds).
+Test Case '-[MusicLibraryTests.KIMusicModelTests testGenerateStoresCreationsOutsideLibrary]' started.
+Test Case '-[MusicLibraryTests.KIMusicModelTests testGenerateStoresCreationsOutsideLibrary]' passed (0.114 seconds).
+Test Case '-[MusicLibraryTests.KIMusicModelTests testSetupStates]' started.
+Test Case '-[MusicLibraryTests.KIMusicModelTests testSetupStates]' passed (0.028 seconds).
+Test Suite 'KIMusicModelTests' passed at 2026-11-13 14:55:36.771.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.716 (0.718) seconds
+Test Suite 'KIMusicTests' started at 2026-11-13 14:55:36.771.
+Test Case '-[MLStudioTests.KIMusicTests testCreationsIndexAndTitles]' started.
+Test Case '-[MLStudioTests.KIMusicTests testCreationsIndexAndTitles]' passed (0.001 seconds).
+Test Case '-[MLStudioTests.KIMusicTests testEngineParamsEncodeAsPlainJSON]' started.
+Test Case '-[MLStudioTests.KIMusicTests testEngineParamsEncodeAsPlainJSON]' passed (0.002 seconds).
+Test Case '-[MLStudioTests.KIMusicTests testEstimate]' started.
+Test Case '-[MLStudioTests.KIMusicTests testEstimate]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.KIMusicTests testHardwareSupport]' started.
+Test Case '-[MLStudioTests.KIMusicTests testHardwareSupport]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.KIMusicTests testLanguagesMatchACEStep]' started.
+Test Case '-[MLStudioTests.KIMusicTests testLanguagesMatchACEStep]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.KIMusicTests testRequestValidationAndEngineParams]' started.
+Test Case '-[MLStudioTests.KIMusicTests testRequestValidationAndEngineParams]' passed (0.000 seconds).
+Test Case '-[MLStudioTests.KIMusicTests testSizeText]' started.
+Test Case '-[MLStudioTests.KIMusicTests testSizeText]' passed (0.001 seconds).
+Test Suite 'KIMusicTests' passed at 2026-11-13 14:55:36.777.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.005 (0.006) seconds
+Test Suite 'StudioModelTests' started at 2026-11-13 14:55:36.777.
+Test Case '-[MusicLibraryTests.StudioModelTests testCutLibraryTrackAsNewFileNextToOriginal]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testCutLibraryTrackAsNewFileNextToOriginal]' passed (0.316 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testDestinationRules]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testDestinationRules]' passed (0.031 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testDuplicateCandidatesAndPreviousExport]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testDuplicateCandidatesAndPreviousExport]' passed (0.219 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testEditedReplaceChecksLengthWithTempoAndSilence]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testEditedReplaceChecksLengthWithTempoAndSilence]' passed (0.183 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testEditTrackReplacesOriginalAndUndo]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testEditTrackReplacesOriginalAndUndo]' passed (0.547 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testFailureMovesOnToNextJob]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testFailureMovesOnToNextJob]' passed (0.179 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testFinishedFileGetsFreeName]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testFinishedFileGetsFreeName]' passed (0.132 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testHistoryIsSavedAndLoaded]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testHistoryIsSavedAndLoaded]' passed (0.178 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testImportIntoLibraryFolderRescans]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testImportIntoLibraryFolderRescans]' passed (0.164 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testKICreationGoesThroughAddQueueWithMetadata]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testKICreationGoesThroughAddQueueWithMetadata]' passed (0.078 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testLeavingEditModeAndNewSourceResetEdit]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testLeavingEditModeAndNewSourceResetEdit]' passed (0.054 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testParseInput]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testParseInput]' passed (0.002 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPauseAndResumeWaitingJobAndRemove]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPauseAndResumeWaitingJobAndRemove]' passed (0.276 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPauseResumeCancelRetry]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPauseResumeCancelRetry]' passed (0.267 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPausingDownloadKeepsPartialFileAndResumes]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPausingDownloadKeepsPartialFileAndResumes]' passed (0.165 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPlaylistAndMultipleAddressesBecomeJobs]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPlaylistAndMultipleAddressesBecomeJobs]' passed (0.340 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPrepareForEditingUsesCacheAndCleansUp]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPrepareForEditingUsesCacheAndCleansUp]' passed (0.251 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPreviewPlaysSelectionAndFollowsPlayhead]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPreviewPlaysSelectionAndFollowsPlayhead]' passed (0.086 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testQueueRunsInOrderWithExactlyOneActiveJob]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testQueueRunsInOrderWithExactlyOneActiveJob]' passed (0.379 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceIsAbortedWhenExportHasWrongLength]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceIsAbortedWhenExportHasWrongLength]' passed (0.142 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceOriginalWithBackupAndUndo]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceOriginalWithBackupAndUndo]' passed (0.257 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceRequiresOriginalFormat]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceRequiresOriginalFormat]' passed (0.067 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testSetFormatOfWaitingJob]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testSetFormatOfWaitingJob]' passed (0.149 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testSettingsAreStoredInInjectedDefaults]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testSettingsAreStoredInInjectedDefaults]' passed (0.008 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testSingleAddressShowsSourceAndExportDownloads]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testSingleAddressShowsSourceAndExportDownloads]' passed (0.232 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testSpotifyShowsMetadataButCannotExport]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testSpotifyShowsMetadataButCannotExport]' passed (0.044 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testStudioQueuesOnHostAndShowsOnlyItsOwnJobsAndHistory]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testStudioQueuesOnHostAndShowsOnlyItsOwnJobsAndHistory]' passed (0.236 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testStudioSharesSettingsWithHost]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testStudioSharesSettingsWithHost]' passed (0.078 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testUndoIsRefusedWhenFileChangedAfterReplace]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testUndoIsRefusedWhenFileChangedAfterReplace]' passed (0.186 seconds).
+Test Suite 'StudioModelTests' passed at 2026-11-13 14:55:42.031.
+	 Executed 29 tests, with 0 failures (0 unexpected) in 5.247 (5.254) seconds
+Test Suite 'MusicLibraryPackageTests.xctest' passed at 2026-11-13 14:55:42.031.
+	 Executed 42 tests, with 0 failures (0 unexpected) in 5.968 (5.979) seconds
+Test Suite 'Selected tests' passed at 2026-11-13 14:55:42.031.
+	 Executed 42 tests, with 0 failures (0 unexpected) in 5.968 (5.986) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: x86_64-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

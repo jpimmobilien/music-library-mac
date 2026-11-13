@@ -1,0 +1,229 @@
+[0/1] Planning build
+Building for debugging...
+[0/16] Write sources
+[0/16] /Users/runner/work/music-library-mac/music-library-mac/.build/x86_64-apple-macosx/debug/MusicLibraryPackageTests.derived/runner.swift
+[0/16] Write sources
+[8/19] Copying Info.plist
+[9/19] Write sources
+[12/19] Copying Fixtures
+[14/19] Write swift-version-7974D3F7F03D5E95.txt
+[16/46] Compiling OggVorbisTests resource_bundle_accessor.swift
+[17/46] Compiling MusicLibraryTests AudioEngineTests.swift
+[18/46] Compiling MusicLibraryTests DateAddedServiceTests.swift
+[19/48] Compiling MLTagsTests AudioIntegrityTests.swift
+[20/48] Compiling MLTagsTests BridgeAPITests.swift
+[21/48] Emitting module MLTagsTests
+[22/48] Compiling MLTagsTests FixtureSupport.swift
+[23/48] Compiling MLTagsTests FormatSpecificTests.swift
+[24/48] Compiling OggVorbisTests VorbisDecoderTests.swift
+[25/48] Emitting module OggVorbisTests
+[26/51] Compiling MLTagsTests TagFileRoundTripTests.swift
+[27/51] Compiling MLTagsTests resource_bundle_accessor.swift
+[28/54] Emitting module MLStudioTests
+[29/54] Compiling MLStudioTests MLStudioTests.swift
+[30/54] Compiling MLStudioTests KIMusicTests.swift
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:20:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 18 | 
+ 19 |     func prepare(dit: String, lm: String?, progress: @escaping @Sendable (Double, String) -> Void) async throws {
+ 20 |         lock.lock(); running = true; prepared.append((dit, lm)); lock.unlock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 21 |         progress(1, "Bereit")
+ 22 |     }
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:20:71: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 18 | 
+ 19 |     func prepare(dit: String, lm: String?, progress: @escaping @Sendable (Double, String) -> Void) async throws {
+ 20 |         lock.lock(); running = true; prepared.append((dit, lm)); lock.unlock()
+    |                                                                       `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 21 |         progress(1, "Bereit")
+ 22 |     }
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:26:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 24 |     func writeLyrics(query: String, caption: String, lyrics: String, language: String?, instrumental: Bool,
+ 25 |                      progress: @escaping @Sendable (Double, String) -> Void) async throws -> KILyricsResult {
+ 26 |         lock.lock(); lyricsCalls += 1; lock.unlock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 27 |         return KILyricsResult(caption: "German pop, female vocals", lyrics: "[Verse]\nDie Sonne sinkt am See", language: language)
+ 28 |     }
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:26:45: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 24 |     func writeLyrics(query: String, caption: String, lyrics: String, language: String?, instrumental: Bool,
+ 25 |                      progress: @escaping @Sendable (Double, String) -> Void) async throws -> KILyricsResult {
+ 26 |         lock.lock(); lyricsCalls += 1; lock.unlock()
+    |                                             `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 27 |         return KILyricsResult(caption: "German pop, female vocals", lyrics: "[Verse]\nDie Sonne sinkt am See", language: language)
+ 28 |     }
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:32:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 30 |     func generate(params: [String: KIValue], variations: Int, seeds: [Int]?, saveDirectory: URL, usePlanning: Bool,
+ 31 |                   progress: @escaping @Sendable (Double, String) -> Void) async throws -> KIGenerationResult {
+ 32 |         lock.lock(); generated.append(params); lock.unlock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 33 |         progress(0.5, "Generating …")
+ 34 |         while hold {
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:32:53: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 30 |     func generate(params: [String: KIValue], variations: Int, seeds: [Int]?, saveDirectory: URL, usePlanning: Bool,
+ 31 |                   progress: @escaping @Sendable (Double, String) -> Void) async throws -> KIGenerationResult {
+ 32 |         lock.lock(); generated.append(params); lock.unlock()
+    |                                                     `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 33 |         progress(0.5, "Generating …")
+ 34 |         while hold {
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:20:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 18 | 
+ 19 |     func prepare(dit: String, lm: String?, progress: @escaping @Sendable (Double, String) -> Void) async throws {
+ 20 |         lock.lock(); running = true; prepared.append((dit, lm)); lock.unlock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 21 |         progress(1, "Bereit")
+ 22 |     }
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:20:71: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 18 | 
+ 19 |     func prepare(dit: String, lm: String?, progress: @escaping @Sendable (Double, String) -> Void) async throws {
+ 20 |         lock.lock(); running = true; prepared.append((dit, lm)); lock.unlock()
+    |                                                                       `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 21 |         progress(1, "Bereit")
+ 22 |     }
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:26:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 24 |     func writeLyrics(query: String, caption: String, lyrics: String, language: String?, instrumental: Bool,
+ 25 |                      progress: @escaping @Sendable (Double, String) -> Void) async throws -> KILyricsResult {
+ 26 |         lock.lock(); lyricsCalls += 1; lock.unlock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 27 |         return KILyricsResult(caption: "German pop, female vocals", lyrics: "[Verse]\nDie Sonne sinkt am See", language: language)
+ 28 |     }
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:26:45: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 24 |     func writeLyrics(query: String, caption: String, lyrics: String, language: String?, instrumental: Bool,
+ 25 |                      progress: @escaping @Sendable (Double, String) -> Void) async throws -> KILyricsResult {
+ 26 |         lock.lock(); lyricsCalls += 1; lock.unlock()
+    |                                             `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 27 |         return KILyricsResult(caption: "German pop, female vocals", lyrics: "[Verse]\nDie Sonne sinkt am See", language: language)
+ 28 |     }
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:32:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 30 |     func generate(params: [String: KIValue], variations: Int, seeds: [Int]?, saveDirectory: URL, usePlanning: Bool,
+ 31 |                   progress: @escaping @Sendable (Double, String) -> Void) async throws -> KIGenerationResult {
+ 32 |         lock.lock(); generated.append(params); lock.unlock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 33 |         progress(0.5, "Generating …")
+ 34 |         while hold {
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:32:53: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 30 |     func generate(params: [String: KIValue], variations: Int, seeds: [Int]?, saveDirectory: URL, usePlanning: Bool,
+ 31 |                   progress: @escaping @Sendable (Double, String) -> Void) async throws -> KIGenerationResult {
+ 32 |         lock.lock(); generated.append(params); lock.unlock()
+    |                                                     `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 33 |         progress(0.5, "Generating …")
+ 34 |         while hold {
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+[33/61] Compiling MLStoreTests LibraryStoreTests.swift
+[34/61] Compiling MLStoreTests DateAddedStoreTests.swift
+[35/61] Emitting module MLStoreTests
+[36/80] Compiling MLCoreTests DuplicateFinderTests.swift
+[37/80] Compiling MLCoreTests EditDSPTests.swift
+[38/80] Emitting module MusicLibraryTests
+[39/80] Compiling MLCoreTests AlbumGroupingTests.swift
+[40/80] Compiling MLCoreTests CoverPaletteTests.swift
+[41/80] Compiling MLRenderTests KotlinReferenceTests.swift
+[42/80] Compiling MLRenderTests PortableCdTests.swift
+[43/81] Emitting module MLRenderTests
+[46/81] Compiling MLCoreTests SyncPlannerTests.swift
+[47/81] Compiling MLCoreTests TagMergeTests.swift
+[48/81] Compiling MLCoreTests TestTracks.swift
+[49/84] Compiling MLRenderTests TurntableTests.swift
+[50/84] Compiling StudioEngineTests StudioTrackEditTests.swift
+[51/84] Compiling StudioEngineTests StudioVendorTests.swift
+[52/84] Compiling MLCoreTests PlayQueueTests.swift
+[53/84] Compiling MLCoreTests PlaybackLogicTests.swift
+[54/84] Compiling MLCoreTests ResumeAndHistoryTests.swift
+[55/84] Compiling MLCoreTests SVGPathTests.swift
+[56/84] Compiling MLCoreTests SectioningTests.swift
+[57/84] Compiling MLCoreTests SettingsTests.swift
+[61/84] Compiling StudioEngineTests StudioTestSupport.swift
+[64/90] Emitting module MLCoreTests
+[69/90] Compiling MLCoreTests EqualizerModelTests.swift
+[70/90] Compiling MLCoreTests LibraryLogicTests.swift
+[82/90] Emitting module StudioEngineTests
+[83/90] Compiling MLCoreTests TimePitchEngineTests.swift
+[84/90] Compiling MLCoreTests V21LogicTests.swift
+[85/90] Compiling MLCoreTests V2FilterTests.swift
+[86/90] Compiling MLCoreTests V2PerformanceTests.swift
+[87/90] Compiling MLCoreTests V2SettingsTests.swift
+[88/90] Compiling MLCoreTests V2SortingTests.swift
+[89/92] Compiling MusicLibraryPackageTests runner.swift
+[90/92] Emitting module MusicLibraryPackageTests
+[90/92] Write Objects.LinkFileList
+[91/92] Linking MusicLibraryPackageTests
+Build complete! (65.69s)
