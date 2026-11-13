@@ -137,6 +137,10 @@ struct SectionHost: View {
                 StudioView(studio: model.studio, host: model.addStudio)
                     .id(MainWorkspace.studio)
                     .transition(.opacity.combined(with: .offset(x: 12)))
+            } else if model.workspace == .ai {
+                KIMusicView(ki: model.ki)
+                    .id(MainWorkspace.ai)
+                    .transition(.opacity.combined(with: .offset(x: 12)))
             } else {
                 ZStack {
                     switch destination {
@@ -170,16 +174,16 @@ struct SectionHost: View {
 }
 
 /// Schwebende Glas-Navigation: sechs Bereiche der Bibliothek, dahinter – durch eine feine Linie getrennt – die
-/// Arbeitsbereiche „Studio“ und „Hinzufügen“ (ganz rechts), mit gleitender Rosé-Linse (Android `FloatingNavBar`).
+/// Arbeitsbereiche „Studio“, „KI-Musik“ und „Hinzufügen“ (ganz rechts), mit gleitender Rosé-Linse (Android `FloatingNavBar`).
 struct NavBar: View {
     @EnvironmentObject private var model: AppModel
     @Environment(\.musicColors) private var colors
 
     /// Breite eines Eintrags.
-    static let itemWidth: CGFloat = 80
+    static let itemWidth: CGFloat = 76
     /// Abstand für die Trennlinie zwischen Bibliothek und Arbeitsbereichen.
     static let dividerGap: CGFloat = 9
-    /// Breite der Leiste (sechs Bereiche, zwei Arbeitsbereiche).
+    /// Breite der Leiste (sechs Bereiche, drei Arbeitsbereiche).
     static var width: CGFloat {
         CGFloat(LibrarySection.allCases.count + MainWorkspace.navigationEntries.count) * itemWidth + dividerGap + 10
     }

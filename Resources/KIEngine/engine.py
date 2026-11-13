@@ -82,8 +82,11 @@ class Engine:
             progress(0.05, "Musikmodell wird geladen …")
             from acestep.handler import AceStepHandler
             self.dit = AceStepHandler()
-            msg, ok = self.dit.initialize_service(project_root=self.ace_root, config_path=dit_model, device="auto",
-                                                  offload_to_cpu=False, offload_dit_to_cpu=False, use_mlx_dit=True,
+            # Überschreibbar für Prüfstände auf virtuellen Rechnern (dort fehlen GPU-Speicher bzw. Metal-Funktionen)
+            device = os.environ.get("KI_DIT_DEVICE", "auto")
+            use_mlx = os.environ.get("KI_MLX_DIT", "1") != "0"
+            msg, ok = self.dit.initialize_service(project_root=self.ace_root, config_path=dit_model, device=device,
+                                                  offload_to_cpu=False, offload_dit_to_cpu=False, use_mlx_dit=use_mlx,
                                                   prefer_source="huggingface")
             if not ok:
                 self.dit = None
@@ -93,8 +96,9 @@ class Engine:
             progress(0.6, "Sprachmodell wird geladen …")
             from acestep.llm_inference import LLMHandler
             self.llm = LLMHandler()
-            msg, ok = self.llm.initialize(checkpoint_dir=self.checkpoints, lm_model_path=lm_model, backend="mlx",
-                                          device="auto", offload_to_cpu=False, dtype=None)
+            backend = os.environ.get("KI_LM_BACKEND", "mlx")
+            msg, ok = self.llm.initialize(checkpoint_dir=self.checkpoints, lm_model_path=lm_model, backend=backend,
+                                          device="cpu" if backend == "pt" else "auto", offload_to_cpu=False, dtype=None)
             if not ok:
                 self.llm = None
                 raise RuntimeError(f"Sprachmodell konnte nicht geladen werden: {msg}")

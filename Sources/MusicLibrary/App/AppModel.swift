@@ -21,6 +21,8 @@ final class AppModel: ObservableObject {
     private(set) var addStudio: StudioModel!
     /// „Studio“ (2.4): Titel der Bibliothek schneiden und bearbeiten.
     private(set) var studio: StudioModel!
+    /// „KI-Musik“ (2.5): lokale Musikerzeugung mit ACE-Step 1.5.
+    private(set) var ki: KIMusicModel!
     /// Demo-Modus (Vorschaubilder/Snapshots): keine Dateizugriffe, keine Wiedergabe.
     let demo: Bool
 
@@ -73,6 +75,7 @@ final class AppModel: ObservableObject {
         case .library: return nil
         case .add: return addStudio
         case .studio: return studio
+        case .ai: return nil
         }
     }
     @Published var sidePanel: SidePanel?
@@ -134,6 +137,7 @@ final class AppModel: ObservableObject {
         self.addStudio = adder
         self.studio = StudioModel(app: self, services: demo ? .demo : .live, preview: demo ? nil : StudioPreviewFactory.make(), demo: demo,
                                   workspace: .edit, queueHost: adder)
+        self.ki = KIMusicModel(demo: demo, preview: demo ? nil : StudioPreviewFactory.make())
         player.model = self
         library.model = self
         metadata.model = self
@@ -491,7 +495,7 @@ final class AppModel: ObservableObject {
     /// Studio öffnen (Navigation, ⌘7, Menü, „Titel bearbeiten …“).
     func openStudio() { open(.studio) }
 
-    /// Arbeitsbereich öffnen („Studio“ ⌘7, „Hinzufügen“ ⌘8).
+    /// Arbeitsbereich öffnen („Studio“ ⌘7, „KI-Musik“ ⌘8, „Hinzufügen“ ⌘9).
     func open(_ target: MainWorkspace) {
         playerOpen = false
         workspace = target

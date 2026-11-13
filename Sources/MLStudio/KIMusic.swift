@@ -422,3 +422,60 @@ public enum KIEstimate {
         return minutes <= 1 ? "etwa eine Minute" : "etwa \(minutes) Minuten"
     }
 }
+
+// MARK: - Rechenprozess (Schnittstelle)
+
+public struct KILyricsResult: Codable, Hashable, Sendable {
+    public var caption: String
+    public var lyrics: String
+    public var bpm: Int?
+    public var duration: Double?
+    public var keyscale: String?
+    public var language: String?
+
+    public init(caption: String, lyrics: String, bpm: Int? = nil, duration: Double? = nil, keyscale: String? = nil, language: String? = nil) {
+        self.caption = caption
+        self.lyrics = lyrics
+        self.bpm = bpm
+        self.duration = duration
+        self.keyscale = keyscale
+        self.language = language
+    }
+}
+
+public struct KIGeneratedFile: Codable, Hashable, Sendable {
+    public var url: URL
+    public var seed: Int?
+    public init(url: URL, seed: Int?) {
+        self.url = url
+        self.seed = seed
+    }
+}
+
+public struct KIGenerationResult: Sendable {
+    public var files: [KIGeneratedFile]
+    /// Reine Rechenzeit laut Rechenprozess.
+    public var seconds: Double
+    /// Vom Sprachmodell geplante Werte (BPM, Tonart, Text …), soweit geliefert.
+    public var planned: KILyricsResult?
+
+    public init(files: [KIGeneratedFile], seconds: Double, planned: KILyricsResult?) {
+        self.files = files
+        self.seconds = seconds
+        self.planned = planned
+    }
+}
+
+/// Der lokale Rechenprozess (echt: ACE-Step über Python; Ersatz: Vorschaubilder und Tests).
+public protocol KIEngineServing: AnyObject, Sendable {
+    var isRunning: Bool { get }
+    /// Modelle laden (falls nicht schon geladen). `lm` nil = ohne Sprachmodell.
+    func prepare(dit: String, lm: String?, progress: @escaping @Sendable (Double, String) -> Void) async throws
+    /// Songtext schreiben (`lyrics` leer) bzw. überarbeiten.
+    func writeLyrics(query: String, caption: String, lyrics: String, language: String?, instrumental: Bool,
+                     progress: @escaping @Sendable (Double, String) -> Void) async throws -> KILyricsResult
+    func generate(params: [String: KIValue], variations: Int, seeds: [Int]?, saveDirectory: URL, usePlanning: Bool,
+                  progress: @escaping @Sendable (Double, String) -> Void) async throws -> KIGenerationResult
+    /// Prozess beenden (bricht alles ab, gibt den Speicher frei).
+    func shutdown()
+}

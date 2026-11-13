@@ -9,7 +9,7 @@ import MLTags
 
 enum SettingsCategory: String, CaseIterable, Hashable, Identifiable {
     case general, appearance, playerDesigns, library, folders, sorting, playback, equalizer, pitch, volume,
-         lyrics, metadata, studio, shortcuts, storage, privacy, about
+         lyrics, metadata, studio, ki, shortcuts, storage, privacy, about
 
     var id: String { rawValue }
 
@@ -28,6 +28,7 @@ enum SettingsCategory: String, CaseIterable, Hashable, Identifiable {
         case .lyrics: return "Liedtexte"
         case .metadata: return "Metadaten"
         case .studio: return "Hinzufügen & Studio"
+        case .ki: return "KI-Musik"
         case .shortcuts: return "Tastaturkurzbefehle"
         case .storage: return "Speicher & Cache"
         case .privacy: return "Datenschutz"
@@ -50,6 +51,7 @@ enum SettingsCategory: String, CaseIterable, Hashable, Identifiable {
         case .lyrics: return Icons.lyrics
         case .metadata: return Icons.editNote
         case .studio: return Icons.studio
+        case .ki: return Icons.autoAwesome
         case .shortcuts: return Icons.keyboard
         case .storage: return Icons.storage
         case .privacy: return Icons.privacy
@@ -172,6 +174,7 @@ private struct SettingsContent: View {
         case .lyrics: LyricsSettings()
         case .metadata: MetadataSettings()
         case .studio: StudioSettingsPane()
+        case .ki: KIMusicSettingsPane()
         case .shortcuts: ShortcutSettings()
         case .storage: StorageSettings()
         case .privacy: PrivacySettings()
@@ -1000,7 +1003,7 @@ private struct ShortcutSettings: View {
 
     private static let shortcuts: [(String, String)] = [
         ("Leertaste", "Abspielen / Pause"), ("⌘ →  /  ⌘ ←", "Nächster / vorheriger Titel"), ("⌘ ↑  /  ⌘ ↓", "Lauter / leiser"),
-        ("⌘1 … ⌘6", "Bereiche Titel … Favoriten"), ("⌘7 / ⌘8", "Studio / Hinzufügen"), ("⌘F", "Suchen im Bereich"), ("⌘I", "Informationen (Metadaten)"),
+        ("⌘1 … ⌘6", "Bereiche Titel … Favoriten"), ("⌘7 / ⌘8 / ⌘9", "Studio / KI-Musik / Hinzufügen"), ("⌘F", "Suchen im Bereich"), ("⌘I", "Informationen (Metadaten)"),
         ("⌘L", "Liedtext-Seitenleiste"), ("⌥⌘U", "Warteschlange"), ("⇧⌘F", "Großer Player öffnen/schließen"),
         ("⌥⌘M", "Mini-Player-Fenster"), ("⌥⌘E", "Equalizer"), ("⌘N", "Neue Playlist"), ("⇧⌘O", "Musikordner hinzufügen"),
         ("⌘R", "Bibliothek neu einlesen"), ("⌘,", "Einstellungen"), ("⌥⌘Z", "Letzte Metadaten-Änderung widerrufen"),

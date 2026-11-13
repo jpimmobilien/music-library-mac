@@ -43,6 +43,9 @@ cp Resources/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
 cp Resources/Fonts/*.ttf "$APP/Contents/Resources/Fonts/"
 cp Resources/GenreArt/*.webp "$APP/Contents/Resources/GenreArt/"
 cp Resources/Licenses/* "$APP/Contents/Resources/Licenses/"
+# KI-Musik: Skripte des lokalen Rechenprozesses (Python wird erst auf Wunsch eingerichtet)
+mkdir -p "$APP/Contents/Resources/KIEngine"
+cp Resources/KIEngine/*.py "$APP/Contents/Resources/KIEngine/"
 
 
 echo "▸ Prüfe Architekturen …"
