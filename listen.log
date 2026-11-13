@@ -1,0 +1,26 @@
+Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Fetching 4 files:  25%|██▌       | 1/4 [00:00<00:00,  6.28it/s]Fetching 4 files:  75%|███████▌  | 3/4 [00:00<00:00, 11.70it/s]Fetching 4 files: 100%|██████████| 4/4 [00:11<00:00,  2.82s/it]
+[Hören] 03-gesang-de-eigener-text (Mix): WER 0.205 – Sonnenblumen breit den See Das Wasser glänzt wie Gold Wir laufen barfuß durch den Cliff Der Abend ist uns ruhig Sommerabend bleibt noch hier Die Nacht erhört nur dir und mir Sommerabend sing mit mir D
+[Trennen] 03-gesang-de-eigener-text: 91.7 s, Spuren ['separated/ecafa142-7a5b-3fc8-e052-c9a6d2358125/bass.wav', 'separated/ecafa142-7a5b-3fc8-e052-c9a6d2358125/drums.wav', 'separated/ecafa142-7a5b-3fc8-e052-c9a6d2358125/other.wav', 'separated/ecafa142-7a5b-3fc8-e052-c9a6d2358125/vocals.wav']
+[Hören] 03-gesang-de-eigener-text (getrennte Stimme): WER None – RuntimeError('Failed to load audio: ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers\n  built with Apple clang version 17.0.0 (clang-1700.6.4.2)\n  configuration: --prefix=/opt/homeb
+[Hören] 04-gesang-de-ki-text (Mix): WER 0.823 – Ich will mein Bier Was ich nicht will Ich will zwar nur ein Bier Das ist nicht so gemein Und dann sei ich mit dir Du mögst mir kein Verzeih'n Ich will einen Schenk Ich will einen Schenk, Schenk, Schen
+[Trennen] 04-gesang-de-ki-text: 76.5 s, Spuren ['separated/01a621a1-74cf-706d-f5db-6e2faea221c8/bass.wav', 'separated/01a621a1-74cf-706d-f5db-6e2faea221c8/drums.wav', 'separated/01a621a1-74cf-706d-f5db-6e2faea221c8/other.wav', 'separated/01a621a1-74cf-706d-f5db-6e2faea221c8/vocals.wav']
+[Hören] 04-gesang-de-ki-text (getrennte Stimme): WER None – RuntimeError('Failed to load audio: ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers\n  built with Apple clang version 17.0.0 (clang-1700.6.4.2)\n  configuration: --prefix=/opt/homeb
+[Hören] 01-instrumental-en (Gegenprobe, sollte leer sein): WER None – Bis zum nächsten Mal.
+[Trennen] 01-instrumental-en: 42.5 s, Spuren ['separated/96334ae7-06ec-3881-ff9b-6bd47ba4b87b/bass.wav', 'separated/96334ae7-06ec-3881-ff9b-6bd47ba4b87b/drums.wav', 'separated/96334ae7-06ec-3881-ff9b-6bd47ba4b87b/other.wav', 'separated/96334ae7-06ec-3881-ff9b-6bd47ba4b87b/vocals.wav']
+      273.16 real        11.79 user        94.38 sys
+          2424193024  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              324231  page reclaims
+                8261  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                 651  messages sent
+              159390  messages received
+                   0  signals received
+               77700  voluntary context switches
+              142805  involuntary context switches
+          2509215808  peak memory footprint

@@ -1,0 +1,83 @@
+{
+  "whisper_model": "mlx-community/whisper-large-v3-turbo",
+  "separation": [
+    {
+      "file": "audio/03-gesang-de-eigener-text/ecafa142-7a5b-3fc8-e052-c9a6d2358125.flac",
+      "label": "03-gesang-de-eigener-text",
+      "seconds": 91.7,
+      "returncode": 0,
+      "log": "Downloading htdemucs MLX weights (160 MB) from https://huggingface.co/ssmall256/demucs-mlx/resolve/main ...\n\nTracks:   0%|          | 0/1 [00:00<?, ?track/s]\nTracks: 100%|██████████| 1/1 [01:17<00:00, 77.47s/track]\nTracks: 100%|██████████| 1/1 [01:17<00:00, 77.61s/track]\n",
+      "stems": [
+        "separated/ecafa142-7a5b-3fc8-e052-c9a6d2358125/bass.wav",
+        "separated/ecafa142-7a5b-3fc8-e052-c9a6d2358125/drums.wav",
+        "separated/ecafa142-7a5b-3fc8-e052-c9a6d2358125/other.wav",
+        "separated/ecafa142-7a5b-3fc8-e052-c9a6d2358125/vocals.wav"
+      ]
+    },
+    {
+      "file": "audio/04-gesang-de-ki-text/01a621a1-74cf-706d-f5db-6e2faea221c8.flac",
+      "label": "04-gesang-de-ki-text",
+      "seconds": 76.5,
+      "returncode": 0,
+      "log": "\nTracks:   0%|          | 0/1 [00:00<?, ?track/s]\nTracks: 100%|██████████| 1/1 [01:13<00:00, 73.39s/track]\nTracks: 100%|██████████| 1/1 [01:13<00:00, 73.60s/track]\n",
+      "stems": [
+        "separated/01a621a1-74cf-706d-f5db-6e2faea221c8/bass.wav",
+        "separated/01a621a1-74cf-706d-f5db-6e2faea221c8/drums.wav",
+        "separated/01a621a1-74cf-706d-f5db-6e2faea221c8/other.wav",
+        "separated/01a621a1-74cf-706d-f5db-6e2faea221c8/vocals.wav"
+      ]
+    },
+    {
+      "file": "audio/01-instrumental-en/96334ae7-06ec-3881-ff9b-6bd47ba4b87b.flac",
+      "label": "01-instrumental-en",
+      "seconds": 42.5,
+      "returncode": 0,
+      "log": "\nTracks:   0%|          | 0/1 [00:00<?, ?track/s]\nTracks: 100%|██████████| 1/1 [00:41<00:00, 41.05s/track]\nTracks: 100%|██████████| 1/1 [00:41<00:00, 41.11s/track]\n",
+      "stems": [
+        "separated/96334ae7-06ec-3881-ff9b-6bd47ba4b87b/bass.wav",
+        "separated/96334ae7-06ec-3881-ff9b-6bd47ba4b87b/drums.wav",
+        "separated/96334ae7-06ec-3881-ff9b-6bd47ba4b87b/other.wav",
+        "separated/96334ae7-06ec-3881-ff9b-6bd47ba4b87b/vocals.wav"
+      ]
+    }
+  ],
+  "transcripts": [
+    {
+      "file": "audio/03-gesang-de-eigener-text/ecafa142-7a5b-3fc8-e052-c9a6d2358125.flac",
+      "label": "03-gesang-de-eigener-text (Mix)",
+      "seconds": 20.3,
+      "text": "Sonnenblumen breit den See Das Wasser glänzt wie Gold Wir laufen barfuß durch den Cliff Der Abend ist uns ruhig Sommerabend bleibt noch hier Die Nacht erhört nur dir und mir Sommerabend sing mit mir Die Nacht gehört nur dir und mir",
+      "wer": 0.205,
+      "reference_words": 44
+    },
+    {
+      "file": "../separated/ecafa142-7a5b-3fc8-e052-c9a6d2358125/vocals.wav",
+      "label": "03-gesang-de-eigener-text (getrennte Stimme)",
+      "error": "RuntimeError('Failed to load audio: ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers\\n  built with Apple clang version 17.0.0 (clang-1700.6.4.2)\\n  configuration: --prefix=/opt/homebrew/Cellar/ffmpeg/9.0.2_1 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvmaf --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox --enable-neon\\n  libavutil      61.  1.102 / 61.  1.102\\n  libavcodec     63.  1.102 / 63.  1.102\\n  libavformat    63.  1.102 / 63.  1.102\\n  libavdevice    63.  1.102 / 63.  1.102\\n  libavfilter    12.  1.102 / 12.  1.102\\n  libswscale     10.  1.102 / 10.  1.102\\n  libswresample   7.  1.102 /  7.  1.102\\n[in#0 @ 0x14c804200] Error opening input: No such file or directory\\nError opening input file separated/ecafa142-7a5b-3fc8-e052-c9a6d2358125/vocals.wav.\\nError opening input files: No such file or directory\\n')",
+      "trace": "rary-mac/scripts/ki/probe_listen.py\", line 54, in transcribe\n    r = mlx_whisper.transcribe(path, path_or_hf_repo=WHISPER, language=\"de\", condition_on_previous_text=False)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/runner/work/_temp/listen/lib/python3.12/site-packages/mlx_whisper/transcribe.py\", line 150, in transcribe\n    mel = log_mel_spectrogram(audio, n_mels=model.dims.n_mels, padding=N_SAMPLES)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/runner/work/_temp/listen/lib/python3.12/site-packages/mlx_whisper/audio.py\", line 157, in log_mel_spectrogram\n    audio = load_audio(audio)\n            ^^^^^^^^^^^^^^^^^\n  File \"/Users/runner/work/_temp/listen/lib/python3.12/site-packages/mlx_whisper/audio.py\", line 61, in load_audio\n    raise RuntimeError(f\"Failed to load audio: {e.stderr.decode()}\") from e\nRuntimeError: Failed to load audio: ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers\n  built with Apple clang version 17.0.0 (clang-1700.6.4.2)\n  configuration: --prefix=/opt/homebrew/Cellar/ffmpeg/9.0.2_1 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvmaf --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox --enable-neon\n  libavutil      61.  1.102 / 61.  1.102\n  libavcodec     63.  1.102 / 63.  1.102\n  libavformat    63.  1.102 / 63.  1.102\n  libavdevice    63.  1.102 / 63.  1.102\n  libavfilter    12.  1.102 / 12.  1.102\n  libswscale     10.  1.102 / 10.  1.102\n  libswresample   7.  1.102 /  7.  1.102\n[in#0 @ 0x14c804200] Error opening input: No such file or directory\nError opening input file separated/ecafa142-7a5b-3fc8-e052-c9a6d2358125/vocals.wav.\nError opening input files: No such file or directory\n\n"
+    },
+    {
+      "file": "audio/04-gesang-de-ki-text/01a621a1-74cf-706d-f5db-6e2faea221c8.flac",
+      "label": "04-gesang-de-ki-text (Mix)",
+      "seconds": 22.4,
+      "text": "Ich will mein Bier Was ich nicht will Ich will zwar nur ein Bier Das ist nicht so gemein Und dann sei ich mit dir Du mögst mir kein Verzeih'n Ich will einen Schenk Ich will einen Schenk, Schenk, Schenk, Schenk.",
+      "wer": 0.823,
+      "reference_words": 231
+    },
+    {
+      "file": "../separated/01a621a1-74cf-706d-f5db-6e2faea221c8/vocals.wav",
+      "label": "04-gesang-de-ki-text (getrennte Stimme)",
+      "error": "RuntimeError('Failed to load audio: ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers\\n  built with Apple clang version 17.0.0 (clang-1700.6.4.2)\\n  configuration: --prefix=/opt/homebrew/Cellar/ffmpeg/9.0.2_1 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvmaf --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox --enable-neon\\n  libavutil      61.  1.102 / 61.  1.102\\n  libavcodec     63.  1.102 / 63.  1.102\\n  libavformat    63.  1.102 / 63.  1.102\\n  libavdevice    63.  1.102 / 63.  1.102\\n  libavfilter    12.  1.102 / 12.  1.102\\n  libswscale     10.  1.102 / 10.  1.102\\n  libswresample   7.  1.102 /  7.  1.102\\n[in#0 @ 0x132605bf0] Error opening input: No such file or directory\\nError opening input file separated/01a621a1-74cf-706d-f5db-6e2faea221c8/vocals.wav.\\nError opening input files: No such file or directory\\n')",
+      "trace": "rary-mac/scripts/ki/probe_listen.py\", line 54, in transcribe\n    r = mlx_whisper.transcribe(path, path_or_hf_repo=WHISPER, language=\"de\", condition_on_previous_text=False)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/runner/work/_temp/listen/lib/python3.12/site-packages/mlx_whisper/transcribe.py\", line 150, in transcribe\n    mel = log_mel_spectrogram(audio, n_mels=model.dims.n_mels, padding=N_SAMPLES)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/runner/work/_temp/listen/lib/python3.12/site-packages/mlx_whisper/audio.py\", line 157, in log_mel_spectrogram\n    audio = load_audio(audio)\n            ^^^^^^^^^^^^^^^^^\n  File \"/Users/runner/work/_temp/listen/lib/python3.12/site-packages/mlx_whisper/audio.py\", line 61, in load_audio\n    raise RuntimeError(f\"Failed to load audio: {e.stderr.decode()}\") from e\nRuntimeError: Failed to load audio: ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers\n  built with Apple clang version 17.0.0 (clang-1700.6.4.2)\n  configuration: --prefix=/opt/homebrew/Cellar/ffmpeg/9.0.2_1 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvmaf --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox --enable-neon\n  libavutil      61.  1.102 / 61.  1.102\n  libavcodec     63.  1.102 / 63.  1.102\n  libavformat    63.  1.102 / 63.  1.102\n  libavdevice    63.  1.102 / 63.  1.102\n  libavfilter    12.  1.102 / 12.  1.102\n  libswscale     10.  1.102 / 10.  1.102\n  libswresample   7.  1.102 /  7.  1.102\n[in#0 @ 0x132605bf0] Error opening input: No such file or directory\nError opening input file separated/01a621a1-74cf-706d-f5db-6e2faea221c8/vocals.wav.\nError opening input files: No such file or directory\n\n"
+    },
+    {
+      "file": "audio/01-instrumental-en/96334ae7-06ec-3881-ff9b-6bd47ba4b87b.flac",
+      "label": "01-instrumental-en (Gegenprobe, sollte leer sein)",
+      "seconds": 11.7,
+      "text": "Bis zum nächsten Mal.",
+      "wer": null,
+      "reference_words": 0
+    }
+  ],
+  "finished": true
+}

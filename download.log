@@ -1,0 +1,24 @@
+[32m2026-11-13 12:22:54.227[0m | [1mINFO    [0m | [36macestep.model_downloader[0m:[36m_smart_download[0m:[36m249[0m - [1m[Model Download] Auto-detected: HuggingFace Hub[0m
+[32m2026-11-13 12:22:54.227[0m | [1mINFO    [0m | [36macestep.model_downloader[0m:[36m_smart_download[0m:[36m252[0m - [1m[Model Download] Using HuggingFace Hub...[0m
+[32m2026-11-13 12:22:54.790[0m | [1mINFO    [0m | [36macestep.model_downloader[0m:[36m_download_from_huggingface_internal[0m:[36m180[0m - [1m[Model Download] Downloading from HuggingFace: ACE-Step/Ace-Step1.5 -> /Users/runner/work/_temp/checkpoints[0m
+Checkpoints directory: /Users/runner/work/_temp/checkpoints
+Downloading main model (includes vae, text encoder, DiT, and LM 1.7B)...
+Downloading main model from ACE-Step/Ace-Step1.5...
+Destination: /Users/runner/work/_temp/checkpoints
+This may take a while depending on your internet connection...
+Fetching 28 files:   0%|          | 0/28 [00:00<?, ?it/s]Fetching 28 files:   4%|▎         | 1/28 [00:00<00:10,  2.63it/s]Fetching 28 files:  21%|██▏       | 6/28 [01:13<04:42, 12.84s/it]Fetching 28 files:  82%|████████▏ | 23/28 [01:15<00:12,  2.56s/it]Fetching 28 files: 100%|██████████| 28/28 [01:15<00:00,  2.70s/it]
+[32m2026-11-13 12:24:10.758[0m | [34m[1mDEBUG   [0m | [36macestep.model_downloader[0m:[36m_sync_model_code_files[0m:[36m131[0m - [34m[1m[Model Sync] Synced modeling_acestep_v15_turbo.py -> /Users/runner/work/_temp/checkpoints/acestep-v15-turbo/modeling_acestep_v15_turbo.py[0m
+[32m2026-11-13 12:24:10.761[0m | [34m[1mDEBUG   [0m | [36macestep.model_downloader[0m:[36m_sync_model_code_files[0m:[36m131[0m - [34m[1m[Model Sync] Synced configuration_acestep_v15.py -> /Users/runner/work/_temp/checkpoints/acestep-v15-turbo/configuration_acestep_v15.py[0m
+[32m2026-11-13 12:24:10.761[0m | [1mINFO    [0m | [36macestep.model_downloader[0m:[36mdownload_main_model[0m:[36m489[0m - [1m[Model Download] Synced code files for acestep-v15-turbo: ['modeling_acestep_v15_turbo.py', 'configuration_acestep_v15.py'][0m
+Successfully downloaded from HuggingFace: ACE-Step/Ace-Step1.5
+
+Download complete!
+Models are available at: /Users/runner/work/_temp/checkpoints
+[32m2026-11-13 12:24:11.554[0m | [1mINFO    [0m | [36macestep.model_downloader[0m:[36m_smart_download[0m:[36m249[0m - [1m[Model Download] Auto-detected: HuggingFace Hub[0m
+[32m2026-11-13 12:24:11.554[0m | [1mINFO    [0m | [36macestep.model_downloader[0m:[36m_smart_download[0m:[36m252[0m - [1m[Model Download] Using HuggingFace Hub...[0m
+[32m2026-11-13 12:24:11.748[0m | [1mINFO    [0m | [36macestep.model_downloader[0m:[36m_download_from_huggingface_internal[0m:[36m180[0m - [1m[Model Download] Downloading from HuggingFace: ACE-Step/acestep-5Hz-lm-0.6B -> /Users/runner/work/_temp/checkpoints/acestep-5Hz-lm-0.6B[0m
+Checkpoints directory: /Users/runner/work/_temp/checkpoints
+Downloading acestep-5Hz-lm-0.6B from ACE-Step/acestep-5Hz-lm-0.6B...
+Destination: /Users/runner/work/_temp/checkpoints/acestep-5Hz-lm-0.6B
+Fetching 11 files:   0%|          | 0/11 [00:00<?, ?it/s]Fetching 11 files:   9%|▉         | 1/11 [00:00<00:03,  3.22it/s]Fetching 11 files:  55%|█████▍    | 6/11 [00:00<00:00, 14.66it/s]Fetching 11 files:  73%|███████▎  | 8/11 [00:09<00:04,  1.52s/it]Fetching 11 files: 100%|██████████| 11/11 [00:09<00:00,  1.18it/s]
+Successfully downloaded from HuggingFace: ACE-Step/acestep-5Hz-lm-0.6B

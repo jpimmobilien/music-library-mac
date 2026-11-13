@@ -1,0 +1,1084 @@
+[Probe] Umgebung: {"python": "3.12.10", "machine": "arm64", "macos": "15.8.2", "ram_gb": 7.0, "cpu": "Apple M1 (Virtual)", "cores": 3, "torch": "2.10.0", "mps_available": true, "mps_built": true, "mlx": "0.30.6", "mlx_device": "Device(gpu, 0)", "mlx_metal_ok": true, "acestep_gpu_memory_gb": 4.6666717529296875}
+W1113 12:24:38.856000 3333 torch/distributed/elastic/multiprocessing/redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torchao/quantization/quant_api.py:1825: SyntaxWarning: invalid escape sequence '\.'
+  * regex for parameter names, must start with `re:`, e.g. `re:language\.layers\..+\.q_proj.weight`.
+Matplotlib is building the font cache; this may take a moment.
+[32m2026-11-13 12:24:55.657[0m | [33m[1mWARNING [0m | [36macestep.training.trainer[0m:[36m<module>[0m:[36m40[0m - [33m[1mbitsandbytes not installed. Using standard AdamW.[0m
+[32m2026-11-13 12:24:55.758[0m | [1mINFO    [0m | [36macestep.gpu_config[0m:[36mget_gpu_config[0m:[36m846[0m - [1mmacOS MPS detected (4.7 GB unified memory, tier=tier2). Applying Apple Silicon optimizations: no compile, no quantization, mlx backend, no CPU offload.[0m
+[32m2026-11-13 12:24:55.763[0m | [1mINFO    [0m | [36macestep.core.generation.handler.init_service_loader[0m:[36m_load_main_model_from_checkpoint[0m:[36m174[0m - [1m[initialize_service] Attempting to load model with attention implementation: sdpa[0m
+[32m2026-11-13 12:27:32.839[0m | [31m[1mERROR   [0m | [36macestep.core.generation.handler.init_service_orchestrator[0m:[36minitialize_service[0m:[36m219[0m - [31m[1mError initializing model: MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 2.05 MiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+
+Traceback:
+Traceback (most recent call last):
+  File "/Users/runner/work/_temp/ace/acestep/core/generation/handler/init_service_orchestrator.py", line 156, in initialize_service
+    self._load_main_model_from_checkpoint(
+  File "/Users/runner/work/_temp/ace/acestep/core/generation/handler/init_service_loader.py", line 198, in _load_main_model_from_checkpoint
+    self.model = self.model.to(device).to(self.dtype)
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/transformers/modeling_utils.py", line 4343, in to
+    return super().to(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1381, in to
+    return self._apply(convert)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  [Previous line repeated 3 more times]
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 964, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1367, in convert
+    return t.to(
+           ^^^^^
+RuntimeError: MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 2.05 MiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32m/Users/runner/work/music-library-mac/music-library-mac/scripts/ki/[0m[32m[1mprobe_acestep.py[0m", line [33m219[0m, in [35m<module>[0m
+    [35m[1mif[0m [1mstep[0m[1m([0m[36m"DiT laden (turbo)"[0m[1m,[0m [1minit_dit[0m[1m)[0m[1m:[0m
+    [36m   │                         └ [0m[36m[1m<function init_dit at 0x135bdaa20>[0m
+    [36m   └ [0m[36m[1m<function step at 0x1030a2e80>[0m
+
+  File "[32m/Users/runner/work/music-library-mac/music-library-mac/scripts/ki/[0m[32m[1mprobe_acestep.py[0m", line [33m118[0m, in [35mstep[0m
+    [1mmsg[0m [35m[1m=[0m [1mfn[0m[1m([0m[1m)[0m
+    [36m      └ [0m[36m[1m<function init_dit at 0x135bdaa20>[0m
+
+  File "[32m/Users/runner/work/music-library-mac/music-library-mac/scripts/ki/[0m[32m[1mprobe_acestep.py[0m", line [33m151[0m, in [35minit_dit[0m
+    [1mmsg[0m[1m,[0m [1mok[0m [35m[1m=[0m [1mdit[0m[35m[1m.[0m[1minitialize_service[0m[1m([0m[1mproject_root[0m[35m[1m=[0m[1mPROJECT[0m[1m,[0m [1mconfig_path[0m[35m[1m=[0m[36m"acestep-v15-turbo"[0m[1m,[0m
+    [36m          │   │                               └ [0m[36m[1m'/Users/runner/work/_temp/ace'[0m
+    [36m          │   └ [0m[36m[1m<function InitServiceOrchestratorMixin.initialize_service at 0x10c25f060>[0m
+    [36m          └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x10c1fdb50>[0m
+
+> File "[32m/Users/runner/work/_temp/ace/acestep/core/generation/handler/[0m[32m[1minit_service_orchestrator.py[0m", line [33m156[0m, in [35minitialize_service[0m
+    [1mself[0m[35m[1m.[0m[1m_load_main_model_from_checkpoint[0m[1m([0m
+    [36m│    └ [0m[36m[1m<function InitServiceLoaderMixin._load_main_model_from_checkpoint at 0x10c25dd00>[0m
+    [36m└ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x10c1fdb50>[0m
+
+  File "[32m/Users/runner/work/_temp/ace/acestep/core/generation/handler/[0m[32m[1minit_service_loader.py[0m", line [33m198[0m, in [35m_load_main_model_from_checkpoint[0m
+    [1mself[0m[35m[1m.[0m[1mmodel[0m [35m[1m=[0m [1mself[0m[35m[1m.[0m[1mmodel[0m[35m[1m.[0m[1mto[0m[1m([0m[1mdevice[0m[1m)[0m[35m[1m.[0m[1mto[0m[1m([0m[1mself[0m[35m[1m.[0m[1mdtype[0m[1m)[0m
+    [36m│    │       │    │        │          │    └ [0m[36m[1mtorch.float32[0m
+    [36m│    │       │    │        │          └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x10c1fdb50>[0m
+    [36m│    │       │    │        └ [0m[36m[1m'mps'[0m
+    [36m│    │       │    └ [0m[36m[1mNone[0m
+    [36m│    │       └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x10c1fdb50>[0m
+    [36m│    └ [0m[36m[1mNone[0m
+    [36m└ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x10c1fdb50>[0m
+
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/transformers/modeling_utils.py", line 4343, in to
+    return super().to(*args, **kwargs)
+                       │       └ {}
+                       └ ('mps',)
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1381, in to
+    return self._apply(convert)
+           │    │      └ <function Module.to.<locals>.convert at 0x10c194860>
+           │    └ <function Module._apply at 0x10526fba0>
+           └ AceStepConditionGenerationModel(
+               (decoder): AceStepDiTModel(
+                 (rotary_emb): Qwen3RotaryEmbedding()
+                 (layers): ModuleL...
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x10c194860>
+    │      └ <function Module._apply at 0x10526fba0>
+    └ AceStepConditionEncoder(
+        (text_projector): Linear(in_features=1024, out_features=2048, bias=False)
+        (lyric_encoder): AceSt...
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x10c194860>
+    │      └ <function Module._apply at 0x10526fba0>
+    └ AceStepTimbreEncoder(
+        (embed_tokens): Linear(in_features=64, out_features=2048, bias=True)
+        (norm): Qwen3RMSNorm((2048,), ...
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x10c194860>
+    │      └ <function Module._apply at 0x10526fba0>
+    └ ModuleList(
+        (0-3): 4 x AceStepEncoderLayer(
+          (self_attn): AceStepAttention(
+            (q_proj): Linear(in_features=2048, out...
+  [Previous line repeated 3 more times]
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 964, in _apply
+    param_applied = fn(param)
+                    │  └ Parameter containing:
+                    │    tensor([[ 0.0369, -0.0028,  0.0085,  ..., -0.0493,  0.0361, -0.0544],
+                    │            [-0.0188, -0.0118, -0.031...
+                    └ <function Module.to.<locals>.convert at 0x10c194860>
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1367, in convert
+    return t.to(
+           │ └ <method 'to' of 'torch._C.TensorBase' objects>
+           └ Parameter containing:
+             tensor([[ 0.0369, -0.0028,  0.0085,  ..., -0.0493,  0.0361, -0.0544],
+                     [-0.0188, -0.0118, -0.031...
+
+[31m[1mRuntimeError[0m:[1m MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 2.05 MiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).[0m
+[32m2026-11-13 12:27:33.113[0m | [1mINFO    [0m | [36macestep.core.generation.handler.init_service_loader[0m:[36m_load_main_model_from_checkpoint[0m:[36m174[0m - [1m[initialize_service] Attempting to load model with attention implementation: sdpa[0m
+[32m2026-11-13 12:29:04.868[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_init[0m:[36m_init_mlx_vae[0m:[36m75[0m - [1m[MLX-VAE] Decode/encode compiled with mx.compile().[0m
+[32m2026-11-13 12:29:04.937[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_init[0m:[36m_init_mlx_vae[0m:[36m85[0m - [1m[MLX-VAE] Native MLX VAE initialized (dtype=mlx.core.float32, compiled=True).[0m
+[Probe] DiT laden (turbo): OK 249.2 s
+[32m2026-11-13 12:29:04.998[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m609[0m - [1mloading 5Hz LM tokenizer... it may take 80~90s[0m
+[32m2026-11-13 12:29:32.423[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m613[0m - [1m5Hz LM tokenizer loaded successfully in 27.42 seconds[0m
+[32m2026-11-13 12:29:32.426[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m618[0m - [1mInitializing constrained decoding processor...[0m
+[32m2026-11-13 12:29:32.427[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m624[0m - [1mSetting constrained decoding max_duration to 480s based on GPU config (tier: tier2)[0m
+[32m2026-11-13 12:29:33.651[0m | [34m[1mDEBUG   [0m | [36macestep.constrained_logits_processor[0m:[36m_precompute_audio_code_tokens[0m:[36m577[0m - [34m[1mFound 1535 audio code tokens with values outside valid range [0, 63999][0m
+[32m2026-11-13 12:29:40.430[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m632[0m - [1mConstrained processor initialized in 8.00 seconds[0m
+[32m2026-11-13 12:29:40.436[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m659[0m - [1mflash_attn not installed: disabling CUDA graph capture for nano-vllm (SDPA fallback uses .item() calls in paged-cache decode that are incompatible with CUDA graph capture)[0m
+[32m2026-11-13 12:29:40.437[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m671[0m - [1mTriton not available: disabling CUDA graph capture for nano-vllm (CUDA graphs require torch.compile which depends on Triton)[0m
+[32m2026-11-13 12:29:40.618[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m681[0m - [1mAttempting MLX backend for Apple Silicon acceleration...[0m
+[32m2026-11-13 12:29:40.618[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_load_mlx_model[0m:[36m2947[0m - [1mLoading MLX model from /Users/runner/work/_temp/checkpoints/acestep-5Hz-lm-0.6B[0m
+[32m2026-11-13 12:30:14.814[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_load_mlx_model[0m:[36m3003[0m - [1mMLX model loaded successfully in 34.19s[0m
+[Probe] Sprachmodell laden (acestep-5Hz-lm-0.6B): OK 69.9 s
+[32m2026-11-13 12:30:14.916[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=True, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=True, use_lm=True[0m
+[32m2026-11-13 12:30:14.917[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m720[0m - [1mLM chunk 1/1 (infer_type=llm_dit) (size: 1, seeds: [1234])[0m
+[32m2026-11-13 12:30:14.918[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1371[0m - [1mPhase 1: Generating CoT metadata...[0m
+[32m2026-11-13 12:30:14.993[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1377[0m - [1mgenerate_with_stop_condition: formatted_prompt=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+Calm lo-fi hip hop with warm piano chords, soft vinyl crackle and a relaxed drum groove
+
+# Lyric
+[Instrumental]
+<|im_end|>
+<|im_start|>assistant
+[0m
+[32m2026-11-13 12:30:18.022[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3595[0m - [1mMLX native prefill: 58 tokens in 2.97s (19.6 tok/s)[0m
+Python(8993) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+MLX Gen (native):   0%|          | 0/3500 [00:00<?, ?tok/s]MLX Gen (native):   0%|          | 1/3500 [00:00<42:25,  1.37tok/s]MLX Gen (native):   0%|          | 3/3500 [00:00<13:25,  4.34tok/s]MLX Gen (native):   0%|          | 6/3500 [00:00<06:26,  9.05tok/s]MLX Gen (native):   0%|          | 9/3500 [00:01<04:52, 11.93tok/s]MLX Gen (native):   0%|          | 12/3500 [00:01<04:44, 12.28tok/s]MLX Gen (native):   0%|          | 15/3500 [00:01<03:53, 14.93tok/s]MLX Gen (native):   1%|          | 18/3500 [00:01<03:21, 17.27tok/s]MLX Gen (native):   1%|          | 21/3500 [00:01<03:00, 19.27tok/s]MLX Gen (native):   1%|          | 24/3500 [00:01<02:42, 21.42tok/s]MLX Gen (native):   1%|          | 27/3500 [00:01<02:34, 22.46tok/s]MLX Gen (native):   1%|          | 30/3500 [00:02<02:38, 21.95tok/s]MLX Gen (native):   1%|          | 33/3500 [00:02<02:45, 20.90tok/s]MLX Gen (native):   1%|          | 36/3500 [00:02<02:37, 21.93tok/s]MLX Gen (native):   1%|          | 39/3500 [00:02<02:27, 23.48tok/s]MLX Gen (native):   1%|          | 42/3500 [00:02<02:21, 24.42tok/s]MLX Gen (native):   1%|▏         | 45/3500 [00:02<02:15, 25.45tok/s]MLX Gen (native):   1%|▏         | 48/3500 [00:02<02:19, 24.83tok/s]MLX Gen (native):   1%|▏         | 51/3500 [00:02<02:22, 24.28tok/s]MLX Gen (native):   2%|▏         | 54/3500 [00:03<02:20, 24.56tok/s]MLX Gen (native):   2%|▏         | 57/3500 [00:03<02:22, 24.23tok/s]MLX Gen (native):   2%|▏         | 60/3500 [00:03<02:22, 24.10tok/s]MLX Gen (native):   2%|▏         | 63/3500 [00:03<02:37, 21.88tok/s]MLX Gen (native):   2%|▏         | 66/3500 [00:03<02:51, 20.05tok/s]MLX Gen (native):   2%|▏         | 69/3500 [00:03<03:19, 17.21tok/s]MLX Gen (native):   2%|▏         | 72/3500 [00:04<02:59, 19.12tok/s]MLX Gen (native):   2%|▏         | 75/3500 [00:04<02:47, 20.50tok/s]MLX Gen (native):   2%|▏         | 78/3500 [00:04<02:39, 21.40tok/s]MLX Gen (native):   2%|▏         | 81/3500 [00:04<02:31, 22.64tok/s]MLX Gen (native):   2%|▏         | 84/3500 [00:04<02:22, 23.89tok/s]MLX Gen (native):   2%|▏         | 87/3500 [00:04<02:18, 24.66tok/s]MLX Gen (native):   3%|▎         | 90/3500 [00:04<02:14, 25.44tok/s]MLX Gen (native):   3%|▎         | 93/3500 [00:04<02:16, 24.99tok/s]MLX Gen (native):   3%|▎         | 96/3500 [00:04<02:14, 25.30tok/s]MLX Gen (native):   3%|▎         | 99/3500 [00:05<02:18, 24.63tok/s]MLX Gen (native):   3%|▎         | 102/3500 [00:05<02:25, 23.42tok/s]MLX Gen (native):   3%|▎         | 105/3500 [00:05<02:22, 23.79tok/s]MLX Gen (native):   3%|▎         | 108/3500 [00:05<02:21, 23.99tok/s]MLX Gen (native):   3%|▎         | 111/3500 [00:05<02:25, 23.33tok/s]MLX Gen (native):   3%|▎         | 114/3500 [00:05<02:35, 21.84tok/s]MLX Gen (native):   3%|▎         | 117/3500 [00:05<02:57, 19.03tok/s]MLX Gen (native):   3%|▎         | 120/3500 [00:06<02:52, 19.55tok/s]MLX Gen (native):   4%|▎         | 123/3500 [00:06<02:40, 21.05tok/s]MLX Gen (native):   4%|▎         | 126/3500 [00:06<02:36, 21.57tok/s]MLX Gen (native):   4%|▎         | 129/3500 [00:06<02:30, 22.34tok/s]MLX Gen (native):   4%|▍         | 132/3500 [00:06<02:23, 23.43tok/s]MLX Gen (native):   4%|▍         | 135/3500 [00:06<02:15, 24.77tok/s]MLX Gen (native):   4%|▍         | 138/3500 [00:06<02:10, 25.69tok/s]MLX Gen (native):   4%|▍         | 141/3500 [00:06<02:11, 25.64tok/s]MLX Gen (native):   4%|▍         | 144/3500 [00:07<02:12, 25.34tok/s]MLX Gen (native):   4%|▍         | 147/3500 [00:07<02:16, 24.54tok/s]MLX Gen (native):   4%|▍         | 150/3500 [00:07<02:47, 20.05tok/s]MLX Gen (native):   4%|▍         | 153/3500 [00:07<02:45, 20.23tok/s]MLX Gen (native):   4%|▍         | 156/3500 [00:07<02:35, 21.47tok/s]MLX Gen (native):   5%|▍         | 159/3500 [00:07<02:27, 22.65tok/s]MLX Gen (native):   5%|▍         | 162/3500 [00:07<02:25, 22.92tok/s]MLX Gen (native):   5%|▍         | 165/3500 [00:08<02:30, 22.23tok/s]MLX Gen (native):   5%|▍         | 168/3500 [00:08<02:30, 22.14tok/s]MLX Gen (native):   5%|▍         | 171/3500 [00:08<02:19, 23.88tok/s]MLX Gen (native):   5%|▍         | 174/3500 [00:08<02:14, 24.70tok/s]MLX Gen (native):   5%|▌         | 177/3500 [00:08<02:16, 24.32tok/s]MLX Gen (native):   5%|▌         | 180/3500 [00:08<02:17, 24.16tok/s]MLX Gen (native):   5%|▌         | 183/3500 [00:08<02:15, 24.56tok/s]MLX Gen (native):   5%|▌         | 184/3500 [00:08<02:38, 20.95tok/s]
+[32m2026-11-13 12:30:26.842[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3711[0m - [1mMLX native generation complete: 184 tokens in 8.82s (20.9 tok/s) | prefill 2.97s + decode 8.82s = 11.78s total[0m
+[32m2026-11-13 12:30:26.847[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <think>
+bpm: 80
+caption: An instrumental piece beginning with a contemplative solo piano playing arpeggiated
+  chords over lush synth pads. At 0:29, a relaxed lo-fi hip-hop beat enters, featuring
+  a soft kick-snare pattern and subtle hi-hats, establishing an introspective chillhop
+  groove underpinnings. The arrangement builds dynamically around 1:36 when the piano
+  shifts to more powerful chordal playing alongside brighter string-like synths. A
+  brief breakdown at 2:26 features virtuosic, almost classical-style piano runs before
+  transitioning into a final section where all elements combine for a full-bodied
+  conclusion that ends abruptly after a short, reflective coda.
+duration: 30
+keyscale: E♭ major
+language: unknown
+timesignature: 4
+<|im_end|>[0m
+[32m2026-11-13 12:30:26.848[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1422[0m - [1mPhase 1 completed in 11.93s. Generated metadata: ['bpm', 'caption', 'duration', 'keyscale', 'language', 'timesignature'][0m
+[32m2026-11-13 12:30:26.848[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1482[0m - [1mPhase 2: Generating audio codes...[0m
+[32m2026-11-13 12:30:26.857[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1490[0m - [1mgenerate_with_stop_condition: formatted_prompt_with_cot=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+Calm lo-fi hip hop with warm piano chords, soft vinyl crackle and a relaxed drum groove
+
+# Lyric
+[Instrumental]
+<|im_end|>
+<|im_start|>assistant
+<think>
+bpm: 80
+caption: An instrumental piece beginning with a contemplative solo piano playing arpeggiated
+  chords over lush synth pads. At 0:29, a relaxed lo-fi hip-hop beat enters, featuring
+  a soft kick-snare pattern and subtle hi-hats, establishing an introspective chillhop
+  groove underpinnings. The arrangement builds dynamically around 1:36 when the piano
+  shifts to more powerful chordal playing alongside brighter string-like synths. A
+  brief breakdown at 2:26 features virtuosic, almost classical-style piano runs before
+  transitioning into a final section where all elements combine for a full-bodied
+  conclusion that ends abruptly after a short, reflective coda.
+duration: 30
+keyscale: E♭ major
+language: unknown
+timesignature: 4
+</think>
+
+[0m
+[32m2026-11-13 12:30:26.862[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3514[0m - [1mMLX native: pre-transitioned FSM to CODES_GENERATION (native fast path)[0m
+[32m2026-11-13 12:30:26.864[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_build_unconditional_prompt[0m:[36m395[0m - [1mCFG unconditional prompt (phase=codes, is_batch=False, negative_prompt='NO USER INPUT'):
+<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+NO USER INPUT<|im_end|>
+<|im_start|>assistant
+<think>
+
+</think>
+
+[0m
+[32m2026-11-13 12:30:27.513[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3571[0m - [1mMLX native prefill: 276 tokens (cond=243, uncond=33) in 0.65s (424.0 tok/s)[0m
+MLX CFG Gen (native):   0%|          | 0/160 [00:00<?, ?tok/s]MLX CFG Gen (native):   1%|▏         | 2/160 [00:00<00:13, 11.74tok/s]MLX CFG Gen (native):   2%|▎         | 4/160 [00:00<00:11, 13.80tok/s]MLX CFG Gen (native):   4%|▍         | 6/160 [00:00<00:10, 15.40tok/s]MLX CFG Gen (native):   5%|▌         | 8/160 [00:00<00:09, 15.86tok/s]MLX CFG Gen (native):   6%|▋         | 10/160 [00:00<00:09, 15.38tok/s]MLX CFG Gen (native):   8%|▊         | 12/160 [00:00<00:10, 14.80tok/s]MLX CFG Gen (native):   9%|▉         | 14/160 [00:00<00:10, 14.32tok/s]MLX CFG Gen (native):  10%|█         | 16/160 [00:01<00:10, 14.36tok/s]MLX CFG Gen (native):  11%|█▏        | 18/160 [00:01<00:09, 14.72tok/s]MLX CFG Gen (native):  12%|█▎        | 20/160 [00:01<00:09, 14.50tok/s]MLX CFG Gen (native):  14%|█▍        | 22/160 [00:01<00:09, 14.58tok/s]MLX CFG Gen (native):  15%|█▌        | 24/160 [00:01<00:09, 14.69tok/s]MLX CFG Gen (native):  16%|█▋        | 26/160 [00:01<00:09, 14.49tok/s]MLX CFG Gen (native):  18%|█▊        | 28/160 [00:01<00:08, 14.78tok/s]MLX CFG Gen (native):  19%|█▉        | 30/160 [00:02<00:08, 14.98tok/s]MLX CFG Gen (native):  20%|██        | 32/160 [00:02<00:08, 15.37tok/s]MLX CFG Gen (native):  21%|██▏       | 34/160 [00:02<00:08, 15.07tok/s]MLX CFG Gen (native):  22%|██▎       | 36/160 [00:02<00:08, 15.14tok/s]MLX CFG Gen (native):  24%|██▍       | 38/160 [00:02<00:07, 15.65tok/s]MLX CFG Gen (native):  25%|██▌       | 40/160 [00:02<00:07, 15.57tok/s]MLX CFG Gen (native):  26%|██▋       | 42/160 [00:02<00:07, 14.87tok/s]MLX CFG Gen (native):  28%|██▊       | 44/160 [00:02<00:07, 14.85tok/s]MLX CFG Gen (native):  29%|██▉       | 46/160 [00:03<00:07, 15.11tok/s]MLX CFG Gen (native):  30%|███       | 48/160 [00:03<00:07, 15.05tok/s]MLX CFG Gen (native):  31%|███▏      | 50/160 [00:03<00:07, 15.28tok/s]MLX CFG Gen (native):  32%|███▎      | 52/160 [00:03<00:07, 15.30tok/s]MLX CFG Gen (native):  34%|███▍      | 54/160 [00:03<00:07, 14.89tok/s]MLX CFG Gen (native):  35%|███▌      | 56/160 [00:03<00:07, 14.24tok/s]MLX CFG Gen (native):  36%|███▋      | 58/160 [00:03<00:06, 15.04tok/s]MLX CFG Gen (native):  38%|███▊      | 60/160 [00:04<00:06, 15.22tok/s]MLX CFG Gen (native):  39%|███▉      | 62/160 [00:04<00:06, 15.24tok/s]MLX CFG Gen (native):  40%|████      | 64/160 [00:04<00:06, 14.97tok/s]MLX CFG Gen (native):  41%|████▏     | 66/160 [00:04<00:06, 13.50tok/s]MLX CFG Gen (native):  42%|████▎     | 68/160 [00:04<00:07, 12.89tok/s]MLX CFG Gen (native):  44%|████▍     | 70/160 [00:04<00:06, 13.47tok/s]MLX CFG Gen (native):  45%|████▌     | 72/160 [00:04<00:06, 14.16tok/s]MLX CFG Gen (native):  46%|████▋     | 74/160 [00:05<00:05, 14.57tok/s]MLX CFG Gen (native):  48%|████▊     | 76/160 [00:05<00:05, 14.88tok/s]MLX CFG Gen (native):  49%|████▉     | 78/160 [00:05<00:05, 15.54tok/s]MLX CFG Gen (native):  50%|█████     | 80/160 [00:05<00:05, 15.22tok/s]MLX CFG Gen (native):  51%|█████▏    | 82/160 [00:05<00:04, 15.95tok/s]MLX CFG Gen (native):  52%|█████▎    | 84/160 [00:05<00:04, 16.49tok/s]MLX CFG Gen (native):  54%|█████▍    | 86/160 [00:05<00:04, 16.20tok/s]MLX CFG Gen (native):  55%|█████▌    | 88/160 [00:05<00:04, 15.93tok/s]MLX CFG Gen (native):  56%|█████▋    | 90/160 [00:06<00:04, 15.83tok/s]MLX CFG Gen (native):  57%|█████▊    | 92/160 [00:06<00:04, 15.46tok/s]MLX CFG Gen (native):  59%|█████▉    | 94/160 [00:06<00:04, 14.88tok/s]MLX CFG Gen (native):  60%|██████    | 96/160 [00:06<00:04, 14.95tok/s]MLX CFG Gen (native):  61%|██████▏   | 98/160 [00:06<00:03, 15.72tok/s]MLX CFG Gen (native):  62%|██████▎   | 100/160 [00:06<00:03, 15.79tok/s]MLX CFG Gen (native):  64%|██████▍   | 102/160 [00:06<00:03, 15.86tok/s]MLX CFG Gen (native):  65%|██████▌   | 104/160 [00:06<00:03, 15.58tok/s]MLX CFG Gen (native):  66%|██████▋   | 106/160 [00:07<00:03, 15.15tok/s]MLX CFG Gen (native):  68%|██████▊   | 108/160 [00:07<00:03, 15.04tok/s]MLX CFG Gen (native):  69%|██████▉   | 110/160 [00:07<00:03, 14.80tok/s]MLX CFG Gen (native):  70%|███████   | 112/160 [00:07<00:03, 14.88tok/s]MLX CFG Gen (native):  71%|███████▏  | 114/160 [00:07<00:02, 15.38tok/s]MLX CFG Gen (native):  72%|███████▎  | 116/160 [00:07<00:02, 15.41tok/s]MLX CFG Gen (native):  74%|███████▍  | 118/160 [00:07<00:02, 15.42tok/s]MLX CFG Gen (native):  75%|███████▌  | 120/160 [00:08<00:02, 14.74tok/s]MLX CFG Gen (native):  76%|███████▋  | 122/160 [00:08<00:02, 14.84tok/s]MLX CFG Gen (native):  78%|███████▊  | 124/160 [00:08<00:02, 15.08tok/s]MLX CFG Gen (native):  79%|███████▉  | 126/160 [00:08<00:02, 15.09tok/s]MLX CFG Gen (native):  80%|████████  | 128/160 [00:08<00:02, 15.36tok/s]MLX CFG Gen (native):  81%|████████▏ | 130/160 [00:08<00:01, 15.36tok/s]MLX CFG Gen (native):  82%|████████▎ | 132/160 [00:08<00:01, 14.79tok/s]MLX CFG Gen (native):  84%|████████▍ | 134/160 [00:08<00:01, 14.46tok/s]MLX CFG Gen (native):  85%|████████▌ | 136/160 [00:09<00:01, 14.58tok/s]MLX CFG Gen (native):  86%|████████▋ | 138/160 [00:09<00:01, 14.92tok/s]MLX CFG Gen (native):  88%|████████▊ | 140/160 [00:09<00:01, 14.91tok/s]MLX CFG Gen (native):  89%|████████▉ | 142/160 [00:09<00:01, 15.27tok/s]MLX CFG Gen (native):  90%|█████████ | 144/160 [00:09<00:01, 15.36tok/s]MLX CFG Gen (native):  91%|█████████▏| 146/160 [00:09<00:00, 15.07tok/s]MLX CFG Gen (native):  92%|█████████▎| 148/160 [00:09<00:00, 14.86tok/s]MLX CFG Gen (native):  94%|█████████▍| 150/160 [00:09<00:00, 15.17tok/s]MLX CFG Gen (native):  94%|█████████▍| 151/160 [00:10<00:00, 15.01tok/s]
+[32m2026-11-13 12:30:37.577[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3711[0m - [1mMLX native generation complete: 151 tokens in 10.06s (15.0 tok/s) | prefill 0.65s + decode 10.06s = 10.71s total[0m
+[32m2026-11-13 12:30:37.584[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <|audio_code_22020|><|audio_code_63667|><|audio_code_5308|><|audio_code_27292|><|audio_code_9924|><|audio_code_3283|><|audio_code_49304|><|audio_code_25187|><|audio_code_2060|><|audio_code_10784|><|audio_code_16953|><|audio_code_30704|><|audio_code_38800|><|audio_code_34928|><|audio_code_22061|><|audio_code_27961|><|audio_code_54018|><|audio_code_14626|><|audio_code_40722|><|audio_code_11010|><|audio_code_63817|><|audio_code_5240|><|audio_code_42648|><|audio_code_8|><|audio_code_50712|><|audio_code_22080|><|audio_code_6216|><|audio_code_60648|><|audio_code_48360|><|audio_code_32552|><|audio_code_48339|><|audio_code_1404|><|audio_code_29427|><|audio_code_12643|><|audio_code_8577|><|audio_code_56193|><|audio_code_3264|><|audio_code_7269|><|audio_code_4144|><|audio_code_7704|><|audio_code_40488|><|audio_code_12808|><|audio_code_1544|><|audio_code_4104|><|audio_code_11320|><|audio_code_34466|><|audio_code_12366|><|audio_code_17015|><|audio_code_17471|><|audio_code_1542|><|audio_code_10789|><|audio_code_5182|><|audio_code_30311|><|audio_code_37903|><|audio_code_10262|><|audio_code_32311|><|audio_code_47679|><|audio_code_10247|><|audio_code_61984|><|audio_code_41651|><|audio_code_45574|><|audio_code_63509|><|audio_code_13866|><|audio_code_32700|><|audio_code_25281|><|audio_code_5898|><|audio_code_24280|><|audio_code_12209|><|audio_code_28160|><|audio_code_50896|><|audio_code_10240|><|audio_code_17609|><|audio_code_9232|><|audio_code_60424|><|audio_code_36464|><|audio_code_7179|><|audio_code_26164|><|audio_code_6907|><|audio_code_25469|><|audio_code_20944|><|audio_code_1468|><|audio_code_18680|><|audio_code_47456|><|audio_code_48|><|audio_code_31944|><|audio_code_55608|><|audio_code_42288|><|audio_code_58152|><|audio_code_6168|><|audio_code_50224|><|audio_code_21156|><|audio_code_2051|><|audio_code_18497|><|audio_code_63924|><|audio_code_14506|><|audio_code_20356|><|audio_code_1479|><|audio_code_11996|><|audio_code_62576|><|audio_code_3088|><|audio_code_61984|><|audio_code_27120|><|audio_code_43992|><|audio_code_33960|><|audio_code_32772|><|audio_code_40639|><|audio_code_50895|><|audio_code_7886|><|audio_code_3103|><|audio_code_29823|><|audio_code_32951|><|audio_code_50711|><|audio_code_10847|><|audio_code_5735|><|audio_code_29887|><|audio_code_46239|><|audio_code_10271|><|audio_code_13423|><|audio_code_32312|><|audio_code_58368|><|audio_code_45575|><|audio_code_50767|><|audio_code_10399|><|audio_code_16567|><|audio_code_29951|><|audio_code_61719|><|audio_code_10967|><|audio_code_3303|><|audio_code_30463|><|audio_code_50958|><|audio_code_10974|><|audio_code_30590|><|audio_code_10518|><|audio_code_14646|><|audio_code_5934|><|audio_code_30590|><|audio_code_35598|><|audio_code_62277|><|audio_code_11046|><|audio_code_30005|><|audio_code_38111|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35855|><|audio_code_37127|><|audio_code_35855|><|audio_code_35847|><|audio_code_35847|><|im_end|>[0m
+[32m2026-11-13 12:30:37.585[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1650[0m - [1mPhase 2 completed in 10.74s. Generated 150 audio codes[0m
+[32m2026-11-13 12:30:37.589[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m329[0m - [1m[generate_music] Starting generation...[0m
+[32m2026-11-13 12:30:37.589[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m332[0m - [1m[generate_music] Preparing inputs...[0m
+[32m2026-11-13 12:30:37.600[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_request[0m:[36m_prepare_reference_and_source_audio[0m:[36m204[0m - [1m[generate_music] cover task: no src_audio but audio codes provided, proceeding with codes[0m
+[32m2026-11-13 12:30:37.615[0m | [1mINFO    [0m | [36macestep.core.generation.handler.progress[0m:[36m_start_diffusion_progress_estimator[0m:[36m179[0m - [1m[progress] No timing history — using fallback estimate (2.5s/step for batch_size=1).  This will self-calibrate after the first generation.[0m
+[32m2026-11-13 12:30:37.628[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_target[0m:[36m_prepare_target_latents_and_wavs[0m:[36m78[0m - [1m[generate_music] Decoding audio codes for item 0...[0m
+[32m2026-11-13 12:30:42.526[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_precomputed_lm_hints[0m:[36m31[0m - [1m[generate_music] Decoding audio codes for LM hints for item 0...[0m
+[32m2026-11-13 12:30:44.469[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m119[0m - [1m
+======================================================================[0m
+[32m2026-11-13 12:30:44.469[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m120[0m - [1m🔍 [DEBUG] DiT TEXT ENCODER INPUT (Inference)[0m
+[32m2026-11-13 12:30:44.469[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m121[0m - [1m======================================================================[0m
+[32m2026-11-13 12:30:44.469[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m122[0m - [1mtext_prompt:
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+# Caption
+An instrumental piece beginning with a contemplative solo piano playing arpeggiated chords over lush synth pads. At 0:29, a relaxed lo-fi hip-hop beat enters, featuring a soft kick-snare pattern and subtle hi-hats, establishing an introspective chillhop groove underpinnings. The arrangement builds dynamically around 1:36 when the piano shifts to more powerful chordal playing alongside brighter string-like synths. A brief breakdown at 2:26 features virtuosic, almost classical-style piano runs before transitioning into a final section where all elements combine for a full-bodied conclusion that ends abruptly after a short, reflective coda.
+
+# Metas
+- bpm: 80
+- timesignature: 4
+- keyscale: E♭ major
+- duration: 30 seconds
+<|endoftext|>
+[0m
+[32m2026-11-13 12:30:44.469[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m123[0m - [1m======================================================================[0m
+[32m2026-11-13 12:30:44.470[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m124[0m - [1mlyrics_text:
+# Languages
+unknown
+
+# Lyric
+[Instrumental]<|endoftext|>[0m
+[32m2026-11-13 12:30:44.470[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m125[0m - [1m======================================================================
+[0m
+[32m2026-11-13 12:30:44.563[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m110[0m - [1m[preprocess_batch] Inferring prompt embeddings...[0m
+[32m2026-11-13 12:30:55.898[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m113[0m - [1m[preprocess_batch] Inferring lyric embeddings...[0m
+[32m2026-11-13 12:30:55.914[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m173[0m - [1m[service_generate] Generating audio... (DiT backend: PyTorch (cpu))[0m
+[32m2026-11-13 12:31:15.225[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m276[0m - [1m[service_generate] DiT diffusion via PyTorch (cpu)...[0m
+[32m2026-11-13 12:31:27.917[0m | [1mINFO    [0m | [36macestep.models.common.dcw_correction[0m:[36m__init__[0m:[36m98[0m - [1m[DCW] Active — mode=double, scaler=0.0500, high_scaler=0.0200, wavelet='haar'[0m
+[32m2026-11-13 12:32:52.282[0m | [1mINFO    [0m | [36macestep.models.common.dcw_loader[0m:[36mget[0m:[36m84[0m - [1m[DCW] Built DWT1D for wavelet='haar' (low-pass filter taps=2, device=cpu, dtype=torch.float32).[0m
+[32m2026-11-13 12:38:20.239[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m42[0m - [1m[generate_music] Model generation completed. Decoding latents...[0m
+[32m2026-11-13 12:38:20.945[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m64[0m - [34m[1m[generate_music] pred_latents: torch.Size([1, 750, 64]), dtype=torch.float32[0m
+[32m2026-11-13 12:38:20.946[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m65[0m - [34m[1m[generate_music] time_costs: {'encoder_time_cost': 12.622056007385254, 'diffusion_time_cost': 411.91057109832764, 'diffusion_per_step_time_cost': 51.488821387290955, 'total_time_cost': 424.5326271057129, 'offload_time_cost': 0.0}[0m
+[32m2026-11-13 12:38:21.013[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m127[0m - [1m[generate_music] Decoding latents with VAE...[0m
+[32m2026-11-13 12:38:21.089[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m136[0m - [34m[1m[generate_music] Before VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-13 12:38:21.090[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m172[0m - [1m[generate_music] Using tiled VAE decode to reduce VRAM usage...[0m
+[32m2026-11-13 12:39:30.629[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_decode_native[0m:[36m_mlx_vae_decode[0m:[36m66[0m - [1m[MLX-VAE] Decoded 1 sample(s), 750 latent frames -> audio in 69.51s (convert=0.044s, decode=69.43s, dtype=mlx.core.float32)[0m
+[32m2026-11-13 12:39:30.671[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m193[0m - [34m[1m[generate_music] After VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-13 12:39:36.184[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m38[0m - [1m[generate_music] VAE decode completed. Preparing audio tensors...[0m
+[32m2026-11-13 12:39:36.190[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m50[0m - [1m[generate_music] Done! Generated 1 audio tensors.[0m
+[32m2026-11-13 12:39:36.508[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1002[0m - [1m[Normalization] Audio 0 BEFORE: Peak=1.0000, Target=-1.0dB[0m
+[32m2026-11-13 12:39:36.548[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1007[0m - [1m[Normalization] Audio 0 AFTER: Peak=0.8913[0m
+[32m2026-11-13 12:39:36.905[0m | [34m[1mDEBUG   [0m | [36macestep.audio_utils[0m:[36msave_audio[0m:[36m339[0m - [34m[1m[AudioSaver] Fallback soundfile Saved audio to /Users/runner/work/music-library-mac/music-library-mac/out/audio/01-instrumental-en/96334ae7-06ec-3881-ff9b-6bd47ba4b87b.flac (flac, 48000Hz)[0m
+Using precomputed LM hints
+Using precomputed LM hints
+[Probe] Erzeugen 01-instrumental-en: OK 562.1 s
+[32m2026-11-13 12:39:37.061[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=True, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=True, use_lm=True[0m
+[32m2026-11-13 12:39:37.061[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m720[0m - [1mLM chunk 1/1 (infer_type=llm_dit) (size: 1, seeds: [1234])[0m
+[32m2026-11-13 12:39:37.061[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1371[0m - [1mPhase 1: Generating CoT metadata...[0m
+[32m2026-11-13 12:39:37.065[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1377[0m - [1mgenerate_with_stop_condition: formatted_prompt=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+Ruhiges Lo-Fi-Stück mit warmem Klavier, leisem Knistern und entspanntem Schlagzeug
+
+# Lyric
+[Instrumental]
+<|im_end|>
+<|im_start|>assistant
+[0m
+[32m2026-11-13 12:39:47.238[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3595[0m - [1mMLX native prefill: 65 tokens in 10.08s (6.4 tok/s)[0m
+MLX Gen (native):   0%|          | 0/3500 [00:00<?, ?tok/s]MLX Gen (native):   0%|          | 3/3500 [00:00<02:06, 27.74tok/s]MLX Gen (native):   0%|          | 6/3500 [00:00<02:05, 27.94tok/s]MLX Gen (native):   0%|          | 9/3500 [00:00<02:11, 26.48tok/s]MLX Gen (native):   0%|          | 12/3500 [00:00<02:16, 25.49tok/s]MLX Gen (native):   0%|          | 16/3500 [00:00<02:06, 27.50tok/s]MLX Gen (native):   1%|          | 19/3500 [00:00<02:07, 27.25tok/s]MLX Gen (native):   1%|          | 23/3500 [00:00<02:04, 28.02tok/s]MLX Gen (native):   1%|          | 26/3500 [00:00<02:05, 27.72tok/s]MLX Gen (native):   1%|          | 29/3500 [00:01<02:06, 27.50tok/s]MLX Gen (native):   1%|          | 32/3500 [00:01<02:07, 27.11tok/s]MLX Gen (native):   1%|          | 35/3500 [00:01<02:09, 26.77tok/s]MLX Gen (native):   1%|          | 38/3500 [00:01<02:08, 27.00tok/s]MLX Gen (native):   1%|          | 41/3500 [00:01<02:08, 26.82tok/s]MLX Gen (native):   1%|▏         | 44/3500 [00:01<02:08, 26.87tok/s]MLX Gen (native):   1%|▏         | 47/3500 [00:01<02:09, 26.72tok/s]MLX Gen (native):   1%|▏         | 50/3500 [00:01<02:07, 27.10tok/s]MLX Gen (native):   2%|▏         | 53/3500 [00:01<02:06, 27.34tok/s]MLX Gen (native):   2%|▏         | 56/3500 [00:02<02:08, 26.79tok/s]MLX Gen (native):   2%|▏         | 59/3500 [00:02<02:05, 27.39tok/s]MLX Gen (native):   2%|▏         | 62/3500 [00:02<02:03, 27.76tok/s]MLX Gen (native):   2%|▏         | 66/3500 [00:02<02:00, 28.57tok/s]MLX Gen (native):   2%|▏         | 69/3500 [00:02<01:59, 28.66tok/s]MLX Gen (native):   2%|▏         | 72/3500 [00:02<02:06, 27.19tok/s]MLX Gen (native):   2%|▏         | 75/3500 [00:02<02:05, 27.20tok/s]MLX Gen (native):   2%|▏         | 78/3500 [00:02<02:04, 27.44tok/s]MLX Gen (native):   2%|▏         | 81/3500 [00:02<02:02, 28.01tok/s]MLX Gen (native):   2%|▏         | 85/3500 [00:03<01:56, 29.39tok/s]MLX Gen (native):   3%|▎         | 88/3500 [00:03<01:55, 29.43tok/s]MLX Gen (native):   3%|▎         | 92/3500 [00:03<01:53, 29.96tok/s]MLX Gen (native):   3%|▎         | 95/3500 [00:03<01:55, 29.43tok/s]MLX Gen (native):   3%|▎         | 98/3500 [00:03<01:56, 29.23tok/s]MLX Gen (native):   3%|▎         | 101/3500 [00:03<01:56, 29.29tok/s]MLX Gen (native):   3%|▎         | 104/3500 [00:03<01:59, 28.49tok/s]MLX Gen (native):   3%|▎         | 104/3500 [00:03<02:02, 27.82tok/s]
+[32m2026-11-13 12:39:50.980[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3711[0m - [1mMLX native generation complete: 104 tokens in 3.74s (27.8 tok/s) | prefill 10.08s + decode 3.74s = 13.82s total[0m
+[32m2026-11-13 12:39:51.019[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <think>
+bpm: 80
+caption: A clean electric guitar plays a gentle, arpeggiated chord progression with
+  a warm tone and light reverb. A brief, melodic lead motif enters before transitioning
+  to a short, expressive phrase filled with tasteful slides and bends. The piece is
+  brief and instrumental, feeling like an intro or a musical sting.
+duration: 30
+keyscale: E major
+language: unknown
+timesignature: 4
+<|im_end|>[0m
+[32m2026-11-13 12:39:51.019[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1422[0m - [1mPhase 1 completed in 13.96s. Generated metadata: ['bpm', 'caption', 'duration', 'keyscale', 'language', 'timesignature'][0m
+[32m2026-11-13 12:39:51.019[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1482[0m - [1mPhase 2: Generating audio codes...[0m
+[32m2026-11-13 12:39:51.026[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1490[0m - [1mgenerate_with_stop_condition: formatted_prompt_with_cot=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+Ruhiges Lo-Fi-Stück mit warmem Klavier, leisem Knistern und entspanntem Schlagzeug
+
+# Lyric
+[Instrumental]
+<|im_end|>
+<|im_start|>assistant
+<think>
+bpm: 80
+caption: A clean electric guitar plays a gentle, arpeggiated chord progression with
+  a warm tone and light reverb. A brief, melodic lead motif enters before transitioning
+  to a short, expressive phrase filled with tasteful slides and bends. The piece is
+  brief and instrumental, feeling like an intro or a musical sting.
+duration: 30
+keyscale: E major
+language: unknown
+timesignature: 4
+</think>
+
+[0m
+[32m2026-11-13 12:39:51.052[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3514[0m - [1mMLX native: pre-transitioned FSM to CODES_GENERATION (native fast path)[0m
+[32m2026-11-13 12:39:51.053[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_build_unconditional_prompt[0m:[36m395[0m - [1mCFG unconditional prompt (phase=codes, is_batch=False, negative_prompt='NO USER INPUT'):
+<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+NO USER INPUT<|im_end|>
+<|im_start|>assistant
+<think>
+
+</think>
+
+[0m
+[32m2026-11-13 12:39:51.353[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3571[0m - [1mMLX native prefill: 203 tokens (cond=170, uncond=33) in 0.30s (674.9 tok/s)[0m
+MLX CFG Gen (native):   0%|          | 0/160 [00:00<?, ?tok/s]MLX CFG Gen (native):   2%|▏         | 3/160 [00:00<00:05, 26.61tok/s]MLX CFG Gen (native):   4%|▍         | 6/160 [00:00<00:07, 19.28tok/s]MLX CFG Gen (native):   6%|▌         | 9/160 [00:00<00:08, 17.56tok/s]MLX CFG Gen (native):   7%|▋         | 11/160 [00:00<00:08, 17.94tok/s]MLX CFG Gen (native):   8%|▊         | 13/160 [00:00<00:09, 15.71tok/s]MLX CFG Gen (native):   9%|▉         | 15/160 [00:00<00:09, 15.76tok/s]MLX CFG Gen (native):  11%|█         | 17/160 [00:00<00:08, 16.73tok/s]MLX CFG Gen (native):  12%|█▏        | 19/160 [00:01<00:08, 17.36tok/s]MLX CFG Gen (native):  13%|█▎        | 21/160 [00:01<00:07, 17.83tok/s]MLX CFG Gen (native):  14%|█▍        | 23/160 [00:01<00:07, 18.14tok/s]MLX CFG Gen (native):  16%|█▌        | 25/160 [00:01<00:07, 18.44tok/s]MLX CFG Gen (native):  17%|█▋        | 27/160 [00:01<00:07, 18.48tok/s]MLX CFG Gen (native):  18%|█▊        | 29/160 [00:01<00:07, 18.68tok/s]MLX CFG Gen (native):  20%|██        | 32/160 [00:01<00:06, 19.38tok/s]MLX CFG Gen (native):  21%|██▏       | 34/160 [00:01<00:06, 18.87tok/s]MLX CFG Gen (native):  22%|██▎       | 36/160 [00:01<00:06, 18.74tok/s]MLX CFG Gen (native):  24%|██▍       | 38/160 [00:02<00:06, 18.43tok/s]MLX CFG Gen (native):  25%|██▌       | 40/160 [00:02<00:06, 18.50tok/s]MLX CFG Gen (native):  26%|██▋       | 42/160 [00:02<00:06, 17.08tok/s]MLX CFG Gen (native):  28%|██▊       | 44/160 [00:02<00:06, 17.08tok/s]MLX CFG Gen (native):  29%|██▉       | 46/160 [00:02<00:06, 17.32tok/s]MLX CFG Gen (native):  30%|███       | 48/160 [00:02<00:06, 17.38tok/s]MLX CFG Gen (native):  31%|███▏      | 50/160 [00:02<00:06, 17.69tok/s]MLX CFG Gen (native):  32%|███▎      | 52/160 [00:02<00:05, 18.15tok/s]MLX CFG Gen (native):  34%|███▍      | 54/160 [00:03<00:05, 18.00tok/s]MLX CFG Gen (native):  35%|███▌      | 56/160 [00:03<00:05, 17.96tok/s]MLX CFG Gen (native):  36%|███▋      | 58/160 [00:03<00:05, 17.39tok/s]MLX CFG Gen (native):  38%|███▊      | 60/160 [00:03<00:05, 17.96tok/s]MLX CFG Gen (native):  39%|███▉      | 63/160 [00:03<00:05, 18.99tok/s]MLX CFG Gen (native):  41%|████      | 65/160 [00:03<00:04, 19.07tok/s]MLX CFG Gen (native):  42%|████▏     | 67/160 [00:03<00:04, 18.95tok/s]MLX CFG Gen (native):  43%|████▎     | 69/160 [00:03<00:04, 19.22tok/s]MLX CFG Gen (native):  44%|████▍     | 71/160 [00:03<00:04, 18.48tok/s]MLX CFG Gen (native):  46%|████▌     | 73/160 [00:04<00:05, 17.14tok/s]MLX CFG Gen (native):  47%|████▋     | 75/160 [00:04<00:05, 16.98tok/s]MLX CFG Gen (native):  48%|████▊     | 77/160 [00:04<00:04, 16.65tok/s]MLX CFG Gen (native):  49%|████▉     | 79/160 [00:04<00:04, 16.46tok/s]MLX CFG Gen (native):  51%|█████     | 81/160 [00:04<00:04, 16.32tok/s]MLX CFG Gen (native):  52%|█████▏    | 83/160 [00:04<00:04, 16.91tok/s]MLX CFG Gen (native):  53%|█████▎    | 85/160 [00:04<00:04, 17.00tok/s]MLX CFG Gen (native):  54%|█████▍    | 87/160 [00:04<00:04, 17.05tok/s]MLX CFG Gen (native):  56%|█████▌    | 89/160 [00:05<00:04, 16.81tok/s]MLX CFG Gen (native):  57%|█████▋    | 91/160 [00:05<00:04, 17.14tok/s]MLX CFG Gen (native):  58%|█████▊    | 93/160 [00:05<00:03, 17.60tok/s]MLX CFG Gen (native):  59%|█████▉    | 95/160 [00:05<00:03, 17.79tok/s]MLX CFG Gen (native):  61%|██████    | 97/160 [00:05<00:03, 17.20tok/s]MLX CFG Gen (native):  62%|██████▏   | 99/160 [00:05<00:03, 17.61tok/s]MLX CFG Gen (native):  63%|██████▎   | 101/160 [00:05<00:03, 18.08tok/s]MLX CFG Gen (native):  64%|██████▍   | 103/160 [00:05<00:03, 18.13tok/s]MLX CFG Gen (native):  66%|██████▌   | 105/160 [00:05<00:03, 16.14tok/s]MLX CFG Gen (native):  67%|██████▋   | 107/160 [00:06<00:03, 16.85tok/s]MLX CFG Gen (native):  68%|██████▊   | 109/160 [00:06<00:02, 17.27tok/s]MLX CFG Gen (native):  69%|██████▉   | 111/160 [00:06<00:02, 17.75tok/s]MLX CFG Gen (native):  71%|███████   | 113/160 [00:06<00:02, 17.61tok/s]MLX CFG Gen (native):  72%|███████▏  | 115/160 [00:06<00:02, 17.44tok/s]MLX CFG Gen (native):  73%|███████▎  | 117/160 [00:06<00:02, 17.62tok/s]MLX CFG Gen (native):  74%|███████▍  | 119/160 [00:06<00:02, 16.79tok/s]MLX CFG Gen (native):  76%|███████▋  | 122/160 [00:06<00:02, 17.68tok/s]MLX CFG Gen (native):  78%|███████▊  | 124/160 [00:07<00:02, 17.55tok/s]MLX CFG Gen (native):  79%|███████▉  | 127/160 [00:07<00:01, 18.71tok/s]MLX CFG Gen (native):  81%|████████  | 129/160 [00:07<00:01, 19.01tok/s]MLX CFG Gen (native):  82%|████████▏ | 131/160 [00:07<00:01, 19.03tok/s]MLX CFG Gen (native):  83%|████████▎ | 133/160 [00:07<00:01, 17.60tok/s]MLX CFG Gen (native):  84%|████████▍ | 135/160 [00:07<00:01, 17.28tok/s]MLX CFG Gen (native):  86%|████████▌ | 137/160 [00:07<00:01, 14.86tok/s]MLX CFG Gen (native):  87%|████████▋ | 139/160 [00:07<00:01, 16.06tok/s]MLX CFG Gen (native):  88%|████████▊ | 141/160 [00:08<00:01, 16.28tok/s]MLX CFG Gen (native):  89%|████████▉ | 143/160 [00:08<00:01, 16.96tok/s]MLX CFG Gen (native):  91%|█████████ | 145/160 [00:08<00:00, 17.47tok/s]MLX CFG Gen (native):  92%|█████████▏| 147/160 [00:08<00:00, 17.27tok/s]MLX CFG Gen (native):  93%|█████████▎| 149/160 [00:08<00:00, 17.44tok/s]MLX CFG Gen (native):  94%|█████████▍| 151/160 [00:08<00:00, 16.68tok/s]MLX CFG Gen (native):  94%|█████████▍| 151/160 [00:08<00:00, 17.56tok/s]
+[32m2026-11-13 12:39:59.953[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3711[0m - [1mMLX native generation complete: 151 tokens in 8.60s (17.6 tok/s) | prefill 0.30s + decode 8.60s = 8.90s total[0m
+[32m2026-11-13 12:40:00.378[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <|audio_code_59728|><|audio_code_51592|><|audio_code_5308|><|audio_code_29115|><|audio_code_8766|><|audio_code_44094|><|audio_code_7905|><|audio_code_10536|><|audio_code_51976|><|audio_code_2662|><|audio_code_7229|><|audio_code_55484|><|audio_code_27384|><|audio_code_43321|><|audio_code_46011|><|audio_code_61242|><|audio_code_60272|><|audio_code_11675|><|audio_code_12756|><|audio_code_12735|><|audio_code_37187|><|audio_code_25744|><|audio_code_24360|><|audio_code_34097|><|audio_code_5437|><|audio_code_18630|><|audio_code_50466|><|audio_code_27921|><|audio_code_15289|><|audio_code_9148|><|audio_code_43845|><|audio_code_40362|><|audio_code_24560|><|audio_code_19920|><|audio_code_10256|><|audio_code_168|><|audio_code_27320|><|audio_code_24456|><|audio_code_8136|><|audio_code_16496|><|audio_code_32312|><|audio_code_7824|><|audio_code_53496|><|audio_code_27385|><|audio_code_10234|><|audio_code_13260|><|audio_code_52561|><|audio_code_60272|><|audio_code_61816|><|audio_code_32304|><|audio_code_36368|><|audio_code_7696|><|audio_code_32809|><|audio_code_39440|><|audio_code_5122|><|audio_code_1591|><|audio_code_61872|><|audio_code_1663|><|audio_code_25152|><|audio_code_61422|><|audio_code_12455|><|audio_code_30215|><|audio_code_10766|><|audio_code_550|><|audio_code_16958|><|audio_code_32828|><|audio_code_62539|><|audio_code_10844|><|audio_code_8276|><|audio_code_652|><|audio_code_4157|><|audio_code_14714|><|audio_code_41087|><|audio_code_35447|><|audio_code_30375|><|audio_code_1800|><|audio_code_4368|><|audio_code_29520|><|audio_code_13648|><|audio_code_29460|><|audio_code_47978|><|audio_code_40216|><|audio_code_40216|><|audio_code_26960|><|audio_code_26468|><|audio_code_53550|><|audio_code_5319|><|audio_code_5671|><|audio_code_63591|><|audio_code_61288|><|audio_code_48136|><|audio_code_11296|><|audio_code_45632|><|audio_code_62032|><|audio_code_13864|><|audio_code_22072|><|audio_code_61056|><|audio_code_61648|><|audio_code_13992|><|audio_code_16488|><|audio_code_45632|><|audio_code_528|><|audio_code_16432|><|audio_code_5014|><|audio_code_48138|><|audio_code_13339|><|audio_code_32771|><|audio_code_33|><|audio_code_29753|><|audio_code_10257|><|audio_code_29753|><|audio_code_61512|><|audio_code_1128|><|audio_code_45696|><|audio_code_10977|><|audio_code_30522|><|audio_code_13859|><|audio_code_60936|><|audio_code_63504|><|audio_code_1056|><|audio_code_16928|><|audio_code_60936|><|audio_code_544|><|audio_code_29752|><|audio_code_60936|><|audio_code_544|><|audio_code_29240|><|audio_code_10256|><|audio_code_3624|><|audio_code_32256|><|audio_code_61456|><|audio_code_13864|><|audio_code_32320|><|audio_code_61520|><|audio_code_13928|><|audio_code_32832|><|audio_code_61520|><|audio_code_13929|><|audio_code_32832|><|audio_code_61584|><|audio_code_25383|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35855|><|audio_code_37127|><|im_end|>[0m
+[32m2026-11-13 12:40:00.392[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1650[0m - [1mPhase 2 completed in 9.36s. Generated 150 audio codes[0m
+[32m2026-11-13 12:40:00.397[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m329[0m - [1m[generate_music] Starting generation...[0m
+[32m2026-11-13 12:40:00.397[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m332[0m - [1m[generate_music] Preparing inputs...[0m
+[32m2026-11-13 12:40:00.404[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_request[0m:[36m_prepare_reference_and_source_audio[0m:[36m204[0m - [1m[generate_music] cover task: no src_audio but audio codes provided, proceeding with codes[0m
+[32m2026-11-13 12:40:00.425[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_target[0m:[36m_prepare_target_latents_and_wavs[0m:[36m78[0m - [1m[generate_music] Decoding audio codes for item 0...[0m
+[32m2026-11-13 12:40:04.326[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_precomputed_lm_hints[0m:[36m31[0m - [1m[generate_music] Decoding audio codes for LM hints for item 0...[0m
+[32m2026-11-13 12:40:05.487[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m119[0m - [1m
+======================================================================[0m
+[32m2026-11-13 12:40:05.487[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m120[0m - [1m🔍 [DEBUG] DiT TEXT ENCODER INPUT (Inference)[0m
+[32m2026-11-13 12:40:05.487[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m121[0m - [1m======================================================================[0m
+[32m2026-11-13 12:40:05.487[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m122[0m - [1mtext_prompt:
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+# Caption
+A clean electric guitar plays a gentle, arpeggiated chord progression with a warm tone and light reverb. A brief, melodic lead motif enters before transitioning to a short, expressive phrase filled with tasteful slides and bends. The piece is brief and instrumental, feeling like an intro or a musical sting.
+
+# Metas
+- bpm: 80
+- timesignature: 4
+- keyscale: E major
+- duration: 30 seconds
+<|endoftext|>
+[0m
+[32m2026-11-13 12:40:05.487[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m123[0m - [1m======================================================================[0m
+[32m2026-11-13 12:40:05.488[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m124[0m - [1mlyrics_text:
+# Languages
+unknown
+
+# Lyric
+[Instrumental]<|endoftext|>[0m
+[32m2026-11-13 12:40:05.488[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m125[0m - [1m======================================================================
+[0m
+[32m2026-11-13 12:40:05.570[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m110[0m - [1m[preprocess_batch] Inferring prompt embeddings...[0m
+[32m2026-11-13 12:40:24.586[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m113[0m - [1m[preprocess_batch] Inferring lyric embeddings...[0m
+[32m2026-11-13 12:40:24.598[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m173[0m - [1m[service_generate] Generating audio... (DiT backend: PyTorch (cpu))[0m
+[32m2026-11-13 12:40:49.246[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m276[0m - [1m[service_generate] DiT diffusion via PyTorch (cpu)...[0m
+[32m2026-11-13 12:40:58.715[0m | [1mINFO    [0m | [36macestep.models.common.dcw_correction[0m:[36m__init__[0m:[36m98[0m - [1m[DCW] Active — mode=double, scaler=0.0500, high_scaler=0.0200, wavelet='haar'[0m
+[32m2026-11-13 12:46:59.020[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m42[0m - [1m[generate_music] Model generation completed. Decoding latents...[0m
+[32m2026-11-13 12:46:59.096[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m64[0m - [34m[1m[generate_music] pred_latents: torch.Size([1, 750, 64]), dtype=torch.float32[0m
+[32m2026-11-13 12:46:59.099[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m65[0m - [34m[1m[generate_music] time_costs: {'encoder_time_cost': 9.449501276016235, 'diffusion_time_cost': 360.18533301353455, 'diffusion_per_step_time_cost': 45.02316662669182, 'total_time_cost': 369.6348342895508, 'offload_time_cost': 0.0}[0m
+[32m2026-11-13 12:46:59.131[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m127[0m - [1m[generate_music] Decoding latents with VAE...[0m
+[32m2026-11-13 12:46:59.212[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m136[0m - [34m[1m[generate_music] Before VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-13 12:46:59.212[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m172[0m - [1m[generate_music] Using tiled VAE decode to reduce VRAM usage...[0m
+[32m2026-11-13 12:47:55.739[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_decode_native[0m:[36m_mlx_vae_decode[0m:[36m66[0m - [1m[MLX-VAE] Decoded 1 sample(s), 750 latent frames -> audio in 56.42s (convert=0.068s, decode=56.30s, dtype=mlx.core.float32)[0m
+[32m2026-11-13 12:47:56.070[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m193[0m - [34m[1m[generate_music] After VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-13 12:48:01.957[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m38[0m - [1m[generate_music] VAE decode completed. Preparing audio tensors...[0m
+[32m2026-11-13 12:48:01.983[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m50[0m - [1m[generate_music] Done! Generated 1 audio tensors.[0m
+[32m2026-11-13 12:48:02.468[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1002[0m - [1m[Normalization] Audio 0 BEFORE: Peak=1.0000, Target=-1.0dB[0m
+[32m2026-11-13 12:48:02.562[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1007[0m - [1m[Normalization] Audio 0 AFTER: Peak=0.8913[0m
+[32m2026-11-13 12:48:02.845[0m | [34m[1mDEBUG   [0m | [36macestep.audio_utils[0m:[36msave_audio[0m:[36m339[0m - [34m[1m[AudioSaver] Fallback soundfile Saved audio to /Users/runner/work/music-library-mac/music-library-mac/out/audio/02-instrumental-de/0a73893c-27e0-8d75-31e2-5b21a59a9bc5.flac (flac, 48000Hz)[0m
+Using precomputed LM hints
+Using precomputed LM hints
+[Probe] Erzeugen 02-instrumental-de: OK 505.9 s
+[32m2026-11-13 12:48:03.005[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=True, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=True, use_lm=True[0m
+[32m2026-11-13 12:48:03.005[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m720[0m - [1mLM chunk 1/1 (infer_type=llm_dit) (size: 1, seeds: [42])[0m
+[32m2026-11-13 12:48:03.005[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1371[0m - [1mPhase 1: Generating CoT metadata...[0m
+[32m2026-11-13 12:48:03.009[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1377[0m - [1mgenerate_with_stop_condition: formatted_prompt=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+Upbeat German pop song, female vocals, acoustic guitar, bright summer mood
+
+# Lyric
+[Verse]
+Die Sonne sinkt am alten See
+das Wasser glänzt wie Gold
+wir laufen barfuß durch den Klee
+der Abend ist uns hold
+
+[Chorus]
+Sommerabend, bleib noch hier
+die Nacht gehört nur dir und mir
+Sommerabend, sing mit mir
+die Nacht gehört nur dir und mir
+<|im_end|>
+<|im_start|>assistant
+[0m
+[32m2026-11-13 12:48:12.097[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3595[0m - [1mMLX native prefill: 128 tokens in 8.41s (15.2 tok/s)[0m
+MLX Gen (native):   0%|          | 0/3500 [00:00<?, ?tok/s]MLX Gen (native):   0%|          | 3/3500 [00:00<02:19, 24.99tok/s]MLX Gen (native):   0%|          | 6/3500 [00:00<02:09, 26.90tok/s]MLX Gen (native):   0%|          | 9/3500 [00:00<02:15, 25.76tok/s]MLX Gen (native):   0%|          | 12/3500 [00:00<02:14, 26.02tok/s]MLX Gen (native):   0%|          | 15/3500 [00:00<02:13, 26.09tok/s]MLX Gen (native):   1%|          | 18/3500 [00:00<02:14, 25.86tok/s]MLX Gen (native):   1%|          | 21/3500 [00:00<02:14, 25.94tok/s]MLX Gen (native):   1%|          | 24/3500 [00:00<02:11, 26.38tok/s]MLX Gen (native):   1%|          | 27/3500 [00:01<02:11, 26.47tok/s]MLX Gen (native):   1%|          | 30/3500 [00:01<02:12, 26.25tok/s]MLX Gen (native):   1%|          | 33/3500 [00:01<02:10, 26.65tok/s]MLX Gen (native):   1%|          | 36/3500 [00:01<02:08, 26.92tok/s]MLX Gen (native):   1%|          | 39/3500 [00:01<02:09, 26.82tok/s]MLX Gen (native):   1%|          | 42/3500 [00:01<02:13, 25.98tok/s]MLX Gen (native):   1%|▏         | 45/3500 [00:01<02:13, 25.89tok/s]MLX Gen (native):   1%|▏         | 48/3500 [00:01<02:13, 25.89tok/s]MLX Gen (native):   1%|▏         | 51/3500 [00:01<02:11, 26.16tok/s]MLX Gen (native):   2%|▏         | 54/3500 [00:02<02:13, 25.86tok/s]MLX Gen (native):   2%|▏         | 57/3500 [00:02<02:13, 25.82tok/s]MLX Gen (native):   2%|▏         | 60/3500 [00:02<02:14, 25.55tok/s]MLX Gen (native):   2%|▏         | 63/3500 [00:02<02:11, 26.09tok/s]MLX Gen (native):   2%|▏         | 66/3500 [00:02<02:15, 25.33tok/s]MLX Gen (native):   2%|▏         | 69/3500 [00:02<02:16, 25.22tok/s]MLX Gen (native):   2%|▏         | 72/3500 [00:02<02:12, 25.82tok/s]MLX Gen (native):   2%|▏         | 75/3500 [00:02<02:11, 25.98tok/s]MLX Gen (native):   2%|▏         | 78/3500 [00:03<02:15, 25.29tok/s]MLX Gen (native):   2%|▏         | 81/3500 [00:03<02:15, 25.21tok/s]MLX Gen (native):   2%|▏         | 84/3500 [00:03<02:13, 25.49tok/s]MLX Gen (native):   2%|▏         | 87/3500 [00:03<02:16, 24.96tok/s]MLX Gen (native):   3%|▎         | 90/3500 [00:03<02:20, 24.19tok/s]MLX Gen (native):   3%|▎         | 93/3500 [00:03<02:16, 24.91tok/s]MLX Gen (native):   3%|▎         | 96/3500 [00:03<02:12, 25.73tok/s]MLX Gen (native):   3%|▎         | 99/3500 [00:03<02:09, 26.27tok/s]MLX Gen (native):   3%|▎         | 102/3500 [00:03<02:06, 26.82tok/s]MLX Gen (native):   3%|▎         | 105/3500 [00:04<02:03, 27.49tok/s]MLX Gen (native):   3%|▎         | 108/3500 [00:04<02:07, 26.61tok/s]MLX Gen (native):   3%|▎         | 111/3500 [00:04<02:09, 26.24tok/s]MLX Gen (native):   3%|▎         | 114/3500 [00:04<02:08, 26.35tok/s]MLX Gen (native):   3%|▎         | 117/3500 [00:04<02:10, 25.94tok/s]MLX Gen (native):   3%|▎         | 120/3500 [00:04<02:11, 25.73tok/s]MLX Gen (native):   4%|▎         | 123/3500 [00:04<02:20, 23.95tok/s]MLX Gen (native):   4%|▎         | 126/3500 [00:04<02:26, 23.05tok/s]MLX Gen (native):   4%|▎         | 129/3500 [00:05<02:27, 22.79tok/s]MLX Gen (native):   4%|▍         | 132/3500 [00:05<02:35, 21.68tok/s]MLX Gen (native):   4%|▍         | 135/3500 [00:05<02:31, 22.18tok/s]MLX Gen (native):   4%|▍         | 138/3500 [00:05<02:34, 21.76tok/s]MLX Gen (native):   4%|▍         | 139/3500 [00:05<02:13, 25.13tok/s]
+[32m2026-11-13 12:48:17.632[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3711[0m - [1mMLX native generation complete: 139 tokens in 5.53s (25.1 tok/s) | prefill 8.41s + decode 5.53s = 13.95s total[0m
+[32m2026-11-13 12:48:17.667[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <think>
+bpm: 110
+caption: A gentle German pop track built on a foundation of clean acoustic guitar chords
+  drenched in reverb and smooth synth pads. A light electronic drum machine provides
+  a steady, relaxed groove with soft kicks and snaps. The female lead vocal is breathy
+  and clear, sung entirely in German, floating over the mix with airy harmonies that
+  enhance the dreamy atmosphere. The song maintains an uplifting yet calm mood throughout
+  its short duration, ending abruptly after a final soaring vocal phrase.
+duration: 40
+keyscale: G major
+language: de
+timesignature: 4
+<|im_end|>[0m
+[32m2026-11-13 12:48:17.668[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1422[0m - [1mPhase 1 completed in 14.66s. Generated metadata: ['bpm', 'caption', 'duration', 'keyscale', 'language', 'timesignature'][0m
+[32m2026-11-13 12:48:17.668[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1482[0m - [1mPhase 2: Generating audio codes...[0m
+[32m2026-11-13 12:48:17.675[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1490[0m - [1mgenerate_with_stop_condition: formatted_prompt_with_cot=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+Upbeat German pop song, female vocals, acoustic guitar, bright summer mood
+
+# Lyric
+[Verse]
+Die Sonne sinkt am alten See
+das Wasser glänzt wie Gold
+wir laufen barfuß durch den Klee
+der Abend ist uns hold
+
+[Chorus]
+Sommerabend, bleib noch hier
+die Nacht gehört nur dir und mir
+Sommerabend, sing mit mir
+die Nacht gehört nur dir und mir
+<|im_end|>
+<|im_start|>assistant
+<think>
+bpm: 110
+caption: A gentle German pop track built on a foundation of clean acoustic guitar
+  chords drenched in reverb and smooth synth pads. A light electronic drum machine
+  provides a steady, relaxed groove with soft kicks and snaps. The female lead vocal
+  is breathy and clear, sung entirely in German, floating over the mix with airy harmonies
+  that enhance the dreamy atmosphere. The song maintains an uplifting yet calm mood
+  throughout its short duration, ending abruptly after a final soaring vocal phrase.
+duration: 40
+keyscale: G major
+language: de
+timesignature: 4
+</think>
+
+[0m
+[32m2026-11-13 12:48:17.697[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3514[0m - [1mMLX native: pre-transitioned FSM to CODES_GENERATION (native fast path)[0m
+[32m2026-11-13 12:48:17.699[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_build_unconditional_prompt[0m:[36m395[0m - [1mCFG unconditional prompt (phase=codes, is_batch=False, negative_prompt='NO USER INPUT'):
+<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+NO USER INPUT<|im_end|>
+<|im_start|>assistant
+<think>
+
+</think>
+
+[0m
+[32m2026-11-13 12:48:18.062[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3571[0m - [1mMLX native prefill: 301 tokens (cond=268, uncond=33) in 0.36s (826.7 tok/s)[0m
+MLX CFG Gen (native):   0%|          | 0/210 [00:00<?, ?tok/s]MLX CFG Gen (native):   1%|▏         | 3/210 [00:00<00:09, 21.95tok/s]MLX CFG Gen (native):   3%|▎         | 6/210 [00:00<00:10, 19.81tok/s]MLX CFG Gen (native):   4%|▍         | 8/210 [00:00<00:10, 18.74tok/s]MLX CFG Gen (native):   5%|▍         | 10/210 [00:00<00:10, 18.35tok/s]MLX CFG Gen (native):   6%|▌         | 12/210 [00:00<00:13, 14.59tok/s]MLX CFG Gen (native):   7%|▋         | 14/210 [00:00<00:12, 15.10tok/s]MLX CFG Gen (native):   8%|▊         | 16/210 [00:00<00:12, 15.31tok/s]MLX CFG Gen (native):   9%|▊         | 18/210 [00:01<00:12, 15.86tok/s]MLX CFG Gen (native):  10%|▉         | 20/210 [00:01<00:12, 15.56tok/s]MLX CFG Gen (native):  10%|█         | 22/210 [00:01<00:11, 16.01tok/s]MLX CFG Gen (native):  11%|█▏        | 24/210 [00:01<00:11, 16.34tok/s]MLX CFG Gen (native):  12%|█▏        | 26/210 [00:01<00:11, 16.43tok/s]MLX CFG Gen (native):  13%|█▎        | 28/210 [00:01<00:10, 16.80tok/s]MLX CFG Gen (native):  14%|█▍        | 30/210 [00:01<00:10, 17.05tok/s]MLX CFG Gen (native):  15%|█▌        | 32/210 [00:01<00:10, 16.72tok/s]MLX CFG Gen (native):  16%|█▌        | 34/210 [00:02<00:10, 17.16tok/s]MLX CFG Gen (native):  17%|█▋        | 36/210 [00:02<00:09, 17.54tok/s]MLX CFG Gen (native):  18%|█▊        | 38/210 [00:02<00:09, 17.21tok/s]MLX CFG Gen (native):  19%|█▉        | 40/210 [00:02<00:10, 16.97tok/s]MLX CFG Gen (native):  20%|██        | 42/210 [00:02<00:10, 16.67tok/s]MLX CFG Gen (native):  21%|██        | 44/210 [00:02<00:09, 16.75tok/s]MLX CFG Gen (native):  22%|██▏       | 46/210 [00:02<00:10, 16.10tok/s]MLX CFG Gen (native):  23%|██▎       | 48/210 [00:02<00:09, 16.38tok/s]MLX CFG Gen (native):  24%|██▍       | 50/210 [00:03<00:09, 16.57tok/s]MLX CFG Gen (native):  25%|██▍       | 52/210 [00:03<00:09, 17.19tok/s]MLX CFG Gen (native):  26%|██▌       | 54/210 [00:03<00:09, 16.94tok/s]MLX CFG Gen (native):  27%|██▋       | 56/210 [00:03<00:09, 16.46tok/s]MLX CFG Gen (native):  28%|██▊       | 58/210 [00:03<00:09, 16.41tok/s]MLX CFG Gen (native):  29%|██▊       | 60/210 [00:03<00:09, 16.36tok/s]MLX CFG Gen (native):  30%|██▉       | 62/210 [00:03<00:08, 16.63tok/s]MLX CFG Gen (native):  30%|███       | 64/210 [00:03<00:08, 16.55tok/s]MLX CFG Gen (native):  31%|███▏      | 66/210 [00:03<00:08, 16.32tok/s]MLX CFG Gen (native):  32%|███▏      | 68/210 [00:04<00:08, 16.69tok/s]MLX CFG Gen (native):  33%|███▎      | 70/210 [00:04<00:08, 16.55tok/s]MLX CFG Gen (native):  34%|███▍      | 72/210 [00:04<00:08, 16.33tok/s]MLX CFG Gen (native):  35%|███▌      | 74/210 [00:04<00:08, 16.29tok/s]MLX CFG Gen (native):  36%|███▌      | 76/210 [00:04<00:08, 16.17tok/s]MLX CFG Gen (native):  37%|███▋      | 78/210 [00:04<00:08, 16.10tok/s]MLX CFG Gen (native):  38%|███▊      | 80/210 [00:04<00:08, 16.05tok/s]MLX CFG Gen (native):  39%|███▉      | 82/210 [00:04<00:07, 16.09tok/s]MLX CFG Gen (native):  40%|████      | 84/210 [00:05<00:07, 16.08tok/s]MLX CFG Gen (native):  41%|████      | 86/210 [00:05<00:07, 16.01tok/s]MLX CFG Gen (native):  42%|████▏     | 88/210 [00:05<00:07, 16.10tok/s]MLX CFG Gen (native):  43%|████▎     | 90/210 [00:05<00:07, 15.95tok/s]MLX CFG Gen (native):  44%|████▍     | 92/210 [00:05<00:07, 15.53tok/s]MLX CFG Gen (native):  45%|████▍     | 94/210 [00:05<00:07, 15.42tok/s]MLX CFG Gen (native):  46%|████▌     | 96/210 [00:05<00:07, 15.51tok/s]MLX CFG Gen (native):  47%|████▋     | 98/210 [00:05<00:07, 15.20tok/s]MLX CFG Gen (native):  48%|████▊     | 100/210 [00:06<00:07, 15.45tok/s]MLX CFG Gen (native):  49%|████▊     | 102/210 [00:06<00:06, 15.76tok/s]MLX CFG Gen (native):  50%|████▉     | 104/210 [00:06<00:06, 15.59tok/s]MLX CFG Gen (native):  50%|█████     | 106/210 [00:06<00:06, 15.39tok/s]MLX CFG Gen (native):  51%|█████▏    | 108/210 [00:06<00:06, 15.65tok/s]MLX CFG Gen (native):  52%|█████▏    | 110/210 [00:06<00:06, 15.53tok/s]MLX CFG Gen (native):  53%|█████▎    | 112/210 [00:06<00:06, 15.79tok/s]MLX CFG Gen (native):  54%|█████▍    | 114/210 [00:07<00:06, 14.23tok/s]MLX CFG Gen (native):  55%|█████▌    | 116/210 [00:07<00:06, 14.32tok/s]MLX CFG Gen (native):  56%|█████▌    | 118/210 [00:07<00:06, 14.03tok/s]MLX CFG Gen (native):  57%|█████▋    | 120/210 [00:07<00:06, 13.94tok/s]MLX CFG Gen (native):  58%|█████▊    | 122/210 [00:07<00:06, 14.39tok/s]MLX CFG Gen (native):  59%|█████▉    | 124/210 [00:07<00:05, 14.73tok/s]MLX CFG Gen (native):  60%|██████    | 126/210 [00:07<00:05, 14.28tok/s]MLX CFG Gen (native):  61%|██████    | 128/210 [00:08<00:05, 14.70tok/s]MLX CFG Gen (native):  62%|██████▏   | 130/210 [00:08<00:05, 14.66tok/s]MLX CFG Gen (native):  63%|██████▎   | 132/210 [00:08<00:05, 14.93tok/s]MLX CFG Gen (native):  64%|██████▍   | 134/210 [00:08<00:05, 15.02tok/s]MLX CFG Gen (native):  65%|██████▍   | 136/210 [00:08<00:04, 15.07tok/s]MLX CFG Gen (native):  66%|██████▌   | 138/210 [00:08<00:04, 15.05tok/s]MLX CFG Gen (native):  67%|██████▋   | 140/210 [00:08<00:04, 14.80tok/s]MLX CFG Gen (native):  68%|██████▊   | 142/210 [00:08<00:04, 15.01tok/s]MLX CFG Gen (native):  69%|██████▊   | 144/210 [00:09<00:04, 14.55tok/s]MLX CFG Gen (native):  70%|██████▉   | 146/210 [00:09<00:04, 15.13tok/s]MLX CFG Gen (native):  70%|███████   | 148/210 [00:09<00:04, 15.23tok/s]MLX CFG Gen (native):  71%|███████▏  | 150/210 [00:09<00:03, 15.26tok/s]MLX CFG Gen (native):  72%|███████▏  | 152/210 [00:09<00:03, 15.32tok/s]MLX CFG Gen (native):  73%|███████▎  | 154/210 [00:09<00:03, 15.34tok/s]MLX CFG Gen (native):  74%|███████▍  | 156/210 [00:09<00:03, 15.60tok/s]MLX CFG Gen (native):  75%|███████▌  | 158/210 [00:09<00:03, 15.75tok/s]MLX CFG Gen (native):  76%|███████▌  | 160/210 [00:10<00:03, 15.57tok/s]MLX CFG Gen (native):  77%|███████▋  | 162/210 [00:10<00:03, 15.34tok/s]MLX CFG Gen (native):  78%|███████▊  | 164/210 [00:10<00:03, 15.24tok/s]MLX CFG Gen (native):  79%|███████▉  | 166/210 [00:10<00:02, 15.58tok/s]MLX CFG Gen (native):  80%|████████  | 168/210 [00:10<00:02, 15.55tok/s]MLX CFG Gen (native):  81%|████████  | 170/210 [00:10<00:02, 15.55tok/s]MLX CFG Gen (native):  82%|████████▏ | 172/210 [00:10<00:02, 15.30tok/s]MLX CFG Gen (native):  83%|████████▎ | 174/210 [00:11<00:02, 13.83tok/s]MLX CFG Gen (native):  84%|████████▍ | 176/210 [00:11<00:02, 14.16tok/s]MLX CFG Gen (native):  85%|████████▍ | 178/210 [00:11<00:02, 14.56tok/s]MLX CFG Gen (native):  86%|████████▌ | 180/210 [00:11<00:02, 14.87tok/s]MLX CFG Gen (native):  87%|████████▋ | 182/210 [00:11<00:01, 14.64tok/s]MLX CFG Gen (native):  88%|████████▊ | 184/210 [00:11<00:01, 14.10tok/s]MLX CFG Gen (native):  89%|████████▊ | 186/210 [00:11<00:01, 14.32tok/s]MLX CFG Gen (native):  90%|████████▉ | 188/210 [00:12<00:01, 14.79tok/s]MLX CFG Gen (native):  90%|█████████ | 190/210 [00:12<00:01, 14.67tok/s]MLX CFG Gen (native):  91%|█████████▏| 192/210 [00:12<00:01, 15.14tok/s]MLX CFG Gen (native):  92%|█████████▏| 194/210 [00:12<00:01, 15.04tok/s]MLX CFG Gen (native):  93%|█████████▎| 196/210 [00:12<00:00, 14.78tok/s]MLX CFG Gen (native):  94%|█████████▍| 198/210 [00:12<00:00, 14.63tok/s]MLX CFG Gen (native):  95%|█████████▌| 200/210 [00:12<00:00, 15.34tok/s]MLX CFG Gen (native):  96%|█████████▌| 201/210 [00:12<00:00, 15.60tok/s]
+[32m2026-11-13 12:48:30.996[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3711[0m - [1mMLX native generation complete: 201 tokens in 12.93s (15.5 tok/s) | prefill 0.36s + decode 12.93s = 13.30s total[0m
+[32m2026-11-13 12:48:31.127[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <|audio_code_28564|><|audio_code_2088|><|audio_code_26199|><|audio_code_53384|><|audio_code_57472|><|audio_code_158|><|audio_code_63166|><|audio_code_37888|><|audio_code_55471|><|audio_code_51156|><|audio_code_58848|><|audio_code_27128|><|audio_code_53219|><|audio_code_58850|><|audio_code_26363|><|audio_code_47040|><|audio_code_18410|><|audio_code_52108|><|audio_code_25560|><|audio_code_23922|><|audio_code_14283|><|audio_code_12165|><|audio_code_24518|><|audio_code_18170|><|audio_code_14078|><|audio_code_40992|><|audio_code_25464|><|audio_code_5605|><|audio_code_24019|><|audio_code_63415|><|audio_code_26611|><|audio_code_13664|><|audio_code_41336|><|audio_code_39922|><|audio_code_51156|><|audio_code_41416|><|audio_code_4083|><|audio_code_22520|><|audio_code_61904|><|audio_code_13769|><|audio_code_12282|><|audio_code_29688|><|audio_code_27641|><|audio_code_12565|><|audio_code_55303|><|audio_code_25616|><|audio_code_244|><|audio_code_16960|><|audio_code_19963|><|audio_code_49606|><|audio_code_27280|><|audio_code_12750|><|audio_code_17917|><|audio_code_10727|><|audio_code_10748|><|audio_code_22523|><|audio_code_38337|><|audio_code_28660|><|audio_code_3019|><|audio_code_15234|><|audio_code_41451|><|audio_code_46073|><|audio_code_35812|><|audio_code_31226|><|audio_code_21465|><|audio_code_53397|><|audio_code_35197|><|audio_code_53175|><|audio_code_13792|><|audio_code_23531|><|audio_code_10735|><|audio_code_27598|><|audio_code_27799|><|audio_code_26573|><|audio_code_12144|><|audio_code_61888|><|audio_code_44021|><|audio_code_8139|><|audio_code_54266|><|audio_code_9898|><|audio_code_13764|><|audio_code_10213|><|audio_code_12101|><|audio_code_14825|><|audio_code_53586|><|audio_code_22896|><|audio_code_26071|><|audio_code_10694|><|audio_code_52829|><|audio_code_50408|><|audio_code_31416|><|audio_code_60608|><|audio_code_2217|><|audio_code_3387|><|audio_code_39955|><|audio_code_8415|><|audio_code_21975|><|audio_code_63919|><|audio_code_51527|><|audio_code_8069|><|audio_code_22507|><|audio_code_10059|><|audio_code_40938|><|audio_code_59275|><|audio_code_833|><|audio_code_63936|><|audio_code_53603|><|audio_code_7555|><|audio_code_36331|><|audio_code_63863|><|audio_code_56583|><|audio_code_2501|><|audio_code_3895|><|audio_code_10151|><|audio_code_56446|><|audio_code_18896|><|audio_code_8504|><|audio_code_61840|><|audio_code_54771|><|audio_code_63448|><|audio_code_12960|><|audio_code_61931|><|audio_code_35819|><|audio_code_48823|><|audio_code_24518|><|audio_code_61325|><|audio_code_22965|><|audio_code_9743|><|audio_code_43127|><|audio_code_8171|><|audio_code_41923|><|audio_code_6061|><|audio_code_6700|><|audio_code_704|><|audio_code_37072|><|audio_code_28400|><|audio_code_31796|><|audio_code_12124|><|audio_code_23807|><|audio_code_49550|><|audio_code_16791|><|audio_code_57719|><|audio_code_267|><|audio_code_53236|><|audio_code_52204|><|audio_code_36290|><|audio_code_47533|><|audio_code_63444|><|audio_code_11246|><|audio_code_22971|><|audio_code_43516|><|audio_code_53717|><|audio_code_3526|><|audio_code_41807|><|audio_code_8519|><|audio_code_61343|><|audio_code_37268|><|audio_code_4111|><|audio_code_27902|><|audio_code_53697|><|audio_code_26368|><|audio_code_53240|><|audio_code_53713|><|audio_code_50128|><|audio_code_20669|><|audio_code_38386|><|audio_code_39191|><|audio_code_25351|><|audio_code_899|><|audio_code_30132|><|audio_code_15111|><|audio_code_5735|><|audio_code_62901|><|audio_code_55210|><|audio_code_6060|><|audio_code_33668|><|audio_code_36851|><|audio_code_41859|><|audio_code_4597|><|audio_code_22797|><|audio_code_23790|><|audio_code_27109|><|audio_code_54250|><|audio_code_29586|><|audio_code_12031|><|audio_code_13038|><|audio_code_24255|><|audio_code_28333|><|audio_code_8446|><|audio_code_40685|><|audio_code_26349|><|audio_code_27908|><|audio_code_46396|><|audio_code_38276|><|audio_code_45045|><|audio_code_25574|><|audio_code_25446|><|audio_code_35855|><|audio_code_35927|><|audio_code_15174|><|im_end|>[0m
+[32m2026-11-13 12:48:31.127[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1650[0m - [1mPhase 2 completed in 13.46s. Generated 200 audio codes[0m
+[32m2026-11-13 12:48:31.133[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m329[0m - [1m[generate_music] Starting generation...[0m
+[32m2026-11-13 12:48:31.133[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m332[0m - [1m[generate_music] Preparing inputs...[0m
+[32m2026-11-13 12:48:31.143[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_request[0m:[36m_prepare_reference_and_source_audio[0m:[36m204[0m - [1m[generate_music] cover task: no src_audio but audio codes provided, proceeding with codes[0m
+[32m2026-11-13 12:48:31.163[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_target[0m:[36m_prepare_target_latents_and_wavs[0m:[36m78[0m - [1m[generate_music] Decoding audio codes for item 0...[0m
+[32m2026-11-13 12:48:36.403[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_precomputed_lm_hints[0m:[36m31[0m - [1m[generate_music] Decoding audio codes for LM hints for item 0...[0m
+[32m2026-11-13 12:48:37.896[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m119[0m - [1m
+======================================================================[0m
+[32m2026-11-13 12:48:37.897[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m120[0m - [1m🔍 [DEBUG] DiT TEXT ENCODER INPUT (Inference)[0m
+[32m2026-11-13 12:48:37.897[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m121[0m - [1m======================================================================[0m
+[32m2026-11-13 12:48:37.897[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m122[0m - [1mtext_prompt:
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+# Caption
+A gentle German pop track built on a foundation of clean acoustic guitar chords drenched in reverb and smooth synth pads. A light electronic drum machine provides a steady, relaxed groove with soft kicks and snaps. The female lead vocal is breathy and clear, sung entirely in German, floating over the mix with airy harmonies that enhance the dreamy atmosphere. The song maintains an uplifting yet calm mood throughout its short duration, ending abruptly after a final soaring vocal phrase.
+
+# Metas
+- bpm: 110
+- timesignature: 4
+- keyscale: G major
+- duration: 40 seconds
+<|endoftext|>
+[0m
+[32m2026-11-13 12:48:37.897[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m123[0m - [1m======================================================================[0m
+[32m2026-11-13 12:48:37.897[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m124[0m - [1mlyrics_text:
+# Languages
+de
+
+# Lyric
+[Verse]
+Die Sonne sinkt am alten See
+das Wasser glänzt wie Gold
+wir laufen barfuß durch den Klee
+der Abend ist uns hold
+
+[Chorus]
+Sommerabend, bleib noch hier
+die Nacht gehört nur dir und mir
+Sommerabend, sing mit mir
+die Nacht gehört nur dir und mir<|endoftext|>[0m
+[32m2026-11-13 12:48:37.897[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m125[0m - [1m======================================================================
+[0m
+[32m2026-11-13 12:48:38.026[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m110[0m - [1m[preprocess_batch] Inferring prompt embeddings...[0m
+[32m2026-11-13 12:49:02.727[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m113[0m - [1m[preprocess_batch] Inferring lyric embeddings...[0m
+[32m2026-11-13 12:49:02.750[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m173[0m - [1m[service_generate] Generating audio... (DiT backend: PyTorch (cpu))[0m
+[32m2026-11-13 12:49:30.235[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m276[0m - [1m[service_generate] DiT diffusion via PyTorch (cpu)...[0m
+[32m2026-11-13 12:49:42.205[0m | [1mINFO    [0m | [36macestep.models.common.dcw_correction[0m:[36m__init__[0m:[36m98[0m - [1m[DCW] Active — mode=double, scaler=0.0500, high_scaler=0.0200, wavelet='haar'[0m
+[32m2026-11-13 12:55:54.808[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m42[0m - [1m[generate_music] Model generation completed. Decoding latents...[0m
+[32m2026-11-13 12:55:54.869[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m64[0m - [34m[1m[generate_music] pred_latents: torch.Size([1, 1000, 64]), dtype=torch.float32[0m
+[32m2026-11-13 12:55:54.871[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m65[0m - [34m[1m[generate_music] time_costs: {'encoder_time_cost': 11.938545227050781, 'diffusion_time_cost': 372.4807839393616, 'diffusion_per_step_time_cost': 46.5600979924202, 'total_time_cost': 384.41932916641235, 'offload_time_cost': 0.0}[0m
+[32m2026-11-13 12:55:54.913[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m127[0m - [1m[generate_music] Decoding latents with VAE...[0m
+[32m2026-11-13 12:55:54.997[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m136[0m - [34m[1m[generate_music] Before VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-13 12:55:54.997[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m172[0m - [1m[generate_music] Using tiled VAE decode to reduce VRAM usage...[0m
+[32m2026-11-13 12:56:57.475[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_decode_native[0m:[36m_mlx_vae_decode[0m:[36m66[0m - [1m[MLX-VAE] Decoded 1 sample(s), 1000 latent frames -> audio in 62.47s (convert=0.062s, decode=62.39s, dtype=mlx.core.float32)[0m
+[32m2026-11-13 12:56:57.537[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m193[0m - [34m[1m[generate_music] After VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-13 12:57:03.292[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m38[0m - [1m[generate_music] VAE decode completed. Preparing audio tensors...[0m
+[32m2026-11-13 12:57:03.294[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m50[0m - [1m[generate_music] Done! Generated 1 audio tensors.[0m
+[32m2026-11-13 12:57:03.609[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1002[0m - [1m[Normalization] Audio 0 BEFORE: Peak=1.0000, Target=-1.0dB[0m
+[32m2026-11-13 12:57:03.658[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1007[0m - [1m[Normalization] Audio 0 AFTER: Peak=0.8913[0m
+[32m2026-11-13 12:57:03.887[0m | [34m[1mDEBUG   [0m | [36macestep.audio_utils[0m:[36msave_audio[0m:[36m339[0m - [34m[1m[AudioSaver] Fallback soundfile Saved audio to /Users/runner/work/music-library-mac/music-library-mac/out/audio/03-gesang-de-eigener-text/ecafa142-7a5b-3fc8-e052-c9a6d2358125.flac (flac, 48000Hz)[0m
+Using precomputed LM hints
+Using precomputed LM hints
+[Probe] Erzeugen 03-gesang-de-eigener-text: OK 541.1 s
+[32m2026-11-13 12:57:04.082[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mcreate_sample_from_query[0m:[36m2097[0m - [1mCreating sample from query: Ein fröhlicher deutscher Popsong über einen Sommerabend am See... (instrumental=False, vocal_language=de)[0m
+[32m2026-11-13 12:57:04.091[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mcreate_sample_from_query[0m:[36m2104[0m - [34m[1mFormatted prompt for inspiration: <|im_start|>system
+# Instruction
+Expand the user's input into a more detailed and specific musical description:
+
+<|im_end|>
+<|im_start|>user
+Ein fröhlicher deutscher Popsong über einen Sommerabend am See
+
+instrumental: false<|im_end|>
+<|im_start|>assistant
+[0m
+[32m2026-11-13 12:57:04.091[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mcreate_sample_from_query[0m:[36m2113[0m - [1mUsing user-specified language: de[0m
+[32m2026-11-13 12:57:12.700[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3595[0m - [1mMLX native prefill: 52 tokens in 8.51s (6.1 tok/s)[0m
+MLX Gen (native):   0%|          | 0/3500 [00:00<?, ?tok/s]MLX Gen (native):   0%|          | 3/3500 [00:00<02:40, 21.76tok/s]MLX Gen (native):   0%|          | 6/3500 [00:00<02:23, 24.35tok/s]MLX Gen (native):   0%|          | 9/3500 [00:00<02:13, 26.06tok/s]MLX Gen (native):   0%|          | 12/3500 [00:00<02:09, 26.92tok/s]MLX Gen (native):   0%|          | 15/3500 [00:00<02:10, 26.74tok/s]MLX Gen (native):   1%|          | 18/3500 [00:00<02:07, 27.37tok/s]MLX Gen (native):   1%|          | 21/3500 [00:00<02:11, 26.53tok/s]MLX Gen (native):   1%|          | 24/3500 [00:00<02:09, 26.84tok/s]MLX Gen (native):   1%|          | 27/3500 [00:01<02:06, 27.35tok/s]MLX Gen (native):   1%|          | 30/3500 [00:01<02:05, 27.56tok/s]MLX Gen (native):   1%|          | 33/3500 [00:01<02:05, 27.61tok/s]MLX Gen (native):   1%|          | 36/3500 [00:01<02:03, 28.08tok/s]MLX Gen (native):   1%|          | 40/3500 [00:01<02:00, 28.61tok/s]MLX Gen (native):   1%|          | 43/3500 [00:01<02:03, 28.01tok/s]MLX Gen (native):   1%|▏         | 46/3500 [00:01<02:01, 28.32tok/s]MLX Gen (native):   1%|▏         | 49/3500 [00:01<02:01, 28.52tok/s]MLX Gen (native):   1%|▏         | 52/3500 [00:01<02:04, 27.81tok/s]MLX Gen (native):   2%|▏         | 55/3500 [00:02<02:04, 27.74tok/s]MLX Gen (native):   2%|▏         | 58/3500 [00:02<02:04, 27.64tok/s]MLX Gen (native):   2%|▏         | 61/3500 [00:02<02:05, 27.37tok/s]MLX Gen (native):   2%|▏         | 64/3500 [00:02<02:04, 27.56tok/s]MLX Gen (native):   2%|▏         | 67/3500 [00:02<02:02, 27.96tok/s]MLX Gen (native):   2%|▏         | 70/3500 [00:02<02:04, 27.64tok/s]MLX Gen (native):   2%|▏         | 73/3500 [00:02<02:03, 27.76tok/s]MLX Gen (native):   2%|▏         | 76/3500 [00:02<02:14, 25.39tok/s]MLX Gen (native):   2%|▏         | 79/3500 [00:02<02:09, 26.36tok/s]MLX Gen (native):   2%|▏         | 82/3500 [00:03<02:06, 27.01tok/s]MLX Gen (native):   2%|▏         | 85/3500 [00:03<02:05, 27.25tok/s]MLX Gen (native):   3%|▎         | 88/3500 [00:03<02:04, 27.36tok/s]MLX Gen (native):   3%|▎         | 91/3500 [00:03<02:04, 27.36tok/s]MLX Gen (native):   3%|▎         | 94/3500 [00:03<02:01, 28.02tok/s]MLX Gen (native):   3%|▎         | 98/3500 [00:03<01:58, 28.67tok/s]MLX Gen (native):   3%|▎         | 101/3500 [00:03<02:02, 27.83tok/s]MLX Gen (native):   3%|▎         | 104/3500 [00:03<02:02, 27.72tok/s]MLX Gen (native):   3%|▎         | 107/3500 [00:03<02:00, 28.20tok/s]MLX Gen (native):   3%|▎         | 110/3500 [00:04<01:59, 28.41tok/s]MLX Gen (native):   3%|▎         | 113/3500 [00:04<02:01, 27.83tok/s]MLX Gen (native):   3%|▎         | 116/3500 [00:04<02:15, 24.95tok/s]MLX Gen (native):   3%|▎         | 119/3500 [00:04<02:16, 24.68tok/s]MLX Gen (native):   3%|▎         | 122/3500 [00:04<02:21, 23.90tok/s]MLX Gen (native):   4%|▎         | 125/3500 [00:04<02:21, 23.82tok/s]MLX Gen (native):   4%|▎         | 128/3500 [00:04<02:15, 24.91tok/s]MLX Gen (native):   4%|▎         | 131/3500 [00:04<02:13, 25.33tok/s]MLX Gen (native):   4%|▍         | 134/3500 [00:04<02:11, 25.62tok/s]MLX Gen (native):   4%|▍         | 137/3500 [00:05<02:06, 26.59tok/s]MLX Gen (native):   4%|▍         | 140/3500 [00:05<02:06, 26.60tok/s]MLX Gen (native):   4%|▍         | 143/3500 [00:05<02:02, 27.44tok/s]MLX Gen (native):   4%|▍         | 146/3500 [00:05<02:58, 18.83tok/s]MLX Gen (native):   4%|▍         | 149/3500 [00:05<03:03, 18.26tok/s]MLX Gen (native):   4%|▍         | 152/3500 [00:05<02:42, 20.65tok/s]MLX Gen (native):   4%|▍         | 155/3500 [00:05<02:27, 22.64tok/s]MLX Gen (native):   5%|▍         | 158/3500 [00:06<02:19, 24.01tok/s]MLX Gen (native):   5%|▍         | 161/3500 [00:06<02:12, 25.16tok/s]MLX Gen (native):   5%|▍         | 165/3500 [00:06<02:06, 26.41tok/s]MLX Gen (native):   5%|▍         | 168/3500 [00:09<19:06,  2.91tok/s]MLX Gen (native):   5%|▍         | 171/3500 [00:09<14:16,  3.89tok/s]MLX Gen (native):   5%|▌         | 175/3500 [00:09<09:53,  5.60tok/s]MLX Gen (native):   5%|▌         | 178/3500 [00:10<07:41,  7.20tok/s]MLX Gen (native):   5%|▌         | 181/3500 [00:10<06:02,  9.14tok/s]MLX Gen (native):   5%|▌         | 184/3500 [00:10<04:52, 11.32tok/s]MLX Gen (native):   5%|▌         | 187/3500 [00:10<04:01, 13.74tok/s]MLX Gen (native):   5%|▌         | 190/3500 [00:10<03:22, 16.31tok/s]MLX Gen (native):   6%|▌         | 193/3500 [00:10<03:00, 18.29tok/s]MLX Gen (native):   6%|▌         | 196/3500 [00:10<02:40, 20.63tok/s]MLX Gen (native):   6%|▌         | 199/3500 [00:10<02:28, 22.28tok/s]MLX Gen (native):   6%|▌         | 203/3500 [00:10<02:14, 24.54tok/s]MLX Gen (native):   6%|▌         | 206/3500 [00:11<02:15, 24.25tok/s]MLX Gen (native):   6%|▌         | 209/3500 [00:11<02:10, 25.28tok/s]MLX Gen (native):   6%|▌         | 213/3500 [00:11<02:03, 26.63tok/s]MLX Gen (native):   6%|▌         | 217/3500 [00:11<01:58, 27.66tok/s]MLX Gen (native):   6%|▋         | 220/3500 [00:11<02:00, 27.25tok/s]MLX Gen (native):   6%|▋         | 223/3500 [00:11<01:57, 27.80tok/s]MLX Gen (native):   6%|▋         | 226/3500 [00:11<01:56, 28.12tok/s]MLX Gen (native):   7%|▋         | 229/3500 [00:11<01:54, 28.46tok/s]MLX Gen (native):   7%|▋         | 232/3500 [00:11<01:55, 28.20tok/s]MLX Gen (native):   7%|▋         | 235/3500 [00:12<01:56, 27.97tok/s]MLX Gen (native):   7%|▋         | 238/3500 [00:12<01:58, 27.46tok/s]MLX Gen (native):   7%|▋         | 241/3500 [00:12<01:58, 27.53tok/s]MLX Gen (native):   7%|▋         | 244/3500 [00:12<01:59, 27.33tok/s]MLX Gen (native):   7%|▋         | 247/3500 [00:12<01:59, 27.29tok/s]MLX Gen (native):   7%|▋         | 250/3500 [00:12<01:57, 27.61tok/s]MLX Gen (native):   7%|▋         | 253/3500 [00:12<01:57, 27.64tok/s]MLX Gen (native):   7%|▋         | 256/3500 [00:12<01:56, 27.88tok/s]MLX Gen (native):   7%|▋         | 259/3500 [00:12<01:59, 27.03tok/s]MLX Gen (native):   7%|▋         | 262/3500 [00:13<02:00, 26.78tok/s]MLX Gen (native):   8%|▊         | 265/3500 [00:13<01:59, 27.06tok/s]MLX Gen (native):   8%|▊         | 268/3500 [00:13<01:58, 27.36tok/s]MLX Gen (native):   8%|▊         | 271/3500 [00:13<01:55, 27.88tok/s]MLX Gen (native):   8%|▊         | 274/3500 [00:13<01:54, 28.08tok/s]MLX Gen (native):   8%|▊         | 277/3500 [00:13<01:53, 28.32tok/s]MLX Gen (native):   8%|▊         | 280/3500 [00:13<01:53, 28.27tok/s]MLX Gen (native):   8%|▊         | 283/3500 [00:13<01:53, 28.38tok/s]MLX Gen (native):   8%|▊         | 287/3500 [00:13<01:49, 29.31tok/s]MLX Gen (native):   8%|▊         | 290/3500 [00:14<01:49, 29.34tok/s]MLX Gen (native):   8%|▊         | 293/3500 [00:14<01:49, 29.34tok/s]MLX Gen (native):   8%|▊         | 296/3500 [00:14<01:49, 29.17tok/s]MLX Gen (native):   9%|▊         | 299/3500 [00:14<01:49, 29.18tok/s]MLX Gen (native):   9%|▊         | 302/3500 [00:14<01:51, 28.76tok/s]MLX Gen (native):   9%|▊         | 305/3500 [00:14<01:50, 28.86tok/s]MLX Gen (native):   9%|▉         | 308/3500 [00:14<01:52, 28.42tok/s]MLX Gen (native):   9%|▉         | 311/3500 [00:14<01:50, 28.77tok/s]MLX Gen (native):   9%|▉         | 314/3500 [00:14<01:54, 27.77tok/s]MLX Gen (native):   9%|▉         | 317/3500 [00:14<01:52, 28.26tok/s]MLX Gen (native):   9%|▉         | 320/3500 [00:15<01:52, 28.31tok/s]MLX Gen (native):   9%|▉         | 323/3500 [00:15<01:51, 28.42tok/s]MLX Gen (native):   9%|▉         | 326/3500 [00:15<01:52, 28.18tok/s]MLX Gen (native):   9%|▉         | 329/3500 [00:15<01:51, 28.38tok/s]MLX Gen (native):   9%|▉         | 332/3500 [00:15<01:50, 28.66tok/s]MLX Gen (native):  10%|▉         | 335/3500 [00:15<01:49, 28.82tok/s]MLX Gen (native):  10%|▉         | 338/3500 [00:15<01:48, 29.09tok/s]MLX Gen (native):  10%|▉         | 341/3500 [00:15<01:56, 27.19tok/s]MLX Gen (native):  10%|▉         | 345/3500 [00:15<01:52, 28.04tok/s]MLX Gen (native):  10%|▉         | 348/3500 [00:16<01:51, 28.22tok/s]MLX Gen (native):  10%|█         | 351/3500 [00:16<01:51, 28.25tok/s]MLX Gen (native):  10%|█         | 354/3500 [00:16<01:49, 28.61tok/s]MLX Gen (native):  10%|█         | 357/3500 [00:16<01:49, 28.71tok/s]MLX Gen (native):  10%|█         | 360/3500 [00:16<01:50, 28.45tok/s]MLX Gen (native):  10%|█         | 363/3500 [00:16<01:50, 28.45tok/s]MLX Gen (native):  10%|█         | 366/3500 [00:16<01:49, 28.70tok/s]MLX Gen (native):  11%|█         | 369/3500 [00:16<01:49, 28.67tok/s]MLX Gen (native):  11%|█         | 372/3500 [00:16<01:48, 28.87tok/s]MLX Gen (native):  11%|█         | 375/3500 [00:17<01:47, 29.19tok/s]MLX Gen (native):  11%|█         | 378/3500 [00:17<01:47, 29.09tok/s]MLX Gen (native):  11%|█         | 381/3500 [00:17<01:47, 28.91tok/s]MLX Gen (native):  11%|█         | 385/3500 [00:17<01:45, 29.58tok/s]MLX Gen (native):  11%|█         | 388/3500 [00:17<01:45, 29.45tok/s]MLX Gen (native):  11%|█         | 392/3500 [00:17<01:44, 29.71tok/s]MLX Gen (native):  11%|█▏        | 395/3500 [00:17<01:45, 29.36tok/s]MLX Gen (native):  11%|█▏        | 398/3500 [00:17<01:46, 29.18tok/s]MLX Gen (native):  11%|█▏        | 401/3500 [00:17<01:52, 27.46tok/s]MLX Gen (native):  12%|█▏        | 404/3500 [00:18<01:52, 27.60tok/s]MLX Gen (native):  12%|█▏        | 407/3500 [00:18<01:52, 27.60tok/s]MLX Gen (native):  12%|█▏        | 410/3500 [00:18<01:52, 27.59tok/s]MLX Gen (native):  12%|█▏        | 413/3500 [00:18<01:51, 27.61tok/s]MLX Gen (native):  12%|█▏        | 416/3500 [00:18<01:51, 27.65tok/s]MLX Gen (native):  12%|█▏        | 419/3500 [00:18<01:52, 27.44tok/s]MLX Gen (native):  12%|█▏        | 422/3500 [00:18<01:50, 27.86tok/s]MLX Gen (native):  12%|█▏        | 426/3500 [00:18<01:47, 28.58tok/s]MLX Gen (native):  12%|█▏        | 429/3500 [00:18<01:47, 28.50tok/s]MLX Gen (native):  12%|█▏        | 432/3500 [00:19<01:49, 28.08tok/s]MLX Gen (native):  12%|█▏        | 435/3500 [00:19<01:50, 27.71tok/s]MLX Gen (native):  13%|█▎        | 438/3500 [00:19<01:52, 27.26tok/s]MLX Gen (native):  13%|█▎        | 441/3500 [00:19<01:53, 26.84tok/s]MLX Gen (native):  13%|█▎        | 444/3500 [00:19<01:55, 26.52tok/s]MLX Gen (native):  13%|█▎        | 447/3500 [00:19<01:55, 26.52tok/s]MLX Gen (native):  13%|█▎        | 450/3500 [00:19<01:54, 26.52tok/s]MLX Gen (native):  13%|█▎        | 453/3500 [00:19<01:56, 26.07tok/s]MLX Gen (native):  13%|█▎        | 456/3500 [00:19<01:58, 25.60tok/s]MLX Gen (native):  13%|█▎        | 459/3500 [00:20<01:58, 25.67tok/s]MLX Gen (native):  13%|█▎        | 462/3500 [00:20<02:05, 24.11tok/s]MLX Gen (native):  13%|█▎        | 465/3500 [00:20<02:00, 25.09tok/s]MLX Gen (native):  13%|█▎        | 468/3500 [00:20<01:59, 25.28tok/s]MLX Gen (native):  13%|█▎        | 471/3500 [00:20<02:00, 25.24tok/s]MLX Gen (native):  14%|█▎        | 474/3500 [00:20<01:59, 25.37tok/s]MLX Gen (native):  14%|█▎        | 477/3500 [00:20<01:58, 25.41tok/s]MLX Gen (native):  14%|█▎        | 480/3500 [00:20<01:58, 25.45tok/s]MLX Gen (native):  14%|█▍        | 483/3500 [00:21<01:55, 26.15tok/s]MLX Gen (native):  14%|█▍        | 486/3500 [00:21<01:53, 26.63tok/s]MLX Gen (native):  14%|█▍        | 489/3500 [00:21<01:50, 27.36tok/s]MLX Gen (native):  14%|█▍        | 492/3500 [00:21<01:50, 27.21tok/s]MLX Gen (native):  14%|█▍        | 495/3500 [00:21<01:53, 26.55tok/s]MLX Gen (native):  14%|█▍        | 498/3500 [00:21<01:52, 26.57tok/s]MLX Gen (native):  14%|█▍        | 501/3500 [00:21<01:51, 26.78tok/s]MLX Gen (native):  14%|█▍        | 504/3500 [00:21<01:52, 26.59tok/s]MLX Gen (native):  14%|█▍        | 507/3500 [00:21<01:53, 26.27tok/s]MLX Gen (native):  15%|█▍        | 510/3500 [00:22<01:52, 26.51tok/s]MLX Gen (native):  15%|█▍        | 513/3500 [00:22<01:52, 26.65tok/s]MLX Gen (native):  15%|█▍        | 516/3500 [00:22<01:55, 25.81tok/s]MLX Gen (native):  15%|█▍        | 519/3500 [00:22<01:54, 26.02tok/s]MLX Gen (native):  15%|█▍        | 522/3500 [00:22<01:55, 25.86tok/s]MLX Gen (native):  15%|█▌        | 525/3500 [00:22<02:02, 24.26tok/s]MLX Gen (native):  15%|█▌        | 528/3500 [00:22<01:58, 25.08tok/s]MLX Gen (native):  15%|█▌        | 531/3500 [00:22<01:54, 26.02tok/s]MLX Gen (native):  15%|█▌        | 534/3500 [00:22<01:54, 25.90tok/s]MLX Gen (native):  15%|█▌        | 537/3500 [00:23<01:53, 26.07tok/s]MLX Gen (native):  15%|█▌        | 540/3500 [00:23<01:51, 26.45tok/s]MLX Gen (native):  16%|█▌        | 543/3500 [00:23<01:52, 26.31tok/s]MLX Gen (native):  16%|█▌        | 546/3500 [00:23<01:52, 26.34tok/s]MLX Gen (native):  16%|█▌        | 549/3500 [00:23<01:49, 26.84tok/s]MLX Gen (native):  16%|█▌        | 552/3500 [00:23<01:51, 26.35tok/s]MLX Gen (native):  16%|█▌        | 555/3500 [00:23<01:50, 26.60tok/s]MLX Gen (native):  16%|█▌        | 558/3500 [00:23<01:51, 26.34tok/s]MLX Gen (native):  16%|█▌        | 561/3500 [00:23<01:51, 26.35tok/s]MLX Gen (native):  16%|█▌        | 564/3500 [00:24<01:50, 26.49tok/s]MLX Gen (native):  16%|█▌        | 567/3500 [00:24<01:49, 26.72tok/s]MLX Gen (native):  16%|█▋        | 570/3500 [00:24<01:52, 25.97tok/s]MLX Gen (native):  16%|█▋        | 573/3500 [00:24<02:00, 24.25tok/s]MLX Gen (native):  16%|█▋        | 576/3500 [00:24<02:00, 24.20tok/s]MLX Gen (native):  17%|█▋        | 579/3500 [00:24<01:59, 24.51tok/s]MLX Gen (native):  17%|█▋        | 582/3500 [00:24<02:01, 23.97tok/s]MLX Gen (native):  17%|█▋        | 585/3500 [00:24<02:00, 24.21tok/s]MLX Gen (native):  17%|█▋        | 588/3500 [00:25<01:55, 25.28tok/s]MLX Gen (native):  17%|█▋        | 591/3500 [00:25<01:59, 24.37tok/s]MLX Gen (native):  17%|█▋        | 594/3500 [00:25<01:58, 24.60tok/s]MLX Gen (native):  17%|█▋        | 597/3500 [00:25<01:55, 25.03tok/s]MLX Gen (native):  17%|█▋        | 600/3500 [00:25<01:55, 25.09tok/s]MLX Gen (native):  17%|█▋        | 603/3500 [00:25<01:54, 25.25tok/s]MLX Gen (native):  17%|█▋        | 606/3500 [00:25<01:53, 25.57tok/s]MLX Gen (native):  17%|█▋        | 609/3500 [00:25<01:53, 25.57tok/s]MLX Gen (native):  17%|█▋        | 612/3500 [00:26<01:53, 25.52tok/s]MLX Gen (native):  18%|█▊        | 615/3500 [00:26<01:48, 26.71tok/s]MLX Gen (native):  18%|█▊        | 618/3500 [00:26<01:51, 25.91tok/s]MLX Gen (native):  18%|█▊        | 621/3500 [00:26<01:50, 26.01tok/s]MLX Gen (native):  18%|█▊        | 624/3500 [00:26<01:50, 26.00tok/s]MLX Gen (native):  18%|█▊        | 627/3500 [00:26<01:49, 26.12tok/s]MLX Gen (native):  18%|█▊        | 630/3500 [00:26<01:50, 25.90tok/s]MLX Gen (native):  18%|█▊        | 633/3500 [00:26<01:50, 25.84tok/s]MLX Gen (native):  18%|█▊        | 636/3500 [00:26<01:50, 25.97tok/s]MLX Gen (native):  18%|█▊        | 639/3500 [00:27<01:48, 26.28tok/s]MLX Gen (native):  18%|█▊        | 642/3500 [00:27<01:46, 26.74tok/s]MLX Gen (native):  18%|█▊        | 645/3500 [00:27<01:49, 26.13tok/s]MLX Gen (native):  19%|█▊        | 648/3500 [00:27<01:49, 25.98tok/s]MLX Gen (native):  19%|█▊        | 651/3500 [00:27<01:49, 26.10tok/s]MLX Gen (native):  19%|█▊        | 654/3500 [00:27<01:46, 26.72tok/s]MLX Gen (native):  19%|█▉        | 657/3500 [00:27<01:46, 26.82tok/s]MLX Gen (native):  19%|█▉        | 660/3500 [00:27<01:47, 26.47tok/s]MLX Gen (native):  19%|█▉        | 663/3500 [00:27<01:47, 26.30tok/s]MLX Gen (native):  19%|█▉        | 666/3500 [00:28<01:48, 26.21tok/s]MLX Gen (native):  19%|█▉        | 669/3500 [00:28<01:46, 26.59tok/s]MLX Gen (native):  19%|█▉        | 671/3500 [00:28<01:59, 23.70tok/s]
+[32m2026-11-13 12:57:41.017[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3711[0m - [1mMLX native generation complete: 671 tokens in 28.31s (23.7 tok/s) | prefill 8.51s + decode 28.31s = 36.82s total[0m
+[32m2026-11-13 12:57:41.054[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <think>
+bpm: 180
+caption: A lighthearted and playful French chanson track driven by an intricate nylon-string
+  acoustic guitar performance. The arrangement features a lively, flamenco-influenced
+  guitar playing both rhythmic chords and melodic fills, accompanied by a warm, walking
+  upright bass line and subtle hand percussion that provides a gentle, swinging groove.
+  The lead male vocal is clear and expressive, delivered in a conversational and charming
+  style. The song follows a classic verse-chorus structure, with catchy, melodic choruses
+  and two short, skillful guitar-led instrumental breaks.
+duration: 213
+genres:French chanson
+keyscale: C major
+language: de
+timesignature: 4
+[0m
+[32m2026-11-13 12:57:41.056[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mcreate_sample_from_query[0m:[36m2156[0m - [1mSample created successfully. Generated {'bpm': 180, 'caption': 'A lighthearted and playful French chanson track driven by an intricate nylon-string acoustic guitar performance. The arrangement features a lively, flamenco-influenced guitar playing both rhythmic chords and melodic fills, accompanied by a warm, walking upright bass line and subtle hand percussion that provides a gentle, swinging groove. The lead male vocal is clear and expressive, delivered in a conversational and charming style. The song follows a classic verse-chorus structure, with catchy, melodic choruses and two short, skillful guitar-led instrumental breaks.', 'duration': 213, 'genres': 'French chanson', 'keyscale': 'C major', 'language': 'de', 'timesignature': '4', 'lyrics': "[Intro - Acoustic Guitar]\n\n[Verse 1]\nAch, schenk mir einen Bier, ich will\nIch will mein Bier\nUnd pflanze auch mal irgendwas\nWas ich nicht will\nIch will zwar nur ein Bier\nDas ist nicht so gemein\nUnd dann sei ich mit dir\nDu mogst mir kein Verzeih'n\n\n[Chorus]\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\n\n[Chorus]\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\n\n[Instrumental Break - Acoustic Guitar]\n\n[Verse 2]\nIch will so gerne Wein, Wein, Wein, Wein, Wein\nUnd dann sei ich mit dir\nDu mogst mir kein Verzeih'n\nDu sollst auch keine Liebe haben\nIch weiß, dass es so ist\nWenn das einst kein Mensch gewinnen mag\nIch kann nichts andres tun\n\n[Chorus]\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\n\n[Chorus]\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\n\n[Instrumental Break - Acoustic Guitar]\n\n[Verse 3]\nIch will so gerne Hochfluggruß\nIch kann nur nicht entkommen\nIch will mein Tunkot an sitzen\nMal schnippen und mal kochen\nIch will einfach nur dein Gobra, Gobra\nYo, ich bin schon gescheh'n\nWenn du falsch zu mir hältst, Erbarmen\nIch kann nicht viel gefeh'n\n\n[Chorus]\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\n\n[Chorus]\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\n\n[Outro - Acoustic Guitar]", 'instrumental': False} fields[0m
+[Probe] KI schreibt deutschen Text (create_sample): OK 37.0 s
+[32m2026-11-13 12:57:41.059[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=True, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=True, use_lm=True[0m
+[32m2026-11-13 12:57:41.059[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m720[0m - [1mLM chunk 1/1 (infer_type=llm_dit) (size: 1, seeds: [7])[0m
+[32m2026-11-13 12:57:41.060[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1371[0m - [1mPhase 1: Generating CoT metadata...[0m
+[32m2026-11-13 12:57:41.068[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1377[0m - [1mgenerate_with_stop_condition: formatted_prompt=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+A lighthearted and playful French chanson track driven by an intricate nylon-string acoustic guitar performance. The arrangement features a lively, flamenco-influenced guitar playing both rhythmic chords and melodic fills, accompanied by a warm, walking upright bass line and subtle hand percussion that provides a gentle, swinging groove. The lead male vocal is clear and expressive, delivered in a conversational and charming style. The song follows a classic verse-chorus structure, with catchy, melodic choruses and two short, skillful guitar-led instrumental breaks.
+
+# Lyric
+[Intro - Acoustic Guitar]
+
+[Verse 1]
+Ach, schenk mir einen Bier, ich will
+Ich will mein Bier
+Und pflanze auch mal irgendwas
+Was ich nicht will
+Ich will zwar nur ein Bier
+Das ist nicht so gemein
+Und dann sei ich mit dir
+Du mogst mir kein Verzeih'n
+
+[Chorus]
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+
+[Chorus]
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+
+[Instrumental Break - Acoustic Guitar]
+
+[Verse 2]
+Ich will so gerne Wein, Wein, Wein, Wein, Wein
+Und dann sei ich mit dir
+Du mogst mir kein Verzeih'n
+Du sollst auch keine Liebe haben
+Ich weiß, dass es so ist
+Wenn das einst kein Mensch gewinnen mag
+Ich kann nichts andres tun
+
+[Chorus]
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+
+[Chorus]
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+
+[Instrumental Break - Acoustic Guitar]
+
+[Verse 3]
+Ich will so gerne Hochfluggruß
+Ich kann nur nicht entkommen
+Ich will mein Tunkot an sitzen
+Mal schnippen und mal kochen
+Ich will einfach nur dein Gobra, Gobra
+Yo, ich bin schon gescheh'n
+Wenn du falsch zu mir hältst, Erbarmen
+Ich kann nicht viel gefeh'n
+
+[Chorus]
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+
+[Chorus]
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+
+[Outro - Acoustic Guitar]
+<|im_end|>
+<|im_start|>assistant
+[0m
+[32m2026-11-13 12:57:41.581[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3595[0m - [1mMLX native prefill: 644 tokens in 0.49s (1322.7 tok/s)[0m
+MLX Gen (native):   0%|          | 0/3500 [00:00<?, ?tok/s]MLX Gen (native):   0%|          | 3/3500 [00:00<02:14, 26.05tok/s]MLX Gen (native):   0%|          | 6/3500 [00:00<02:15, 25.70tok/s]MLX Gen (native):   0%|          | 9/3500 [00:00<02:46, 21.00tok/s]MLX Gen (native):   0%|          | 12/3500 [00:00<02:42, 21.42tok/s]MLX Gen (native):   0%|          | 15/3500 [00:00<02:34, 22.49tok/s]MLX Gen (native):   1%|          | 18/3500 [00:00<02:29, 23.34tok/s]MLX Gen (native):   1%|          | 21/3500 [00:00<02:25, 23.97tok/s]MLX Gen (native):   1%|          | 24/3500 [00:01<02:24, 24.13tok/s]MLX Gen (native):   1%|          | 27/3500 [00:01<02:22, 24.34tok/s]MLX Gen (native):   1%|          | 30/3500 [00:01<02:21, 24.52tok/s]MLX Gen (native):   1%|          | 33/3500 [00:01<02:21, 24.43tok/s]MLX Gen (native):   1%|          | 36/3500 [00:01<02:23, 24.08tok/s]MLX Gen (native):   1%|          | 39/3500 [00:01<02:28, 23.29tok/s]MLX Gen (native):   1%|          | 42/3500 [00:01<02:28, 23.35tok/s]MLX Gen (native):   1%|▏         | 45/3500 [00:01<02:24, 23.88tok/s]MLX Gen (native):   1%|▏         | 48/3500 [00:02<02:24, 23.96tok/s]MLX Gen (native):   1%|▏         | 51/3500 [00:02<02:23, 23.96tok/s]MLX Gen (native):   2%|▏         | 54/3500 [00:02<02:22, 24.18tok/s]MLX Gen (native):   2%|▏         | 57/3500 [00:02<02:20, 24.47tok/s]MLX Gen (native):   2%|▏         | 60/3500 [00:02<02:27, 23.36tok/s]MLX Gen (native):   2%|▏         | 63/3500 [00:02<02:25, 23.68tok/s]MLX Gen (native):   2%|▏         | 66/3500 [00:02<02:26, 23.49tok/s]MLX Gen (native):   2%|▏         | 69/3500 [00:02<02:29, 22.96tok/s]MLX Gen (native):   2%|▏         | 72/3500 [00:03<02:28, 23.14tok/s]MLX Gen (native):   2%|▏         | 75/3500 [00:03<02:28, 23.10tok/s]MLX Gen (native):   2%|▏         | 78/3500 [00:03<02:24, 23.68tok/s]MLX Gen (native):   2%|▏         | 81/3500 [00:03<02:22, 23.94tok/s]MLX Gen (native):   2%|▏         | 84/3500 [00:03<02:44, 20.82tok/s]MLX Gen (native):   2%|▏         | 87/3500 [00:03<02:48, 20.26tok/s]MLX Gen (native):   3%|▎         | 90/3500 [00:03<02:38, 21.50tok/s]MLX Gen (native):   3%|▎         | 93/3500 [00:04<02:32, 22.31tok/s]MLX Gen (native):   3%|▎         | 96/3500 [00:04<02:29, 22.80tok/s]MLX Gen (native):   3%|▎         | 99/3500 [00:04<02:26, 23.21tok/s]MLX Gen (native):   3%|▎         | 102/3500 [00:04<02:22, 23.93tok/s]MLX Gen (native):   3%|▎         | 105/3500 [00:04<02:19, 24.42tok/s]MLX Gen (native):   3%|▎         | 108/3500 [00:04<02:18, 24.41tok/s]MLX Gen (native):   3%|▎         | 111/3500 [00:04<02:22, 23.74tok/s]MLX Gen (native):   3%|▎         | 114/3500 [00:04<02:23, 23.68tok/s]MLX Gen (native):   3%|▎         | 117/3500 [00:05<02:22, 23.78tok/s]MLX Gen (native):   3%|▎         | 120/3500 [00:05<02:22, 23.72tok/s]MLX Gen (native):   4%|▎         | 123/3500 [00:05<02:22, 23.66tok/s]MLX Gen (native):   4%|▎         | 126/3500 [00:05<02:27, 22.85tok/s]MLX Gen (native):   4%|▎         | 129/3500 [00:05<02:24, 23.26tok/s]MLX Gen (native):   4%|▍         | 132/3500 [00:05<02:32, 22.01tok/s]MLX Gen (native):   4%|▍         | 135/3500 [00:05<02:35, 21.70tok/s]MLX Gen (native):   4%|▍         | 138/3500 [00:05<02:29, 22.44tok/s]MLX Gen (native):   4%|▍         | 141/3500 [00:06<02:26, 22.89tok/s]MLX Gen (native):   4%|▍         | 144/3500 [00:06<02:24, 23.27tok/s]MLX Gen (native):   4%|▍         | 147/3500 [00:06<02:23, 23.39tok/s]MLX Gen (native):   4%|▍         | 150/3500 [00:06<02:21, 23.72tok/s]MLX Gen (native):   4%|▍         | 153/3500 [00:06<02:22, 23.48tok/s]MLX Gen (native):   4%|▍         | 156/3500 [00:06<02:23, 23.32tok/s]MLX Gen (native):   5%|▍         | 159/3500 [00:06<02:22, 23.44tok/s]MLX Gen (native):   5%|▍         | 159/3500 [00:06<02:23, 23.28tok/s]
+[32m2026-11-13 12:57:48.412[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3711[0m - [1mMLX native generation complete: 159 tokens in 6.83s (23.3 tok/s) | prefill 0.49s + decode 6.83s = 7.32s total[0m
+[32m2026-11-13 12:57:48.413[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <think>
+bpm: 180
+caption: A lighthearted and playful French chanson track driven by an intricate nylon-string
+  acoustic guitar performance. The arrangement features a lively, flamenco-influenced
+  guitar playing both rhythmic chords and melodic fills, accompanied by a warm, walking
+  upright bass line and subtle hand percussion that provides a gentle, swinging groove.
+  The lead male vocal is clear and expressive, delivered in a conversational and charming
+  style. The song follows a classic verse-chorus structure, with catchy, melodic choruses
+  and two short, skillful guitar-led instrumental breaks.
+duration: 40
+keyscale: C major
+language: de
+timesignature: 4
+<|im_end|>[0m
+[32m2026-11-13 12:57:48.413[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1422[0m - [1mPhase 1 completed in 7.35s. Generated metadata: ['bpm', 'caption', 'duration', 'keyscale', 'language', 'timesignature'][0m
+[32m2026-11-13 12:57:48.414[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1482[0m - [1mPhase 2: Generating audio codes...[0m
+[32m2026-11-13 12:57:48.416[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1490[0m - [1mgenerate_with_stop_condition: formatted_prompt_with_cot=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+A lighthearted and playful French chanson track driven by an intricate nylon-string acoustic guitar performance. The arrangement features a lively, flamenco-influenced guitar playing both rhythmic chords and melodic fills, accompanied by a warm, walking upright bass line and subtle hand percussion that provides a gentle, swinging groove. The lead male vocal is clear and expressive, delivered in a conversational and charming style. The song follows a classic verse-chorus structure, with catchy, melodic choruses and two short, skillful guitar-led instrumental breaks.
+
+# Lyric
+[Intro - Acoustic Guitar]
+
+[Verse 1]
+Ach, schenk mir einen Bier, ich will
+Ich will mein Bier
+Und pflanze auch mal irgendwas
+Was ich nicht will
+Ich will zwar nur ein Bier
+Das ist nicht so gemein
+Und dann sei ich mit dir
+Du mogst mir kein Verzeih'n
+
+[Chorus]
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+
+[Chorus]
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+
+[Instrumental Break - Acoustic Guitar]
+
+[Verse 2]
+Ich will so gerne Wein, Wein, Wein, Wein, Wein
+Und dann sei ich mit dir
+Du mogst mir kein Verzeih'n
+Du sollst auch keine Liebe haben
+Ich weiß, dass es so ist
+Wenn das einst kein Mensch gewinnen mag
+Ich kann nichts andres tun
+
+[Chorus]
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+
+[Chorus]
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+
+[Instrumental Break - Acoustic Guitar]
+
+[Verse 3]
+Ich will so gerne Hochfluggruß
+Ich kann nur nicht entkommen
+Ich will mein Tunkot an sitzen
+Mal schnippen und mal kochen
+Ich will einfach nur dein Gobra, Gobra
+Yo, ich bin schon gescheh'n
+Wenn du falsch zu mir hältst, Erbarmen
+Ich kann nicht viel gefeh'n
+
+[Chorus]
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+
+[Chorus]
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+
+[Outro - Acoustic Guitar]
+<|im_end|>
+<|im_start|>assistant
+<think>
+bpm: 180
+caption: A lighthearted and playful French chanson track driven by an intricate nylon-string
+  acoustic guitar performance. The arrangement features a lively, flamenco-influenced
+  guitar playing both rhythmic chords and melodic fills, accompanied by a warm, walking
+  upright bass line and subtle hand percussion that provides a gentle, swinging groove.
+  The lead male vocal is clear and expressive, delivered in a conversational and charming
+  style. The song follows a classic verse-chorus structure, with catchy, melodic choruses
+  and two short, skillful guitar-led instrumental breaks.
+duration: 40
+keyscale: C major
+language: de
+timesignature: 4
+</think>
+
+[0m
+[32m2026-11-13 12:57:48.423[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3514[0m - [1mMLX native: pre-transitioned FSM to CODES_GENERATION (native fast path)[0m
+[32m2026-11-13 12:57:48.425[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_build_unconditional_prompt[0m:[36m395[0m - [1mCFG unconditional prompt (phase=codes, is_batch=False, negative_prompt='NO USER INPUT'):
+<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+NO USER INPUT<|im_end|>
+<|im_start|>assistant
+<think>
+
+</think>
+
+[0m
+[32m2026-11-13 12:57:49.128[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3571[0m - [1mMLX native prefill: 837 tokens (cond=804, uncond=33) in 0.70s (1187.7 tok/s)[0m
+MLX CFG Gen (native):   0%|          | 0/210 [00:00<?, ?tok/s]MLX CFG Gen (native):   1%|▏         | 3/210 [00:00<00:08, 23.99tok/s]MLX CFG Gen (native):   3%|▎         | 6/210 [00:00<00:10, 19.64tok/s]MLX CFG Gen (native):   4%|▍         | 9/210 [00:00<00:12, 16.32tok/s]MLX CFG Gen (native):   5%|▌         | 11/210 [00:00<00:12, 16.41tok/s]MLX CFG Gen (native):   6%|▌         | 13/210 [00:00<00:12, 16.41tok/s]MLX CFG Gen (native):   7%|▋         | 15/210 [00:00<00:11, 16.80tok/s]MLX CFG Gen (native):   8%|▊         | 17/210 [00:00<00:11, 16.74tok/s]MLX CFG Gen (native):   9%|▉         | 19/210 [00:01<00:11, 16.51tok/s]MLX CFG Gen (native):  10%|█         | 21/210 [00:01<00:13, 14.08tok/s]MLX CFG Gen (native):  11%|█         | 23/210 [00:01<00:13, 14.15tok/s]MLX CFG Gen (native):  12%|█▏        | 25/210 [00:01<00:12, 14.61tok/s]MLX CFG Gen (native):  13%|█▎        | 27/210 [00:01<00:12, 14.52tok/s]MLX CFG Gen (native):  14%|█▍        | 29/210 [00:01<00:11, 15.22tok/s]MLX CFG Gen (native):  15%|█▍        | 31/210 [00:01<00:11, 15.89tok/s]MLX CFG Gen (native):  16%|█▌        | 33/210 [00:02<00:11, 15.46tok/s]MLX CFG Gen (native):  17%|█▋        | 35/210 [00:02<00:11, 15.81tok/s]MLX CFG Gen (native):  18%|█▊        | 37/210 [00:02<00:11, 15.07tok/s]MLX CFG Gen (native):  19%|█▊        | 39/210 [00:02<00:11, 14.94tok/s]MLX CFG Gen (native):  20%|█▉        | 41/210 [00:02<00:11, 14.43tok/s]MLX CFG Gen (native):  20%|██        | 43/210 [00:02<00:11, 14.28tok/s]MLX CFG Gen (native):  21%|██▏       | 45/210 [00:02<00:11, 14.51tok/s]MLX CFG Gen (native):  22%|██▏       | 47/210 [00:03<00:11, 14.30tok/s]MLX CFG Gen (native):  23%|██▎       | 49/210 [00:03<00:10, 14.88tok/s]MLX CFG Gen (native):  24%|██▍       | 51/210 [00:03<00:10, 15.20tok/s]MLX CFG Gen (native):  25%|██▌       | 53/210 [00:03<00:10, 14.54tok/s]MLX CFG Gen (native):  26%|██▌       | 55/210 [00:03<00:10, 14.60tok/s]MLX CFG Gen (native):  27%|██▋       | 57/210 [00:03<00:10, 15.20tok/s]MLX CFG Gen (native):  28%|██▊       | 59/210 [00:03<00:10, 15.00tok/s]MLX CFG Gen (native):  29%|██▉       | 61/210 [00:03<00:09, 15.12tok/s]MLX CFG Gen (native):  30%|███       | 63/210 [00:04<00:09, 15.17tok/s]MLX CFG Gen (native):  31%|███       | 65/210 [00:04<00:09, 15.51tok/s]MLX CFG Gen (native):  32%|███▏      | 67/210 [00:04<00:09, 15.77tok/s]MLX CFG Gen (native):  33%|███▎      | 69/210 [00:04<00:09, 14.95tok/s]MLX CFG Gen (native):  34%|███▍      | 71/210 [00:04<00:09, 14.06tok/s]MLX CFG Gen (native):  35%|███▍      | 73/210 [00:04<00:10, 13.66tok/s]MLX CFG Gen (native):  36%|███▌      | 75/210 [00:04<00:09, 14.02tok/s]MLX CFG Gen (native):  37%|███▋      | 77/210 [00:05<00:09, 14.25tok/s]MLX CFG Gen (native):  38%|███▊      | 79/210 [00:05<00:09, 14.52tok/s]MLX CFG Gen (native):  39%|███▊      | 81/210 [00:05<00:08, 14.74tok/s]MLX CFG Gen (native):  40%|███▉      | 83/210 [00:05<00:08, 14.84tok/s]MLX CFG Gen (native):  40%|████      | 85/210 [00:05<00:08, 15.05tok/s]MLX CFG Gen (native):  41%|████▏     | 87/210 [00:05<00:08, 15.33tok/s]MLX CFG Gen (native):  42%|████▏     | 89/210 [00:05<00:07, 15.40tok/s]MLX CFG Gen (native):  43%|████▎     | 91/210 [00:05<00:07, 15.77tok/s]MLX CFG Gen (native):  44%|████▍     | 93/210 [00:06<00:07, 15.83tok/s]MLX CFG Gen (native):  45%|████▌     | 95/210 [00:06<00:07, 15.82tok/s]MLX CFG Gen (native):  46%|████▌     | 97/210 [00:06<00:07, 15.91tok/s]MLX CFG Gen (native):  47%|████▋     | 99/210 [00:06<00:06, 15.86tok/s]MLX CFG Gen (native):  48%|████▊     | 101/210 [00:06<00:06, 15.96tok/s]MLX CFG Gen (native):  49%|████▉     | 103/210 [00:06<00:06, 16.28tok/s]MLX CFG Gen (native):  50%|█████     | 105/210 [00:06<00:06, 16.35tok/s]MLX CFG Gen (native):  51%|█████     | 107/210 [00:06<00:06, 16.33tok/s]MLX CFG Gen (native):  52%|█████▏    | 109/210 [00:07<00:06, 16.45tok/s]MLX CFG Gen (native):  53%|█████▎    | 111/210 [00:07<00:06, 16.37tok/s]MLX CFG Gen (native):  54%|█████▍    | 113/210 [00:07<00:05, 16.27tok/s]MLX CFG Gen (native):  55%|█████▍    | 115/210 [00:07<00:05, 16.11tok/s]MLX CFG Gen (native):  56%|█████▌    | 117/210 [00:07<00:05, 16.13tok/s]MLX CFG Gen (native):  57%|█████▋    | 119/210 [00:07<00:05, 15.80tok/s]MLX CFG Gen (native):  58%|█████▊    | 121/210 [00:07<00:05, 15.97tok/s]MLX CFG Gen (native):  59%|█████▊    | 123/210 [00:07<00:05, 15.84tok/s]MLX CFG Gen (native):  60%|█████▉    | 125/210 [00:08<00:05, 15.58tok/s]MLX CFG Gen (native):  60%|██████    | 127/210 [00:08<00:05, 15.64tok/s]MLX CFG Gen (native):  61%|██████▏   | 129/210 [00:08<00:05, 15.08tok/s]MLX CFG Gen (native):  62%|██████▏   | 131/210 [00:08<00:05, 14.86tok/s]MLX CFG Gen (native):  63%|██████▎   | 133/210 [00:08<00:05, 14.22tok/s]MLX CFG Gen (native):  64%|██████▍   | 135/210 [00:08<00:05, 14.54tok/s]MLX CFG Gen (native):  65%|██████▌   | 137/210 [00:08<00:04, 15.09tok/s]MLX CFG Gen (native):  66%|██████▌   | 139/210 [00:09<00:04, 15.47tok/s]MLX CFG Gen (native):  67%|██████▋   | 141/210 [00:09<00:04, 15.79tok/s]MLX CFG Gen (native):  68%|██████▊   | 143/210 [00:09<00:04, 15.96tok/s]MLX CFG Gen (native):  69%|██████▉   | 145/210 [00:09<00:04, 15.95tok/s]MLX CFG Gen (native):  70%|███████   | 147/210 [00:09<00:03, 16.07tok/s]MLX CFG Gen (native):  71%|███████   | 149/210 [00:09<00:03, 15.55tok/s]MLX CFG Gen (native):  72%|███████▏  | 151/210 [00:09<00:03, 15.75tok/s]MLX CFG Gen (native):  73%|███████▎  | 153/210 [00:09<00:03, 15.74tok/s]MLX CFG Gen (native):  74%|███████▍  | 155/210 [00:10<00:03, 16.32tok/s]MLX CFG Gen (native):  75%|███████▍  | 157/210 [00:10<00:03, 16.41tok/s]MLX CFG Gen (native):  76%|███████▌  | 159/210 [00:10<00:03, 16.18tok/s]MLX CFG Gen (native):  77%|███████▋  | 161/210 [00:10<00:03, 16.25tok/s]MLX CFG Gen (native):  78%|███████▊  | 163/210 [00:10<00:02, 16.30tok/s]MLX CFG Gen (native):  79%|███████▊  | 165/210 [00:10<00:02, 15.85tok/s]MLX CFG Gen (native):  80%|███████▉  | 167/210 [00:10<00:02, 15.89tok/s]MLX CFG Gen (native):  80%|████████  | 169/210 [00:10<00:02, 16.05tok/s]MLX CFG Gen (native):  81%|████████▏ | 171/210 [00:11<00:02, 14.65tok/s]MLX CFG Gen (native):  82%|████████▏ | 173/210 [00:11<00:02, 15.14tok/s]MLX CFG Gen (native):  83%|████████▎ | 175/210 [00:11<00:02, 15.44tok/s]MLX CFG Gen (native):  84%|████████▍ | 177/210 [00:11<00:02, 15.46tok/s]MLX CFG Gen (native):  85%|████████▌ | 179/210 [00:11<00:02, 15.11tok/s]MLX CFG Gen (native):  86%|████████▌ | 181/210 [00:11<00:01, 14.78tok/s]MLX CFG Gen (native):  87%|████████▋ | 183/210 [00:11<00:01, 15.06tok/s]MLX CFG Gen (native):  88%|████████▊ | 185/210 [00:11<00:01, 15.13tok/s]MLX CFG Gen (native):  89%|████████▉ | 187/210 [00:12<00:01, 15.61tok/s]MLX CFG Gen (native):  90%|█████████ | 189/210 [00:12<00:01, 15.85tok/s]MLX CFG Gen (native):  91%|█████████ | 191/210 [00:12<00:01, 15.61tok/s]MLX CFG Gen (native):  92%|█████████▏| 193/210 [00:12<00:01, 15.59tok/s]MLX CFG Gen (native):  93%|█████████▎| 195/210 [00:12<00:00, 15.29tok/s]MLX CFG Gen (native):  94%|█████████▍| 197/210 [00:12<00:00, 15.66tok/s]MLX CFG Gen (native):  95%|█████████▍| 199/210 [00:12<00:00, 14.01tok/s]MLX CFG Gen (native):  96%|█████████▌| 201/210 [00:13<00:00, 14.19tok/s]MLX CFG Gen (native):  96%|█████████▌| 201/210 [00:13<00:00, 15.39tok/s]
+[32m2026-11-13 12:58:02.190[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3711[0m - [1mMLX native generation complete: 201 tokens in 13.06s (15.4 tok/s) | prefill 0.70s + decode 13.06s = 13.77s total[0m
+[32m2026-11-13 12:58:03.009[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <|audio_code_2230|><|audio_code_54231|><|audio_code_14207|><|audio_code_32255|><|audio_code_56591|><|audio_code_18560|><|audio_code_2998|><|audio_code_14151|><|audio_code_37830|><|audio_code_59176|><|audio_code_24026|><|audio_code_3557|><|audio_code_30666|><|audio_code_1932|><|audio_code_23507|><|audio_code_53749|><|audio_code_61894|><|audio_code_63365|><|audio_code_32568|><|audio_code_46022|><|audio_code_59375|><|audio_code_7107|><|audio_code_37316|><|audio_code_34241|><|audio_code_14810|><|audio_code_14316|><|audio_code_15810|><|audio_code_44540|><|audio_code_63485|><|audio_code_51082|><|audio_code_39571|><|audio_code_494|><|audio_code_52541|><|audio_code_43024|><|audio_code_2942|><|audio_code_48944|><|audio_code_37512|><|audio_code_47609|><|audio_code_52206|><|audio_code_14314|><|audio_code_18387|><|audio_code_60410|><|audio_code_11715|><|audio_code_33725|><|audio_code_2951|><|audio_code_23465|><|audio_code_50131|><|audio_code_12260|><|audio_code_23505|><|audio_code_23548|><|audio_code_15744|><|audio_code_4577|><|audio_code_24517|><|audio_code_5574|><|audio_code_15158|><|audio_code_51183|><|audio_code_10095|><|audio_code_17807|><|audio_code_50442|><|audio_code_15160|><|audio_code_20471|><|audio_code_34239|><|audio_code_22523|><|audio_code_53195|><|audio_code_62410|><|audio_code_14834|><|audio_code_2947|><|audio_code_59383|><|audio_code_34239|><|audio_code_38892|><|audio_code_24550|><|audio_code_28887|><|audio_code_37247|><|audio_code_58080|><|audio_code_36127|><|audio_code_24518|><|audio_code_51658|><|audio_code_16174|><|audio_code_14832|><|audio_code_7621|><|audio_code_63835|><|audio_code_23444|><|audio_code_51439|><|audio_code_37790|><|audio_code_58319|><|audio_code_33642|><|audio_code_54439|><|audio_code_17887|><|audio_code_61863|><|audio_code_25035|><|audio_code_13265|><|audio_code_61945|><|audio_code_7659|><|audio_code_50132|><|audio_code_22735|><|audio_code_50935|><|audio_code_37333|><|audio_code_50183|><|audio_code_22807|><|audio_code_26872|><|audio_code_43055|><|audio_code_5591|><|audio_code_2183|><|audio_code_15179|><|audio_code_28521|><|audio_code_46521|><|audio_code_9601|><|audio_code_12761|><|audio_code_13283|><|audio_code_56310|><|audio_code_23495|><|audio_code_20975|><|audio_code_5672|><|audio_code_12368|><|audio_code_25711|><|audio_code_471|><|audio_code_7109|><|audio_code_2351|><|audio_code_56814|><|audio_code_18199|><|audio_code_51143|><|audio_code_34302|><|audio_code_27039|><|audio_code_39572|><|audio_code_52198|><|audio_code_52687|><|audio_code_50688|><|audio_code_23349|><|audio_code_23534|><|audio_code_41287|><|audio_code_50655|><|audio_code_16255|><|audio_code_63951|><|audio_code_24054|><|audio_code_25871|><|audio_code_3047|><|audio_code_11655|><|audio_code_24549|><|audio_code_63942|><|audio_code_20256|><|audio_code_25144|><|audio_code_44750|><|audio_code_42455|><|audio_code_13759|><|audio_code_53719|><|audio_code_10731|><|audio_code_53519|><|audio_code_47062|><|audio_code_46919|><|audio_code_24535|><|audio_code_63895|><|audio_code_51694|><|audio_code_17350|><|audio_code_19072|><|audio_code_5353|><|audio_code_18820|><|audio_code_407|><|audio_code_25565|><|audio_code_19271|><|audio_code_11759|><|audio_code_36839|><|audio_code_53719|><|audio_code_23517|><|audio_code_26535|><|audio_code_22008|><|audio_code_3351|><|audio_code_606|><|audio_code_15804|><|audio_code_29095|><|audio_code_54305|><|audio_code_35854|><|audio_code_41855|><|audio_code_49662|><|audio_code_47082|><|audio_code_4578|><|audio_code_13738|><|audio_code_36860|><|audio_code_62443|><|audio_code_61420|><|audio_code_17892|><|audio_code_29123|><|audio_code_15314|><|audio_code_23491|><|audio_code_36599|><|audio_code_28279|><|audio_code_16767|><|audio_code_2288|><|audio_code_383|><|audio_code_18935|><|audio_code_52625|><|audio_code_55736|><|audio_code_21488|><|audio_code_61360|><|audio_code_10175|><|audio_code_58640|><|audio_code_16071|><|audio_code_7623|><|audio_code_39832|><|audio_code_12664|><|audio_code_3464|><|im_end|>[0m
+[32m2026-11-13 12:58:03.011[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1650[0m - [1mPhase 2 completed in 14.60s. Generated 200 audio codes[0m
+[32m2026-11-13 12:58:03.018[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m329[0m - [1m[generate_music] Starting generation...[0m
+[32m2026-11-13 12:58:03.018[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m332[0m - [1m[generate_music] Preparing inputs...[0m
+[32m2026-11-13 12:58:03.108[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_request[0m:[36m_prepare_reference_and_source_audio[0m:[36m204[0m - [1m[generate_music] cover task: no src_audio but audio codes provided, proceeding with codes[0m
+[32m2026-11-13 12:58:03.539[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_target[0m:[36m_prepare_target_latents_and_wavs[0m:[36m78[0m - [1m[generate_music] Decoding audio codes for item 0...[0m
+[32m2026-11-13 12:58:10.842[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_precomputed_lm_hints[0m:[36m31[0m - [1m[generate_music] Decoding audio codes for LM hints for item 0...[0m
+[32m2026-11-13 12:58:12.343[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m119[0m - [1m
+======================================================================[0m
+[32m2026-11-13 12:58:12.343[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m120[0m - [1m🔍 [DEBUG] DiT TEXT ENCODER INPUT (Inference)[0m
+[32m2026-11-13 12:58:12.344[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m121[0m - [1m======================================================================[0m
+[32m2026-11-13 12:58:12.344[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m122[0m - [1mtext_prompt:
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+# Caption
+A lighthearted and playful French chanson track driven by an intricate nylon-string acoustic guitar performance. The arrangement features a lively, flamenco-influenced guitar playing both rhythmic chords and melodic fills, accompanied by a warm, walking upright bass line and subtle hand percussion that provides a gentle, swinging groove. The lead male vocal is clear and expressive, delivered in a conversational and charming style. The song follows a classic verse-chorus structure, with catchy, melodic choruses and two short, skillful guitar-led instrumental breaks.
+
+# Metas
+- bpm: 180
+- timesignature: 4
+- keyscale: C major
+- duration: 40 seconds
+<|endoftext|>
+[0m
+[32m2026-11-13 12:58:12.344[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m123[0m - [1m======================================================================[0m
+[32m2026-11-13 12:58:12.344[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m124[0m - [1mlyrics_text:
+# Languages
+de
+
+# Lyric
+[Intro - Acoustic Guitar]
+
+[Verse 1]
+Ach, schenk mir einen Bier, ich will
+Ich will mein Bier
+Und pflanze auch mal irgendwas
+Was ich nicht will
+Ich will zwar nur ein Bier
+Das ist nicht so gemein
+Und dann sei ich mit dir
+Du mogst mir kein Verzeih'n
+
+[Chorus]
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+
+[Chorus]
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+
+[Instrumental Break - Acoustic Guitar]
+
+[Verse 2]
+Ich will so gerne Wein, Wein, Wein, Wein, Wein
+Und dann sei ich mit dir
+Du mogst mir kein Verzeih'n
+Du sollst auch keine Liebe haben
+Ich weiß, dass es so ist
+Wenn das einst kein Mensch gewinnen mag
+Ich kann nichts andres tun
+
+[Chorus]
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+
+[Chorus]
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+
+[Instrumental Break - Acoustic Guitar]
+
+[Verse 3]
+Ich will so gerne Hochfluggruß
+Ich kann nur nicht entkommen
+Ich will mein Tunkot an sitzen
+Mal schnippen und mal kochen
+Ich will einfach nur dein Gobra, Gobra
+Yo, ich bin schon gescheh'n
+Wenn du falsch zu mir hältst, Erbarmen
+Ich kann nicht viel gefeh'n
+
+[Chorus]
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+
+[Chorus]
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+Ich will einen Schenk, Schenk, Schenk, Schenk, Schenk
+
+[Outro - Acoustic Guitar]<|endoftext|>[0m
+[32m2026-11-13 12:58:12.344[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m125[0m - [1m======================================================================
+[0m
+[32m2026-11-13 12:58:12.507[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m110[0m - [1m[preprocess_batch] Inferring prompt embeddings...[0m
+[32m2026-11-13 12:58:34.128[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m113[0m - [1m[preprocess_batch] Inferring lyric embeddings...[0m
+[32m2026-11-13 12:58:34.360[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m173[0m - [1m[service_generate] Generating audio... (DiT backend: PyTorch (cpu))[0m
+[32m2026-11-13 12:58:58.310[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m276[0m - [1m[service_generate] DiT diffusion via PyTorch (cpu)...[0m
+[32m2026-11-13 12:59:07.587[0m | [1mINFO    [0m | [36macestep.models.common.dcw_correction[0m:[36m__init__[0m:[36m98[0m - [1m[DCW] Active — mode=double, scaler=0.0500, high_scaler=0.0200, wavelet='haar'[0m
+[32m2026-11-13 13:05:39.215[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m42[0m - [1m[generate_music] Model generation completed. Decoding latents...[0m
+[32m2026-11-13 13:05:39.295[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m64[0m - [34m[1m[generate_music] pred_latents: torch.Size([1, 1000, 64]), dtype=torch.float32[0m
+[32m2026-11-13 13:05:39.297[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m65[0m - [34m[1m[generate_music] time_costs: {'encoder_time_cost': 9.260045051574707, 'diffusion_time_cost': 391.4613199234009, 'diffusion_per_step_time_cost': 48.93266499042511, 'total_time_cost': 400.7213649749756, 'offload_time_cost': 0.0}[0m
+[32m2026-11-13 13:05:39.326[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m127[0m - [1m[generate_music] Decoding latents with VAE...[0m
+[32m2026-11-13 13:05:39.397[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m136[0m - [34m[1m[generate_music] Before VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-13 13:05:39.397[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m172[0m - [1m[generate_music] Using tiled VAE decode to reduce VRAM usage...[0m
+[32m2026-11-13 13:06:42.171[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_decode_native[0m:[36m_mlx_vae_decode[0m:[36m66[0m - [1m[MLX-VAE] Decoded 1 sample(s), 1000 latent frames -> audio in 62.47s (convert=0.033s, decode=62.37s, dtype=mlx.core.float32)[0m
+[32m2026-11-13 13:06:42.810[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m193[0m - [34m[1m[generate_music] After VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-13 13:06:48.109[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m38[0m - [1m[generate_music] VAE decode completed. Preparing audio tensors...[0m
+[32m2026-11-13 13:06:48.115[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m50[0m - [1m[generate_music] Done! Generated 1 audio tensors.[0m
+[32m2026-11-13 13:06:48.549[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1002[0m - [1m[Normalization] Audio 0 BEFORE: Peak=1.0000, Target=-1.0dB[0m
+[32m2026-11-13 13:06:48.595[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1007[0m - [1m[Normalization] Audio 0 AFTER: Peak=0.8913[0m
+[32m2026-11-13 13:06:48.775[0m | [34m[1mDEBUG   [0m | [36macestep.audio_utils[0m:[36msave_audio[0m:[36m339[0m - [34m[1m[AudioSaver] Fallback soundfile Saved audio to /Users/runner/work/music-library-mac/music-library-mac/out/audio/04-gesang-de-ki-text/01a621a1-74cf-706d-f5db-6e2faea221c8.flac (flac, 48000Hz)[0m
+Using precomputed LM hints
+Using precomputed LM hints
+[Probe] Erzeugen 04-gesang-de-ki-text: OK 547.9 s
+[32m2026-11-13 13:06:48.922[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=False, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=True, use_lm=True[0m
+[32m2026-11-13 13:06:48.922[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m720[0m - [1mLM chunk 1/1 (infer_type=dit) (size: 2, seeds: [11, 22])[0m
+[32m2026-11-13 13:06:48.922[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1369[0m - [1mBatch Phase 1: Generating CoT metadata (once for all items)...[0m
+[32m2026-11-13 13:06:48.929[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1377[0m - [1mgenerate_with_stop_condition: formatted_prompt=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+Energetic synthwave with driving bass, bright arpeggios and punchy drums
+
+# Lyric
+[Instrumental]
+<|im_end|>
+<|im_start|>assistant
+[0m
+[32m2026-11-13 13:07:01.184[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3595[0m - [1mMLX native prefill: 56 tokens in 12.18s (4.6 tok/s)[0m
+MLX Gen (native):   0%|          | 0/3500 [00:00<?, ?tok/s]MLX Gen (native):   0%|          | 3/3500 [00:00<02:44, 21.20tok/s]MLX Gen (native):   0%|          | 6/3500 [00:00<02:52, 20.23tok/s]MLX Gen (native):   0%|          | 9/3500 [00:00<02:45, 21.14tok/s]MLX Gen (native):   0%|          | 12/3500 [00:00<02:41, 21.58tok/s]MLX Gen (native):   0%|          | 15/3500 [00:00<02:32, 22.91tok/s]MLX Gen (native):   1%|          | 18/3500 [00:00<02:27, 23.57tok/s]MLX Gen (native):   1%|          | 21/3500 [00:00<02:21, 24.61tok/s]MLX Gen (native):   1%|          | 24/3500 [00:01<02:19, 24.99tok/s]MLX Gen (native):   1%|          | 27/3500 [00:01<02:16, 25.51tok/s]MLX Gen (native):   1%|          | 30/3500 [00:01<02:12, 26.16tok/s]MLX Gen (native):   1%|          | 33/3500 [00:01<02:08, 27.01tok/s]MLX Gen (native):   1%|          | 36/3500 [00:01<02:04, 27.81tok/s]MLX Gen (native):   1%|          | 39/3500 [00:01<02:07, 27.17tok/s]MLX Gen (native):   1%|          | 42/3500 [00:01<02:07, 27.13tok/s]MLX Gen (native):   1%|▏         | 45/3500 [00:01<02:11, 26.24tok/s]MLX Gen (native):   1%|▏         | 48/3500 [00:01<02:11, 26.33tok/s]MLX Gen (native):   1%|▏         | 51/3500 [00:02<02:06, 27.17tok/s]MLX Gen (native):   2%|▏         | 54/3500 [00:02<02:07, 27.02tok/s]MLX Gen (native):   2%|▏         | 57/3500 [00:02<02:11, 26.21tok/s]MLX Gen (native):   2%|▏         | 60/3500 [00:02<02:13, 25.83tok/s]MLX Gen (native):   2%|▏         | 63/3500 [00:02<03:34, 16.06tok/s]MLX Gen (native):   2%|▏         | 66/3500 [00:02<03:04, 18.59tok/s]MLX Gen (native):   2%|▏         | 69/3500 [00:02<02:51, 20.06tok/s]MLX Gen (native):   2%|▏         | 72/3500 [00:03<02:46, 20.63tok/s]MLX Gen (native):   2%|▏         | 75/3500 [00:03<02:37, 21.74tok/s]MLX Gen (native):   2%|▏         | 78/3500 [00:03<02:27, 23.13tok/s]MLX Gen (native):   2%|▏         | 81/3500 [00:03<02:17, 24.81tok/s]MLX Gen (native):   2%|▏         | 84/3500 [00:03<02:11, 25.99tok/s]MLX Gen (native):   2%|▏         | 87/3500 [00:03<02:06, 27.03tok/s]MLX Gen (native):   3%|▎         | 90/3500 [00:03<02:09, 26.39tok/s]MLX Gen (native):   3%|▎         | 93/3500 [00:03<02:07, 26.68tok/s]MLX Gen (native):   3%|▎         | 96/3500 [00:03<02:07, 26.77tok/s]MLX Gen (native):   3%|▎         | 99/3500 [00:04<02:08, 26.41tok/s]MLX Gen (native):   3%|▎         | 102/3500 [00:04<02:04, 27.32tok/s]MLX Gen (native):   3%|▎         | 105/3500 [00:04<02:20, 24.08tok/s]MLX Gen (native):   3%|▎         | 109/3500 [00:04<02:08, 26.29tok/s]MLX Gen (native):   3%|▎         | 112/3500 [00:04<02:06, 26.72tok/s]MLX Gen (native):   3%|▎         | 115/3500 [00:04<02:07, 26.49tok/s]MLX Gen (native):   3%|▎         | 118/3500 [00:04<02:07, 26.62tok/s]MLX Gen (native):   3%|▎         | 121/3500 [00:04<02:08, 26.36tok/s]MLX Gen (native):   4%|▎         | 124/3500 [00:05<02:07, 26.39tok/s]MLX Gen (native):   4%|▎         | 127/3500 [00:05<02:12, 25.41tok/s]MLX Gen (native):   4%|▎         | 130/3500 [00:05<02:22, 23.67tok/s]MLX Gen (native):   4%|▍         | 133/3500 [00:05<02:25, 23.08tok/s]MLX Gen (native):   4%|▍         | 136/3500 [00:05<02:27, 22.84tok/s]MLX Gen (native):   4%|▍         | 139/3500 [00:05<02:25, 23.13tok/s]MLX Gen (native):   4%|▍         | 142/3500 [00:05<02:24, 23.21tok/s]MLX Gen (native):   4%|▍         | 145/3500 [00:05<02:15, 24.80tok/s]MLX Gen (native):   4%|▍         | 148/3500 [00:06<02:09, 25.80tok/s]MLX Gen (native):   4%|▍         | 151/3500 [00:06<02:06, 26.50tok/s]MLX Gen (native):   4%|▍         | 155/3500 [00:06<02:00, 27.80tok/s]MLX Gen (native):   4%|▍         | 157/3500 [00:06<02:15, 24.74tok/s]
+[32m2026-11-13 13:07:07.536[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3711[0m - [1mMLX native generation complete: 157 tokens in 6.35s (24.7 tok/s) | prefill 12.18s + decode 6.35s = 18.53s total[0m
+[32m2026-11-13 13:07:07.544[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <think>
+bpm: 118
+caption: An atmospheric intro with swirling synth pads and reversed textures gives way
+  to an energetic chiptune-inspired electronic track. A driving drum machine beat
+  propels a fast-paced section featuring layered 8-bit style arpeggios that build
+  tension before dropping into a more contemplative verse-like structure led by clean
+  electric piano chords over a steady groove. The main melodic theme returns with
+  increased intensity for a powerful chorus where multiple synth layers intertwine.
+  The track concludes by dissolving back into its initial ambient soundscape, fading
+  out on sustained synth notes.
+duration: 20
+keyscale: A minor
+language: unknown
+timesignature: 4
+<|im_end|>[0m
+[32m2026-11-13 13:07:07.545[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1420[0m - [1mBatch Phase 1 completed in 18.62s. Generated metadata: ['bpm', 'caption', 'duration', 'keyscale', 'language', 'timesignature'][0m
+[32m2026-11-13 13:07:07.546[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m329[0m - [1m[generate_music] Starting generation...[0m
+[32m2026-11-13 13:07:07.546[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m332[0m - [1m[generate_music] Preparing inputs...[0m
+[32m2026-11-13 13:07:07.607[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m119[0m - [1m
+======================================================================[0m
+[32m2026-11-13 13:07:07.608[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m120[0m - [1m🔍 [DEBUG] DiT TEXT ENCODER INPUT (Inference)[0m
+[32m2026-11-13 13:07:07.608[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m121[0m - [1m======================================================================[0m
+[32m2026-11-13 13:07:07.608[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m122[0m - [1mtext_prompt:
+# Instruction
+Fill the audio semantic mask based on the given conditions:
+
+# Caption
+An atmospheric intro with swirling synth pads and reversed textures gives way to an energetic chiptune-inspired electronic track. A driving drum machine beat propels a fast-paced section featuring layered 8-bit style arpeggios that build tension before dropping into a more contemplative verse-like structure led by clean electric piano chords over a steady groove. The main melodic theme returns with increased intensity for a powerful chorus where multiple synth layers intertwine. The track concludes by dissolving back into its initial ambient soundscape, fading out on sustained synth notes.
+
+# Metas
+- bpm: 118
+- timesignature: 4
+- keyscale: A minor
+- duration: 20 seconds
+<|endoftext|>
+[0m
+[32m2026-11-13 13:07:07.608[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m123[0m - [1m======================================================================[0m
+[32m2026-11-13 13:07:07.608[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m124[0m - [1mlyrics_text:
+# Languages
+unknown
+
+# Lyric
+[Instrumental]<|endoftext|>[0m
+[32m2026-11-13 13:07:07.608[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m125[0m - [1m======================================================================
+[0m
+[32m2026-11-13 13:07:07.688[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m110[0m - [1m[preprocess_batch] Inferring prompt embeddings...[0m
+[32m2026-11-13 13:07:26.178[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m113[0m - [1m[preprocess_batch] Inferring lyric embeddings...[0m
+[32m2026-11-13 13:07:26.198[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m173[0m - [1m[service_generate] Generating audio... (DiT backend: PyTorch (cpu))[0m
+[32m2026-11-13 13:08:05.999[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m276[0m - [1m[service_generate] DiT diffusion via PyTorch (cpu)...[0m
+[32m2026-11-13 13:08:25.016[0m | [1mINFO    [0m | [36macestep.models.common.dcw_correction[0m:[36m__init__[0m:[36m98[0m - [1m[DCW] Active — mode=double, scaler=0.0500, high_scaler=0.0200, wavelet='haar'[0m
+[32m2026-11-13 13:12:22.600[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m42[0m - [1m[generate_music] Model generation completed. Decoding latents...[0m
+[32m2026-11-13 13:12:22.632[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m64[0m - [34m[1m[generate_music] pred_latents: torch.Size([2, 500, 64]), dtype=torch.float32[0m
+[32m2026-11-13 13:12:22.633[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m65[0m - [34m[1m[generate_music] time_costs: {'encoder_time_cost': 18.998608112335205, 'diffusion_time_cost': 237.28094792366028, 'diffusion_per_step_time_cost': 29.660118490457535, 'total_time_cost': 256.2795560359955, 'offload_time_cost': 0.0}[0m
+[32m2026-11-13 13:12:22.652[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m127[0m - [1m[generate_music] Decoding latents with VAE...[0m
+[32m2026-11-13 13:12:22.710[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m136[0m - [34m[1m[generate_music] Before VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-13 13:12:22.710[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m172[0m - [1m[generate_music] Using tiled VAE decode to reduce VRAM usage...[0m
+[32m2026-11-13 13:13:13.277[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_decode_native[0m:[36m_mlx_vae_decode[0m:[36m66[0m - [1m[MLX-VAE] Decoded 2 sample(s), 500 latent frames -> audio in 50.55s (convert=0.028s, decode=50.49s, dtype=mlx.core.float32)[0m
+[32m2026-11-13 13:13:13.306[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m193[0m - [34m[1m[generate_music] After VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-13 13:13:16.988[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m38[0m - [1m[generate_music] VAE decode completed. Preparing audio tensors...[0m
+[32m2026-11-13 13:13:17.000[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m50[0m - [1m[generate_music] Done! Generated 2 audio tensors.[0m
+[32m2026-11-13 13:13:17.290[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1002[0m - [1m[Normalization] Audio 0 BEFORE: Peak=1.0000, Target=-1.0dB[0m
+[32m2026-11-13 13:13:17.318[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1007[0m - [1m[Normalization] Audio 0 AFTER: Peak=0.8913[0m
+[32m2026-11-13 13:13:17.449[0m | [34m[1mDEBUG   [0m | [36macestep.audio_utils[0m:[36msave_audio[0m:[36m339[0m - [34m[1m[AudioSaver] Fallback soundfile Saved audio to /Users/runner/work/music-library-mac/music-library-mac/out/audio/05-varianten-ohne-lm/e843f370-d9f3-ee3f-94df-ffff375a0879.flac (flac, 48000Hz)[0m
+[32m2026-11-13 13:13:17.457[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1002[0m - [1m[Normalization] Audio 1 BEFORE: Peak=1.0000, Target=-1.0dB[0m
+[32m2026-11-13 13:13:17.482[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1007[0m - [1m[Normalization] Audio 1 AFTER: Peak=0.8913[0m
+[32m2026-11-13 13:13:17.537[0m | [34m[1mDEBUG   [0m | [36macestep.audio_utils[0m:[36msave_audio[0m:[36m339[0m - [34m[1m[AudioSaver] Fallback soundfile Saved audio to /Users/runner/work/music-library-mac/music-library-mac/out/audio/05-varianten-ohne-lm/52d50c97-415d-6aca-f40d-2a3a8856cd1a.flac (flac, 48000Hz)[0m
+[Probe] Erzeugen 05-varianten-ohne-lm: OK 388.8 s
+[32m2026-11-13 13:13:17.702[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m660[0m - [1mSkipping LM for task_type='cover' - using DiT directly[0m
+[32m2026-11-13 13:13:17.702[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=True, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=True, use_lm=False[0m
+[32m2026-11-13 13:13:17.702[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m834[0m - [1m[generate_music] cover task: using params.caption='Smooth jazz trio version with upright bass, brushed drums and jazz piano', params.lyrics='[Instrumental]'[0m
+[32m2026-11-13 13:13:17.702[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m835[0m - [1m[generate_music] Final inputs: dit_input_caption='Smooth jazz trio version with upright bass, brushed drums and jazz piano', dit_input_lyrics='[Instrumental]'[0m
+[32m2026-11-13 13:13:17.702[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m329[0m - [1m[generate_music] Starting generation...[0m
+[32m2026-11-13 13:13:17.702[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m332[0m - [1m[generate_music] Preparing inputs...[0m
+[32m2026-11-13 13:13:17.710[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_request[0m:[36m_prepare_reference_and_source_audio[0m:[36m188[0m - [1m[generate_music] Processing source audio...[0m
+[32m2026-11-13 13:13:17.777[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_target[0m:[36m_prepare_target_latents_and_wavs[0m:[36m104[0m - [1m[generate_music] Encoding target audio to latents for item 0...[0m
+[32m2026-11-13 13:13:44.241[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_encode_native[0m:[36m_mlx_vae_encode_sample[0m:[36m80[0m - [1m[MLX-VAE] Encoded 1 sample(s), 1440000 audio frames -> latent in 26.46s (dtype=mlx.core.float32)[0m
+[32m2026-11-13 13:13:44.357[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m119[0m - [1m
+======================================================================[0m
+[32m2026-11-13 13:13:44.357[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m120[0m - [1m🔍 [DEBUG] DiT TEXT ENCODER INPUT (Inference)[0m
+[32m2026-11-13 13:13:44.357[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m121[0m - [1m======================================================================[0m
+[32m2026-11-13 13:13:44.357[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m122[0m - [1mtext_prompt:
+# Instruction
+Fill the audio semantic mask based on the given conditions:
+
+# Caption
+Smooth jazz trio version with upright bass, brushed drums and jazz piano
+
+# Metas
+- bpm: N/A
+- timesignature: N/A
+- keyscale: N/A
+- duration: 30 seconds
+<|endoftext|>
+[0m
+[32m2026-11-13 13:13:44.357[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m123[0m - [1m======================================================================[0m
+[32m2026-11-13 13:13:44.357[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m124[0m - [1mlyrics_text:
+# Languages
+unknown
+
+# Lyric
+[Instrumental]<|endoftext|>[0m
+[32m2026-11-13 13:13:44.358[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m125[0m - [1m======================================================================
+[0m
+[32m2026-11-13 13:13:44.479[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m110[0m - [1m[preprocess_batch] Inferring prompt embeddings...[0m
+[32m2026-11-13 13:13:57.281[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m113[0m - [1m[preprocess_batch] Inferring lyric embeddings...[0m
+[32m2026-11-13 13:13:57.286[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m122[0m - [1m[preprocess_batch] Inferring non-cover text embeddings...[0m
+[32m2026-11-13 13:13:58.719[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m173[0m - [1m[service_generate] Generating audio... (DiT backend: PyTorch (cpu))[0m
+[32m2026-11-13 13:14:32.941[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m276[0m - [1m[service_generate] DiT diffusion via PyTorch (cpu)...[0m
+[32m2026-11-13 13:14:59.445[0m | [1mINFO    [0m | [36macestep.models.common.dcw_correction[0m:[36m__init__[0m:[36m98[0m - [1m[DCW] Active — mode=double, scaler=0.0500, high_scaler=0.0200, wavelet='haar'[0m
+[32m2026-11-13 13:18:13.349[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m42[0m - [1m[generate_music] Model generation completed. Decoding latents...[0m
+[32m2026-11-13 13:18:13.427[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m64[0m - [34m[1m[generate_music] pred_latents: torch.Size([1, 750, 64]), dtype=torch.float32[0m
+[32m2026-11-13 13:18:13.428[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m65[0m - [34m[1m[generate_music] time_costs: {'encoder_time_cost': 26.484795093536377, 'diffusion_time_cost': 193.82425498962402, 'diffusion_per_step_time_cost': 24.228031873703003, 'total_time_cost': 220.3090500831604, 'offload_time_cost': 0.0}[0m
+[32m2026-11-13 13:18:13.439[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m127[0m - [1m[generate_music] Decoding latents with VAE...[0m
+[32m2026-11-13 13:18:13.500[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m136[0m - [34m[1m[generate_music] Before VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-13 13:18:13.500[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m172[0m - [1m[generate_music] Using tiled VAE decode to reduce VRAM usage...[0m
+[32m2026-11-13 13:18:47.504[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_decode_native[0m:[36m_mlx_vae_decode[0m:[36m66[0m - [1m[MLX-VAE] Decoded 1 sample(s), 750 latent frames -> audio in 33.95s (convert=0.023s, decode=33.92s, dtype=mlx.core.float32)[0m
+[32m2026-11-13 13:18:47.535[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m193[0m - [34m[1m[generate_music] After VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-13 13:18:52.568[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m38[0m - [1m[generate_music] VAE decode completed. Preparing audio tensors...[0m
+[32m2026-11-13 13:18:52.583[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m50[0m - [1m[generate_music] Done! Generated 1 audio tensors.[0m
+[32m2026-11-13 13:18:52.879[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1002[0m - [1m[Normalization] Audio 0 BEFORE: Peak=1.0000, Target=-1.0dB[0m
+[32m2026-11-13 13:18:52.912[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1007[0m - [1m[Normalization] Audio 0 AFTER: Peak=0.8913[0m
+[32m2026-11-13 13:18:53.062[0m | [34m[1mDEBUG   [0m | [36macestep.audio_utils[0m:[36msave_audio[0m:[36m339[0m - [34m[1m[AudioSaver] Fallback soundfile Saved audio to /Users/runner/work/music-library-mac/music-library-mac/out/audio/06-remix-cover/8224e6f7-16cc-4ce8-9616-b16b900695af.flac (flac, 48000Hz)[0m
+[Probe] Erzeugen 06-remix-cover: OK 335.5 s
+[Probe] fertig
+     3274.74 real      1601.81 user      1251.12 sys
+          4322066432  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+            24836159  page reclaims
+              700309  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                  37  messages sent
+                  36  messages received
+                   1  signals received
+             1766355  voluntary context switches
+            16552353  involuntary context switches
+            13599680  peak memory footprint

@@ -1,0 +1,381 @@
+{
+  "lm_model": "acestep-5Hz-lm-0.6B",
+  "steps": [
+    {
+      "name": "DiT laden (turbo)",
+      "ok": true,
+      "message": "{'device': 'cpu', 'use_mlx_dit': False}: [OK] Model initialized successfully on cpu\nMain model: /Users/runner/work/_temp/checkpoints/acestep-v15-turbo\nVAE: /Users/runner/work/_temp/checkpoints/vae\nText encoder: /Users/runner/work/_temp/checkpoints/Qwen3-Embedding-0.6B\nDtype: torch.float32\nAttention: sdpa\nCompiled: False\nQuantization: Disabled\nOffload to CPU: False\nOffload DiT to CPU: False\nMLX DiT: Disabled by user\nMLX VAE: Active (native MLX)",
+      "seconds": 249.2,
+      "peak_rss_mb": 2061.4,
+      "metal_peak_mb": 643.4
+    },
+    {
+      "name": "Sprachmodell laden (acestep-5Hz-lm-0.6B)",
+      "ok": true,
+      "message": "{'backend': 'mlx', 'device': 'auto'}: ✅ 5Hz LM initialized successfully\nModel: /Users/runner/work/_temp/checkpoints/acestep-5Hz-lm-0.6B\nBackend: MLX (Apple Silicon native)\nDevice: Apple Silicon GPU",
+      "seconds": 69.9,
+      "peak_rss_mb": 2061.4,
+      "metal_peak_mb": 1907.7
+    },
+    {
+      "name": "Erzeugen 01-instrumental-en",
+      "ok": true,
+      "message": "1 Datei(en), 562.0 s",
+      "seconds": 562.1,
+      "peak_rss_mb": 2061.4,
+      "metal_peak_mb": 6568.2
+    },
+    {
+      "name": "Erzeugen 02-instrumental-de",
+      "ok": true,
+      "message": "1 Datei(en), 505.8 s",
+      "seconds": 505.9,
+      "peak_rss_mb": 2400.1,
+      "metal_peak_mb": 6568.2
+    },
+    {
+      "name": "Erzeugen 03-gesang-de-eigener-text",
+      "ok": true,
+      "message": "1 Datei(en), 540.9 s",
+      "seconds": 541.1,
+      "peak_rss_mb": 2400.1,
+      "metal_peak_mb": 6579.6
+    },
+    {
+      "name": "KI schreibt deutschen Text (create_sample)",
+      "ok": true,
+      "message": "[Intro - Acoustic Guitar]\n\n[Verse 1]\nAch, schenk mir einen Bier, ich will\nIch will mein Bier\nUnd pflanze auch mal irgendwas\nWas ich nicht will\nIch will zwar nur ein Bier\nDas ist nicht so gemein\nUnd dann sei ich mit dir\nDu mogst mir kein Verzeih'n\n\n[Chorus]\nIch will einen Schenk, Schenk, Schenk, Sche",
+      "seconds": 37.0,
+      "peak_rss_mb": 2400.1,
+      "metal_peak_mb": 6579.6
+    },
+    {
+      "name": "Erzeugen 04-gesang-de-ki-text",
+      "ok": true,
+      "message": "1 Datei(en), 547.7 s",
+      "seconds": 547.9,
+      "peak_rss_mb": 2400.1,
+      "metal_peak_mb": 6579.6
+    },
+    {
+      "name": "Erzeugen 05-varianten-ohne-lm",
+      "ok": true,
+      "message": "2 Datei(en), 388.6 s",
+      "seconds": 388.8,
+      "peak_rss_mb": 2400.1,
+      "metal_peak_mb": 6579.6
+    },
+    {
+      "name": "Erzeugen 06-remix-cover",
+      "ok": true,
+      "message": "1 Datei(en), 335.4 s",
+      "seconds": 335.5,
+      "peak_rss_mb": 4121.8,
+      "metal_peak_mb": 6579.6
+    }
+  ],
+  "cases": [
+    {
+      "id": "01-instrumental-en",
+      "note": "Instrumental, englische Beschreibung, mit Sprachmodell (falls geladen)",
+      "ok": true,
+      "status": "✅ LM chunk 1: phase1_time: 11.93s, phase2_time: 10.74s, total_time: 22.66s\nGeneration completed successfully!",
+      "error": null,
+      "seconds": 562.0,
+      "realtime_factor": 0.05,
+      "params": {
+        "task_type": "text2music",
+        "caption": "Calm lo-fi hip hop with warm piano chords, soft vinyl crackle and a relaxed drum groove",
+        "lyrics": "[Instrumental]",
+        "instrumental": true,
+        "vocal_language": "unknown",
+        "bpm": 80,
+        "keyscale": "",
+        "duration": 30,
+        "inference_steps": 8,
+        "seed": 1234,
+        "thinking": true
+      },
+      "batch_size": 1,
+      "files": [
+        {
+          "path": "audio/01-instrumental-en/96334ae7-06ec-3881-ff9b-6bd47ba4b87b.flac",
+          "seed": 1234,
+          "measure": {
+            "seconds": 30.0,
+            "rate": 48000,
+            "channels": 2,
+            "rms_db": -19.0,
+            "peak_db": -1.0,
+            "silent_share": 0.073,
+            "spectral_flatness": 0.0002,
+            "spectral_centroid_hz": 171,
+            "clipped_share": 0.0
+          }
+        }
+      ],
+      "peak_rss_mb": 2061.4,
+      "metal_peak_mb": 6568.2
+    },
+    {
+      "id": "02-instrumental-de",
+      "note": "Gleiche Beschreibung auf Deutsch – versteht das Modell deutsche Beschreibungen?",
+      "ok": true,
+      "status": "✅ LM chunk 1: phase1_time: 13.96s, phase2_time: 9.36s, total_time: 23.32s\nGeneration completed successfully!",
+      "error": null,
+      "seconds": 505.8,
+      "realtime_factor": 0.06,
+      "params": {
+        "task_type": "text2music",
+        "caption": "Ruhiges Lo-Fi-Stück mit warmem Klavier, leisem Knistern und entspanntem Schlagzeug",
+        "lyrics": "[Instrumental]",
+        "instrumental": true,
+        "vocal_language": "unknown",
+        "bpm": 80,
+        "keyscale": "",
+        "duration": 30,
+        "inference_steps": 8,
+        "seed": 1234,
+        "thinking": true
+      },
+      "batch_size": 1,
+      "files": [
+        {
+          "path": "audio/02-instrumental-de/0a73893c-27e0-8d75-31e2-5b21a59a9bc5.flac",
+          "seed": 1234,
+          "measure": {
+            "seconds": 30.0,
+            "rate": 48000,
+            "channels": 2,
+            "rms_db": -18.4,
+            "peak_db": -1.0,
+            "silent_share": 0.067,
+            "spectral_flatness": 0.0001,
+            "spectral_centroid_hz": 588,
+            "clipped_share": 0.0
+          }
+        }
+      ],
+      "peak_rss_mb": 2400.1,
+      "metal_peak_mb": 6568.2
+    },
+    {
+      "id": "03-gesang-de-eigener-text",
+      "note": "Deutscher Gesang mit vorgegebenem Text (für Whisper-Verständlichkeitsprüfung)",
+      "ok": true,
+      "status": "✅ LM chunk 1: phase1_time: 14.66s, phase2_time: 13.46s, total_time: 28.12s\nGeneration completed successfully!",
+      "error": null,
+      "seconds": 540.9,
+      "realtime_factor": 0.07,
+      "params": {
+        "task_type": "text2music",
+        "caption": "Upbeat German pop song, female vocals, acoustic guitar, bright summer mood",
+        "lyrics": "[Verse]\nDie Sonne sinkt am alten See\ndas Wasser glänzt wie Gold\nwir laufen barfuß durch den Klee\nder Abend ist uns hold\n\n[Chorus]\nSommerabend, bleib noch hier\ndie Nacht gehört nur dir und mir\nSommerabend, sing mit mir\ndie Nacht gehört nur dir und mir",
+        "instrumental": false,
+        "vocal_language": "de",
+        "bpm": 110,
+        "keyscale": "",
+        "duration": 40,
+        "inference_steps": 8,
+        "seed": 42,
+        "thinking": true
+      },
+      "batch_size": 1,
+      "files": [
+        {
+          "path": "audio/03-gesang-de-eigener-text/ecafa142-7a5b-3fc8-e052-c9a6d2358125.flac",
+          "seed": 42,
+          "measure": {
+            "seconds": 40.0,
+            "rate": 48000,
+            "channels": 2,
+            "rms_db": -15.0,
+            "peak_db": -1.0,
+            "silent_share": 0.06,
+            "spectral_flatness": 0.0003,
+            "spectral_centroid_hz": 338,
+            "clipped_share": 0.0
+          }
+        }
+      ],
+      "peak_rss_mb": 2400.1,
+      "metal_peak_mb": 6579.6
+    },
+    {
+      "id": "04-gesang-de-ki-text",
+      "note": "Text und Beschreibung vom Sprachmodell, deutsch",
+      "ok": true,
+      "status": "✅ LM chunk 1: phase1_time: 7.35s, phase2_time: 14.60s, total_time: 21.95s\nGeneration completed successfully!",
+      "error": null,
+      "seconds": 547.7,
+      "realtime_factor": 0.07,
+      "params": {
+        "task_type": "text2music",
+        "caption": "A lighthearted and playful French chanson track driven by an intricate nylon-string acoustic guitar performance. The arrangement features a lively, flamenco-influenced guitar playing both rhythmic chords and melodic fills, accompanied by a warm, walking upright bass line and subtle hand percussion that provides a gentle, swinging groove. The lead male vocal is clear and expressive, delivered in a conversational and charming style. The song follows a classic verse-chorus structure, with catchy, melodic choruses and two short, skillful guitar-led instrumental breaks.",
+        "lyrics": "[Intro - Acoustic Guitar]\n\n[Verse 1]\nAch, schenk mir einen Bier, ich will\nIch will mein Bier\nUnd pflanze auch mal irgendwas\nWas ich nicht will\nIch will zwar nur ein Bier\nDas ist nicht so gemein\nUnd dann sei ich mit dir\nDu mogst mir kein Verzeih'n\n\n[Chorus]\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\n\n[Chorus]\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\n\n[Instrumental Break - Acoustic Guitar]\n\n[Verse 2]\nIch will so gerne Wein, Wein, Wein, Wein, Wein\nUnd dann sei ich mit dir\nDu mogst mir kein Verzeih'n\nDu sollst auch keine Liebe haben\nIch weiß, dass es so ist\nWenn das einst kein Mensch gewinnen mag\nIch kann nichts andres tun\n\n[Chorus]\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\n\n[Chorus]\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\n\n[Instrumental Break - Acoustic Guitar]\n\n[Verse 3]\nIch will so gerne Hochfluggruß\nIch kann nur nicht entkommen\nIch will mein Tunkot an sitzen\nMal schnippen und mal kochen\nIch will einfach nur dein Gobra, Gobra\nYo, ich bin schon gescheh'n\nWenn du falsch zu mir hältst, Erbarmen\nIch kann nicht viel gefeh'n\n\n[Chorus]\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\n\n[Chorus]\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\n\n[Outro - Acoustic Guitar]",
+        "instrumental": false,
+        "vocal_language": "de",
+        "bpm": 180,
+        "keyscale": "C major",
+        "duration": 40,
+        "inference_steps": 8,
+        "seed": 7,
+        "thinking": true
+      },
+      "batch_size": 1,
+      "files": [
+        {
+          "path": "audio/04-gesang-de-ki-text/01a621a1-74cf-706d-f5db-6e2faea221c8.flac",
+          "seed": 7,
+          "measure": {
+            "seconds": 40.0,
+            "rate": 48000,
+            "channels": 2,
+            "rms_db": -15.6,
+            "peak_db": -1.0,
+            "silent_share": 0.007,
+            "spectral_flatness": 0.0006,
+            "spectral_centroid_hz": 557,
+            "clipped_share": 0.0
+          }
+        }
+      ],
+      "peak_rss_mb": 2400.1,
+      "metal_peak_mb": 6579.6
+    },
+    {
+      "id": "05-varianten-ohne-lm",
+      "note": "Zwei Varianten gleichzeitig, nur DiT (ohne Sprachmodell) – reine Erzeugungsgeschwindigkeit",
+      "ok": true,
+      "status": "✅ LM chunk 1: phase1_time: 18.62s, total_time: 18.62s\nGeneration completed successfully!",
+      "error": null,
+      "seconds": 388.6,
+      "realtime_factor": 0.1,
+      "params": {
+        "task_type": "text2music",
+        "caption": "Energetic synthwave with driving bass, bright arpeggios and punchy drums",
+        "lyrics": "[Instrumental]",
+        "instrumental": true,
+        "vocal_language": "unknown",
+        "bpm": 118,
+        "keyscale": "A minor",
+        "duration": 20,
+        "inference_steps": 8,
+        "seed": -1,
+        "thinking": false
+      },
+      "batch_size": 2,
+      "files": [
+        {
+          "path": "audio/05-varianten-ohne-lm/e843f370-d9f3-ee3f-94df-ffff375a0879.flac",
+          "seed": 11,
+          "measure": {
+            "seconds": 20.0,
+            "rate": 48000,
+            "channels": 2,
+            "rms_db": -20.3,
+            "peak_db": -1.0,
+            "silent_share": 0.035,
+            "spectral_flatness": 0.0001,
+            "spectral_centroid_hz": 389,
+            "clipped_share": 0.0
+          }
+        },
+        {
+          "path": "audio/05-varianten-ohne-lm/52d50c97-415d-6aca-f40d-2a3a8856cd1a.flac",
+          "seed": 22,
+          "measure": {
+            "seconds": 20.0,
+            "rate": 48000,
+            "channels": 2,
+            "rms_db": -20.1,
+            "peak_db": -1.0,
+            "silent_share": 0.18,
+            "spectral_flatness": 0.0005,
+            "spectral_centroid_hz": 301,
+            "clipped_share": 0.0
+          }
+        }
+      ],
+      "peak_rss_mb": 2400.1,
+      "metal_peak_mb": 6579.6
+    },
+    {
+      "id": "06-remix-cover",
+      "note": "Remix (cover) des ersten Stücks als Jazz-Version – Original bleibt unverändert",
+      "ok": true,
+      "status": "Generation completed successfully!",
+      "error": null,
+      "seconds": 335.4,
+      "realtime_factor": 0.09,
+      "params": {
+        "task_type": "cover",
+        "caption": "Smooth jazz trio version with upright bass, brushed drums and jazz piano",
+        "lyrics": "[Instrumental]",
+        "instrumental": true,
+        "vocal_language": "unknown",
+        "bpm": null,
+        "keyscale": "",
+        "duration": -1.0,
+        "inference_steps": 8,
+        "seed": 5,
+        "thinking": true
+      },
+      "batch_size": 1,
+      "files": [
+        {
+          "path": "audio/06-remix-cover/8224e6f7-16cc-4ce8-9616-b16b900695af.flac",
+          "seed": 5,
+          "measure": {
+            "seconds": 30.0,
+            "rate": 48000,
+            "channels": 2,
+            "rms_db": -16.9,
+            "peak_db": -1.0,
+            "silent_share": 0.067,
+            "spectral_flatness": 0.0,
+            "spectral_centroid_hz": 252,
+            "clipped_share": 0.0
+          }
+        }
+      ],
+      "peak_rss_mb": 4121.8,
+      "metal_peak_mb": 6579.6
+    }
+  ],
+  "environment": {
+    "python": "3.12.10",
+    "machine": "arm64",
+    "macos": "15.8.2",
+    "ram_gb": 7.0,
+    "cpu": "Apple M1 (Virtual)",
+    "cores": 3,
+    "torch": "2.10.0",
+    "mps_available": true,
+    "mps_built": true,
+    "mlx": "0.30.6",
+    "mlx_device": "Device(gpu, 0)",
+    "mlx_metal_ok": true,
+    "acestep_gpu_memory_gb": 4.6666717529296875
+  },
+  "dit_config": {
+    "device": "cpu",
+    "use_mlx_dit": false
+  },
+  "llm_config": {
+    "backend": "mlx",
+    "device": "auto"
+  },
+  "create_sample": {
+    "success": true,
+    "caption": "A lighthearted and playful French chanson track driven by an intricate nylon-string acoustic guitar performance. The arrangement features a lively, flamenco-influenced guitar playing both rhythmic chords and melodic fills, accompanied by a warm, walking upright bass line and subtle hand percussion that provides a gentle, swinging groove. The lead male vocal is clear and expressive, delivered in a conversational and charming style. The song follows a classic verse-chorus structure, with catchy, melodic choruses and two short, skillful guitar-led instrumental breaks.",
+    "lyrics": "[Intro - Acoustic Guitar]\n\n[Verse 1]\nAch, schenk mir einen Bier, ich will\nIch will mein Bier\nUnd pflanze auch mal irgendwas\nWas ich nicht will\nIch will zwar nur ein Bier\nDas ist nicht so gemein\nUnd dann sei ich mit dir\nDu mogst mir kein Verzeih'n\n\n[Chorus]\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\n\n[Chorus]\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\n\n[Instrumental Break - Acoustic Guitar]\n\n[Verse 2]\nIch will so gerne Wein, Wein, Wein, Wein, Wein\nUnd dann sei ich mit dir\nDu mogst mir kein Verzeih'n\nDu sollst auch keine Liebe haben\nIch weiß, dass es so ist\nWenn das einst kein Mensch gewinnen mag\nIch kann nichts andres tun\n\n[Chorus]\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\n\n[Chorus]\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\n\n[Instrumental Break - Acoustic Guitar]\n\n[Verse 3]\nIch will so gerne Hochfluggruß\nIch kann nur nicht entkommen\nIch will mein Tunkot an sitzen\nMal schnippen und mal kochen\nIch will einfach nur dein Gobra, Gobra\nYo, ich bin schon gescheh'n\nWenn du falsch zu mir hältst, Erbarmen\nIch kann nicht viel gefeh'n\n\n[Chorus]\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\n\n[Chorus]\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\n\n[Outro - Acoustic Guitar]",
+    "bpm": 180,
+    "duration": 213.0,
+    "keyscale": "C major",
+    "language": "de",
+    "status_message": "✅ Sample created successfully\nGenerated fields: {'bpm': 180, 'caption': 'A lighthearted and playful French chanson track driven by an intricate nylon-string acoustic guitar performance. The arrangement features a lively, flamenco-influenced guitar playing both rhythmic chords and melodic fills, accompanied by a warm, walking upright bass line and subtle hand percussion that provides a gentle, swinging groove. The lead male vocal is clear and expressive, delivered in a conversational and charming style. The song follows a classic verse-chorus structure, with catchy, melodic choruses and two short, skillful guitar-led instrumental breaks.', 'duration': 213, 'genres': 'French chanson', 'keyscale': 'C major', 'language': 'de', 'timesignature': '4', 'lyrics': \"[Intro - Acoustic Guitar]\\n\\n[Verse 1]\\nAch, schenk mir einen Bier, ich will\\nIch will mein Bier\\nUnd pflanze auch mal irgendwas\\nWas ich nicht will\\nIch will zwar nur ein Bier\\nDas ist nicht so gemein\\nUnd dann sei ich mit dir\\nDu mogst mir kein Verzeih'n\\n\\n[Chorus]\\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\\n\\n[Chorus]\\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\\n\\n[Instrumental Break - Acoustic Guitar]\\n\\n[Verse 2]\\nIch will so gerne Wein, Wein, Wein, Wein, Wein\\nUnd dann sei ich mit dir\\nDu mogst mir kein Verzeih'n\\nDu sollst auch keine Liebe haben\\nIch weiß, dass es so ist\\nWenn das einst kein Mensch gewinnen mag\\nIch kann nichts andres tun\\n\\n[Chorus]\\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\\n\\n[Chorus]\\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\\n\\n[Instrumental Break - Acoustic Guitar]\\n\\n[Verse 3]\\nIch will so gerne Hochfluggruß\\nIch kann nur nicht entkommen\\nIch will mein Tunkot an sitzen\\nMal schnippen und mal kochen\\nIch will einfach nur dein Gobra, Gobra\\nYo, ich bin schon gescheh'n\\nWenn du falsch zu mir hältst, Erbarmen\\nIch kann nicht viel gefeh'n\\n\\n[Chorus]\\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\\n\\n[Chorus]\\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\\nIch will einen Schenk, Schenk, Schenk, Schenk, Schenk\\n\\n[Outro - Acoustic Guitar]\", 'instrumental': False}",
+    "error": null
+  },
+  "finished": true
+}
