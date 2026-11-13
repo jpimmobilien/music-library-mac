@@ -20,6 +20,27 @@ und Tablet-Größe 1600 × 2560 / 320 dpi). Hardware-Prüfung auf einem echten T
 | Leere Zustände mit eigener Illustration | ✔ | Build |
 | Tatsächlicher Build, installierbare APK | ✔ `ORBIT-0.4.0.apk` | Build, `apksigner`, Emulator-Installation |
 
+### Prüfprotokoll 0.4.0 (GitHub Actions, Zweig `orbit-android`, Ergebnisse im Zweig `ci-ergebnisse-orbit-android`)
+
+| Prüfung | Ergebnis |
+|---|---|
+| Unit-Tests (Gradle) | **232/232** – core/files 155 (echte Dateien), core/model 71 (davon 6 ORBIT), Designsystem 6 (Kontrast aller Themes × Akzente) |
+| Release-Build | `ORBIT-0.4.0.apk` (≈ 27,6 MB, versionCode 3), AGP 9.3.1, compileSdk 37, minSdk 31, targetSdk 36 |
+| Paketprüfung | `apksigner verify`: Signaturschema v2 gültig (Projektschlüssel); `aapt2`: Paket `de.privateapp.aether`, Name „ORBIT“, Symbol adaptiv |
+| Emulator (Android 15, x86_64, 4 GB) | Installation mit allen Laufzeitrechten, 3 Kaltstarts je ≈ 3,3–4,0 s (Software-Grafik), Bildschirmfotos: 6 Hauptbereiche hell/dunkel, alle 6 Themes, 3 Effektstärken, Tablet-Größe, aufgeklappte ORBIT-Core-Karte, Bewegung mit Sensor-Globus; **keine Abstürze** (Absturzpuffer leer, kein FATAL im vollständigen Logcat) |
+| Offline-Prüfungen | Typprüfung aller Module 0 Fehler/0 Warnungen, Prüfskript „Farben aus dem Theme“ ohne Verstoß |
+
+**Im Build gefunden und behoben:** ORBIT-Core-Namen auf schmalen Telefonen abgeschnitten („Arbeitsspei…“) → Kern
+oben, Legende in voller Breite; Thermik-Bahn war schon bei 43 % orange → Orange erst ab 60 %, Rot ab 85 %;
+Einstellungen nannten „fünf“ Themes → sechs. In Lauf 3 brach der **Emulator** (nicht die App) beim Scrollen der
+Bewegungsseite ab und die Absturzprüfung wartete bis zur Zeitgrenze: Seitdem hat jeder Schritt eine Frist, das
+vollständige Logcat wird mitgeschrieben, und der Emulator bekommt 4 GB statt der Vorgabe – in den Läufen 4 und 5
+lief alles ohne Abbruch.
+
+**Grenzen:** Die Bildwiederholraten des Emulators (`gfxinfo`) sind mit Software-Grafik (SwiftShader) nicht
+aussagekräftig – jedes Bild gilt dort als „ruckelnd“, auch ohne ORBIT-Effekte (Lauf 1). Flüssigkeit, Haptik, echte
+Satelliten, SD-Karte und USB müssen auf einem Telefon geprüft werden (docs/TESTPLAN.md).
+
 Legende: **✔ umgesetzt** · **◐ teilweise / Grundlage** · **– spätere Phase**. „Geprüft“ nennt die höchste erreichte
 Prüfstufe: *JVM-Test* (automatisiert, ausgeführt; bei `core:files` gegen echte Dateien), *Typprüfung* (gegen
 Android-/AndroidX-Schnittstellen kompiliert, nicht ausgeführt), *Vorschau* (nachgebaute Design-Vorschau), *Gerät*
