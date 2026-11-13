@@ -1,5 +1,18 @@
 # Prüfstand – was gebaut und getestet ist (ehrlich)
 
+## Version 2.2.3 (13.11.2026, Build-Lauf 43389570531, Commit `6a06e4d`)
+
+| Stufe | Ergebnis |
+|---|---|
+| Fehler | Instagram- (und andere HE-AAC-)Tonspuren in MP4/Video wurden mit halber Abtastrate gelesen: Ton halb so schnell, eine (bei HE-AAC v2 zwei) Oktaven zu tief – nachgestellt auf macOS 15 und 26 (1000 Hz → 500/250 Hz) |
+| Test | `StudioHEAACTests`: 34 Varianten (AAC-LC, HE-AAC, HE-AAC v2 · M4A, MP4, ADTS, fragmentiert/DASH, Video · 44,1/48 kHz) plus 16 MP3-Exporte – vorher 24 falsch, jetzt alle 50 richtig (macOS 15 und 26 Intel) |
+| Echte Quelle | Öffentliches Instagram-Reel (NASA): Analyse 3–5 s, Laden 3–6 s (0,3 MB reine Tonspur, HE-AAC 48 kHz), MP3-Export 1,8–2,8 s, 32,45 s / 48 kHz richtig; Titel aus dem Beitragstext. YouTube weiterhin von YouTube blockiert (Rechenzentrum) |
+| Tests | ✅ 588 Tests, 0 Fehler (4 Zusatzprüfungen übersprungen) auf macOS 26 Intel und macOS 15 Intel |
+| DMG | ✅ SHA-256 `ba7cbef1245ac55778f736140d8cfd75badd9015a71852cf7b95297fa52d607f`, `hdiutil verify` gültig, `x86_64 arm64`, Signatur gültig |
+| Starttest | ✅ macOS 15 Apple Silicon (nativ) und Intel-Code über Rosetta |
+| Abnahme | ✅ Apple Silicon und Intel (macOS 26), Rosetta: Installation aus der DMG, Version 2.2.3, Aktualisierung 2.2.2 → 2.2.3 → 2.2.2 ohne Befund, 134 Ansichten × Hell/Dunkel auf Apple Silicon; Leerlauf mit Wiedergabe gleich (Apple Silicon 22,9/20,8 % gegenüber 22,7/20,3 %), übrige Messwerte innerhalb der Streuung · Intel macOS 15 (virtuell): Installation ✅, Start scheitert wie bei jeder Version am Metal-Fehler der virtuellen Maschine |
+| Nicht geprüft | macOS 13, Instagram an einem privaten Anschluss, Instagram-Beiträge ohne reine Tonspur mit echtem Inhalt (nur nachgebaut), Bedienung von Hand |
+
 ## Version 2.2.2 (12.11.2026, Build-Lauf 43308096148, Commit `e324bb4`)
 
 | Stufe | Ergebnis |
