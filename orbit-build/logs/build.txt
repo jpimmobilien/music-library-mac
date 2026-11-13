@@ -1,32 +1,32 @@
 To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.6.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
 Daemon will be stopped at the end of the build 
-> Task :core:model:checkKotlinGradlePluginConfigurationErrors SKIPPED
-> Task :core:files:checkKotlinGradlePluginConfigurationErrors SKIPPED
 > Task :platform:device:preBuild UP-TO-DATE
-> Task :platform:device:preReleaseBuild UP-TO-DATE
 > Task :app:preBuild UP-TO-DATE
+> Task :core:model:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :platform:device:preReleaseBuild UP-TO-DATE
+> Task :core:files:checkKotlinGradlePluginConfigurationErrors SKIPPED
 > Task :app:preReleaseBuild UP-TO-DATE
-> Task :platform:device:mergeReleaseJniLibFolders
 > Task :app:mergeReleaseJniLibFolders
 > Task :platform:storage:preBuild UP-TO-DATE
+> Task :platform:device:mergeReleaseJniLibFolders
 > Task :platform:storage:preReleaseBuild UP-TO-DATE
 > Task :core:files:compileKotlin UP-TO-DATE
-> Task :core:files:compileJava NO-SOURCE
-> Task :platform:device:mergeReleaseNativeLibs NO-SOURCE
 > Task :core:model:compileKotlin UP-TO-DATE
+> Task :platform:device:mergeReleaseNativeLibs NO-SOURCE
+> Task :core:files:compileJava NO-SOURCE
+> Task :platform:storage:mergeReleaseJniLibFolders
+> Task :platform:storage:mergeReleaseNativeLibs NO-SOURCE
 > Task :core:files:processResources NO-SOURCE
 > Task :core:files:classes UP-TO-DATE
-> Task :platform:storage:mergeReleaseJniLibFolders
-> Task :core:files:jar UP-TO-DATE
-> Task :platform:storage:mergeReleaseNativeLibs NO-SOURCE
 > Task :core:model:compileJava NO-SOURCE
 > Task :core:model:processResources NO-SOURCE
 > Task :core:model:classes UP-TO-DATE
-> Task :platform:storage:copyReleaseJniLibsProjectOnly
-> Task :core:model:jar UP-TO-DATE
+> Task :platform:device:copyReleaseJniLibsProjectOnly
 > Task :ui:designsystem:preBuild UP-TO-DATE
 > Task :ui:designsystem:preReleaseBuild UP-TO-DATE
-> Task :platform:device:copyReleaseJniLibsProjectOnly
+> Task :platform:storage:copyReleaseJniLibsProjectOnly
+> Task :core:files:jar UP-TO-DATE
+> Task :core:model:jar UP-TO-DATE
 > Task :ui:designsystem:mergeReleaseJniLibFolders
 > Task :ui:designsystem:mergeReleaseNativeLibs NO-SOURCE
 > Task :platform:storage:generateReleaseResources
@@ -35,18 +35,17 @@ Daemon will be stopped at the end of the build
 > Task :platform:device:generateReleaseResources
 > Task :platform:storage:packageReleaseResources
 > Task :platform:storage:processReleaseNavigationResources
-> Task :ui:designsystem:packageReleaseResources
-> Task :ui:designsystem:processReleaseNavigationResources
-> Task :platform:storage:javaPreCompileRelease
-> Task :ui:designsystem:javaPreCompileRelease
 > Task :platform:device:packageReleaseResources
+> Task :ui:designsystem:packageReleaseResources
 > Task :platform:device:processReleaseNavigationResources
+> Task :ui:designsystem:processReleaseNavigationResources
 > Task :platform:device:parseReleaseLocalResources
 > Task :platform:storage:parseReleaseLocalResources
 > Task :ui:designsystem:parseReleaseLocalResources
+> Task :ui:designsystem:javaPreCompileRelease
 > Task :platform:storage:generateReleaseRFile
-> Task :ui:designsystem:generateReleaseRFile
 > Task :platform:device:generateReleaseRFile
+> Task :ui:designsystem:generateReleaseRFile
 > Task :app:mergeReleaseNativeLibs
 
 > Task :app:stripReleaseDebugSymbols
@@ -54,6 +53,7 @@ Unable to strip the following libraries, packaging them as they are: libandroidx
 
 > Task :app:extractReleaseNativeSymbolTables
 > Task :app:mergeReleaseNativeDebugMetadata NO-SOURCE
+> Task :platform:storage:javaPreCompileRelease
 > Task :platform:device:javaPreCompileRelease
 > Task :app:checkReleaseDuplicateClasses
 > Task :app:generateReleaseBuildConfig
@@ -92,18 +92,19 @@ Unable to strip the following libraries, packaging them as they are: libandroidx
 > Task :app:desugarReleaseFileDependencies
 > Task :app:mergeReleaseStartupProfile
 > Task :platform:device:compileReleaseKotlin
-> Task :platform:storage:compileReleaseKotlin
 > Task :platform:device:compileReleaseJavaWithJavac NO-SOURCE
-> Task :platform:storage:compileReleaseJavaWithJavac NO-SOURCE
 > Task :platform:device:bundleLibRuntimeToDirRelease
+> Task :platform:storage:compileReleaseKotlin
+> Task :platform:storage:compileReleaseJavaWithJavac NO-SOURCE
 > Task :platform:storage:bundleLibRuntimeToDirRelease
 > Task :platform:device:bundleLibCompileToJarRelease
-> Task :platform:storage:bundleLibCompileToJarRelease
 > Task :platform:device:prepareReleaseArtProfile
+> Task :platform:storage:bundleLibCompileToJarRelease
 > Task :platform:storage:prepareReleaseArtProfile
 > Task :ui:designsystem:prepareReleaseArtProfile
 > Task :platform:storage:bundleLibRuntimeToJarRelease
 > Task :platform:device:bundleLibRuntimeToJarRelease
+> Task :ui:designsystem:compileReleaseKotlin
 > Task :platform:device:generateReleaseAssets UP-TO-DATE
 > Task :platform:storage:generateReleaseAssets UP-TO-DATE
 > Task :platform:storage:mergeReleaseAssets
@@ -123,46 +124,46 @@ Unable to strip the following libraries, packaging them as they are: libandroidx
 > Task :ui:designsystem:prepareLintJarForPublish
 > Task :platform:storage:prepareLintJarForPublish
 > Task :platform:storage:checkReleaseAarMetadata
+> Task :ui:designsystem:extractDeepLinksForAarRelease
 > Task :ui:designsystem:checkReleaseAarMetadata
 > Task :platform:storage:extractDeepLinksForAarRelease
-> Task :ui:designsystem:extractDeepLinksForAarRelease
-> Task :ui:designsystem:compileReleaseKotlin
 > Task :platform:storage:extractReleaseAnnotations
 > Task :ui:designsystem:extractReleaseAnnotations
 > Task :platform:storage:mergeReleaseGeneratedProguardFiles
 > Task :platform:storage:mergeReleaseConsumerProguardFiles
 > Task :ui:designsystem:compileReleaseJavaWithJavac NO-SOURCE
-> Task :platform:storage:mergeReleaseJavaResource
-> Task :ui:designsystem:bundleLibRuntimeToDirRelease
 > Task :platform:device:checkReleaseAarMetadata
+> Task :platform:storage:mergeReleaseJavaResource
 > Task :ui:designsystem:bundleLibCompileToJarRelease
 > Task :ui:designsystem:processReleaseJavaRes
+> Task :app:mergeExtDexRelease
+> Task :ui:designsystem:generateReleaseLintModel
+> Task :ui:designsystem:mergeReleaseGeneratedProguardFiles
+> Task :ui:designsystem:mergeReleaseConsumerProguardFiles
+> Task :ui:designsystem:bundleLibRuntimeToDirRelease
+> Task :ui:designsystem:mergeReleaseJavaResource
+> Task :ui:designsystem:syncReleaseLibJars
+> Task :ui:designsystem:bundleReleaseLocalLintAar
 > Task :platform:storage:syncReleaseLibJars
 > Task :platform:storage:bundleReleaseLocalLintAar
 > Task :platform:device:extractDeepLinksForAarRelease
 > Task :platform:device:extractReleaseAnnotations
 > Task :platform:device:mergeReleaseGeneratedProguardFiles
 > Task :platform:device:mergeReleaseConsumerProguardFiles
-> Task :ui:designsystem:generateReleaseLintModel
-> Task :ui:designsystem:mergeReleaseGeneratedProguardFiles
-> Task :ui:designsystem:mergeReleaseConsumerProguardFiles
 > Task :ui:designsystem:bundleLibRuntimeToJarRelease
 > Task :platform:device:mergeReleaseJavaResource
 > Task :ui:designsystem:createFullJarRelease
 > Task :platform:device:syncReleaseLibJars
 > Task :platform:device:bundleReleaseLocalLintAar
 > Task :platform:device:writeReleaseLintModelMetadata
-> Task :ui:designsystem:mergeReleaseJavaResource
-> Task :ui:designsystem:syncReleaseLibJars
-> Task :ui:designsystem:bundleReleaseLocalLintAar
 > Task :platform:storage:writeReleaseLintModelMetadata
-> Task :app:mergeExtDexRelease
 > Task :platform:device:lintVitalAnalyzeRelease
 > Task :ui:designsystem:writeReleaseLintModelMetadata
 > Task :platform:device:generateReleaseLintVitalModel
 > Task :platform:storage:generateReleaseLintVitalModel
 > Task :ui:designsystem:generateReleaseLintVitalModel
 > Task :platform:storage:lintVitalAnalyzeRelease
+> Task :ui:designsystem:lintVitalAnalyzeRelease
 > Task :app:mergeReleaseArtProfile
 > Task :app:generateReleaseAssets UP-TO-DATE
 > Task :app:mergeReleaseAssets
@@ -175,7 +176,6 @@ Unable to strip the following libraries, packaging them as they are: libandroidx
 > Task :app:validateSigningRelease
 > Task :app:writeReleaseAppMetadata
 > Task :app:writeReleaseSigningConfigVersions
-> Task :ui:designsystem:lintVitalAnalyzeRelease
 > Task :app:compileReleaseKotlin
 > Task :app:compileReleaseJavaWithJavac
 > Task :app:dexBuilderRelease
@@ -191,8 +191,8 @@ Unable to strip the following libraries, packaging them as they are: libandroidx
 > Task :app:packageRelease
 > Task :app:createReleaseApkListingFileRedirect
 > Task :app:assembleRelease
-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_4-1794577711751.json
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_4-1794578455069.json
 
-BUILD SUCCESSFUL in 2m 16s
+BUILD SUCCESSFUL in 3m
 160 actionable tasks: 156 executed, 4 up-to-date
 Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.6.1/userguide/configuration_cache_enabling.html
