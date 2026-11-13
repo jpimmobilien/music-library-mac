@@ -1,0 +1,66 @@
+[0/1] Planning build
+Test Suite 'Selected tests' started at 2026-11-13 09:03:05.440.
+Test Suite 'MusicLibraryPackageTests.xctest' started at 2026-11-13 09:03:05.445.
+Test Suite 'StudioModelTests' started at 2026-11-13 09:03:05.446.
+Test Case '-[MusicLibraryTests.StudioModelTests testCutLibraryTrackAsNewFileNextToOriginal]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testCutLibraryTrackAsNewFileNextToOriginal]' passed (0.250 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testDestinationRules]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testDestinationRules]' passed (0.009 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testDuplicateCandidatesAndPreviousExport]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testDuplicateCandidatesAndPreviousExport]' passed (0.174 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testEditedReplaceChecksLengthWithTempoAndSilence]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testEditedReplaceChecksLengthWithTempoAndSilence]' passed (0.190 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testEditTrackReplacesOriginalAndUndo]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testEditTrackReplacesOriginalAndUndo]' passed (0.420 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testFailureMovesOnToNextJob]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testFailureMovesOnToNextJob]' passed (0.100 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testFinishedFileGetsFreeName]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testFinishedFileGetsFreeName]' passed (0.092 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testHistoryIsSavedAndLoaded]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testHistoryIsSavedAndLoaded]' passed (0.336 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testImportIntoLibraryFolderRescans]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testImportIntoLibraryFolderRescans]' passed (0.118 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testLeavingEditModeAndNewSourceResetEdit]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testLeavingEditModeAndNewSourceResetEdit]' passed (0.059 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testParseInput]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testParseInput]' passed (0.003 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPauseAndResumeWaitingJobAndRemove]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPauseAndResumeWaitingJobAndRemove]' passed (0.431 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPauseResumeCancelRetry]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPauseResumeCancelRetry]' passed (0.337 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPausingDownloadKeepsPartialFileAndResumes]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPausingDownloadKeepsPartialFileAndResumes]' passed (0.122 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPlaylistAndMultipleAddressesBecomeJobs]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPlaylistAndMultipleAddressesBecomeJobs]' passed (0.376 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPrepareForEditingUsesCacheAndCleansUp]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPrepareForEditingUsesCacheAndCleansUp]' passed (0.111 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testPreviewPlaysSelectionAndFollowsPlayhead]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testPreviewPlaysSelectionAndFollowsPlayhead]' passed (0.078 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testQueueRunsInOrderWithExactlyOneActiveJob]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testQueueRunsInOrderWithExactlyOneActiveJob]' passed (0.298 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceIsAbortedWhenExportHasWrongLength]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceIsAbortedWhenExportHasWrongLength]' passed (0.105 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceOriginalWithBackupAndUndo]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceOriginalWithBackupAndUndo]' passed (0.124 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceRequiresOriginalFormat]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testReplaceRequiresOriginalFormat]' passed (0.039 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testSetFormatOfWaitingJob]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testSetFormatOfWaitingJob]' passed (0.146 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testSettingsAreStoredInInjectedDefaults]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testSettingsAreStoredInInjectedDefaults]' passed (0.007 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testSingleAddressShowsSourceAndExportDownloads]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testSingleAddressShowsSourceAndExportDownloads]' passed (0.214 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testSpotifyShowsMetadataButCannotExport]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testSpotifyShowsMetadataButCannotExport]' passed (0.032 seconds).
+Test Case '-[MusicLibraryTests.StudioModelTests testUndoIsRefusedWhenFileChangedAfterReplace]' started.
+Test Case '-[MusicLibraryTests.StudioModelTests testUndoIsRefusedWhenFileChangedAfterReplace]' passed (0.270 seconds).
+Test Suite 'StudioModelTests' passed at 2026-11-13 09:03:09.892.
+	 Executed 26 tests, with 0 failures (0 unexpected) in 4.438 (4.446) seconds
+Test Suite 'MusicLibraryPackageTests.xctest' passed at 2026-11-13 09:03:09.892.
+	 Executed 26 tests, with 0 failures (0 unexpected) in 4.438 (4.446) seconds
+Test Suite 'Selected tests' passed at 2026-11-13 09:03:09.892.
+	 Executed 26 tests, with 0 failures (0 unexpected) in 4.438 (4.452) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: x86_64-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

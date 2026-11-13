@@ -1,0 +1,25 @@
+[Snapshot] ▸ 62-studio-bearbeiten hell
+[Wächter] Hauptthread reagiert seit über 6 s nicht – Aufnahme haenger-1.txt
+[Snapshot] 62-studio-bearbeiten hell: Aufbau+Warten 4303 ms, Hauptthread-Verzögerung Ø 4252.1 ms, max 4252.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 62-studio-bearbeiten dunkel
+[Snapshot] 62-studio-bearbeiten dunkel: Aufbau+Warten 2246 ms, Hauptthread-Verzögerung Ø 154.1 ms, max 1571.1 ms, Hauptthread belegt 33 %
+[Snapshot] ▸ 62-studio-bearbeiten-standard hell
+[Snapshot] 62-studio-bearbeiten-standard hell: Aufbau+Warten 2438 ms, Hauptthread-Verzögerung Ø 2387.6 ms, max 2387.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 62-studio-bearbeiten-standard dunkel
+[Snapshot] 62-studio-bearbeiten-standard dunkel: Aufbau+Warten 2226 ms, Hauptthread-Verzögerung Ø 12.2 ms, max 29.1 ms, Hauptthread belegt 21 %
+[Snapshot] ▸ 62-studio-bearbeiten-regler hell
+[Snapshot] 62-studio-bearbeiten-regler hell: Aufbau+Warten 2246 ms, Hauptthread-Verzögerung Ø 90.4 ms, max 1225.7 ms, Hauptthread belegt 35 %
+[Snapshot] ▸ 62-studio-bearbeiten-regler dunkel
+[Snapshot] 62-studio-bearbeiten-regler dunkel: Aufbau+Warten 2220 ms, Hauptthread-Verzögerung Ø 108.6 ms, max 1152.8 ms, Hauptthread belegt 31 %
+[Snapshot] ▸ 62-studio-bearbeiten-werkzeuge hell
+[Snapshot] 62-studio-bearbeiten-werkzeuge hell: Aufbau+Warten 2251 ms, Hauptthread-Verzögerung Ø 154.6 ms, max 1411.9 ms, Hauptthread belegt 29 %
+[Snapshot] ▸ 62-studio-bearbeiten-werkzeuge dunkel
+[Snapshot] 62-studio-bearbeiten-werkzeuge dunkel: Aufbau+Warten 2233 ms, Hauptthread-Verzögerung Ø 109.4 ms, max 1167.4 ms, Hauptthread belegt 24 %
+[Snapshot] ▸ 62-studio-bearbeiten-schmal hell
+[Snapshot] 62-studio-bearbeiten-schmal hell: Aufbau+Warten 2245 ms, Hauptthread-Verzögerung Ø 35.4 ms, max 119.3 ms, Hauptthread belegt 16 %
+[Snapshot] ▸ 62-studio-bearbeiten-schmal dunkel
+[Snapshot] 62-studio-bearbeiten-schmal dunkel: Aufbau+Warten 2238 ms, Hauptthread-Verzögerung Ø 323.0 ms, max 1584.9 ms, Hauptthread belegt 42 %
+[Snapshot] ▸ 62-studio-bearbeiten-bestaetigen hell
+[Snapshot] 62-studio-bearbeiten-bestaetigen hell: Aufbau+Warten 2335 ms, Hauptthread-Verzögerung Ø 38.7 ms, max 126.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 62-studio-bearbeiten-bestaetigen dunkel
+[Snapshot] 62-studio-bearbeiten-bestaetigen dunkel: Aufbau+Warten 2325 ms, Hauptthread-Verzögerung Ø 26.2 ms, max 131.3 ms, Hauptthread belegt 0 %

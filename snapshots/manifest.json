@@ -1,0 +1,117 @@
+{
+  "architecture" : "x86_64",
+  "images" : [
+    {
+      "elapsedMs" : "4303",
+      "file" : "62-studio-bearbeiten-hell-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "4252.1",
+      "mainThreadLagMeanMs" : "4252.1",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2246",
+      "file" : "62-studio-bearbeiten-dunkel-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "33",
+      "mainThreadLagMaxMs" : "1571.1",
+      "mainThreadLagMeanMs" : "154.1",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2438",
+      "file" : "62-studio-bearbeiten-standard-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "2387.6",
+      "mainThreadLagMeanMs" : "2387.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2226",
+      "file" : "62-studio-bearbeiten-standard-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "21",
+      "mainThreadLagMaxMs" : "29.1",
+      "mainThreadLagMeanMs" : "12.2",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2246",
+      "file" : "62-studio-bearbeiten-regler-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "35",
+      "mainThreadLagMaxMs" : "1225.7",
+      "mainThreadLagMeanMs" : "90.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2220",
+      "file" : "62-studio-bearbeiten-regler-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "31",
+      "mainThreadLagMaxMs" : "1152.8",
+      "mainThreadLagMeanMs" : "108.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2251",
+      "file" : "62-studio-bearbeiten-werkzeuge-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "29",
+      "mainThreadLagMaxMs" : "1411.9",
+      "mainThreadLagMeanMs" : "154.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2233",
+      "file" : "62-studio-bearbeiten-werkzeuge-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "24",
+      "mainThreadLagMaxMs" : "1167.4",
+      "mainThreadLagMeanMs" : "109.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2245",
+      "file" : "62-studio-bearbeiten-schmal-hell-940x660.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "16",
+      "mainThreadLagMaxMs" : "119.3",
+      "mainThreadLagMeanMs" : "35.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2238",
+      "file" : "62-studio-bearbeiten-schmal-dunkel-940x660.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "42",
+      "mainThreadLagMaxMs" : "1584.9",
+      "mainThreadLagMeanMs" : "323.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2335",
+      "file" : "62-studio-bearbeiten-bestaetigen-hell-480x400.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "126.6",
+      "mainThreadLagMeanMs" : "38.7",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2325",
+      "file" : "62-studio-bearbeiten-bestaetigen-dunkel-480x400.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "131.3",
+      "mainThreadLagMeanMs" : "26.2",
+      "method" : "window-server"
+    }
+  ],
+  "interFont" : true,
+  "liquidGlass" : true,
+  "macOS" : "Version 26.6.1 (Build 25G76)",
+  "screen" : "1920x1080 @1.0x, sichtbar 1920x959"
+}
