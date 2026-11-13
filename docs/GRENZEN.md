@@ -152,3 +152,21 @@ Ob Akkuwerte (Zyklen, Kapazitäten, Spannung, Strom, Temperatur), SMC-Sensoren, 
 die GPU-Treiberangabe auf echter Hardware stimmen, ist **nicht geprüft**, bis es auf einem physischen Mac bestätigt
 ist. Der Selbsttest prüft auf den Build-Rechnern den Lesepfad (z. B. SMC öffnen und Schlüssel aufzählen) und dass
 nicht verfügbare Werte mit Grund erscheinen.
+
+## ORBIT-Effekte (2.0)
+
+- **Bewegung lässt sich in Standbildern nicht prüfen.** Auftakt, Drift der Lichtfelder (Immersiv), Glasreflexion und
+  magnetisches Schweben unter dem Zeiger, räumliche Übergänge, rollende Zahlen und der kreisende Lichtpunkt des
+  ORBIT Core wurden im Build gebaut und gestartet, ihre Kosten im Selbsttest gemessen (eigene CPU je Effektprofil) –
+  gesehen werden sie in den Bildschirmfotos nur als Standbild. Die Zeiger-Effekte brauchen eine echte Maus; im
+  automatischen Lauf bewegt sich kein Zeiger.
+- **Akku-Lichtfluss** erscheint nur, wenn macOS „lädt“ meldet – die Build-Rechner haben keinen Akku, dort ist er nicht
+  zu sehen. Ebenso bleibt die Akku-Bahn des ORBIT Core auf Desktop-Macs und in VMs gestrichelt („kein Akku“).
+- **GPU-Bahn:** nur mit Auslastungsangabe des Grafiktreibers; in VMs fehlt sie (gestrichelt, mit Grund).
+- **Netzwerk-Bahn** ist bewusst relativ (Spitze der letzten 5 Minuten, mindestens 64 kB/s) – kein absoluter
+  Anteil einer „Leitungskapazität“, die macOS nicht kennt.
+- **Haptik** gibt es nur in der Android-App; macOS-Trackpads bieten Apps nur Rückmeldungen beim Kraftklick, die ORBIT
+  nicht braucht.
+- Die macOS-App bleibt bei Core Animation und SwiftUI-Formen; Canvas-, Metal- und `drawingGroup`-Effekte, wie sie der
+  Auftrag nennt, werden bewusst nicht verwendet: Auf Intel-Macs ohne Metal-Gerät (u. a. den Intel-Build-Rechnern)
+  bräche die Darstellung ab.
