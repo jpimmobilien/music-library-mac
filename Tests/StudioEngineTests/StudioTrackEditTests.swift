@@ -181,7 +181,7 @@ final class StudioTrackEditTests: XCTestCase {
         defer { try? FileManager.default.removeItem(at: dir) }
         let wav = dir.appendingPathComponent("quelle.wav")
         try TS.writePCM(wav, rate: 44_100, channels: 2, bits: 16, seconds: 8, signal: .sweep)
-        let meta = TS.metadata(cover: TS.makeImage("jpg"))
+        let meta = TS.metadata(cover: TS.jpeg)
         var e = TrackEdit(); e.speed = 1.1; e.semitones = 1; e.enhance = true
         for format in [StudioFormat.mp3, .m4a, .flac] {
             // „Original“ mit Tags erzeugen
