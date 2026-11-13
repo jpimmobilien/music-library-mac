@@ -282,6 +282,12 @@ final class KIMusicModel: ObservableObject {
 
     func generate() {
         guard blocker == nil, !isWorking, let installer else { return }
+        do {
+            try installer.installScripts()
+        } catch {
+            phase = .failed(StudioModel.message(error))
+            return
+        }
         let req = request
         rememberPrompt(req.prompt)
         let engine = self.engine ?? KIEngine(installer: installer)
