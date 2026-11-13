@@ -7,7 +7,10 @@ import android.view.ViewTreeObserver
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import de.privateapp.aether.model.appearance.EffectIntensity
+import de.privateapp.aether.model.appearance.ThemeStyle
 import de.privateapp.aether.ui.AetherRoot
+import de.privateapp.aether.ui.SnapshotAppearance
 
 /** Einzige Activity. Die Oberfläche ist vollständig in Compose (siehe ui/AetherRoot). */
 class MainActivity : ComponentActivity() {
@@ -19,13 +22,22 @@ class MainActivity : ComponentActivity() {
         val graph = (application as AetherApp).graph
         // Prüfmodus für Bildschirmfotos (ci/android_screens.sh): öffnet nur einen Bereich – keine Daten, keine Rechte.
         val startScreen = intent?.getStringExtra(EXTRA_START_SCREEN)?.takeIf { savedInstanceState == null }
-        setContent { AetherRoot(graph, startScreen) }
+        // Ebenfalls nur für Bildschirmfotos: Theme/Effektstärke für diese Sitzung (nichts wird gespeichert).
+        val override = SnapshotAppearance(
+            theme = intent?.getStringExtra(EXTRA_THEME)?.let { name -> ThemeStyle.entries.firstOrNull { it.name == name } },
+            intensity = intent?.getStringExtra(EXTRA_EFFECTS)?.let { name -> EffectIntensity.entries.firstOrNull { it.name == name } },
+        ).takeIf { it.theme != null || it.intensity != null }
+        setContent { AetherRoot(graph, startScreen, override) }
         keepSplashUntilAppearanceLoaded(graph)
     }
 
     companion object {
         /** Startbereich (home, files, storage, device, motion, settings, trash, privacy) – nur für Bildschirmfotos. */
         const val EXTRA_START_SCREEN = "orbit.snapshot"
+
+        /** Theme (Name aus ThemeStyle) bzw. Effektstärke (Name aus EffectIntensity) – nur für Bildschirmfotos, ungespeichert. */
+        const val EXTRA_THEME = "orbit.theme"
+        const val EXTRA_EFFECTS = "orbit.effects"
     }
 
     /**

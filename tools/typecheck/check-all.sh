@@ -26,12 +26,14 @@ echo "== 2. Kontrasttest"
 java -cp "$OUT/model.jar:$OUT/pal:$OUT/paltest:$L/junit-4.13.2.jar:$L/hamcrest-core-1.3.jar:$TC/kotlinc/lib/kotlin-stdlib.jar" org.junit.runner.JUnitCore de.privateapp.aether.design.ContrastTest | tail -3
 echo "== 3. Typprüfung"
 TCK="$ROOT/tools/typecheck/typecheck.sh"
+# Zusätzliche Platzhalter für APIs außerhalb der Framework-Stubs (siehe tools/typecheck/extra-stubs)
+mkdir -p "$OUT/extra" && javac -d "$OUT/extra" $(find tools/typecheck/extra-stubs -name '*.java') && (cd "$OUT/extra" && jar cf "$OUT/extra.jar" .)
 "$TCK" --module designsystem --res de.privateapp.aether.design=ui/designsystem/src/main/res --cp "$OUT/model.jar" --out "$OUT/designsystem.jar" --werror -- ui/designsystem/src/main/java
 "$TCK" --module storage --no-compose --cp "$OUT/model.jar:$OUT/files.jar" --out "$OUT/storage.jar" --werror -- platform/storage/src/main/java
-"$TCK" --module device --no-compose --cp "$OUT/model.jar" --out "$OUT/device.jar" --werror -- platform/device/src/main/java
+"$TCK" --module device --no-compose --cp "$OUT/model.jar:$OUT/extra.jar" --out "$OUT/device.jar" --werror -- platform/device/src/main/java
 "$TCK" --module app --res de.privateapp.aether=app/src/main/res --res de.privateapp.aether.design=ui/designsystem/src/main/res \
   --buildconfig de.privateapp.aether --application-id de.privateapp.aether --version-code 3 --version-name 0.4.0 \
-  --field 'APP_NAME=String:"ORBIT"' --cp "$OUT/model.jar:$OUT/files.jar:$OUT/designsystem.jar:$OUT/storage.jar:$OUT/device.jar" --werror -- app/src/main/java
+  --field 'APP_NAME=String:"ORBIT"' --cp "$OUT/model.jar:$OUT/files.jar:$OUT/designsystem.jar:$OUT/storage.jar:$OUT/device.jar:$OUT/extra.jar" --werror -- app/src/main/java
 echo "== 4. Theme-Farben"
 python3 -I tools/ui-check/uncolored.py
 echo "Alle Prüfungen bestanden."

@@ -64,6 +64,8 @@ data class SatelliteState(
     val summary: SatelliteSummary?,
     val timeToFirstFixMillis: Long?,
     val hardwareName: String?,
+    /** Einzelne Signale (Richtung, Höhe, Stärke) für den Sensor-Globus; leer, solange nichts gemeldet ist. */
+    val signals: List<de.privateapp.aether.model.motion.SatelliteSignal> = emptyList(),
 )
 
 /** Alles außer dem Kompass (der meldet viel häufiger und hat einen eigenen Zustand). */
@@ -250,6 +252,7 @@ class MotionViewModel(context: Context) : ViewModel() {
                 summary = signals?.let { GnssInterpreter.summarize(it) },
                 timeToFirstFixMillis = if (blocked == null) r.gnss?.timeToFirstFixMillis else null,
                 hardwareName = gnssHardwareName,
+                signals = signals.orEmpty(),
             ),
             hasBarometer = sensors.hasBarometer,
             barometerName = barometerName,

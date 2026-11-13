@@ -105,6 +105,7 @@ fun Panel(
             .pressFeedback(interaction)
             .glassPanel(colors)
             .clip(shape)
+            .touchReflection(shape)
             .clickable(interactionSource = interaction, indication = ripple(), onClickLabel = onClickLabel, role = Role.Button, onClick = onClick)
     } else {
         Modifier.glassPanel(colors).clip(shape)

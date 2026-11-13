@@ -67,16 +67,16 @@ data class AccentSpec(val onLight: Long, val onDark: Long) {
 
 object PaletteSpec {
 
-    /** Liquid Glass Hell – „Morgenluft“: kühles Perlgrau, weißes Glas, weiche Schatten. */
+    /** Liquid Glass Hell – ORBIT „Pearl White“: kühles Perlweiß, weißes Glas, Lichtfelder in Arctic Blue und Soft Violet. */
     val GlassLight = BaseSpec(
         isDark = false,
         glass = true,
-        backgroundTop = 0xFFF4F7FB,
-        background = 0xFFEDF1F6,
-        backgroundBottom = 0xFFE5EAF1,
+        backgroundTop = 0xFFF6F9FD,
+        background = 0xFFEEF2F8,
+        backgroundBottom = 0xFFE6EBF3,
         atmosphereAccentAlpha = 0.10f,
-        atmosphereCool = 0x8CCFE4FB,
-        atmosphereWarm = 0x80FCE3D2,
+        atmosphereCool = 0x80BFDCFF,
+        atmosphereWarm = 0x66DCD3FF,
         panelTop = 0xC7FFFFFF,
         panelBottom = 0x9EFFFFFF,
         panelEdgeTop = 0xF2FFFFFF,
@@ -104,25 +104,25 @@ object PaletteSpec {
         scrim = 0x660E141C,
     )
 
-    /** Liquid Glass Dunkel – „Nachthimmel“: tiefes Blaugraphit, leuchtende Glaskanten. */
+    /** Liquid Glass Dunkel – ORBIT „Deep Ocean“: tiefes Ozeanblau, leuchtende Glaskanten, Lichtfelder in Sapphire und Violett. */
     val GlassDark = BaseSpec(
         isDark = true,
         glass = true,
-        backgroundTop = 0xFF0F141C,
-        background = 0xFF0A0E14,
-        backgroundBottom = 0xFF06080C,
+        backgroundTop = 0xFF0B1730,
+        background = 0xFF081124,
+        backgroundBottom = 0xFF050A17,
         atmosphereAccentAlpha = 0.10f,
-        atmosphereCool = 0x661E3A5C,
-        atmosphereWarm = 0x2E4A3420,
+        atmosphereCool = 0x661B3D7A,
+        atmosphereWarm = 0x332E2466,
         panelTop = 0x13FFFFFF,
         panelBottom = 0x0AFFFFFF,
         panelEdgeTop = 0x33FFFFFF,
         panelEdgeBottom = 0x0AFFFFFF,
         sheen = 0x12FFFFFF,
-        surface = 0xFF151A22,
-        surfaceRaised = 0xFF1C222B,
-        glassTint = 0xD1161C25,
-        glassTintSolid = 0xF2161C25,
+        surface = 0xFF121B2C,
+        surfaceRaised = 0xFF182336,
+        glassTint = 0xD1121B2C,
+        glassTintSolid = 0xF2121B2C,
         glassEdgeLight = 0x3DFFFFFF,
         glassEdgeDark = 0x0DFFFFFF,
         shadow = 0x8C000000,
@@ -130,7 +130,7 @@ object PaletteSpec {
         fillStrong = 0x24FFFFFF,
         hairline = 0x14FFFFFF,
         text = 0xFFF2F4F7,
-        textSecondary = 0xFFAEB6C1,
+        textSecondary = 0xFFB6BEC9,
         textTertiary = 0xFFA0A9B5,
         textDisabled = 0xFF5D6570,
         onAccent = 0xFF08111C,
@@ -178,6 +178,43 @@ object PaletteSpec {
         scrim = 0x660E141C,
     )
 
+    /** Minimal Dunkel – ORBIT „Graphite“: deckende, ruhige Flächen mit feinen Linien, ohne Glas und Atmosphäre. */
+    val MinimalDark = BaseSpec(
+        isDark = true,
+        glass = false,
+        backgroundTop = 0xFF111317,
+        background = 0xFF111317,
+        backgroundBottom = 0xFF111317,
+        atmosphereAccentAlpha = 0f,
+        atmosphereCool = 0x00000000,
+        atmosphereWarm = 0x00000000,
+        panelTop = 0xFF1A1D23,
+        panelBottom = 0xFF1A1D23,
+        panelEdgeTop = 0x1FFFFFFF,
+        panelEdgeBottom = 0x1FFFFFFF,
+        sheen = 0x00FFFFFF,
+        surface = 0xFF1A1D23,
+        surfaceRaised = 0xFF20242B,
+        glassTint = 0xF51A1D23,
+        glassTintSolid = 0xFA1A1D23,
+        glassEdgeLight = 0x1FFFFFFF,
+        glassEdgeDark = 0x1FFFFFFF,
+        shadow = 0x00000000,
+        fill = 0x14FFFFFF,
+        fillStrong = 0x24FFFFFF,
+        hairline = 0x17FFFFFF,
+        text = 0xFFF2F3F5,
+        textSecondary = 0xFFAAB0B9,
+        textTertiary = 0xFF9AA0AA,
+        textDisabled = 0xFF5A5F67,
+        onAccent = 0xFF08111C,
+        success = 0xFF5DD394,
+        warning = 0xFFF2B44C,
+        critical = 0xFFFF7B70,
+        info = 0xFF93C6EA,
+        scrim = 0xB3000000,
+    )
+
     /** Deep Dark – echtes Schwarz (OLED), sehr zurückhaltendes Glas, keine Atmosphäre. */
     val DeepDark = BaseSpec(
         isDark = true,
@@ -217,9 +254,10 @@ object PaletteSpec {
 
     /** Feste Akzentfarben (hell / dunkel). Systemfarbe: siehe Theme.kt (wird zur Laufzeit geprüft). */
     val accents: Map<AccentChoice, AccentSpec> = mapOf(
-        AccentChoice.OCEAN to AccentSpec(0xFF1B58B3, 0xFF8DB9FF),
-        AccentChoice.ARCTIC to AccentSpec(0xFF006680, 0xFF6DD3EA),
-        AccentChoice.VIOLET to AccentSpec(0xFF5F41C2, 0xFFBBA6FF),
+        // ORBIT: Arctic Blue (Standard), Electric Cyan, Soft Violet – auf Lesbarkeit (≥ 4,5 : 1) abgestimmt
+        AccentChoice.OCEAN to AccentSpec(0xFF0952C0, 0xFF6FB5FF),
+        AccentChoice.ARCTIC to AccentSpec(0xFF00667F, 0xFF3FDDEF),
+        AccentChoice.VIOLET to AccentSpec(0xFF5B41C7, 0xFFB3A3FF),
         AccentChoice.EMERALD to AccentSpec(0xFF156E45, 0xFF6CD6A1),
         AccentChoice.AMBER to AccentSpec(0xFF8A5000, 0xFFF3B556),
         AccentChoice.ROSE to AccentSpec(0xFFA82B58, 0xFFFF92B6),
@@ -234,6 +272,7 @@ object PaletteSpec {
         ThemeStyle.GLASS_LIGHT -> GlassLight
         ThemeStyle.GLASS_DARK -> GlassDark
         ThemeStyle.MINIMAL_LIGHT -> MinimalLight
+        ThemeStyle.MINIMAL_DARK -> MinimalDark
         ThemeStyle.DEEP_DARK -> DeepDark
     }
 
@@ -241,6 +280,7 @@ object PaletteSpec {
         "Liquid Glass Hell" to GlassLight,
         "Liquid Glass Dunkel" to GlassDark,
         "Minimal Hell" to MinimalLight,
+        "Minimal Dunkel" to MinimalDark,
         "Deep Dark" to DeepDark,
     )
 }

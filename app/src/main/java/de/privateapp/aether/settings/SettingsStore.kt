@@ -43,6 +43,8 @@ class SettingsStore(context: Context) {
 
     suspend fun setReduceMotion(reduce: Boolean) = update { it.copy(reduceMotion = reduce) }
 
+    suspend fun setHaptics(enabled: Boolean) = update { it.copy(haptics = enabled) }
+
     suspend fun resetAppearance() = update { AppearanceSettings.Default }
 
     // --- Dateien ------------------------------------------------------------------------------------------------
@@ -135,6 +137,7 @@ class SettingsStore(context: Context) {
             prefs[ACCENT] = next.accent.name
             prefs[INTENSITY] = next.intensity.name
             prefs[REDUCE_MOTION] = next.reduceMotion
+            prefs[HAPTICS] = next.haptics
         }
     }
 
@@ -143,6 +146,7 @@ class SettingsStore(context: Context) {
         accent = AppearanceCodec.accent(p[ACCENT]),
         intensity = AppearanceCodec.intensity(p[INTENSITY]),
         reduceMotion = p[REDUCE_MOTION] ?: AppearanceSettings.Default.reduceMotion,
+        haptics = p[HAPTICS] ?: AppearanceSettings.Default.haptics,
     )
 
     private companion object {
@@ -150,6 +154,7 @@ class SettingsStore(context: Context) {
         val ACCENT = stringPreferencesKey("appearance.accent")
         val INTENSITY = stringPreferencesKey("appearance.intensity")
         val REDUCE_MOTION = booleanPreferencesKey("appearance.reduceMotion")
+        val HAPTICS = booleanPreferencesKey("appearance.haptics")
 
         val VIEW_MODE = stringPreferencesKey("files.viewMode")
         val MEDIA_VIEW_MODE = stringPreferencesKey("files.mediaViewMode")

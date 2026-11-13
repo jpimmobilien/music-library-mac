@@ -67,6 +67,7 @@ fun MotionScreen(graph: AppGraph, insets: PaddingValues, onBack: () -> Unit) {
         }
         item(key = "compass") { CompassPanel(vm) }
         item(key = "altitude") { AltitudePanel(state) }
+        if (gpsUsable) item(key = "globe") { SensorGlobePanel(state, vm) }
         if (gpsUsable) item(key = "satellites") { SatellitesPanel(state) }
         if (gpsUsable || state.session.climbSource == ClimbSource.BAROMETER) {
             item(key = "session") { SessionPanel(state, gpsUsable, onReset = vm::resetSession) }

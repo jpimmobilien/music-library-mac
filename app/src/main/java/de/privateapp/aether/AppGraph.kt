@@ -65,6 +65,9 @@ class AppGraph(context: Context) {
     val storageSource: StorageVolumeSource = AndroidStorageVolumeSource(appContext)
     val deviceInfo = DeviceInfoReader(appContext)
 
+    /** Arbeitsspeicher und Netzwerk-Zähler für den ORBIT Core (nur gelesen, solange er sichtbar ist). */
+    val vitals = de.privateapp.aether.platform.device.LiveVitalsReader(appContext)
+
     val storage: StateFlow<StorageOverview?> =
         storageSource.overview().stateIn(appScope, SharingStarted.WhileSubscribed(stopDelayMillis), null)
 

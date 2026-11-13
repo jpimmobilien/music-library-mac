@@ -19,7 +19,7 @@ DIRS = [ROOT / "app/src/main/java", ROOT / "ui/designsystem/src/main/java"]
 verbose = "-v" in sys.argv
 NEEDS = {"Text": "color", "BasicText": "color", "Icon": "tint"}
 # Dateien, in denen feste Farbwerte erlaubt sind (Definition oder Lichteffekte)
-COLOR_ALLOWED = {"PaletteSpec.kt", "Palette.kt", "Glass.kt", "Charts.kt", "Icons.kt", "Theme.kt", "Components.kt"}
+COLOR_ALLOWED = {"PaletteSpec.kt", "Palette.kt", "Glass.kt", "Charts.kt", "Icons.kt", "Theme.kt", "Components.kt", "Orbit.kt"}  # Orbit.kt: ORBIT-Grundfarben und Licht
 
 def args_of(src, i):
     depth = 0; j = i

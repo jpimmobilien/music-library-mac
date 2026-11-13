@@ -1,6 +1,7 @@
 package de.privateapp.aether.ui
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.scaleOut
 import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -60,6 +61,9 @@ import de.privateapp.aether.design.GlassCircleButton
 import de.privateapp.aether.design.GlassRail
 import de.privateapp.aether.design.GlassTabBar
 import de.privateapp.aether.design.Motion
+import de.privateapp.aether.design.Orbit
+import de.privateapp.aether.design.rememberOrbitHaptics
+import de.privateapp.aether.ui.orbit.ProvideAtmosphereMotion
 import de.privateapp.aether.design.NavItem
 import de.privateapp.aether.design.RailWidth
 import de.privateapp.aether.design.Spacing
@@ -153,6 +157,7 @@ private fun ShellLayout(
 ) {
     val backdrop = rememberBackdrop()
     val motion = Aether.motion
+    val spatial = Orbit.effects.spatialBackground
     val system = WindowInsets.safeDrawing.asPaddingValues()
     val dir = LocalLayoutDirection.current
     val top = system.calculateTopPadding()
@@ -203,13 +208,15 @@ private fun ShellLayout(
             pendingClear.clear()
         }
     }
+    val haptics = rememberOrbitHaptics()
+    ProvideAtmosphereMotion(area = navigator.area.ordinal, areaCount = TopLevel.entries.size) {
     Box(Modifier.fillMaxSize()) {
         // 1. Hintergrund und Inhalt – zugleich Quelle der Glas-Unschärfe (deckend durch den Hintergrund).
         Box(Modifier.fillMaxSize().backdropSource(backdrop)) {
             AtmosphereBackground()
             AnimatedContent(
                 targetState = navigator.current,
-                transitionSpec = { transitionFor(navigator.lastMove, motion.reduced) },
+                transitionSpec = { transitionFor(navigator.lastMove, motion.reduced, spatial) },
                 contentKey = { it.key },
                 label = "screen",
             ) { route ->
@@ -234,7 +241,10 @@ private fun ShellLayout(
             GlassRail(
                 items = TopLevel.entries.map { NavItem(it.label, it.icon) },
                 selectedIndex = navigator.area.ordinal,
-                onSelect = { navigator.select(TopLevel.entries[it]) },
+                onSelect = {
+                    if (TopLevel.entries[it] != navigator.area) haptics.tick()
+                    navigator.select(TopLevel.entries[it])
+                },
                 backdrop = backdrop,
                 modifier = Modifier
                     .align(Alignment.CenterStart)
@@ -263,14 +273,20 @@ private fun ShellLayout(
                         GlassTabBar(
                             items = tabs.map { NavItem(it.label, it.icon) },
                             selectedIndex = tabs.indexOf(navigator.area),
-                            onSelect = { navigator.select(tabs[it]) },
+                            onSelect = {
+                                if (tabs[it] != navigator.area) haptics.tick()
+                                navigator.select(tabs[it])
+                            },
                             backdrop = backdrop,
                             modifier = Modifier.weight(1f),
                         )
                         GlassCircleButton(
                             icon = TopLevel.SETTINGS.icon,
                             contentDescription = TopLevel.SETTINGS.label,
-                            onClick = { navigator.select(TopLevel.SETTINGS) },
+                            onClick = {
+                                if (navigator.area != TopLevel.SETTINGS) haptics.tick()
+                                navigator.select(TopLevel.SETTINGS)
+                            },
                             backdrop = backdrop,
                             selected = navigator.area == TopLevel.SETTINGS,
                             asTab = true,
@@ -283,6 +299,7 @@ private fun ShellLayout(
         // 4. Darüber: Fortschritt laufender Vorgänge, Rückmeldungen, Dialoge (liegen über der Navigation).
         val clearance = if (wide) bottom + barGap else bottom + barGap + TabBarHeight + Spacing.s
         overlay(backdrop, clearance)
+    }
     }
 }
 
@@ -319,20 +336,24 @@ internal class RouteViewModelStores {
 }
 
 /**
- * Übergänge: Bereichswechsel als ruhige Überblendung mit leichter Tiefe, Unterseiten gleiten von rechts
- * herein (zurück: nach rechts hinaus). Bei reduzierter Bewegung nur eine kurze Überblendung.
+ * Übergänge (ORBIT „Spatial Navigation“): Bereichswechsel kommen aus leichter Tiefe nach vorn, während der alte
+ * Bereich zurücktritt; Unterseiten gleiten von rechts herein und schieben die vorige leicht nach hinten (zurück:
+ * umgekehrt). Ohne räumliche Effekte (Minimal) die bisherigen ruhigen Übergänge; bei reduzierter Bewegung nur eine
+ * kurze Überblendung.
  */
-private fun transitionFor(move: NavMove, reduced: Boolean): ContentTransform {
+private fun transitionFor(move: NavMove, reduced: Boolean, spatial: Boolean): ContentTransform {
     if (reduced) return fadeIn(tween(Motion.REDUCED_FADE_MS)) togetherWith fadeOut(tween(Motion.REDUCED_FADE_MS))
+    val depthIn = if (spatial) 0.955f else 0.985f
+    val depthOut = if (spatial) 0.97f else 1f
     return when (move) {
         NavMove.AREA ->
-            (fadeIn(tween(Motion.STANDARD_MS, delayMillis = 40, easing = Motion.Standard)) + scaleIn(tween(Motion.STANDARD_MS, easing = Motion.Standard), initialScale = 0.985f)) togetherWith
-                fadeOut(tween(Motion.QUICK_MS, easing = Motion.Exit))
+            (fadeIn(tween(Motion.STANDARD_MS, delayMillis = 40, easing = Motion.Standard)) + scaleIn(tween(Motion.EMPHASIZED_MS, easing = Motion.Emphasized), initialScale = depthIn)) togetherWith
+                (fadeOut(tween(Motion.QUICK_MS, easing = Motion.Exit)) + scaleOut(tween(Motion.STANDARD_MS, easing = Motion.Exit), targetScale = if (spatial) 1.03f else 1f))
         NavMove.FORWARD ->
             (slideInHorizontally(tween(Motion.EMPHASIZED_MS, easing = Motion.Emphasized)) { it / 3 } + fadeIn(tween(Motion.STANDARD_MS))) togetherWith
-                (slideOutHorizontally(tween(Motion.EMPHASIZED_MS, easing = Motion.Emphasized)) { -it / 8 } + fadeOut(tween(Motion.QUICK_MS)))
+                (slideOutHorizontally(tween(Motion.EMPHASIZED_MS, easing = Motion.Emphasized)) { -it / 8 } + scaleOut(tween(Motion.EMPHASIZED_MS), targetScale = depthOut) + fadeOut(tween(Motion.QUICK_MS)))
         NavMove.BACK ->
-            (slideInHorizontally(tween(Motion.EMPHASIZED_MS, easing = Motion.Emphasized)) { -it / 8 } + fadeIn(tween(Motion.STANDARD_MS))) togetherWith
+            (slideInHorizontally(tween(Motion.EMPHASIZED_MS, easing = Motion.Emphasized)) { -it / 8 } + scaleIn(tween(Motion.EMPHASIZED_MS), initialScale = depthOut) + fadeIn(tween(Motion.STANDARD_MS))) togetherWith
                 (slideOutHorizontally(tween(Motion.EMPHASIZED_MS, easing = Motion.Emphasized)) { it / 3 } + fadeOut(tween(Motion.QUICK_MS)))
     }
 }

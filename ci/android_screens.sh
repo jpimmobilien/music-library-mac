@@ -45,6 +45,24 @@ for mode in no yes; do
   for s in $SCREENS; do shot "telefon-$label-$s" "$s"; done
 done
 
+log "Alle Themes (Übersicht) – Darstellung nur für diese Sitzung"
+adb shell cmd uimode night no >/dev/null 2>&1
+for t in GLASS_LIGHT GLASS_DARK MINIMAL_LIGHT MINIMAL_DARK DEEP_DARK; do
+  shot "theme-$t-home" home --es orbit.theme "$t"
+done
+
+log "Effektprofile"
+for e in MINIMAL BALANCED IMMERSIVE; do
+  shot "effekte-$e-home" home --es orbit.theme GLASS_DARK --es orbit.effects "$e"
+done
+
+log "Übersicht gescrollt und ORBIT Core aufgeklappt"
+shot "telefon-hell-home-oben" home --es orbit.theme GLASS_LIGHT
+adb shell input swipe 540 1700 540 900 400
+sleep 2
+adb exec-out screencap -p > "$OUT/telefon-hell-home-gescrollt.png"
+log "Foto telefon-hell-home-gescrollt"
+
 log "Tablet-Größe"
 adb shell wm size 1600x2560
 adb shell wm density 320

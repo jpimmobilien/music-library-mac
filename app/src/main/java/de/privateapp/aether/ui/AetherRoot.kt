@@ -31,6 +31,7 @@ import de.privateapp.aether.ui.home.HomeScreen
 import de.privateapp.aether.ui.files.CategoryScreen
 import de.privateapp.aether.ui.files.FileActions
 import de.privateapp.aether.ui.files.FileActionsHost
+import de.privateapp.aether.ui.orbit.OrbitIntroOverlay
 import de.privateapp.aether.ui.files.FileActionsViewModel
 import de.privateapp.aether.ui.files.FolderScreen
 import de.privateapp.aether.ui.files.LocalFileActions
@@ -64,9 +65,11 @@ import de.privateapp.aether.ui.storage.StorageScreen
  * verteilt die Ziele der Navigation auf die Bildschirme.
  */
 @Composable
-fun AetherRoot(graph: AppGraph, startScreen: String? = null) {
+fun AetherRoot(graph: AppGraph, startScreen: String? = null, snapshot: SnapshotAppearance? = null) {
     val appearance: AppearanceSettings? by graph.appearance.collectAsStateWithLifecycle()
-    val settings = appearance
+    val settings = appearance?.let { a ->
+        if (snapshot == null) a else a.copy(theme = snapshot.theme ?: a.theme, intensity = snapshot.intensity ?: a.intensity)
+    }
     if (settings == null) {
         // Nur in den ersten Millisekunden nach dem Start (der Startbildschirm deckt sie ab, siehe MainActivity).
         val base = if (isSystemInDarkTheme()) PaletteSpec.GlassDark else PaletteSpec.GlassLight
@@ -116,9 +119,17 @@ fun AetherRoot(graph: AppGraph, startScreen: String? = null) {
             }
         }
         FileActionsHost(actions)
+        // ORBIT-Auftakt beim Kaltstart (≈ 0,8 s, über dem fertigen Inhalt, ohne Eingaben abzufangen)
+        OrbitIntroOverlay()
         }
     }
 }
+
+/** Darstellung für Bildschirmfotos (MainActivity.EXTRA_THEME/EXTRA_EFFECTS) – gilt nur für diese Sitzung. */
+data class SnapshotAppearance(
+    val theme: de.privateapp.aether.model.appearance.ThemeStyle?,
+    val intensity: de.privateapp.aether.model.appearance.EffectIntensity?,
+)
 
 /** Startbereich für Bildschirmfotos (MainActivity.EXTRA_START_SCREEN); Unbekanntes wird ignoriert. */
 private fun openStartScreen(navigator: AppNavigator, screen: String) {

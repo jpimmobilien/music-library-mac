@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,7 +25,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.privateapp.aether.AppGraph
 import de.privateapp.aether.design.Aether
 import de.privateapp.aether.design.AetherIcons
-import de.privateapp.aether.design.BatteryGlyph
+import de.privateapp.aether.design.BatteryLiquid
+import de.privateapp.aether.design.RollingText
 import de.privateapp.aether.design.CapacityBar
 import de.privateapp.aether.design.Hairline
 import de.privateapp.aether.design.InfoRow
@@ -112,10 +114,17 @@ private fun BatteryPanel(b: BatterySnapshot?) {
             Spacer(Modifier.height(Spacing.l))
             val level = (b.level as? Reading.Value)?.value
             Row(verticalAlignment = Alignment.CenterVertically) {
-                BatteryGlyph(level, charging = b.status == ChargeStatus.CHARGING, tone = b.levelTone())
+                // ORBIT „Battery Liquid“: Füllstand = gemessener Ladestand; Bewegung nur, solange Android „lädt“ meldet
+                val tone = b.levelTone()
+                BatteryLiquid(
+                    level = level?.let { it / 100f },
+                    charging = b.status == ChargeStatus.CHARGING,
+                    color = if (tone == Tone.ACCENT) colors.accent else colors.tone(tone),
+                )
                 Spacer(Modifier.width(Spacing.l))
                 if (level != null) {
-                    ValueWithUnit(level.toString(), "%", large = true)
+                    RollingText(level.toString(), style = Aether.type.numberLarge, color = colors.text)
+                    Text("%", color = colors.textSecondary, style = Aether.type.subhead, modifier = Modifier.padding(start = 3.dp, top = 10.dp))
                 } else {
                     Text((b.level as? Reading.Unavailable)?.missing?.text ?: "–", color = colors.textTertiary, style = Aether.type.callout)
                 }

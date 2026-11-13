@@ -100,6 +100,9 @@ fun HomeScreen(graph: AppGraph, insets: PaddingValues, reselect: Int, onOpen: (T
 
     ScreenList(insets, reselect) {
         item(key = "header") { HomeHeader(state, Modifier.entrance(0)) }
+        item(key = "orbit") {
+            OrbitCorePanel(graph, onOpenDevice = { onOpen(TopLevel.DEVICE) }, onOpenStorage = { onOpen(TopLevel.STORAGE) }, modifier = Modifier.entrance(1))
+        }
         item(key = "storage") { StorageHero(state, onClick = { onOpen(TopLevel.STORAGE) }, modifier = Modifier.entrance(1)) }
         item(key = "shortcuts") {
             QuickAccessPanel(

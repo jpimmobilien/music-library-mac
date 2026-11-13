@@ -65,6 +65,13 @@ import de.privateapp.aether.files.ConflictChoice
 import de.privateapp.aether.files.FileEntry
 import de.privateapp.aether.files.OperationPhase
 import de.privateapp.aether.files.OperationProgress
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.ui.graphics.graphicsLayer
+import de.privateapp.aether.design.LiquidProgressBar
+import de.privateapp.aether.design.Orbit
+import de.privateapp.aether.design.rememberOrbitHaptics
 import de.privateapp.aether.files.OperationTexts
 import de.privateapp.aether.files.Resolution
 import de.privateapp.aether.model.ByteFormat
@@ -136,6 +143,14 @@ fun BoxScope.OperationOverlay(actions: FileActions, backdrop: Backdrop, clearanc
 @Composable
 private fun BannerCard(b: Banner, backdrop: Backdrop, onDismiss: () -> Unit, onDetails: (de.privateapp.aether.files.OperationReport) -> Unit) {
     val colors = Aether.colors
+    // ORBIT: Die Rückmeldung erscheint erst nach dem Abschluss des Vorgangs – erst dann Haptik und Bestätigungssymbol.
+    val haptics = rememberOrbitHaptics()
+    val animate = Orbit.effects.dataFlow
+    val pop = remember(b) { Animatable(if (animate) 0.4f else 1f) }
+    LaunchedEffect(b) {
+        if (b.isProblem) haptics.reject() else haptics.confirm()
+        pop.animateTo(1f, spring(dampingRatio = 0.55f, stiffness = Spring.StiffnessMediumLow))
+    }
     GlassSurface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(Radii.card), backdrop = backdrop) {
         Row(
             Modifier
@@ -144,7 +159,15 @@ private fun BannerCard(b: Banner, backdrop: Backdrop, onDismiss: () -> Unit, onD
                 .semantics { liveRegion = LiveRegionMode.Polite },
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            IconBadge(if (b.isProblem) AetherIcons.Warning else AetherIcons.CheckCircle, tone = if (b.isProblem) Tone.WARNING else Tone.SUCCESS, size = 32.dp)
+            IconBadge(
+                if (b.isProblem) AetherIcons.Warning else AetherIcons.CheckCircle,
+                tone = if (b.isProblem) Tone.WARNING else Tone.SUCCESS,
+                size = 32.dp,
+                modifier = Modifier.graphicsLayer {
+                    scaleX = pop.value
+                    scaleY = pop.value
+                },
+            )
             Spacer(Modifier.width(Spacing.m))
             Column(Modifier.weight(1f)) {
                 Text(b.headline, color = colors.text, style = Aether.type.bodyStrong, maxLines = 2, overflow = TextOverflow.Ellipsis)
@@ -198,7 +221,9 @@ private fun ProgressCapsule(job: OperationJob, queued: Int, backdrop: Backdrop, 
             Column(Modifier.weight(1f).semantics(mergeDescendants = true) { }) {
                 Text(job.title, color = colors.text, style = Aether.type.bodyStrong, maxLines = 1, overflow = TextOverflow.MiddleEllipsis)
                 Spacer(Modifier.height(Spacing.xs))
-                CapacityBar(fraction = if (job.status == JobStatus.RUNNING) p?.fraction else null, height = 4.dp)
+                // ORBIT: flüssige Füllung = echter Fortschritt; der Lichtschimmer läuft nur, während der Vorgang arbeitet
+                val fraction = if (job.status == JobStatus.RUNNING) p?.fraction else null
+                LiquidProgressBar(fraction = fraction ?: 0f, active = fraction != null, height = 4.dp)
                 Spacer(Modifier.height(Spacing.xs))
                 Text(line, color = colors.textSecondary, style = Aether.type.caption, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }

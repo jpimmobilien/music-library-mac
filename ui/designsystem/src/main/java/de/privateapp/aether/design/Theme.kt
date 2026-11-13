@@ -71,6 +71,10 @@ fun AetherTheme(
     val reduced = systemReducedMotion || settings.reduceMotion
     val motion = MotionScheme(reduced = reduced, decorative = !reduced && settings.intensity != EffectIntensity.MINIMAL)
     val colors = animateColors(target, if (reduced) snap() else tween(Motion.THEME_MS, easing = Motion.Standard))
+    val powerSave = rememberPowerSaveMode()
+    val orbit = remember(settings.intensity, reduced, powerSave) {
+        de.privateapp.aether.model.orbit.OrbitEffects.resolve(settings.intensity, reducedMotion = reduced, powerSave = powerSave)
+    }
 
     CompositionLocalProvider(
         LocalAetherColors provides colors,
@@ -79,6 +83,8 @@ fun AetherTheme(
         LocalMotion provides motion,
         LocalSystemReducedMotion provides systemReducedMotion,
         LocalResolvedAccent provides accent,
+        LocalOrbitEffects provides orbit,
+        LocalHapticsEnabled provides settings.haptics,
     ) {
         MaterialTheme(colorScheme = materialScheme(colors), typography = materialTypography) {
             CompositionLocalProvider(LocalContentColor provides colors.text, content = content)

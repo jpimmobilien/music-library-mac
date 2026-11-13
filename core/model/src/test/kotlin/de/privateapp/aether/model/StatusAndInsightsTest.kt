@@ -147,10 +147,13 @@ class AppearanceCodecTest {
 
     @Test
     fun defaultsMatchTheBrief() {
-        assertEquals(5, ThemeStyle.entries.size)
+        // ORBIT: Adaptiv, Liquid Glass Hell/Dunkel, Minimal Hell/Dunkel, Deep Dark
+        assertEquals(6, ThemeStyle.entries.size)
         assertEquals(3, EffectIntensity.entries.size)
         // sieben feste Akzente + Systemfarbe
         assertEquals(8, AccentChoice.entries.size)
         assertEquals(ThemeStyle.ADAPTIVE, AppearanceSettings.Default.theme)
+        assertEquals(EffectIntensity.BALANCED, AppearanceSettings.Default.intensity)
+        assertTrue("Haptik ist standardmäßig an", AppearanceSettings.Default.haptics)
     }
 }

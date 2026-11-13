@@ -64,6 +64,7 @@ class SettingsViewModel(private val store: SettingsStore, loaded: StateFlow<Appe
     fun setAccent(a: AccentChoice) = viewModelScope.launch { store.setAccent(a) }
     fun setIntensity(i: EffectIntensity) = viewModelScope.launch { store.setIntensity(i) }
     fun setReduceMotion(r: Boolean) = viewModelScope.launch { store.setReduceMotion(r) }
+    fun setHaptics(h: Boolean) = viewModelScope.launch { store.setHaptics(h) }
     fun reset() = viewModelScope.launch { store.resetAppearance() }
 
     fun setShowHidden(show: Boolean) = viewModelScope.launch { store.setShowHidden(show) }
@@ -191,6 +192,13 @@ fun SettingsScreen(graph: AppGraph, insets: PaddingValues, reselect: Int, onNavi
                     onCheckedChange = { vm.setReduceMotion(it) },
                     enabled = !systemReduced,
                     note = if (systemReduced) "Android hat „Animationen entfernen“ aktiviert – die Bewegung ist bereits reduziert." else null,
+                )
+                Spacer(Modifier.height(Spacing.s))
+                ToggleRow(
+                    title = "Haptisches Feedback",
+                    description = "Kurzes Tippen beim Wechsel der Bereiche, Bestätigung nach abgeschlossenen Dateivorgängen. Die Vibrationseinstellung von Android hat Vorrang.",
+                    checked = settings.haptics,
+                    onCheckedChange = { vm.setHaptics(it) },
                 )
             }
         }

@@ -66,6 +66,7 @@ import de.privateapp.aether.design.AetherIcons
 import de.privateapp.aether.design.GlassCircleButton
 import de.privateapp.aether.design.GlassToolbar
 import de.privateapp.aether.design.IconBadge
+import de.privateapp.aether.design.OrbitMark
 import de.privateapp.aether.design.MinTouchTarget
 import de.privateapp.aether.design.PillButton
 import de.privateapp.aether.design.Radii
@@ -519,7 +520,12 @@ fun EmptyState(icon: ImageVector, title: String, message: String, modifier: Modi
         modifier.fillMaxWidth().padding(vertical = Spacing.huge, horizontal = Spacing.l),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        IconBadge(icon, tone = tone, size = 64.dp)
+        // ORBIT: eigene Illustration (Kern mit Umlaufbahnen und Symbol); Warnungen behalten ihr farbiges Zeichen
+        if (tone == Tone.NEUTRAL || tone == Tone.ACCENT) {
+            OrbitMark(size = 120.dp, icon = icon)
+        } else {
+            IconBadge(icon, tone = tone, size = 64.dp)
+        }
         Spacer(Modifier.height(Spacing.l))
         Text(title, color = colors.text, style = Aether.type.headline, textAlign = TextAlign.Center)
         Spacer(Modifier.height(Spacing.xs))

@@ -254,14 +254,15 @@ fun DrawScope.drawPanelMaterial(colors: AetherColors, radiusPx: Float) {
 @Composable
 fun AtmosphereBackground(modifier: Modifier = Modifier) {
     val colors = Aether.colors
-    Box(modifier.fillMaxSize().drawBehind { drawAtmosphere(colors) })
+    val shift = LocalAtmosphereShift.current
+    Box(modifier.fillMaxSize().drawBehind { drawAtmosphere(colors, shift = shift()) })
 }
 
 /**
  * Zeichnet die Atmosphäre. [area] = Fläche, auf die sich die Lichtfelder beziehen (normalerweise die eigene
  * Größe; für Kantenübergänge die ganze Bildschirmfläche, damit Übergang und Hintergrund deckungsgleich sind).
  */
-fun DrawScope.drawAtmosphere(colors: AetherColors, area: Size = size) {
+fun DrawScope.drawAtmosphere(colors: AetherColors, area: Size = size, shift: Offset = Offset.Zero) {
     if (area.width <= 0f || area.height <= 0f) return
     drawRect(
         Brush.verticalGradient(0f to colors.backgroundTop, 0.55f to colors.background, 1f to colors.backgroundBottom, startY = 0f, endY = area.height),
@@ -274,9 +275,12 @@ fun DrawScope.drawAtmosphere(colors: AetherColors, area: Size = size) {
         if (color.alpha <= 0f) return
         drawCircle(Brush.radialGradient(listOf(color, color.copy(alpha = 0f)), center = center, radius = r), radius = r, center = center)
     }
-    field(colors.atmosphereAccent, Offset(w * -0.05f, h * 0.04f), radius)
-    field(colors.atmosphereCool, Offset(w * 1.08f, h * 0.30f), radius * 0.9f)
-    field(colors.atmosphereWarm, Offset(w * 0.25f, h * 1.02f), radius)
+    // ORBIT: Lichtfelder gleiten beim Bereichswechsel (und in „Immersiv“ sehr langsam) – Anteil der Fläche
+    val sx = shift.x * w
+    val sy = shift.y * h
+    field(colors.atmosphereAccent, Offset(w * -0.05f + sx, h * 0.04f + sy), radius)
+    field(colors.atmosphereCool, Offset(w * 1.08f - sx * 0.6f, h * 0.30f + sy * 0.8f), radius * 0.9f)
+    field(colors.atmosphereWarm, Offset(w * 0.25f + sx * 0.4f, h * 1.02f - sy), radius)
 }
 
 /**
@@ -288,13 +292,14 @@ fun DrawScope.drawAtmosphere(colors: AetherColors, area: Size = size) {
 @Composable
 fun EdgeFade(top: Boolean, fullHeight: Dp, modifier: Modifier = Modifier, strength: Float = 0.92f) {
     val colors = Aether.colors
+    val shift = LocalAtmosphereShift.current
     Box(
         modifier
             .graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen }
             .drawBehind {
                 val full = Size(size.width, fullHeight.toPx().coerceAtLeast(size.height))
                 val dy = if (top) 0f else size.height - full.height
-                translate(top = dy) { drawAtmosphere(colors, full) }
+                translate(top = dy) { drawAtmosphere(colors, full, shift()) }
                 val mask = if (top) {
                     Brush.verticalGradient(0f to Color.Black.copy(alpha = strength), 0.55f to Color.Black.copy(alpha = strength * 0.6f), 1f to Color.Transparent)
                 } else {
