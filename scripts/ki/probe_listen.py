@@ -18,7 +18,23 @@ import traceback
 
 OUT = os.path.abspath(sys.argv[1] if len(sys.argv) > 1 else "out")
 WHISPER = os.environ.get("KI_WHISPER", "mlx-community/whisper-large-v3-turbo")
-probe = json.load(open(os.path.join(OUT, "probe.json")))
+probe_path = os.path.join(OUT, "probe.json")
+if os.path.exists(probe_path):
+    probe = json.load(open(probe_path))
+else:
+    # Prüfstand KI-E2E: Ordner audio/<fall>/*.flac; Gesang mit Referenztext 03-text-de.txt
+    probe = {"cases": []}
+    audio_dir = os.path.join(OUT, "audio")
+    ref_path = os.path.join(audio_dir, "03-text-de.txt")
+    reference = open(ref_path).read() if os.path.exists(ref_path) else ""
+    for case in sorted(os.listdir(audio_dir)) if os.path.isdir(audio_dir) else []:
+        d = os.path.join(audio_dir, case)
+        if not os.path.isdir(d):
+            continue
+        files = [{"path": os.path.relpath(os.path.join(d, f), OUT)} for f in sorted(os.listdir(d)) if f.endswith((".flac", ".wav", ".mp3"))]
+        vocal = "gesang" in case
+        probe["cases"].append({"id": case if case != "01-instrumental-en" else "01-instrumental-en", "files": files,
+                               "params": {"instrumental": not vocal, "lyrics": reference if vocal else "[Instrumental]"}})
 result = {"whisper_model": WHISPER, "separation": [], "transcripts": []}
 
 
@@ -96,7 +112,7 @@ for c in probe.get("cases", []):
         stems = separate(path, c["id"])
         vocal = next((s for s in stems if "vocals" in os.path.basename(s)), None)
         if vocal:
-            transcribe(vocal, lyrics_by_case[c["id"]], c["id"] + " (getrennte Stimme)")
+            transcribe(os.path.join(OUT, vocal), lyrics_by_case[c["id"]], c["id"] + " (getrennte Stimme)")
 
 # Gegenprobe: ein Instrumentalstück sollte (fast) keinen erkannten Text enthalten
 inst = next((c for c in probe.get("cases", []) if c["id"] == "01-instrumental-en" and c.get("files")), None)
