@@ -1,4 +1,14 @@
-# Einschränkungen und offene Punkte (Version 2.2)
+# Einschränkungen und offene Punkte (Version 2.3)
+
+## Titel bearbeiten (2.3)
+
+| Punkt | Stand |
+|---|---|
+| **Auto-Tune in fertig gemischten Songs** | Stimme und Instrumente lassen sich nicht trennen; erkannt wird nur eine deutlich vorherrschende Melodie, die Korrektur verschiebt dann den ganzen Mix. Für Einzelstimmen gebaut und mit synthetischen Stimmen gemessen (452 Hz → 438–440 Hz), nicht mit echten Gesangsaufnahmen angehört. |
+| **Stimmungs- und Tonarterkennung** | Schätzung aus Spektralspitzen; mit synthetischen Akkorden geprüft (442 Hz → 442,1 Hz, C-Dur erkannt), nicht mit einer Sammlung echter Titel. Unsichere Ergebnisse werden als „unsicher“ bzw. „nicht eindeutig“ angezeigt. |
+| **Vorhören** | Folgt Reglern mit kurzer Verzögerung (Wiedergabe setzt neu an); Lautheitsangleichung beim Vorhören geschätzt. |
+| **MP3/AAC** | Werden für die Bearbeitung neu kodiert (gleiche Bitrate) – minimaler Generationsverlust. |
+| **Bedienung und Klang** | Regler, Vorhören und Speichern über Vorschaubilder und automatische Abläufe geprüft, nicht von Hand bedient; Klang gemessen, nicht über Lautsprecher angehört. |
 
 ## Audio Studio (2.2)
 

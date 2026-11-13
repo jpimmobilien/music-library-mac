@@ -260,6 +260,42 @@ enum Benchmark {
             record("Abschnitte „Hinzugefügt“ ohne Zwischenspeicher", directSamples)
         }
 
+        // Titel bearbeiten (2.3): 60 s Stereo bei 44,1 kHz durch die Bearbeitungskette (ohne Lesen und Kodieren)
+        do {
+            let rate = 44_100.0
+            let n = Int(rate * 60)
+            var left = [Float](repeating: 0, count: n)
+            for i in 0..<n {
+                let t = Double(i) / rate
+                left[i] = Float(0.2 * sin(2 * .pi * 220 * t) + 0.1 * sin(2 * .pi * 445 * t) + 0.05 * sin(2 * .pi * 3_000 * t))
+            }
+            let right = left
+            func run(_ label: String, _ p: EditChainParameters) {
+                let chain = EditChain(sampleRate: rate, channels: 2, parameters: p)
+                let t = CACurrentMediaTime()
+                left.withUnsafeBufferPointer { l in
+                    right.withUnsafeBufferPointer { r in
+                        var pos = 0
+                        while pos < n {
+                            let k = min(32_768, n - pos)
+                            try? chain.push([l.baseAddress! + pos, r.baseAddress! + pos], frames: k) { _, _ in }
+                            pos += k
+                        }
+                    }
+                }
+                try? chain.finish { _, _ in }
+                record(label, [(CACurrentMediaTime() - t) * 1000])
+            }
+            run("Bearbeiten 60 s: Equalizer + Begrenzer", EditChainParameters(bandGains: EqPresets.pop.gains, bassDb: 3, limiterCeiling: 0.891))
+            run("Bearbeiten 60 s: Tempo 1,1 + 432 Hz", EditChainParameters(speed: 1.1, pitch: 432.0 / 440.0))
+            run("Bearbeiten 60 s: Auto-Tune", EditChainParameters(autoTune: AutoTuneProcessor.Settings(key: 0, scale: .major, strength: 0.8)))
+            let meter = LoudnessMeter(sampleRate: rate, channels: 2)
+            let t = CACurrentMediaTime()
+            left.withUnsafeBufferPointer { l in right.withUnsafeBufferPointer { r in meter.add([l.baseAddress!, r.baseAddress!], frames: n) } }
+            _ = meter.integratedLoudness
+            record("Bearbeiten 60 s: Lautheit messen", [(CACurrentMediaTime() - t) * 1000])
+        }
+
         // 2. Fenster
         for w in NSApp.windows { w.orderOut(nil) }
         NSApp.setActivationPolicy(.regular)
