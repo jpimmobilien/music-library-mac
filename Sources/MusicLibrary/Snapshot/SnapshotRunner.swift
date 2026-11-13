@@ -353,6 +353,12 @@ enum SnapshotRunner {
                 s.trackAnalysis = nil
                 s.trackAnalysisProgress = 0.42
             }, view: main),
+            Scenario(name: "62-studio-bearbeiten-regler", size: big, prepare: studio { m, s in
+                editDemo(m, s, configured: true)
+                s.trackEdit.autoTune = true
+                s.trackEdit.semitones = -2
+                StudioScrollSeed.pending = .tools
+            }, view: main),
             Scenario(name: "62-studio-bearbeiten-werkzeuge", size: big, prepare: studio { m, s in
                 editDemo(m, s, configured: true)
                 s.trackEdit.autoTune = true

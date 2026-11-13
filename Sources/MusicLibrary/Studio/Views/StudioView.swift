@@ -112,6 +112,7 @@ private struct StudioMainColumn: View {
                                     .studioAnchor(.editor)
                                 if studio.mode == .edit {
                                     TrackEditTools(studio: studio, width: width)
+                                        .studioAnchor(.tools)
                                         .transition(.opacity)
                                 }
                                 exportSection(twoColumns: twoColumns, width: width)
@@ -233,7 +234,7 @@ private struct StudioHeader: View {
                     }
                 }
                 Text(studio.mode == .edit
-                     ? "Lautstärke, Tempo, Tonhöhe, Stimmung, Equalizer, Auto-Tune und Verbesserung – dauerhaft gespeichert."
+                     ? "Klang dauerhaft verändern – mit Sicherung des Originals und „Rückgängig“."
                      : studio.isLibraryTrack
                      ? "Titel aus deiner Bibliothek – speichere den Ausschnitt als neue Datei oder ersetze das Original."
                      : "Laden, schneiden und umwandeln – direkt in deine Musikbibliothek.")
@@ -385,7 +386,7 @@ enum StudioDrop {
 // MARK: - Sprungziele (Scrollen)
 
 enum StudioAnchor: Hashable {
-    case top, editor, export, metadata, destination, queue
+    case top, editor, tools, export, metadata, destination, queue
 }
 
 extension View {

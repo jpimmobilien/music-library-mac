@@ -704,10 +704,11 @@ struct StudioExportBar: View {
 
 extension StudioModel {
     /// Exportieren möglich (im Vorschaumodus ohne echtes Ziel trotzdem aktiv dargestellt).
-    var exportEnabled: Bool { canExport || (demo && showsEditor) }
+    var exportEnabled: Bool { canExport || (demo && showsEditor && !editHasNoChanges) }
 
     var exportBlockedReason: String {
         guard let source else { return "Zuerst eine Quelle wählen." }
+        if editHasNoChanges { return "Noch keine Änderungen – zuerst etwas einstellen oder beschneiden." }
         if !source.kind.supportsAudio { return "Spotify-Audio ist kopiergeschützt und kann nicht exportiert werden." }
         if source.isLive { return "Live-Übertragungen werden nicht unterstützt." }
         if sourceState != .ready { return "Die Quelle wird noch analysiert." }

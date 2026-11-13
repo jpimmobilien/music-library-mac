@@ -240,7 +240,7 @@ struct TrackEditLevelCard: View {
     private var analysisLine: String {
         if let p = studio.trackAnalysisProgress { return "Titel wird analysiert … \(Int(p * 100)) %" }
         guard let a = studio.trackAnalysis, let l = a.loudness else { return "Lautheit wird nach dem Laden gemessen" }
-        var parts = ["Original \(EditText.number(l)) LUFS"]
+        var parts = ["Original \(EditText.signed(l)) LUFS"]
         if let p = a.peakDb { parts.append("Spitze \(EditText.db(p))") }
         return parts.joined(separator: " · ")
     }

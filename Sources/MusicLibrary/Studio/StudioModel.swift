@@ -372,8 +372,13 @@ final class StudioModel: ObservableObject {
         return history.previousExport(of: Self.historyKey(source))
     }
 
+    /// Bearbeiten ohne jede Änderung (Klang, Schnitt, Blenden) – Speichern wäre sinnlos.
+    var editHasNoChanges: Bool {
+        mode == .edit && trackEdit.isNeutral && exportWholeFile && fadeIn <= 0 && fadeOut <= 0
+    }
+
     var canExport: Bool {
-        guard let source, source.kind.supportsAudio, sourceState == .ready, destination != nil else { return false }
+        guard let source, source.kind.supportsAudio, sourceState == .ready, destination != nil, !editHasNoChanges else { return false }
         return !source.isLive
     }
 
