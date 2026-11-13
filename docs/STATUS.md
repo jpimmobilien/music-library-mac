@@ -27,15 +27,22 @@ und Tablet-Größe 1600 × 2560 / 320 dpi). Hardware-Prüfung auf einem echten T
 | Unit-Tests (Gradle) | **232/232** – core/files 155 (echte Dateien), core/model 71 (davon 6 ORBIT), Designsystem 6 (Kontrast aller Themes × Akzente) |
 | Release-Build | `ORBIT-0.4.0.apk` (≈ 27,6 MB, versionCode 3), AGP 9.3.1, compileSdk 37, minSdk 31, targetSdk 36 |
 | Paketprüfung | `apksigner verify`: Signaturschema v2 gültig (Projektschlüssel); `aapt2`: Paket `de.privateapp.aether`, Name „ORBIT“, Symbol adaptiv |
-| Emulator (Android 15, x86_64, 4 GB) | Installation mit allen Laufzeitrechten, 3 Kaltstarts je ≈ 3,3–4,0 s (Software-Grafik), Bildschirmfotos: 6 Hauptbereiche hell/dunkel, alle 6 Themes, 3 Effektstärken, Tablet-Größe, aufgeklappte ORBIT-Core-Karte, Bewegung mit Sensor-Globus; **keine Abstürze** (Absturzpuffer leer, kein FATAL im vollständigen Logcat) |
+| Emulator (Android 15, x86_64, 4 GB) | Installation mit allen Laufzeitrechten, 3 Kaltstarts je ≈ 3,3–4,0 s (Software-Grafik), Bildschirmfotos: 6 Hauptbereiche hell/dunkel, alle 6 Themes, 3 Effektstärken, Tablet-Größe, aufgeklappte ORBIT-Core-Karte, Sensor-Globus hell/dunkel; **keine App-Abstürze** (Lauf 6) (Absturzpuffer leer, kein FATAL im vollständigen Logcat) |
 | Offline-Prüfungen | Typprüfung aller Module 0 Fehler/0 Warnungen, Prüfskript „Farben aus dem Theme“ ohne Verstoß |
 
 **Im Build gefunden und behoben:** ORBIT-Core-Namen auf schmalen Telefonen abgeschnitten („Arbeitsspei…“) → Kern
 oben, Legende in voller Breite; Thermik-Bahn war schon bei 43 % orange → Orange erst ab 60 %, Rot ab 85 %;
 Einstellungen nannten „fünf“ Themes → sechs. In Lauf 3 brach der **Emulator** (nicht die App) beim Scrollen der
 Bewegungsseite ab und die Absturzprüfung wartete bis zur Zeitgrenze: Seitdem hat jeder Schritt eine Frist, das
-vollständige Logcat wird mitgeschrieben, und der Emulator bekommt 4 GB statt der Vorgabe – in den Läufen 4 und 5
-lief alles ohne Abbruch.
+vollständige Logcat wird mitgeschrieben, und der Emulator bekommt 4 GB statt der Vorgabe. In Lauf 5 brach der
+Emulator erneut ab, wieder beim Wischen am linken Rand der Bewegungsseite: Das Logcat endet mit einer abgebrochenen
+Zurück-Geste des Systems (`ShellBackPreview`), die App meldete keinen Fehler (kein FATAL, Absturzpuffer leer). Seit
+Lauf 6 öffnet der Prüfmodus die Bewegungsseite direkt beim Sensor-Globus (`orbit.snapshot=globe`), ohne zu wischen –
+Lauf 6 lief vollständig durch, ohne Abbruch und ohne App-Fehler.
+
+**Sensor-Globus im Emulator:** Der Emulator meldet 6 Satelliten mit Signal, aber offenbar ohne Richtung – alle Punkte
+liegen übereinander am Nordpunkt des Horizonts. Das ist die Meldung des Emulators, keine Darstellung der App; auf
+einem Telefon verteilen sich die Satellitenpunkte nach ihrem gemeldeten Azimut und ihrer Elevation.
 
 **Grenzen:** Die Bildwiederholraten des Emulators (`gfxinfo`) sind mit Software-Grafik (SwiftShader) nicht
 aussagekräftig – jedes Bild gilt dort als „ruckelnd“, auch ohne ORBIT-Effekte (Lauf 1). Flüssigkeit, Haptik, echte

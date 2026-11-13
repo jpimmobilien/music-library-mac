@@ -17,6 +17,13 @@ Zeit vor der Umbenennung und bleiben, damit Einstellungen und Daten erhalten ble
 > * **Nicht** geprüft: Lauf auf einem echten Telefon, echte SD-Karte/USB-Stick, GPS/Barometer/Kompass/Haptik auf
 >   Hardware (der Emulator liefert eigene Ersatzwerte für Akku, Standort und Satelliten).
 
+<p>
+<img src="docs/design/orbit-uebersicht-deep-ocean.jpg" width="200" alt="Übersicht mit ORBIT Core, Deep Ocean">
+<img src="docs/design/orbit-core-detailkarte.jpg" width="200" alt="ORBIT Core mit aufgeklappter Detailkarte">
+<img src="docs/design/orbit-sensor-globus.jpg" width="200" alt="Sensor-Globus">
+<img src="docs/design/orbit-uebersicht-pearl-white.jpg" width="200" alt="Übersicht, Pearl White">
+</p>
+
 ---
 
 ## Inhalt
