@@ -12,10 +12,10 @@ For more details see https://docs.gradle.org/9.6.1/release-notes.html
 
 To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.6.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
 Daemon will be stopped at the end of the build 
-> Task :core:model:checkKotlinGradlePluginConfigurationErrors SKIPPED
-> Task :platform:device:preBuild UP-TO-DATE
-> Task :app:preBuild UP-TO-DATE
 > Task :core:files:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:preBuild UP-TO-DATE
+> Task :platform:device:preBuild UP-TO-DATE
+> Task :core:model:checkKotlinGradlePluginConfigurationErrors SKIPPED
 > Task :app:preDebugBuild UP-TO-DATE
 > Task :platform:device:preDebugBuild UP-TO-DATE
 > Task :app:generateDebugBuildConfig
@@ -66,19 +66,19 @@ Daemon will be stopped at the end of the build
 > Task :platform:storage:generateDebugUnitTestStubRFile
 > Task :platform:storage:javaPreCompileDebugUnitTest
 > Task :ui:designsystem:preDebugUnitTestBuild UP-TO-DATE
-> Task :app:processDebugNavigationResources
+> Task :ui:designsystem:generateDebugUnitTestStubRFile
 > Task :core:model:processResources NO-SOURCE
 > Task :core:files:processResources NO-SOURCE
-> Task :app:parseDebugLocalResources
-> Task :app:generateDebugRFile
-> Task :app:javaPreCompileDebug
-> Task :app:checkDebugAarMetadata
-> Task :app:mapDebugSourceSetPaths
-> Task :app:compileDebugNavigationResources
-> Task :ui:designsystem:generateDebugUnitTestStubRFile
 > Task :core:files:processTestResources NO-SOURCE
 > Task :core:model:processTestResources NO-SOURCE
 > Task :ui:designsystem:javaPreCompileDebugUnitTest
+> Task :app:processDebugNavigationResources
+> Task :app:javaPreCompileDebug
+> Task :app:parseDebugLocalResources
+> Task :app:generateDebugRFile
+> Task :app:checkDebugAarMetadata
+> Task :app:mapDebugSourceSetPaths
+> Task :app:compileDebugNavigationResources
 > Task :app:createDebugCompatibleScreenManifests
 > Task :app:extractDeepLinksDebug
 > Task :app:processDebugMainManifest
@@ -96,11 +96,11 @@ Daemon will be stopped at the end of the build
 > Task :core:files:compileJava NO-SOURCE
 > Task :core:files:classes UP-TO-DATE
 > Task :core:files:jar
+> Task :core:model:compileTestKotlin
 > Task :platform:device:compileDebugKotlin
 > Task :platform:device:compileDebugJavaWithJavac NO-SOURCE
-> Task :core:model:compileTestKotlin
-> Task :platform:device:bundleLibRuntimeToJarDebug
 > Task :platform:device:bundleLibCompileToJarDebug
+> Task :platform:device:bundleLibRuntimeToJarDebug
 > Task :platform:device:processDebugJavaRes
 > Task :core:model:compileTestJava NO-SOURCE
 > Task :core:model:testClasses UP-TO-DATE
@@ -126,12 +126,12 @@ Daemon will be stopped at the end of the build
 > Task :ui:designsystem:compileDebugKotlin
 > Task :ui:designsystem:compileDebugJavaWithJavac NO-SOURCE
 > Task :ui:designsystem:bundleLibCompileToJarDebug
-> Task :ui:designsystem:processDebugJavaRes
 > Task :ui:designsystem:bundleLibRuntimeToJarDebug
-> Task :core:files:test
+> Task :ui:designsystem:processDebugJavaRes
 > Task :ui:designsystem:compileDebugUnitTestKotlin
 > Task :ui:designsystem:compileDebugUnitTestJavaWithJavac NO-SOURCE
 > Task :ui:designsystem:processDebugUnitTestJavaRes
+> Task :core:files:test
 > Task :ui:designsystem:testDebugUnitTest
 > Task :ui:designsystem:test
 > Task :app:compileDebugKotlin
@@ -144,8 +144,8 @@ Daemon will be stopped at the end of the build
 > Task :app:processDebugUnitTestJavaRes NO-SOURCE
 > Task :app:testDebugUnitTest NO-SOURCE
 > Task :app:test UP-TO-DATE
-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1794574427176.json
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1794577603292.json
 
-BUILD SUCCESSFUL in 2m 24s
+BUILD SUCCESSFUL in 1m 51s
 86 actionable tasks: 86 executed
 Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.6.1/userguide/configuration_cache_enabling.html
