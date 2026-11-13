@@ -29,7 +29,7 @@ private struct KIMusicSettingsContent: View {
             if let free = ki.freeSpace {
                 Hairline()
                 SettingRow(title: "Freier Speicher", text: "Für Umgebung und Grundpaket werden etwa 13 GB gebraucht.") {
-                    Text(Formatting.fileSize(free)).textStyle(Typo.labelLarge).foregroundColor(colors.textSecondary)
+                    Text(KIFormat.bytes(free)).textStyle(Typo.labelLarge).foregroundColor(colors.textSecondary)
                 }
             }
         }
@@ -140,9 +140,9 @@ private struct KIMusicSettingsContent: View {
     private func modelText(_ m: KIModel, installed: Bool, info: KIInstaller.State.Model?) -> String {
         var parts = [m.purpose]
         if let info, installed {
-            parts.append("\(Formatting.fileSize(info.bytes)) · Stand \(String(info.revision.prefix(7)))")
+            parts.append("\(KIFormat.bytes(info.bytes)) · Stand \(String(info.revision.prefix(7)))")
         } else if let b = m.bytes {
-            parts.append((m.approximate ? "ca. " : "") + Formatting.fileSize(b))
+            parts.append((m.approximate ? "ca. " : "") + KIFormat.bytes(b))
         }
         parts.append("Lizenz \(m.license)")
         return parts.joined(separator: " · ")

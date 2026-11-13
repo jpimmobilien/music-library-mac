@@ -15,8 +15,10 @@ struct KIMusicView: View {
     var body: some View {
         GeometryReader { geo in
             let bottom = Chrome.contentBottom(miniPlayer: player.current != nil)
+            ScrollViewReader { proxy in
             ScrollView(.vertical) {
                 VStack(alignment: .leading, spacing: 18) {
+                    Color.clear.frame(height: 0).id("ki-top")
                     KIHeader(ki: ki)
                     switch ki.setup {
                     case .unsupported(let reason):
@@ -24,7 +26,7 @@ struct KIMusicView: View {
                     case .needsEnvironment, .needsModels:
                         KISetupCard(ki: ki)
                     case .ready:
-                        KIPromptCard(ki: ki, width: geo.size.width)
+                        // Laufende Erzeugung, Fehler und Ergebnisse stehen oben – dort, wo der Blick nach dem Klick ist
                         if ki.isWorking { KIProgressCard(ki: ki).transition(.opacity) }
                         if case .failed(let message) = ki.phase {
                             StudioNotice(icon: Icons.warning, title: "Erzeugen fehlgeschlagen", text: message, tint: colors.danger) {
@@ -32,7 +34,8 @@ struct KIMusicView: View {
                                 PillButton(title: "Schließen", style: .plain) { ki.dismissError() }
                             }
                         }
-                        if !ki.results.isEmpty { KIResultsCard(ki: ki) }
+                        if !ki.results.isEmpty && !ki.isWorking { KIResultsCard(ki: ki) }
+                        KIPromptCard(ki: ki, width: geo.size.width)
                     }
                     if !ki.creations.items.isEmpty || ki.setup == .ready {
                         KICreationsSection(ki: ki)
@@ -45,6 +48,10 @@ struct KIMusicView: View {
                 .frame(maxWidth: .infinity)
                 .animation(Motion.easeOut(Motion.medium), value: ki.isWorking)
                 .animation(Motion.easeOut(Motion.medium), value: ki.results.map(\.id))
+            }
+            .onChange(of: ki.isWorking) { working in
+                if working { withAnimation(Motion.easeOut()) { proxy.scrollTo("ki-top", anchor: .top) } }
+            }
             }
         }
         .overlay(alignment: .top) {
@@ -146,7 +153,7 @@ private struct KISetupCard: View {
                 point(Icons.lock, "Beschreibungen, Texte und deine Musik verlassen den Mac nicht.")
                 point(Icons.info, "Lizenz: ACE-Step 1.5 – Quelltext und Modelle MIT; erzeugte Musik darf laut den Entwicklern auch kommerziell genutzt werden.")
                 if let free = ki.freeSpace {
-                    point("hard_drive", "Frei auf dem Laufwerk: \(Formatting.fileSize(free)) – gebraucht werden etwa 13 GB.")
+                    point("hard_drive", "Frei auf dem Laufwerk: \(KIFormat.bytes(free)) – gebraucht werden etwa 13 GB.")
                 }
             }
             switch ki.installTask {

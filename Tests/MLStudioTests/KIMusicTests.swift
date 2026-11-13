@@ -97,6 +97,12 @@ final class KIMusicTests: XCTestCase {
         XCTAssertEqual(index.items.map(\.title), ["Sommerabend"])
     }
 
+    func testSizeText() {
+        XCTAssertEqual(KIFormat.bytes(10_420_000_000), "10,4 GB")
+        XCTAssertEqual(KIFormat.bytes(392_913_800_000), "393 GB")
+        XCTAssertEqual(KIFormat.bytes(322_000_000), "322 MB")
+    }
+
     func testEstimate() {
         let r = KIGenerationRequest(prompt: "x", duration: 180, variations: 2, quality: .balanced)
         XCTAssertEqual(KIEstimate.seconds(for: r, secondsPerAudioSecond: 0.3, planningSeconds: 10), 10 + 180 * 0.3 * 2, accuracy: 0.001)

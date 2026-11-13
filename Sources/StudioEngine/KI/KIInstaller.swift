@@ -145,7 +145,7 @@ public final class KIInstaller: @unchecked Sendable {
         let fm = FileManager.default
         try fm.createDirectory(at: paths.base, withIntermediateDirectories: true)
         if let free = freeSpace(), free < Self.environmentBytes {
-            throw StudioError.other("Zu wenig freier Speicher: Für die KI-Umgebung werden etwa \(Formatting.fileSize(Self.environmentBytes)) gebraucht, frei sind \(Formatting.fileSize(free)).")
+            throw StudioError.other("Zu wenig freier Speicher: Für die KI-Umgebung werden etwa \(KIFormat.bytes(Self.environmentBytes)) gebraucht, frei sind \(KIFormat.bytes(free)).")
         }
         try installScripts()
         let staging = paths.base.appendingPathComponent(".install-\(UUID().uuidString)", isDirectory: true)
@@ -203,7 +203,7 @@ public final class KIInstaller: @unchecked Sendable {
         let file = staging.appendingPathComponent(asset)
         try await StudioHTTP.download(from: URL(string: base + asset)!, to: file, maxBytes: 200 * 1024 * 1024, timeout: 120) { done, total in
             let f = total.map { Double(done) / Double(max($0, 1)) } ?? 0
-            progress(Progress(step: "uv wird geladen … \(Formatting.fileSize(done))", fraction: 0.01 + 0.08 * min(1, f)))
+            progress(Progress(step: "uv wird geladen … \(KIFormat.bytes(done))", fraction: 0.01 + 0.08 * min(1, f)))
         }
         try ToolChecksum.verify(file: file, expected: expected, name: "uv")
         let out = staging.appendingPathComponent("uv-out", isDirectory: true)
@@ -224,7 +224,7 @@ public final class KIInstaller: @unchecked Sendable {
         let url = URL(string: "https://codeload.github.com/ace-step/ACE-Step-1.5/tar.gz/\(Self.aceCommit)")!
         let file = staging.appendingPathComponent("ace.tar.gz")
         try await StudioHTTP.download(from: url, to: file, maxBytes: 600 * 1024 * 1024, timeout: 180) { done, _ in
-            progress(Progress(step: "ACE-Step 1.5 wird geladen … \(Formatting.fileSize(done))", fraction: 0.12))
+            progress(Progress(step: "ACE-Step 1.5 wird geladen … \(KIFormat.bytes(done))", fraction: 0.12))
         }
         let out = staging.appendingPathComponent("ace-out", isDirectory: true)
         try FileManager.default.createDirectory(at: out, withIntermediateDirectories: true)
@@ -268,7 +268,7 @@ public final class KIInstaller: @unchecked Sendable {
         let dest = model.core ? paths.checkpoints : paths.checkpoints.appendingPathComponent(model.id, isDirectory: true)
         try FileManager.default.createDirectory(at: dest, withIntermediateDirectories: true)
         if let need = model.bytes, let free = freeSpace(), free < need + 1_000_000_000 {
-            throw StudioError.other("Zu wenig freier Speicher für „\(model.title)“: gebraucht etwa \(Formatting.fileSize(need)), frei \(Formatting.fileSize(free)).")
+            throw StudioError.other("Zu wenig freier Speicher für „\(model.title)“: gebraucht etwa \(KIFormat.bytes(need)), frei \(KIFormat.bytes(free)).")
         }
         let total = Counter()
         let existing = Counter()
@@ -290,7 +290,7 @@ public final class KIInstaller: @unchecked Sendable {
                 let t = total.value
                 let have = min(t, done + existing.value)
                 let fraction = t > 0 ? Double(have) / Double(t) : nil
-                progress(Progress(step: "\(model.title): \(Formatting.fileSize(have)) von \(Formatting.fileSize(t))", fraction: fraction))
+                progress(Progress(step: "\(model.title): \(KIFormat.bytes(have)) von \(KIFormat.bytes(t))", fraction: fraction))
             case "error":
                 failure.set(obj["message"] as? String ?? "")
             default:

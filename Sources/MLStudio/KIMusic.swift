@@ -479,3 +479,17 @@ public protocol KIEngineServing: AnyObject, Sendable {
     /// Prozess beenden (bricht alles ab, gibt den Speicher frei).
     func shutdown()
 }
+
+// MARK: - Anzeige
+
+public enum KIFormat {
+    /// Größe wie „10,4 GB“ bzw. „322 MB“ (dezimal, deutsche Schreibweise).
+    public static func bytes(_ b: Int64) -> String {
+        let gb = Double(b) / 1_000_000_000
+        if gb >= 1 {
+            let text = gb >= 100 ? String(Int(gb.rounded())) : String(format: "%.1f", gb).replacingOccurrences(of: ".", with: ",")
+            return text + " GB"
+        }
+        return "\(Int((Double(b) / 1_000_000).rounded())) MB"
+    }
+}
