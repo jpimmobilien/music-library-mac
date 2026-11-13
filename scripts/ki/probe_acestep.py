@@ -145,8 +145,11 @@ def init_dit():
     from acestep.model_downloader import check_main_model_exists
     if not check_main_model_exists(CHECKPOINTS):
         raise RuntimeError("Hauptmodell fehlt im Ordner " + CHECKPOINTS)
-    attempts = [dict(device="auto", use_mlx_dit=True), dict(device="cpu", use_mlx_dit=False)]
+    attempts = [dict(device="auto", use_mlx_dit=True), dict(device="cpu", use_mlx_dit=True), dict(device="cpu", use_mlx_dit=False)]
+    if os.environ.get("KI_DIT") == "cpu":
+        attempts = attempts[2:]
     errors = []
+    report["dit_attempts"] = errors
     for a in attempts:
         msg, ok = dit.initialize_service(project_root=PROJECT, config_path="acestep-v15-turbo",
                                          offload_to_cpu=False, offload_dit_to_cpu=False,
@@ -155,12 +158,15 @@ def init_dit():
             state["dit"] = a
             report["dit_config"] = a
             return f"{a}: {msg}"
-        errors.append(f"{a}: {msg}")
+        errors.append(f"{a}: {str(msg)[:400]}")
+        save()
     raise RuntimeError(" | ".join(errors))
 
 
-def init_llm():
+def init_llm(force_pt=False):
     attempts = [dict(backend="mlx", device="auto"), dict(backend="pt", device="cpu")]
+    if force_pt or os.environ.get("KI_LM_BACKEND") == "pt":
+        attempts = attempts[1:]
     errors = []
     for a in attempts:
         msg, ok = llm.initialize(checkpoint_dir=CHECKPOINTS, lm_model_path=LM_MODEL, offload_to_cpu=False,
@@ -186,11 +192,17 @@ Sommerabend, sing mit mir
 die Nacht gehört nur dir und mir"""
 
 
-def generate(case_id, params, config, note=""):
+def generate(case_id, params, config, note="", use_lm=True):
     def run():
         t0 = time.time()
-        res = generate_music(dit, llm if state["llm"] else None, params=params, config=config,
+        res = generate_music(dit, llm if (state["llm"] and use_lm) else None, params=params, config=config,
                              save_dir=os.path.join(OUT, "audio", case_id))
+        # MLX-Kernel lassen sich auf manchen virtuellen Rechnern nicht übersetzen → Sprachmodell einmal mit PyTorch/CPU
+        if not res.success and use_lm and state["llm"] and state["llm"].get("backend") == "mlx" and "metal::Device" in (res.error or res.status_message or ""):
+            report.setdefault("notes", []).append(f"{case_id}: MLX-Sprachmodell scheitert ({(res.error or '')[:160]}) – Wechsel auf PyTorch/CPU")
+            init_llm(force_pt=True)
+            t0 = time.time()
+            res = generate_music(dit, llm, params=params, config=config, save_dir=os.path.join(OUT, "audio", case_id))
         elapsed = time.time() - t0
         files = []
         for a in res.audios:
@@ -261,7 +273,7 @@ if step("DiT laden (turbo)", init_dit):
         task_type="text2music", caption="Energetic synthwave with driving bass, bright arpeggios and punchy drums",
         lyrics="[Instrumental]", instrumental=True, duration=20, bpm=118, keyscale="A minor", seed=-1, thinking=False, **base),
         GenerationConfig(batch_size=2, audio_format="flac", use_random_seed=False, seeds=[11, 22]),
-        "Zwei Varianten gleichzeitig, nur DiT (ohne Sprachmodell) – reine Erzeugungsgeschwindigkeit")
+        "Zwei Varianten gleichzeitig, nur DiT (ohne Sprachmodell) – reine Erzeugungsgeschwindigkeit", use_lm=False)
 
     first = next((c for c in report["cases"] if c["id"] == "01-instrumental-en" and c["files"]), None)
     if first:
@@ -270,7 +282,7 @@ if step("DiT laden (turbo)", init_dit):
             caption="Smooth jazz trio version with upright bass, brushed drums and jazz piano",
             lyrics="[Instrumental]", instrumental=True, audio_cover_strength=0.5, seed=5, **base),
             GenerationConfig(batch_size=1, audio_format="flac", use_random_seed=False, seeds=[5]),
-            "Remix (cover) des ersten Stücks als Jazz-Version – Original bleibt unverändert")
+            "Remix (cover) des ersten Stücks als Jazz-Version – Original bleibt unverändert", use_lm=False)
 
 report["finished"] = True
 save()

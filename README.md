@@ -27,6 +27,12 @@ Rückgängig). Spotify liefert nur Titel und Cover (DRM). Siehe [docs/V2_2_AENDE
 Auto-Tune, Equalizer und Beschneiden – dauerhaft, mit Sicherung und Rückgängig. Siehe
 [docs/V2_3_AENDERUNGEN.md](docs/V2_3_AENDERUNGEN.md).
 
+**Version 2.4** trennt das Audio Studio in zwei Einträge der Navigation: **„Hinzufügen“** (⌘7) lädt neue Musik aus
+dem Netz oder von deinem Mac, **„Studio“** (⌘8) bearbeitet nur Titel der Bibliothek – mit Titelauswahl, Suche und
+dem gerade laufenden Titel. Eine gemeinsame Warteschlange, jeder Bereich mit eigenem Verlauf. Siehe
+[docs/V2_4_AENDERUNGEN.md](docs/V2_4_AENDERUNGEN.md). Für die geplante **KI-Musik** (lokale Musikerzeugung mit
+ACE-Step 1.5) gibt es einen Machbarkeitsbericht: [docs/KI_MUSIK_MACHBARKEIT.md](docs/KI_MUSIK_MACHBARKEIT.md).
+
 > **Stand 2.2:** Universal-DMG (Xcode 26), 577 Tests ohne Fehler auf macOS 26 (Apple Silicon) und macOS 15 (Intel),
 > 125 Ansichten in Hell und Dunkel mit echtem Liquid Glass, Abnahme aus der DMG mit Aktualisierung 2.1 → 2.2 → 2.1
 > ohne Befund. YouTube auf GitHub-Rechnern blockiert (nicht nachgewiesen), Bedienung nicht von Hand geprüft –
@@ -46,6 +52,8 @@ Auto-Tune, Equalizer und Beschneiden – dauerhaft, mit Sicherung und Rückgäng
 ## Inhalt
 
 - [docs/INSTALLATION.md](docs/INSTALLATION.md) – Installation, Update, erster Start, Signieren/Beglaubigen
+- [docs/V2_4_AENDERUNGEN.md](docs/V2_4_AENDERUNGEN.md) – „Hinzufügen“ und „Studio“ (Version 2.4)
+- [docs/KI_MUSIK_MACHBARKEIT.md](docs/KI_MUSIK_MACHBARKEIT.md) – KI-Musik: technische Analyse und Machbarkeit
 - [docs/V2_3_AENDERUNGEN.md](docs/V2_3_AENDERUNGEN.md) – Titel bearbeiten (Version 2.3)
 - [docs/V2_2_AENDERUNGEN.md](docs/V2_2_AENDERUNGEN.md) – Audio Studio (Version 2.2)
 - [docs/V2_1_AENDERUNGEN.md](docs/V2_1_AENDERUNGEN.md) – Änderungen in Version 2.1

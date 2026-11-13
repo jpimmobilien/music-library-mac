@@ -22,7 +22,7 @@ struct StudioTrackPicker: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            StudioToolOverview(columns: width >= 900 ? 3 : (width >= 560 ? 2 : 1))
+            StudioToolOverview()
             VStack(alignment: .leading, spacing: 12) {
                 HStack(alignment: .firstTextBaseline, spacing: 12) {
                     Text("Titel wählen")
@@ -186,10 +186,9 @@ private struct StudioPickerRow: View {
     }
 }
 
-/// Was das Studio kann – kurze Kacheln über der Titelauswahl.
+/// Was das Studio kann – eine Zeile kleiner Kapseln über der Titelauswahl (Erklärung beim Darüberfahren).
 private struct StudioToolOverview: View {
     @Environment(\.musicColors) private var colors
-    let columns: Int
 
     private static let tools: [(icon: String, title: String, text: String)] = [
         (Icons.cut, "Beschneiden", "Start und Ende auf die Millisekunde, Ein- und Ausblenden – verlustfrei, wo es geht."),
@@ -201,35 +200,21 @@ private struct StudioToolOverview: View {
     ]
 
     var body: some View {
-        let rows = stride(from: 0, to: Self.tools.count, by: columns).map { Array(Self.tools[$0..<min($0 + columns, Self.tools.count)]) }
-        VStack(spacing: 10) {
-            ForEach(rows.indices, id: \.self) { r in
-                HStack(alignment: .top, spacing: 10) {
-                    ForEach(rows[r], id: \.title) { tool in
-                        HStack(alignment: .top, spacing: 10) {
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .fill(colors.accentSoft)
-                                .frame(width: 34, height: 34)
-                                .overlay(Icon(tool.icon, size: 18, color: colors.accentText))
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(tool.title)
-                                    .textStyle(Typo.titleSmall)
-                                    .foregroundColor(colors.textPrimary)
-                                Text(tool.text)
-                                    .textStyle(Typo.bodySmall)
-                                    .foregroundColor(colors.textSecondary)
-                                    .fixedSize(horizontal: false, vertical: true)
-                            }
-                            Spacer(minLength: 0)
-                        }
-                        .padding(12)
-                        .frame(maxWidth: .infinity, alignment: .topLeading)
-                        .glassSurface(RoundedRectangle(cornerRadius: Radius.card, style: .continuous))
-                    }
-                    if rows[r].count < columns {
-                        ForEach(0..<(columns - rows[r].count), id: \.self) { _ in Color.clear.frame(maxWidth: .infinity) }
-                    }
+        StudioFlow(spacing: 8) {
+            ForEach(Self.tools, id: \.title) { tool in
+                HStack(spacing: 7) {
+                    Icon(tool.icon, size: 15, color: colors.accentText)
+                    Text(tool.title)
+                        .textStyle(Typo.labelMedium)
+                        .foregroundColor(colors.textPrimary)
+                        .lineLimit(1)
                 }
+                .padding(.horizontal, 12)
+                .frame(height: 30)
+                .glassSurface(Capsule())
+                .help(tool.text)
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("\(tool.title): \(tool.text)")
             }
         }
         .accessibilityElement(children: .contain)
