@@ -143,6 +143,15 @@ enum StudioDemo {
                           sampleRate: 44_100, channels: 2, isLossless: false, fileSize: 3_480_000)
     }
 
+    /// Instagram-Reel (erfundener Inhalt): Ton als HE-AAC, 48 kHz – wie Instagram ihn liefert.
+    static func instagramSource() -> SourceInfo {
+        let meta = StudioMetadata(title: "Sonnenaufgang am Hafen", artist: "Lina Sommer", year: 2026)
+        return SourceInfo(id: "demo-instagram-1", kind: .web, url: URL(string: "https://www.instagram.com/reel/Beispiel01/")!,
+                          title: "Sonnenaufgang am Hafen", uploader: "Lina Sommer", duration: 32.4,
+                          thumbnail: videoThumbnail(album: 4), suggested: meta, codec: "mp4a.40.5", bitrateKbps: 74,
+                          sampleRate: 48_000, channels: 2, isLossless: false, fileSize: 300_153)
+    }
+
     static func localWavSource() -> SourceInfo {
         let url = URL(fileURLWithPath: "/Demo/Aufnahmen/Proberaum – Sternstaub (Take 3).wav")
         return SourceInfo(id: "demo-file-1", kind: .localFile, url: url, title: "Proberaum – Sternstaub (Take 3)", uploader: nil, duration: 248.6,

@@ -15,6 +15,8 @@ final class AssetPCMReader: PCMReader {
     private var position: Int64 = 0
     /// Solange true, werden Frames vor `position` anhand der Zeitstempel verworfen.
     private var seeking = false
+    /// Format des ersten gelieferten Puffers geprüft (nach jedem Start).
+    private var formatChecked = false
     /// Zwischenspeicher (verschachtelt) aus dem letzten Sample-Puffer.
     private var pending: UnsafeMutablePointer<Float>
     private var pendingCapacity: Int
@@ -37,11 +39,12 @@ final class AssetPCMReader: PCMReader {
         }
         guard let track = tracks.first else { throw StudioError.decodeFailed("Die Datei enthält keine Audiospur.") }
         let descriptions = try await track.load(.formatDescriptions)
-        guard let desc = descriptions.first, let asbdPointer = CMAudioFormatDescriptionGetStreamBasicDescription(desc) else {
+        // HE-AAC: Abtastrate und Kanäle des dekodierten Tons, nicht die des AAC-Grundlayers (siehe AudioTrackFormat)
+        guard let desc = descriptions.first, let asbd = AudioTrackFormat.decoded(desc) else {
             throw StudioError.decodeFailed("Unbekanntes Audioformat der Spur.")
         }
         let range = try await track.load(.timeRange)
-        return try AssetPCMReader(asset: asset, track: track, asbd: asbdPointer.pointee, range: range, downmixToStereo: downmixToStereo)
+        return try AssetPCMReader(asset: asset, track: track, asbd: asbd, range: range, downmixToStereo: downmixToStereo)
     }
 
     private init(asset: AVURLAsset, track: AVAssetTrack, asbd: AudioStreamBasicDescription, range: CMTimeRange, downmixToStereo: Bool) throws {
@@ -72,17 +75,20 @@ final class AssetPCMReader: PCMReader {
         } catch {
             throw StudioError.decodeFailed("AVAssetReader: \(error.localizedDescription)")
         }
+        // Abtastrate und (bei Mono/Stereo) Kanäle ausdrücklich verlangen: Was geliefert wird, passt damit immer zu
+        // `sampleRate`/`channelCount` – auch wenn die Spur ihr Format unvollständig beschreibt.
         var settings: [String: Any] = [
             AVFormatIDKey: kAudioFormatLinearPCM,
             AVLinearPCMBitDepthKey: 32,
             AVLinearPCMIsFloatKey: true,
             AVLinearPCMIsBigEndianKey: false,
             AVLinearPCMIsNonInterleaved: false,
+            AVSampleRateKey: sampleRate,
         ]
-        if channelCount != sourceChannelCount {
+        if channelCount <= 2 {
             var layout = AudioChannelLayout()
-            layout.mChannelLayoutTag = kAudioChannelLayoutTag_Stereo
-            settings[AVNumberOfChannelsKey] = 2
+            layout.mChannelLayoutTag = channelCount == 1 ? kAudioChannelLayoutTag_Mono : kAudioChannelLayoutTag_Stereo
+            settings[AVNumberOfChannelsKey] = channelCount
             settings[AVChannelLayoutKey] = Data(bytes: &layout, count: MemoryLayout<AudioChannelLayout>.size)
         }
         let out = AVAssetReaderTrackOutput(track: track, outputSettings: settings)
@@ -102,6 +108,7 @@ final class AssetPCMReader: PCMReader {
         output = out
         position = frame
         seeking = true
+        formatChecked = false
         pendingFrames = 0
         pendingOffset = 0
     }
@@ -123,6 +130,14 @@ final class AssetPCMReader: PCMReader {
             let n = CMSampleBufferGetNumSamples(sb)
             guard n > 0, let bb = CMSampleBufferGetDataBuffer(sb) else { continue }
             let ch = channelCount
+            if !formatChecked {
+                // Nie Daten in einem anderen Format als angenommen weitergeben (falsche Tonhöhe, Kanalsalat)
+                if let fd = CMSampleBufferGetFormatDescription(sb), let got = CMAudioFormatDescriptionGetStreamBasicDescription(fd)?.pointee,
+                   Int(got.mChannelsPerFrame) != ch || abs(got.mSampleRate - sampleRate) > 0.5 {
+                    throw StudioError.decodeFailed("Unerwartetes Format der Audiospur (\(Int(got.mSampleRate)) Hz, \(got.mChannelsPerFrame) Kanäle statt \(Int(sampleRate)) Hz, \(ch) Kanäle).")
+                }
+                formatChecked = true
+            }
             if n * ch > pendingCapacity {
                 pending.deallocate()
                 pendingCapacity = n * ch

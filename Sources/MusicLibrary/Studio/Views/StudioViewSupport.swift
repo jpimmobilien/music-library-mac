@@ -217,12 +217,12 @@ enum StudioText {
         case .youtube: return Icons.play
         case .soundcloud: return Icons.waves
         case .spotify: return Icons.lock
-        case .web: return Icons.globe
+        case .web: return SourceURL.isInstagram(s.url) ? Icons.photoLibrary : Icons.globe
         }
     }
 
     static func sourceLabel(_ s: SourceInfo) -> String {
-        s.libraryUid != nil ? "Bibliothek" : s.kind.label
+        s.libraryUid != nil ? "Bibliothek" : SourceURL.label(kind: s.kind, url: s.url)
     }
 
     static func megabytes(_ bytes: Int64) -> String { Formatting.fileSize(bytes) }

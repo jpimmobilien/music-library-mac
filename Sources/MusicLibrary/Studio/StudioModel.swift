@@ -525,7 +525,7 @@ final class StudioModel: ObservableObject {
     private func loadRemote(_ url: URL, kind: SourceKind) {
         resetForNewSource()
         let generation = sourceGeneration
-        sourceState = .analyzing(Self.analyzingText(kind))
+        sourceState = .analyzing(Self.analyzingText(kind, url: url))
         sourceTask = Task { [weak self] in
             guard let self else { return }
             do {
@@ -951,7 +951,8 @@ final class StudioModel: ObservableObject {
         return false
     }
 
-    nonisolated static func analyzingText(_ kind: SourceKind) -> String {
+    nonisolated static func analyzingText(_ kind: SourceKind, url: URL? = nil) -> String {
+        if kind == .web, let url, SourceURL.isInstagram(url) { return "Instagram wird abgefragt …" }
         switch kind {
         case .youtube: return "YouTube wird abgefragt …"
         case .soundcloud: return "SoundCloud wird abgefragt …"

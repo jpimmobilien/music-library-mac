@@ -80,7 +80,8 @@ final class RemoteTests: XCTestCase {
         XCTAssertFalse(d.contains("--js-runtimes"), "JavaScript-Laufzeit nur für YouTube")
         XCTAssertFalse(d.contains("-x"))
         let i = d.firstIndex(of: "-f")!
-        XCTAssertEqual(d[i + 1], "bestaudio[ext=m4a]/bestaudio[acodec^=mp4a]/bestaudio[ext=mp3]/bestaudio/best")
+        XCTAssertEqual(d[i + 1], "bestaudio[ext=m4a]/bestaudio[acodec^=mp4a]/bestaudio[ext=mp3]/bestaudio/best[acodec!=none][height<=?720]/best[acodec!=none]/best")
+        XCTAssertEqual(d[d.firstIndex(of: "--concurrent-fragments")! + 1], "4")
 
         let c = YtDlpOutput.downloadArguments(url: url, kind: .youtube, directory: URL(fileURLWithPath: "/tmp/d"), cacheDirectory: nil,
                                               denoPath: "/x/deno", convertWith: "/opt/homebrew/bin/ffmpeg")
@@ -105,6 +106,11 @@ final class RemoteTests: XCTestCase {
         XCTAssertEqual(map("ERROR: [youtube] abc: Join this channel to get access to members-only content like this video, and other exclusive perks."), .loginRequired)
         XCTAssertEqual(map("ERROR: [vimeo] 1: This video requires authentication. Use --cookies"), .loginRequired)
         XCTAssertEqual(map("ERROR: [youtube] abc: Video unavailable"), .unavailable("Video unavailable"))
+        // Instagram: „Requested content is not available, rate-limit reached or login required“ verständlich erklären
+        if case .unavailable(let text) = map("ERROR: [Instagram] Dbn: Requested content is not available, rate-limit reached or login required. Use --cookies, --cookies-from-browser, --username and --password, --netrc-cmd, or --netrc (instagram) to provide account credentials", .web) {
+            XCTAssertTrue(text.contains("Instagram") && text.contains("später"), text)
+        } else { XCTFail("Instagram-Sperre falsch zugeordnet") }
+        XCTAssertEqual(map("ERROR: [Instagram] abc: There is no video in this post", .web), .unavailable("Dieser Beitrag enthält kein Video und damit keinen Ton."))
         XCTAssertEqual(map("ERROR: [soundcloud] 1: Unable to download JSON metadata: HTTP Error 404: Not Found", .soundcloud),
                        .unavailable("Unable to download JSON metadata: HTTP Error 404: Not Found"))
         if case .network = map("ERROR: Unable to download webpage: <urlopen error [Errno 8] nodename nor servname provided, or not known>") {} else {

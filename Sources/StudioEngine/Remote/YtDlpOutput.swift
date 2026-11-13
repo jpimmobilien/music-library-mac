@@ -12,8 +12,11 @@ public enum YtDlpOutput {
     public static let progressTemplate = "download:\(progressPrefix) %(progress.status)s %(progress.downloaded_bytes)s %(progress.total_bytes)s "
         + "%(progress.total_bytes_estimate)s %(progress.speed)s %(progress.eta)s %(progress.fragment_index)s %(progress.fragment_count)s"
 
-    /// Formatwahl: zuerst, was AVFoundation direkt lesen kann (M4A/AAC, MP3), sonst bestes Audio.
-    public static let audioFormatSelector = "bestaudio[ext=m4a]/bestaudio[acodec^=mp4a]/bestaudio[ext=mp3]/bestaudio/best"
+    /// Formatwahl: zuerst reine Tonspuren, die AVFoundation direkt lesen kann (M4A/AAC, MP3), sonst bestes Audio.
+    /// Gibt es keine reine Tonspur (z. B. manche Instagram-, Facebook- oder X-Videos), wird ein Video mit Ton
+    /// geladen – höchstens 720p: Der Ton ist derselbe, die Datei aber oft um ein Vielfaches kleiner als 1080p/4K.
+    public static let audioFormatSelector = "bestaudio[ext=m4a]/bestaudio[acodec^=mp4a]/bestaudio[ext=mp3]/bestaudio/"
+        + "best[acodec!=none][height<=?720]/best[acodec!=none]/best"
 
     /// Gemeinsame Argumente: keine Konfigurationsdateien des Nutzers, eigener Zwischenspeicher, keine Farben.
     public static func commonArguments(cacheDirectory: URL?) -> [String] {
@@ -49,7 +52,9 @@ public enum YtDlpOutput {
                     "-P", directory.path, "-o", "%(id)s.%(ext)s", "--trim-filenames", "120",
                     "--newline", "--progress", "--progress-template", progressTemplate,
                     "--print", "after_move:filepath",
-                    "--continue", "--no-mtime", "--no-overwrites", "--retries", "3", "--fragment-retries", "3"]
+                    "--continue", "--no-mtime", "--no-overwrites", "--retries", "3", "--fragment-retries", "3",
+                    // Segmentierte Quellen (HLS/DASH) mit mehreren Verbindungen laden – deutlich schneller als Stück für Stück
+                    "--concurrent-fragments", "4"]
         if let ffmpeg {
             args += ["--ffmpeg-location", ffmpeg, "-x", "--audio-format", "wav"]
         }
@@ -135,6 +140,13 @@ public enum YtDlpOutput {
             return .liveStream
         }
         if has("preview", "snippet") && kind == .soundcloud { return .previewOnly }
+        // Instagram unterscheidet nicht zwischen „privat“, „nur mit Anmeldung“ und „zu viele Abrufe“
+        if has("rate-limit reached or login required", "rate limit reached or login required") {
+            return .unavailable("Instagram gibt diesen Beitrag ohne Anmeldung gerade nicht frei – er ist privat oder altersbeschränkt, oder Instagram begrenzt vorübergehend die Abrufe. Bitte später erneut versuchen; Inhalte hinter einer Anmeldung werden nicht geladen.")
+        }
+        if has("there is no video in this post", "no video in this post") {
+            return .unavailable("Dieser Beitrag enthält kein Video und damit keinen Ton.")
+        }
         if has("sign in", "login required", "log in", "--cookies", "cookies-from-browser", "requires authentication", "authentication required") {
             return .loginRequired
         }

@@ -125,6 +125,53 @@ final class StudioSourceTests: XCTestCase {
         XCTAssertFalse(SourceKind.spotify.supportsAudio)
     }
 
+    /// Instagram: als Web-Quelle gespeichert (ältere Versionen lesen Verlauf weiter), aber als „Instagram“ benannt.
+    func testInstagramRecognition() throws {
+        for text in ["https://www.instagram.com/reel/Dbn-XJhk0_-/", "instagram.com/p/abc/", "https://m.instagram.com/tv/abc",
+                     "https://instagr.am/p/abc", "https://www.instagram.com/reels/abc/?igsh=xyz"] {
+            let c = try XCTUnwrap(SourceURL.classify(text), text)
+            XCTAssertEqual(c.kind, .web, text)
+            XCTAssertTrue(SourceURL.isInstagram(c.url), text)
+            XCTAssertEqual(SourceURL.label(kind: c.kind, url: c.url), "Instagram", text)
+        }
+        for text in ["https://example.org/instagram.com", "https://notinstagram.com/reel/a", "https://instagram.com.example.org/x"] {
+            let c = try XCTUnwrap(SourceURL.classify(text), text)
+            XCTAssertFalse(SourceURL.isInstagram(c.url), text)
+            XCTAssertEqual(SourceURL.label(kind: c.kind, url: c.url), "Web", text)
+        }
+        XCTAssertEqual(SourceURL.label(kind: .youtube, url: URL(string: "https://instagram.com/x")), "YouTube")
+        XCTAssertEqual(SourceURL.label(kind: .web, url: nil), "Web")
+        // Verlauf: Dateipfade sind keine Instagram-Adressen
+        XCTAssertFalse(SourceURL.isInstagram(URL(string: "/Users/a/instagram.com/x.mp4")!))
+    }
+
+    func testInstagramTitleFromCaption() throws {
+        XCTAssertTrue(YtDlpInfo.isGenericPostTitle("Video by nasa"))
+        XCTAssertTrue(YtDlpInfo.isGenericPostTitle("Post by some.user_1"))
+        XCTAssertFalse(YtDlpInfo.isGenericPostTitle("Stand by me"))
+        XCTAssertFalse(YtDlpInfo.isGenericPostTitle("Video by the sea"))
+        XCTAssertEqual(YtDlpInfo.captionTitle("\n  \nArtemis II ist bereit 🚀 #Artemis #NASA @nasa\nmehr Text"), "Artemis II ist bereit 🚀")
+        XCTAssertEqual(YtDlpInfo.captionTitle("#nurhashtags #und @namen\nZweite Zeile https://example.org/x"), "Zweite Zeile")
+        XCTAssertNil(YtDlpInfo.captionTitle("#a #b\n🔥🔥\n   "))
+        let long = String(repeating: "Wort ", count: 30)
+        let cut = try XCTUnwrap(YtDlpInfo.captionTitle(long))
+        XCTAssertLessThanOrEqual(cut.count, 82)
+        XCTAssertTrue(cut.hasSuffix(" …"))
+        XCTAssertFalse(cut.contains("Wor …"), "an einer Wortgrenze gekürzt")
+
+        let json = #"{"id":"Dbn-XJhk0_-","title":"Video by nasa","description":"Leaving Earth - one launch at a time #NASA","uploader":"NASA","channel":"nasa","upload_date":"20261030","acodec":"mp4a.40.5","asr":48000,"abr":74.0,"webpage_url":"https://www.instagram.com/p/Dbn-XJhk0_-/"}"#
+        let info = try JSONDecoder().decode(YtDlpInfo.self, from: Data(json.utf8))
+        let s = info.sourceInfo(kind: .web, requestedURL: URL(string: "https://www.instagram.com/reel/Dbn-XJhk0_-/")!)
+        XCTAssertEqual(s.title, "Leaving Earth - one launch at a time")
+        XCTAssertEqual(s.suggested.title, "Leaving Earth - one launch at a time", "Beitragstext wird nicht in Interpret/Titel aufgeteilt")
+        XCTAssertEqual(s.suggested.artist, "NASA")
+        XCTAssertEqual(s.suggested.year, 2026)
+        XCTAssertEqual(s.sampleRate, 48000)
+        // Ohne Beitragstext bleibt der Ersatztitel
+        let bare = try JSONDecoder().decode(YtDlpInfo.self, from: Data(#"{"title":"Video by nasa","uploader":"NASA"}"#.utf8))
+        XCTAssertEqual(bare.sourceInfo(kind: .web, requestedURL: URL(string: "https://instagram.com/reel/a")!).title, "Video by nasa")
+    }
+
     func testYtDlpMapping() throws {
         let json = """
         {"id":"abc","title":"Nova - Blue Sky (Official Video)","uploader":"NovaVEVO","duration":213.5,

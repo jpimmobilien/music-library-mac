@@ -379,7 +379,7 @@ struct StudioHistoryRow: View {
                         } else if entry.imported {
                             StudioBadge(text: "In der Bibliothek", icon: Icons.libraryMusic, tint: colors.accentText)
                         }
-                        StudioBadge(text: StudioText.sourceKindLabel(entry.sourceKind))
+                        StudioBadge(text: StudioText.sourceKindLabel(entry.sourceKind, source: entry.source))
                     }
                     .padding(.top, 1)
                 }
@@ -426,7 +426,9 @@ struct StudioHistoryRow: View {
 }
 
 extension StudioText {
-    static func sourceKindLabel(_ kind: SourceKind) -> String { kind.label }
+    static func sourceKindLabel(_ kind: SourceKind, source: String? = nil) -> String {
+        SourceURL.label(kind: kind, url: source.flatMap(URL.init(string:)))
+    }
 }
 
 // MARK: - Bausteine
