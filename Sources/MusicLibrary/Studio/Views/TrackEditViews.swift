@@ -249,7 +249,7 @@ struct TrackEditLevelCard: View {
         let e = studio.trackEdit
         guard let l = studio.trackAnalysis?.loudness else { return "Auf eine einheitliche Lautheit (EBU R 128) – gemessen nach allen anderen Änderungen." }
         let g = e.normalizationGain(measured: l)
-        return "Etwa \(EditText.db(g)) bis \(Int(e.targetLoudness)) LUFS (genau gemessen beim Speichern, nach allen anderen Änderungen)."
+        return "Etwa \(EditText.db(g)) bis \(EditText.signed(e.targetLoudness, digits: 0)) LUFS (genau gemessen beim Speichern, nach allen anderen Änderungen)."
     }
 
     private var silenceDetail: String {

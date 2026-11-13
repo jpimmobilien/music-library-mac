@@ -186,7 +186,7 @@ public struct TrackEdit: Codable, Hashable, Sendable {
         if autoTune { parts.append("Auto-Tune \(Self.keyName(autoTuneKey, autoTuneScale))") }
         if enhance {
             var e: [String] = []
-            if normalize { e.append("\(Int(targetLoudness)) LUFS") }
+            if normalize { e.append("\(targetLoudness < 0 ? "−" : "")\(Int(abs(targetLoudness))) LUFS") }
             if removeRumble { e.append("Rumpelfilter") }
             if trimSilence { e.append("Stille entfernt") }
             parts.append("Verbessert" + (e.isEmpty ? "" : " (\(e.joined(separator: ", ")))"))

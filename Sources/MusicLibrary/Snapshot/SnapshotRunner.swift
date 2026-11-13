@@ -156,6 +156,7 @@ enum SnapshotRunner {
         }
         s.mode = .edit
         s.cutSaveMode = .replaceOriginal
+        s.trackAnalysisProgress = nil
         s.trackAnalysis = TrackAnalysis(reference: 441.6, referenceConfidence: 0.72, keyTonic: 9, keyScale: .minor, keyCorrelation: 0.81,
                                         loudness: -10.8, peakDb: -0.3, leadingSilence: 0.42, trailingSilence: 2.35)
         var e = TrackEdit()
