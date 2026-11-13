@@ -26,7 +26,7 @@ final class OrbitCoreFeed: ObservableObject {
     private var peak = RollingPeak(window: 300, bucket: 15)
     private weak var telemetry: Telemetry?
     private var raw = false
-    private var physicalMemory: Double?
+    private var physicalMemory: UInt64?
     private var storage: (capacity: Int64, available: Int64)?
     private var started = false
 
@@ -58,10 +58,11 @@ final class OrbitCoreFeed: ObservableObject {
     }
 
     func configure(raw: Bool, physicalMemory: UInt64?) {
-        let memory = physicalMemory.map(Double.init)
-        guard raw != self.raw || memory != self.physicalMemory else { return }
+        // Bytes bleiben UInt64 bis in AetherCore (dort getestet umgerechnet): `map(Double.init)` traf in Lauf 24
+        // `Double(bitPattern:)` – der Speicherring stand deshalb auf 100 %.
+        guard raw != self.raw || physicalMemory != self.physicalMemory else { return }
         self.raw = raw
-        self.physicalMemory = memory
+        self.physicalMemory = physicalMemory
         recompute()
     }
 
@@ -80,7 +81,7 @@ final class OrbitCoreFeed: ObservableObject {
         let next: [OrbitRingState] = [
             OrbitRingState(kind: .cpu, fraction: value(.cpuTotal, .fraction), basis: .measured),
             OrbitRingState(kind: .gpu, fraction: value(.gpu, .fraction), basis: .measured),
-            OrbitRingState(kind: .memory, fraction: OrbitCoreModel.memoryFraction(used: value(.memoryUsed, .bytes), physical: physicalMemory),
+            OrbitRingState(kind: .memory, fraction: OrbitCoreModel.memoryFraction(used: value(.memoryUsed, .bytes), physicalBytes: physicalMemory),
                            basis: .measured),
             OrbitRingState(kind: .storage, fraction: OrbitCoreModel.storageFraction(capacity: storage?.capacity, available: storage?.available),
                            basis: .measured),

@@ -163,6 +163,11 @@ public enum OrbitCoreModel {
         return Double(capacity - available) / Double(capacity)
     }
 
+    /// Wie `memoryFraction(used:physical:)`, mit dem eingebauten Speicher in Bytes (`hw.memsize`).
+    public static func memoryFraction(used: Double?, physicalBytes: UInt64?) -> Double? {
+        memoryFraction(used: used, physical: physicalBytes.map { Double($0) })
+    }
+
     public static func memoryFraction(used: Double?, physical: Double?) -> Double? {
         guard let used, let physical, physical > 0, used >= 0 else { return nil }
         return Swift.min(1, used / physical)

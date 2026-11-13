@@ -62,6 +62,8 @@ final class OrbitTests: XCTestCase {
         XCTAssertNil(OrbitCoreModel.storageFraction(capacity: 100, available: 200))
         XCTAssertEqual(OrbitCoreModel.memoryFraction(used: 8, physical: 16), 0.5)
         XCTAssertNil(OrbitCoreModel.memoryFraction(used: 8, physical: nil))
+        // Fehler aus Lauf 24: Bytes als UInt64 dürfen nie als Bitmuster gedeutet werden (Ring stand auf 100 %)
+        XCTAssertEqual(OrbitCoreModel.memoryFraction(used: 4_030_000_000, physicalBytes: 7_516_192_768)!, 0.536, accuracy: 0.001)
     }
 
     func testRingStateClampsAndMarksUnavailable() {

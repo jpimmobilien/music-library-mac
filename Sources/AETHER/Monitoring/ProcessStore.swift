@@ -38,7 +38,7 @@ struct ProcessRow: Identifiable, Equatable {
     var nameSort: String { name.lowercased() }
     /// Auf 0,5 % gerundet: kleine Schwankungen vertauschen keine Zeilen.
     var cpuSort: Double { cpu.map { ($0 * 200).rounded() / 200 } ?? -1 }
-    var memorySort: Double { memory.map(Double.init) ?? -1 }
+    var memorySort: Double { memory.map { Double($0) } ?? -1 }
     var threadSort: Int { threads ?? -1 }
     var pidSort: Int { Int(pid) }
     var userSort: String { user }
@@ -71,7 +71,7 @@ struct FamilyRow: Identifiable, Equatable {
 
     var nameSort: String { name.lowercased() }
     var cpuSort: Double { cpu ?? -1 }
-    var memorySort: Double { memory.map(Double.init) ?? -1 }
+    var memorySort: Double { memory.map { Double($0) } ?? -1 }
     var countSort: Int { members.count }
 }
 
