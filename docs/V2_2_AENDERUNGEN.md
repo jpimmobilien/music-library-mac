@@ -1,5 +1,24 @@
 # Version 2.2 – Audio Studio
 
+## 2.2.3 (13.11.2026) – Instagram-Reels und -Videos als MP3
+
+- **Fehler behoben: Ton halb so schnell und eine Oktave tiefer.** Instagram (wie Facebook, TikTok und viele Videos)
+  liefert den Ton als HE-AAC. In MP4- und Videodateien nennt die Formatbeschreibung dann nur die halbe
+  Abtastrate (z. B. 24 statt 48 kHz) und bei HE-AAC v2 nur einen Kanal. Die App hat das übernommen: Der Ton lief
+  halb so schnell und eine Oktave (bei v2 zwei Oktaven) zu tief – auch in der exportierten MP3. Jetzt zählt das
+  Format des tatsächlich dekodierten Tons; der Leser verlangt Abtastrate und Kanäle ausdrücklich und bricht ab,
+  statt je wieder falsch formatierte Daten weiterzugeben. Betraf alle MP4-/MOV-/Videodateien mit HE-AAC-Ton,
+  auch von Hand ins Studio gezogene.
+- **Instagram als eigene Quelle:** Reels, Videos und Beiträge werden erkannt und als „Instagram“ angezeigt
+  („Instagram wird abgefragt …“). Statt „Video by konto“ wird die erste Zeile des Beitragstexts als Titel
+  vorgeschlagen (ohne Hashtags und Links), als Interpret der Kontoname.
+- **Schneller:** Es wird zuerst die reine Tonspur geladen (bei Instagram rund 0,3 MB für 30 s). Gibt es keine,
+  wird höchstens ein 720p-Video statt der größten Fassung geladen. Segmentierte Quellen (HLS/DASH) mit vier
+  Verbindungen gleichzeitig.
+- **Verständliche Meldungen:** „Instagram gibt diesen Beitrag ohne Anmeldung gerade nicht frei …“ statt der
+  englischen yt-dlp-Meldung; Beiträge ohne Video werden benannt. Keine Anmeldung, keine Cookies.
+- Verlauf und Einstellungen bleiben mit älteren Versionen lesbar (Instagram wird als Web-Quelle gespeichert).
+
 ## 2.2.2 (12.11.2026) – Abschnitte nach Datum
 
 - **Abschnitte in den Übersichten Titel und Alben**, sobald nach **Erscheinungsjahr** oder **Hinzugefügt** sortiert

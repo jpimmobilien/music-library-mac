@@ -64,7 +64,7 @@ Dateien nicht.
 Das Audio Studio (Navigation „Studio“ oder ⌘7) wandelt lokale Audio- und Videodateien um und schneidet Titel
 der Bibliothek – dafür ist nichts weiter nötig.
 
-**Internet-Quellen (YouTube, SoundCloud):** Dafür braucht das Studio das Open-Source-Werkzeug **yt-dlp**, für
+**Internet-Quellen (YouTube, SoundCloud, Instagram):** Dafür braucht das Studio das Open-Source-Werkzeug **yt-dlp**, für
 YouTube zusätzlich die JavaScript-Laufzeit **Deno**. Beide sind nicht in der App enthalten. Im Studio oben rechts
 „Werkzeuge einrichten“ → „Installieren“: Die App lädt sie von den offiziellen GitHub-Veröffentlichungen, prüft die
 SHA-256-Prüfsummen und legt sie unter `~/Library/Application Support/Music Library/Audio Studio/Tools` ab
