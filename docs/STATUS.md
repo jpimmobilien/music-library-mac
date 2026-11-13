@@ -25,7 +25,7 @@ und Tablet-Größe 1600 × 2560 / 320 dpi). Hardware-Prüfung auf einem echten T
 | Prüfung | Ergebnis |
 |---|---|
 | Unit-Tests (Gradle) | **232/232** – core/files 155 (echte Dateien), core/model 71 (davon 6 ORBIT), Designsystem 6 (Kontrast aller Themes × Akzente) |
-| Release-Build | `ORBIT-0.4.0.apk` (≈ 27,6 MB, versionCode 3), AGP 9.3.1, compileSdk 37, minSdk 31, targetSdk 36 |
+| Release-Build | `ORBIT-0.4.0.apk` (27 658 372 Bytes, SHA-256 `9366e329147a7bca2961ef7d767e26f570b8ebec57f9685233d3e171df635bdd`, versionCode 3, Lauf 6), AGP 9.3.1, compileSdk 37, minSdk 31, targetSdk 36 |
 | Paketprüfung | `apksigner verify`: Signaturschema v2 gültig (Projektschlüssel); `aapt2`: Paket `de.privateapp.aether`, Name „ORBIT“, Symbol adaptiv |
 | Emulator (Android 15, x86_64, 4 GB) | Installation mit allen Laufzeitrechten, 3 Kaltstarts je ≈ 3,3–4,0 s (Software-Grafik), Bildschirmfotos: 6 Hauptbereiche hell/dunkel, alle 6 Themes, 3 Effektstärken, Tablet-Größe, aufgeklappte ORBIT-Core-Karte, Sensor-Globus hell/dunkel; **keine App-Abstürze** (Lauf 6) (Absturzpuffer leer, kein FATAL im vollständigen Logcat) |
 | Offline-Prüfungen | Typprüfung aller Module 0 Fehler/0 Warnungen, Prüfskript „Farben aus dem Theme“ ohne Verstoß |
