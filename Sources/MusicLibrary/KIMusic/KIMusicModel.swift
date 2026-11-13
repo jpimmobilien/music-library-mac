@@ -90,7 +90,7 @@ final class KIMusicModel: ObservableObject {
          creationsFolder: URL? = nil, defaults: UserDefaults = .standard, preview: StudioPreviewing? = nil) {
         self.demo = demo
         self.defaults = defaults
-        self.support = support ?? Self.detectSupport()
+        self.support = support ?? (demo ? .supported(recommendedLM: KIModel.lmMedium.id) : Self.detectSupport())
         self.creationsFolder = creationsFolder ?? URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent("Music/KI-Musik", isDirectory: true)
         self.preview = preview
         self.unloadMinutes = (defaults.object(forKey: "ki.unloadMinutes") as? Int) ?? 10
@@ -113,6 +113,21 @@ final class KIMusicModel: ObservableObject {
         refreshSetup()
         loadCreations()
         preview?.onFinish = { [weak self] in Task { @MainActor in self?.playingID = nil } }
+    }
+
+    // MARK: Vorschaubilder
+
+    /// Feste Zustände für Vorschaubilder (Demo-Modus, keine Dateien, kein Prozess).
+    func applyDemo(setup: Setup, installTask: InstallActivity = .idle, phase: Phase = .idle, results: [KICreation] = [],
+                   creations: [KICreation] = [], lastLyrics: String? = nil, freeSpace: Int64? = 412_000_000_000) {
+        guard demo else { return }
+        self.setup = setup
+        self.installTask = installTask
+        self.phase = phase
+        self.results = results
+        self.creations = KICreationIndex(items: creations)
+        self.lastLyrics = lastLyrics
+        self.freeSpace = freeSpace
     }
 
     // MARK: Hardware
@@ -155,7 +170,13 @@ final class KIMusicModel: ObservableObject {
         else { setup = .ready }
     }
 
-    func isInstalled(_ model: KIModel) -> Bool { installer?.isInstalled(model) ?? false }
+    func isInstalled(_ model: KIModel) -> Bool {
+        if demo { return demoInstalled.contains(model.id) || (model.id == KIModel.lmMedium.id && demoInstalled.contains(KIModel.core.id)) }
+        return installer?.isInstalled(model) ?? false
+    }
+
+    /// Vorschaubilder: als geladen geltende Modelle.
+    var demoInstalled: Set<String> = []
 
     var installing: Bool {
         if case .running = installTask { return true }

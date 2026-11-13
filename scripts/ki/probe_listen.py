@@ -112,7 +112,7 @@ for c in probe.get("cases", []):
         stems = separate(path, c["id"])
         vocal = next((s for s in stems if "vocals" in os.path.basename(s)), None)
         if vocal:
-            transcribe(vocal, lyrics_by_case[c["id"]], c["id"] + " (getrennte Stimme)")
+            transcribe(os.path.join(OUT, vocal), lyrics_by_case[c["id"]], c["id"] + " (getrennte Stimme)")
 
 # Gegenprobe: ein Instrumentalstück sollte (fast) keinen erkannten Text enthalten
 inst = next((c for c in probe.get("cases", []) if c["id"] == "01-instrumental-en" and c.get("files")), None)

@@ -403,6 +403,49 @@ enum SnapshotRunner {
                 WindowRouter.shared.pendingSettingsCategory = SettingsCategory.studio.rawValue
             }, view: { AnyView(SettingsView()) }),
         ]
+        // KI-Musik (2.5) – feste Zustände, keine Erzeugung
+        func ki(_ setup: @escaping @MainActor (AppModel, KIMusicModel) -> Void) -> @MainActor (AppModel) -> Void {
+            return studio { m, _ in
+                m.workspace = .ai
+                m.ki.request = KIMusicDemo.request
+                m.ki.demoInstalled = [KIModel.core.id]
+                m.ki.filter = .all
+                m.ki.query = ""
+                setup(m, m.ki)
+            }
+        }
+        list += [
+            Scenario(name: "70-ki-einrichten", size: big, prepare: ki { _, k in
+                k.demoInstalled = []
+                k.applyDemo(setup: .needsEnvironment)
+            }, view: main),
+            Scenario(name: "70-ki-einrichten-laeuft", size: big, prepare: ki { _, k in
+                k.demoInstalled = []
+                k.applyDemo(setup: .needsModels, installTask: .running(title: KIModel.core.title,
+                                                                         progress: .init(step: "ACE-Step 1.5 – Grundpaket: 4,2 GB von 10,4 GB", fraction: 0.41)))
+            }, view: main),
+            Scenario(name: "70-ki-bereit", size: wide, prepare: ki { _, k in
+                k.applyDemo(setup: .ready, creations: KIMusicDemo.creations())
+            }, view: main),
+            Scenario(name: "70-ki-erzeugt", size: big, prepare: ki { _, k in
+                let made = Array(KIMusicDemo.creations().prefix(2))
+                k.applyDemo(setup: .ready, results: made, creations: KIMusicDemo.creations(), lastLyrics: KIMusicDemo.lyrics)
+                StudioScrollSeed.pending = nil
+            }, view: main),
+            Scenario(name: "70-ki-laeuft", size: big, prepare: ki { _, k in
+                k.applyDemo(setup: .ready, phase: .working(step: "Musik wird erzeugt …", progress: 0.46,
+                                                            started: Date().addingTimeInterval(-38), estimate: 95),
+                            creations: KIMusicDemo.creations())
+            }, view: main),
+            Scenario(name: "70-ki-schmal", size: small, prepare: ki { _, k in
+                k.applyDemo(setup: .ready, creations: KIMusicDemo.creations())
+            }, view: main),
+            Scenario(name: "70-ki-einstellungen", size: CGSize(width: 860, height: 900), prepare: ki { m, k in
+                k.applyDemo(setup: .ready)
+                m.workspace = .library
+                WindowRouter.shared.pendingSettingsCategory = SettingsCategory.ki.rawValue
+            }, view: { AnyView(SettingsView()) }),
+        ]
         return list
     }
 

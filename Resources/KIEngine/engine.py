@@ -88,10 +88,19 @@ class Engine:
             msg, ok = self.dit.initialize_service(project_root=self.ace_root, config_path=dit_model, device=device,
                                                   offload_to_cpu=False, offload_dit_to_cpu=False, use_mlx_dit=use_mlx,
                                                   prefer_source="huggingface")
+            if not ok and device != "cpu" and "out of memory" in str(msg).lower():
+                # Zu wenig Grafikspeicher (z. B. kleine Rechner): auf dem Prozessor weiter – langsam, aber es läuft
+                progress(0.3, "Zu wenig Grafikspeicher – Musikmodell läuft auf dem Prozessor (langsamer) …")
+                self.dit = AceStepHandler()
+                msg, ok = self.dit.initialize_service(project_root=self.ace_root, config_path=dit_model, device="cpu",
+                                                      offload_to_cpu=False, offload_dit_to_cpu=False, use_mlx_dit=False,
+                                                      prefer_source="huggingface")
+                device = "cpu"
             if not ok:
                 self.dit = None
                 raise RuntimeError(f"Musikmodell konnte nicht geladen werden: {msg}")
             self.loaded["dit"] = dit_model
+            self.loaded["dit_device"] = device
         if lm_model and self.loaded.get("lm") != lm_model:
             progress(0.6, "Sprachmodell wird geladen …")
             from acestep.llm_inference import LLMHandler
@@ -103,6 +112,7 @@ class Engine:
                 self.llm = None
                 raise RuntimeError(f"Sprachmodell konnte nicht geladen werden: {msg}")
             self.loaded["lm"] = lm_model
+            self.loaded["lm_backend"] = backend
         progress(1.0, "Bereit")
         return {"loaded": self.loaded}
 
@@ -122,7 +132,38 @@ class Engine:
 
     # MARK: Erzeugen
 
+    # MLX-Kernel lassen sich auf manchen Rechnern nicht übersetzen (beobachtet auf einem virtuellen Mac mit
+    # macOS 26). Dann einmal mit PyTorch weitermachen statt abzubrechen.
+    @staticmethod
+    def _metal_failure(text):
+        return "metal::Device" in text or "Unable to load kernel" in text
+
+    def _lm_fallback(self, progress):
+        if self.llm is None or self.loaded.get("lm_backend") == "pt":
+            return False
+        progress(0.05, "Sprachmodell wechselt auf PyTorch …")
+        from acestep.llm_inference import LLMHandler
+        lm_model = self.loaded.get("lm")
+        self.llm = LLMHandler()
+        msg, ok = self.llm.initialize(checkpoint_dir=self.checkpoints, lm_model_path=lm_model, backend="pt",
+                                      device="auto", offload_to_cpu=False, dtype=None)
+        if not ok:
+            self.llm = None
+            self.loaded.pop("lm", None)
+            return False
+        self.loaded["lm_backend"] = "pt"
+        print(f"[KI] Sprachmodell auf PyTorch umgestellt: {msg}", file=sys.stderr)
+        return True
+
     def generate(self, req, progress):
+        try:
+            return self._generate(req, progress)
+        except RuntimeError as e:
+            if self._metal_failure(str(e)) and req.get("use_lm", True) and self._lm_fallback(progress):
+                return self._generate(req, progress)
+            raise
+
+    def _generate(self, req, progress):
         if self.dit is None:
             raise RuntimeError("Das Musikmodell ist nicht geladen.")
         from acestep.inference import GenerationConfig, GenerationParams, generate_music
@@ -162,6 +203,14 @@ class Engine:
         return {"files": files, "seconds": round(time.time() - t0, 2), "metadata": meta}
 
     def write_lyrics(self, req, progress):
+        try:
+            return self._write_lyrics(req, progress)
+        except RuntimeError as e:
+            if self._metal_failure(str(e)) and self._lm_fallback(progress):
+                return self._write_lyrics(req, progress)
+            raise
+
+    def _write_lyrics(self, req, progress):
         if self.llm is None:
             raise RuntimeError("Das Sprachmodell ist nicht geladen.")
         from acestep.inference import create_sample, format_sample
