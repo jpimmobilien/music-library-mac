@@ -148,9 +148,6 @@ enum SnapshotRunner {
         return list
     }
 
-    /// Version 2.2: Audio Studio – Leerzustand, Quellen, Editor, Export, Metadaten, Warteschlange, Verlauf,
-    /// Werkzeuge, Spotify, Doppel-Warnung, Schneiden mit „Original ersetzen“, schmales Fenster.
-    @MainActor
     /// „Titel bearbeiten“ mit einem Titel der Demo-Bibliothek (erfundene Analyse; `configured` = Beispiel-Einstellungen).
     @MainActor
     static func editDemo(_ m: AppModel, _ s: StudioModel, configured: Bool) {
@@ -176,6 +173,9 @@ enum SnapshotRunner {
         s.trackEdit = e
     }
 
+    /// Version 2.2: Audio Studio – Leerzustand, Quellen, Editor, Export, Metadaten, Warteschlange, Verlauf,
+    /// Werkzeuge, Spotify, Doppel-Warnung, Schneiden mit „Original ersetzen“, schmales Fenster.
+    @MainActor
     private static func studioScenarios(library: @escaping @MainActor (LibrarySection, Destination?, SidePanel?, Bool, PlayerTheme) -> @MainActor (AppModel) -> Void,
                                         main: @escaping @MainActor () -> AnyView, big: CGSize, small: CGSize, wide: CGSize) -> [Scenario] {
         /// Grundzustand: Bibliothek mit Mini-Player, Studio geöffnet und zurückgesetzt, dann `setup`.
