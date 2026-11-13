@@ -8,11 +8,23 @@ APK="$1"; OUT="$2"
 mkdir -p "$OUT"
 PKG=de.privateapp.aether
 log() { echo "[$(date +%H:%M:%S)] $*" | tee -a "$OUT/ablauf.txt"; }
+# Kein Schritt darf hängen: jeder adb-Aufruf hat eine Frist. Ist der Emulator weg, wird das protokolliert und beendet.
+ADB="$(command -v adb)"
+adb() { timeout 90 "$ADB" "$@"; }
+alive() {
+  if [ "$(timeout 15 "$ADB" get-state 2>/dev/null)" != "device" ]; then
+    log "EMULATOR NICHT MEHR ERREICHBAR (vor: $1)"
+    echo "$1" > "$OUT/emulator-verloren.txt"
+    exit 0
+  fi
+}
 
 adb wait-for-device
 adb shell getprop ro.build.version.release | sed 's/^/Android /' | tee "$OUT/geraet.txt"
 adb shell getprop ro.product.model | tee -a "$OUT/geraet.txt"
 adb shell wm size | tee -a "$OUT/geraet.txt"
+# Vollständiges Protokoll laufend mitschreiben (bleibt erhalten, falls der Emulator unterwegs abbricht)
+("$ADB" logcat -v time > "$OUT/logcat-voll.txt" 2>&1 &)
 log "Installation"
 adb install -r -g "$APK" 2>&1 | tee "$OUT/installation.txt"
 adb shell dumpsys package "$PKG" | grep -E "versionName|versionCode|targetSdk" | tee -a "$OUT/installation.txt"
@@ -23,6 +35,7 @@ adb shell settings put global animator_duration_scale 1 >/dev/null 2>&1
 
 shot() { # name, screen, [extra args]
   local name="$1" screen="$2"; shift 2
+  alive "$name"
   adb shell am force-stop "$PKG"
   adb shell am start -W -n "$PKG/.MainActivity" --es orbit.snapshot "$screen" "$@" >/dev/null 2>&1
   sleep 6
@@ -63,15 +76,6 @@ sleep 2
 adb exec-out screencap -p > "$OUT/telefon-hell-home-gescrollt.png"
 log "Foto telefon-hell-home-gescrollt"
 
-log "Bewegung gescrollt (Sensor-Globus) – gewischt wird am linken Rand, damit der Globus sich nicht dreht"
-shot "telefon-dunkel-bewegung-oben" motion --es orbit.theme GLASS_DARK
-for i in 1 2 3; do
-  adb shell input swipe 60 1900 60 700 500
-  sleep 2
-  adb exec-out screencap -p > "$OUT/telefon-dunkel-bewegung-gescrollt-$i.png"
-  log "Foto telefon-dunkel-bewegung-gescrollt-$i"
-done
-
 log "ORBIT Core: Zeile „Arbeitsspeicher“ aufgeklappt (Antippen nach Bildschirmposition)"
 shot "telefon-dunkel-home-orbit" home --es orbit.theme GLASS_DARK
 adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1 && adb pull /sdcard/ui.xml "$OUT/ui-home.xml" >/dev/null 2>&1
@@ -108,12 +112,22 @@ for s in home device; do shot "tablet-dunkel-$s" "$s"; done
 adb shell wm size reset
 adb shell wm density reset
 
+log "Bewegung gescrollt (Sensor-Globus) – gewischt wird am linken Rand, damit der Globus sich nicht dreht"
+shot "telefon-dunkel-bewegung-oben" motion --es orbit.theme GLASS_DARK
+for i in 1 2 3; do
+  adb shell input swipe 60 1900 60 700 500
+  sleep 2
+  adb exec-out screencap -p > "$OUT/telefon-dunkel-bewegung-gescrollt-$i.png"
+  log "Foto telefon-dunkel-bewegung-gescrollt-$i"
+done
+
 log "Leistung: gfxinfo nach Startseite"
 adb shell am force-stop "$PKG"
 adb shell am start -W -n "$PKG/.MainActivity" >/dev/null 2>&1
 sleep 8
 adb shell dumpsys gfxinfo "$PKG" | sed -n '1,40p' > "$OUT/gfxinfo.txt"
 adb shell dumpsys meminfo "$PKG" | sed -n '1,40p' > "$OUT/meminfo.txt"
+alive "Absturzprüfung"
 log "Absturzprüfung"
 adb logcat -d -b crash > "$OUT/abstuerze.txt" 2>&1
 adb logcat -d | grep -iE "orbit|aether|AndroidRuntime" | tail -400 > "$OUT/logcat.txt"
