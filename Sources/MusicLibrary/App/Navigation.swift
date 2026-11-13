@@ -19,8 +19,8 @@ enum MainWorkspace: String, Hashable, CaseIterable {
     case add
     case studio
 
-    /// Einträge rechts in der Navigation, in dieser Reihenfolge.
-    static let navigationEntries: [MainWorkspace] = [.add, .studio]
+    /// Einträge rechts in der Navigation, in dieser Reihenfolge – „Hinzufügen“ immer ganz rechts.
+    static let navigationEntries: [MainWorkspace] = [.studio, .add]
 
     var label: String {
         switch self {
@@ -47,8 +47,8 @@ enum MainWorkspace: String, Hashable, CaseIterable {
     var help: String {
         switch self {
         case .library: return "Bibliothek"
-        case .add: return "Hinzufügen – Musik aus dem Netz oder von deinem Mac (⌘7)"
-        case .studio: return "Studio – Titel der Bibliothek schneiden und bearbeiten (⌘8)"
+        case .add: return "Hinzufügen – Musik aus dem Netz oder von deinem Mac (⌘8)"
+        case .studio: return "Studio – Titel der Bibliothek schneiden und bearbeiten (⌘7)"
         }
     }
 }

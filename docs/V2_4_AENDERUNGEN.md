@@ -5,11 +5,12 @@ bearbeiten. Ab 2.4 sind das zwei eigene Einträge in der Navigation:
 
 | Eintrag | Kürzel | Wofür |
 |---|---|---|
-| **Hinzufügen** | ⌘7 | Neue Musik: Adressen (YouTube, SoundCloud, Instagram und weitere über yt-dlp) und Audio-/Videodateien vom Mac laden, Ausschnitt wählen, umwandeln, Metadaten und Cover setzen, in die Bibliothek übernehmen. Werkzeuge für Internet-Quellen, Warteschlange und Verlauf der Downloads. |
-| **Studio** | ⌘8 | Nur Bearbeitung von Titeln, die schon in der Bibliothek sind: **Bearbeiten** (Lautstärke, Verbesserung, Tempo, Tonhöhe, Stimmung, Auto-Tune, Equalizer, Beschneiden) und **Schneiden** (verlustfrei, wenn möglich). Original ersetzen mit Sicherung und „Rückgängig“ oder neue Datei. |
+| **Studio** | ⌘7 | Nur Bearbeitung von Titeln, die schon in der Bibliothek sind: **Bearbeiten** (Lautstärke, Verbesserung, Tempo, Tonhöhe, Stimmung, Auto-Tune, Equalizer, Beschneiden) und **Schneiden** (verlustfrei, wenn möglich). Original ersetzen mit Sicherung und „Rückgängig“ oder neue Datei. |
+| **Hinzufügen** (ganz rechts) | ⌘8 | Neue Musik: Adressen (YouTube, SoundCloud, Instagram und weitere über yt-dlp) und Audio-/Videodateien vom Mac laden, Ausschnitt wählen, umwandeln, Metadaten und Cover setzen, in die Bibliothek übernehmen. Werkzeuge für Internet-Quellen, Warteschlange und Verlauf der Downloads. |
 
 Die sechs Bereiche der Bibliothek behalten ⌘1 … ⌘6; eine feine Linie trennt sie in der Navigation von den beiden
-Arbeitsbereichen.
+Arbeitsbereichen. Reihenfolge rechts: Studio, dann „Hinzufügen“ als letzter Eintrag. Das Studio behält ⌘7 (wie das
+bisherige Audio Studio).
 
 ## Studio
 

@@ -488,10 +488,10 @@ final class AppModel: ObservableObject {
 
     var currentDestination: Destination? { stacks[section]?.last }
 
-    /// Studio öffnen (Navigation, ⌘8, Menü, „Titel bearbeiten …“).
+    /// Studio öffnen (Navigation, ⌘7, Menü, „Titel bearbeiten …“).
     func openStudio() { open(.studio) }
 
-    /// Arbeitsbereich öffnen („Hinzufügen“ ⌘7, „Studio“ ⌘8).
+    /// Arbeitsbereich öffnen („Studio“ ⌘7, „Hinzufügen“ ⌘8).
     func open(_ target: MainWorkspace) {
         playerOpen = false
         workspace = target

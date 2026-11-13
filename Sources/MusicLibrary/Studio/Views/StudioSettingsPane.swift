@@ -65,7 +65,7 @@ private struct StudioSettingsContent: View {
                 MusicToggle(isOn: $studio.settings.revealAfterExport, label: "Nach dem Export im Finder zeigen")
             }
             Hairline()
-            SettingRow(title: "„Hinzufügen“ öffnen", text: "Auch über ⌘7 oder den Eintrag „Hinzufügen“ in der Navigation. Titel der Bibliothek bearbeitest du im Studio (⌘8).") {
+            SettingRow(title: "„Hinzufügen“ öffnen", text: "Auch über ⌘8 oder den Eintrag „Hinzufügen“ ganz rechts in der Navigation. Titel der Bibliothek bearbeitest du im Studio (⌘7).") {
                 PillButton(title: "Öffnen", icon: Icons.addMusic) {
                     model.open(.add)
                     if let main = MainWindowRef.window { main.makeKeyAndOrderFront(nil) }

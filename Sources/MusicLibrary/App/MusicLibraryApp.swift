@@ -412,7 +412,7 @@ struct AppCommands: Commands {
     }
 }
 
-/// Menü „Studio“ (2.4): „Hinzufügen“ (⌘7) und Studio (⌘8) öffnen, Quelle wählen, Vorhören, Auswahl, Werkzeuge.
+/// Menü „Studio“ (2.4): Studio (⌘7) und „Hinzufügen“ (⌘8) öffnen, Quelle wählen, Vorhören, Auswahl, Werkzeuge.
 /// Vorhören und Auswahl wirken auf den gerade offenen Bereich.
 struct StudioCommands: Commands {
     @ObservedObject var model: AppModel
@@ -421,9 +421,9 @@ struct StudioCommands: Commands {
 
     var body: some Commands {
         CommandMenu("Studio") {
-            Button("Hinzufügen öffnen") { model.open(.add) }
-                .keyboardShortcut("7", modifiers: .command)
             Button("Studio öffnen") { model.open(.studio) }
+                .keyboardShortcut("7", modifiers: .command)
+            Button("Hinzufügen öffnen") { model.open(.add) }
                 .keyboardShortcut("8", modifiers: .command)
             Divider()
             Group {

@@ -170,7 +170,7 @@ struct SectionHost: View {
 }
 
 /// Schwebende Glas-Navigation: sechs Bereiche der Bibliothek, dahinter – durch eine feine Linie getrennt – die
-/// Arbeitsbereiche „Hinzufügen“ und „Studio“, mit gleitender Rosé-Linse (Android `FloatingNavBar`).
+/// Arbeitsbereiche „Studio“ und „Hinzufügen“ (ganz rechts), mit gleitender Rosé-Linse (Android `FloatingNavBar`).
 struct NavBar: View {
     @EnvironmentObject private var model: AppModel
     @Environment(\.musicColors) private var colors
