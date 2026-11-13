@@ -5,7 +5,9 @@ dist/
 snapshots/
 logs/
 /AETHER-macOS-Universal.dmg
+/ORBIT-macOS-Universal.dmg
 *.xcodeproj/xcuserdata/
 .DS_Store
 __pycache__/
 /AETHER-macOS-Universal.dmg.sha256
+/ORBIT-macOS-Universal.dmg.sha256

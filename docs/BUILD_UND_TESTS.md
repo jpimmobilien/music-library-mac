@@ -1,5 +1,60 @@
 # Build- und Testergebnis
 
+**ORBIT 2.0.0** (vorher AETHER; „Spatial Liquid Glass“) · Stand 13. November 2026 · Release-Build: Lauf 25
+(GitHub-Lauf 43428965072) (`4511312`)
+
+## ORBIT 2.0.0 – Ergebnis
+
+| Prüfung | Ergebnis |
+|---|---|
+| Datei | `ORBIT-macOS-Universal.dmg` · 12 037 983 Bytes (11,5 MB) · SHA-256 `ced20b9d5bfddb4f75a74827ad94c3fa92b1d394c80bf195f2cc97bb2773c672` |
+| Version | 2.0.0 (Build 25), `de.projectaether.macos` (unverändert, Einstellungen bleiben erhalten) |
+| App / Programmdatei | `ORBIT.app` / `Contents/MacOS/ORBIT`, Symbol aus der Vorlage des Auftraggebers |
+| Architekturen | `x86_64 arm64` – beide nativ, Mindest-macOS 13.0 je Architektur |
+| SDK / Compiler | macOS SDK 26.5, Xcode 26.6, Swift 6.3.3 (Build-Rechner macOS 26.7.2) |
+| Xcode-Projekt | `ORBIT.xcodeproj` (Schema „ORBIT“) aus `project.yml` erzeugt und mit `xcodebuild` gebaut: `x86_64 arm64` ✓ |
+| Signatur | ad-hoc, keine Developer-ID hinterlegt → **nicht notarisiert** (wie bisher) |
+| Unit-Tests | **141/141** auf Linux, macOS 26 (arm64) und macOS 15 (Intel) – davon 9 neue ORBIT-Tests |
+| Selbsttest (34 Prüfungen, echte Messwerte) | ✓ Build und aus der DMG installiert: macOS 26 nativ, macOS 26 über Rosetta, macOS 15 Intel, zweiter Intel-Mac |
+| Bildschirmfotos | macOS 26: je 32 Szenarien mit Liquid Glass, im Rückfall ohne Liquid Glass und auf Deutsch |
+| Unabhängige DMG-Prüfung ohne macOS (`tools/dmg_inspect/verify.py`) | bestanden: Prüfsumme, UDIF, `ORBIT.app`, Link „Programme“, Hintergrund, Volume-Symbol, Info.plist, `CFBundleExecutable = ORBIT`, Universal Binary, nur Systembibliotheken |
+| Vorversion | AETHER 1.2.0 (Lauf 22) vor dem Ersetzen gesichert: `AETHER-macOS-Universal-1.2.0.dmg`, SHA-256 `e058e355…74503` |
+
+### Leistung (eigene CPU-Last in % eines Kerns, Selbsttest, je 6–8 s nach Eingewöhnung)
+
+| Rechner | Übersicht (Ausgewogen) | Übersicht Immersiv | Übersicht Minimal | Animationen aus | Aktivität | Einstellungen |
+|---|---|---|---|---|---|---|
+| macOS 26, Apple Silicon (Build) | 4,9 | 3,4 | 3,3 | 3,5 | 7,0 | 2,0 |
+| macOS 26, Apple Silicon (installiert) | 3,8 | 3,2 | 3,7 | 3,2 | 5,1 | 1,9 |
+| macOS 26 über Rosetta | 7,0 | 4,6 | 4,6 | 3,3 | 8,7 | 3,6 |
+| macOS 15 Intel (Build) | 5,2 | 4,2 | 3,2 | 5,9 | 19,7 | 1,5 |
+| macOS 15 Intel (installiert) | 6,3 | 5,9 | 4,2 | 6,0 | 17,3 | 1,1 |
+| zweiter Intel-Mac (aus der DMG) | 9,0 | 3,9 | 4,4 | 4,6 | 19,0 | 0,8 |
+
+Bewertung: Die ORBIT-Effekte kosten messbar **nichts Zusätzliches** – „Immersiv“ (mit Drift der Lichtfelder) liegt
+im Rahmen der Messstreuung von „Ausgewogen“ und „Minimal“; die Dauerbewegung läuft im Render-Server (Core Animation,
+gedrosselt), nicht im Prozess. Gegenüber AETHER 1.2.0 (Übersicht 2–8 % Apple Silicon, Intel-VMs bis 33 % in der
+Aktivität) keine Verschlechterung. Die Schwankungen zwischen gleichen Rechnern stammen von den virtuellen Macs.
+
+### Im Build gefunden und behoben (ORBIT)
+
+| Lauf | Befund | Ursache | Behebung |
+|---|---|---|---|
+| 23 | Unit-Test `testRingStateClampsAndMarksUnavailable` rot | Testerwartung falsch gerundet (0,4321 → 0,43, nicht 0,435) | Erwartung korrigiert, zweiter Fall 0,4337 → 0,435 ergänzt |
+| 24 | ORBIT Core: Speicherring stand auf **100 %** (Bildschirmfoto), obwohl 4 von 7 GB belegt | `UInt64.map(Double.init)` wählte `Double(bitPattern:)` – der eingebaute Speicher wurde zu einer winzigen Zahl | Umrechnung nach AetherCore verlegt (`memoryFraction(used:physicalBytes:)`) und getestet; gleiche Schreibweise beim Sortieren nach Speicher vorsorglich ersetzt. Lauf 25: 54–55 % |
+
+### Bekannte Grenzen dieses Builds
+- Auf dem virtuellen **Intel**-Build-Rechner brechen weiterhin alle Fenster im **hellen** Erscheinungsbild beim
+  Fotografieren ab (`MTLLoader … Target device architecture is nil`, 6 Absturzberichte je Lauf, abgelegt im
+  Ergebniszweig) – dieselbe VM-Ursache wie seit 1.0 (Abschnitt 5 unten); dunkle Szenarien, Selbsttests und der
+  Start aus der DMG laufen auf Intel fehlerfrei.
+- Bewegung (Auftakt, Drift, Reflexion, magnetisches Schweben, rollende Zahlen, Lichtpunkt) ist in Standbildern nicht
+  sichtbar; Akku-Lichtfluss und Akku-Bahn sind ohne Akku (VM) nicht prüfbar – siehe [GRENZEN.md](GRENZEN.md).
+
+---
+
+## Anhang: Bericht AETHER 1.2.0
+
 AETHER 1.2.0 (Geräte-Illustrationen je Mac-Modell) · Stand 9. November 2026 · Release-Build: Lauf 22 (GitHub-Lauf 42595664135) (`2e0430b`)
 
 Vorversion 1.1.0: Lauf 18 (`95b30f2`), DMG-SHA-256 `dc42254809329c57494be71ebce06f43d62fe78c6973dec54cfc63f6ad32e223`.

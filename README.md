@@ -47,9 +47,11 @@ ihrem eigenen Takt. Konzept und Messgrößen: [docs/DESIGN_STUDIO.md](docs/DESIG
 Was macOS grundsätzlich nicht hergibt und wo die Grenzen liegen: [docs/GRENZEN.md](docs/GRENZEN.md).
 Build- und Testergebnis mit allen Prüfungen und den im Build gefundenen Fehlern: [docs/BUILD_UND_TESTS.md](docs/BUILD_UND_TESTS.md).
 
-![Übersicht – Liquid Glass Dunkel](docs/design/uebersicht-liquid-glass-dunkel.jpg)
+![ORBIT – Übersicht, Liquid Glass Dunkel „Deep Ocean“](docs/design/orbit-uebersicht-deep-ocean.jpg)
 
-Weitere Ansichten: [ganze Übersicht](docs/design/uebersicht-ganz.jpg) · [CPU & GPU](docs/design/cpu-gpu.jpg) ·
+Weitere Ansichten: [Pearl White](docs/design/orbit-uebersicht-pearl-white.jpg) ·
+[ORBIT Core, Profil Immersiv](docs/design/orbit-core-immersiv.jpg) · [Einstellungen mit Effektprofil](docs/design/orbit-einstellungen-effekte.jpg) ·
+[ganze Übersicht](docs/design/uebersicht-ganz.jpg) · [CPU & GPU](docs/design/cpu-gpu.jpg) ·
 [Arbeitsspeicher](docs/design/arbeitsspeicher.jpg) · [Netzwerk](docs/design/netzwerk.jpg) · [helles Design, großes Fenster](docs/design/grosses-fenster-englisch.jpg) ·
 [alle Mac-Modelle](docs/design/modellgalerie.jpg)
 
