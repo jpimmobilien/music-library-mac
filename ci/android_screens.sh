@@ -112,14 +112,9 @@ for s in home device; do shot "tablet-dunkel-$s" "$s"; done
 adb shell wm size reset
 adb shell wm density reset
 
-log "Bewegung gescrollt (Sensor-Globus) – gewischt wird am linken Rand, damit der Globus sich nicht dreht"
-shot "telefon-dunkel-bewegung-oben" motion --es orbit.theme GLASS_DARK
-for i in 1 2 3 4 5 6 7; do
-  adb shell input swipe 60 1900 60 700 500
-  sleep 2
-  adb exec-out screencap -p > "$OUT/telefon-dunkel-bewegung-gescrollt-$i.png"
-  log "Foto telefon-dunkel-bewegung-gescrollt-$i"
-done
+log "Sensor-Globus direkt öffnen (Prüfmodus „globe“ – kein Wischen am Rand, das die Zurück-Geste auslöst)"
+shot "telefon-dunkel-sensor-globus" globe --es orbit.theme GLASS_DARK
+shot "telefon-hell-sensor-globus" globe --es orbit.theme GLASS_LIGHT
 
 log "Leistung: gfxinfo nach Startseite"
 adb shell am force-stop "$PKG"

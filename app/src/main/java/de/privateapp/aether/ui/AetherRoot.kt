@@ -143,6 +143,12 @@ private fun openStartScreen(navigator: AppNavigator, screen: String) {
             navigator.select(TopLevel.DEVICE)
             navigator.push(Route.Motion)
         }
+        "globe" -> {
+            // Bewegung › Sensor-Globus: Kopf, Geschwindigkeit, Kacheln, Kompass, Höhe, dann der Globus (Index 5)
+            de.privateapp.aether.ui.common.SnapshotHints.motionStartIndex = 5
+            navigator.select(TopLevel.DEVICE)
+            navigator.push(Route.Motion)
+        }
         "trash" -> {
             navigator.select(TopLevel.FILES)
             navigator.push(Route.Trash)

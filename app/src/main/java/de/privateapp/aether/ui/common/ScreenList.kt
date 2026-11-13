@@ -51,9 +51,11 @@ fun ScreenList(
     insets: PaddingValues,
     reselect: Int,
     modifier: Modifier = Modifier,
+    /** Erster sichtbarer Eintrag beim ersten Aufbau (nur Prüfmodus für Bildschirmfotos, sonst 0). */
+    initialIndex: Int = 0,
     content: LazyListScope.() -> Unit,
 ) {
-    val state = rememberLazyListState()
+    val state = rememberLazyListState(initialFirstVisibleItemIndex = initialIndex)
     val motion = Aether.motion
     // Nur auf ein NEUES erneutes Antippen reagieren – kehrt man später zum Bereich zurück, bleibt die Position.
     var handledReselect by rememberSaveable { mutableIntStateOf(reselect) }
@@ -142,4 +144,14 @@ fun UpdatedAt(epochMillis: Long?, modifier: Modifier = Modifier, label: String =
         style = Aether.type.footnote,
         modifier = modifier.padding(top = Spacing.s),
     )
+}
+
+/**
+ * Hinweise des Prüfmodus für Bildschirmfotos (MainActivity „orbit.snapshot“): z. B. die Bewegungsseite direkt beim
+ * Sensor-Globus öffnen, ohne auf dem Emulator zu scrollen. Wird beim ersten Lesen zurückgesetzt; im normalen Betrieb 0.
+ */
+object SnapshotHints {
+    var motionStartIndex: Int = 0
+
+    fun takeMotionStartIndex(): Int = motionStartIndex.also { motionStartIndex = 0 }
 }

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -37,6 +38,7 @@ import de.privateapp.aether.model.Reading
 import de.privateapp.aether.model.motion.ClimbSource
 import de.privateapp.aether.model.motion.MotionFormat
 import de.privateapp.aether.ui.common.ScreenList
+import de.privateapp.aether.ui.common.SnapshotHints
 import de.privateapp.aether.ui.common.SubpageHeader
 
 /**
@@ -57,7 +59,8 @@ fun MotionScreen(graph: AppGraph, insets: PaddingValues, onBack: () -> Unit) {
     var showCoordinates by rememberSaveable { mutableStateOf(false) }
     val gpsUsable = state.phase != GpsPhase.BLOCKED
 
-    ScreenList(insets, reselect = 0) {
+    val startIndex = remember { SnapshotHints.takeMotionStartIndex() }
+    ScreenList(insets, reselect = 0, initialIndex = startIndex) {
         item(key = "header") { SubpageHeader("Bewegung", onBack) }
         if (gpsUsable) {
             item(key = "speed") { SpeedHero(state) }
