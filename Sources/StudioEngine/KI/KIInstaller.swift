@@ -48,6 +48,8 @@ public final class KIInstaller: @unchecked Sendable {
         public var uvVersion: String?
         public var environmentDate: Date?
         public var models: [String: Model] = [:]
+
+        public init() {}
     }
 
     public struct Progress: Sendable, Equatable {
