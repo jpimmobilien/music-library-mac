@@ -1,0 +1,35 @@
+INFO Rechner: Version 15.7.9 (Build 24G830)
+OK Werkzeuge installiert (SHA-256 geprüft) in 5 s: yt-dlp 2026.10.26, Deno 2.9.8
+INFO YouTube „Big Buck Bunny“: https://www.youtube.com/watch?v=aqz-KE-bpKQ – Lizenz CC BY 3.0, Blender Foundation (peach.blender.org)
+BLOCKIERT YouTube „Big Buck Bunny“: Analyse – Der Inhalt ist nicht verfügbar: YouTube verlangt eine Anmeldung zur Bestätigung, dass kein Bot zugreift (häufig in Rechenzentren oder über VPN). Ohne Anmeldung kann der Inhalt nicht geladen werden.
+INFO YouTube „Big Buck Bunny“: yt-dlp meldet wörtlich: ERROR: [youtube] aqz-KE-bpKQ: Sign in to confirm you’re not a bot. This helps protect our community. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+INFO SoundCloud „Echoes“: https://soundcloud.com/scottbuckley/echoes-cc-by – Lizenz CC BY 4.0, Scott Buckley (scottbuckley.com.au)
+OK SoundCloud „Echoes“: Analyse in 3 s – „Echoes (CC-BY)“, Interpret „Scott Buckley“, 363 s, Codec mp4a.40.2, 160 kbit/s, 0 Hz
+OK SoundCloud „Echoes“: Vorschaubild 174420 Bytes (JPEG)
+OK SoundCloud „Echoes“: geladen in 5 s – 1847240487.m4a, 7341844 Bytes
+OK SoundCloud „Echoes“: AVFoundation liest die Datei – 363.9 s, 44100 Hz, 2 Kanäle
+OK SoundCloud „Echoes“: App liest AVFileReader – 44100 Hz, 2 Kanäle, 363.89 s (Quelle 363.89 s), gelesen in 0.3 s
+OK SoundCloud „Echoes“: Export MP3 (Ausschnitt 10–40 s) in 1.3 s – 30.00 s, 320 kbit/s, 44100 Hz, Tags ja
+INFO Instagram-Reel (NASA): https://www.instagram.com/reel/Dbn-XJhk0_-/ – Lizenz NASA (gemeinfrei, nasa.gov/nasa-brand-center/images-and-media)
+OK Instagram-Reel (NASA): Analyse in 3 s – „Lunar landers, assemble.“, Interpret „NASA“, 0 s, Codec mp4a.40.5, 74 kbit/s, 48000 Hz
+OK Instagram-Reel (NASA): Vorschaubild 305517 Bytes (JPEG)
+INFO Instagram-Reel (NASA): Format ID                      EXT RESOLUTION |   TBR PROTO | VCODEC          VBR ACODEC     ABR ASR MORE INFO
+INFO Instagram-Reel (NASA): Format ------------------------------------------------------------------------------------------------------------------
+INFO Instagram-Reel (NASA): Format dash-18633749989049152a m4a audio only |   74k https | audio only          mp4a.40.5  74k 48k DASH audio, m4a_dash
+INFO Instagram-Reel (NASA): Format 1                       mp4 unknown    |       https | unknown             unknown
+INFO Instagram-Reel (NASA): Format 2                       mp4 unknown    |       https | unknown             unknown
+INFO Instagram-Reel (NASA): Format 3                       mp4 unknown    |       https | unknown             unknown
+INFO Instagram-Reel (NASA): Format dash-18633752470049152v mp4 720x1280   |  178k https | vp09.00.31.08  178k video only         DASH video, mp4_dash
+INFO Instagram-Reel (NASA): Format dash-18633752467049152v mp4 720x1280   |  247k https | vp09.00.31.08  247k video only         DASH video, mp4_dash
+INFO Instagram-Reel (NASA): Format dash-18633752464049152v mp4 720x1280   |  335k https | vp09.00.31.08  335k video only         DASH video, mp4_dash
+INFO Instagram-Reel (NASA): Format dash-18633752473049152v mp4 720x1280   |  478k https | vp09.00.31.08  478k video only         DASH video, mp4_dash
+INFO Instagram-Reel (NASA): Format dash-18633752458049152v mp4 720x1280   |  654k https | vp09.00.31.08  654k video only         DASH video, mp4_dash
+INFO Instagram-Reel (NASA): Format dash-18633752455049152v mp4 720x1280   |  887k https | vp09.00.31.08  887k video only         DASH video, mp4_dash
+INFO Instagram-Reel (NASA): Format dash-18633752452049152v mp4 720x1280   | 1299k https | vp09.00.31.08 1299k video only         DASH video, mp4_dash
+INFO Instagram-Reel (NASA): Format dash-18633752461049152v mp4 1080x1920  | 1957k https | vp09.00.40.08 1957k video only         DASH video, mp4_dash
+OK Instagram-Reel (NASA): geladen in 4 s – Dbn-XJhk0_-.m4a, 300153 Bytes
+OK Instagram-Reel (NASA): AVFoundation liest die Datei – 32.4 s, 48000 Hz, 2 Kanäle
+OK Instagram-Reel (NASA): App liest AVFileReader – 48000 Hz, 2 Kanäle, 32.45 s (Quelle 0.00 s), gelesen in 0.1 s
+OK Instagram-Reel (NASA): Export MP3 (ganze Datei) in 1.9 s – 32.45 s, 320 kbit/s, 48000 Hz, Tags ja
+OK Spotify: Metadaten „Today’s Top Hits“, Vorschaubild 26185 Bytes
+OK Spotify: Download abgelehnt – „Spotify-Audio ist kopiergeschützt (DRM) und kann nicht exportiert werden. Titel, Interpret und Cover lassen sich übernehmen.“
