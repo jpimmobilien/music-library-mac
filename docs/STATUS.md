@@ -1,0 +1,43 @@
+# Umsetzungsstand
+
+Stand 27.10.2026 · AETHER 0.3.0 (Phase 3)
+
+Legende: **✔ umgesetzt** · **◐ teilweise / Grundlage** · **– spätere Phase**. „Geprüft“ nennt die höchste erreichte
+Prüfstufe: *JVM-Test* (automatisiert, ausgeführt; bei `core:files` gegen echte Dateien), *Typprüfung* (gegen
+Android-/AndroidX-Schnittstellen kompiliert, nicht ausgeführt), *Vorschau* (nachgebaute Design-Vorschau), *Gerät*
+(bisher bei keinem Punkt).
+
+## Phase 3 – dein Auftrag
+
+| Wunsch | Stand | Geprüft | Wo |
+|---|---|---|---|
+| Zugriff auf alle Daten | ✔ „Zugriff auf alle Dateien“ mit Erklärung, Rückkehr-Erkennung, Stand in den Einstellungen | Typprüfung | `platform/storage/AllFilesAccess.kt`, `ui/files/FilesScreen.kt`, `ui/settings/InfoScreens.kt` |
+| Löschen | ✔ Papierkorb je Speicher (mit Widerrufen, Wiederherstellen, Leeren) und endgültiges Löschen nach Bestätigung | JVM-Test (`TrashTest`), Typprüfung | `core/files/TrashStore.kt`, `TrashOperations.kt`, `ui/files/TrashScreen.kt` |
+| Bearbeiten | ✔ Umbenennen, Ordner erstellen, Kopieren, Verschieben, Duplizieren, Komprimieren, Entpacken, Textdateien bearbeiten | JVM-Test (`CopyTest`, `MoveTest`, `RenameCreateTest`, `ArchiveTest`, `WriteTextTest`, `CancellationTest`) | `core/files/*Operations.kt`, `ui/files/*` |
+| SD-Karte | ✔ wie interner Speicher (Liste, Vorgänge, eigener Papierkorb); geprüftes Verschieben zwischen den Speichern; „nur lesbar“ erkannt | JVM-Test (Speichergrenzen simuliert), Typprüfung · **echte Karte ausstehend** | `platform/storage/VolumeRoots.kt`, `core/files/TransferOperations.kt` |
+| Geschwindigkeit, Höhe usw. | ✔ Geschwindigkeit, Kurs, Höhe (Meeresspiegel/Ellipsoid/Druck), Satelliten, Kompass, Messung seit dem Öffnen | JVM-Test (`MotionModelsTest`), Typprüfung · **Hardware ausstehend** | `core/model/motion`, `platform/device/motion`, `ui/motion` |
+| „Wie bei Apple“ | ✔ Aufbau wie „Dateien“/„Kompass“ auf dem iPhone: Aktionsblatt, Auswahl-Werkzeugleiste, Schnellansicht, Widerrufen, ehrliche Zustände, Bewegung nach Systemeinstellung | JVM-Test (Kontrast inkl. neuer Flächen), Prüfskript, Vorschau | `docs/design/dateien-vorschau.png` |
+
+## Anforderungen des Auftrags (Stand nach Phase 3)
+
+| § | Anforderung | Stand | Geprüft |
+|---|---|---|---|
+| 3.1–3.4 | Liquid Glass, Dark Mode, keine festen Schriftfarben, Bewegungssystem | ✔ | JVM-Test (Kontrast), Prüfskript, Vorschau |
+| 4.1 | Header mit Identität, Statuszeile, Einstellungen, **globale Suche** | ✔ | Typprüfung (Suche unter „Dateien“) |
+| 4.2–4.4 | Speichervisualisierung, Gerätestatus, Empfehlungen aus realen Befunden | ✔ | JVM-Test, Typprüfung |
+| 4.5 | Schnellzugriffe | ✔ | Typprüfung (Übersicht und „Dateien“) |
+| 5 | Dateimanager: Navigation, Kategorien, Liste/Raster, Sortierung, Auswahl, Kopieren, Verschieben, Umbenennen, Löschen (Papierkorb), Teilen, Öffnen, Informationen, Suche, Favoriten, zuletzt verwendet, Archive | ✔ | JVM-Test (Engine), Typprüfung (Oberfläche) |
+| 5 | Datensicherheit: Original erst nach verifizierter Kopie löschen, nie automatisch löschen | ✔ | JVM-Test (u. a. Prüfsumme, Abbruch, volle Ziele, Absturz-Journal) |
+| 6 | microSD/USB | ✔ | Typprüfung · Gerät ausstehend (Pixel: USB-OTG, Xiaomi: SD) |
+| 7 | Smart Storage (Analyse, Duplikate) | – | Phase 5 (Papierkorb vorgezogen) |
+| 8.1–8.3 | Geräteübersicht, Temperatur, Thermalstatus | ✔ | JVM-Test, Typprüfung |
+| 8.4–8.6 | Sensor-Explorer, Live, Diagnose | ◐ | „Bewegung“ (GPS, Barometer, Kompass) live · Sensorliste Phase 6 |
+| 9 | Live-Werte nur während der Nutzung | ✔ | Typprüfung (WhileSubscribed, Abmelden; Bewegung ohne Hintergrund) |
+| 10.1–10.5 | Themes, Akzente, Effektstärke, Tokens | ✔ | JVM-Test, Prüfskript |
+| 10.4 | Personalisierung | ◐ | Darstellung, Dateiansicht, Sortierung, versteckte Objekte · Startseite Phase 7 |
+| 11 | Fünf Bereiche, schwebende Navigation, adaptiv | ✔ | Typprüfung |
+| 12.4 | Minimale Berechtigungen | ✔ | Manifest, [BERECHTIGUNGEN.md](BERECHTIGUNGEN.md) |
+| 12.5 | Lokal, keine Telemetrie, kein Internet | ✔ | Manifest (keine `INTERNET`-Berechtigung) |
+| 14 | Zugänglichkeit: Kontraste, Touch-Ziele, TalkBack (Rollen, Aktionen, Ansagen), nicht nur Farbe | ✔ | JVM-Test (Kontrast), Durchsicht · TalkBack auf Gerät ausstehend |
+| 15 | Fehlerbehandlung: entfernte Karte, volle Ziele, gesperrte Ordner, Konflikte, Abbruch | ✔ | JVM-Test (Engine), Typprüfung |
+| 16 | Tests | ◐ | siehe [TESTPLAN.md](TESTPLAN.md) – kein Gradle-Build/Gerät in dieser Umgebung |

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Nur für das Fenster vor dem Start von Compose und den Startbildschirm. Die Oberfläche selbst nutzt das
+         Designsystem (ui/designsystem: PaletteSpec.kt). Fenster = Liquid Glass Hell bzw. Dunkel;
+         Symbolgrund = Mitte des Verlaufs im ORBIT-Symbol (tools/icons/make_orbit_icons.py). -->
+    <color name="aether_window">#FFEDF1F6</color>
+    <color name="aether_icon_bottom">#FF0586F6</color>
+</resources>

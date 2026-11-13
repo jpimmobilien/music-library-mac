@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fensterthema vor dem Start von Compose (Startbildschirm, Systemleisten). Die eigentliche Gestaltung
+         übernimmt das Compose-Designsystem (ui/designsystem). -->
+    <style name="Theme.Aether" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/aether_window</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowSplashScreenBackground">@color/aether_window</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_foreground</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/aether_icon_bottom</item>
+    </style>
+</resources>

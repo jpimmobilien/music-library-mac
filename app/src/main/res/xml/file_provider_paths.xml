@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Welche Dateien der FileProvider übergeben darf: Ein Dateimanager öffnet Dateien überall – im internen Speicher,
+    auf SD-Karten und USB-Speichern (/storage/…). Deshalb die Wurzel. Das ist unbedenklich, weil der Provider nicht
+    exportiert ist und nur ausdrücklich übergebene Dateien freigibt (siehe AndroidManifest und FileIntents).
+-->
+<paths>
+    <root-path
+        name="root"
+        path="." />
+</paths>
