@@ -1,0 +1,31 @@
+openjdk version "17.0.21" 2026-10-20
+OpenJDK Runtime Environment Temurin-17.0.21+9 (build 17.0.21+9)
+OpenJDK 64-Bit Server VM Temurin-17.0.21+9 (build 17.0.21+9, mixed mode, sharing)
+ANDROID_HOME=/usr/local/lib/android/sdk
+/usr/local/lib/android/sdk/build-tools:
+34.0.0
+35.0.0
+35.0.1
+36.0.0
+36.1.0
+37.0.0
+
+/usr/local/lib/android/sdk/platforms:
+android-34
+android-34-ext10
+android-34-ext11
+android-34-ext12
+android-34-ext8
+android-35
+android-35-ext14
+android-35-ext15
+android-36
+android-36-ext18
+android-36-ext19
+android-36.1
+android-37.0
+android-37.1
+android-37.2
+android-37.2-beta1
+android-37.2-beta2
+android-37.2-beta3

@@ -1,0 +1,151 @@
+Downloading https://services.gradle.org/distributions/gradle-9.6.1-bin.zip
+.............10%.............20%..............30%.............40%..............50%.............60%.............70%..............80%.............90%..............100%
+
+Welcome to Gradle 9.6.1!
+
+Here are the highlights of this release:
+ - Improved Configuration Cache hit rates
+ - Additional CLI rendering options
+ - Important project hierarchy lookup deprecations
+
+For more details see https://docs.gradle.org/9.6.1/release-notes.html
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.6.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :platform:device:preBuild UP-TO-DATE
+> Task :core:files:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :core:model:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :platform:device:preDebugBuild UP-TO-DATE
+> Task :app:generateDebugBuildConfig
+> Task :platform:device:processDebugNavigationResources
+> Task :platform:storage:preBuild UP-TO-DATE
+> Task :platform:storage:preDebugBuild UP-TO-DATE
+> Task :platform:storage:processDebugNavigationResources
+> Task :ui:designsystem:preBuild UP-TO-DATE
+> Task :ui:designsystem:preDebugBuild UP-TO-DATE
+> Task :ui:designsystem:processDebugNavigationResources
+> Task :platform:device:generateDebugResources
+> Task :app:generateDebugResValues
+> Task :app:generateDebugResources
+> Task :platform:device:packageDebugResources
+> Task :app:packageDebugResources
+> Task :platform:device:parseDebugLocalResources
+> Task :platform:device:generateDebugRFile
+> Task :platform:device:javaPreCompileDebug
+> Task :platform:storage:generateDebugResources
+> Task :platform:storage:packageDebugResources
+> Task :platform:storage:parseDebugLocalResources
+> Task :platform:storage:generateDebugRFile
+> Task :platform:storage:javaPreCompileDebug
+> Task :ui:designsystem:generateDebugResources
+> Task :ui:designsystem:packageDebugResources
+> Task :ui:designsystem:parseDebugLocalResources
+> Task :ui:designsystem:generateDebugRFile
+> Task :ui:designsystem:javaPreCompileDebug
+> Task :platform:device:writeDebugAarMetadata
+> Task :platform:storage:writeDebugAarMetadata
+> Task :ui:designsystem:writeDebugAarMetadata
+> Task :platform:device:extractDeepLinksDebug
+> Task :platform:device:processDebugManifest
+> Task :platform:storage:extractDeepLinksDebug
+> Task :platform:storage:processDebugManifest
+> Task :ui:designsystem:extractDeepLinksDebug
+> Task :ui:designsystem:processDebugManifest
+> Task :platform:device:mapDebugSourceSetPaths
+> Task :platform:device:compileDebugLibraryResources
+> Task :platform:storage:mapDebugSourceSetPaths
+> Task :platform:storage:compileDebugLibraryResources
+> Task :ui:designsystem:mapDebugSourceSetPaths
+> Task :ui:designsystem:compileDebugLibraryResources
+> Task :platform:device:preDebugUnitTestBuild UP-TO-DATE
+> Task :platform:device:generateDebugUnitTestStubRFile
+> Task :platform:device:javaPreCompileDebugUnitTest
+> Task :platform:storage:preDebugUnitTestBuild UP-TO-DATE
+> Task :platform:storage:generateDebugUnitTestStubRFile
+> Task :platform:storage:javaPreCompileDebugUnitTest
+> Task :ui:designsystem:preDebugUnitTestBuild UP-TO-DATE
+> Task :app:processDebugNavigationResources
+> Task :core:model:processResources NO-SOURCE
+> Task :core:files:processResources NO-SOURCE
+> Task :app:parseDebugLocalResources
+> Task :app:generateDebugRFile
+> Task :app:javaPreCompileDebug
+> Task :app:checkDebugAarMetadata
+> Task :app:mapDebugSourceSetPaths
+> Task :app:compileDebugNavigationResources
+> Task :ui:designsystem:generateDebugUnitTestStubRFile
+> Task :core:files:processTestResources NO-SOURCE
+> Task :core:model:processTestResources NO-SOURCE
+> Task :ui:designsystem:javaPreCompileDebugUnitTest
+> Task :app:createDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksDebug
+> Task :app:processDebugMainManifest
+> Task :app:processDebugManifest
+> Task :app:processDebugManifestForPackage
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :app:javaPreCompileDebugUnitTest
+> Task :app:mergeDebugResources
+> Task :app:processDebugResources
+> Task :core:model:compileKotlin
+> Task :core:model:compileJava NO-SOURCE
+> Task :core:model:classes UP-TO-DATE
+> Task :core:model:jar
+> Task :core:files:compileKotlin
+> Task :core:files:compileJava NO-SOURCE
+> Task :core:files:classes UP-TO-DATE
+> Task :core:files:jar
+> Task :core:model:compileTestKotlin
+> Task :platform:device:compileDebugKotlin
+> Task :platform:device:compileDebugJavaWithJavac NO-SOURCE
+> Task :platform:device:bundleLibCompileToJarDebug
+> Task :platform:device:bundleLibRuntimeToJarDebug
+> Task :platform:device:processDebugJavaRes
+> Task :core:model:compileTestJava NO-SOURCE
+> Task :core:model:testClasses UP-TO-DATE
+> Task :platform:storage:compileDebugKotlin
+> Task :platform:storage:compileDebugJavaWithJavac NO-SOURCE
+> Task :platform:storage:bundleLibCompileToJarDebug
+> Task :platform:storage:bundleLibRuntimeToJarDebug
+> Task :platform:storage:processDebugJavaRes
+> Task :platform:device:compileDebugUnitTestKotlin NO-SOURCE
+> Task :platform:device:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :platform:device:processDebugUnitTestJavaRes NO-SOURCE
+> Task :platform:device:testDebugUnitTest NO-SOURCE
+> Task :platform:device:test UP-TO-DATE
+> Task :platform:storage:compileDebugUnitTestKotlin NO-SOURCE
+> Task :platform:storage:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :platform:storage:processDebugUnitTestJavaRes NO-SOURCE
+> Task :platform:storage:testDebugUnitTest NO-SOURCE
+> Task :platform:storage:test UP-TO-DATE
+> Task :core:model:test
+> Task :core:files:compileTestKotlin
+> Task :core:files:compileTestJava NO-SOURCE
+> Task :core:files:testClasses UP-TO-DATE
+> Task :ui:designsystem:compileDebugKotlin
+> Task :ui:designsystem:compileDebugJavaWithJavac NO-SOURCE
+> Task :ui:designsystem:bundleLibCompileToJarDebug
+> Task :ui:designsystem:bundleLibRuntimeToJarDebug
+> Task :ui:designsystem:processDebugJavaRes
+> Task :core:files:test
+> Task :ui:designsystem:compileDebugUnitTestKotlin
+> Task :ui:designsystem:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :ui:designsystem:processDebugUnitTestJavaRes
+> Task :ui:designsystem:testDebugUnitTest
+> Task :ui:designsystem:test
+> Task :app:compileDebugKotlin
+> Task :app:compileDebugJavaWithJavac
+> Task :app:processDebugJavaRes
+> Task :app:bundleDebugClassesToRuntimeJar
+> Task :app:bundleDebugClassesToCompileJar
+> Task :app:compileDebugUnitTestKotlin NO-SOURCE
+> Task :app:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :app:processDebugUnitTestJavaRes NO-SOURCE
+> Task :app:testDebugUnitTest NO-SOURCE
+> Task :app:test UP-TO-DATE
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1794570906580.json
+
+BUILD SUCCESSFUL in 1m 52s
+86 actionable tasks: 86 executed
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.6.1/userguide/configuration_cache_enabling.html

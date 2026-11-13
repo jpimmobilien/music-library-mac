@@ -1,0 +1,198 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.6.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :platform:device:preBuild UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :core:files:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :platform:device:preReleaseBuild UP-TO-DATE
+> Task :core:model:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:preReleaseBuild UP-TO-DATE
+> Task :core:files:compileKotlin UP-TO-DATE
+> Task :app:mergeReleaseJniLibFolders
+> Task :platform:device:mergeReleaseJniLibFolders
+> Task :core:model:compileKotlin UP-TO-DATE
+> Task :platform:storage:preBuild UP-TO-DATE
+> Task :platform:storage:preReleaseBuild UP-TO-DATE
+> Task :core:files:compileJava NO-SOURCE
+> Task :platform:device:mergeReleaseNativeLibs NO-SOURCE
+> Task :core:model:compileJava NO-SOURCE
+> Task :core:model:processResources NO-SOURCE
+> Task :core:model:classes UP-TO-DATE
+> Task :core:files:processResources NO-SOURCE
+> Task :core:files:classes UP-TO-DATE
+> Task :platform:storage:mergeReleaseJniLibFolders
+> Task :platform:storage:mergeReleaseNativeLibs NO-SOURCE
+> Task :platform:device:copyReleaseJniLibsProjectOnly
+> Task :ui:designsystem:preBuild UP-TO-DATE
+> Task :ui:designsystem:preReleaseBuild UP-TO-DATE
+> Task :core:model:jar UP-TO-DATE
+> Task :core:files:jar UP-TO-DATE
+> Task :platform:storage:copyReleaseJniLibsProjectOnly
+> Task :ui:designsystem:mergeReleaseJniLibFolders
+> Task :ui:designsystem:mergeReleaseNativeLibs NO-SOURCE
+> Task :ui:designsystem:copyReleaseJniLibsProjectOnly
+> Task :platform:storage:generateReleaseResources
+> Task :ui:designsystem:generateReleaseResources
+> Task :platform:device:generateReleaseResources
+> Task :platform:device:packageReleaseResources
+> Task :platform:storage:packageReleaseResources
+> Task :platform:device:processReleaseNavigationResources
+> Task :platform:storage:processReleaseNavigationResources
+> Task :ui:designsystem:packageReleaseResources
+> Task :ui:designsystem:processReleaseNavigationResources
+> Task :platform:storage:parseReleaseLocalResources
+> Task :platform:device:parseReleaseLocalResources
+> Task :ui:designsystem:parseReleaseLocalResources
+> Task :ui:designsystem:javaPreCompileRelease
+> Task :platform:device:generateReleaseRFile
+> Task :ui:designsystem:generateReleaseRFile
+> Task :platform:storage:generateReleaseRFile
+> Task :platform:storage:javaPreCompileRelease
+> Task :app:mergeReleaseNativeLibs
+
+> Task :app:stripReleaseDebugSymbols
+Unable to strip the following libraries, packaging them as they are: libandroidx.graphics.path.so, libdatastore_shared_counter.so. Run with --info option to learn more.
+
+> Task :app:extractReleaseNativeSymbolTables
+> Task :app:mergeReleaseNativeDebugMetadata NO-SOURCE
+> Task :platform:device:javaPreCompileRelease
+> Task :app:checkReleaseDuplicateClasses
+> Task :app:generateReleaseBuildConfig
+> Task :app:generateReleaseResValues
+> Task :app:generateReleaseResources
+> Task :app:packageReleaseResources
+> Task :app:processReleaseNavigationResources
+> Task :app:parseReleaseLocalResources
+> Task :app:generateReleaseRFile
+> Task :app:javaPreCompileRelease
+> Task :platform:device:writeReleaseAarMetadata
+> Task :platform:storage:writeReleaseAarMetadata
+> Task :ui:designsystem:writeReleaseAarMetadata
+> Task :app:checkReleaseAarMetadata
+> Task :app:mapReleaseSourceSetPaths
+> Task :app:compileReleaseNavigationResources
+> Task :app:mergeReleaseResources
+> Task :app:createReleaseCompatibleScreenManifests
+> Task :app:extractDeepLinksRelease
+> Task :platform:device:extractDeepLinksRelease
+> Task :platform:device:processReleaseManifest
+> Task :platform:storage:extractDeepLinksRelease
+> Task :platform:storage:processReleaseManifest
+> Task :ui:designsystem:extractDeepLinksRelease
+> Task :ui:designsystem:processReleaseManifest
+> Task :app:processReleaseMainManifest
+> Task :app:processReleaseManifest
+> Task :app:processReleaseManifestForPackage
+> Task :platform:device:mapReleaseSourceSetPaths
+> Task :platform:device:compileReleaseLibraryResources
+> Task :platform:storage:mapReleaseSourceSetPaths
+> Task :platform:storage:compileReleaseLibraryResources
+> Task :ui:designsystem:mapReleaseSourceSetPaths
+> Task :ui:designsystem:compileReleaseLibraryResources
+> Task :app:processReleaseResources
+> Task :app:desugarReleaseFileDependencies
+> Task :app:mergeReleaseStartupProfile
+> Task :platform:device:compileReleaseKotlin
+> Task :platform:device:compileReleaseJavaWithJavac NO-SOURCE
+> Task :platform:device:bundleLibRuntimeToDirRelease
+> Task :platform:storage:compileReleaseKotlin
+> Task :platform:storage:compileReleaseJavaWithJavac NO-SOURCE
+> Task :platform:storage:bundleLibRuntimeToDirRelease
+> Task :platform:device:bundleLibCompileToJarRelease
+> Task :platform:device:prepareReleaseArtProfile
+> Task :platform:storage:prepareReleaseArtProfile
+> Task :ui:designsystem:prepareReleaseArtProfile
+> Task :platform:storage:bundleLibCompileToJarRelease
+> Task :platform:storage:bundleLibRuntimeToJarRelease
+> Task :platform:device:bundleLibRuntimeToJarRelease
+> Task :platform:device:generateReleaseAssets UP-TO-DATE
+> Task :platform:storage:generateReleaseAssets UP-TO-DATE
+> Task :platform:device:mergeReleaseAssets
+> Task :ui:designsystem:generateReleaseAssets UP-TO-DATE
+> Task :platform:storage:mergeReleaseAssets
+> Task :platform:device:processReleaseJavaRes
+> Task :platform:device:createFullJarRelease
+> Task :platform:device:extractProguardFiles
+> Task :platform:device:generateReleaseLintModel
+> Task :platform:device:prepareLintJarForPublish
+> Task :ui:designsystem:mergeReleaseAssets
+> Task :ui:designsystem:extractProguardFiles
+> Task :platform:storage:processReleaseJavaRes
+> Task :platform:storage:createFullJarRelease
+> Task :platform:storage:extractProguardFiles
+> Task :platform:storage:generateReleaseLintModel
+> Task :ui:designsystem:prepareLintJarForPublish
+> Task :platform:storage:prepareLintJarForPublish
+> Task :platform:storage:checkReleaseAarMetadata
+> Task :ui:designsystem:extractDeepLinksForAarRelease
+> Task :ui:designsystem:checkReleaseAarMetadata
+> Task :platform:storage:extractDeepLinksForAarRelease
+> Task :ui:designsystem:compileReleaseKotlin
+> Task :ui:designsystem:extractReleaseAnnotations
+> Task :platform:storage:extractReleaseAnnotations
+> Task :platform:storage:mergeReleaseGeneratedProguardFiles
+> Task :ui:designsystem:compileReleaseJavaWithJavac NO-SOURCE
+> Task :platform:storage:mergeReleaseConsumerProguardFiles
+> Task :platform:device:checkReleaseAarMetadata
+> Task :ui:designsystem:bundleLibRuntimeToDirRelease
+> Task :ui:designsystem:processReleaseJavaRes
+> Task :ui:designsystem:generateReleaseLintModel
+> Task :ui:designsystem:mergeReleaseGeneratedProguardFiles
+> Task :ui:designsystem:mergeReleaseConsumerProguardFiles
+> Task :ui:designsystem:bundleLibCompileToJarRelease
+> Task :ui:designsystem:bundleLibRuntimeToJarRelease
+> Task :ui:designsystem:createFullJarRelease
+> Task :platform:device:extractDeepLinksForAarRelease
+> Task :platform:device:extractReleaseAnnotations
+> Task :platform:device:mergeReleaseGeneratedProguardFiles
+> Task :platform:device:mergeReleaseConsumerProguardFiles
+> Task :platform:device:mergeReleaseJavaResource
+> Task :platform:storage:mergeReleaseJavaResource
+> Task :platform:device:syncReleaseLibJars
+> Task :platform:storage:syncReleaseLibJars
+> Task :platform:device:bundleReleaseLocalLintAar
+> Task :platform:storage:bundleReleaseLocalLintAar
+> Task :ui:designsystem:mergeReleaseJavaResource
+> Task :ui:designsystem:syncReleaseLibJars
+> Task :ui:designsystem:bundleReleaseLocalLintAar
+> Task :platform:device:writeReleaseLintModelMetadata
+> Task :platform:storage:writeReleaseLintModelMetadata
+> Task :app:mergeExtDexRelease
+> Task :platform:device:lintVitalAnalyzeRelease
+> Task :platform:storage:lintVitalAnalyzeRelease
+> Task :app:mergeReleaseArtProfile
+> Task :app:generateReleaseAssets UP-TO-DATE
+> Task :app:mergeReleaseAssets
+> Task :app:compressReleaseAssets
+> Task :app:extractReleaseVersionControlInfo
+> Task :app:extractProguardFiles
+> Task :ui:designsystem:writeReleaseLintModelMetadata
+> Task :platform:device:generateReleaseLintVitalModel
+> Task :platform:storage:generateReleaseLintVitalModel
+> Task :ui:designsystem:generateReleaseLintVitalModel
+> Task :app:optimizeReleaseResources
+> Task :app:collectReleaseDependencies
+> Task :app:sdkReleaseDependencyData
+> Task :app:validateSigningRelease
+> Task :app:writeReleaseAppMetadata
+> Task :app:writeReleaseSigningConfigVersions
+> Task :ui:designsystem:lintVitalAnalyzeRelease
+> Task :app:compileReleaseKotlin
+> Task :app:compileReleaseJavaWithJavac
+> Task :app:dexBuilderRelease
+> Task :app:mergeReleaseGlobalSynthetics
+> Task :app:generateReleaseLintVitalReportModel
+> Task :app:processReleaseJavaRes
+> Task :app:mergeReleaseJavaResource
+> Task :app:mergeDexRelease
+> Task :app:compileReleaseArtProfile
+> Task :app:lintVitalAnalyzeRelease
+> Task :app:lintVitalReportRelease
+> Task :app:lintVitalRelease
+> Task :app:packageRelease
+> Task :app:createReleaseApkListingFileRedirect
+> Task :app:assembleRelease
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_4-1794571014040.json
+
+BUILD SUCCESSFUL in 2m 7s
+160 actionable tasks: 156 executed, 4 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.6.1/userguide/configuration_cache_enabling.html

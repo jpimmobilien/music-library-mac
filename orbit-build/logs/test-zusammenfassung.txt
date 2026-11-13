@@ -1,0 +1,4 @@
+core/files (test)                                        155 Tests    0 fehlgeschlagen    0 übersprungen
+core/model (test)                                         65 Tests    0 fehlgeschlagen    0 übersprungen
+ui/designsystem (testDebugUnitTest)                        6 Tests    0 fehlgeschlagen    0 übersprungen
+GESAMT                                                   226 Tests    0 fehlgeschlagen

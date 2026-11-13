@@ -1,0 +1,22 @@
+[12:01:31] Installation
+[12:01:39] Kaltstartzeiten (3 Läufe)
+[12:02:11] Foto telefon-hell-home (home) 853146 Bytes
+[12:02:21] Foto telefon-hell-device (device) 762879 Bytes
+[12:02:32] Foto telefon-hell-storage (storage) 858907 Bytes
+[12:02:41] Foto telefon-hell-files (files) 863810 Bytes
+[12:02:53] Foto telefon-hell-motion (motion) 801689 Bytes
+[12:03:03] Foto telefon-hell-settings (settings) 926759 Bytes
+[12:03:12] Foto telefon-dunkel-home (home) 1199797 Bytes
+[12:03:22] Foto telefon-dunkel-device (device) 1152872 Bytes
+[12:03:30] Foto telefon-dunkel-storage (storage) 1274309 Bytes
+[12:03:40] Foto telefon-dunkel-files (files) 1256328 Bytes
+[12:03:50] Foto telefon-dunkel-motion (motion) 1176067 Bytes
+[12:03:59] Foto telefon-dunkel-settings (settings) 1253098 Bytes
+[12:03:59] Tablet-Größe
+[12:04:08] Foto tablet-hell-home (home) 977582 Bytes
+[12:04:17] Foto tablet-hell-device (device) 1027422 Bytes
+[12:04:26] Foto tablet-dunkel-home (home) 1439220 Bytes
+[12:04:34] Foto tablet-dunkel-device (device) 1627227 Bytes
+[12:04:35] Leistung: gfxinfo nach Startseite
+[12:04:45] Absturzprüfung
+[12:04:45] fertig

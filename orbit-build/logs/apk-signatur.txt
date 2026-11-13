@@ -1,0 +1,18 @@
+Verifies
+Verified using v1 scheme (JAR signing): false
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): false
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v3.2 scheme (APK Signature Scheme v3.2): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
+V2 Signer: certificate DN: CN=ORBIT Projektschluessel, O=Privat, C=DE
+V2 Signer: certificate SHA-256 digest: 085cc45cde76cbf7be1fd382737ec2e510b3db753acd421760fcd75f6ec058db
+V2 Signer: certificate SHA-1 digest: b1f0d79f8c4f65b04e9431be61e2b9e166269503
+V2 Signer: certificate MD5 digest: 8e300134669692dba9c8be17153e4838
+V2 Signer: key algorithm: RSA
+V2 Signer: key size (bits): 4096
+V2 Signer: public key SHA-256 digest: bd970921d96f746b2fa5b1815a88c4e978176b6ccf637315a067dc5166a4c894
+V2 Signer: public key SHA-1 digest: a41b7233e6b834483b31bd504ddedbff350e2c86
+V2 Signer: public key MD5 digest: 3ac746f1d797013145381a05a3fd3308
