@@ -18,8 +18,8 @@ struct KIMusicView: View {
             ScrollViewReader { proxy in
             ScrollView(.vertical) {
                 VStack(alignment: .leading, spacing: 18) {
-                    Color.clear.frame(height: 0).id("ki-top")
                     KIHeader(ki: ki)
+                        .id("ki-top")
                     switch ki.setup {
                     case .unsupported(let reason):
                         KIUnsupportedCard(reason: reason)
@@ -690,7 +690,7 @@ struct KICreationRow: View {
             }
             IconTap(icon: creation.favorite ? Icons.favorite : Icons.favoriteBorder, label: creation.favorite ? "Kein Favorit" : "Favorit",
                     tint: creation.favorite ? colors.accentText : colors.textSecondary) { ki.toggleFavorite(creation) }
-            if hover || compact {
+            if (hover || compact) && creation.exportedPath == nil {
                 PillButton(title: "In Bibliothek", icon: Icons.libraryMusic, style: .plain) { ki.addToLibrary(creation, app: model) }
                     .help("Über „Hinzufügen“ im gewählten Format in die Musikbibliothek übernehmen")
             }
