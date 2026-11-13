@@ -796,6 +796,24 @@ final class StudioModelTests: XCTestCase {
         XCTAssertEqual(saved.entries.map(\.title), ["a"])
     }
 
+    func testKICreationGoesThroughAddQueueWithMetadata() async throws {
+        let adder = makeModel()
+        let studio = makeStudio(host: adder)
+        let creation = try file("KI-Musik/Sommerabend am See.flac")
+        // Aus einem beliebigen Bereich aufgerufen – der Auftrag landet in der Warteschlange von „Hinzufügen“
+        studio.importKICreation(file: creation, title: "Sommerabend am See", genre: "Pop")
+        await waitUntil("eingereiht") { adder.jobs.count == 1 }
+        let job = try XCTUnwrap(adder.jobs.first)
+        XCTAssertEqual(job.metadata.title, "Sommerabend am See")
+        XCTAssertEqual(job.metadata.artist, "KI-Musik")
+        XCTAssertEqual(job.metadata.genre, "Pop")
+        XCTAssertNil(job.source.libraryUid)
+        XCTAssertTrue(StudioWorkspace.add.includes(job))
+        await waitUntil("fertig") { adder.job(job.id)?.phase == .done }
+        XCTAssertEqual(content(creation.path), "AUDIO", "Kreation selbst bleibt unverändert")
+        XCTAssertTrue(library.toasts.contains { $0.text.contains("wird in die Bibliothek übernommen") })
+    }
+
     func testStudioSharesSettingsWithHost() async throws {
         let defaults = UserDefaults(suiteName: "StudioModelTests-\(UUID().uuidString)")!
         let adder = makeModel(defaults: defaults)
