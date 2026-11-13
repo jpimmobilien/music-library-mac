@@ -1,5 +1,18 @@
 # Prüfstand – was gebaut und getestet ist (ehrlich)
 
+## Version 2.3.0 (13.11.2026, Build-Lauf 43404651595, Commit `0a0a0ea`) – Titel bearbeiten
+
+| Stufe | Ergebnis |
+|---|---|
+| Tests | ✅ 608 Tests, 0 Fehler (4 Zusatzprüfungen übersprungen) auf macOS 26 Intel und macOS 15 Intel; neu: 12 Klangbaustein-Tests (auch unter Linux), 5 Ende-zu-Ende-Exporte, 3 Abläufe im Studio |
+| Messungen (Export) | Tempo 1,25 → 4,800 s, Grundton 220,00 Hz; Schallplatte 0,8 → 7,500 s / 176,00 Hz; +2 Halbtöne 246,94 Hz; 440 → 432 Hz: 216,00 Hz (Soll 216,00); Lautheit −13,8 LUFS (Ziel −14); Stille 2 s/3 s entfernt (6,06 s); Begrenzer 0,891 (−1 dB); Rumpeln 10 Hz −35 dB; Equalizer 60 Hz −15,6 dB / 2 kHz −0,02 dB; Auto-Tune 452 → 438,4 Hz (Ziel 440); Tags + Cover in MP3, M4A, FLAC erhalten |
+| Analyse | A4 = 442 Hz erkannt als 442,09 Hz, Tonart C-Dur, EBU-Testton −23,0 LUFS, Stille am Rand auf 0,02 s |
+| Geschwindigkeit (App, 60 s Stereo) | Apple Silicon: Equalizer + Begrenzer 0,38–0,41 s, Tempo + Umstimmen 0,56–0,67 s, Auto-Tune 0,39–0,57 s, Lautheit 0,07 s · Intel (virtuell): 1,0–1,1 s, 1,3–1,8 s, 1,5–1,6 s, 0,07 s |
+| DMG | ✅ SHA-256 `8d5eefb5fb71d7300958a4faf61f73999e0b7d41adc70201bc43dc14475c3d44`, `hdiutil verify` gültig, `x86_64 arm64`, Signatur gültig |
+| Starttest | ✅ macOS 15 Apple Silicon (nativ) und Intel-Code über Rosetta |
+| Abnahme | ✅ Apple Silicon, Intel (macOS 26) und Rosetta: Installation aus der DMG, Version 2.3.0, Aktualisierung 2.2.3 → 2.3.0 → 2.2.3 ohne Befund, 140 Ansichten × Hell/Dunkel mit Liquid Glass (Apple Silicon); Leerlauf gleich (22,0–22,6 %) · Intel macOS 15 (virtuell): Installation ✅, Start scheitert wie bei jeder Version am Metal-Fehler der virtuellen Maschine |
+| Nicht geprüft | Bedienung von Hand (Regler, Vorhören, Speichern), Klang über Lautsprecher, Auto-Tune und Stimmungserkennung mit echten Aufnahmen, macOS 13 |
+
 ## Version 2.2.3 (13.11.2026, Build-Lauf 43389570531, Commit `6a06e4d`)
 
 | Stufe | Ergebnis |
