@@ -12,10 +12,10 @@ For more details see https://docs.gradle.org/9.6.1/release-notes.html
 
 To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.6.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
 Daemon will be stopped at the end of the build 
-> Task :platform:device:preBuild UP-TO-DATE
-> Task :core:files:checkKotlinGradlePluginConfigurationErrors SKIPPED
-> Task :core:model:checkKotlinGradlePluginConfigurationErrors SKIPPED
 > Task :app:preBuild UP-TO-DATE
+> Task :core:model:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :core:files:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :platform:device:preBuild UP-TO-DATE
 > Task :app:preDebugBuild UP-TO-DATE
 > Task :platform:device:preDebugBuild UP-TO-DATE
 > Task :app:generateDebugBuildConfig
@@ -25,10 +25,10 @@ Daemon will be stopped at the end of the build
 > Task :platform:storage:processDebugNavigationResources
 > Task :ui:designsystem:preBuild UP-TO-DATE
 > Task :ui:designsystem:preDebugBuild UP-TO-DATE
-> Task :ui:designsystem:processDebugNavigationResources
-> Task :platform:device:generateDebugResources
 > Task :app:generateDebugResValues
+> Task :ui:designsystem:processDebugNavigationResources
 > Task :app:generateDebugResources
+> Task :platform:device:generateDebugResources
 > Task :platform:device:packageDebugResources
 > Task :app:packageDebugResources
 > Task :platform:device:parseDebugLocalResources
@@ -67,8 +67,6 @@ Daemon will be stopped at the end of the build
 > Task :platform:storage:javaPreCompileDebugUnitTest
 > Task :ui:designsystem:preDebugUnitTestBuild UP-TO-DATE
 > Task :app:processDebugNavigationResources
-> Task :core:model:processResources NO-SOURCE
-> Task :core:files:processResources NO-SOURCE
 > Task :app:parseDebugLocalResources
 > Task :app:generateDebugRFile
 > Task :app:javaPreCompileDebug
@@ -76,17 +74,19 @@ Daemon will be stopped at the end of the build
 > Task :app:mapDebugSourceSetPaths
 > Task :app:compileDebugNavigationResources
 > Task :ui:designsystem:generateDebugUnitTestStubRFile
+> Task :core:model:processResources NO-SOURCE
+> Task :core:files:processResources NO-SOURCE
+> Task :app:createDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksDebug
+> Task :app:mergeDebugResources
 > Task :core:files:processTestResources NO-SOURCE
 > Task :core:model:processTestResources NO-SOURCE
 > Task :ui:designsystem:javaPreCompileDebugUnitTest
-> Task :app:createDebugCompatibleScreenManifests
-> Task :app:extractDeepLinksDebug
 > Task :app:processDebugMainManifest
 > Task :app:processDebugManifest
-> Task :app:processDebugManifestForPackage
 > Task :app:preDebugUnitTestBuild UP-TO-DATE
 > Task :app:javaPreCompileDebugUnitTest
-> Task :app:mergeDebugResources
+> Task :app:processDebugManifestForPackage
 > Task :app:processDebugResources
 > Task :core:model:compileKotlin
 > Task :core:model:compileJava NO-SOURCE
@@ -105,21 +105,21 @@ Daemon will be stopped at the end of the build
 > Task :core:model:compileTestJava NO-SOURCE
 > Task :core:model:testClasses UP-TO-DATE
 > Task :platform:storage:compileDebugKotlin
+> Task :core:model:test
 > Task :platform:storage:compileDebugJavaWithJavac NO-SOURCE
-> Task :platform:storage:bundleLibCompileToJarDebug
-> Task :platform:storage:bundleLibRuntimeToJarDebug
-> Task :platform:storage:processDebugJavaRes
 > Task :platform:device:compileDebugUnitTestKotlin NO-SOURCE
-> Task :platform:device:compileDebugUnitTestJavaWithJavac NO-SOURCE
-> Task :platform:device:processDebugUnitTestJavaRes NO-SOURCE
-> Task :platform:device:testDebugUnitTest NO-SOURCE
-> Task :platform:device:test UP-TO-DATE
+> Task :platform:storage:bundleLibRuntimeToJarDebug
+> Task :platform:storage:bundleLibCompileToJarDebug
+> Task :platform:storage:processDebugJavaRes
 > Task :platform:storage:compileDebugUnitTestKotlin NO-SOURCE
+> Task :platform:device:compileDebugUnitTestJavaWithJavac NO-SOURCE
 > Task :platform:storage:compileDebugUnitTestJavaWithJavac NO-SOURCE
 > Task :platform:storage:processDebugUnitTestJavaRes NO-SOURCE
+> Task :platform:device:processDebugUnitTestJavaRes NO-SOURCE
 > Task :platform:storage:testDebugUnitTest NO-SOURCE
 > Task :platform:storage:test UP-TO-DATE
-> Task :core:model:test
+> Task :platform:device:testDebugUnitTest NO-SOURCE
+> Task :platform:device:test UP-TO-DATE
 > Task :core:files:compileTestKotlin
 > Task :core:files:compileTestJava NO-SOURCE
 > Task :core:files:testClasses UP-TO-DATE
@@ -144,8 +144,8 @@ Daemon will be stopped at the end of the build
 > Task :app:processDebugUnitTestJavaRes NO-SOURCE
 > Task :app:testDebugUnitTest NO-SOURCE
 > Task :app:test UP-TO-DATE
-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1794570906580.json
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1794573219017.json
 
-BUILD SUCCESSFUL in 1m 52s
+BUILD SUCCESSFUL in 2m 13s
 86 actionable tasks: 86 executed
 Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.6.1/userguide/configuration_cache_enabling.html
