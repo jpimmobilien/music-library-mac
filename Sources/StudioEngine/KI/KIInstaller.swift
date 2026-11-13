@@ -43,6 +43,12 @@ public final class KIInstaller: @unchecked Sendable {
             public var revision: String
             public var bytes: Int64
             public var date: Date
+
+            public init(revision: String, bytes: Int64, date: Date) {
+                self.revision = revision
+                self.bytes = bytes
+                self.date = date
+            }
         }
         public var aceCommit: String?
         public var uvVersion: String?
