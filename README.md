@@ -1,28 +1,21 @@
-# AETHER – Files & Device Intelligence
+# ORBIT – Files & Device Intelligence (Android, früher Aether)
 
-Dateimanager, Speicherassistent und Gerätediagnose für Android – mit einer eigenständigen Liquid-Glass-Oberfläche.
-„PROJECT AETHER“ ist der interne Projektname; der Anzeigename steht zentral in `gradle.properties`
-(`aether.appName`).
+Dateimanager, Speicherassistent und Gerätediagnose für Android – mit der Oberfläche **„Spatial Liquid Glass“**.
+Der Anzeigename steht zentral in `gradle.properties` (`aether.appName=ORBIT`); Paket- und Modulnamen stammen aus der
+Zeit vor der Umbenennung und bleiben, damit Einstellungen und Daten erhalten bleiben.
 
 > **Stand dieses Projekts – bitte zuerst lesen**
 >
-> * **Version 0.3.0 – Phase 3: Dateimanager und Bewegung.** Neu: vollwertiger Dateimanager mit „Zugriff auf alle
->   Dateien“ für internen Speicher, **SD-Karte und USB-Speicher** (Durchsuchen, Kategorien, Suche, Kopieren,
->   Verschieben, Umbenennen, Papierkorb, endgültig Löschen, ZIP, Textdateien bearbeiten, Schnellansicht, Teilen,
->   APK-Installation) und **„Gerät › Bewegung“** mit Geschwindigkeit, Höhe, Kurs, Satelliten, Luftdruck und Kompass.
-> * Erstellt in einer Umgebung **ohne Android-SDK und ohne Zugriff auf Google Maven**: Ein Gradle-Build und damit ein
->   **APK konnten hier nicht erzeugt werden**. Es liegt kein APK bei. Geprüft wurde, was ohne SDK möglich ist
->   ([docs/TESTPLAN.md](docs/TESTPLAN.md)):
->   * **226 JVM-Tests grün** – davon **155 Dateivorgänge gegen echte Dateien** (Kopieren, Verschieben mit Prüfsumme,
->     Papierkorb, Abbruch, Absturz, Groß-/Kleinschreibung …), 65 Fachlogik (inkl. Bewegung), 6 Kontrast in jeder
->     Theme-/Akzent-Kombination.
->   * Alle sieben Module gegen Android-API-36- und AndroidX-Schnittstellen **typgeprüft: 0 Fehler, 0 Warnungen**.
->     Das ist kein vollständiger Build: Ressourcen-Linking, Manifest und Lint liefen nicht.
->   * Prüfskript: jede Schrift und jedes Symbol bezieht ihre Farbe aus dem Theme.
->   * Zwei unabhängige Durchsichten: 5 kritische, 5 hohe und alle mittleren Befunde behoben (u. a. ein Fall, in dem
->     „Ersetzen“ auf einem USB-Stick eine zweite, anders geschriebene Datei überschrieben hätte).
-> * **Nicht** geprüft: Lauf auf einem Gerät, echte SD-Karte/USB-Stick, GPS/Barometer/Kompass auf Hardware. Der erste
->   Bau in Android Studio ist der erste echte Build – siehe [Öffnen und Bauen](#öffnen-und-bauen).
+> * **Version 0.4.0 – ORBIT.** Neuer Name und neues Startsymbol, Designsystem „Spatial Liquid Glass“ mit ORBIT Core,
+>   Sensor-Globus, Akku-Flüssigkeit, räumlichen Übergängen, Lichtreflex, flüssigem Fortschritt und Haptik
+>   ([docs/ORBIT.md](docs/ORBIT.md), [CHANGELOG.md](CHANGELOG.md)). Alle Funktionen von 0.3.0 bleiben.
+> * **Erstmals eine echte, installierbare APK:** `ORBIT-0.4.0.apk`, gebaut mit Gradle (AGP 9.3.1, Kotlin 2.4.21,
+>   compileSdk 37) auf einem Ubuntu-Rechner mit Android-SDK (GitHub Actions, Workflow
+>   [`.github/workflows/orbit-android.yml`](.github/workflows/orbit-android.yml)), signiert mit dem Projektschlüssel
+>   ([docs/SIGNATUR.md](docs/SIGNATUR.md)), geprüft mit `apksigner` und `aapt2`, auf einem **Android-15-Emulator**
+>   installiert, gestartet und fotografiert. Ergebnisse und Prüfprotokoll: [docs/STATUS.md](docs/STATUS.md).
+> * **Nicht** geprüft: Lauf auf einem echten Telefon, echte SD-Karte/USB-Stick, GPS/Barometer/Kompass/Haptik auf
+>   Hardware (der Emulator liefert eigene Ersatzwerte für Akku, Standort und Satelliten).
 
 ---
 
@@ -95,27 +88,31 @@ Die Oberfläche greift nie selbst auf Systemdienste oder Dateien zu. Begründung
 Voraussetzungen wie bei deinen anderen Projekten: Android Studio mit Unterstützung für **AGP 9.3.1**, JDK 17 (bringt
 Android Studio mit), Android SDK Platform **37**. Mindestversion **Android 12**, Ziel **Android 16**.
 
-1. ZIP entpacken, in Android Studio **File › Open** und den Ordner `Aether` wählen.
+1. ZIP entpacken, in Android Studio **File › Open** und den Projektordner wählen (Projektname in Android Studio: ORBIT).
 2. Warten, bis **Gradle Sync** fertig ist. Fehlt `local.properties`, sucht `settings.gradle.kts` das SDK am
    Standardort (macOS `~/Library/Android/sdk`) und legt die Datei an.
 3. **Build › Make Project** – oder im Terminal `./gradlew assembleDebug`.
 4. Tests: `./gradlew :core:model:test :core:files:test :ui:designsystem:testDebugUnitTest`
-5. Empfohlen beim ersten Bau: `./gradlew :app:lintDebug` (Lint lief in der Entwicklungsumgebung nicht).
+5. Release-APK wie in der CI: `./gradlew :app:assembleRelease` → `app/build/outputs/apk/release/app-release.apk`
+   (signiert mit dem Projektschlüssel, siehe [docs/SIGNATUR.md](docs/SIGNATUR.md)).
 
-Weil hier kein vollständiger Gradle-Build möglich war, können beim ersten Bau noch Meldungen auftreten, die nur ein
-echter Build findet (Ressourcen-Linking, Manifest, Lint). Bitte die Meldung dann einfach mitschicken.
+Seit 0.4.0 baut jeder Push in den Zweig `orbit-android` die App vollständig mit Gradle (Tests, Release-APK,
+Emulator-Start, Bildschirmfotos); die Ergebnisse liegen im Zweig `ci-ergebnisse-orbit-android`.
 
 ## Installation und erster Start
 
+* **Ohne Android Studio:** `ORBIT-0.4.0.apk` aufs Telefon kopieren und antippen (Android fragt einmal, ob die
+  Datei-App Apps installieren darf). Spätere ORBIT-Versionen ersetzen sie ohne Deinstallation.
 * **Pixel 6 Pro:** per USB verbinden, in Android Studio **Run ▶**.
 * **Xiaomi:** zusätzlich in den Entwickleroptionen **„Über USB installieren“** einschalten, dann **Run ▶**.
-* `versionCode` ist jetzt **2** (Version 0.3.0) – die Installation über 0.1.0 behält deine Einstellungen.
-* **Dateien:** Beim ersten Öffnen erklärt AETHER den „Zugriff auf alle Dateien“. „In den Einstellungen erlauben“
+* `versionCode` ist jetzt **3** (Version 0.4.0). Hattest du eine selbst gebaute Aether-Version mit einem anderen
+  Schlüssel installiert, verlangt Android einmal die Deinstallation (Signatur-Wechsel, siehe docs/SIGNATUR.md).
+* **Dateien:** Beim ersten Öffnen erklärt ORBIT den „Zugriff auf alle Dateien“. „In den Einstellungen erlauben“
   öffnet die passende Android-Seite (Xiaomi: „Verwaltung aller Dateien erlauben“); nach der Rückkehr ist alles da.
 * **Bewegung** (Gerät › Bewegung): Android fragt nach dem Standort – „Bei Nutzung der App“ und **„Genau“** wählen.
 * **Benachrichtigungen:** Android fragt einmal beim ersten langen Vorgang (z. B. Kopieren) – für den Fortschritt,
   wenn du die App währenddessen verlässt.
-* **Xiaomi-Tipp:** Für lange Kopiervorgänge im Hintergrund Einstellungen › Apps › Aether › Akku sparen ›
+* **Xiaomi-Tipp:** Für lange Kopiervorgänge im Hintergrund Einstellungen › Apps › ORBIT › Akku sparen ›
   „Keine Einschränkungen“.
 
 ## Gerätetest

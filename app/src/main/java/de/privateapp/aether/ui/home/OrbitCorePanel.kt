@@ -87,12 +87,13 @@ fun OrbitCorePanel(graph: AppGraph, onOpenDevice: () -> Unit, onOpenStorage: () 
     Panel(modifier.animateContentSize(Aether.motion.gentleSpring())) {
         PanelHeader(icon = AetherIcons.Pulse, title = "ORBIT Core", subtitle = "Jede Bahn ein gemessener Anteil", tone = Tone.ACCENT)
         Spacer(Modifier.height(Spacing.m))
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Box(Modifier.size(150.dp), contentAlignment = Alignment.Center) {
+        // Kern oben (zentriert), Legende darunter in voller Breite – so bleiben die Namen auch auf schmalen Telefonen lesbar
+        Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+            Box(Modifier.size(176.dp), contentAlignment = Alignment.Center) {
                 OrbitRings(
                     tracks = state.rings.map { OrbitTrack(if (it.basis == OrbitBasis.UNAVAILABLE) null else it.arc, ringColor(it.ring)) },
                     modifier = Modifier
-                        .size(150.dp)
+                        .size(176.dp)
                         .semantics { contentDescription = ringsDescription(state) },
                     flowIndex = OrbitRing.entries.indexOf(OrbitRing.NETWORK),
                     flow = state.flow,
@@ -103,13 +104,13 @@ fun OrbitCorePanel(graph: AppGraph, onOpenDevice: () -> Unit, onOpenStorage: () 
                     Text("RAM", style = type.caption, color = Orbit.tones.onCore.copy(alpha = 0.85f))
                 }
             }
-            Spacer(Modifier.width(Spacing.m))
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                for (ring in OrbitRing.entries) {
-                    OrbitLegendLine(state.ring(ring), valueText(state, ring), expanded == ring.name) {
-                        haptics.tick()
-                        expanded = if (expanded == ring.name) null else ring.name
-                    }
+        }
+        Spacer(Modifier.height(Spacing.m))
+        Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            for (ring in OrbitRing.entries) {
+                OrbitLegendLine(state.ring(ring), valueText(state, ring), expanded == ring.name) {
+                    haptics.tick()
+                    expanded = if (expanded == ring.name) null else ring.name
                 }
             }
         }

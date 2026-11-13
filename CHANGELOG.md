@@ -1,5 +1,36 @@
 # Änderungen
 
+## Version 0.4.0 (versionCode 3) – ORBIT: „Spatial Liquid Glass“
+
+### Name, Symbol, Build
+- Die App heißt **ORBIT** (vorher Aether). Paketname, Einstellungen, Favoriten und Papierkorb bleiben erhalten.
+- **Neues Startsymbol** aus der Vorlage des Auftraggebers: adaptiv (Verlauf + Chip mit „i“), Designsymbol für
+  Android 13, neuer Startbildschirm (`tools/icons/make_orbit_icons.py`).
+- **Erste echte APK:** Gradle-Build in der CI (Ubuntu + Android-SDK), alle Unit-Tests, `apksigner`/`aapt2`-Prüfung,
+  Installation und Start auf einem Android-15-Emulator mit Bildschirmfotos. Signiert mit einem stabilen
+  Projektschlüssel ([docs/SIGNATUR.md](docs/SIGNATUR.md)), damit künftige Versionen ohne Deinstallation ersetzen.
+
+### Design
+- Grundfarben von ORBIT (wie macOS): Deep Ocean (Liquid Glass Dunkel), Pearl White (Liquid Glass Hell), Arctic
+  Blue, Electric Cyan, Soft Violet, Sapphire, Graphite. Neues Theme **Minimal Dunkel**. Akzente heißen jetzt Arctic
+  Blue (Standard), Electric Cyan, Soft Violet. Alle Kombinationen weiter WCAG-AA-geprüft.
+- Effektstärke Minimal / Ausgewogen / Immersiv steuert die ORBIT-Effekte; „Animationen entfernen“, „Bewegung
+  reduzieren“ und der Energiesparmodus haben Vorrang.
+- **Auftakt** beim Kaltstart (≈ 0,8 s, über fertigem Inhalt), **räumliche Übergänge**, **Lichtfelder**, die beim
+  Bereichswechsel weitergleiten (Immersiv: langsame Drift, nur im Vordergrund), **Lichtreflex** an der Berührstelle.
+
+### Visualisierungen
+- **ORBIT Core** auf der Übersicht: Arbeitsspeicher, Speicher, Thermik, Netzwerk (relativ zur 5-Minuten-Spitze), Akku –
+  mit verwandelbaren Detailkarten (Speicherschichten, Akku-Flüssigkeit, Thermometer). CPU/GPU: von Android nicht
+  freigegeben, ausdrücklich benannt.
+- **Akku-Flüssigkeit** auf „Gerät“ (bewegt sich nur beim echten Laden), **rollende Zahlen** (Immersiv).
+- **Sensor-Globus** unter „Gerät › Bewegung“: gemeldete Satelliten und Blickrichtung auf einer drehbaren Himmelskugel.
+
+### Dateien und Rückmeldung
+- Flüssiger Fortschritt bei Dateivorgängen, Bestätigungssymbol erst nach dem Abschluss.
+- **Haptik** (abschaltbar): Bereichswechsel, ORBIT Core, Abschluss/Fehler von Vorgängen.
+- Leere Zustände mit eigener Illustration.
+
 ## Version 0.3.0 (versionCode 2) – Phase 3: Dateimanager und Bewegung
 
 ### Neu – Dateien

@@ -1,6 +1,24 @@
 # Umsetzungsstand
 
-Stand 27.10.2026 · AETHER 0.3.0 (Phase 3)
+Stand 13.11.2026 · **ORBIT 0.4.0** (vorher AETHER 0.3.0, Phase 3)
+
+## ORBIT 0.4.0 – „Spatial Liquid Glass“ (Auftrag „ORBIT Master Prompt“)
+
+Prüfstufe neu: **Build** (Gradle, echte Android-SDK-Bibliotheken) und **Emulator** (Android 15, x86_64, Pixel-7-Profil
+und Tablet-Größe 1600 × 2560 / 320 dpi). Hardware-Prüfung auf einem echten Telefon steht weiterhin aus.
+
+| Punkt des Auftrags | Stand | Geprüft |
+|---|---|---|
+| Name ORBIT, neues Symbol (adaptiv, Designsymbol, Startbildschirm) | ✔ | Build (`aapt2`: Label „ORBIT“), Emulator |
+| Designsystem: Palette, Materialebenen, Themes inkl. Minimal Dunkel, Effektprofile, Bewegung reduzieren | ✔ | JVM-Test (Kontrast 6, OrbitTest 6), Emulator (alle Themes, alle Effektstärken) |
+| 1 Auftakt · 2 lebendiger Hintergrund · 3 Lichtreflex · 4 räumliche Navigation | ✔ | Build, Emulator (Standbilder) |
+| 5 verwandelbare Karten · 6 Datenfluss · 8 ORBIT Core | ✔ (CPU/GPU von Android nicht freigegeben – benannt) | JVM-Test (Rechenlogik), Build, Emulator |
+| 7 Live-Diagramme | ◐ bestehende Verlaufsdiagramme (Speicher) unverändert | Build |
+| 9 Temperatur · 10 Akku-Flüssigkeit · 11 Speicherschichten | ✔ | Build, Emulator |
+| 12 Sensor-Globus | ✔ (echte GNSS-Meldungen + Kompass) | Build; Emulator liefert eigene Satelliten |
+| 13 Dateianimationen · 14 Statusrückmeldung · 15 Haptik | ✔ | Build; Haptik nur auf Hardware spürbar |
+| Leere Zustände mit eigener Illustration | ✔ | Build |
+| Tatsächlicher Build, installierbare APK | ✔ `ORBIT-0.4.0.apk` | Build, `apksigner`, Emulator-Installation |
 
 Legende: **✔ umgesetzt** · **◐ teilweise / Grundlage** · **– spätere Phase**. „Geprüft“ nennt die höchste erreichte
 Prüfstufe: *JVM-Test* (automatisiert, ausgeführt; bei `core:files` gegen echte Dateien), *Typprüfung* (gegen
