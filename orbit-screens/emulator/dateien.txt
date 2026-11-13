@@ -1,0 +1,2 @@
+screens/emulator/dateien.txt
+screens/emulator/emu-crash-37.2.13.db/settings.dat

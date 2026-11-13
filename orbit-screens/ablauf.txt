@@ -1,46 +1,41 @@
-[14:05:27] Installation
-[14:05:31] Kaltstartzeiten (3 Läufe)
-[14:06:01] Foto telefon-hell-home (home) 106946 Bytes
-[14:06:12] Foto telefon-hell-device (device) 117341 Bytes
-[14:06:22] Foto telefon-hell-storage (storage) 869831 Bytes
-[14:06:31] Foto telefon-hell-files (files) 875989 Bytes
-[14:06:41] Foto telefon-hell-motion (motion) 108557 Bytes
-[14:06:50] Foto telefon-hell-settings (settings) 928914 Bytes
-[14:07:00] Foto telefon-dunkel-home (home) 1238025 Bytes
-[14:07:11] Foto telefon-dunkel-device (device) 1163703 Bytes
-[14:07:20] Foto telefon-dunkel-storage (storage) 1335571 Bytes
-[14:07:28] Foto telefon-dunkel-files (files) 1331232 Bytes
-[14:07:37] Foto telefon-dunkel-motion (motion) 1179007 Bytes
-[14:07:45] Foto telefon-dunkel-settings (settings) 1257906 Bytes
-[14:07:45] Alle Themes (Übersicht) – Darstellung nur für diese Sitzung
-[14:07:54] Foto theme-GLASS_LIGHT-home (home) 848974 Bytes
-[14:08:02] Foto theme-GLASS_DARK-home (home) 1244095 Bytes
-[14:08:10] Foto theme-MINIMAL_LIGHT-home (home) 322781 Bytes
-[14:08:18] Foto theme-MINIMAL_DARK-home (home) 319152 Bytes
-[14:08:26] Foto theme-DEEP_DARK-home (home) 343025 Bytes
-[14:08:26] Effektprofile
-[14:08:34] Foto effekte-MINIMAL-home (home) 358487 Bytes
-[14:08:43] Foto effekte-BALANCED-home (home) 1243701 Bytes
-[14:08:52] Foto effekte-IMMERSIVE-home (home) 1379627 Bytes
-[14:08:52] Übersicht gescrollt und ORBIT Core aufgeklappt
-[14:09:00] Foto telefon-hell-home-oben (home) 849905 Bytes
-[14:09:04] Foto telefon-hell-home-gescrollt
-[14:09:04] ORBIT Core: Zeile „Arbeitsspeicher“ aufgeklappt (Antippen nach Bildschirmposition)
-[14:09:12] Foto telefon-dunkel-home-orbit (home) 1243701 Bytes
-[14:09:20] Foto telefon-dunkel-home-orbit-aufgeklappt (Tipp bei 496 1213)
-[14:09:20] Tablet-Größe
-[14:09:31] Foto tablet-hell-home (home) 1018604 Bytes
-[14:09:41] Foto tablet-hell-device (device) 981506 Bytes
-[14:09:51] Foto tablet-dunkel-home (home) 1639134 Bytes
-[14:10:01] Foto tablet-dunkel-device (device) 1595980 Bytes
-[14:10:02] Bewegung gescrollt (Sensor-Globus) – gewischt wird am linken Rand, damit der Globus sich nicht dreht
-[14:10:12] Foto telefon-dunkel-bewegung-oben (motion) 1178619 Bytes
-[14:10:17] Foto telefon-dunkel-bewegung-gescrollt-1
-[14:11:19] Foto telefon-dunkel-bewegung-gescrollt-2
-[14:11:21] Foto telefon-dunkel-bewegung-gescrollt-3
-[14:11:23] Foto telefon-dunkel-bewegung-gescrollt-4
-[14:11:25] Foto telefon-dunkel-bewegung-gescrollt-5
-[14:11:27] Foto telefon-dunkel-bewegung-gescrollt-6
-[14:11:29] Foto telefon-dunkel-bewegung-gescrollt-7
-[14:11:29] Leistung: gfxinfo nach Startseite
-[14:11:37] EMULATOR NICHT MEHR ERREICHBAR (vor: Absturzprüfung)
+[14:24:06] Installation
+[14:24:15] Kaltstartzeiten (3 Läufe)
+[14:24:46] Foto telefon-hell-home (home) 105828 Bytes
+[14:24:55] Foto telefon-hell-device (device) 117214 Bytes
+[14:25:05] Foto telefon-hell-storage (storage) 116288 Bytes
+[14:25:14] Foto telefon-hell-files (files) 106249 Bytes
+[14:25:24] Foto telefon-hell-motion (motion) 107966 Bytes
+[14:25:34] Foto telefon-hell-settings (settings) 928270 Bytes
+[14:25:45] Foto telefon-dunkel-home (home) 1242154 Bytes
+[14:25:56] Foto telefon-dunkel-device (device) 1164240 Bytes
+[14:26:05] Foto telefon-dunkel-storage (storage) 1342807 Bytes
+[14:26:13] Foto telefon-dunkel-files (files) 1331510 Bytes
+[14:26:24] Foto telefon-dunkel-motion (motion) 1177030 Bytes
+[14:26:32] Foto telefon-dunkel-settings (settings) 1257892 Bytes
+[14:26:32] Alle Themes (Übersicht) – Darstellung nur für diese Sitzung
+[14:26:41] Foto theme-GLASS_LIGHT-home (home) 849103 Bytes
+[14:26:50] Foto theme-GLASS_DARK-home (home) 1243250 Bytes
+[14:26:59] Foto theme-MINIMAL_LIGHT-home (home) 320991 Bytes
+[14:27:07] Foto theme-MINIMAL_DARK-home (home) 317181 Bytes
+[14:27:16] Foto theme-DEEP_DARK-home (home) 341901 Bytes
+[14:27:16] Effektprofile
+[14:27:24] Foto effekte-MINIMAL-home (home) 356376 Bytes
+[14:27:32] Foto effekte-BALANCED-home (home) 1242908 Bytes
+[14:27:43] Foto effekte-IMMERSIVE-home (home) 1379317 Bytes
+[14:27:43] Übersicht gescrollt und ORBIT Core aufgeklappt
+[14:27:51] Foto telefon-hell-home-oben (home) 848838 Bytes
+[14:27:54] Foto telefon-hell-home-gescrollt
+[14:27:54] ORBIT Core: Zeile „Arbeitsspeicher“ aufgeklappt (Antippen nach Bildschirmposition)
+[14:28:04] Foto telefon-dunkel-home-orbit (home) 1243135 Bytes
+[14:28:11] Foto telefon-dunkel-home-orbit-aufgeklappt (Tipp bei 496 1213)
+[14:28:11] Tablet-Größe
+[14:28:22] Foto tablet-hell-home (home) 1017218 Bytes
+[14:28:33] Foto tablet-hell-device (device) 980659 Bytes
+[14:28:42] Foto tablet-dunkel-home (home) 1638522 Bytes
+[14:28:53] Foto tablet-dunkel-device (device) 1595062 Bytes
+[14:28:53] Sensor-Globus direkt öffnen (Prüfmodus „globe“ – kein Wischen am Rand, das die Zurück-Geste auslöst)
+[14:29:04] Foto telefon-dunkel-sensor-globus (globe) 1404556 Bytes
+[14:29:14] Foto telefon-hell-sensor-globus (globe) 1031160 Bytes
+[14:29:14] Leistung: gfxinfo nach Startseite
+[14:29:24] Absturzprüfung
+[14:29:24] fertig

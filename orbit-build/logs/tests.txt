@@ -12,11 +12,11 @@ For more details see https://docs.gradle.org/9.6.1/release-notes.html
 
 To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.6.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
 Daemon will be stopped at the end of the build 
+> Task :platform:device:preBuild UP-TO-DATE
 > Task :app:preBuild UP-TO-DATE
 > Task :core:model:checkKotlinGradlePluginConfigurationErrors SKIPPED
 > Task :core:files:checkKotlinGradlePluginConfigurationErrors SKIPPED
 > Task :app:preDebugBuild UP-TO-DATE
-> Task :platform:device:preBuild UP-TO-DATE
 > Task :platform:device:preDebugBuild UP-TO-DATE
 > Task :app:generateDebugBuildConfig
 > Task :platform:device:processDebugNavigationResources
@@ -107,13 +107,13 @@ Daemon will be stopped at the end of the build
 > Task :core:model:test
 > Task :platform:device:compileDebugUnitTestKotlin NO-SOURCE
 > Task :platform:device:compileDebugUnitTestJavaWithJavac NO-SOURCE
-> Task :platform:storage:compileDebugKotlin
 > Task :platform:device:processDebugUnitTestJavaRes NO-SOURCE
-> Task :platform:storage:compileDebugJavaWithJavac NO-SOURCE
 > Task :platform:device:testDebugUnitTest NO-SOURCE
 > Task :platform:device:test UP-TO-DATE
-> Task :platform:storage:bundleLibRuntimeToJarDebug
+> Task :platform:storage:compileDebugKotlin
+> Task :platform:storage:compileDebugJavaWithJavac NO-SOURCE
 > Task :platform:storage:bundleLibCompileToJarDebug
+> Task :platform:storage:bundleLibRuntimeToJarDebug
 > Task :platform:storage:processDebugJavaRes
 > Task :platform:storage:compileDebugUnitTestKotlin NO-SOURCE
 > Task :platform:storage:compileDebugUnitTestJavaWithJavac NO-SOURCE
@@ -137,15 +137,15 @@ Daemon will be stopped at the end of the build
 > Task :app:compileDebugKotlin
 > Task :app:compileDebugJavaWithJavac
 > Task :app:processDebugJavaRes
-> Task :app:bundleDebugClassesToCompileJar
 > Task :app:bundleDebugClassesToRuntimeJar
+> Task :app:bundleDebugClassesToCompileJar
 > Task :app:compileDebugUnitTestKotlin NO-SOURCE
 > Task :app:compileDebugUnitTestJavaWithJavac NO-SOURCE
 > Task :app:processDebugUnitTestJavaRes NO-SOURCE
 > Task :app:testDebugUnitTest NO-SOURCE
 > Task :app:test UP-TO-DATE
-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1794578313783.json
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1794579442163.json
 
-BUILD SUCCESSFUL in 2m 25s
+BUILD SUCCESSFUL in 2m 20s
 86 actionable tasks: 86 executed
 Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.6.1/userguide/configuration_cache_enabling.html
