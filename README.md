@@ -22,6 +22,11 @@ nach MP3, WAV, FLAC, AAC, M4A oder AIFF umwandeln, Metadaten und Cover setzen, d
 Warteschlange und Verlauf – und **vorhandene Songs schneiden** (neue Datei oder Original ersetzen mit Sicherung und
 Rückgängig). Spotify liefert nur Titel und Cover (DRM). Siehe [docs/V2_2_AENDERUNGEN.md](docs/V2_2_AENDERUNGEN.md).
 
+**Version 2.3** bringt **„Titel bearbeiten“** (Rechtsklick auf einen Titel): Lautstärke, automatische Verbesserung
+(Lautheit, Rumpelfilter, Begrenzer, Stille), Tempo, Tonhöhe, Kammerton (z. B. 440 → 432 Hz, mit Erkennung),
+Auto-Tune, Equalizer und Beschneiden – dauerhaft, mit Sicherung und Rückgängig. Siehe
+[docs/V2_3_AENDERUNGEN.md](docs/V2_3_AENDERUNGEN.md).
+
 > **Stand 2.2:** Universal-DMG (Xcode 26), 577 Tests ohne Fehler auf macOS 26 (Apple Silicon) und macOS 15 (Intel),
 > 125 Ansichten in Hell und Dunkel mit echtem Liquid Glass, Abnahme aus der DMG mit Aktualisierung 2.1 → 2.2 → 2.1
 > ohne Befund. YouTube auf GitHub-Rechnern blockiert (nicht nachgewiesen), Bedienung nicht von Hand geprüft –
@@ -41,6 +46,7 @@ Rückgängig). Spotify liefert nur Titel und Cover (DRM). Siehe [docs/V2_2_AENDE
 ## Inhalt
 
 - [docs/INSTALLATION.md](docs/INSTALLATION.md) – Installation, Update, erster Start, Signieren/Beglaubigen
+- [docs/V2_3_AENDERUNGEN.md](docs/V2_3_AENDERUNGEN.md) – Titel bearbeiten (Version 2.3)
 - [docs/V2_2_AENDERUNGEN.md](docs/V2_2_AENDERUNGEN.md) – Audio Studio (Version 2.2)
 - [docs/V2_1_AENDERUNGEN.md](docs/V2_1_AENDERUNGEN.md) – Änderungen in Version 2.1
 - [docs/V2_FUNKTIONEN.md](docs/V2_FUNKTIONEN.md) – Funktionsmatrix Android → macOS mit Prüfstand je Funktion

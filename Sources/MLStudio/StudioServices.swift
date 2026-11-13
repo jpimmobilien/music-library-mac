@@ -20,9 +20,17 @@ public struct ExportRequest: Hashable, Sendable {
     public var preferPassthrough: Bool
     /// Alle Tags und Bilder dieser Datei übernehmen (Schneiden vorhandener Songs); `metadata` wird darüber gelegt.
     public var copyTagsFrom: URL?
+    /// Klangbearbeitung („Titel bearbeiten“): Lautstärke, Tempo, Tonhöhe, Stimmung, Equalizer, Auto-Tune,
+    /// Verbesserung. nil oder neutral = unverändert. Erzwingt Neukodierung.
+    public var edit: TrackEdit?
+
+    /// Wird der Klang verändert (über Schnitt und Blenden hinaus)?
+    public var hasEdit: Bool { edit.map { !$0.isNeutral } ?? false }
 
     public init(input: URL, trim: TrimRange?, options: ExportOptions, metadata: StudioMetadata, output: URL,
-                fadeIn: Double = 0, fadeOut: Double = 0, preferPassthrough: Bool = false, copyTagsFrom: URL? = nil) {
+                fadeIn: Double = 0, fadeOut: Double = 0, preferPassthrough: Bool = false, copyTagsFrom: URL? = nil,
+                edit: TrackEdit? = nil) {
+        self.edit = edit
         self.input = input
         self.trim = trim
         self.options = options

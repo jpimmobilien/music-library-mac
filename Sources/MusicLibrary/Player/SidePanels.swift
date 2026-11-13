@@ -75,6 +75,11 @@ struct QueuePanel: View {
                                 Button("Aus der Warteschlange entfernen") { player.removeFromQueue(item: item) }
                                 Divider()
                                 Button("Informationen …") { model.showInfo([track.uid]) }
+                                Button("Titel bearbeiten …") {
+                                    model.studio.openTrackEditor(track.uid)
+                                    model.openStudio()
+                                }
+                                .disabled(!track.available)
                                 Button("Im Audio Studio schneiden …") {
                                     model.studio.openLibraryTrack(track.uid)
                                     model.openStudio()

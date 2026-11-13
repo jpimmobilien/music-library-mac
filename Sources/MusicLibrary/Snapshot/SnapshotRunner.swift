@@ -148,6 +148,32 @@ enum SnapshotRunner {
         return list
     }
 
+    /// „Titel bearbeiten“ mit einem Titel der Demo-Bibliothek (erfundene Analyse; `configured` = Beispiel-Einstellungen).
+    @MainActor
+    static func editDemo(_ m: AppModel, _ s: StudioModel, configured: Bool) {
+        if let src = StudioDemo.libraryTrackSource(m) {
+            StudioDemo.load(s, src, playhead: 38.2)
+        }
+        s.mode = .edit
+        s.cutSaveMode = .replaceOriginal
+        s.trackAnalysisProgress = nil
+        s.trackAnalysis = TrackAnalysis(reference: 441.6, referenceConfidence: 0.72, keyTonic: 9, keyScale: .minor, keyCorrelation: 0.81,
+                                        loudness: -10.8, peakDb: -0.3, leadingSilence: 0.42, trailingSilence: 2.35)
+        var e = TrackEdit()
+        e.tuningFrom = 441.6
+        e.tuningTo = 441.6
+        e.autoTuneKey = 9
+        e.autoTuneScale = .minor
+        if configured {
+            e.speed = 1.06
+            e.tuningTo = 432
+            e.bandGains = EqPresets.pop.gains
+            e.bassDb = 2
+            e.enhance = true
+        }
+        s.trackEdit = e
+    }
+
     /// Version 2.2: Audio Studio – Leerzustand, Quellen, Editor, Export, Metadaten, Warteschlange, Verlauf,
     /// Werkzeuge, Spotify, Doppel-Warnung, Schneiden mit „Original ersetzen“, schmales Fenster.
     @MainActor
@@ -318,6 +344,33 @@ enum SnapshotRunner {
                     StudioDemo.load(s, src, selection: TrimRange(start: 8.4, end: 141.2))
                 }
                 s.cutSaveMode = .replaceOriginal
+            }, view: sheet(480) { StudioReplaceDialogView(studio: AppModel.shared!.studio, close: {}) }),
+            Scenario(name: "62-studio-bearbeiten", size: wide, prepare: studio { m, s in
+                editDemo(m, s, configured: true)
+                s.history = StudioDemo.history()
+            }, view: main),
+            Scenario(name: "62-studio-bearbeiten-standard", size: big, prepare: studio { m, s in
+                editDemo(m, s, configured: false)
+                s.trackAnalysis = nil
+                s.trackAnalysisProgress = 0.42
+            }, view: main),
+            Scenario(name: "62-studio-bearbeiten-regler", size: big, prepare: studio { m, s in
+                editDemo(m, s, configured: true)
+                s.trackEdit.autoTune = true
+                s.trackEdit.semitones = -2
+                StudioScrollSeed.pending = .tools
+            }, view: main),
+            Scenario(name: "62-studio-bearbeiten-werkzeuge", size: big, prepare: studio { m, s in
+                editDemo(m, s, configured: true)
+                s.trackEdit.autoTune = true
+                StudioScrollSeed.pending = .export
+            }, view: main),
+            Scenario(name: "62-studio-bearbeiten-schmal", size: small, prepare: studio { m, s in
+                editDemo(m, s, configured: true)
+                StudioScrollSeed.pending = .export
+            }, view: main),
+            Scenario(name: "62-studio-bearbeiten-bestaetigen", size: CGSize(width: 480, height: 400), prepare: studio { m, s in
+                editDemo(m, s, configured: true)
             }, view: sheet(480) { StudioReplaceDialogView(studio: AppModel.shared!.studio, close: {}) }),
             Scenario(name: "60-studio-verlauf-loeschen", size: CGSize(width: 440, height: 210), prepare: studio { _, s in
                 s.history = StudioDemo.history()

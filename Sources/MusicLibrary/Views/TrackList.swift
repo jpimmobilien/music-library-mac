@@ -522,6 +522,11 @@ struct TrackMenuItems: View {
             Button(single != nil ? "Informationen bearbeiten …" : "Informationen bearbeiten (\(Formatting.tracks(uids.count))) …") { model.showInfo(uids) }
             // Audio Studio (2.2): nur bei genau einem Titel
             if let single {
+                Button("Titel bearbeiten …") {
+                    model.studio.openTrackEditor(single.uid)
+                    model.openStudio()
+                }
+                .disabled(!single.available)
                 Button("Im Audio Studio schneiden …") {
                     model.studio.openLibraryTrack(single.uid)
                     model.openStudio()

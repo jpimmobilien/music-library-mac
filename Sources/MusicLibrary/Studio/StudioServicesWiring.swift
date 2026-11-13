@@ -15,7 +15,7 @@ extension StudioServiceSet {
     static var live: StudioServiceSet {
         let tools = StudioToolManager(supportDirectory: supportDirectory.appendingPathComponent("Tools", isDirectory: true))
         return StudioServiceSet(exporter: AudioExporter(), waveforms: WaveformAnalyzer(), local: LocalSourceAnalyzer(),
-                                remote: YtDlpSourceProvider(tools: tools), tools: tools)
+                                remote: YtDlpSourceProvider(tools: tools), tools: tools, editAnalyzer: TrackEditAnalyzer())
     }
 }
 
