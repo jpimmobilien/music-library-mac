@@ -217,12 +217,14 @@ enum StudioDemo {
     static func history() -> StudioHistory {
         let now = Date()
         func entry(_ title: String, _ artist: String, kind: SourceKind, format: String, hoursAgo: Double, imported: Bool = true,
-                   succeeded: Bool = true, error: String? = nil, backup: String? = nil, undone: Bool = false, ext: String = "m4a") -> StudioHistoryEntry {
+                   succeeded: Bool = true, error: String? = nil, backup: String? = nil, undone: Bool = false, ext: String = "m4a",
+                   library: Bool? = nil) -> StudioHistoryEntry {
             var e = StudioHistoryEntry(date: now.addingTimeInterval(-hoursAgo * 3600), sourceKind: kind,
                                        source: kind == .localFile ? "/Demo/Musik/\(artist)/\(title).\(ext)" : "https://www.youtube.com/watch?v=\(stableHash(title))",
                                        title: title, artist: artist,
                                        outputPath: succeeded ? "/Demo/Musik/Audio Studio/\(artist) – \(title).\(ext)" : "",
-                                       formatSummary: format, duration: 200, imported: imported, succeeded: succeeded, error: error, backupPath: backup)
+                                       formatSummary: format, duration: 200, imported: imported, succeeded: succeeded, error: error, backupPath: backup,
+                                       fromLibrary: library ?? (backup != nil))
             e.undone = undone
             return e
         }
@@ -230,6 +232,8 @@ enum StudioDemo {
             entry("Paper Boats", "The Harbor Lights", kind: .youtube, format: "M4A · 256 kbit/s · 44,1 kHz", hoursAgo: 0.15),
             entry("Stadt aus Glas", "Lina Sommer", kind: .localFile, format: "M4A · ohne Neukodierung", hoursAgo: 2.5,
                   backup: "/Demo/Sicherungen/Stadt aus Glas.m4a"),
+            entry("Nachtzug (bearbeitet)", "Clara Wendt", kind: .localFile, format: "M4A · 256 kbit/s · Tempo 1,1× · Equalizer „Pop“", hoursAgo: 5,
+                  library: true),
             entry("Lighthouse Keeper", "The Harbor Lights", kind: .soundcloud, format: "MP3 · 320 kbit/s · 44,1 kHz", hoursAgo: 26, ext: "mp3"),
             entry("Café Noir", "Ella Marquez Trio", kind: .localFile, format: "FLAC · 24 Bit · Stufe 5 · 48 kHz", hoursAgo: 30, backup: "/Demo/Sicherungen/Café Noir.flac", undone: true, ext: "flac"),
             entry("Puls (Live)", "Kraftfeld", kind: .youtube, format: "MP3 · 256 kbit/s", hoursAgo: 49, imported: false, succeeded: false,
@@ -248,7 +252,13 @@ enum StudioDemo {
 
     /// Alles auf Anfang (die Szenarien laufen nacheinander mit demselben Modell).
     static func reset(_ m: AppModel) {
-        let s = m.studio!
+        resetModel(m.studio)
+        resetModel(m.addStudio)
+        m.workspace = .add
+    }
+
+    private static func resetModel(_ s: StudioModel) {
+        guard let m = AppModel.shared else { return }
         duplicates = nil
         askDuplicates = false
         queueTab = nil
@@ -282,7 +292,10 @@ enum StudioDemo {
         s.history = StudioHistory()
         s.toolStatus = readyTools
         s.toolInstall = .idle
-        m.studioOpen = true
+        s.mode = .convert
+        s.trackEdit = TrackEdit()
+        s.trackAnalysis = nil
+        s.trackAnalysisProgress = nil
     }
 
     /// Quelle mit fertiger Wellenform und Auswahl.

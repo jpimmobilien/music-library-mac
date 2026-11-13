@@ -80,7 +80,7 @@ struct QueuePanel: View {
                                     model.openStudio()
                                 }
                                 .disabled(!track.available)
-                                Button("Im Audio Studio schneiden …") {
+                                Button("Im Studio schneiden …") {
                                     model.studio.openLibraryTrack(track.uid)
                                     model.openStudio()
                                 }

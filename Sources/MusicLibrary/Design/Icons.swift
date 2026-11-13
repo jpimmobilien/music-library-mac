@@ -311,6 +311,9 @@ enum Icons {
     // v2.2 Audio Studio (eigene Zeichnungen, siehe `HandDrawnIcons`)
     static let studio = "studio"
     static let studioFill = "studio_fill"
+    /// „Hinzufügen“ in der Navigation (Pfeil in eine Ablage).
+    static let addMusic = "add_music"
+    static let addMusicFill = "add_music_fill"
     static let waveform = "waveform"
     static let download = "download"
     static let cut = "content_cut"
@@ -360,6 +363,13 @@ enum HandDrawnIcons {
             return icon(brackets + [stroke("M9,9.5v5"), stroke("M12,6.5v11"), stroke("M15,9v6")])
         case "studio_fill":
             return icon([fill("M4.5,4.5h15v15h-15z", 0.24)] + brackets + [stroke("M9,9.5v5", 2.2), stroke("M12,6.5v11", 2.2), stroke("M15,9v6", 2.2)])
+        case "add_music":
+            return icon([stroke("M4.5,14v3.3a2.2,2.2 0 0 0 2.2,2.2h10.6a2.2,2.2 0 0 0 2.2,-2.2V14"),
+                         stroke("M12,4.5v10"), stroke("M8,10.5l4,4l4,-4")])
+        case "add_music_fill":
+            return icon([fill("M4.5,14h15v3.3a2.2,2.2 0 0 1 -2.2,2.2H6.7a2.2,2.2 0 0 1 -2.2,-2.2Z", 0.24),
+                         stroke("M4.5,14v3.3a2.2,2.2 0 0 0 2.2,2.2h10.6a2.2,2.2 0 0 0 2.2,-2.2V14", 2.2),
+                         stroke("M12,4.5v10", 2.2), stroke("M8,10.5l4,4l4,-4", 2.2)])
         case "waveform":
             return icon([stroke("M3.5,10.5v3"), stroke("M6.3,8.5v7"), stroke("M9.2,5.5v13"), stroke("M12,3.5v17"),
                          stroke("M14.8,6.5v11"), stroke("M17.7,9v6"), stroke("M20.5,10.5v3")])

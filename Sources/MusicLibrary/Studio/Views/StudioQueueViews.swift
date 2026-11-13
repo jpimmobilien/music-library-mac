@@ -13,8 +13,10 @@ enum StudioQueueTab: Hashable {
 }
 
 /// Glas-Spalte (breites Fenster) bzw. Abschnitt unter dem Editor (schmales Fenster).
+/// `studio` ist das Modell mit der Warteschlange („Hinzufügen“), `scope` der anzeigende Arbeitsbereich.
 struct StudioQueuePanel: View {
     @ObservedObject var studio: StudioModel
+    let scope: StudioWorkspace
     @Environment(\.musicColors) private var colors
     @Binding var tab: StudioQueueTab
     /// Breite Spalte: füllt die Höhe und scrollt selbst.
@@ -26,9 +28,9 @@ struct StudioQueuePanel: View {
                              label: { $0 == .queue ? queueLabel : "Verlauf" },
                              icon: { $0 == .queue ? Icons.queue : Icons.history }, height: 32)
             if tab == .queue {
-                StudioQueueList(studio: studio, scrolls: column)
+                StudioQueueList(studio: studio, scope: scope, scrolls: column)
             } else {
-                StudioHistoryList(studio: studio, scrolls: column)
+                StudioHistoryList(studio: studio, scope: scope, scrolls: column)
             }
         }
         .padding(12)
@@ -37,7 +39,7 @@ struct StudioQueuePanel: View {
     }
 
     private var queueLabel: String {
-        let open = studio.unfinishedJobCount
+        let open = scope.jobs(studio.jobs).filter { !$0.phase.isFinished }.count
         return open > 0 ? "Warteschlange (\(open))" : "Warteschlange"
     }
 }
@@ -46,11 +48,12 @@ struct StudioQueuePanel: View {
 
 struct StudioQueueList: View {
     @ObservedObject var studio: StudioModel
+    let scope: StudioWorkspace
     @Environment(\.musicColors) private var colors
     let scrolls: Bool
 
     var body: some View {
-        let jobs = studio.jobs
+        let jobs = scope.jobs(studio.jobs)
         VStack(alignment: .leading, spacing: 8) {
             if !jobs.isEmpty {
                 HStack(spacing: 8) {
@@ -60,14 +63,16 @@ struct StudioQueueList: View {
                         .foregroundColor(colors.textSecondary)
                     Spacer(minLength: 4)
                     if jobs.contains(where: { $0.phase.isFinished }) {
-                        StudioLinkButton(title: "Erledigte entfernen") { withAnimation(Motion.easeOut()) { studio.clearFinished() } }
+                        StudioLinkButton(title: "Erledigte entfernen") { withAnimation(Motion.easeOut()) { studio.clearFinished(scope) } }
                     }
                 }
                 .padding(.horizontal, 4)
             }
             if jobs.isEmpty {
                 StudioPanelEmpty(icon: Icons.queue, title: "Keine Aufträge",
-                                 text: "Exporte erscheinen hier mit Fortschritt. Sie laufen nacheinander – auch während du schon die nächste Quelle bearbeitest.")
+                                 text: scope == .edit
+                                    ? "Gespeicherte Bearbeitungen erscheinen hier mit Fortschritt – du kannst währenddessen schon den nächsten Titel öffnen."
+                                    : "Exporte erscheinen hier mit Fortschritt. Sie laufen nacheinander – auch während du schon die nächste Quelle bearbeitest.")
             } else if scrolls {
                 ScrollView(.vertical, showsIndicators: true) {
                     LazyVStack(spacing: 4) {
@@ -291,12 +296,13 @@ private struct StudioJobFormatMenu: View {
 
 struct StudioHistoryList: View {
     @ObservedObject var studio: StudioModel
+    let scope: StudioWorkspace
     @Environment(\.musicColors) private var colors
     let scrolls: Bool
     @State private var query = ""
 
     var body: some View {
-        let all = studio.history.entries
+        let all = scope.entries(studio.history.entries)
         let shown = filtered(all)
         VStack(alignment: .leading, spacing: 8) {
             if !all.isEmpty {
@@ -307,13 +313,15 @@ struct StudioHistoryList: View {
                         .monospacedDigit()
                         .foregroundColor(colors.textSecondary)
                     Spacer(minLength: 4)
-                    StudioLinkButton(title: "Verlauf löschen …") { StudioDialogs.confirmClearHistory(studio: studio) }
+                    StudioLinkButton(title: "Verlauf löschen …") { StudioDialogs.confirmClearHistory(studio: studio, scope: scope) }
                 }
                 .padding(.horizontal, 4)
             }
             if all.isEmpty {
                 StudioPanelEmpty(icon: Icons.history, title: "Noch kein Verlauf",
-                                 text: "Jeder Export wird hier festgehalten – mit Ziel, Format und, beim Ersetzen eines Originals, „Rückgängig“.")
+                                 text: scope == .edit
+                                    ? "Jede gespeicherte Bearbeitung wird hier festgehalten – beim Ersetzen eines Originals mit „Rückgängig“."
+                                    : "Jeder Export wird hier festgehalten – mit Ziel, Format und Quelle.")
             } else if shown.isEmpty {
                 StudioPanelEmpty(icon: Icons.search, title: "Keine Treffer", text: "Kein Eintrag passt zu „\(query)“.")
             } else if scrolls {

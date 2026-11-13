@@ -12,7 +12,7 @@ enum StudioToolsSheet {
     @MainActor
     static func present() {
         guard let model = AppModel.shared else { return }
-        let studio = model.studio!
+        let studio = model.addStudio!
         GlassSheet.present(width: 560) { close in
             StudioToolsView(studio: studio, close: close)
         }
@@ -87,7 +87,7 @@ struct StudioToolsView: View {
                     Text("Werkzeuge für Internet-Quellen")
                         .textStyle(Typo.titleLarge)
                         .foregroundColor(colors.textPrimary)
-                    Text("Für YouTube, SoundCloud und viele weitere Seiten nutzt das Audio Studio zwei bewährte Open-Source-Werkzeuge. Für eigene Dateien werden sie nicht gebraucht.")
+                    Text("Für YouTube, SoundCloud und viele weitere Seiten nutzt „Hinzufügen“ zwei bewährte Open-Source-Werkzeuge. Für eigene Dateien werden sie nicht gebraucht.")
                         .textStyle(Typo.bodyMedium)
                         .foregroundColor(colors.textSecondary)
                         .fixedSize(horizontal: false, vertical: true)
@@ -249,9 +249,9 @@ enum StudioDialogs {
         }
     }
 
-    static func confirmClearHistory(studio: StudioModel) {
+    static func confirmClearHistory(studio: StudioModel, scope: StudioWorkspace) {
         GlassSheet.present(width: 440) { close in
-            StudioClearHistoryDialogView(studio: studio, close: close)
+            StudioClearHistoryDialogView(studio: studio, scope: scope, close: close)
         }
     }
 }
@@ -344,11 +344,13 @@ struct StudioReplaceDialogView: View {
 
 struct StudioClearHistoryDialogView: View {
     @ObservedObject var studio: StudioModel
+    /// Nur die Einträge dieses Arbeitsbereichs werden gelöscht.
+    let scope: StudioWorkspace
     @Environment(\.musicColors) private var colors
     let close: () -> Void
 
     var body: some View {
-        let entries = studio.history.entries
+        let entries = scope.entries(studio.history.entries)
         let undoable = entries.filter { $0.backupPath != nil && !$0.undone && $0.succeeded }.count
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .top, spacing: 14) {
@@ -373,7 +375,7 @@ struct StudioClearHistoryDialogView: View {
                     .keyboardShortcut(.defaultAction)
                 StudioDangerButton(title: "Verlauf löschen", icon: Icons.delete) {
                     close()
-                    studio.clearHistory()
+                    studio.clearHistory(scope)
                 }
             }
             .padding(.top, 20)

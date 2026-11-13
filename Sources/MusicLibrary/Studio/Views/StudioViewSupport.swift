@@ -108,11 +108,19 @@ extension StudioModel {
     /// Diese Quelle wurde schon einmal erfolgreich exportiert (Verlauf).
     var previousExport: StudioHistoryEntry? {
         guard let src = source else { return nil }
+        let history = host.history
         return history.previousExport(of: src.url.absoluteString) ?? src.localFile.flatMap { history.previousExport(of: $0.path) }
     }
 
-    var activeJob: StudioJob? { jobs.first { $0.phase.isActive } }
-    var unfinishedJobCount: Int { jobs.filter { !$0.phase.isFinished }.count }
+    /// Aufträge und Verlauf dieses Arbeitsbereichs (Warteschlange und Verlauf liegen bei „Hinzufügen“).
+    var visibleJobs: [StudioJob] { workspace.jobs(host.jobs) }
+    var visibleHistory: [StudioHistoryEntry] { workspace.entries(host.history.entries) }
+    var hasQueueOrHistory: Bool {
+        host.jobs.contains(where: workspace.includes) || host.history.entries.contains(where: workspace.includes)
+    }
+
+    var activeJob: StudioJob? { visibleJobs.first { $0.phase.isActive } }
+    var unfinishedJobCount: Int { visibleJobs.filter { !$0.phase.isFinished }.count }
 
     // MARK: Zoom und Verschieben (nur Ansichtszustand)
 

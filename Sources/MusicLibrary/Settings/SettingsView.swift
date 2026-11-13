@@ -27,7 +27,7 @@ enum SettingsCategory: String, CaseIterable, Hashable, Identifiable {
         case .volume: return "Lautstärke"
         case .lyrics: return "Liedtexte"
         case .metadata: return "Metadaten"
-        case .studio: return "Audio Studio"
+        case .studio: return "Hinzufügen & Studio"
         case .shortcuts: return "Tastaturkurzbefehle"
         case .storage: return "Speicher & Cache"
         case .privacy: return "Datenschutz"
@@ -1000,7 +1000,7 @@ private struct ShortcutSettings: View {
 
     private static let shortcuts: [(String, String)] = [
         ("Leertaste", "Abspielen / Pause"), ("⌘ →  /  ⌘ ←", "Nächster / vorheriger Titel"), ("⌘ ↑  /  ⌘ ↓", "Lauter / leiser"),
-        ("⌘1 … ⌘6", "Bereiche Titel … Favoriten"), ("⌘7", "Audio Studio"), ("⌘F", "Suchen im Bereich"), ("⌘I", "Informationen (Metadaten)"),
+        ("⌘1 … ⌘6", "Bereiche Titel … Favoriten"), ("⌘7 / ⌘8", "Hinzufügen / Studio"), ("⌘F", "Suchen im Bereich"), ("⌘I", "Informationen (Metadaten)"),
         ("⌘L", "Liedtext-Seitenleiste"), ("⌥⌘U", "Warteschlange"), ("⇧⌘F", "Großer Player öffnen/schließen"),
         ("⌥⌘M", "Mini-Player-Fenster"), ("⌥⌘E", "Equalizer"), ("⌘N", "Neue Playlist"), ("⇧⌘O", "Musikordner hinzufügen"),
         ("⌘R", "Bibliothek neu einlesen"), ("⌘,", "Einstellungen"), ("⌥⌘Z", "Letzte Metadaten-Änderung widerrufen"),

@@ -527,7 +527,7 @@ struct TrackMenuItems: View {
                     model.openStudio()
                 }
                 .disabled(!single.available)
-                Button("Im Audio Studio schneiden …") {
+                Button("Im Studio schneiden …") {
                     model.studio.openLibraryTrack(single.uid)
                     model.openStudio()
                 }

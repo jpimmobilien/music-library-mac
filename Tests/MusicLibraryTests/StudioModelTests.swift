@@ -502,7 +502,7 @@ final class StudioModelTests: XCTestCase {
         XCTAssertEqual(reopened.history.entries.first?.title, "b", "neueste zuerst")
         XCTAssertNotNil(reopened.history.previousExport(of: try file("Quelle/a.m4a").path))
 
-        reopened.clearHistory()
+        reopened.clearHistory(.add)
         await reopened.waitForPendingWrites()
         let saved = try JSONDecoder().decode(StudioHistory.self, from: Data(contentsOf: json))
         XCTAssertTrue(saved.entries.isEmpty)
@@ -743,6 +743,73 @@ final class StudioModelTests: XCTestCase {
         await model.waitForPendingWrites()
         let saved = try JSONDecoder().decode(StudioHistory.self, from: Data(contentsOf: support.appendingPathComponent("history.json")))
         XCTAssertEqual(saved.entries.first?.undone, true)
+    }
+
+    // MARK: Arbeitsbereiche (2.4)
+
+    /// Studio-Modell, das Warteschlange, Verlauf und Einstellungen an `host` („Hinzufügen“) abgibt.
+    private func makeStudio(host: StudioModel) -> StudioModel {
+        let services = StudioServiceSet(exporter: exporter, waveforms: FakeWaveforms(), local: local, remote: remote, tools: FakeTools(),
+                                        editAnalyzer: NoTrackEditAnalyzer())
+        return StudioModel(app: nil, services: services, preview: nil, demo: false, library: library,
+                           supportDirectory: host.supportDirectory, defaults: host.defaults, workspace: .edit, queueHost: host)
+    }
+
+    func testStudioQueuesOnHostAndShowsOnlyItsOwnJobsAndHistory() async throws {
+        let support = temp.appendingPathComponent("Support", isDirectory: true)
+        let adder = makeModel(support: support)
+        let studio = makeStudio(host: adder)
+        let (music, _) = try libraryTrack()
+
+        // „Hinzufügen“: eine Datei umwandeln
+        adder.importFiles([try file("Quelle/a.m4a")])
+        await waitUntil("Datei bereit") { adder.sourceState == .ready }
+        let first = try XCTUnwrap(adder.addToQueue())
+        await waitUntil("Datei fertig") { adder.job(first.id)?.phase == .done }
+
+        // Studio: Bibliothekstitel schneiden → Auftrag landet in der gemeinsamen Warteschlange
+        studio.openLibraryTrack(7)
+        await waitUntil("Titel bereit") { studio.sourceState == .ready }
+        studio.setSelection(start: 10, end: 40)
+        let job = try XCTUnwrap(studio.addToQueue())
+        XCTAssertTrue(studio.jobs.isEmpty, "das Studio führt keine eigene Warteschlange")
+        XCTAssertEqual(adder.jobs.count, 2)
+        await waitUntil("Schnitt fertig") { adder.job(job.id)?.phase == .done }
+        XCTAssertEqual(adder.job(job.id)?.outputPath, music.appendingPathComponent("Lina Hafen/Nordlicht (Ausschnitt).mp3").path)
+
+        XCTAssertEqual(studio.visibleJobs.map(\.id), [job.id])
+        XCTAssertEqual(adder.visibleJobs.count, 1)
+        XCTAssertNotEqual(adder.visibleJobs.first?.id, job.id)
+        XCTAssertEqual(studio.visibleHistory.map(\.title), ["Nordlicht"])
+        XCTAssertEqual(studio.visibleHistory.first?.fromLibrary, true)
+        XCTAssertEqual(adder.visibleHistory.map(\.title), ["a"])
+        XCTAssertEqual(adder.visibleHistory.first?.fromLibrary, false)
+
+        // Erledigte entfernen und Verlauf löschen betreffen nur den eigenen Bereich
+        studio.clearFinished()
+        XCTAssertEqual(adder.jobs.count, 1)
+        XCTAssertTrue(studio.visibleJobs.isEmpty)
+        adder.clearHistory(.edit)
+        XCTAssertEqual(adder.history.entries.map(\.title), ["a"])
+        await adder.waitForPendingWrites()
+        let saved = try JSONDecoder().decode(StudioHistory.self, from: Data(contentsOf: support.appendingPathComponent("history.json")))
+        XCTAssertEqual(saved.entries.map(\.title), ["a"])
+    }
+
+    func testStudioSharesSettingsWithHost() async throws {
+        let defaults = UserDefaults(suiteName: "StudioModelTests-\(UUID().uuidString)")!
+        let adder = makeModel(defaults: defaults)
+        let studio = makeStudio(host: adder)
+        XCTAssertEqual(studio.settings, adder.settings)
+
+        studio.settings.revealAfterExport = true
+        XCTAssertTrue(adder.settings.revealAfterExport, "Änderung im Studio geht an „Hinzufügen“")
+        let stored = StudioSettings.decode(defaults.data(forKey: StudioSettings.userDefaultsKey))
+        XCTAssertTrue(stored.revealAfterExport, "gespeichert wird einmal, bei „Hinzufügen“")
+
+        adder.settings.librarySubfolder = "Neu"
+        await waitUntil("zurückgespiegelt") { studio.settings.librarySubfolder == "Neu" }
+        XCTAssertEqual(studio.settings, adder.settings)
     }
 
     func testUndoIsRefusedWhenFileChangedAfterReplace() async throws {

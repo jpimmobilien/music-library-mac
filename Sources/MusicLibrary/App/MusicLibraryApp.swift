@@ -234,19 +234,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             if event.window?.isSheet == true || event.window?.attachedSheet != nil { return event }
             // Pfeiltasten tragen zusätzlich .numericPad/.function – für den Vergleich entfernen
             let flags = event.modifierFlags.intersection(.deviceIndependentFlagsMask).subtracting([.numericPad, .function])
-            // Im Audio Studio sind die Listen der Bibliothek nicht sichtbar: Eingabe, Löschen, Pfeile und ⌘A gehen nicht an sie
+            // In „Hinzufügen“ und im Studio sind die Listen der Bibliothek nicht sichtbar: Eingabe, Löschen, Pfeile und ⌘A gehen nicht an sie
             let list = model.studioOpen && !model.playerOpen ? nil : KeyboardFocus.shared.activeList
-            // Audio Studio: Leertaste steuert das Vorhören (nicht den Hauptplayer), I/O setzen Start/Ende am Abspielkopf
-            if model.studioOpen && !model.playerOpen && flags.isEmpty, model.studio.waveform != nil {
+            // Leertaste steuert das Vorhören (nicht den Hauptplayer), I/O setzen Start/Ende am Abspielkopf
+            if !model.playerOpen && flags.isEmpty, let studio = model.activeStudio, studio.waveform != nil {
                 switch event.keyCode {
                 case 49: // Leertaste
-                    model.studio.togglePreview()
+                    studio.togglePreview()
                     return nil
                 case 34: // I
-                    model.studio.setSelection(start: model.studio.playback.playhead, end: model.studio.shownSelection.end)
+                    studio.setSelection(start: studio.playback.playhead, end: studio.shownSelection.end)
                     return nil
                 case 31: // O
-                    model.studio.setSelection(start: model.studio.shownSelection.start, end: model.studio.playback.playhead)
+                    studio.setSelection(start: studio.shownSelection.start, end: studio.playback.playhead)
                     return nil
                 default:
                     break
@@ -401,7 +401,7 @@ struct AppCommands: Commands {
             }
             .keyboardShortcut("i", modifiers: .command)
         }
-        StudioCommands(model: model, studio: model.studio)
+        StudioCommands(model: model, adder: model.addStudio, studio: model.studio)
     }
 
     @MainActor
@@ -412,44 +412,57 @@ struct AppCommands: Commands {
     }
 }
 
-/// Menü „Audio Studio“ (2.2): öffnen (⌘7), Quelle wählen, Vorhören, Auswahl, Werkzeuge.
+/// Menü „Studio“ (2.4): „Hinzufügen“ (⌘7) und Studio (⌘8) öffnen, Quelle wählen, Vorhören, Auswahl, Werkzeuge.
+/// Vorhören und Auswahl wirken auf den gerade offenen Bereich.
 struct StudioCommands: Commands {
     @ObservedObject var model: AppModel
+    @ObservedObject var adder: StudioModel
     @ObservedObject var studio: StudioModel
 
     var body: some Commands {
-        CommandMenu("Audio Studio") {
-            Button("Audio Studio öffnen") { model.openStudio() }
+        CommandMenu("Studio") {
+            Button("Hinzufügen öffnen") { model.open(.add) }
                 .keyboardShortcut("7", modifiers: .command)
+            Button("Studio öffnen") { model.open(.studio) }
+                .keyboardShortcut("8", modifiers: .command)
             Divider()
             Group {
                 Button("Datei öffnen …") {
-                    model.openStudio()
-                    studio.chooseFiles()
+                    model.open(.add)
+                    adder.chooseFiles()
                 }
                 Button("Adresse aus der Zwischenablage einfügen") {
-                    model.openStudio()
-                    studio.pasteFromClipboard()
+                    model.open(.add)
+                    adder.pasteFromClipboard()
                 }
-                Button("Quelle schließen") { studio.clearSource() }
-                    .disabled(studio.source == nil)
+                Button(model.workspace == .studio ? "Titel schließen" : "Quelle schließen") { active?.clearSource() }
+                    .disabled(active?.source == nil)
             }
             Divider()
             Group {
-                Button("Vorhören / Pause (Leertaste)") { studio.togglePreview() }
-                    .disabled(!model.studioOpen || studio.waveform == nil)
-                Button("Auswahl von Anfang an vorhören") { studio.previewSelection() }
-                    .disabled(!model.studioOpen || studio.waveform == nil)
-                Button("Ganze Datei auswählen") { studio.selectAll() }
-                    .disabled(studio.source == nil)
-                Button("Auf die Auswahl zoomen") { studio.zoomToSelection() }
-                    .disabled(studio.waveform == nil || studio.exportWholeFile)
+                Button("Vorhören / Pause (Leertaste)") { active?.togglePreview() }
+                    .disabled(active?.waveform == nil)
+                Button("Auswahl von Anfang an vorhören") { active?.previewSelection() }
+                    .disabled(active?.waveform == nil)
+                Button("Ganze Datei auswählen") { active?.selectAll() }
+                    .disabled(active?.source == nil)
+                Button("Auf die Auswahl zoomen") { active?.zoomToSelection() }
+                    .disabled(active?.waveform == nil || active?.exportWholeFile != false)
             }
             Divider()
             Button("Werkzeuge für Internet-Quellen …") {
-                model.openStudio()
+                model.open(.add)
                 StudioToolsSheet.present()
             }
+        }
+    }
+
+    /// Modell des offenen Bereichs (nil in der Bibliothek).
+    private var active: StudioModel? {
+        switch model.workspace {
+        case .library: return nil
+        case .add: return adder
+        case .studio: return studio
         }
     }
 }

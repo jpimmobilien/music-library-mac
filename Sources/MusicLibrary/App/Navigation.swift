@@ -12,6 +12,47 @@ enum Destination: Hashable {
     case duplicates
 }
 
+/// Was das Hauptfenster zeigt: die Bibliothek (sechs Bereiche) oder einen Arbeitsbereich mit eigenem Eintrag
+/// in der Navigation (2.4: „Hinzufügen“ und „Studio“).
+enum MainWorkspace: String, Hashable, CaseIterable {
+    case library
+    case add
+    case studio
+
+    /// Einträge rechts in der Navigation, in dieser Reihenfolge.
+    static let navigationEntries: [MainWorkspace] = [.add, .studio]
+
+    var label: String {
+        switch self {
+        case .library: return "Bibliothek"
+        case .add: return "Hinzufügen"
+        case .studio: return "Studio"
+        }
+    }
+
+    /// Tastenkürzel (⌘7, ⌘8) – direkt nach den sechs Bereichen.
+    var shortcutDigit: Int? {
+        guard let i = Self.navigationEntries.firstIndex(of: self) else { return nil }
+        return 7 + i
+    }
+
+    func icon(selected: Bool) -> String {
+        switch self {
+        case .library: return Icons.libraryMusic
+        case .add: return selected ? Icons.addMusicFill : Icons.addMusic
+        case .studio: return selected ? Icons.studioFill : Icons.studio
+        }
+    }
+
+    var help: String {
+        switch self {
+        case .library: return "Bibliothek"
+        case .add: return "Hinzufügen – Musik aus dem Netz oder von deinem Mac (⌘7)"
+        case .studio: return "Studio – Titel der Bibliothek schneiden und bearbeiten (⌘8)"
+        }
+    }
+}
+
 /// Seitenleiste rechts (Desktop-Ergänzung): Warteschlange, Liedtext oder Titelinformationen.
 enum SidePanel: String, Hashable {
     case queue

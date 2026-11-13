@@ -37,7 +37,7 @@ extension StudioModel {
     /// Titel der Bibliothek zum Bearbeiten öffnen (Kontextmenü „Titel bearbeiten …“).
     func openTrackEditor(_ uid: Int64) {
         if source?.libraryUid == uid, sourceState == .ready {
-            lib?.studioShow()
+            lib?.studioShow(workspace)
             enterEditMode()
             return
         }

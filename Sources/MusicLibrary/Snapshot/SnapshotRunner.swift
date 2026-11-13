@@ -87,7 +87,7 @@ enum SnapshotRunner {
         func library(_ section: LibrarySection, _ destination: Destination? = nil, panel: SidePanel? = nil, player open: Bool = false, theme: PlayerTheme = .vinylStudio) -> @MainActor (AppModel) -> Void {
             return { m in
                 m.playerOpen = false
-                m.studioOpen = false
+                m.workspace = .library
                 m.section = section
                 m.stacks = destination.map { [section: [$0]] } ?? [:]
                 m.sidePanel = panel
@@ -179,15 +179,17 @@ enum SnapshotRunner {
     @MainActor
     private static func studioScenarios(library: @escaping @MainActor (LibrarySection, Destination?, SidePanel?, Bool, PlayerTheme) -> @MainActor (AppModel) -> Void,
                                         main: @escaping @MainActor () -> AnyView, big: CGSize, small: CGSize, wide: CGSize) -> [Scenario] {
-        /// Grundzustand: Bibliothek mit Mini-Player, Studio geöffnet und zurückgesetzt, dann `setup`.
-        func studio(_ setup: @escaping @MainActor (AppModel, StudioModel) -> Void = { _, _ in }) -> @MainActor (AppModel) -> Void {
+        /// Grundzustand: Bibliothek mit Mini-Player, „Hinzufügen“ (bzw. mit `.studio` das Studio) geöffnet und
+        /// zurückgesetzt, dann `setup` mit dem Modell des Bereichs.
+        func studio(_ workspace: MainWorkspace = .add, _ setup: @escaping @MainActor (AppModel, StudioModel) -> Void = { _, _ in }) -> @MainActor (AppModel) -> Void {
             return { m in
                 for c in LibraryViewContext.allCases { m.setViewOptions(.defaults(for: c), for: c) }
                 library(.tracks, nil, nil, false, .vinylStudio)(m)
                 m.settings.miniPlayerSize = .standard
                 m.settings.playerBackground = .auto
                 StudioDemo.reset(m)
-                setup(m, m.studio)
+                m.workspace = workspace
+                setup(m, workspace == .studio ? m.studio : m.addStudio)
             }
         }
         /// Blatt-Inhalt wie in `GlassSheet` (feste Breite, Höhe nach Inhalt), oben im Bild.
@@ -270,11 +272,11 @@ enum SnapshotRunner {
             }, view: main),
             Scenario(name: "60-studio-werkzeuge", size: CGSize(width: 560, height: 500), prepare: studio { _, s in
                 s.toolStatus = StudioDemo.partialTools
-            }, view: sheet(560) { StudioToolsView(studio: AppModel.shared!.studio, close: {}) }),
+            }, view: sheet(560) { StudioToolsView(studio: AppModel.shared!.addStudio, close: {}) }),
             Scenario(name: "60-studio-werkzeuge-installation", size: CGSize(width: 560, height: 540), prepare: studio { _, s in
                 s.toolStatus = StudioToolStatus()
                 s.toolInstall = .running(ToolInstallProgress(step: "Deno wird geladen und geprüft … 16,2 von 38,4 MB", fraction: 0.42))
-            }, view: sheet(560) { StudioToolsView(studio: AppModel.shared!.studio, close: {}) }),
+            }, view: sheet(560) { StudioToolsView(studio: AppModel.shared!.addStudio, close: {}) }),
             Scenario(name: "60-studio-werkzeuge-fehlen", size: big, prepare: studio { _, s in
                 s.toolStatus = StudioToolStatus()
                 s.urlText = "https://www.youtube.com/watch?v=Beispiel01"
@@ -325,56 +327,56 @@ enum SnapshotRunner {
                 s.waveform = nil
                 s.waveformProgress = 0.42
             }, view: main),
-            Scenario(name: "60-studio-schneiden", size: wide, prepare: studio { m, s in
+            Scenario(name: "60-studio-schneiden", size: wide, prepare: studio(.studio) { m, s in
                 if let src = StudioDemo.libraryTrackSource(m) {
                     StudioDemo.load(s, src, selection: TrimRange(start: 8.4, end: 141.2), playhead: 20.5)
                 }
                 s.cutSaveMode = .replaceOriginal
-                s.history = StudioDemo.history()
+                s.host.history = StudioDemo.history()
             }, view: main),
-            Scenario(name: "60-studio-schneiden-speichern", size: big, prepare: studio { m, s in
+            Scenario(name: "60-studio-schneiden-speichern", size: big, prepare: studio(.studio) { m, s in
                 if let src = StudioDemo.libraryTrackSource(m) {
                     StudioDemo.load(s, src, selection: TrimRange(start: 8.4, end: 141.2))
                 }
                 s.cutSaveMode = .replaceOriginal
                 StudioScrollSeed.pending = .export
             }, view: main),
-            Scenario(name: "60-studio-schneiden-bestaetigen", size: CGSize(width: 480, height: 372), prepare: studio { m, s in
+            Scenario(name: "60-studio-schneiden-bestaetigen", size: CGSize(width: 480, height: 372), prepare: studio(.studio) { m, s in
                 if let src = StudioDemo.libraryTrackSource(m) {
                     StudioDemo.load(s, src, selection: TrimRange(start: 8.4, end: 141.2))
                 }
                 s.cutSaveMode = .replaceOriginal
             }, view: sheet(480) { StudioReplaceDialogView(studio: AppModel.shared!.studio, close: {}) }),
-            Scenario(name: "62-studio-bearbeiten", size: wide, prepare: studio { m, s in
+            Scenario(name: "62-studio-bearbeiten", size: wide, prepare: studio(.studio) { m, s in
                 editDemo(m, s, configured: true)
-                s.history = StudioDemo.history()
+                s.host.history = StudioDemo.history()
             }, view: main),
-            Scenario(name: "62-studio-bearbeiten-standard", size: big, prepare: studio { m, s in
+            Scenario(name: "62-studio-bearbeiten-standard", size: big, prepare: studio(.studio) { m, s in
                 editDemo(m, s, configured: false)
                 s.trackAnalysis = nil
                 s.trackAnalysisProgress = 0.42
             }, view: main),
-            Scenario(name: "62-studio-bearbeiten-regler", size: big, prepare: studio { m, s in
+            Scenario(name: "62-studio-bearbeiten-regler", size: big, prepare: studio(.studio) { m, s in
                 editDemo(m, s, configured: true)
                 s.trackEdit.autoTune = true
                 s.trackEdit.semitones = -2
                 StudioScrollSeed.pending = .tools
             }, view: main),
-            Scenario(name: "62-studio-bearbeiten-werkzeuge", size: big, prepare: studio { m, s in
+            Scenario(name: "62-studio-bearbeiten-werkzeuge", size: big, prepare: studio(.studio) { m, s in
                 editDemo(m, s, configured: true)
                 s.trackEdit.autoTune = true
                 StudioScrollSeed.pending = .export
             }, view: main),
-            Scenario(name: "62-studio-bearbeiten-schmal", size: small, prepare: studio { m, s in
+            Scenario(name: "62-studio-bearbeiten-schmal", size: small, prepare: studio(.studio) { m, s in
                 editDemo(m, s, configured: true)
                 StudioScrollSeed.pending = .export
             }, view: main),
-            Scenario(name: "62-studio-bearbeiten-bestaetigen", size: CGSize(width: 480, height: 400), prepare: studio { m, s in
+            Scenario(name: "62-studio-bearbeiten-bestaetigen", size: CGSize(width: 480, height: 400), prepare: studio(.studio) { m, s in
                 editDemo(m, s, configured: true)
             }, view: sheet(480) { StudioReplaceDialogView(studio: AppModel.shared!.studio, close: {}) }),
             Scenario(name: "60-studio-verlauf-loeschen", size: CGSize(width: 440, height: 210), prepare: studio { _, s in
                 s.history = StudioDemo.history()
-            }, view: sheet(440) { StudioClearHistoryDialogView(studio: AppModel.shared!.studio, close: {}) }),
+            }, view: sheet(440) { StudioClearHistoryDialogView(studio: AppModel.shared!.addStudio, scope: .add, close: {}) }),
             Scenario(name: "60-studio-schmal", size: small, prepare: studio { _, s in
                 StudioDemo.load(s, StudioDemo.youtubeSource(), selection: TrimRange(start: 42.3, end: 190.5), playhead: 61.8)
                 withJobs(s)
@@ -384,8 +386,20 @@ enum SnapshotRunner {
                 withJobs(s)
                 StudioScrollSeed.pending = .export
             }, view: main),
+            Scenario(name: "63-studio-auswahl", size: big, prepare: studio(.studio) { m, s in
+                s.host.history = StudioDemo.history()
+            }, view: main),
+            Scenario(name: "63-studio-auswahl-breit", size: wide, prepare: studio(.studio) { m, s in
+                s.host.jobs = StudioDemo.jobs()
+                s.host.history = StudioDemo.history()
+                StudioDemo.queueTab = .history
+            }, view: main),
+            Scenario(name: "63-studio-auswahl-schmal", size: small, prepare: studio(.studio), view: main),
+            Scenario(name: "63-studio-verlauf-loeschen", size: CGSize(width: 440, height: 210), prepare: studio(.studio) { _, s in
+                s.host.history = StudioDemo.history()
+            }, view: sheet(440) { StudioClearHistoryDialogView(studio: AppModel.shared!.addStudio, scope: .edit, close: {}) }),
             Scenario(name: "60-studio-einstellungen", size: CGSize(width: 860, height: 760), prepare: studio { m, _ in
-                m.studioOpen = false
+                m.workspace = .library
                 WindowRouter.shared.pendingSettingsCategory = SettingsCategory.studio.rawValue
             }, view: { AnyView(SettingsView()) }),
         ]

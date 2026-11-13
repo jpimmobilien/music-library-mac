@@ -9,8 +9,8 @@ struct StudioSettingsPane: View {
     @EnvironmentObject private var model: AppModel
 
     var body: some View {
-        StudioSettingsContent(studio: model.studio)
-            .onAppear { if !model.studio.demo { model.studio.refreshToolStatus() } }
+        StudioSettingsContent(studio: model.addStudio)
+            .onAppear { if !model.addStudio.demo { model.addStudio.refreshToolStatus() } }
     }
 }
 
@@ -65,9 +65,9 @@ private struct StudioSettingsContent: View {
                 MusicToggle(isOn: $studio.settings.revealAfterExport, label: "Nach dem Export im Finder zeigen")
             }
             Hairline()
-            SettingRow(title: "Audio Studio öffnen", text: "Auch über ⌘7 oder den siebten Eintrag der Navigation.") {
-                PillButton(title: "Öffnen", icon: Icons.studio) {
-                    model.openStudio()
+            SettingRow(title: "„Hinzufügen“ öffnen", text: "Auch über ⌘7 oder den Eintrag „Hinzufügen“ in der Navigation. Titel der Bibliothek bearbeitest du im Studio (⌘8).") {
+                PillButton(title: "Öffnen", icon: Icons.addMusic) {
+                    model.open(.add)
                     if let main = MainWindowRef.window { main.makeKeyAndOrderFront(nil) }
                 }
             }

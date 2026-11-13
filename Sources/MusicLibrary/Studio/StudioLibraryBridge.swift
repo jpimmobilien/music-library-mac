@@ -21,10 +21,15 @@ protocol StudioLibraryAccess: AnyObject {
     func studioToast(_ text: String, action: String?, isError: Bool, perform: (() -> Void)?)
     /// Audio Studio anzeigen.
     func studioShow()
+    /// Arbeitsbereich anzeigen („Hinzufügen“ bzw. „Studio“, 2.4).
+    func studioShow(_ workspace: StudioWorkspace)
     /// Titel im Hauptplayer abspielen.
     func studioPlay(uid: Int64)
     /// Änderungen beobachten: Bibliothek neu geladen bzw. Studio ein-/ausgeblendet.
     func studioObserve(libraryChanged: @escaping @MainActor @Sendable () -> Void, visibilityChanged: @escaping @MainActor @Sendable (Bool) -> Void) -> [AnyCancellable]
+    /// Wie oben, mit Sichtbarkeit des einen Arbeitsbereichs.
+    func studioObserve(workspace: StudioWorkspace, libraryChanged: @escaping @MainActor @Sendable () -> Void,
+                       visibilityChanged: @escaping @MainActor @Sendable (Bool) -> Void) -> [AnyCancellable]
     /// Equalizer und Bass des Players (für „wie im Player“ beim Bearbeiten).
     var studioPlayerEffects: AudioEffectsSettings? { get }
     /// Eigene Equalizer-Voreinstellungen.
@@ -34,6 +39,11 @@ protocol StudioLibraryAccess: AnyObject {
 extension StudioLibraryAccess {
     var studioPlayerEffects: AudioEffectsSettings? { nil }
     var studioEqUserPresets: [EqUserPreset] { [] }
+    func studioShow(_ workspace: StudioWorkspace) { studioShow() }
+    func studioObserve(workspace: StudioWorkspace, libraryChanged: @escaping @MainActor @Sendable () -> Void,
+                       visibilityChanged: @escaping @MainActor @Sendable (Bool) -> Void) -> [AnyCancellable] {
+        studioObserve(libraryChanged: libraryChanged, visibilityChanged: visibilityChanged)
+    }
 }
 
 extension AppModel: StudioLibraryAccess {
@@ -52,6 +62,7 @@ extension AppModel: StudioLibraryAccess {
     }
 
     func studioShow() { openStudio() }
+    func studioShow(_ workspace: StudioWorkspace) { open(workspace == .edit ? .studio : .add) }
     var studioPlayerEffects: AudioEffectsSettings? { settings.effects }
     var studioEqUserPresets: [EqUserPreset] { settings.eqUserPresets }
 
@@ -64,7 +75,19 @@ extension AppModel: StudioLibraryAccess {
         let lib = $index.dropFirst().sink { _ in
             Task { @MainActor in libraryChanged() }
         }
-        let vis = $studioOpen.removeDuplicates().sink { open in
+        let vis = $workspace.map { $0 != .library }.removeDuplicates().sink { open in
+            Task { @MainActor in visibilityChanged(open) }
+        }
+        return [lib, vis]
+    }
+
+    func studioObserve(workspace: StudioWorkspace, libraryChanged: @escaping @MainActor @Sendable () -> Void,
+                       visibilityChanged: @escaping @MainActor @Sendable (Bool) -> Void) -> [AnyCancellable] {
+        let lib = $index.dropFirst().sink { _ in
+            Task { @MainActor in libraryChanged() }
+        }
+        let target: MainWorkspace = workspace == .edit ? .studio : .add
+        let vis = $workspace.map { $0 == target }.removeDuplicates().sink { open in
             Task { @MainActor in visibilityChanged(open) }
         }
         return [lib, vis]

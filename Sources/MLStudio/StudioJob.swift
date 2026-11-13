@@ -188,11 +188,15 @@ public struct StudioHistoryEntry: Codable, Hashable, Sendable, Identifiable {
     public var backupPath: String?
     /// „Rückgängig“ wurde ausgeführt.
     public var undone: Bool = false
+    /// Bearbeitung eines Bibliothekstitels im Studio (2.4). nil bei älteren Einträgen – dann gilt ein ersetztes
+    /// Original als Bearbeitung (siehe `StudioWorkspace.includes`).
+    public var fromLibrary: Bool?
 
     public init(id: UUID = UUID(), date: Date = Date(), sourceKind: SourceKind, source: String, title: String, artist: String,
                 outputPath: String, formatSummary: String, duration: Double?, imported: Bool, succeeded: Bool, error: String? = nil,
-                backupPath: String? = nil) {
+                backupPath: String? = nil, fromLibrary: Bool? = nil) {
         self.backupPath = backupPath
+        self.fromLibrary = fromLibrary
         self.id = id
         self.date = date
         self.sourceKind = sourceKind
@@ -220,10 +224,36 @@ public struct StudioHistory: Codable, Hashable, Sendable {
         if entries.count > Self.limit { entries.removeLast(entries.count - Self.limit) }
     }
 
+    /// Einträge eines Arbeitsbereichs entfernen (die des anderen bleiben).
+    public mutating func clear(_ workspace: StudioWorkspace) {
+        entries.removeAll { workspace.includes($0) }
+    }
+
     /// Wurde diese Quelle schon einmal erfolgreich exportiert? (für die Doppel-Warnung)
     public func previousExport(of source: String) -> StudioHistoryEntry? {
         entries.first(where: { $0.succeeded && $0.source == source })
     }
+}
+
+/// Arbeitsbereiche (2.4): „Hinzufügen“ (Internet-Adressen und Dateien laden, schneiden, umwandeln) und „Studio“
+/// (Titel der Bibliothek schneiden und bearbeiten). Beide teilen sich Warteschlange und Verlauf; jeder Bereich
+/// zeigt nur seine eigenen Aufträge und Einträge.
+public enum StudioWorkspace: String, CaseIterable, Sendable {
+    case add
+    case edit
+
+    public func includes(_ job: StudioJob) -> Bool {
+        (job.source.libraryUid != nil) == (self == .edit)
+    }
+
+    public func includes(_ entry: StudioHistoryEntry) -> Bool {
+        let library = entry.fromLibrary ?? (entry.backupPath != nil)
+        return library == (self == .edit)
+    }
+
+    public func jobs(_ all: [StudioJob]) -> [StudioJob] { all.filter(includes) }
+
+    public func entries(_ all: [StudioHistoryEntry]) -> [StudioHistoryEntry] { all.filter(includes) }
 }
 
 /// Erkennung doppelter Importe (rein, testbar).

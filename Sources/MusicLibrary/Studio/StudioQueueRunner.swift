@@ -93,8 +93,10 @@ extension StudioModel {
         jobs.removeAll { $0.id == id }
     }
 
-    func clearFinished() {
-        let finished = jobs.filter { $0.phase.isFinished && jobTasks[$0.id] == nil }.map(\.id)
+    /// Erledigte Aufträge eines Arbeitsbereichs entfernen (nil = alle).
+    func clearFinished(_ scope: StudioWorkspace? = nil) {
+        if let queueHost { queueHost.clearFinished(scope ?? workspace); return }
+        let finished = jobs.filter { $0.phase.isFinished && jobTasks[$0.id] == nil && (scope?.includes($0) ?? true) }.map(\.id)
         guard !finished.isEmpty else { return }
         for id in finished {
             removeWorkDirectory(id)
@@ -141,6 +143,8 @@ extension StudioModel {
 
     /// Nächsten Auftrag starten, falls keiner läuft.
     func scheduleNext() {
+        // Das Studio reicht Aufträge an „Hinzufügen“ weiter – nur dort läuft die Warteschlange.
+        if let queueHost { queueHost.scheduleNext(); return }
         guard runningJobID == nil, let id = StudioQueueLogic.nextRunnable(jobs) else { return }
         if jobTasks[id] != nil, let gate = jobGates[id] {
             // Angehaltene Umwandlung, die wieder an der Reihe ist
@@ -304,7 +308,8 @@ extension StudioModel {
                                            artist: job.metadata.artist, outputPath: finalPath,
                                            formatSummary: Self.formatSummary(result, options: job.options) + Self.editSummary(job.edit),
                                            duration: result.duration > 0 ? result.duration : (job.trim?.length ?? job.source.duration),
-                                           imported: job.destination.importsIntoLibrary, succeeded: true, backupPath: backupPath)
+                                           imported: job.destination.importsIntoLibrary, succeeded: true, backupPath: backupPath,
+                                           fromLibrary: job.source.libraryUid != nil)
             addHistory(entry)
             if job.destination.replacesOriginal { notifyReplaced(path: finalPath, historyID: entry.id) }
             queueRun.done += 1
@@ -329,7 +334,8 @@ extension StudioModel {
                                                   title: job.metadata.title.studioTrimmed.isEmpty ? job.source.title : job.metadata.title,
                                                   artist: job.metadata.artist, outputPath: "", formatSummary: job.options.summary(),
                                                   duration: job.trim?.length ?? job.source.duration,
-                                                  imported: false, succeeded: false, error: message))
+                                                  imported: false, succeeded: false, error: message,
+                                                  fromLibrary: job.source.libraryUid != nil))
                 }
                 // Angefangene Downloads bleiben für „Wiederholen“ liegen (Aufräumen beim Entfernen/Beenden).
             }
@@ -499,10 +505,11 @@ extension StudioModel {
         saveHistory()
     }
 
-    func clearHistory() {
-        guard !history.entries.isEmpty else { return }
-        history = StudioHistory()
-        saveHistory()
+    /// Verlauf eines Arbeitsbereichs löschen (die Einträge des anderen bleiben).
+    func clearHistory(_ scope: StudioWorkspace) {
+        let before = history.entries.count
+        history.clear(scope)
+        if history.entries.count != before { saveHistory() }
     }
 
     /// Verlauf atomar speichern (Hintergrund, Reihenfolge bleibt erhalten).

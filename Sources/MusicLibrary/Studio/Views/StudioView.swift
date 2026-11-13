@@ -4,16 +4,19 @@ import UniformTypeIdentifiers
 import MLCore
 import MLStudio
 
-// Audio Studio (2.2) – Hauptansicht im Fenster der Bibliothek (siebter Eintrag der Navigation).
+// „Hinzufügen“ und „Studio“ (2.4; bis 2.3 ein gemeinsames Audio Studio) – Hauptansicht im Fenster der Bibliothek.
 //
 // Aufbau: links die Arbeitsspalte (Kopf, Quelle, Ausschnitt, Format, Metadaten, Ziel) mit schwebender
 // Exportleiste; rechts – bei breitem Fenster – die Glas-Spalte mit Warteschlange und Verlauf, sonst als
-// Abschnitt unten. Dateien lassen sich auf das ganze Studio ziehen.
+// Abschnitt unten. „Hinzufügen“: Adressen und Dateien (auch per Ziehen); „Studio“: Titel der Bibliothek.
+// Beide Bereiche teilen sich Warteschlange und Verlauf (bei „Hinzufügen“), jeder zeigt nur seine Aufträge.
 
 struct StudioView: View {
     @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var player: PlayerService
     @ObservedObject var studio: StudioModel
+    /// Modell mit Warteschlange und Verlauf (bei „Hinzufügen“ dasselbe wie `studio`).
+    @ObservedObject var host: StudioModel
     @Environment(\.musicColors) private var colors
     @State private var dropTargeted = false
     @State private var queueTab: StudioQueueTab = .queue
@@ -29,14 +32,14 @@ struct StudioView: View {
     var body: some View {
         GeometryReader { geo in
             // Eigene Spalte nur, wenn es Aufträge oder Verlauf gibt – sonst bekommt die Arbeitsfläche die ganze Breite
-            let wide = geo.size.width >= Self.columnBreakpoint && (!studio.jobs.isEmpty || !studio.history.entries.isEmpty)
+            let wide = geo.size.width >= Self.columnBreakpoint && studio.hasQueueOrHistory
             let queueWidth: CGFloat = geo.size.width >= 1440 ? 372 : 336
             let bottom = Chrome.contentBottom(miniPlayer: player.current != nil)
             HStack(alignment: .top, spacing: 18) {
-                StudioMainColumn(studio: studio, wide: wide, bottomInset: bottom, queueTab: $queueTab, askDuplicates: $askDuplicates)
+                StudioMainColumn(studio: studio, host: host, wide: wide, bottomInset: bottom, queueTab: $queueTab, askDuplicates: $askDuplicates)
                     .frame(maxWidth: .infinity)
                 if wide {
-                    StudioQueuePanel(studio: studio, tab: $queueTab, column: true)
+                    StudioQueuePanel(studio: host, scope: studio.workspace, tab: $queueTab, column: true)
                         .frame(width: queueWidth)
                         .padding(.top, Chrome.contentTop + 2)
                         .padding(.bottom, bottom)
@@ -59,20 +62,20 @@ struct StudioView: View {
         .overlay { if dropTargeted { StudioDropOverlay().transition(.opacity) } }
         .animation(Motion.easeOut(Motion.short), value: dropTargeted)
         .onDrop(of: [UTType.fileURL, UTType.url, UTType.plainText], isTargeted: $dropTargeted) { providers in
-            StudioDrop.handle(providers, studio: studio)
+            StudioDrop.handle(providers, studio: studio, model: model)
         }
         .onAppear {
-            if !studio.demo { studio.refreshToolStatus() }
+            if !studio.demo && studio.workspace == .add { studio.refreshToolStatus() }
             if studio.demo && StudioDemo.askDuplicates { askDuplicates = true }
-            if studio.jobs.isEmpty && !studio.history.entries.isEmpty { queueTab = .history }
+            if studio.visibleJobs.isEmpty && !studio.visibleHistory.isEmpty { queueTab = .history }
             if studio.demo, let tab = StudioDemo.queueTab { queueTab = tab }
         }
-        .onChange(of: studio.jobs.count) { count in
+        .onChange(of: studio.visibleJobs.count) { count in
             if count > 0 { queueTab = .queue }
         }
         .onChange(of: studio.source?.id) { _ in askDuplicates = false }
         .accessibilityElement(children: .contain)
-        .accessibilityLabel("Audio Studio")
+        .accessibilityLabel(studio.workspace == .edit ? "Studio" : "Hinzufügen")
     }
 }
 
@@ -80,6 +83,7 @@ struct StudioView: View {
 private struct StudioMainColumn: View {
     @EnvironmentObject private var model: AppModel
     @ObservedObject var studio: StudioModel
+    @ObservedObject var host: StudioModel
     @Environment(\.musicColors) private var colors
     let wide: Bool
     let bottomInset: CGFloat
@@ -95,15 +99,19 @@ private struct StudioMainColumn: View {
                 ScrollViewReader { proxy in
                     ScrollView(.vertical) {
                         VStack(alignment: .leading, spacing: 16) {
-                            StudioHeader(studio: studio, showsJobs: !wide) {
+                            StudioHeader(studio: studio, host: host, showsJobs: !wide) {
                                 withAnimation(Motion.easeOut()) { proxy.scrollTo(StudioAnchor.queue, anchor: .top) }
                             }
                             .studioAnchor(.top)
-                            if studio.mode != .edit {
+                            if studio.workspace == .add {
                                 StudioSourceInput(studio: studio)
                             }
                             if studio.isEmptyStudio {
-                                StudioEmptyState(studio: studio, columns: width >= 760 ? 3 : 1)
+                                if studio.workspace == .edit {
+                                    StudioTrackPicker(studio: studio, width: width)
+                                } else {
+                                    StudioEmptyState(studio: studio, columns: width >= 640 ? 2 : 1)
+                                }
                             } else {
                                 StudioSourceCard(studio: studio)
                             }
@@ -117,8 +125,8 @@ private struct StudioMainColumn: View {
                                 }
                                 exportSection(twoColumns: twoColumns, width: width)
                             }
-                            if !wide && (!studio.jobs.isEmpty || !studio.history.entries.isEmpty) {
-                                StudioQueuePanel(studio: studio, tab: $queueTab, column: false)
+                            if !wide && studio.hasQueueOrHistory {
+                                StudioQueuePanel(studio: host, scope: studio.workspace, tab: $queueTab, column: false)
                                     .studioAnchor(.queue)
                             }
                         }
@@ -212,6 +220,7 @@ private struct StudioMainColumn: View {
 /// Kopf: großer Titel, Unterzeile, rechts Aufträge (schmales Fenster) und Werkzeug-Status.
 private struct StudioHeader: View {
     @ObservedObject var studio: StudioModel
+    @ObservedObject var host: StudioModel
     @Environment(\.musicColors) private var colors
     let showsJobs: Bool
     let showQueue: () -> Void
@@ -220,7 +229,7 @@ private struct StudioHeader: View {
         HStack(alignment: .center, spacing: 12) {
             VStack(alignment: .leading, spacing: 2) {
                 HStack(spacing: 8) {
-                    Text(studio.mode == .edit ? "Titel bearbeiten" : (studio.isLibraryTrack ? "Schneiden" : "Audio Studio"))
+                    Text(title)
                         .textStyle(Typo.headlineLarge)
                         .foregroundColor(colors.textPrimary)
                         .lineLimit(1)
@@ -233,11 +242,7 @@ private struct StudioHeader: View {
                             .truncationMode(.tail)
                     }
                 }
-                Text(studio.mode == .edit
-                     ? "Klang dauerhaft verändern – mit Sicherung des Originals und „Rückgängig“."
-                     : studio.isLibraryTrack
-                     ? "Titel aus deiner Bibliothek – speichere den Ausschnitt als neue Datei oder ersetze das Original."
-                     : "Laden, schneiden und umwandeln – direkt in deine Musikbibliothek.")
+                Text(subtitle)
                     .textStyle(Typo.bodyMedium)
                     .foregroundColor(colors.textSecondary)
                     .lineLimit(1)
@@ -270,9 +275,27 @@ private struct StudioHeader: View {
                 .help("Zur Warteschlange")
                 .accessibilityLabel("Warteschlange: \(chip)")
             }
-            StudioToolsChip(studio: studio)
+            if studio.workspace == .add {
+                StudioToolsChip(studio: studio)
+            }
         }
         .padding(.horizontal, 4)
+    }
+
+    private var title: String {
+        if studio.isLibraryTrack { return studio.mode == .edit ? "Titel bearbeiten" : "Schneiden" }
+        return studio.workspace == .edit ? "Studio" : "Hinzufügen"
+    }
+
+    private var subtitle: String {
+        if studio.isLibraryTrack {
+            return studio.mode == .edit
+                ? "Klang dauerhaft verändern – mit Sicherung des Originals und „Rückgängig“."
+                : "Speichere den Ausschnitt als neue Datei oder ersetze das Original."
+        }
+        return studio.workspace == .edit
+            ? "Titel deiner Bibliothek schneiden und klanglich bearbeiten – das Original wird vorher gesichert."
+            : "Musik aus dem Netz oder von deinem Mac laden, schneiden und umwandeln – direkt in deine Bibliothek."
     }
 
     private var modeBinding: Binding<StudioModel.StudioMode> {
@@ -325,8 +348,9 @@ private struct StudioDropOverlay: View {
 
 @MainActor
 enum StudioDrop {
-    /// Dateien → `importFiles`; ein Link (z. B. aus Safari) → Eingabefeld und Analyse.
-    static func handle(_ providers: [NSItemProvider], studio: StudioModel) -> Bool {
+    /// Dateien → `importFiles`; ein Link (z. B. aus Safari) → Eingabefeld und Analyse. Im Studio öffnet ein
+    /// Titel der Bibliothek den Editor; alles andere geht an „Hinzufügen“.
+    static func handle(_ providers: [NSItemProvider], studio: StudioModel, model: AppModel) -> Bool {
         guard !providers.isEmpty else { return false }
         let group = DispatchGroup()
         let found = Collected()
@@ -360,6 +384,16 @@ enum StudioDrop {
         group.notify(queue: .main) {
             Task { @MainActor in
                 let (files, links) = found.result()
+                var studio = studio
+                if studio.workspace == .edit {
+                    if links.isEmpty, files.count == 1, let track = model.index.tracks.first(where: { $0.path == files[0].path }) {
+                        studio.openTrackEditor(track.uid)
+                        return
+                    }
+                    // Neue Dateien und Adressen gehören zu „Hinzufügen“
+                    model.open(.add)
+                    studio = model.addStudio
+                }
                 if !files.isEmpty {
                     studio.importFiles(files.sorted { $0.lastPathComponent.localizedStandardCompare($1.lastPathComponent) == .orderedAscending })
                 } else if !links.isEmpty {

@@ -129,8 +129,13 @@ struct SectionHost: View {
     var body: some View {
         let destination = model.currentDestination
         ZStack {
-            if model.studioOpen {
-                StudioView(studio: model.studio)
+            if model.workspace == .add {
+                StudioView(studio: model.addStudio, host: model.addStudio)
+                    .id(MainWorkspace.add)
+                    .transition(.opacity.combined(with: .offset(x: 12)))
+            } else if model.workspace == .studio {
+                StudioView(studio: model.studio, host: model.addStudio)
+                    .id(MainWorkspace.studio)
                     .transition(.opacity.combined(with: .offset(x: 12)))
             } else {
                 ZStack {
@@ -158,27 +163,38 @@ struct SectionHost: View {
             }
         }
         .animation(Motion.easeOut(Motion.medium), value: sectionID(destination))
-        .animation(Motion.easeOut(Motion.medium), value: model.studioOpen)
+        .animation(Motion.easeOut(Motion.medium), value: model.workspace)
     }
 
     private func sectionID(_ d: Destination?) -> String { "\(model.section.rawValue)/\(String(describing: d))" }
 }
 
-/// Schwebende Glas-Navigation: sechs Bereiche der Bibliothek und – als siebter Eintrag – das Audio Studio,
-/// mit gleitender Rosé-Linse (Android `FloatingNavBar`).
+/// Schwebende Glas-Navigation: sechs Bereiche der Bibliothek, dahinter – durch eine feine Linie getrennt – die
+/// Arbeitsbereiche „Hinzufügen“ und „Studio“, mit gleitender Rosé-Linse (Android `FloatingNavBar`).
 struct NavBar: View {
     @EnvironmentObject private var model: AppModel
     @Environment(\.musicColors) private var colors
 
-    /// Breite der Leiste (sieben Einträge).
-    static let width: CGFloat = 588
+    /// Breite eines Eintrags.
+    static let itemWidth: CGFloat = 80
+    /// Abstand für die Trennlinie zwischen Bibliothek und Arbeitsbereichen.
+    static let dividerGap: CGFloat = 9
+    /// Breite der Leiste (sechs Bereiche, zwei Arbeitsbereiche).
+    static var width: CGFloat {
+        CGFloat(LibrarySection.allCases.count + MainWorkspace.navigationEntries.count) * itemWidth + dividerGap + 10
+    }
 
     var body: some View {
         let entries = LibrarySection.allCases
-        let count = entries.count + 1
-        let index = CGFloat(model.studioOpen ? entries.count : (entries.firstIndex(of: model.section) ?? 0))
+        let workspaces = MainWorkspace.navigationEntries
+        let lensX: CGFloat = {
+            if let i = workspaces.firstIndex(of: model.workspace) {
+                return 5 + CGFloat(entries.count + i) * Self.itemWidth + Self.dividerGap
+            }
+            return 5 + CGFloat(entries.firstIndex(of: model.section) ?? 0) * Self.itemWidth
+        }()
         GeometryReader { geo in
-            let itemWidth = max(0, geo.size.width - 10) / CGFloat(count)
+            let itemWidth = Self.itemWidth
             ZStack(alignment: .leading) {
                 // Linse unter dem aktiven Eintrag
                 RoundedRectangle(cornerRadius: 22, style: .continuous)
@@ -186,18 +202,25 @@ struct NavBar: View {
                     .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous)
                         .strokeBorder(LinearGradient(colors: [colors.glassEdgeLight.opacity(0.6), .clear], startPoint: .top, endPoint: .bottom), lineWidth: 0.7))
                     .frame(width: itemWidth, height: geo.size.height - 10)
-                    .offset(x: 5 + itemWidth * index)
-                    .animation(Motion.lensSpring, value: index)
+                    .offset(x: lensX)
+                    .animation(Motion.lensSpring, value: lensX)
                 HStack(spacing: 0) {
                     ForEach(entries, id: \.self) { s in
-                        let selected = !model.studioOpen && s == model.section
+                        let selected = model.workspace == .library && s == model.section
                         NavItem(icon: s.icon(selected: selected), label: s.label, help: String("\(s.label) (⌘\(s.shortcutDigit))"),
                                 selected: selected) { model.select(s) }
                             .frame(width: itemWidth, height: geo.size.height - 10)
                     }
-                    NavItem(icon: model.studioOpen ? Icons.studioFill : Icons.studio, label: "Studio", help: "Audio Studio (⌘7)",
-                            selected: model.studioOpen) { model.openStudio() }
-                        .frame(width: itemWidth, height: geo.size.height - 10)
+                    Capsule()
+                        .fill(colors.textPrimary.opacity(0.14))
+                        .frame(width: 1, height: geo.size.height * 0.42)
+                        .frame(width: Self.dividerGap)
+                        .accessibilityHidden(true)
+                    ForEach(workspaces, id: \.self) { w in
+                        let selected = model.workspace == w
+                        NavItem(icon: w.icon(selected: selected), label: w.label, help: w.help, selected: selected) { model.open(w) }
+                            .frame(width: itemWidth, height: geo.size.height - 10)
+                    }
                 }
                 .padding(.horizontal, 5)
             }

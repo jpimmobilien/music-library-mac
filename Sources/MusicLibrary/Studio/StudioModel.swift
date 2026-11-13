@@ -28,11 +28,26 @@ final class StudioModel: ObservableObject {
     let preview: StudioPreviewing?
     /// Demo-Modus (Vorschaubilder): keine Datei- und Netzwerkzugriffe.
     let demo: Bool
+    /// Arbeitsbereich (2.4): „Hinzufügen“ lädt und wandelt neue Titel, „Studio“ bearbeitet Titel der Bibliothek.
+    let workspace: StudioWorkspace
+    /// Studio: Warteschlange, Verlauf und Einstellungen liegen bei „Hinzufügen“ (eine gemeinsame Warteschlange,
+    /// ein Verlauf). nil = dieses Modell führt sie selbst.
+    private(set) weak var queueHost: StudioModel?
+    /// Modell mit Warteschlange und Verlauf.
+    var host: StudioModel { queueHost ?? self }
 
     // MARK: Einstellungen (gespeichert unter `StudioSettings.userDefaultsKey`)
 
     @Published var settings: StudioSettings {
-        didSet { if settings != oldValue { saveSettings() } }
+        didSet {
+            guard settings != oldValue else { return }
+            // Studio: Einstellungen gehören „Hinzufügen“ (dort gespeichert und an das Studio zurückgespiegelt).
+            if let queueHost {
+                if queueHost.settings != settings { queueHost.settings = settings }
+            } else {
+                saveSettings()
+            }
+        }
     }
 
     // MARK: Werkzeuge für Internet-Quellen
@@ -210,16 +225,31 @@ final class StudioModel: ObservableObject {
     nonisolated static let ioQueue = DispatchQueue(label: "MusicLibrary.AudioStudio.io", qos: .utility)
 
     init(app: AppModel?, services: StudioServiceSet, preview: StudioPreviewing?, demo: Bool,
-         library: StudioLibraryAccess? = nil, supportDirectory: URL? = nil, defaults: UserDefaults = .standard) {
+         library: StudioLibraryAccess? = nil, supportDirectory: URL? = nil, defaults: UserDefaults = .standard,
+         workspace: StudioWorkspace = .add, queueHost: StudioModel? = nil) {
         self.app = app
         self.services = services
         self.preview = preview
         self.demo = demo
+        self.workspace = workspace
+        self.queueHost = queueHost
         self.libraryOverride = library
         self.supportDirectory = supportDirectory ?? StudioServiceSet.supportDirectory
         self.defaults = defaults
-        self.settings = demo ? StudioSettings() : StudioSettings.decode(defaults.data(forKey: StudioSettings.userDefaultsKey))
+        if let queueHost {
+            self.settings = queueHost.settings
+        } else {
+            self.settings = demo ? StudioSettings() : StudioSettings.decode(defaults.data(forKey: StudioSettings.userDefaultsKey))
+        }
         self.options = settings.options(for: settings.lastFormat)
+        if let queueHost {
+            // Änderungen in „Hinzufügen“ (Einstellungsfenster, gemerktes Format) übernehmen. Verzögert, weil
+            // @Published vor der Änderung meldet.
+            observers.append(queueHost.$settings.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] _ in
+                guard let self, let host = self.queueHost, self.settings != host.settings else { return }
+                self.settings = host.settings
+            })
+        }
         guard !demo else { return }
         startUp()
     }
@@ -231,8 +261,10 @@ final class StudioModel: ObservableObject {
 
     /// Beobachter, Aufräumen alter Reste, Verlauf laden.
     private func startUp() {
-        observers = lib?.studioObserve(libraryChanged: { [weak self] in self?.libraryDidChange() },
-                                       visibilityChanged: { [weak self] open in self?.studioVisibilityChanged(open) }) ?? []
+        observers += lib?.studioObserve(workspace: workspace, libraryChanged: { [weak self] in self?.libraryDidChange() },
+                                        visibilityChanged: { [weak self] open in self?.studioVisibilityChanged(open) }) ?? []
+        // Studio: Zwischenspeicher, Verlauf und Beenden regelt „Hinzufügen“.
+        guard queueHost == nil else { return }
         // Reste einer früheren Sitzung (Zwischenspeicher, angefangene Downloads) löschen – die Warteschlange wird
         // nicht gespeichert, sie werden also nicht mehr gebraucht. Erst umbenennen (sofort), dann im Hintergrund
         // löschen, damit neue Aufträge nie in einen Ordner schreiben, der gerade gelöscht wird.
@@ -263,7 +295,7 @@ final class StudioModel: ObservableObject {
 
     private func studioVisibilityChanged(_ open: Bool) {
         if open {
-            if !toolsChecked { refreshToolStatus() }
+            if workspace == .add, !toolsChecked { refreshToolStatus() }
         } else {
             stopPreview()
         }
@@ -369,7 +401,7 @@ final class StudioModel: ObservableObject {
     /// Gleiche Schlüssel wie `previousExport` der Oberfläche (Adresse bzw. Dateipfad).
     var previousExportEntry: StudioHistoryEntry? {
         guard let source else { return nil }
-        return history.previousExport(of: Self.historyKey(source))
+        return host.history.previousExport(of: Self.historyKey(source))
     }
 
     /// Bearbeiten ohne jede Änderung (Klang, Schnitt, Blenden) – Speichern wäre sinnlos.
@@ -540,7 +572,7 @@ final class StudioModel: ObservableObject {
             lib.studioToast("Der Titel wurde in der Bibliothek nicht gefunden.", action: nil, isError: true, perform: nil)
             return
         }
-        lib.studioShow()
+        lib.studioShow(workspace)
         if !demo, !FileManager.default.fileExists(atPath: track.path) {
             resetForNewSource()
             sourceState = .failed("Die Datei ist nicht erreichbar – ist das Laufwerk angeschlossen?")
@@ -909,9 +941,9 @@ final class StudioModel: ObservableObject {
         job.fadeOut = max(0, fadeOut)
         job.edit = activeTrackEdit
         job.preferPassthrough = job.edit == nil && isLibraryTrack && keepOriginalFormat && fadeIn <= 0 && fadeOut <= 0 && options.sampleRate == nil
-        jobs.append(job)
+        host.jobs.append(job)
         if !(isLibraryTrack && keepOriginalFormat) { settings.remember(options) }
-        scheduleNext()
+        host.scheduleNext()
         return job
     }
 

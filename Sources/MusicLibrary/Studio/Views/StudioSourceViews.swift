@@ -245,7 +245,7 @@ private struct StudioSourceInfoCard: View {
                             studio.revealInFinder(file.path)
                         }
                     }
-                    IconTap(icon: Icons.close, label: "Andere Quelle wählen", tint: colors.textSecondary) {
+                    IconTap(icon: Icons.close, label: studio.workspace == .edit ? "Anderen Titel wählen" : "Andere Quelle wählen", tint: colors.textSecondary) {
                         studio.clearSource()
                     }
                 }
@@ -333,13 +333,13 @@ struct StudioEmptyState: View {
                         .fill(LinearGradient(colors: [colors.accent.opacity(0.9), colors.accentStrong], startPoint: .topLeading, endPoint: .bottomTrailing))
                         .frame(width: 78, height: 78)
                         .shadow(color: colors.accent.opacity(0.35), radius: 18, y: 8)
-                    Icon(Icons.studio, size: 40, color: .white)
+                    Icon(Icons.addMusic, size: 40, color: .white)
                 }
-                Text("Laden, schneiden, umwandeln")
+                Text("Musik hinzufügen")
                     .textStyle(Typo.headlineMedium)
                     .foregroundColor(colors.textPrimary)
                     .padding(.top, 6)
-                Text("Hol dir Audio aus dem Netz oder von deinem Mac, wähle den perfekten Ausschnitt und speichere ihn im Format deiner Wahl – direkt in deine Musikbibliothek.")
+                Text("Hol dir Audio aus dem Netz oder von deinem Mac, wähle den passenden Ausschnitt und speichere ihn im Format deiner Wahl – direkt in deine Musikbibliothek. Vorhandene Titel bearbeitest du im Studio.")
                     .textStyle(Typo.bodyLarge)
                     .foregroundColor(colors.textSecondary)
                     .multilineTextAlignment(.center)
@@ -354,12 +354,10 @@ struct StudioEmptyState: View {
                 StudioWayTile(number: 2, icon: Icons.audioFile, title: "Datei ziehen oder öffnen",
                               text: "Audio- oder Videodateien (MP3, M4A, WAV, FLAC, AIFF, MP4, MOV …) einfach auf dieses Fenster ziehen.",
                               action: "Datei öffnen …") { studio.chooseFiles() }
-                StudioWayTile(number: 3, icon: Icons.cut, title: "Titel aus der Bibliothek",
-                              text: "Rechtsklick auf einen Titel → „Im Audio Studio schneiden …“ – als neue Datei oder anstelle des Originals.",
-                              action: "Zur Titelliste") { model.select(.tracks) }
             }
-            if columns >= 3 {
+            if columns >= 2 {
                 HStack(alignment: .top, spacing: 14) { tiles }
+                    .frame(maxWidth: 780)
             } else {
                 VStack(spacing: 12) { tiles }
             }

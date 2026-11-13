@@ -172,6 +172,39 @@ final class StudioSourceTests: XCTestCase {
         XCTAssertEqual(bare.sourceInfo(kind: .web, requestedURL: URL(string: "https://instagram.com/reel/a")!).title, "Video by nasa")
     }
 
+    func testWorkspaceScopeOfJobsAndHistory() throws {
+        let web = SourceInfo(id: "w", kind: .youtube, url: URL(string: "https://www.youtube.com/watch?v=a")!, title: "Web")
+        let file = URL(fileURLWithPath: "/Musik/a.mp3")
+        let lib = SourceInfo(id: "l", kind: .localFile, url: file, title: "Bibliothek", localFile: file, libraryUid: 7)
+        func job(_ s: SourceInfo) -> StudioJob {
+            StudioJob(source: s, options: .defaults(for: .m4a), trim: nil, metadata: StudioMetadata(title: s.title), fileName: s.title,
+                      destination: .folder(path: "/tmp"))
+        }
+        let jobs = [job(web), job(lib)]
+        XCTAssertEqual(StudioWorkspace.add.jobs(jobs).map(\.source.title), ["Web"])
+        XCTAssertEqual(StudioWorkspace.edit.jobs(jobs).map(\.source.title), ["Bibliothek"])
+
+        func entry(_ title: String, backup: String? = nil, library: Bool? = nil) -> StudioHistoryEntry {
+            StudioHistoryEntry(sourceKind: .localFile, source: "/x/\(title)", title: title, artist: "", outputPath: "/y/\(title)",
+                               formatSummary: "", duration: nil, imported: true, succeeded: true, backupPath: backup, fromLibrary: library)
+        }
+        // Ältere Einträge (ohne Kennzeichen): ein ersetztes Original zählt zum Studio
+        var history = StudioHistory(entries: [entry("neu-studio", library: true), entry("neu-hinzu", library: false),
+                                              entry("alt-ersetzt", backup: "/b"), entry("alt-export")])
+        XCTAssertEqual(StudioWorkspace.edit.entries(history.entries).map(\.title), ["neu-studio", "alt-ersetzt"])
+        XCTAssertEqual(StudioWorkspace.add.entries(history.entries).map(\.title), ["neu-hinzu", "alt-export"])
+        history.clear(.edit)
+        XCTAssertEqual(history.entries.map(\.title), ["neu-hinzu", "alt-export"])
+
+        // Verlauf von 2.3 (ohne „fromLibrary“) bleibt lesbar; 2.3 liest den neuen (unbekannte Schlüssel werden übergangen)
+        let old = #"{"entries":[{"id":"6F9619FF-8B86-D011-B42D-00C04FC964FF","date":0,"sourceKind":"localFile","source":"/a","title":"A","artist":"","outputPath":"/a","formatSummary":"MP3","imported":true,"succeeded":true,"backupPath":"/b","undone":false}]}"#
+        let decoded = try JSONDecoder().decode(StudioHistory.self, from: Data(old.utf8))
+        XCTAssertNil(decoded.entries.first?.fromLibrary)
+        XCTAssertTrue(StudioWorkspace.edit.includes(try XCTUnwrap(decoded.entries.first)))
+        let encoded = try JSONEncoder().encode(StudioHistory(entries: [entry("x", library: true)]))
+        XCTAssertTrue(String(decoding: encoded, as: UTF8.self).contains("\"fromLibrary\":true"))
+    }
+
     func testYtDlpMapping() throws {
         let json = """
         {"id":"abc","title":"Nova - Blue Sky (Official Video)","uploader":"NovaVEVO","duration":213.5,

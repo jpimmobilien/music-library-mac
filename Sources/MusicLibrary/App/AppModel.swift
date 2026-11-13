@@ -16,7 +16,10 @@ final class AppModel: ObservableObject {
     let player: PlayerService
     let library: LibraryService
     let metadata: MetadataService
-    /// Audio Studio (2.2): Download, Umwandeln, Schneiden.
+    /// „Hinzufügen“ (2.4): Internet-Adressen und Dateien laden, schneiden, umwandeln. Führt Warteschlange,
+    /// Verlauf und Einstellungen beider Bereiche.
+    private(set) var addStudio: StudioModel!
+    /// „Studio“ (2.4): Titel der Bibliothek schneiden und bearbeiten.
     private(set) var studio: StudioModel!
     /// Demo-Modus (Vorschaubilder/Snapshots): keine Dateizugriffe, keine Wiedergabe.
     let demo: Bool
@@ -60,8 +63,18 @@ final class AppModel: ObservableObject {
     @Published var stacks: [LibrarySection: [Destination]] = [:]
     @Published var queries: [LibrarySection: String] = [:]
     @Published var playerOpen = false
-    /// Audio Studio statt der Bibliothek anzeigen (eigener Eintrag in der Navigation).
-    @Published var studioOpen = false
+    /// Arbeitsbereich statt der Bibliothek („Hinzufügen“, „Studio“ – eigene Einträge in der Navigation).
+    @Published var workspace: MainWorkspace = .library
+    /// Ein Arbeitsbereich ist offen (keine Bibliotheksansicht).
+    var studioOpen: Bool { workspace != .library }
+    /// Modell des offenen Arbeitsbereichs (nil = Bibliothek).
+    var activeStudio: StudioModel? {
+        switch workspace {
+        case .library: return nil
+        case .add: return addStudio
+        case .studio: return studio
+        }
+    }
     @Published var sidePanel: SidePanel?
     @Published var toasts: [Toast] = []
     @Published var searchFocusRequest = 0
@@ -117,7 +130,10 @@ final class AppModel: ObservableObject {
         self.metadata = MetadataService(store: store)
         self.section = settings.startSection ?? settings.lastSection   // Einstellung „Bereich beim Start“
         AppModel.shared = self
-        self.studio = StudioModel(app: self, services: demo ? .demo : .live, preview: demo ? nil : StudioPreviewFactory.make(), demo: demo)
+        let adder = StudioModel(app: self, services: demo ? .demo : .live, preview: demo ? nil : StudioPreviewFactory.make(), demo: demo)
+        self.addStudio = adder
+        self.studio = StudioModel(app: self, services: demo ? .demo : .live, preview: demo ? nil : StudioPreviewFactory.make(), demo: demo,
+                                  workspace: .edit, queueHost: adder)
         player.model = self
         library.model = self
         metadata.model = self
@@ -428,8 +444,8 @@ final class AppModel: ObservableObject {
     // MARK: - Navigation
 
     func select(_ target: LibrarySection) {
-        if studioOpen {
-            studioOpen = false
+        if workspace != .library {
+            workspace = .library
             section = target
             settings.lastSection = target
             return
@@ -472,10 +488,13 @@ final class AppModel: ObservableObject {
 
     var currentDestination: Destination? { stacks[section]?.last }
 
-    /// Audio Studio öffnen (Navigation, ⌘7, Menü).
-    func openStudio() {
+    /// Studio öffnen (Navigation, ⌘8, Menü, „Titel bearbeiten …“).
+    func openStudio() { open(.studio) }
+
+    /// Arbeitsbereich öffnen („Hinzufügen“ ⌘7, „Studio“ ⌘8).
+    func open(_ target: MainWorkspace) {
         playerOpen = false
-        studioOpen = true
+        workspace = target
     }
 
     func openAlbum(of track: Track) {
