@@ -168,7 +168,7 @@ public enum ProcessProtection: Equatable, Sendable {
     case allowed
     /// Systemnaher Prozess: nur mit ausdrücklicher Bestätigung.
     case confirmSystem
-    /// Wird nie beendet (Kernel, launchd, Fenstersystem, Anmeldung, AETHER selbst).
+    /// Wird nie beendet (Kernel, launchd, Fenstersystem, Anmeldung, ORBIT selbst).
     case blocked
     /// Gehört einem anderen Benutzer – ohne Administratorrechte nicht möglich.
     case otherUser

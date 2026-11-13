@@ -111,7 +111,7 @@ public enum InterfaceInventory {
 
     /// Schnittstellen der Standardrouten (IPv4 und IPv6) laut SystemConfiguration.
     public static func primaryInterfaces() -> Set<String> {
-        guard let store = SCDynamicStoreCreate(nil, "AETHER" as CFString, nil, nil) else { return [] }
+        guard let store = SCDynamicStoreCreate(nil, "ORBIT" as CFString, nil, nil) else { return [] }
         var result: Set<String> = []
         for key in ["State:/Network/Global/IPv4", "State:/Network/Global/IPv6"] {
             if let dictionary = SCDynamicStoreCopyValue(store, key as CFString) as? [String: Any],

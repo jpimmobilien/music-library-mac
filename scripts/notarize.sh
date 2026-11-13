@@ -13,7 +13,7 @@
 #   scripts/notarize.sh dmg        → DMG signieren, einreichen, Ticket anheften, prüfen
 set -euo pipefail
 cd "$(dirname "$0")/.."
-NAME="AETHER-macOS-Universal.dmg"
+NAME="ORBIT-macOS-Universal.dmg"
 
 have_credentials() {
     [ -n "${MACOS_CERT_P12_BASE64:-}" ] && [ -n "${NOTARY_APPLE_ID:-}" ] && [ -n "${NOTARY_TEAM_ID:-}" ] && [ -n "${NOTARY_PASSWORD:-}" ]

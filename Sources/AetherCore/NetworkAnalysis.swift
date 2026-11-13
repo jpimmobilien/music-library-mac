@@ -127,7 +127,7 @@ public struct InterfaceTraffic: Sendable, Equatable, Identifiable {
     /// Bytes pro Sekunde; `nil` bis zur zweiten Messung oder nach einer Zählerrücksetzung.
     public var download: Double?
     public var upload: Double?
-    /// Seit Start von AETHER übertragen.
+    /// Seit Start von ORBIT übertragen.
     public var sessionDownloaded: UInt64
     public var sessionUploaded: UInt64
 

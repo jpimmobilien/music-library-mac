@@ -8,15 +8,19 @@ struct RootView: View {
     @EnvironmentObject private var settings: AppSettings
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.openWindow) private var openWindow
+    /// Auftakt nur beim ersten Fenster eines Programmstarts (nicht im Selbsttest- und Fotomodus).
+    @State private var introDone = OrbitIntroOverlay.played
     /// Für Fotos im Build: feste Fenstergröße ohne Fensterkonfiguration.
     var embedded = false
 
     var body: some View {
         let theme = AetherTheme.resolve(settings: settings, systemIsDark: colorScheme == .dark,
-                                        reduceTransparency: reduceTransparency && !model.launchMode.isSnapshot)
+                                        reduceTransparency: reduceTransparency && !model.launchMode.isSnapshot,
+                                        reduceMotion: reduceMotion && !model.launchMode.isSnapshot)
         ZStack(alignment: .topLeading) {
-            AmbientBackground()
+            AmbientBackground(section: model.selection)
             HStack(spacing: 0) {
                 if model.sidebarVisible {
                     SidebarView()
@@ -29,6 +33,11 @@ struct RootView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .aetherAnimation(Motion.spring, value: model.sidebarVisible)
+        }
+        .overlay {
+            if !introDone && !embedded && !model.launchMode.isAutomated {
+                OrbitIntroOverlay { introDone = true }
+            }
         }
         .overlay(alignment: .bottomTrailing) {
             if settings.diagnosticsEnabled {
@@ -68,13 +77,23 @@ private struct ContentArea: View {
         ZStack {
             page(for: model.selection)
                 .id(model.selection)
-                .transition(.asymmetric(insertion: .opacity.combined(with: .offset(y: 8)), removal: .opacity))
+                .transition(transition)
         }
-        .aetherAnimation(Motion.easeOut(0.3), value: model.selection)
+        .aetherAnimation(theme.effects.spatialTransitions ? Motion.easeOut(0.38) : Motion.easeOut(0.3), value: model.selection)
         .overlay(alignment: .top) {
             // Oberer Rand dient als Titelleiste zum Verschieben des Fensters
             WindowDragArea().frame(height: 22)
         }
+    }
+
+    /// Räumlicher Übergang (ORBIT): Die neue Seite kommt aus leichter Tiefe nach vorn, die alte tritt zurück.
+    /// Ohne räumliche Übergänge (Minimal, reduzierte Bewegung): kurze Überblendung wie bisher.
+    private var transition: AnyTransition {
+        if theme.effects.spatialTransitions {
+            return .asymmetric(insertion: .opacity.combined(with: .scale(scale: 0.975, anchor: .top)).combined(with: .offset(y: 10)),
+                               removal: .opacity.combined(with: .scale(scale: 1.012, anchor: .top)))
+        }
+        return .asymmetric(insertion: .opacity.combined(with: .offset(y: 8)), removal: .opacity)
     }
 
     @ViewBuilder

@@ -80,7 +80,7 @@ private struct HardwareContent: View {
                         }
                     }
                 }
-                NoticeBar(text: tr("All values come from macOS on this Mac. AETHER doesn’t send anything – the report is only saved where you choose."),
+                NoticeBar(text: tr("All values come from macOS on this Mac. ORBIT doesn’t send anything – the report is only saved where you choose."),
                           symbol: "lock.shield")
             }
             .padding(.horizontal, Spacing.gutter)
@@ -126,15 +126,15 @@ private struct HardwareContent: View {
         let dateText = DateFormatter.localizedString(from: now, dateStyle: .long, timeStyle: .short)
         let text = ReportFormatter.markdown(
             title: tr("System report – %@", system.hardware.machineName ?? system.profiler?.machineName ?? "Mac"),
-            subtitle: tr("Created with AETHER %@ on %@. Values as reported by macOS at that moment.", version, dateText),
+            subtitle: tr("Created with ORBIT %@ on %@. Values as reported by macOS at that moment.", version, dateText),
             columns: (tr("Item"), tr("Value"), tr("Type")),
             sections: all, includeSensitive: includeSerial,
-            footer: tr("Measured = read directly · Computed = calculated by AETHER · Reported by macOS = system information or manufacturer data · Estimate = estimate by macOS."),
+            footer: tr("Measured = read directly · Computed = calculated by ORBIT · Reported by macOS = system information or manufacturer data · Estimate = estimate by macOS."),
             describe: { $0.provenance.title })
 
         let panel = NSSavePanel()
         panel.title = tr("Export System Report")
-        panel.nameFieldStringValue = ReportFormatter.fileName(prefix: tr("AETHER-System-Report"), date: now)
+        panel.nameFieldStringValue = ReportFormatter.fileName(prefix: tr("ORBIT-System-Report"), date: now)
         panel.allowedContentTypes = [UTType(filenameExtension: "md") ?? .plainText]
         panel.canCreateDirectories = true
         guard panel.runModal() == .OK, let url = panel.url else { return }
@@ -177,7 +177,7 @@ private struct SerialPanel: View {
                     UnavailableValue(reason: .notProvidedByMacOS, source: .serialNumber, compact: true)
                 }
             }
-            Text(tr("Only read when you click “Show”. AETHER doesn’t store or transmit it."))
+            Text(tr("Only read when you click “Show”. ORBIT doesn’t store or transmit it."))
                 .font(Typo.caption).foregroundStyle(theme.textTertiary)
         }
     }
@@ -306,8 +306,8 @@ enum HardwareReport {
                                       source: .uptime))
         }
         let info = Bundle.main.infoDictionary ?? [:]
-        software.append(ReportRow("AETHER", "\(info["CFBundleShortVersionString"] as? String ?? "–") (\(info["CFBundleVersion"] as? String ?? "–"))"))
-        software.append(ReportRow(tr("AETHER runs as"), hw.isTranslated ? tr("Intel code via Rosetta") : (hw.isAppleSilicon ? "arm64" : "x86_64"),
+        software.append(ReportRow("ORBIT", "\(info["CFBundleShortVersionString"] as? String ?? "–") (\(info["CFBundleVersion"] as? String ?? "–"))"))
+        software.append(ReportRow(tr("ORBIT runs as"), hw.isTranslated ? tr("Intel code via Rosetta") : (hw.isAppleSilicon ? "arm64" : "x86_64"),
                                   source: .hardwareSysctl))
         result.append(ReportSection(title: tr("Software"), symbol: "apple.logo", rows: software))
         return result

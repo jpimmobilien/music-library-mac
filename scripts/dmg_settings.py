@@ -1,7 +1,7 @@
-# dmgbuild-Einstellungen für AETHER-macOS-Universal.dmg
+# dmgbuild-Einstellungen für ORBIT-macOS-Universal.dmg
 import os
 
-application = defines.get("app", "build/AETHER.app")  # noqa: F821 (von dmgbuild bereitgestellt)
+application = defines.get("app", "build/ORBIT.app")  # noqa: F821 (von dmgbuild bereitgestellt)
 appname = os.path.basename(application)
 here = os.path.join(os.getcwd(), "scripts")
 

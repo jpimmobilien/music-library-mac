@@ -214,7 +214,7 @@ private struct HealthPanel: View {
                 InfoRow(label: tr("Full charge capacity"), value: "\(fmt.integer(full)) mAh", source: b.fullChargeCapacity.source,
                         timestamp: b.fullChargeCapacity.timestamp)
             }
-            Text(tr("AETHER computes the capacity as full charge capacity ÷ design capacity. Apple’s “Maximum capacity” uses its own method and can differ by a few percent – both are shown unchanged."))
+            Text(tr("ORBIT computes the capacity as full charge capacity ÷ design capacity. Apple’s “Maximum capacity” uses its own method and can differ by a few percent – both are shown unchanged."))
                 .font(Typo.caption).foregroundStyle(theme.textTertiary).fixedSize(horizontal: false, vertical: true)
         }
     }
@@ -331,7 +331,7 @@ private struct ChargingSettingsNote: View {
 
     var body: some View {
         HStack(alignment: .center, spacing: Spacing.m) {
-            NoticeBar(text: tr("AETHER only reads battery values and never changes how the Mac charges. Optimised charging and the charge limit are set in System Settings."),
+            NoticeBar(text: tr("ORBIT only reads battery values and never changes how the Mac charges. Optimised charging and the charge limit are set in System Settings."),
                       symbol: "info.circle")
             Button(tr("Battery Settings…")) { openBatterySettings() }
                 .buttonStyle(CapsuleButtonStyle())

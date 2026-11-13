@@ -145,7 +145,10 @@ public struct ThemeSpec: Equatable, Sendable {
 /// Akzentfarben.
 public enum AccentChoice: String, Codable, Sendable, CaseIterable, Identifiable {
     case system
+    /// „Arctic Blue“ (ORBIT-Standard). Der gespeicherte Name stammt aus der Zeit vor der Umbenennung.
     case aetherBlue
+    /// „Electric Cyan“ (ORBIT)
+    case electricCyan
     case mint
     case violet
     case orange
@@ -158,7 +161,8 @@ public enum AccentChoice: String, Codable, Sendable, CaseIterable, Identifiable 
     public var fixed: (light: RGBA, dark: RGBA)? {
         switch self {
         case .system: return nil
-        case .aetherBlue: return (RGBA(0x2563EB), RGBA(0x6FA3FF))
+        case .aetherBlue: return (RGBA(0x0B6BEA), RGBA(0x5AB4FF))
+        case .electricCyan: return (RGBA(0x007C99), RGBA(0x2EE6F6))
         case .mint: return (RGBA(0x0B8F74), RGBA(0x4FE0BF))
         case .violet: return (RGBA(0x6D3FE6), RGBA(0xAE8DFF))
         case .orange: return (RGBA(0xB4500B), RGBA(0xFFA552))
@@ -188,41 +192,41 @@ public enum ThemeCatalog {
 
     public static var all: [ThemeSpec] { ThemeID.allCases.map(spec) }
 
-    // MARK: Liquid Glass Dark – „Äthernacht“
+    // MARK: Liquid Glass Dark – „Deep Ocean“ (ORBIT)
 
     public static let glassDark = ThemePalette(
         isDark: true,
-        backgroundTop: RGBA(0x0F1424), backgroundBottom: RGBA(0x070A13),
-        ambient: [RGBA(0x3B44E0, 0.36), RGBA(0x0B8FA0, 0.28), RGBA(0x7A3FD4, 0.24)],
-        surface: RGBA(0x171C2B),
-        glassTint: RGBA(0x1A2133, 0.52), glassTintStrong: RGBA(0x1B2336, 0.70),
+        backgroundTop: RGBA(0x0B1830), backgroundBottom: RGBA(0x050A16),
+        ambient: [RGBA(0x1E6BFF, 0.34), RGBA(0x12C8E8, 0.22), RGBA(0x7B5CFF, 0.22)],
+        surface: RGBA(0x15203A),
+        glassTint: RGBA(0x15203A, 0.52), glassTintStrong: RGBA(0x16223D, 0.70),
         edgeLight: RGBA(0xFFFFFF, 0.22), edgeDark: RGBA(0xFFFFFF, 0.05), sheen: RGBA(0xFFFFFF, 0.07),
         shadow: RGBA(0x000000, 0.55), hairline: RGBA(0xFFFFFF, 0.09),
         fieldFill: RGBA(0xFFFFFF, 0.07), hoverFill: RGBA(0xFFFFFF, 0.06),
         textPrimary: RGBA(0xF2F5FA), textSecondary: RGBA(0xA9B2C4), textTertiary: RGBA(0x7F899D),
-        cpuUser: RGBA(0x5AC8FA), cpuSystem: RGBA(0xFF7A6B), gpu: RGBA(0xBF8CFF),
-        memory: RGBA(0x4CD9A6), memoryWired: RGBA(0xFFB648), memoryCompressed: RGBA(0xFF6AC1), memoryCached: RGBA(0x6C7A96),
-        storage: RGBA(0xFFB648), networkDown: RGBA(0x40D0E0), networkUp: RGBA(0xFF6AC1),
+        cpuUser: RGBA(0x5AA9FF), cpuSystem: RGBA(0xFF7A6B), gpu: RGBA(0x8F9BFF),
+        memory: RGBA(0xA48CFF), memoryWired: RGBA(0xFFB648), memoryCompressed: RGBA(0xFF6AC1), memoryCached: RGBA(0x6C7A96),
+        storage: RGBA(0x7FD4FF), networkDown: RGBA(0x2EE6F6), networkUp: RGBA(0x9DB4FF),
         thermal: RGBA(0xFF9F45), battery: RGBA(0x4CD964),
         statusNormal: RGBA(0x3DDC84), statusElevated: RGBA(0xFFB340), statusCritical: RGBA(0xFF5A5F),
         statusUnavailable: RGBA(0x7F899D)
     )
 
-    // MARK: Liquid Glass Light – „Perle“
+    // MARK: Liquid Glass Light – „Pearl White“ (ORBIT)
 
     public static let glassLight = ThemePalette(
         isDark: false,
-        backgroundTop: RGBA(0xF7F9FC), backgroundBottom: RGBA(0xE9EEF5),
-        ambient: [RGBA(0x9CC8FF, 0.50), RGBA(0xD5C6FF, 0.45), RGBA(0xA8EBDD, 0.40)],
+        backgroundTop: RGBA(0xF8FAFD), backgroundBottom: RGBA(0xE8EEF6),
+        ambient: [RGBA(0x8CC4FF, 0.50), RGBA(0x9EEFFF, 0.40), RGBA(0xCFC2FF, 0.42)],
         surface: RGBA(0xFFFFFF),
         glassTint: RGBA(0xFFFFFF, 0.56), glassTintStrong: RGBA(0xFFFFFF, 0.78),
         edgeLight: RGBA(0xFFFFFF, 0.95), edgeDark: RGBA(0xFFFFFF, 0.30), sheen: RGBA(0xFFFFFF, 0.50),
         shadow: RGBA(0x1B2440, 0.13), hairline: RGBA(0x101828, 0.08),
         fieldFill: RGBA(0x101828, 0.05), hoverFill: RGBA(0x101828, 0.05),
         textPrimary: RGBA(0x0F1524), textSecondary: RGBA(0x566072), textTertiary: RGBA(0x7A8393),
-        cpuUser: RGBA(0x0A84FF), cpuSystem: RGBA(0xE5484D), gpu: RGBA(0x8E5CF7),
-        memory: RGBA(0x12A97A), memoryWired: RGBA(0xE08A00), memoryCompressed: RGBA(0xD9409E), memoryCached: RGBA(0x98A2B3),
-        storage: RGBA(0xE08A00), networkDown: RGBA(0x0FA3B1), networkUp: RGBA(0xD9409E),
+        cpuUser: RGBA(0x0B6BEA), cpuSystem: RGBA(0xE5484D), gpu: RGBA(0x2446C8),
+        memory: RGBA(0x6E56E8), memoryWired: RGBA(0xE08A00), memoryCompressed: RGBA(0xD9409E), memoryCached: RGBA(0x98A2B3),
+        storage: RGBA(0x0F7FB8), networkDown: RGBA(0x0598B3), networkUp: RGBA(0x4F5FD6),
         thermal: RGBA(0xE8700A), battery: RGBA(0x1FA75A),
         statusNormal: RGBA(0x178F4E), statusElevated: RGBA(0xB57200), statusCritical: RGBA(0xD7373F),
         statusUnavailable: RGBA(0x8A93A3)

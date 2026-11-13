@@ -123,7 +123,7 @@ private struct HistoryTimelineContent: View {
                     Image(systemName: "clock.arrow.circlepath")
                         .font(.system(size: 20, weight: .light))
                         .foregroundStyle(theme.textSecondary)
-                    Text(tr("Long-term history is off. When you turn it on, AETHER stores one average value per minute on this Mac only – nothing is sent."))
+                    Text(tr("Long-term history is off. When you turn it on, ORBIT stores one average value per minute on this Mac only – nothing is sent."))
                         .font(Typo.callout)
                         .foregroundStyle(theme.textSecondary)
                         .fixedSize(horizontal: false, vertical: true)
@@ -148,7 +148,7 @@ private struct HistoryTimelineContent: View {
                         ProvenanceBadge(source: .localHistory, timestamp: samples.last?.time)
                     }
                 } else {
-                    Text(loaded ? tr("No values in this period yet. AETHER records one value per minute while it is measuring.")
+                    Text(loaded ? tr("No values in this period yet. ORBIT records one value per minute while it is measuring.")
                                 : tr("Loading…"))
                         .font(Typo.callout)
                         .foregroundStyle(theme.textSecondary)
@@ -311,7 +311,7 @@ struct HistorySettingsPanel: View {
                 .labelsHidden()
                 .frame(width: 160)
             }
-            SettingsRow(title: tr("Stored data"), detail: "~/Library/Application Support/AETHER/history.sqlite") {
+            SettingsRow(title: tr("Stored data"), detail: store.url.map { ($0.path as NSString).abbreviatingWithTildeInPath } ?? "–") {
                 Text(store.databaseSize > 0 ? fmt.bytes(store.databaseSize) : tr("None"))
                     .font(Typo.callout)
                     .monospacedDigit()
@@ -351,7 +351,7 @@ struct HistorySettingsPanel: View {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         formatter.locale = Locale(identifier: "en_US_POSIX")
-        panel.nameFieldStringValue = "AETHER-History_\(formatter.string(from: Date())).csv"
+        panel.nameFieldStringValue = "ORBIT-History_\(formatter.string(from: Date())).csv"
         panel.allowedContentTypes = [.commaSeparatedText]
         panel.canCreateDirectories = true
         guard panel.runModal() == .OK, let url = panel.url else { return }

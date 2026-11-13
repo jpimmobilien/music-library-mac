@@ -1,7 +1,7 @@
 #!/bin/bash
-# Baut AETHER.app als Universal Binary (arm64 + x86_64) und prüft das Ergebnis.
+# Baut ORBIT.app als Universal Binary (arm64 + x86_64) und prüft das Ergebnis.
 #
-#   scripts/build_app.sh                       → build/AETHER.app
+#   scripts/build_app.sh                       → build/ORBIT.app
 #   CLEAN=1 VERSION=1.2.0 BUILD_NUMBER=1 scripts/build_app.sh
 #   SIGN_IDENTITY="Developer ID Application: …" scripts/build_app.sh   (Hardened Runtime, für Notarisierung)
 #
@@ -11,10 +11,11 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-VERSION="${VERSION:-1.2.0}"
+VERSION="${VERSION:-2.0.0}"
 BUILD_NUMBER="${BUILD_NUMBER:-1}"
-APP="build/AETHER.app"
-EXE="AETHER"
+APP="build/ORBIT.app"
+PRODUCT="AETHER"   # Name des Swift-Produkts (intern, unverändert seit 1.0)
+EXE="ORBIT"        # Name der Programmdatei im App-Bundle (CFBundleExecutable)
 MIN_MACOS="13.0"
 
 if [ "${CLEAN:-0}" = "1" ]; then
@@ -31,12 +32,12 @@ SLICES=()
 for ARCH in arm64 x86_64; do
     TRIPLE="$ARCH-apple-macosx$MIN_MACOS"
     echo "▸ Baue $ARCH ($TRIPLE) …"
-    swift build -c release --triple "$TRIPLE" --product "$EXE"
+    swift build -c release --triple "$TRIPLE" --product "$PRODUCT"
     BIN_DIR="$(swift build -c release --triple "$TRIPLE" --show-bin-path)"
-    test -f "$BIN_DIR/$EXE" || { echo "✗ Programmdatei fehlt: $BIN_DIR/$EXE"; exit 1; }
-    ARCHS_SLICE="$(lipo -archs "$BIN_DIR/$EXE")"
-    test "$ARCHS_SLICE" = "$ARCH" || { echo "✗ $BIN_DIR/$EXE enthält „$ARCHS_SLICE“ statt $ARCH"; exit 1; }
-    SLICES+=("$BIN_DIR/$EXE")
+    test -f "$BIN_DIR/$PRODUCT" || { echo "✗ Programmdatei fehlt: $BIN_DIR/$PRODUCT"; exit 1; }
+    ARCHS_SLICE="$(lipo -archs "$BIN_DIR/$PRODUCT")"
+    test "$ARCHS_SLICE" = "$ARCH" || { echo "✗ $BIN_DIR/$PRODUCT enthält „$ARCHS_SLICE“ statt $ARCH"; exit 1; }
+    SLICES+=("$BIN_DIR/$PRODUCT")
 done
 mkdir -p build
 lipo -create "${SLICES[@]}" -output "build/$EXE-universal"

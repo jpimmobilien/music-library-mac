@@ -194,7 +194,7 @@ struct BigFigure: View {
                 if let source { ProvenanceBadge(source: source, reason: reason) }
             }
             HStack(alignment: .firstTextBaseline, spacing: 4) {
-                Text(value)
+                RollingText(text: value)
                     .font(valueFont)
                     .monospacedDigit()
                     .foregroundStyle(reason != nil ? theme.textTertiary : (color ?? theme.textPrimary))
@@ -287,6 +287,10 @@ struct InteractiveVisual<Content: View>: View {
     @Environment(\.aether) private var theme
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     var hint: String = tr("Details")
+    /// Radius der Glasfläche im Inhalt (für die ORBIT-Reflexion).
+    var cornerRadius: CGFloat = Radius.card
+    /// Magnetisches Schweben (nur Profil „Immersiv“).
+    var magnetic: Bool = true
     let action: () -> Void
     @ViewBuilder var content: () -> Content
     @State private var hovering = false
@@ -311,6 +315,7 @@ struct InteractiveVisual<Content: View>: View {
                 // Kein Farbfilter (brightness): eingebettete Ebenen (z. B. Datenströme) müssten sonst gefiltert
                 // neu zusammengesetzt werden. Rückmeldung: Hinweis „Details“ und leichte Vergrößerung.
                 .scaleEffect(hovering && !reduceMotion && theme.motion == .full ? 1.008 : 1)
+                .orbitHover(cornerRadius: cornerRadius, magnetic: magnetic)
         }
         .buttonStyle(.plain)
         .onHover { inside in

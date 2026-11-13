@@ -65,6 +65,16 @@ struct SettingsView: View {
                 .labelsHidden()
                 .frame(width: 260)
             }
+            SettingsRow(title: tr("Effects"), detail: effectDetail) {
+                Picker("", selection: $settings.effectProfile) {
+                    Text(tr("Minimal")).tag(EffectProfile.minimal)
+                    Text(tr("Balanced")).tag(EffectProfile.balanced)
+                    Text(tr("Immersive")).tag(EffectProfile.immersive)
+                }
+                .pickerStyle(.segmented)
+                .labelsHidden()
+                .frame(width: 260)
+            }
             SettingsRow(title: tr("Information density")) {
                 Picker("", selection: $settings.density) {
                     Text(tr("Compact")).tag(Density.compact)
@@ -80,6 +90,17 @@ struct SettingsView: View {
                 Button(tr("Reset appearance")) { settings.resetAppearance() }
                     .buttonStyle(CapsuleButtonStyle())
             }
+        }
+    }
+
+    private var effectDetail: String {
+        switch settings.effectProfile {
+        case .minimal:
+            return tr("No light effects or decorative motion – the most economical setting. Real activity (data flow, charging) is still shown.")
+        case .balanced:
+            return tr("Light fields, glass reflection under the pointer and spatial transitions. Nothing moves permanently.")
+        case .immersive:
+            return tr("Additionally a very slow drift of the light fields, magnetic hover and rolling numbers. Uses slightly more energy.")
         }
     }
 
@@ -122,7 +143,7 @@ struct SettingsView: View {
                 Toggle("", isOn: $settings.showRawValues).toggleStyle(.switch).labelsHidden()
             }
             SettingsRow(title: tr("Developer diagnostics"),
-                        detail: tr("Shows how much CPU and memory AETHER itself uses, how long each measurement takes and how often the display updates. Also shows a small overlay in the window.")) {
+                        detail: tr("Shows how much CPU and memory ORBIT itself uses, how long each measurement takes and how often the display updates. Also shows a small overlay in the window.")) {
                 Toggle("", isOn: $settings.diagnosticsEnabled).toggleStyle(.switch).labelsHidden()
             }
             if settings.diagnosticsEnabled {
@@ -138,7 +159,7 @@ struct SettingsView: View {
     private var windows: some View {
         SettingsPanel(title: tr("Live Monitor & Menu Bar"), symbol: "menubar.rectangle") {
             SettingsRow(title: tr("Show in the menu bar"),
-                        detail: tr("Shows the CPU load in the menu bar. AETHER then keeps running when the window is closed and measures at most every 5 seconds.")) {
+                        detail: tr("Shows the CPU load in the menu bar. ORBIT then keeps running when the window is closed and measures at most every 5 seconds.")) {
                 Toggle("", isOn: $settings.menuBarEnabled).toggleStyle(.switch).labelsHidden()
             }
             SettingsRow(title: tr("Keep Live Monitor on top"), detail: tr("The Live Monitor (⌥⌘M) floats above other windows.")) {
@@ -156,7 +177,7 @@ struct SettingsView: View {
     private var language: some View {
         SettingsPanel(title: tr("Language"), symbol: "globe") {
             SettingsRow(title: tr("App language"),
-                        detail: tr("Takes effect after restarting AETHER. You can also set it in System Settings → General → Language & Region → Applications.")) {
+                        detail: tr("Takes effect after restarting ORBIT. You can also set it in System Settings → General → Language & Region → Applications.")) {
                 Picker("", selection: Binding(get: { settings.languageChoice }, set: { settings.setLanguage($0) })) {
                     Text(tr("Same as system")).tag(AppSettings.LanguageChoice.system)
                     Text("English").tag(AppSettings.LanguageChoice.english)
@@ -167,7 +188,7 @@ struct SettingsView: View {
             }
             HStack {
                 Spacer()
-                Button(tr("Restart AETHER")) { relaunch() }
+                Button(tr("Restart ORBIT")) { relaunch() }
                     .buttonStyle(CapsuleButtonStyle())
             }
         }
@@ -187,7 +208,7 @@ struct SettingsView: View {
     private var privacy: some View {
         SettingsPanel(title: tr("Privacy"), symbol: "hand.raised") {
             VStack(alignment: .leading, spacing: 8) {
-                privacyLine("network.slash", tr("AETHER makes no network connections and sends no data anywhere."))
+                privacyLine("network.slash", tr("ORBIT makes no network connections and sends no data anywhere."))
                 privacyLine("chart.bar.xaxis", tr("No telemetry, no accounts, no passwords."))
                 privacyLine("lock.shield", tr("No administrator rights, no background helpers."))
                 privacyLine("clock.arrow.circlepath", tr("Long-term history is off unless you turn it on – and then stays on this Mac."))
@@ -368,7 +389,8 @@ private struct AccentDot: View {
 func accentName(_ accent: AccentChoice) -> String {
     switch accent {
     case .system: return tr("System accent color")
-    case .aetherBlue: return tr("Aether Blue")
+    case .aetherBlue: return tr("Arctic Blue")
+    case .electricCyan: return tr("Electric Cyan")
     case .mint: return tr("Mint")
     case .violet: return tr("Violet")
     case .orange: return tr("Orange")
@@ -384,18 +406,18 @@ private struct AboutPanel: View {
 
     var body: some View {
         let info = Bundle.main.infoDictionary ?? [:]
-        SettingsPanel(title: tr("About AETHER"), symbol: "info.circle") {
+        SettingsPanel(title: tr("About ORBIT"), symbol: "info.circle") {
             VStack(spacing: 6) {
                 InfoRow(label: tr("Version"), value: "\(info["CFBundleShortVersionString"] as? String ?? "–") (\(info["CFBundleVersion"] as? String ?? "–"))")
                 InfoRow(label: tr("This process"), value: processArchitecture)
                 InfoRow(label: tr("Liquid Glass"), value: LiquidGlass.isAvailable ? tr("Native (macOS 26)") : tr("Equivalent fallback"))
                 if let own = system.ownUsage {
-                    InfoRow(label: tr("AETHER itself"),
+                    InfoRow(label: tr("ORBIT itself"),
                             value: [own.cpu.map { fmt.percent($0, fractionDigits: 1) + " CPU" }, own.footprint.map { fmt.bytes($0, style: .memory) }]
                                 .compactMap { $0 }.joined(separator: " · "))
                 }
             }
-            Text(tr("PROJECT AETHER – macOS Edition · System Intelligence & File Explorer"))
+            Text(tr("ORBIT – macOS Edition · System Intelligence & File Explorer"))
                 .font(Typo.caption).foregroundStyle(theme.textTertiary)
         }
     }

@@ -56,7 +56,7 @@ struct NetworkHero: View {
     }
 }
 
-/// Seit dem Start von AETHER empfangen und gesendet (Bytezähler).
+/// Seit dem Start von ORBIT empfangen und gesendet (Bytezähler).
 private struct SessionTotals: View {
     @ObservedObject var store: NetworkStore
     @Environment(\.aether) private var theme

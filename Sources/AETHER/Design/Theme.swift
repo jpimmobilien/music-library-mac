@@ -3,7 +3,7 @@ import AppKit
 import AetherCore
 
 // =============================================================================================
-// Designsystem von AETHER
+// Designsystem von ORBIT
 //
 // – Themes kommen als Daten aus AetherCore (Kontraste dort unit-getestet) und werden hier in Farben übersetzt.
 // – Glas für Navigation und Werkzeuge, ruhigere, stärker getönte Flächen für Zahlen und Diagramme.
@@ -28,6 +28,9 @@ struct AetherTheme {
     var glassIntensity: Double
     var density: Density
     var motion: MotionLevel
+    /// ORBIT-Effekte (Profil + Animations-Einstellung + „Bewegung reduzieren“ aufgelöst).
+    var effects: OrbitEffects = OrbitEffects.resolve(profile: .balanced, motion: .full, systemReduceMotion: false)
+    var effectProfile: EffectProfile = .balanced
 
     var isDark: Bool { palette.isDark }
 
@@ -116,7 +119,8 @@ struct AetherTheme {
     }
 
     @MainActor
-    static func resolve(settings: AppSettings, systemIsDark: Bool, reduceTransparency: Bool) -> AetherTheme {
+    static func resolve(settings: AppSettings, systemIsDark: Bool, reduceTransparency: Bool,
+                        reduceMotion: Bool = NSWorkspace.shared.accessibilityDisplayShouldReduceMotion) -> AetherTheme {
         let spec = ThemeCatalog.spec(settings.theme)
         let dark: Bool
         switch spec.appearance {
@@ -136,9 +140,13 @@ struct AetherTheme {
             accent = Color(nsColor: .controlAccentColor)
             onAccent = .white
         }
-        return AetherTheme(id: spec.id, palette: palette, usesGlass: spec.usesGlass && !reduceTransparency, accent: accent,
-                           onAccent: onAccent, glassIntensity: reduceTransparency ? 0 : settings.glassIntensity,
-                           density: settings.density, motion: settings.motion)
+        var theme = AetherTheme(id: spec.id, palette: palette, usesGlass: spec.usesGlass && !reduceTransparency, accent: accent,
+                                onAccent: onAccent, glassIntensity: reduceTransparency ? 0 : settings.glassIntensity,
+                                density: settings.density, motion: settings.motion)
+        theme.effectProfile = settings.effectProfile
+        theme.effects = OrbitEffects.resolve(profile: settings.effectProfile, motion: settings.motion,
+                                             systemReduceMotion: reduceMotion)
+        return theme
     }
 
     static let fallback = AetherTheme(id: .liquidGlassDark, palette: ThemeCatalog.glassDark, usesGlass: true,

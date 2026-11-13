@@ -37,7 +37,7 @@ struct ProbeHost: View {
         case .plainText:
             Text("Plain")
         case .text:
-            Text("AETHER 123 °C").font(Typo.metricLarge)
+            Text("ORBIT 123 °C").font(Typo.metricLarge)
         case .secondaryText:
             Text("Secondary").foregroundStyle(.secondary)
         case .ambient:

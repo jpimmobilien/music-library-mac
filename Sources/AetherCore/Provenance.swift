@@ -1,7 +1,7 @@
 import Foundation
 
 // =============================================================================================
-// Herkunft jeder Zahl – das Markenzeichen von AETHER.
+// Herkunft jeder Zahl – das Markenzeichen von ORBIT.
 //
 // Jeder angezeigte Wert gehört zu einer Datenquelle mit einer Herkunftsart. Die Oberfläche zeigt sie als kleines
 // Symbol (● gemessen, ◐ berechnet, ◇ Systemangabe, ○ Schätzung, ⊘ nicht verfügbar) und erklärt sie auf Klick.
@@ -27,9 +27,9 @@ public enum UnavailableReason: String, Codable, Sendable, CaseIterable {
     case notPresent
     /// macOS stellt den Wert Drittanbieter-Apps nicht bereit.
     case notProvidedByMacOS
-    /// Nur mit Administratorrechten erhältlich – AETHER fordert sie bewusst nicht an.
+    /// Nur mit Administratorrechten erhältlich – ORBIT fordert sie bewusst nicht an.
     case requiresAdministrator
-    /// Nur über private Schnittstellen von Apple erhältlich – AETHER nutzt sie nicht.
+    /// Nur über private Schnittstellen von Apple erhältlich – ORBIT nutzt sie nicht.
     case privateInterfaceOnly
     /// Virtueller Mac: keine physischen Sensoren.
     case virtualMachine
@@ -81,7 +81,7 @@ public extension DataSource {
     static let hardwareSysctl = DataSource(id: "hardware.sysctl", api: "sysctl hw.model · machdep.cpu.brand_string · hw.memsize", provenance: .systemReported)
     static let systemProfiler = DataSource(id: "hardware.profiler", api: "system_profiler SPHardwareDataType -json", provenance: .systemReported)
     static let osVersion = DataSource(id: "software.os", api: "sysctl kern.osproductversion · kern.osversion", provenance: .systemReported)
-    static let pulse = DataSource(id: "pulse", api: "AETHER · Puls-Regeln (AetherCore/Pulse.swift)", provenance: .computed)
+    static let pulse = DataSource(id: "pulse", api: "ORBIT · Puls-Regeln (AetherCore/Pulse.swift)", provenance: .computed)
     static let thermalAggregate = DataSource(id: "thermal.aggregate", api: "SMC-Sensoren · Mittelwert und Maximum je Bereich", provenance: .computed)
     static let batteryPower = DataSource(id: "battery.power", api: "Voltage × Amperage", provenance: .computed)
     static let adapterDetails = DataSource(id: "battery.adapter", api: "IOPSCopyExternalPowerAdapterDetails", provenance: .systemReported)
@@ -105,7 +105,7 @@ public extension DataSource {
     static let connections = DataSource(id: "network.connections", api: "/usr/sbin/netstat -anv -p tcp|udp (Socket-Tabellen des Kernels)",
                                         provenance: .measured)
     static let localHistory = DataSource(id: "history.local",
-                                         api: "SQLite · ~/Library/Application Support/AETHER/history.sqlite · Minutenmittel",
+                                         api: "SQLite · ~/Library/Application Support/ORBIT/history.sqlite · Minutenmittel",
                                          provenance: .computed)
 
     /// Alle Quellen (für die Datenschutz-/Quellenübersicht und Tests der Lokalisierung).

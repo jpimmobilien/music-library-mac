@@ -24,6 +24,7 @@ struct OverviewView: View {
                         .transition(.opacity.combined(with: .move(edge: .top)))
                 }
                 OverviewStage(system: engine.system, telemetry: engine.telemetry, gpu: engine.gpu)
+                OrbitCorePanel(system: engine.system, telemetry: engine.telemetry, storage: engine.storage, gpu: engine.gpu)
                 LiveStrip(power: engine.power, gpu: engine.gpu, system: engine.system, telemetry: engine.telemetry)
                 OverviewModules(range: $range)
             }
@@ -202,7 +203,7 @@ private struct PulseRules: View {
         VStack(alignment: .leading, spacing: 10) {
             Text(tr("How the status is determined"))
                 .font(.system(size: 13, weight: .semibold))
-            Text(tr("AETHER only uses measured values and what macOS itself reports, with fixed thresholds. It doesn’t diagnose anything."))
+            Text(tr("ORBIT only uses measured values and what macOS itself reports, with fixed thresholds. It doesn’t diagnose anything."))
                 .font(.system(size: 12))
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)

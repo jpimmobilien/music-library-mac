@@ -15,10 +15,10 @@ struct DiagnosticsPanel: View {
         let s = diagnostics.snapshot
         VStack(alignment: .leading, spacing: Spacing.m) {
             Grid(alignment: .leading, horizontalSpacing: 28, verticalSpacing: 6) {
-                row(tr("AETHER CPU"), s.ownCPU.map { fmt.percent($0, fractionDigits: 1) } ?? "–",
-                    help: tr("Share of one CPU core used by AETHER itself (all threads)."))
-                row(tr("AETHER memory"), s.ownMemory.map { fmt.bytes($0, style: .memory) } ?? "–",
-                    help: tr("Physical memory footprint of AETHER, as Activity Monitor shows it."))
+                row(tr("ORBIT CPU"), s.ownCPU.map { fmt.percent($0, fractionDigits: 1) } ?? "–",
+                    help: tr("Share of one CPU core used by ORBIT itself (all threads)."))
+                row(tr("ORBIT memory"), s.ownMemory.map { fmt.bytes($0, style: .memory) } ?? "–",
+                    help: tr("Physical memory footprint of ORBIT, as Activity Monitor shows it."))
                 row(tr("Base interval"), tr("%@ s", fmt.number(s.interval, fractionDigits: s.interval < 1 ? 1 : 0)))
                 row(tr("Measurement time per tick"), milliseconds(s.tickMs),
                     help: tr("Time the background measurement needs per tick (all sources due in this tick)."))

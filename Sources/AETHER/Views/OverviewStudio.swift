@@ -491,7 +491,7 @@ struct StudioModule<Content: View>: View {
     @ViewBuilder var content: () -> Content
 
     var body: some View {
-        InteractiveVisual(action: { model.select(section) }) {
+        InteractiveVisual(cornerRadius: Radius.panel, action: { model.select(section) }) {
             VStack(alignment: .leading, spacing: 16) {
                 HStack(spacing: 7) {
                     Image(systemName: symbol).font(.system(size: 12, weight: .semibold))
@@ -989,7 +989,7 @@ private struct ThisMacModule: View {
                     InfoRow(label: "macOS", value: hw.osBuild.map { "\(os) (\($0))" } ?? os, source: .osVersion)
                 }
                 if let own = system.ownUsage {
-                    InfoRow(label: tr("AETHER itself"),
+                    InfoRow(label: tr("ORBIT itself"),
                             value: [own.cpu.map { fmt.percent($0, fractionDigits: 1) }, own.footprint.map { fmt.bytes($0, style: .memory) }]
                                 .compactMap { $0 }.joined(separator: " · "))
                 }

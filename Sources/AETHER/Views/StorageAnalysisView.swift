@@ -455,7 +455,7 @@ struct CleanupPanel: View {
                     .buttonStyle(CapsuleButtonStyle())
                     .disabled(cleanup.measuring || isSnapshot)
             }
-            Text(tr("Places that often grow large. AETHER only measures them – nothing is deleted. Decide in the Finder what you want to remove."))
+            Text(tr("Places that often grow large. ORBIT only measures them – nothing is deleted. Decide in the Finder what you want to remove."))
                 .font(Typo.callout).foregroundStyle(theme.textSecondary).fixedSize(horizontal: false, vertical: true)
             ForEach(cleanup.measurements) { measurement in
                 CleanupRow(measurement: measurement)
@@ -496,7 +496,7 @@ private struct CleanupRow: View {
                     Text(tr("Not present")).font(Typo.callout).foregroundStyle(theme.textTertiary)
                 case .notReadable:
                     Text(tr("Not readable – privacy protection")).font(Typo.callout).foregroundStyle(theme.textSecondary)
-                        .help(tr("macOS only lets apps with Full Disk Access read this folder. AETHER doesn’t ask for it."))
+                        .help(tr("macOS only lets apps with Full Disk Access read this folder. ORBIT doesn’t ask for it."))
                 }
                 if measurement.state != .notPresent {
                     Button(tr("Show in Finder")) {

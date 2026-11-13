@@ -507,6 +507,13 @@ private struct BatteryCell: View {
                             .padding(.horizontal, h * 0.12)
                             .padding(.top, h * 0.07)
                     }
+                    .overlay {
+                        // ORBIT „Battery Liquid“: Ladung fließt sichtbar – nur solange macOS „lädt“ meldet
+                        if charging && theme.effects.dataFlow {
+                            SheenFlow(duration: 2.2, intensity: theme.isDark ? 0.34 : 0.5)
+                                .clipShape(RoundedRectangle(cornerRadius: max(2, corner - inset * 0.7), style: .continuous))
+                        }
+                    }
                     .frame(width: max(0, (bodyW - inset * 2) * level), height: h - inset * 2)
                     .offset(x: inset)
                     .opacity(percent == nil || level == 0 ? 0 : 1)

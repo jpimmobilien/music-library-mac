@@ -2,7 +2,7 @@ import Foundation
 
 // =============================================================================================
 // Dateilogik ohne Oberfläche (Linux-testbar): eindeutige Namen, Namensprüfung, Stapel-Umbenennung.
-// AETHER überschreibt nie: Bei Namensgleichheit entsteht „Name 2“, „Name 3“ … wie im Finder („Beide behalten“).
+// ORBIT überschreibt nie: Bei Namensgleichheit entsteht „Name 2“, „Name 3“ … wie im Finder („Beide behalten“).
 // =============================================================================================
 
 public enum FileNaming {

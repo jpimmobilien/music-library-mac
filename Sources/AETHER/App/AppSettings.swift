@@ -13,6 +13,8 @@ final class AppSettings: ObservableObject {
     @Published var accent: AccentChoice { didSet { save(accent.rawValue, "accent") } }
     @Published var glassIntensity: Double { didSet { save(glassIntensity, "glassIntensity") } }
     @Published var motion: MotionLevel { didSet { save(motion.rawValue, "motion") } }
+    /// ORBIT-Effektprofil: Minimal (Leistungsmodus), Ausgewogen (Standard), Immersiv.
+    @Published var effectProfile: EffectProfile { didSet { save(effectProfile.rawValue, "effectProfile") } }
     @Published var density: Density { didSet { save(density.rawValue, "density") } }
     @Published var refreshInterval: RefreshInterval { didSet { save(refreshInterval.rawValue, "refreshInterval") } }
     @Published var lowImpact: Bool { didSet { save(lowImpact, "lowImpact") } }
@@ -45,6 +47,7 @@ final class AppSettings: ObservableObject {
         accent = (read("accent") as? String).flatMap(AccentChoice.init(rawValue:)) ?? .aetherBlue
         glassIntensity = min(1, max(0, (read("glassIntensity") as? Double) ?? 0.85))
         motion = (read("motion") as? String).flatMap(MotionLevel.init(rawValue:)) ?? .full
+        effectProfile = (read("effectProfile") as? String).flatMap(EffectProfile.init(rawValue:)) ?? .balanced
         density = (read("density") as? String).flatMap(Density.init(rawValue:)) ?? .standard
         // Ab Version 2 der Einstellungen ist der Grundtakt 1 s (die Anzeige wird geglättet, einzelne Quellen haben
         // eigene, längere Takte). Ältere gespeicherte 2-s-Takte werden einmalig umgestellt.
@@ -80,6 +83,7 @@ final class AppSettings: ObservableObject {
         accent = .aetherBlue
         glassIntensity = 0.85
         motion = .full
+        effectProfile = .balanced
         density = .standard
         dashboard = DashboardLayout()
     }

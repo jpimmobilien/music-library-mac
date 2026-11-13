@@ -1,7 +1,8 @@
-# Xcode-Projekt für AETHER (XcodeGen). Erzeugen: scripts/make_xcodeproj.sh  →  AETHER.xcodeproj
-# Die Logik-Module kommen aus dem Swift-Paket im selben Ordner (AetherCore, AetherSystem, AetherC);
-# die App-Quellen (Sources/AETHER) kompiliert das Xcode-Ziel „AETHER-App“ direkt. Ergebnis: AETHER.app (arm64 + x86_64).
-name: AETHER
+# Xcode-Projekt für ORBIT (XcodeGen). Erzeugen: scripts/make_xcodeproj.sh  →  ORBIT.xcodeproj
+# Die Logik-Module kommen aus dem Swift-Paket im selben Ordner (AetherCore, AetherSystem, AetherC – interne Namen aus
+# der Zeit vor der Umbenennung, unverändert); die App-Quellen (Sources/AETHER) kompiliert das Xcode-Ziel „ORBIT“ direkt.
+# Ergebnis: ORBIT.app (arm64 + x86_64).
+name: ORBIT
 options:
   deploymentTarget:
     macOS: "13.0"
@@ -23,7 +24,7 @@ packages:
   AetherPackage:
     path: .
 targets:
-  AETHER-App:
+  ORBIT:
     type: application
     platform: macOS
     deploymentTarget: "13.0"
@@ -34,7 +35,7 @@ targets:
         buildPhase: resources
     settings:
       base:
-        PRODUCT_NAME: AETHER
+        PRODUCT_NAME: ORBIT
         PRODUCT_BUNDLE_IDENTIFIER: de.projectaether.macos
         INFOPLIST_FILE: Xcode/Info.plist
         GENERATE_INFOPLIST_FILE: NO

@@ -45,7 +45,7 @@ struct ActivityView: View {
             }
             filterBar
             if store.loaded && !store.othersAvailable {
-                NoticeBar(text: tr("CPU and memory values of other users’ and system processes are only available to programs with administrator rights. AETHER deliberately doesn’t ask for them."))
+                NoticeBar(text: tr("CPU and memory values of other users’ and system processes are only available to programs with administrator rights. ORBIT deliberately doesn’t ask for them."))
             }
             if let message {
                 NoticeBar(text: message, symbol: "exclamationmark.triangle")
@@ -334,7 +334,7 @@ struct ActivityView: View {
     private func request(_ row: ProcessRow, force: Bool) {
         switch row.protection {
         case .blocked:
-            message = tr("“%@” is essential for macOS and is never quit by AETHER.", row.name)
+            message = tr("“%@” is essential for macOS and is never quit by ORBIT.", row.name)
         case .otherUser:
             message = tr("“%@” belongs to another user (%@). macOS only allows quitting it with administrator rights.", row.name, row.user)
         case .allowed where !force && row.isApp:

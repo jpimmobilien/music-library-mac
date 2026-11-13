@@ -42,6 +42,7 @@ struct Card<Content: View>: View {
             RoundedRectangle(cornerRadius: Radius.card, style: .continuous)
                 .strokeBorder(theme.accent.opacity(hovering && action != nil ? 0.35 : 0), lineWidth: 1)
         )
+        .orbitHover(cornerRadius: Radius.card, magnetic: action != nil)
         .scaleEffect(hovering && action != nil ? 1.006 : 1)
         .aetherAnimation(Motion.quick, value: hovering)
         .contentShape(RoundedRectangle(cornerRadius: Radius.card, style: .continuous))
@@ -263,14 +264,34 @@ struct LegendItem: View {
 // MARK: - Status und Herkunft
 
 struct StatusDot: View {
+    @Environment(\.aether) private var theme
     var color: Color
     var size: CGFloat = 8
+    /// ORBIT „Smart Status Feedback“: Bei einem echten Zustandswechsel läuft einmal ein Ring nach außen.
+    @State private var ripple = false
 
     var body: some View {
         Circle()
             .fill(color)
             .frame(width: size, height: size)
             .shadow(color: color.opacity(0.6), radius: size / 2)
+            .overlay {
+                if ripple {
+                    Circle()
+                        .strokeBorder(color.opacity(0.8), lineWidth: 1.5)
+                        .frame(width: size * 2.6, height: size * 2.6)
+                        .transition(.asymmetric(insertion: .scale(scale: 0.4).combined(with: .opacity), removal: .opacity))
+                        .allowsHitTesting(false)
+                }
+            }
+            .animation(theme.effects.dataFlow ? .easeOut(duration: 0.35) : nil, value: color)
+            .onChange(of: color) { _ in
+                guard theme.effects.dataFlow else { return }
+                withAnimation(.easeOut(duration: 0.45)) { ripple = true }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    withAnimation(.easeOut(duration: 0.4)) { ripple = false }
+                }
+            }
     }
 }
 

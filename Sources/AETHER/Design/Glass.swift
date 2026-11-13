@@ -152,26 +152,41 @@ struct GlassGroup<Content: View>: View {
     }
 }
 
-/// Atmosphärischer Fensterhintergrund: weiche, statische Farbinseln – keine Daueranimation, keine Echtzeit-Unschärfe.
+/// Atmosphärischer Fensterhintergrund: weiche Lichtfelder in den ORBIT-Farben (Core Animation, siehe Orbit.swift).
+/// „Minimal“: nur der Verlauf. „Ausgewogen“: ruhende Lichtfelder, die beim Bereichswechsel weitergleiten.
+/// „Immersiv“: zusätzlich eine sehr langsame Drift. Keine Echtzeit-Unschärfe.
 struct AmbientBackground: View {
     @Environment(\.aether) private var theme
+    /// Aktueller Bereich – bestimmt die Lage der Lichtfelder (räumliche Orientierung). nil = feste Lage.
+    var section: AppSection? = nil
 
     var body: some View {
-        GeometryReader { geo in
-            let radius = max(geo.size.width, geo.size.height) * 0.75
-            let ambient = theme.palette.ambient
-            ZStack {
-                LinearGradient(colors: [theme.backgroundTop, theme.backgroundBottom], startPoint: .top, endPoint: .bottom)
-                if theme.usesGlass {
-                    let centers: [UnitPoint] = [UnitPoint(x: 0.05, y: 0.0), UnitPoint(x: 1.0, y: 0.2), UnitPoint(x: 0.45, y: 1.1)]
-                    ForEach(Array(ambient.prefix(3).enumerated()), id: \.offset) { index, color in
-                        RadialGradient(colors: [Color(color).opacity(0.35 + 0.65 * theme.glassIntensity), .clear],
-                                       center: centers[index], startRadius: 0, endRadius: radius * (index == 0 ? 1 : 0.85))
-                    }
-                }
+        ZStack {
+            LinearGradient(colors: [theme.backgroundTop, theme.backgroundBottom], startPoint: .top, endPoint: .bottom)
+            if theme.usesGlass && theme.effects.ambientLights && !theme.palette.ambient.isEmpty {
+                AmbientLightsView(lights: lights, shift: shift, living: theme.effects.livingBackground,
+                                  animateShift: theme.effects.spatialBackground)
             }
         }
         .ignoresSafeArea()
         .allowsHitTesting(false)
+        .accessibilityHidden(true)
+    }
+
+    private var lights: [AmbientLightsView.Light] {
+        let centers: [UnitPoint] = [UnitPoint(x: 0.05, y: 0.0), UnitPoint(x: 1.0, y: 0.2), UnitPoint(x: 0.45, y: 1.1)]
+        let radii: [CGFloat] = [0.75, 0.64, 0.64]
+        let intensity = 0.35 + 0.65 * min(1, max(0, theme.glassIntensity))
+        return theme.palette.ambient.prefix(3).enumerated().map { index, color in
+            AmbientLightsView.Light(color: color.withAlpha(color.alpha * intensity), center: centers[index], radius: radii[index])
+        }
+    }
+
+    /// Jeder Bereich hat eine eigene, leicht versetzte Lage der Lichtfelder (höchstens 6 % der Fenstergröße).
+    private var shift: CGPoint {
+        guard let section, theme.effects.spatialBackground,
+              let index = AppSection.allCases.firstIndex(of: section) else { return .zero }
+        let angle = Double(index) / Double(AppSection.allCases.count) * 2 * Double.pi
+        return CGPoint(x: cos(angle) * 0.06, y: sin(angle) * 0.04)
     }
 }

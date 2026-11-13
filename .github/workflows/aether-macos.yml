@@ -1,4 +1,4 @@
-# AETHER macOS – Tests, Clean Build, Universal-Build, DMG, Installations- und Starttests auf echten macOS-Rechnern
+# ORBIT macOS (früher AETHER) – Tests, Clean Build, Universal-Build, DMG, Installations- und Starttests auf echten macOS-Rechnern
 #
 #   core     Linux: Kernlogik-Tests (AetherCore ist frei von Apple-Frameworks) und Lokalisierungsprüfung
 #   build    macOS 26 (Apple Silicon, Xcode 26) und macOS 15 Intel (Ausweichrechner) parallel:
@@ -8,7 +8,7 @@
 #   smoke    fertige DMG auf einem Intel-Mac wie ein Nutzer installieren und starten
 #   xcode    Xcode-Projekt aus project.yml erzeugen (XcodeGen) und mit xcodebuild universal bauen
 #   results  DMG, Prüfsumme, Protokolle, Bildschirmfotos → Zweig „ci-ergebnisse-aether-macos“
-name: AETHER macOS
+name: ORBIT macOS
 
 on:
   push:
@@ -23,7 +23,7 @@ permissions:
   contents: read
 
 env:
-  VERSION: "1.2.0"
+  VERSION: "2.0.0"
 
 jobs:
   core:
@@ -99,23 +99,23 @@ jobs:
           set -o pipefail
           scripts/build_app.sh 2>&1 | tee logs/build-output.txt
       - name: Selbsttest (Build, nativ)
-        run: scripts/run_selftest.sh build/AETHER.app logs/selftest-${{ matrix.os }}.json
+        run: scripts/run_selftest.sh build/ORBIT.app logs/selftest-${{ matrix.os }}.json
       - name: Bildschirmfotos (Liquid Glass bzw. Systemstand)
         if: ${{ !cancelled() }}
         continue-on-error: true
-        run: scripts/run_snapshots.sh build/AETHER.app snapshots/${{ matrix.os }}-glass
+        run: scripts/run_snapshots.sh build/ORBIT.app snapshots/${{ matrix.os }}-glass
       - name: Bildschirmfotos (Rückfall ohne Liquid Glass)
         if: ${{ !cancelled() && matrix.os == 'macos-26' }}
         continue-on-error: true
         env:
           AETHER_FORCE_GLASS_FALLBACK: "1"
-        run: scripts/run_snapshots.sh build/AETHER.app snapshots/${{ matrix.os }}-fallback
+        run: scripts/run_snapshots.sh build/ORBIT.app snapshots/${{ matrix.os }}-fallback
       - name: Bildschirmfotos (Deutsch)
         if: ${{ !cancelled() && matrix.os == 'macos-26' }}
         continue-on-error: true
         env:
           SNAPSHOT_LANG: de
-        run: scripts/run_snapshots.sh build/AETHER.app snapshots/${{ matrix.os }}-deutsch
+        run: scripts/run_snapshots.sh build/ORBIT.app snapshots/${{ matrix.os }}-deutsch
       - name: DMG erstellen und prüfen (Mount-Test)
         run: |
           set -o pipefail
@@ -131,23 +131,23 @@ jobs:
         run: |
           set -e
           MNT="$(mktemp -d)"
-          hdiutil attach dist/AETHER-macOS-Universal.dmg -nobrowse -readonly -mountpoint "$MNT"
+          hdiutil attach dist/ORBIT-macOS-Universal.dmg -nobrowse -readonly -mountpoint "$MNT"
           mkdir -p "$HOME/Applications"
-          rm -rf "$HOME/Applications/AETHER.app"
-          ditto "$MNT/AETHER.app" "$HOME/Applications/AETHER.app"
+          rm -rf "$HOME/Applications/ORBIT.app"
+          ditto "$MNT/ORBIT.app" "$HOME/Applications/ORBIT.app"
           hdiutil detach "$MNT"
-          codesign --verify --deep --strict --verbose=2 "$HOME/Applications/AETHER.app"
-          scripts/run_selftest.sh "$HOME/Applications/AETHER.app" logs/selftest-installiert-${{ matrix.os }}.json
+          codesign --verify --deep --strict --verbose=2 "$HOME/Applications/ORBIT.app"
+          scripts/run_selftest.sh "$HOME/Applications/ORBIT.app" logs/selftest-installiert-${{ matrix.os }}.json
           if [ "$(uname -m)" = "arm64" ]; then
             /usr/sbin/softwareupdate --install-rosetta --agree-to-license || true
-            SNAPSHOT_ARCH=x86_64 scripts/run_selftest.sh "$HOME/Applications/AETHER.app" logs/selftest-installiert-${{ matrix.os }}-rosetta.json
+            SNAPSHOT_ARCH=x86_64 scripts/run_selftest.sh "$HOME/Applications/ORBIT.app" logs/selftest-installiert-${{ matrix.os }}-rosetta.json
           fi
       - uses: actions/upload-artifact@v4
         with:
-          name: AETHER-dmg-${{ matrix.os }}
+          name: ORBIT-dmg-${{ matrix.os }}
           path: |
-            dist/AETHER-macOS-Universal.dmg
-            dist/AETHER-macOS-Universal.dmg.sha256
+            dist/ORBIT-macOS-Universal.dmg
+            dist/ORBIT-macOS-Universal.dmg.sha256
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: always()
@@ -168,36 +168,36 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
-          pattern: AETHER-dmg-*
+          pattern: ORBIT-dmg-*
           path: dmgs
       - name: DMG wählen (bevorzugt macOS-26-Build)
         run: |
           mkdir -p dist
-          SRC=dmgs/AETHER-dmg-macos-26
-          [ -f "$SRC/AETHER-macOS-Universal.dmg" ] || SRC=dmgs/AETHER-dmg-macos-15-intel
-          cp "$SRC"/AETHER-macOS-Universal.dmg* dist/
+          SRC=dmgs/ORBIT-dmg-macos-26
+          [ -f "$SRC/ORBIT-macOS-Universal.dmg" ] || SRC=dmgs/ORBIT-dmg-macos-15-intel
+          cp "$SRC"/ORBIT-macOS-Universal.dmg* dist/
           echo "Verwendet: $SRC" | tee dist/quelle.txt
       - name: DMG einhängen und wie ein Benutzer installieren
         run: |
           set -e
           mkdir -p logs/smoke-intel
           { sw_vers; uname -m; cat dist/quelle.txt; } | tee logs/smoke-intel/system.txt
-          (cd dist && shasum -a 256 -c AETHER-macOS-Universal.dmg.sha256)
+          (cd dist && shasum -a 256 -c ORBIT-macOS-Universal.dmg.sha256)
           MNT="$(mktemp -d)"
-          hdiutil attach dist/AETHER-macOS-Universal.dmg -nobrowse -readonly -mountpoint "$MNT"
+          hdiutil attach dist/ORBIT-macOS-Universal.dmg -nobrowse -readonly -mountpoint "$MNT"
           ls -la "$MNT" | tee logs/smoke-intel/dmg-inhalt.txt
           test -L "$MNT/Programme"
           mkdir -p "$HOME/Applications"
-          ditto "$MNT/AETHER.app" "$HOME/Applications/AETHER.app"
+          ditto "$MNT/ORBIT.app" "$HOME/Applications/ORBIT.app"
           hdiutil detach "$MNT"
-          lipo -archs "$HOME/Applications/AETHER.app/Contents/MacOS/AETHER" | tee -a logs/smoke-intel/system.txt
-          codesign --verify --deep --strict --verbose=2 "$HOME/Applications/AETHER.app"
+          lipo -archs "$HOME/Applications/ORBIT.app/Contents/MacOS/ORBIT" | tee -a logs/smoke-intel/system.txt
+          codesign --verify --deep --strict --verbose=2 "$HOME/Applications/ORBIT.app"
       - name: App starten (Selbsttest)
-        run: scripts/run_selftest.sh "$HOME/Applications/AETHER.app" logs/smoke-intel/selftest.json
+        run: scripts/run_selftest.sh "$HOME/Applications/ORBIT.app" logs/smoke-intel/selftest.json
       - name: Bildschirmfotos
         if: always()
         continue-on-error: true
-        run: scripts/run_snapshots.sh "$HOME/Applications/AETHER.app" snapshots/smoke-intel
+        run: scripts/run_snapshots.sh "$HOME/Applications/ORBIT.app" snapshots/smoke-intel
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -226,23 +226,23 @@ jobs:
       - name: Universal-Build mit xcodebuild
         run: |
           set +e
-          xcodebuild -project AETHER.xcodeproj -scheme AETHER-App -configuration Release -derivedDataPath build/xcode \
+          xcodebuild -project ORBIT.xcodeproj -scheme ORBIT -configuration Release -derivedDataPath build/xcode \
             -destination 'generic/platform=macOS' ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO \
             CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO build > logs/xcodebuild.txt 2>&1
           STATUS=$?
           grep -E "error:|BUILD (SUCCEEDED|FAILED)" logs/xcodebuild.txt | sed 's|/Users/runner/work/[^ ]*/Sources/|Sources/|' | sort -u | head -60
           [ $STATUS -eq 0 ] || exit $STATUS
           set -e
-          APP=build/xcode/Build/Products/Release/AETHER.app
-          lipo -archs "$APP/Contents/MacOS/AETHER" | tee logs/xcode-archs.txt
-          lipo "$APP/Contents/MacOS/AETHER" -verify_arch arm64 x86_64
+          APP=build/xcode/Build/Products/Release/ORBIT.app
+          lipo -archs "$APP/Contents/MacOS/ORBIT" | tee logs/xcode-archs.txt
+          lipo "$APP/Contents/MacOS/ORBIT" -verify_arch arm64 x86_64
           test -s "$APP/Contents/Resources/de.lproj/Localizable.strings"
           test -s "$APP/Contents/Resources/en.lproj/Localizable.strings"
           /usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$APP/Contents/Info.plist"
           echo "✓ Xcode-Build universal (arm64 + x86_64)"
       - name: Projekt sichern
         if: always()
-        run: zip -qr logs/AETHER-xcodeproj.zip AETHER.xcodeproj Xcode 2>/dev/null || true
+        run: zip -qr logs/ORBIT-xcodeproj.zip ORBIT.xcodeproj Xcode 2>/dev/null || true
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -280,7 +280,7 @@ jobs:
             echo "Lauf: ${GITHUB_RUN_NUMBER} (${GITHUB_SHA})"
             echo "core: ${{ needs.core.result }}"
             echo "build: ${{ needs.build.result }}"
-            ls -d AETHER-dmg-* 2>/dev/null | sed 's/^/dmg: /'
+            ls -d ORBIT-dmg-* 2>/dev/null | sed 's/^/dmg: /'
             echo "smoke: ${{ needs.smoke.result }}"
             echo "xcode: ${{ needs.xcode.result }}"
             date -u
@@ -289,5 +289,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -q -m "CI-Ergebnisse AETHER macOS Lauf ${GITHUB_RUN_NUMBER}"
+          git commit -q -m "CI-Ergebnisse ORBIT macOS Lauf ${GITHUB_RUN_NUMBER}"
           git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" ci-ergebnisse-aether-macos

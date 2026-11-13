@@ -39,6 +39,8 @@ enum SnapshotRunner {
         var rawValues = false
         /// Galerie aller Geräte-Illustrationen statt des Fensters
         var gallery = false
+        /// ORBIT-Effektprofil
+        var effects: EffectProfile = .balanced
     }
 
     /// Diagnose-Szenarien: jeder Baustein hell und dunkel.
@@ -85,6 +87,9 @@ enum SnapshotRunner {
         // Alle Mac-Bauformen seit 2017 (die Build-Rechner selbst sind virtuelle Macs)
         Scenario(name: "29-modellgalerie-dark", size: CGSize(width: 1760, height: 2400), theme: .liquidGlassDark, gallery: true),
         Scenario(name: "30-modellgalerie-light", size: CGSize(width: 1760, height: 2400), theme: .liquidGlassLight, gallery: true),
+        // ORBIT: Effektprofile Immersiv und Minimal auf der ganzen Übersicht (ORBIT Core)
+        Scenario(name: "31-orbit-immersiv-hell", size: CGSize(width: 1320, height: 2200), theme: .liquidGlassLight, effects: .immersive),
+        Scenario(name: "32-orbit-minimal-dunkel", size: CGSize(width: 1320, height: 2200), theme: .liquidGlassDark, effects: .minimal),
     ]
 
     static func run(model: AppModel, output: URL) async {
@@ -117,6 +122,7 @@ enum SnapshotRunner {
             settings.glassIntensity = scenario.glassIntensity
             settings.diagnosticsEnabled = scenario.diagnostics
             settings.showRawValues = scenario.rawValues
+            settings.effectProfile = scenario.effects
             model.selection = scenario.section
             model.editingDashboard = scenario.editing
             let spec = ThemeCatalog.spec(scenario.theme)

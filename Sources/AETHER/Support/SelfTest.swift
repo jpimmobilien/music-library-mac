@@ -172,7 +172,7 @@ enum SelfTest {
         // Systembericht: Abschnitte aus echten Werten, ohne Seriennummer
         let sections = HardwareReport.sections(system: engine.system, gpu: engine.gpu, storage: engine.storage, power: engine.power,
                                                displays: DisplayCatalog.current())
-        let markdown = ReportFormatter.markdown(title: "AETHER", subtitle: "Selbsttest", columns: ("a", "b", "c"), sections: sections,
+        let markdown = ReportFormatter.markdown(title: "ORBIT", subtitle: "Selbsttest", columns: ("a", "b", "c"), sections: sections,
                                                 includeSensitive: false, describe: { $0.provenance.rawValue })
         check("hardware.report", sections.contains { !$0.rows.isEmpty } && !sections.flatMap(\.rows).contains { $0.isSensitive },
               "Abschnitte=\(sections.filter { !$0.rows.isEmpty }.count) Zeichen=\(markdown.count) Bildschirme=\(DisplayCatalog.current().count)")
@@ -254,6 +254,17 @@ enum SelfTest {
         try? await Task.sleep(nanoseconds: 6_000_000_000)
         sectionCPU["overview-motion-off"] = (processCPUSeconds() - still0) / max(1, ProcessInfo.processInfo.systemUptime - stillWall0)
         model.settings.motion = motion
+        // ORBIT: Effektprofile im Vergleich (Übersicht) – „Immersiv“ darf nur wenig mehr kosten als „Ausgewogen“
+        let profile = model.settings.effectProfile
+        for candidate in [EffectProfile.immersive, .minimal] {
+            model.settings.effectProfile = candidate
+            try? await Task.sleep(nanoseconds: 2_000_000_000)
+            let p0 = processCPUSeconds()
+            let pWall0 = ProcessInfo.processInfo.systemUptime
+            try? await Task.sleep(nanoseconds: 6_000_000_000)
+            sectionCPU["overview-\(candidate.rawValue)"] = (processCPUSeconds() - p0) / max(1, ProcessInfo.processInfo.systemUptime - pWall0)
+        }
+        model.settings.effectProfile = profile
         let ownShare = sectionCPU[AppSection.overview.rawValue] ?? 0
         let diag = overviewDiag
         let perSection = sectionCPU.sorted { $0.key < $1.key }.map { String(format: "%@ %.1f %%", $0.key, $0.value * 100) }

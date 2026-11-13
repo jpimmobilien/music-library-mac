@@ -217,7 +217,7 @@ private struct FansPanel: View {
                                      maxValue: nil, height: 80, label: { fmt.integer(Int($0.rounded())) },
                                      spanLabel: mediumSpanLabel(interval))
                     }
-                    Text(tr("Read-only – AETHER never changes fan speeds."))
+                    Text(tr("Read-only – ORBIT never changes fan speeds."))
                         .font(Typo.caption).foregroundStyle(theme.textTertiary)
                 }
             } else if let fans {
@@ -273,7 +273,7 @@ private struct SMCNote: View {
 
     var body: some View {
         NoticeBar(text: enabled
-                  ? tr("Temperatures and fans come from the System Management Controller via public IOKit functions. Apple doesn’t document the keys; AETHER only reads and checks every value for plausibility. You can turn this off in Settings.")
+                  ? tr("Temperatures and fans come from the System Management Controller via public IOKit functions. Apple doesn’t document the keys; ORBIT only reads and checks every value for plausibility. You can turn this off in Settings.")
                   : tr("Reading sensors via the SMC is turned off in Settings. The thermal state and battery temperature remain available."),
                   symbol: "info.circle")
     }

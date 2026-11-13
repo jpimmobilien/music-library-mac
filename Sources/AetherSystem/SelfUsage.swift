@@ -1,7 +1,7 @@
 import Darwin
 import Foundation
 
-/// Eigenverbrauch von AETHER (CPU-Anteil seit der letzten Messung, Speicherbedarf wie in der Aktivitätsanzeige).
+/// Eigenverbrauch von ORBIT (CPU-Anteil seit der letzten Messung, Speicherbedarf wie in der Aktivitätsanzeige).
 public final class SelfUsage {
     public struct Sample: Sendable, Equatable {
         /// Anteil eines Kerns (0,01 = 1 % eines Kerns).

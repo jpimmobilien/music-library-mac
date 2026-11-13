@@ -33,14 +33,14 @@ final class StatusItemController: NSObject {
         guard item == nil, let model else { return }
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         if let button = item.button {
-            let image = NSImage(systemSymbolName: "waveform.path.ecg", accessibilityDescription: "AETHER")
+            let image = NSImage(systemSymbolName: "waveform.path.ecg", accessibilityDescription: "ORBIT")
             image?.isTemplate = true
             button.image = image
             button.imagePosition = .imageLeading
             button.font = NSFont.monospacedDigitSystemFont(ofSize: NSFont.systemFontSize, weight: .regular)
             button.target = self
             button.action = #selector(togglePanel(_:))
-            button.toolTip = "AETHER"
+            button.toolTip = "ORBIT"
         }
         self.item = item
         title = ""

@@ -81,7 +81,7 @@ final class StorageAnalysisModel: ObservableObject {
         panel.canCreateDirectories = false
         panel.directoryURL = root
         panel.prompt = tr("Choose")
-        panel.message = tr("Choose the folder AETHER should analyse.")
+        panel.message = tr("Choose the folder ORBIT should analyse.")
         guard panel.runModal() == .OK, let url = panel.url else { return }
         root = url
         result = nil

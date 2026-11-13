@@ -2,7 +2,7 @@
 //
 // SMC (System Management Controller): Temperaturen und Lüfter. Zugriff über die öffentlichen IOKit-Funktionen
 // IOServiceOpen und IOConnectCallStructMethod; das Protokoll selbst ist nicht von Apple dokumentiert (siehe
-// docs/KONZEPT.md, Risikoanalyse 8.3). AETHER LIEST AUSSCHLIESSLICH – es gibt keine Schreibfunktion.
+// docs/KONZEPT.md, Risikoanalyse 8.3). ORBIT LIEST AUSSCHLIESSLICH – es gibt keine Schreibfunktion.
 #ifndef AETHER_C_H
 #define AETHER_C_H
 

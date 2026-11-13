@@ -541,7 +541,7 @@ struct ThisMacCard: View {
                     InfoRow(label: tr("Uptime"), value: fmt.duration(seconds: Uptime.seconds(bootTime: boot)))
                 }
                 if let own = system.ownUsage {
-                    InfoRow(label: tr("AETHER itself"),
+                    InfoRow(label: tr("ORBIT itself"),
                             value: [own.cpu.map { fmt.percent($0, fractionDigits: 1) }, own.footprint.map { fmt.bytes($0, style: .memory) }]
                                 .compactMap { $0 }.joined(separator: " · "))
                 }

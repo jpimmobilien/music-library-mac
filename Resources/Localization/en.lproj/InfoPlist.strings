@@ -1,8 +1,8 @@
-/* AETHER – Info.plist (English) */
-"NSDesktopFolderUsageDescription" = "AETHER shows the contents of your Desktop folder in Files and includes it in storage analyses you start. Nothing leaves this Mac.";
-"NSDocumentsFolderUsageDescription" = "AETHER shows the contents of your Documents folder in Files and includes it in storage analyses you start. Nothing leaves this Mac.";
-"NSDownloadsFolderUsageDescription" = "AETHER shows the contents of your Downloads folder in Files and includes it in storage analyses you start. Nothing leaves this Mac.";
-"NSRemovableVolumesUsageDescription" = "AETHER shows files on removable drives in Files and analyses their storage when you ask for it.";
-"NSNetworkVolumesUsageDescription" = "AETHER shows files on network drives in Files when you open them.";
-"NSLocationUsageDescription" = "macOS only reveals the name of the Wi‑Fi network to apps with location access. AETHER uses it for nothing else and never stores your location.";
-"NSLocationWhenInUseUsageDescription" = "macOS only reveals the name of the Wi‑Fi network to apps with location access. AETHER uses it for nothing else and never stores your location.";
+/* ORBIT – Info.plist (English) */
+"NSDesktopFolderUsageDescription" = "ORBIT shows the contents of your Desktop folder in Files and includes it in storage analyses you start. Nothing leaves this Mac.";
+"NSDocumentsFolderUsageDescription" = "ORBIT shows the contents of your Documents folder in Files and includes it in storage analyses you start. Nothing leaves this Mac.";
+"NSDownloadsFolderUsageDescription" = "ORBIT shows the contents of your Downloads folder in Files and includes it in storage analyses you start. Nothing leaves this Mac.";
+"NSRemovableVolumesUsageDescription" = "ORBIT shows files on removable drives in Files and analyses their storage when you ask for it.";
+"NSNetworkVolumesUsageDescription" = "ORBIT shows files on network drives in Files when you open them.";
+"NSLocationUsageDescription" = "macOS only reveals the name of the Wi‑Fi network to apps with location access. ORBIT uses it for nothing else and never stores your location.";
+"NSLocationWhenInUseUsageDescription" = "macOS only reveals the name of the Wi‑Fi network to apps with location access. ORBIT uses it for nothing else and never stores your location.";

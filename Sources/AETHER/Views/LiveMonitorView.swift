@@ -222,7 +222,7 @@ struct MenuBarPanel: View {
         let theme = AetherTheme.resolve(settings: settings, systemIsDark: colorScheme == .dark, reduceTransparency: false)
         VStack(alignment: .leading, spacing: Spacing.m) {
             HStack {
-                Text("AETHER").font(.system(size: 13, weight: .bold))
+                Text("ORBIT").font(.system(size: 13, weight: .bold))
                 Spacer()
                 Text(tr("every %@", fmt.duration(seconds: model.menuBarInterval.seconds)))
                     .font(Typo.caption).foregroundStyle(theme.textTertiary)
@@ -230,7 +230,7 @@ struct MenuBarPanel: View {
             LiveMetrics(engine: model.engine, compact: true)
             Divider()
             HStack(spacing: Spacing.s) {
-                Button(tr("Open AETHER")) {
+                Button(tr("Open ORBIT")) {
                     model.openWindow(id: "main")
                 }
                 .buttonStyle(CapsuleButtonStyle(prominent: true))

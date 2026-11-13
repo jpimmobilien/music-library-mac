@@ -20,11 +20,29 @@ public final class HistoryDatabase: @unchecked Sendable {
     private let queue = DispatchQueue(label: "aether.history.database", qos: .utility)
     private var db: OpaquePointer?
 
-    /// ~/Library/Application Support/AETHER/history.sqlite
+    /// ~/Library/Application Support/ORBIT/history.sqlite
+    ///
+    /// Bis Version 1.2 hieß die App AETHER und speicherte unter „…/Application Support/AETHER“. Gibt es den neuen Ordner
+    /// noch nicht, wird der alte einmalig umbenannt (verschoben, nicht kopiert oder gelöscht) – der Verlauf bleibt erhalten.
+    /// Schlägt das fehl (z. B. fehlende Rechte), bleibt die App beim alten Ordner, statt Daten zu verlieren.
     public static func defaultURL() -> URL? {
-        FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?
-            .appendingPathComponent("AETHER", isDirectory: true)
-            .appendingPathComponent("history.sqlite")
+        guard let support = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else { return nil }
+        return migratedFolder(in: support).appendingPathComponent("history.sqlite")
+    }
+
+    /// Ordner für die Daten der App in `support` (mit einmaliger Übernahme des früheren AETHER-Ordners).
+    public static func migratedFolder(in support: URL, fileManager: FileManager = .default) -> URL {
+        let current = support.appendingPathComponent("ORBIT", isDirectory: true)
+        let legacy = support.appendingPathComponent("AETHER", isDirectory: true) // Name bis Version 1.2
+        var isDir: ObjCBool = false
+        if fileManager.fileExists(atPath: current.path) { return current }
+        guard fileManager.fileExists(atPath: legacy.path, isDirectory: &isDir), isDir.boolValue else { return current }
+        do {
+            try fileManager.moveItem(at: legacy, to: current)
+            return current
+        } catch {
+            return legacy
+        }
     }
 
     /// Öffnet (und legt bei Bedarf an) die Datenbank.

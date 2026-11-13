@@ -1,6 +1,6 @@
 #!/bin/bash
 # Erzeugt Bildschirmfotos (alle Themes, mehrere Fenstergrößen) mit echten Messwerten zur Sichtprüfung.
-#   scripts/run_snapshots.sh "build/AETHER.app" snapshots/macos26
+#   scripts/run_snapshots.sh "build/ORBIT.app" snapshots/macos26
 # Stürzt die App bei einem Szenario ab (z. B. Metal-Assertion auf virtuellen Intel-Macs ohne Grafikgerät), wird der
 # Absturzbericht gesichert, das Szenario im Protokoll benannt und der Rest in einem neuen Prozess fortgesetzt.
 # Der Exit-Status bleibt dann ≠ 0 – ein Absturz wird nie verschwiegen.
@@ -8,7 +8,7 @@ set -euo pipefail
 APP="$1"; OUT="$2"
 mkdir -p "$OUT"
 OUT_ABS="$(cd "$OUT" && pwd)"
-BIN="$APP/Contents/MacOS/AETHER"
+BIN="$APP/Contents/MacOS/ORBIT"
 RUNNER=()
 if [ -n "${SNAPSHOT_ARCH:-}" ]; then RUNNER=(arch "-$SNAPSHOT_ARCH"); fi
 # SNAPSHOT_LANG=de: Oberfläche auf Deutsch (wie „Sprache der App“ in den Systemeinstellungen)
@@ -30,8 +30,8 @@ for ATTEMPT in $(seq 1 "${SNAPSHOT_MAX_ATTEMPTS:-6}"); do
     if [ $STATUS -eq 0 ]; then break; fi
     FINAL=$STATUS
     echo "✗ App beendet mit Status $STATUS (Versuch $ATTEMPT)" | tee -a "$OUT_ABS/run.log"
-    for _ in $(seq 1 30); do ls "$HOME"/Library/Logs/DiagnosticReports/AETHER* >/dev/null 2>&1 && break; sleep 1; done
-    for f in "$HOME"/Library/Logs/DiagnosticReports/AETHER*; do [ -e "$f" ] && mv "$f" "$OUT_ABS/"; done
+    for _ in $(seq 1 30); do ls "$HOME"/Library/Logs/DiagnosticReports/ORBIT* >/dev/null 2>&1 && break; sleep 1; done
+    for f in "$HOME"/Library/Logs/DiagnosticReports/ORBIT*; do [ -e "$f" ] && mv "$f" "$OUT_ABS/"; done
     CURRENT="$(cat "$OUT_ABS/current.txt" 2>/dev/null || true)"
     [ -n "$CURRENT" ] || break
     echo "✗ Absturz bei Szenario: $CURRENT" | tee -a "$OUT_ABS/run.log"

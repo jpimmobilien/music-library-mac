@@ -9,7 +9,7 @@ struct AetherApp: App {
     @StateObject private var model = AppModel()
 
     var body: some Scene {
-        Window("AETHER", id: "main") {
+        Window("ORBIT", id: "main") {
             RootView()
                 .environmentObject(model)
                 .environmentObject(model.settings)
@@ -112,9 +112,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    /// Normal: Schließen des Fensters beendet AETHER (kein versteckter Hintergrundbetrieb).
+    /// Normal: Schließen des Fensters beendet ORBIT (kein versteckter Hintergrundbetrieb).
     /// Selbsttest und Bildschirmfotos blenden Fenster aus und beenden sich selbst, sobald sie fertig sind.
-    /// Mit Menüleisten-Anzeige läuft AETHER weiter, bis „Beenden“ gewählt wird.
+    /// Mit Menüleisten-Anzeige läuft ORBIT weiter, bis „Beenden“ gewählt wird.
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         !LaunchMode.fromArguments().isAutomated && !(model?.settings.menuBarEnabled ?? false)
     }

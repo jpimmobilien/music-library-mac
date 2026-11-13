@@ -40,7 +40,7 @@ public struct NetworkSnapshot: Sendable, Equatable {
     /// sonst würde Verkehr doppelt gezählt).
     public var download: Reading<Double>
     public var upload: Reading<Double>
-    /// Seit Start von AETHER übertragen.
+    /// Seit Start von ORBIT übertragen.
     public var sessionDownloaded: UInt64
     public var sessionUploaded: UInt64
     public var activeInterfaces: [String]

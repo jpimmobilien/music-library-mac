@@ -38,6 +38,7 @@ private struct FilesContent: View {
                     Rectangle().fill(theme.hairline).frame(height: 1)
                     if let banner = browser.banner {
                         BannerRow(banner: banner, browser: browser)
+                            .transition(.move(edge: .top).combined(with: .opacity))
                     }
                     mainContent
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -45,6 +46,7 @@ private struct FilesContent: View {
                             if let operation = browser.operation {
                                 OperationRow(operation: operation) { browser.cancelOperation() }
                                     .padding(Spacing.m)
+                                    .transition(.move(edge: .bottom).combined(with: .opacity))
                             }
                         }
                         .onDrop(of: [.fileURL], isTargeted: $dropTargeted) { providers in
@@ -75,6 +77,8 @@ private struct FilesContent: View {
         .background(ShortcutButtons(browser: browser, disabled: searchFocused, rename: startRename,
                                     focusSearch: { searchFocused = true }))
         .background(QuickLookAnchor())
+        .aetherAnimation(Motion.spring, value: browser.operation != nil)
+        .aetherAnimation(Motion.spring, value: browser.banner?.text)
         .sheet(item: $renaming) { item in
             RenameSheet(browser: browser, item: item) { renaming = nil }
         }
@@ -794,16 +798,10 @@ private struct EmptyState: View {
     let symbol: String
     let title: String
     let detail: String
-    @Environment(\.aether) private var theme
 
     var body: some View {
-        VStack(spacing: 8) {
-            Image(systemName: symbol).font(.system(size: 30, weight: .light)).foregroundStyle(theme.textTertiary)
-            Text(title).font(Typo.bodyMedium)
-            Text(detail).font(Typo.callout).foregroundStyle(theme.textSecondary).multilineTextAlignment(.center).frame(maxWidth: 380)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding()
+        OrbitEmptyState(symbol: symbol, title: title, detail: detail,
+                        problem: symbol.contains("exclamationmark") || symbol.contains("questionmark"))
     }
 }
 
@@ -815,7 +813,7 @@ private struct AccessDeniedView: View {
         VStack(spacing: 10) {
             Image(systemName: "lock.fill").font(.system(size: 28, weight: .light)).foregroundStyle(theme.textSecondary)
             Text(tr("No access to this folder")).font(Typo.bodyMedium)
-            Text(tr("macOS protects this folder. You can allow access for AETHER in System Settings → Privacy & Security → Files and Folders (or Full Disk Access)."))
+            Text(tr("macOS protects this folder. You can allow access for ORBIT in System Settings → Privacy & Security → Files and Folders (or Full Disk Access)."))
                 .font(Typo.callout).foregroundStyle(theme.textSecondary).multilineTextAlignment(.center).frame(maxWidth: 420)
             HStack {
                 Button(tr("Open Privacy Settings")) { openPrivacySettings() }.buttonStyle(CapsuleButtonStyle(prominent: true))
@@ -841,8 +839,8 @@ private struct BannerRow: View {
 
     var body: some View {
         HStack(spacing: Spacing.s) {
-            Image(systemName: banner.isError ? "exclamationmark.triangle.fill" : "checkmark.circle.fill")
-                .foregroundStyle(banner.isError ? theme.statusElevated : theme.statusNormal)
+            CompletionSymbol(isError: banner.isError)
+                .id(banner.text)
             Text(banner.text).font(Typo.callout).lineLimit(2)
             Spacer()
             if banner.undoable {
@@ -867,16 +865,22 @@ private struct OperationRow: View {
     let cancel: () -> Void
     @Environment(\.aether) private var theme
 
+    /// Echter Fortschritt: Bytes, wenn bekannt, sonst Anzahl der Objekte.
+    private var fraction: Double {
+        if operation.totalBytes > 0 { return Double(operation.completedBytes) / Double(operation.totalBytes) }
+        return Double(operation.completedItems) / Double(max(1, operation.totalItems))
+    }
+
     var body: some View {
         HStack(spacing: Spacing.m) {
             VStack(alignment: .leading, spacing: 4) {
                 Text(verbatim: "\(operation.title) · \(tr("%ld of %ld items", operation.completedItems, operation.totalItems))")
                     .font(Typo.captionMedium)
-                if operation.totalBytes > 0 {
-                    ProgressView(value: Double(operation.completedBytes), total: Double(operation.totalBytes))
-                } else {
-                    ProgressView(value: Double(operation.completedItems), total: Double(max(1, operation.totalItems)))
-                }
+                LiquidProgressBar(fraction: fraction, active: theme.effects.dataFlow, color: theme.electricCyan, track: theme.fieldFill)
+                    .frame(height: 6)
+                    .accessibilityElement()
+                    .accessibilityLabel(Text(operation.title))
+                    .accessibilityValue(Text(fmt.percent(fraction)))
                 Text(operation.current).font(Typo.caption).foregroundStyle(theme.textSecondary).lineLimit(1).truncationMode(.middle)
             }
             Button(tr("Stop"), action: cancel).buttonStyle(CapsuleButtonStyle())

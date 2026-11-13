@@ -310,7 +310,7 @@ private struct GPUPanel: View {
                     Spacer()
                     UnavailableValue(reason: store.utilization?.reason ?? .notProvidedByMacOS, source: .gpuStatistics, compact: true)
                 }
-                Text(tr("The utilization comes from the graphics driver. Not every driver reports it – AETHER never estimates it."))
+                Text(tr("The utilization comes from the graphics driver. Not every driver reports it – ORBIT never estimates it."))
                     .font(Typo.caption).foregroundStyle(theme.textTertiary)
             }
         }

@@ -4,7 +4,7 @@ import AetherCore
 import AetherSystem
 
 /// Netzwerk: Durchsatz mit Verlauf, Schnittstellen mit Adressen und eigenem Verkehr, WLAN-Kennwerte, aktive
-/// Verbindungen und der lokale Langzeitverlauf. AETHER baut dabei selbst keine Verbindung auf.
+/// Verbindungen und der lokale Langzeitverlauf. ORBIT baut dabei selbst keine Verbindung auf.
 struct NetworkView: View {
     @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var settings: AppSettings
@@ -31,7 +31,7 @@ struct NetworkView: View {
                 WiFiPanel(details: details, location: location, isSnapshot: model.launchMode.isSnapshot)
                 ConnectionsPanel(details: details)
                 HistoryTimelinePanel(metrics: [.download, .upload])
-                NoticeBar(text: tr("AETHER makes no network connections itself. It only reads the counters, interface details and socket tables macOS provides."),
+                NoticeBar(text: tr("ORBIT makes no network connections itself. It only reads the counters, interface details and socket tables macOS provides."),
                           symbol: "lock.shield")
             }
             .padding(.horizontal, Spacing.gutter)
@@ -98,9 +98,9 @@ private struct ThroughputPanel: View {
                 SeriesLegend(items: [(tr("Download"), theme.networkDown), (tr("Upload"), theme.networkUp)])
                 Spacer(minLength: Spacing.l)
                 VStack(alignment: .leading, spacing: 5) {
-                    InfoRow(label: tr("Received since AETHER started"), value: fmt.bytes(store.snapshot?.sessionDownloaded ?? 0),
+                    InfoRow(label: tr("Received since ORBIT started"), value: fmt.bytes(store.snapshot?.sessionDownloaded ?? 0),
                             source: .interfaceCounters)
-                    InfoRow(label: tr("Sent since AETHER started"), value: fmt.bytes(store.snapshot?.sessionUploaded ?? 0),
+                    InfoRow(label: tr("Sent since ORBIT started"), value: fmt.bytes(store.snapshot?.sessionUploaded ?? 0),
                             source: .interfaceCounters)
                     WindowPeakRow(down: down, up: up, range: range)
                 }
@@ -228,7 +228,7 @@ private struct InterfaceRow: View {
                     HStack(spacing: Spacing.l) {
                         Label(traffic.download.map { fmt.rate($0) } ?? "–", systemImage: "arrow.down")
                         Label(traffic.upload.map { fmt.rate($0) } ?? "–", systemImage: "arrow.up")
-                        Text(tr("%@ received · %@ sent since AETHER started", fmt.bytes(traffic.sessionDownloaded),
+                        Text(tr("%@ received · %@ sent since ORBIT started", fmt.bytes(traffic.sessionDownloaded),
                                 fmt.bytes(traffic.sessionUploaded)))
                             .lineLimit(1)
                         Spacer(minLength: 0)
@@ -371,7 +371,7 @@ private struct WiFiPanel: View {
                         .buttonStyle(CapsuleButtonStyle())
                     }
                 }
-                Text(tr("macOS only reveals the Wi‑Fi name to apps with location access. AETHER never asks for your location itself."))
+                Text(tr("macOS only reveals the Wi‑Fi name to apps with location access. ORBIT never asks for your location itself."))
                     .font(Typo.caption).foregroundStyle(theme.textTertiary)
             }
         }

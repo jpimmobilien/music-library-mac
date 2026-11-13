@@ -1,11 +1,11 @@
 #!/bin/bash
-# Startet AETHER im Selbsttestmodus (echte Messungen) und prüft das Ergebnis.
-#   scripts/run_selftest.sh "/Applications/AETHER.app" out/selftest.json      (SNAPSHOT_ARCH=x86_64 für Rosetta)
+# Startet ORBIT im Selbsttestmodus (echte Messungen) und prüft das Ergebnis.
+#   scripts/run_selftest.sh "/Applications/ORBIT.app" out/selftest.json      (SNAPSHOT_ARCH=x86_64 für Rosetta)
 set -euo pipefail
 APP="$1"; OUT="$2"
 mkdir -p "$(dirname "$OUT")"
 OUT_ABS="$(cd "$(dirname "$OUT")" && pwd)/$(basename "$OUT")"
-BIN="$APP/Contents/MacOS/AETHER"
+BIN="$APP/Contents/MacOS/ORBIT"
 RUNNER=()
 if [ -n "${SNAPSHOT_ARCH:-}" ]; then RUNNER=(arch "-$SNAPSHOT_ARCH"); fi
 set +e
@@ -18,8 +18,8 @@ tail -n 40 "$OUT_ABS.log" || true
 if [ $STATUS -ne 0 ]; then
     echo "✗ App beendet mit Status $STATUS"
     # Absturzbericht abwarten (ReportCrash schreibt ihn erst nach einigen Sekunden) und ins Protokoll übernehmen
-    for _ in $(seq 1 30); do ls "$HOME"/Library/Logs/DiagnosticReports/AETHER* >/dev/null 2>&1 && break; sleep 1; done
-    for f in "$HOME"/Library/Logs/DiagnosticReports/AETHER*; do
+    for _ in $(seq 1 30); do ls "$HOME"/Library/Logs/DiagnosticReports/ORBIT* >/dev/null 2>&1 && break; sleep 1; done
+    for f in "$HOME"/Library/Logs/DiagnosticReports/ORBIT*; do
         [ -e "$f" ] || continue
         cp "$f" "$(dirname "$OUT_ABS")/"
         echo "── Absturzbericht $(basename "$f") (Auszug)"; grep -E '"symbol"|"imageIndex"|Thread|abort|assert|crashed' "$f" | head -80 || true

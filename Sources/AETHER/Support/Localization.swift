@@ -37,7 +37,7 @@ extension Provenance {
     var explanation: String {
         switch self {
         case .measured: return tr("Read directly from a counter or sensor.")
-        case .computed: return tr("Calculated by AETHER from measured values.")
+        case .computed: return tr("Calculated by ORBIT from measured values.")
         case .systemReported: return tr("A classification or specification provided by macOS or the manufacturer.")
         case .estimated: return tr("An estimate by macOS that can change quickly.")
         }
@@ -50,8 +50,8 @@ extension UnavailableReason {
         case .awaitingSecondSample: return tr("Needs a second measurement – available in a moment.")
         case .notPresent: return tr("This Mac doesn’t have this component.")
         case .notProvidedByMacOS: return tr("macOS doesn’t provide this value to apps on this Mac.")
-        case .requiresAdministrator: return tr("macOS only provides this value to programs with administrator rights. AETHER deliberately doesn’t ask for them.")
-        case .privateInterfaceOnly: return tr("Only available through private Apple interfaces, which AETHER doesn’t use.")
+        case .requiresAdministrator: return tr("macOS only provides this value to programs with administrator rights. ORBIT deliberately doesn’t ask for them.")
+        case .privateInterfaceOnly: return tr("Only available through private Apple interfaces, which ORBIT doesn’t use.")
         case .virtualMachine: return tr("This is a virtual Mac without physical sensors.")
         case .implausibleValue: return tr("The source answered, but the value wasn’t plausible, so it isn’t shown.")
         case .queryFailed: return tr("The query failed.")
@@ -94,7 +94,7 @@ extension DataSource {
         case "hardware.profiler": return tr("Hardware overview from System Information, without personal data.")
         case "software.os": return tr("macOS version and build number.")
         case "pulse": return tr("Fixed rules that only use measured values and system reports.")
-        case "thermal.aggregate": return tr("Average and maximum of all sensors in an area, calculated by AETHER.")
+        case "thermal.aggregate": return tr("Average and maximum of all sensors in an area, calculated by ORBIT.")
         case "battery.adapter": return tr("Details the connected power adapter reports to macOS.")
         case "hardware.displays": return tr("Connected displays as macOS reports them.")
         case "hardware.serial": return tr("The serial number stored in the Mac’s firmware. Only read when you ask for it.")
@@ -103,7 +103,7 @@ extension DataSource {
         case "network.wifi": return tr("Signal, noise, channel and data rate of the Wi‑Fi interface. Passwords are never read.")
         case "network.wifi.snr": return tr("Signal-to-noise ratio: signal strength minus noise level.")
         case "network.connections": return tr("Open TCP and UDP sockets from the kernel’s tables, read via netstat. The process is the socket’s last owner.")
-        case "history.local": return tr("One-minute averages AETHER stores on this Mac only – only while history is turned on.")
+        case "history.local": return tr("One-minute averages ORBIT stores on this Mac only – only while history is turned on.")
         default: return ""
         }
     }
