@@ -1,4 +1,0 @@
-Performing Streamed Install
-Success
-    versionCode=3 minSdk=31 targetSdk=36
-    versionName=0.4.0

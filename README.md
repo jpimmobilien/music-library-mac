@@ -1,4 +1,4 @@
 # ORBIT Android – Ergebnisse
 
-Lauf: 2 · Commit: 48657e3bf87c0d7ae72d0445c032b20970ba795a
-build: success · screens: success
+Lauf: 3 · Commit: 79a6b214f2fb71cc5349ba2759ed250ac2fed62d
+build: success · screens: cancelled

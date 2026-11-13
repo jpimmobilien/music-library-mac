@@ -1,3 +1,0 @@
-Android 15
-sdk_gphone64_x86_64
-Physical size: 1080x2400
