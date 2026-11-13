@@ -1,4 +1,19 @@
-# Einschränkungen und offene Punkte (Version 2.3)
+# Einschränkungen und offene Punkte (Version 2.4)
+
+## „Hinzufügen“ und „Studio“ (2.4)
+
+| Punkt | Stand |
+|---|---|
+| **Auto-Tune bei fertigen Songs** | Weiterhin kaum hörbar (siehe 2.3): Dafür muss erst der Gesang vom Rest getrennt werden. Das geht technisch mit einem KI-Modell (demucs-mlx, im Machbarkeitsbericht geprüft) und kommt mit der KI-Musik; die Lizenz der Demucs-Gewichte ist ungeklärt. |
+| **Titelauswahl im Studio** | Zeigt den laufenden Titel, die 40 zuletzt hinzugefügten und bis zu 80 Suchtreffer – keine vollständige Bibliotheksliste (dafür Rechtsklick in „Titel“). |
+| **Ältere Verlaufseinträge** | Einträge von 2.2/2.3 tragen noch nicht, ob sie zu einem Bibliothekstitel gehören: Ersetzte Originale erscheinen im Studio, „als neue Datei geschnittene“ Bibliothekstitel aus 2.3 unter „Hinzufügen“. |
+| **Bedienung von Hand** | Wechsel zwischen den Bereichen, Titelauswahl, Ziehen auf das Studio als Vorschaubild und in automatischen Abläufen geprüft, nicht von Hand bedient. |
+
+## KI-Musik (geplant, Machbarkeit siehe [KI_MUSIK_MACHBARKEIT.md](KI_MUSIK_MACHBARKEIT.md))
+
+Noch nicht in der App. Der Machbarkeitsbericht zeigt: lokal auf Apple Silicon machbar, auf Intel-Macs nicht;
+Geschwindigkeit auf echter Hardware und Klang (Hörtest) ungeprüft; KI-geschriebene deutsche Texte mit dem kleinen
+Sprachmodell schlecht.
 
 ## Titel bearbeiten (2.3)
 
