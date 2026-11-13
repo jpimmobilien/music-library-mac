@@ -129,6 +129,29 @@ final class StudioModel: ObservableObject {
 
     var isLibraryTrack: Bool { source?.libraryUid != nil }
 
+    // MARK: Titel bearbeiten (2.3, siehe StudioTrackEdit.swift)
+
+    enum StudioMode: String { case convert, edit }
+    /// „Bearbeiten“: eigene Ansicht mit Lautstärke, Tempo, Tonhöhe, Stimmung, Equalizer, Auto-Tune und Verbesserung.
+    @Published var mode: StudioMode = .convert
+    @Published var trackEdit = TrackEdit() {
+        didSet { if trackEdit != oldValue { trackEditChanged() } }
+    }
+    /// Analyse des Titels (Stimmung, Tonart, Lautheit) – nil, solange sie läuft.
+    @Published var trackAnalysis: TrackAnalysis?
+    @Published var trackAnalysisProgress: Double?
+    /// Vorhören: bearbeitet (true) oder Original (false).
+    @Published var previewEdited = true {
+        didSet { if previewEdited != oldValue { pushPreviewEdit(immediately: true) } }
+    }
+    var trackAnalysisTask: Task<Void, Never>?
+    var previewEditTask: Task<Void, Never>?
+    /// Nach dem Laden des Titels in den Bearbeitungsmodus wechseln.
+    var opensInEditMode = false
+    /// Stimmung und Tonart vom Nutzer gewählt (dann nicht mehr aus der Analyse übernehmen).
+    var tuningTouched = false
+    var keyTouched = false
+
     // MARK: Warteschlange und Verlauf
 
     @Published var jobs: [StudioJob] = []
@@ -262,8 +285,9 @@ final class StudioModel: ObservableObject {
         if let source, source.libraryUid != nil {
             let original = (source.localFile ?? source.url).deletingPathExtension().lastPathComponent
             if cutSaveMode == .replaceOriginal { return FileNames.sanitize(original) }
-            let base = FileNames.sanitize(original + " (Ausschnitt)")
-            return base.isEmpty ? "Ausschnitt" : base
+            let suffix = mode == .edit ? " (bearbeitet)" : " (Ausschnitt)"
+            let base = FileNames.sanitize(original + suffix)
+            return base.isEmpty ? (mode == .edit ? "Bearbeitet" : "Ausschnitt") : base
         }
         return settings.fileNameScheme.render(metadata, fallback: source?.title ?? "Audio")
     }
@@ -621,6 +645,10 @@ final class StudioModel: ObservableObject {
         }
         sourceState = .ready
         computeWaveform(info.localFile ?? info.url)
+        if info.libraryUid != nil && opensInEditMode {
+            opensInEditMode = false
+            enterEditMode()
+        }
     }
 
     /// Format und Qualität wie das Original (Schneiden vorhandener Songs); sonst M4A.
@@ -687,6 +715,7 @@ final class StudioModel: ObservableObject {
             keepOriginalFormat = true
             options = settings.options(for: settings.lastFormat)
         }
+        resetTrackEditState()
     }
 
     private func editCacheDirectory() -> URL {
@@ -817,6 +846,7 @@ final class StudioModel: ObservableObject {
         preview.onFinish = { [weak self] in self?.previewFinished() }
         previewEnd = end
         playback.playhead = start
+        preview.setEdit(previewEditSettings, normalizationGainDb: previewNormalizationGain)
         preview.play(from: start, to: end)
         setPlaying(true)
     }
@@ -872,7 +902,8 @@ final class StudioModel: ObservableObject {
                             destination: destination)
         job.fadeIn = max(0, fadeIn)
         job.fadeOut = max(0, fadeOut)
-        job.preferPassthrough = isLibraryTrack && keepOriginalFormat && fadeIn <= 0 && fadeOut <= 0 && options.sampleRate == nil
+        job.edit = activeTrackEdit
+        job.preferPassthrough = job.edit == nil && isLibraryTrack && keepOriginalFormat && fadeIn <= 0 && fadeOut <= 0 && options.sampleRate == nil
         jobs.append(job)
         if !(isLibraryTrack && keepOriginalFormat) { settings.remember(options) }
         scheduleNext()

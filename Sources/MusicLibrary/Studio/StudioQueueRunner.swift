@@ -251,7 +251,7 @@ extension StudioModel {
             try? FileManager.default.removeItem(at: output)
             let request = ExportRequest(input: input, trim: job.trim, options: job.options, metadata: job.metadata, output: output,
                                         fadeIn: job.fadeIn, fadeOut: job.fadeOut, preferPassthrough: job.preferPassthrough,
-                                        copyTagsFrom: job.source.libraryUid != nil ? input : nil)
+                                        copyTagsFrom: job.source.libraryUid != nil ? input : nil, edit: job.edit)
             let throttle = ThrottleGate(interval: 0.2)
             let result = try await services.exporter.export(request, pause: gate) { value in
                 guard throttle.allow(force: value >= 1) else { return }
@@ -302,7 +302,7 @@ extension StudioModel {
             let entry = StudioHistoryEntry(sourceKind: job.source.kind, source: Self.historyKey(job.source),
                                            title: job.metadata.title.studioTrimmed.isEmpty ? job.source.title : job.metadata.title,
                                            artist: job.metadata.artist, outputPath: finalPath,
-                                           formatSummary: Self.formatSummary(result, options: job.options),
+                                           formatSummary: Self.formatSummary(result, options: job.options) + Self.editSummary(job.edit),
                                            duration: result.duration > 0 ? result.duration : (job.trim?.length ?? job.source.duration),
                                            imported: job.destination.importsIntoLibrary, succeeded: true, backupPath: backupPath)
             addHistory(entry)
@@ -421,6 +421,12 @@ extension StudioModel {
     }
 
     /// Angaben aus der fertigen Datei, z. B. „MP3 · 320 kbit/s · 44,1 kHz“ oder „FLAC · 24 Bit · 48 kHz“.
+    /// „ · Tempo 1,1× · Equalizer“ für den Verlauf (leer ohne Bearbeitung).
+    nonisolated static func editSummary(_ edit: TrackEdit?) -> String {
+        guard let e = edit, !e.isNeutral else { return "" }
+        return " · " + e.summary
+    }
+
     nonisolated static func formatSummary(_ r: ExportResult, options: ExportOptions) -> String {
         var parts = [options.format.label]
         if options.format.isLossless {
@@ -436,9 +442,14 @@ extension StudioModel {
     /// Vor dem Ersetzen: Die neue Datei muss die erwartete Länge haben (sonst bleibt das Original unverändert).
     nonisolated static func checkExportedDuration(_ r: ExportResult, job: StudioJob) throws {
         guard r.duration > 0.05 else { throw StudioError.encodeFailed("Die neue Datei enthält kein Audio – das Original bleibt unverändert.") }
-        if let expected = job.trim?.length ?? job.source.duration, expected > 0 {
+        if let base = job.trim?.length ?? job.source.duration, base > 0 {
+            // Tempoänderung verkürzt bzw. verlängert; „Stille entfernen“ darf kürzen
+            let edit = job.edit.flatMap { $0.isNeutral ? nil : $0.normalized() }
+            let expected = base / (edit?.speed ?? 1)
             let tolerance = max(1.0, expected * 0.02)
-            if abs(r.duration - expected) > tolerance {
+            let mayBeShorter = edit.map { $0.enhance && $0.trimSilence } ?? false
+            let tooShort = mayBeShorter ? r.duration < min(1, expected) : r.duration < expected - tolerance
+            if tooShort || r.duration > expected + tolerance {
                 throw StudioError.encodeFailed("Die neue Datei ist \(StudioTime.format(r.duration, millis: false)) lang statt \(StudioTime.format(expected, millis: false)) – das Original bleibt unverändert.")
             }
         }

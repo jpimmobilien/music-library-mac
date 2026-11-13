@@ -25,6 +25,15 @@ protocol StudioLibraryAccess: AnyObject {
     func studioPlay(uid: Int64)
     /// Änderungen beobachten: Bibliothek neu geladen bzw. Studio ein-/ausgeblendet.
     func studioObserve(libraryChanged: @escaping @MainActor @Sendable () -> Void, visibilityChanged: @escaping @MainActor @Sendable (Bool) -> Void) -> [AnyCancellable]
+    /// Equalizer und Bass des Players (für „wie im Player“ beim Bearbeiten).
+    var studioPlayerEffects: AudioEffectsSettings? { get }
+    /// Eigene Equalizer-Voreinstellungen.
+    var studioEqUserPresets: [EqUserPreset] { get }
+}
+
+extension StudioLibraryAccess {
+    var studioPlayerEffects: AudioEffectsSettings? { nil }
+    var studioEqUserPresets: [EqUserPreset] { [] }
 }
 
 extension AppModel: StudioLibraryAccess {
@@ -43,6 +52,8 @@ extension AppModel: StudioLibraryAccess {
     }
 
     func studioShow() { openStudio() }
+    var studioPlayerEffects: AudioEffectsSettings? { settings.effects }
+    var studioEqUserPresets: [EqUserPreset] { settings.eqUserPresets }
 
     func studioPlay(uid: Int64) {
         player.play(uids: [uid], startIndex: 0, shuffle: .off, source: PlaybackSource(kind: .singleTrack, label: "Audio Studio"))

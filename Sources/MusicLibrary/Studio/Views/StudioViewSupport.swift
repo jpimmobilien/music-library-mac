@@ -57,6 +57,7 @@ extension StudioModel {
     /// „ohne Neukodierung“ bzw. „verlustfrei“ – nur als Hinweis; die tatsächliche Art steht nach dem Export im Ergebnis.
     var passthroughBadge: String? {
         guard isLibraryTrack, keepOriginalFormat, let f = originalFormat else { return nil }
+        if activeTrackEdit != nil { return f.isLossless ? "verlustfrei" : nil }   // Klang verändert: neu kodiert
         if f.isLossless { return "verlustfrei" }
         if (f == .mp3 || f == .m4a), fadeIn == 0, fadeOut == 0 { return "ohne Neukodierung" }
         return nil

@@ -182,6 +182,8 @@ final class FakePreview: StudioPreviewing {
     }
     func pause() { pauses += 1; isPlaying = false }
     func stop() { stops += 1; isPlaying = false }
+    var edits: [TrackEdit?] = []
+    func setEdit(_ edit: TrackEdit?, normalizationGainDb: Double?) { edits.append(edit) }
 }
 
 struct FakeTools: StudioToolManaging {
@@ -221,8 +223,10 @@ final class StudioModelTests: XCTestCase {
         try? FileManager.default.removeItem(at: temp)
     }
 
-    private func makeModel(support: URL? = nil, defaults: UserDefaults? = nil, preview: StudioPreviewing? = nil) -> StudioModel {
-        let services = StudioServiceSet(exporter: exporter, waveforms: FakeWaveforms(), local: local, remote: remote, tools: FakeTools())
+    private func makeModel(support: URL? = nil, defaults: UserDefaults? = nil, preview: StudioPreviewing? = nil,
+                           editAnalyzer: any TrackEditAnalyzing = NoTrackEditAnalyzer()) -> StudioModel {
+        let services = StudioServiceSet(exporter: exporter, waveforms: FakeWaveforms(), local: local, remote: remote, tools: FakeTools(),
+                                        editAnalyzer: editAnalyzer)
         let model = StudioModel(app: nil, services: services, preview: preview, demo: false, library: library,
                                 supportDirectory: support ?? temp.appendingPathComponent("Support", isDirectory: true),
                                 defaults: defaults ?? UserDefaults(suiteName: "StudioModelTests-\(UUID().uuidString)")!)
@@ -791,5 +795,107 @@ final class StudioModelTests: XCTestCase {
         model.clearSource()
         XCTAssertFalse(model.isLibraryTrack)
         XCTAssertEqual(model.cutSaveMode, .newFile)
+    }
+
+    // MARK: Titel bearbeiten (2.3)
+
+    private static let analysis = TrackAnalysis(reference: 441.9, referenceConfidence: 0.8, keyTonic: 9, keyScale: .minor, keyCorrelation: 0.8,
+                                                loudness: -9, peakDb: -0.1, leadingSilence: 0.4, trailingSilence: 1.2)
+
+    func testEditTrackReplacesOriginalAndUndo() async throws {
+        let support = temp.appendingPathComponent("Support", isDirectory: true)
+        let preview = FakePreview()
+        let model = makeModel(support: support, preview: preview, editAnalyzer: NoTrackEditAnalyzer(result: Self.analysis))
+        let (_, original) = try libraryTrack()
+        model.openTrackEditor(7)
+        XCTAssertEqual(library.shown, 1)
+        await waitUntil("bereit") { model.sourceState == .ready && model.mode == .edit }
+        XCTAssertEqual(model.cutSaveMode, .replaceOriginal, "Bearbeiten ersetzt standardmäßig das Original")
+        await waitUntil("Analyse") { model.trackAnalysis != nil }
+        // Erkannter Kammerton als Ausgangswert (unverändert), erkannte Tonart für Auto-Tune
+        XCTAssertEqual(model.trackEdit.tuningFrom, 441.9)
+        XCTAssertEqual(model.trackEdit.tuningTo, 441.9)
+        XCTAssertEqual(model.trackEdit.autoTuneKey, 9)
+        XCTAssertEqual(model.trackEdit.autoTuneScale, .minor)
+        XCTAssertTrue(model.trackEdit.isNeutral)
+        XCTAssertNil(model.activeTrackEdit)
+
+        model.setTuningTarget(432)
+        model.trackEdit.speed = 1.25
+        XCTAssertEqual(model.fileNameBase, "Nordlicht")
+        XCTAssertEqual(model.editedDuration, 96, accuracy: 0.001)
+        XCTAssertEqual(model.passthroughBadge, nil, "MP3 wird für die Bearbeitung neu kodiert")
+        await waitUntil("Vorhören bekommt die Bearbeitung") { preview.edits.last??.speed == 1.25 }
+        model.previewEdited = false
+        XCTAssertEqual(preview.edits.last ?? nil, nil, "Original vorhören")
+        model.previewEdited = true
+
+        exporter.content = Data("BEARBEITET".utf8)
+        exporter.resultDuration = 96
+        let job = try XCTUnwrap(model.addToQueue())
+        XCTAssertFalse(job.preferPassthrough)
+        XCTAssertEqual(job.edit?.speed, 1.25)
+        XCTAssertEqual(job.edit?.tuningTo, 432)
+        await waitUntil("fertig") { model.job(job.id)?.phase == .done }
+        let request = try XCTUnwrap(exporter.allRequests.last)
+        XCTAssertEqual(request.edit?.speed, 1.25)
+        XCTAssertEqual(request.copyTagsFrom?.path, original.path, "Tags, Cover und Liedtexte des Originals")
+        XCTAssertEqual(content(original.path), "BEARBEITET")
+        let entry = try XCTUnwrap(model.history.entries.first)
+        XCTAssertTrue(entry.formatSummary.contains("Tempo 1,25×"), entry.formatSummary)
+        XCTAssertTrue(entry.formatSummary.contains("441,9 → 432 Hz"), entry.formatSummary)
+        XCTAssertEqual(library.refreshed, [7])
+
+        model.undoReplace(entry.id)
+        await waitUntil("rückgängig") { model.history.entries.first?.undone == true }
+        XCTAssertEqual(content(original.path), "ORIGINAL-AUDIO")
+    }
+
+    func testEditedReplaceChecksLengthWithTempoAndSilence() async throws {
+        let model = makeModel()
+        let (_, original) = try libraryTrack()
+        model.openTrackEditor(7)
+        await waitUntil("bereit") { model.sourceState == .ready && model.mode == .edit }
+        model.trackEdit.speed = 1.25
+        exporter.resultDuration = 120   // unverändert lang → falsch
+        let wrong = try XCTUnwrap(model.addToQueue())
+        await waitUntil("abgebrochen") { model.job(wrong.id)?.phase == .failed }
+        XCTAssertEqual(content(original.path), "ORIGINAL-AUDIO")
+
+        // „Stille entfernen“ darf kürzen
+        model.trackEdit.speed = 1
+        model.trackEdit.enhance = true
+        exporter.resultDuration = 117.5
+        exporter.content = Data("VERBESSERT".utf8)
+        let ok = try XCTUnwrap(model.addToQueue())
+        await waitUntil("fertig") { model.job(ok.id)?.phase == .done }
+        XCTAssertEqual(content(original.path), "VERBESSERT")
+    }
+
+    func testLeavingEditModeAndNewSourceResetEdit() async throws {
+        let model = makeModel()
+        _ = try libraryTrack()
+        model.openTrackEditor(7)
+        await waitUntil("bereit") { model.sourceState == .ready && model.mode == .edit }
+        model.trackEdit.semitones = 3
+        model.leaveEditMode()
+        XCTAssertEqual(model.mode, .convert)
+        model.cutSaveMode = .newFile
+        let job = try XCTUnwrap(model.addToQueue())
+        XCTAssertNil(job.edit, "Schneiden ohne Klangbearbeitung")
+        XCTAssertTrue(job.preferPassthrough)
+        XCTAssertEqual(model.fileNameBase, "Nordlicht (Ausschnitt)")
+        model.enterEditMode()
+        XCTAssertEqual(model.trackEdit.semitones, 3, "Einstellungen bleiben beim Umschalten")
+        XCTAssertEqual(model.cutSaveMode, .replaceOriginal)
+        model.cutSaveMode = .newFile
+        XCTAssertEqual(model.fileNameBase, "Nordlicht (bearbeitet)")
+        // Neue Quelle: alles zurück
+        let other = try file("Musik/Anderer.wav")
+        model.importFiles([other])
+        await waitUntil("andere Quelle") { model.source?.url == other && model.sourceState == .ready }
+        XCTAssertEqual(model.mode, .convert)
+        XCTAssertTrue(model.trackEdit.isNeutral)
+        XCTAssertNil(model.trackAnalysis)
     }
 }

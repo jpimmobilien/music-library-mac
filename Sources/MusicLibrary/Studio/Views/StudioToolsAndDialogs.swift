@@ -274,9 +274,7 @@ struct StudioReplaceDialogView: View {
                     Text("Original ersetzen?")
                         .textStyle(Typo.titleLarge)
                         .foregroundColor(colors.textPrimary)
-                    Text(studio.exportWholeFile
-                         ? "„\(title)“ wird neu geschrieben\(studio.fadeIn > 0 || studio.fadeOut > 0 ? " (mit Blenden)" : "")."
-                         : "„\(title)“ wird durch den Ausschnitt \(StudioTime.format(sel.start, millis: false)) – \(StudioTime.format(sel.end, millis: false)) ersetzt (Länge \(StudioTime.format(sel.length, millis: false))).")
+                    Text(replaceText(title: title, sel: sel))
                         .textStyle(Typo.bodyMedium)
                         .foregroundColor(colors.textSecondary)
                         .fixedSize(horizontal: false, vertical: true)
@@ -289,6 +287,8 @@ struct StudioReplaceDialogView: View {
                 point(Icons.label, "Tags, Cover und Liedtexte bleiben erhalten.")
                 if let badge = studio.passthroughBadge {
                     point(Icons.check, passthroughText(badge))
+                } else if studio.activeTrackEdit != nil, let f = studio.originalFormat, !f.isLossless {
+                    point(Icons.info, "\(f.label) wird dafür neu kodiert (gleiche Bitrate) – ein kleiner, meist unhörbarer Qualitätsverlust ist dabei unvermeidlich.")
                 }
             }
             .padding(14)
@@ -308,6 +308,16 @@ struct StudioReplaceDialogView: View {
         }
         .padding(22)
         .background(AmbientBackground())
+    }
+
+    private func replaceText(title: String, sel: TrimRange) -> String {
+        if let edit = studio.activeTrackEdit {
+            let part = studio.exportWholeFile ? "" : " (Ausschnitt \(StudioTime.format(sel.start, millis: false)) – \(StudioTime.format(sel.end, millis: false)))"
+            return "„\(title)“ wird mit den Änderungen neu geschrieben\(part): \(edit.summary)."
+        }
+        return studio.exportWholeFile
+            ? "„\(title)“ wird neu geschrieben\(studio.fadeIn > 0 || studio.fadeOut > 0 ? " (mit Blenden)" : "")."
+            : "„\(title)“ wird durch den Ausschnitt \(StudioTime.format(sel.start, millis: false)) – \(StudioTime.format(sel.end, millis: false)) ersetzt (Länge \(StudioTime.format(sel.length, millis: false)))."
     }
 
     private func passthroughText(_ badge: String) -> String {

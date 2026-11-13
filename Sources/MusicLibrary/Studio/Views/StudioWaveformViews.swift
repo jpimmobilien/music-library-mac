@@ -14,7 +14,7 @@ struct StudioEditorCard: View {
 
     var body: some View {
         let ready = studio.waveform != nil && !studio.needsPreparation
-        StudioCard(icon: studio.isLibraryTrack ? Icons.cut : Icons.waveform, title: "Ausschnitt", subtitle: subtitle) {
+        StudioCard(icon: studio.isLibraryTrack ? Icons.cut : Icons.waveform, title: studio.mode == .edit ? "Beschneiden" : "Ausschnitt", subtitle: subtitle) {
             StudioZoomControls(studio: studio)
                 .disabled(!ready)
                 .opacity(ready ? 1 : 0.5)

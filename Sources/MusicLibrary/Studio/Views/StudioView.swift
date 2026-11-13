@@ -99,7 +99,9 @@ private struct StudioMainColumn: View {
                                 withAnimation(Motion.easeOut()) { proxy.scrollTo(StudioAnchor.queue, anchor: .top) }
                             }
                             .studioAnchor(.top)
-                            StudioSourceInput(studio: studio)
+                            if studio.mode != .edit {
+                                StudioSourceInput(studio: studio)
+                            }
                             if studio.isEmptyStudio {
                                 StudioEmptyState(studio: studio, columns: width >= 760 ? 3 : 1)
                             } else {
@@ -108,6 +110,10 @@ private struct StudioMainColumn: View {
                             if studio.showsEditor {
                                 StudioEditorCard(studio: studio)
                                     .studioAnchor(.editor)
+                                if studio.mode == .edit {
+                                    TrackEditTools(studio: studio, width: width)
+                                        .transition(.opacity)
+                                }
                                 exportSection(twoColumns: twoColumns, width: width)
                             }
                             if !wide && (!studio.jobs.isEmpty || !studio.history.entries.isEmpty) {
@@ -121,6 +127,7 @@ private struct StudioMainColumn: View {
                         .frame(maxWidth: .infinity)
                         .animation(Motion.easeOut(Motion.medium), value: studio.isEmptyStudio)
                         .animation(Motion.easeOut(Motion.medium), value: studio.showsEditor)
+                        .animation(Motion.easeOut(Motion.medium), value: studio.mode)
                     }
                     .onAppear { StudioScrollSeed.apply(proxy) }
                 }
@@ -144,7 +151,24 @@ private struct StudioMainColumn: View {
 
     @ViewBuilder
     private func exportSection(twoColumns: Bool, width: CGFloat) -> some View {
-        if twoColumns {
+        if studio.mode == .edit {
+            // Bearbeiten: Format und Speichern (Tags, Cover und Liedtexte bleiben wie im Original)
+            if twoColumns {
+                HStack(alignment: .top, spacing: 16) {
+                    StudioFormatCard(studio: studio)
+                        .frame(maxWidth: .infinity)
+                    StudioDestinationCard(studio: studio, compact: true)
+                        .frame(maxWidth: .infinity)
+                        .studioAnchor(.destination)
+                }
+                .studioAnchor(.export)
+            } else {
+                StudioFormatCard(studio: studio)
+                    .studioAnchor(.export)
+                StudioDestinationCard(studio: studio, compact: width < 720)
+                    .studioAnchor(.destination)
+            }
+        } else if twoColumns {
             HStack(alignment: .top, spacing: 16) {
                 StudioFormatCard(studio: studio)
                     .frame(maxWidth: .infinity)
@@ -159,8 +183,10 @@ private struct StudioMainColumn: View {
             StudioMetadataCard(studio: studio, compact: width < 560)
                 .studioAnchor(.metadata)
         }
-        StudioDestinationCard(studio: studio, compact: width < 720)
-            .studioAnchor(.destination)
+        if studio.mode != .edit {
+            StudioDestinationCard(studio: studio, compact: width < 720)
+                .studioAnchor(.destination)
+        }
     }
 
     /// „Exportieren“: beim Ersetzen erst bestätigen, bei möglichen Dubletten erst nachfragen.
@@ -193,7 +219,7 @@ private struct StudioHeader: View {
         HStack(alignment: .center, spacing: 12) {
             VStack(alignment: .leading, spacing: 2) {
                 HStack(spacing: 8) {
-                    Text(studio.isLibraryTrack ? "Schneiden" : "Audio Studio")
+                    Text(studio.mode == .edit ? "Titel bearbeiten" : (studio.isLibraryTrack ? "Schneiden" : "Audio Studio"))
                         .textStyle(Typo.headlineLarge)
                         .foregroundColor(colors.textPrimary)
                         .lineLimit(1)
@@ -206,7 +232,9 @@ private struct StudioHeader: View {
                             .truncationMode(.tail)
                     }
                 }
-                Text(studio.isLibraryTrack
+                Text(studio.mode == .edit
+                     ? "Lautstärke, Tempo, Tonhöhe, Stimmung, Equalizer, Auto-Tune und Verbesserung – dauerhaft gespeichert."
+                     : studio.isLibraryTrack
                      ? "Titel aus deiner Bibliothek – speichere den Ausschnitt als neue Datei oder ersetze das Original."
                      : "Laden, schneiden und umwandeln – direkt in deine Musikbibliothek.")
                     .textStyle(Typo.bodyMedium)
@@ -214,6 +242,13 @@ private struct StudioHeader: View {
                     .lineLimit(1)
             }
             Spacer(minLength: 12)
+            if studio.isLibraryTrack {
+                SegmentedControl(options: [StudioModel.StudioMode.convert, .edit], selection: modeBinding,
+                                 label: { $0 == .edit ? "Bearbeiten" : "Schneiden" },
+                                 icon: { $0 == .edit ? Icons.tune : Icons.cut }, height: 32)
+                    .frame(width: 230)
+                    .help("Nur schneiden oder den Klang dauerhaft bearbeiten")
+            }
             if showsJobs, let chip = jobChipText {
                 Button(action: showQueue) {
                     HStack(spacing: 7) {
@@ -237,6 +272,10 @@ private struct StudioHeader: View {
             StudioToolsChip(studio: studio)
         }
         .padding(.horizontal, 4)
+    }
+
+    private var modeBinding: Binding<StudioModel.StudioMode> {
+        Binding(get: { studio.mode }, set: { $0 == .edit ? studio.enterEditMode() : studio.leaveEditMode() })
     }
 
     private var jobChipText: String? {

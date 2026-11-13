@@ -484,7 +484,9 @@ struct StudioDestinationCard: View {
             VStack(alignment: .leading, spacing: 12) {
                 let tiles = Group {
                     StudioOptionTile(icon: Icons.newFile, title: "Als neue Datei",
-                                     text: "Der Ausschnitt wird neben dem Original gespeichert und in die Bibliothek aufgenommen. Das Original bleibt unverändert.",
+                                     text: studio.mode == .edit
+                                        ? "Die bearbeitete Fassung wird neben dem Original gespeichert und in die Bibliothek aufgenommen. Das Original bleibt unverändert."
+                                        : "Der Ausschnitt wird neben dem Original gespeichert und in die Bibliothek aufgenommen. Das Original bleibt unverändert.",
                                      selected: studio.cutSaveMode == .newFile) { studio.cutSaveMode = .newFile }
                     StudioOptionTile(icon: Icons.swap, title: "Original ersetzen",
                                      text: "Vorher wird eine Sicherung angelegt – im Verlauf lässt sich das rückgängig machen. Favoriten, Playlists und Statistik bleiben am Titel.",
@@ -694,6 +696,7 @@ struct StudioExportBar: View {
             parts.append("Ausschnitt \(StudioTime.format(studio.shownSelection.length, millis: false))")
         }
         if studio.fadeIn > 0 || studio.fadeOut > 0 { parts.append("mit Blenden") }
+        if let edit = studio.activeTrackEdit { parts.insert(edit.summary, at: 0) }
         parts.append("→ \(studio.shownDestination.title)")
         return parts.joined(separator: " · ")
     }

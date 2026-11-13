@@ -101,6 +101,8 @@ public struct StudioJob: Codable, Hashable, Sendable, Identifiable {
     public var fadeOut: Double = 0
     /// Ohne Neukodierung schneiden, wenn möglich (Schneiden vorhandener Songs im selben Format).
     public var preferPassthrough: Bool = false
+    /// Klangbearbeitung („Titel bearbeiten“, 2.3); nil = keine.
+    public var edit: TrackEdit?
     public var phase: JobPhase
     /// 0…1 innerhalb des aktuellen Schritts.
     public var progress: Double

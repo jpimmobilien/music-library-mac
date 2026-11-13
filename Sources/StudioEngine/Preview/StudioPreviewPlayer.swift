@@ -1,5 +1,6 @@
 import AVFoundation
 import Foundation
+import MLCore
 import MLStudio
 
 /// Vorhören im Editor über einen eigenen AVAudioEngine + AVAudioPlayerNode – völlig getrennt vom
@@ -15,6 +16,8 @@ public final class StudioPreviewPlayer: StudioPreviewing {
     private var streamURL: URL?
     private var format: AVAudioFormat?
     private var fileDuration: Double = 0
+    /// Tempofaktor der laufenden Wiedergabe (bei bearbeitetem Vorhören ≠ 1).
+    private var playbackSpeed: Double = 1
     /// Startversatz der laufenden bzw. letzten Wiedergabe (Sekunden).
     private var startOffset: Double = 0
     private var endTime: Double?
@@ -26,8 +29,29 @@ public final class StudioPreviewPlayer: StudioPreviewing {
     /// Hintergrund-Dekodierung (nur für Formate ohne AVAudioFile); auch im deinit abbrechbar.
     nonisolated(unsafe) private var streamTask: Task<Void, Never>?
     private var attached = false
+    /// Geladene Datei (für das Vorhören mit Bearbeitung immer über den Datenstrom).
+    private var loadedURL: URL?
+    /// Klangbearbeitung beim Vorhören („Titel bearbeiten“).
+    private var editSettings: TrackEdit?
+    private var editGain: Double?
 
     public var onFinish: (() -> Void)?
+
+    private var editActive: Bool { editSettings.map { !$0.isNeutral } ?? false }
+    /// Tempofaktor der Bearbeitung (Position im Original = abgespielte Zeit × Faktor).
+    private var speedFactor: Double { editActive ? (editSettings?.normalized().speed ?? 1) : 1 }
+
+    public func setEdit(_ edit: TrackEdit?, normalizationGainDb: Double?) {
+        let wasActive = editActive
+        let old = editSettings
+        editSettings = edit.map { $0.normalized() }
+        editGain = normalizationGainDb
+        guard playing, (wasActive || editActive), old != editSettings || wasActive != editActive else { return }
+        // An derselben Stelle mit den neuen Einstellungen weiterspielen
+        let p = position
+        let end = endTime
+        play(from: p, to: end)
+    }
 
     public init() {}
 
@@ -42,7 +66,7 @@ public final class StudioPreviewPlayer: StudioPreviewing {
         guard playing, let rate = format?.sampleRate, rate > 0,
               let nodeTime = node.lastRenderTime, nodeTime.isSampleTimeValid,
               let playerTime = node.playerTime(forNodeTime: nodeTime) else { return startOffset }
-        let t = startOffset + max(0, Double(playerTime.sampleTime)) / rate
+        let t = startOffset + max(0, Double(playerTime.sampleTime)) / rate * playbackSpeed
         return min(t, endTime ?? fileDuration)
     }
 
@@ -50,6 +74,7 @@ public final class StudioPreviewPlayer: StudioPreviewing {
         stop()
         file = nil
         streamURL = nil
+        loadedURL = url
         startOffset = 0
         pausedAt = nil
         let newFormat: AVAudioFormat
@@ -104,7 +129,13 @@ public final class StudioPreviewPlayer: StudioPreviewing {
         if !engine.isRunning {
             do { try engine.start() } catch { return }
         }
-        if let file {
+        playbackSpeed = speedFactor
+        if editActive, let url = loadedURL {
+            // Bearbeitet vorhören: immer über den Datenstrom und die Bearbeitungskette
+            playing = true
+            node.play()
+            startStreaming(url: url, start: begin, end: end, generation: gen, edit: editSettings, gain: editGain)
+        } else if let file {
             let rate = format.sampleRate
             let first = AVAudioFramePosition((begin * rate).rounded())
             let last = end.map { AVAudioFramePosition(($0 * rate).rounded()) } ?? file.length
@@ -119,12 +150,12 @@ public final class StudioPreviewPlayer: StudioPreviewing {
         } else if let url = streamURL {
             playing = true
             node.play()
-            startStreaming(url: url, start: begin, end: end, generation: gen)
+            startStreaming(url: url, start: begin, end: end, generation: gen, edit: nil, gain: nil)
         }
     }
 
     /// Dekodiert im Hintergrund und plant Puffer ein (höchstens ~2 Sekunden im Voraus).
-    private func startStreaming(url: URL, start: Double, end: Double?, generation gen: Int) {
+    private func startStreaming(url: URL, start: Double, end: Double?, generation gen: Int, edit: TrackEdit?, gain: Double?) {
         let node = self.node
         guard let format else { return }
         streamTask = Task.detached(priority: .userInitiated) { [weak self] in
@@ -143,24 +174,40 @@ public final class StudioPreviewPlayer: StudioPreviewing {
                 var remaining: Int64? = end.map { max(0, Int64(($0 * rate).rounded()) - first) }
                 let pending = PendingCounter()
                 let chunk = Int(rate / 4)
+                let chain = edit.map { EditChain(sampleRate: rate, channels: reader.channelCount, parameters: $0.chainParameters(normalizationGainDb: gain)) }
+                let channels = reader.channelCount
+                // Ausgabe der Kette als Puffer einplanen
+                func scheduleChain(_ p: [UnsafeMutablePointer<Float>], _ k: Int) {
+                    guard k > 0, let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(k)),
+                          let dst = buffer.floatChannelData else { return }
+                    for c in 0..<channels { dst[c].update(from: p[c], count: k) }
+                    buffer.frameLength = AVAudioFrameCount(k)
+                    pending.increment()
+                    Self.schedule(buffer, on: node) { pending.decrement() }
+                }
+                let block = FloatBlock(channels: reader.channelCount, capacity: chunk)
                 while !Task.isCancelled {
                     if self == nil { return }
                     if let r = remaining, r <= 0 { break }
                     while pending.value >= 8 && !Task.isCancelled { try await Task.sleep(nanoseconds: 20_000_000) }
-                    guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(chunk)) else { break }
-                    let block = FloatBlock(channels: reader.channelCount, capacity: chunk)
                     let want = remaining.map { Int(min(Int64(chunk), $0)) } ?? chunk
                     let n = try reader.read(into: block, maxFrames: want)
                     if n == 0 { break }
+                    remaining = remaining.map { $0 - Int64(n) }
+                    if let chain {
+                        try chain.push(block.channels.map { UnsafePointer($0) }, frames: n) { p, k in scheduleChain(p, k) }
+                        continue
+                    }
+                    guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(chunk)) else { break }
                     if let dst = buffer.floatChannelData {
                         for c in 0..<reader.channelCount { dst[c].update(from: block.channels[c], count: n) }
                     }
                     buffer.frameLength = AVAudioFrameCount(n)
-                    remaining = remaining.map { $0 - Int64(n) }
                     pending.increment()
                     Self.schedule(buffer, on: node) { pending.decrement() }
                 }
                 if Task.isCancelled { return }
+                if let chain { try chain.finish { p, k in scheduleChain(p, k) } }
                 // Ende: nach dem letzten Puffer melden
                 guard let silence = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 1) else { return }
                 silence.frameLength = 1
