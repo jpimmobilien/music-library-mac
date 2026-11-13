@@ -1,0 +1,207 @@
+{
+  "lm_model": "acestep-5Hz-lm-0.6B",
+  "steps": [
+    {
+      "name": "DiT laden (turbo)",
+      "ok": true,
+      "message": "{'device': 'cpu', 'use_mlx_dit': False}: [OK] Model initialized successfully on cpu\nMain model: /Users/runner/work/_temp/checkpoints/acestep-v15-turbo\nVAE: /Users/runner/work/_temp/checkpoints/vae\nText encoder: /Users/runner/work/_temp/checkpoints/Qwen3-Embedding-0.6B\nDtype: torch.float32\nAttention: sdpa\nCompiled: False\nQuantization: Disabled\nOffload to CPU: False\nOffload DiT to CPU: False\nMLX DiT: Disabled by user\nMLX VAE: Active (native MLX)",
+      "seconds": 314.2,
+      "peak_rss_mb": 1936.3,
+      "metal_peak_mb": 643.4
+    },
+    {
+      "name": "Sprachmodell laden (acestep-5Hz-lm-0.6B)",
+      "ok": true,
+      "message": "{'backend': 'mlx', 'device': 'auto'}: ✅ 5Hz LM initialized successfully\nModel: /Users/runner/work/_temp/checkpoints/acestep-5Hz-lm-0.6B\nBackend: MLX (Apple Silicon native)\nDevice: Apple Silicon GPU",
+      "seconds": 71.3,
+      "peak_rss_mb": 1936.3,
+      "metal_peak_mb": 1907.7
+    },
+    {
+      "name": "Erzeugen 01-instrumental-en",
+      "ok": false,
+      "error": "RuntimeError('❌ Error generating from formatted prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t\\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\\n\\n')",
+      "trace": "Traceback (most recent call last):\n  File \"/Users/runner/work/music-library-mac/music-library-mac/scripts/ki/probe_acestep.py\", line 118, in step\n    msg = fn()\n          ^^^^\n  File \"/Users/runner/work/music-library-mac/music-library-mac/scripts/ki/probe_acestep.py\", line 214, in run\n    raise RuntimeError(res.error or res.status_message)\nRuntimeError: ❌ Error generating from formatted prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\n\n\n",
+      "seconds": 3.7,
+      "peak_rss_mb": 1936.3,
+      "metal_peak_mb": 1910.5
+    },
+    {
+      "name": "Erzeugen 02-instrumental-de",
+      "ok": false,
+      "error": "RuntimeError('❌ Error generating from formatted prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t\\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\\n\\n')",
+      "trace": "Traceback (most recent call last):\n  File \"/Users/runner/work/music-library-mac/music-library-mac/scripts/ki/probe_acestep.py\", line 118, in step\n    msg = fn()\n          ^^^^\n  File \"/Users/runner/work/music-library-mac/music-library-mac/scripts/ki/probe_acestep.py\", line 214, in run\n    raise RuntimeError(res.error or res.status_message)\nRuntimeError: ❌ Error generating from formatted prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\n\n\n",
+      "seconds": 0.4,
+      "peak_rss_mb": 1936.3,
+      "metal_peak_mb": 1911.5
+    },
+    {
+      "name": "Erzeugen 03-gesang-de-eigener-text",
+      "ok": false,
+      "error": "RuntimeError('❌ Error generating from formatted prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_t_align_N_t_align_K_t\\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\\n\\n')",
+      "trace": "Traceback (most recent call last):\n  File \"/Users/runner/work/music-library-mac/music-library-mac/scripts/ki/probe_acestep.py\", line 118, in step\n    msg = fn()\n          ^^^^\n  File \"/Users/runner/work/music-library-mac/music-library-mac/scripts/ki/probe_acestep.py\", line 214, in run\n    raise RuntimeError(res.error or res.status_message)\nRuntimeError: ❌ Error generating from formatted prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_t_align_N_t_align_K_t\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\n\n\n",
+      "seconds": 0.3,
+      "peak_rss_mb": 1936.3,
+      "metal_peak_mb": 1913.8
+    },
+    {
+      "name": "KI schreibt deutschen Text (create_sample)",
+      "ok": false,
+      "error": "RuntimeError('❌ Error generating from formatted prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t\\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\\n\\n')",
+      "trace": "Traceback (most recent call last):\n  File \"/Users/runner/work/music-library-mac/music-library-mac/scripts/ki/probe_acestep.py\", line 118, in step\n    msg = fn()\n          ^^^^\n  File \"/Users/runner/work/music-library-mac/music-library-mac/scripts/ki/probe_acestep.py\", line 250, in write_lyrics\n    raise RuntimeError(r.error or r.status_message)\nRuntimeError: ❌ Error generating from formatted prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\n\n\n",
+      "seconds": 0.4,
+      "peak_rss_mb": 1936.3,
+      "metal_peak_mb": 1913.8
+    },
+    {
+      "name": "Erzeugen 05-varianten-ohne-lm",
+      "ok": false,
+      "error": "RuntimeError('❌ Error generating from formatted prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t\\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\\n\\n')",
+      "trace": "Traceback (most recent call last):\n  File \"/Users/runner/work/music-library-mac/music-library-mac/scripts/ki/probe_acestep.py\", line 118, in step\n    msg = fn()\n          ^^^^\n  File \"/Users/runner/work/music-library-mac/music-library-mac/scripts/ki/probe_acestep.py\", line 214, in run\n    raise RuntimeError(res.error or res.status_message)\nRuntimeError: ❌ Error generating from formatted prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\n\n\n",
+      "seconds": 0.4,
+      "peak_rss_mb": 1936.3,
+      "metal_peak_mb": 1913.8
+    }
+  ],
+  "cases": [
+    {
+      "id": "01-instrumental-en",
+      "note": "Instrumental, englische Beschreibung, mit Sprachmodell (falls geladen)",
+      "ok": false,
+      "status": "❌ LM generation failed: ❌ Error generating from formatted prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descripto",
+      "error": "❌ Error generating from formatted prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\n\n",
+      "seconds": 3.7,
+      "realtime_factor": null,
+      "params": {
+        "task_type": "text2music",
+        "caption": "Calm lo-fi hip hop with warm piano chords, soft vinyl crackle and a relaxed drum groove",
+        "lyrics": "[Instrumental]",
+        "instrumental": true,
+        "vocal_language": "unknown",
+        "bpm": 80,
+        "keyscale": "",
+        "duration": 30,
+        "inference_steps": 8,
+        "seed": 1234,
+        "thinking": true
+      },
+      "batch_size": 1,
+      "files": [],
+      "peak_rss_mb": 1936.3,
+      "metal_peak_mb": 1910.5
+    },
+    {
+      "id": "02-instrumental-de",
+      "note": "Gleiche Beschreibung auf Deutsch – versteht das Modell deutsche Beschreibungen?",
+      "ok": false,
+      "status": "❌ LM generation failed: ❌ Error generating from formatted prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descripto",
+      "error": "❌ Error generating from formatted prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\n\n",
+      "seconds": 0.4,
+      "realtime_factor": null,
+      "params": {
+        "task_type": "text2music",
+        "caption": "Ruhiges Lo-Fi-Stück mit warmem Klavier, leisem Knistern und entspanntem Schlagzeug",
+        "lyrics": "[Instrumental]",
+        "instrumental": true,
+        "vocal_language": "unknown",
+        "bpm": 80,
+        "keyscale": "",
+        "duration": 30,
+        "inference_steps": 8,
+        "seed": 1234,
+        "thinking": true
+      },
+      "batch_size": 1,
+      "files": [],
+      "peak_rss_mb": 1936.3,
+      "metal_peak_mb": 1911.5
+    },
+    {
+      "id": "03-gesang-de-eigener-text",
+      "note": "Deutscher Gesang mit vorgegebenem Text (für Whisper-Verständlichkeitsprüfung)",
+      "ok": false,
+      "status": "❌ LM generation failed: ❌ Error generating from formatted prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_t_align_N_t_align_K_t\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descripto",
+      "error": "❌ Error generating from formatted prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_t_align_N_t_align_K_t\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\n\n",
+      "seconds": 0.3,
+      "realtime_factor": null,
+      "params": {
+        "task_type": "text2music",
+        "caption": "Upbeat German pop song, female vocals, acoustic guitar, bright summer mood",
+        "lyrics": "[Verse]\nDie Sonne sinkt am alten See\ndas Wasser glänzt wie Gold\nwir laufen barfuß durch den Klee\nder Abend ist uns hold\n\n[Chorus]\nSommerabend, bleib noch hier\ndie Nacht gehört nur dir und mir\nSommerabend, sing mit mir\ndie Nacht gehört nur dir und mir",
+        "instrumental": false,
+        "vocal_language": "de",
+        "bpm": 110,
+        "keyscale": "",
+        "duration": 40,
+        "inference_steps": 8,
+        "seed": 42,
+        "thinking": true
+      },
+      "batch_size": 1,
+      "files": [],
+      "peak_rss_mb": 1936.3,
+      "metal_peak_mb": 1913.8
+    },
+    {
+      "id": "05-varianten-ohne-lm",
+      "note": "Zwei Varianten gleichzeitig, nur DiT (ohne Sprachmodell) – reine Erzeugungsgeschwindigkeit",
+      "ok": false,
+      "status": "❌ LM generation failed: ❌ Error generating from formatted prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descripto",
+      "error": "❌ Error generating from formatted prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\n\n",
+      "seconds": 0.4,
+      "realtime_factor": null,
+      "params": {
+        "task_type": "text2music",
+        "caption": "Energetic synthwave with driving bass, bright arpeggios and punchy drums",
+        "lyrics": "[Instrumental]",
+        "instrumental": true,
+        "vocal_language": "unknown",
+        "bpm": 118,
+        "keyscale": "A minor",
+        "duration": 20,
+        "inference_steps": 8,
+        "seed": -1,
+        "thinking": false
+      },
+      "batch_size": 2,
+      "files": [],
+      "peak_rss_mb": 1936.3,
+      "metal_peak_mb": 1913.8
+    }
+  ],
+  "environment": {
+    "python": "3.12.10",
+    "machine": "arm64",
+    "macos": "26.7.2",
+    "ram_gb": 7.0,
+    "cpu": "Apple M1 (Virtual)",
+    "cores": 3,
+    "torch": "2.10.0",
+    "mps_available": true,
+    "mps_built": true,
+    "mlx": "0.30.6",
+    "mlx_device": "Device(gpu, 0)",
+    "mlx_metal_ok": true,
+    "acestep_gpu_memory_gb": 4.6666717529296875
+  },
+  "dit_config": {
+    "device": "cpu",
+    "use_mlx_dit": false
+  },
+  "llm_config": {
+    "backend": "mlx",
+    "device": "auto"
+  },
+  "create_sample": {
+    "success": false,
+    "caption": "",
+    "lyrics": "",
+    "bpm": null,
+    "duration": null,
+    "keyscale": "",
+    "language": "",
+    "status_message": "❌ Error generating from formatted prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\n\n",
+    "error": "❌ Error generating from formatted prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\nerror: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS\n\n"
+  },
+  "finished": true
+}

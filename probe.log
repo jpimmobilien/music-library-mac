@@ -1,0 +1,388 @@
+[Probe] Umgebung: {"python": "3.12.10", "machine": "arm64", "macos": "26.7.2", "ram_gb": 7.0, "cpu": "Apple M1 (Virtual)", "cores": 3, "torch": "2.10.0", "mps_available": true, "mps_built": true, "mlx": "0.30.6", "mlx_device": "Device(gpu, 0)", "mlx_metal_ok": true, "acestep_gpu_memory_gb": 4.6666717529296875}
+W1113 12:23:16.186000 6472 torch/distributed/elastic/multiprocessing/redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torchao/quantization/quant_api.py:1825: SyntaxWarning: invalid escape sequence '\.'
+  * regex for parameter names, must start with `re:`, e.g. `re:language\.layers\..+\.q_proj.weight`.
+Matplotlib is building the font cache; this may take a moment.
+[32m2026-11-13 12:23:47.536[0m | [33m[1mWARNING [0m | [36macestep.training.trainer[0m:[36m<module>[0m:[36m40[0m - [33m[1mbitsandbytes not installed. Using standard AdamW.[0m
+[32m2026-11-13 12:23:47.668[0m | [1mINFO    [0m | [36macestep.gpu_config[0m:[36mget_gpu_config[0m:[36m846[0m - [1mmacOS MPS detected (4.7 GB unified memory, tier=tier2). Applying Apple Silicon optimizations: no compile, no quantization, mlx backend, no CPU offload.[0m
+[32m2026-11-13 12:23:47.673[0m | [1mINFO    [0m | [36macestep.core.generation.handler.init_service_loader[0m:[36m_load_main_model_from_checkpoint[0m:[36m174[0m - [1m[initialize_service] Attempting to load model with attention implementation: sdpa[0m
+[32m2026-11-13 12:27:08.712[0m | [31m[1mERROR   [0m | [36macestep.core.generation.handler.init_service_orchestrator[0m:[36minitialize_service[0m:[36m219[0m - [31m[1mError initializing model: MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 2.05 MiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+
+Traceback:
+Traceback (most recent call last):
+  File "/Users/runner/work/_temp/ace/acestep/core/generation/handler/init_service_orchestrator.py", line 156, in initialize_service
+    self._load_main_model_from_checkpoint(
+  File "/Users/runner/work/_temp/ace/acestep/core/generation/handler/init_service_loader.py", line 198, in _load_main_model_from_checkpoint
+    self.model = self.model.to(device).to(self.dtype)
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/transformers/modeling_utils.py", line 4343, in to
+    return super().to(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1381, in to
+    return self._apply(convert)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  [Previous line repeated 3 more times]
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 964, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1367, in convert
+    return t.to(
+           ^^^^^
+RuntimeError: MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 2.05 MiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32m/Users/runner/work/music-library-mac/music-library-mac/scripts/ki/[0m[32m[1mprobe_acestep.py[0m", line [33m219[0m, in [35m<module>[0m
+    [35m[1mif[0m [1mstep[0m[1m([0m[36m"DiT laden (turbo)"[0m[1m,[0m [1minit_dit[0m[1m)[0m[1m:[0m
+    [36m   │                         └ [0m[36m[1m<function init_dit at 0x124e9ef20>[0m
+    [36m   └ [0m[36m[1m<function step at 0x100baae80>[0m
+
+  File "[32m/Users/runner/work/music-library-mac/music-library-mac/scripts/ki/[0m[32m[1mprobe_acestep.py[0m", line [33m118[0m, in [35mstep[0m
+    [1mmsg[0m [35m[1m=[0m [1mfn[0m[1m([0m[1m)[0m
+    [36m      └ [0m[36m[1m<function init_dit at 0x124e9ef20>[0m
+
+  File "[32m/Users/runner/work/music-library-mac/music-library-mac/scripts/ki/[0m[32m[1mprobe_acestep.py[0m", line [33m151[0m, in [35minit_dit[0m
+    [1mmsg[0m[1m,[0m [1mok[0m [35m[1m=[0m [1mdit[0m[35m[1m.[0m[1minitialize_service[0m[1m([0m[1mproject_root[0m[35m[1m=[0m[1mPROJECT[0m[1m,[0m [1mconfig_path[0m[35m[1m=[0m[36m"acestep-v15-turbo"[0m[1m,[0m
+    [36m          │   │                               └ [0m[36m[1m'/Users/runner/work/_temp/ace'[0m
+    [36m          │   └ [0m[36m[1m<function InitServiceOrchestratorMixin.initialize_service at 0x109e5f060>[0m
+    [36m          └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x10657c0e0>[0m
+
+> File "[32m/Users/runner/work/_temp/ace/acestep/core/generation/handler/[0m[32m[1minit_service_orchestrator.py[0m", line [33m156[0m, in [35minitialize_service[0m
+    [1mself[0m[35m[1m.[0m[1m_load_main_model_from_checkpoint[0m[1m([0m
+    [36m│    └ [0m[36m[1m<function InitServiceLoaderMixin._load_main_model_from_checkpoint at 0x109e5dd00>[0m
+    [36m└ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x10657c0e0>[0m
+
+  File "[32m/Users/runner/work/_temp/ace/acestep/core/generation/handler/[0m[32m[1minit_service_loader.py[0m", line [33m198[0m, in [35m_load_main_model_from_checkpoint[0m
+    [1mself[0m[35m[1m.[0m[1mmodel[0m [35m[1m=[0m [1mself[0m[35m[1m.[0m[1mmodel[0m[35m[1m.[0m[1mto[0m[1m([0m[1mdevice[0m[1m)[0m[35m[1m.[0m[1mto[0m[1m([0m[1mself[0m[35m[1m.[0m[1mdtype[0m[1m)[0m
+    [36m│    │       │    │        │          │    └ [0m[36m[1mtorch.float32[0m
+    [36m│    │       │    │        │          └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x10657c0e0>[0m
+    [36m│    │       │    │        └ [0m[36m[1m'mps'[0m
+    [36m│    │       │    └ [0m[36m[1mNone[0m
+    [36m│    │       └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x10657c0e0>[0m
+    [36m│    └ [0m[36m[1mNone[0m
+    [36m└ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x10657c0e0>[0m
+
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/transformers/modeling_utils.py", line 4343, in to
+    return super().to(*args, **kwargs)
+                       │       └ {}
+                       └ ('mps',)
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1381, in to
+    return self._apply(convert)
+           │    │      └ <function Module.to.<locals>.convert at 0x109dc4860>
+           │    └ <function Module._apply at 0x102d57ba0>
+           └ AceStepConditionGenerationModel(
+               (decoder): AceStepDiTModel(
+                 (rotary_emb): Qwen3RotaryEmbedding()
+                 (layers): ModuleL...
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x109dc4860>
+    │      └ <function Module._apply at 0x102d57ba0>
+    └ AceStepConditionEncoder(
+        (text_projector): Linear(in_features=1024, out_features=2048, bias=False)
+        (lyric_encoder): AceSt...
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x109dc4860>
+    │      └ <function Module._apply at 0x102d57ba0>
+    └ AceStepTimbreEncoder(
+        (embed_tokens): Linear(in_features=64, out_features=2048, bias=True)
+        (norm): Qwen3RMSNorm((2048,), ...
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x109dc4860>
+    │      └ <function Module._apply at 0x102d57ba0>
+    └ ModuleList(
+        (0-3): 4 x AceStepEncoderLayer(
+          (self_attn): AceStepAttention(
+            (q_proj): Linear(in_features=2048, out...
+  [Previous line repeated 3 more times]
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 964, in _apply
+    param_applied = fn(param)
+                    │  └ Parameter containing:
+                    │    tensor([[ 0.0369, -0.0028,  0.0085,  ..., -0.0493,  0.0361, -0.0544],
+                    │            [-0.0188, -0.0118, -0.031...
+                    └ <function Module.to.<locals>.convert at 0x109dc4860>
+  File "/Users/runner/work/_temp/ace/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1367, in convert
+    return t.to(
+           │ └ <method 'to' of 'torch._C.TensorBase' objects>
+           └ Parameter containing:
+             tensor([[ 0.0369, -0.0028,  0.0085,  ..., -0.0493,  0.0361, -0.0544],
+                     [-0.0188, -0.0118, -0.031...
+
+[31m[1mRuntimeError[0m:[1m MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 2.05 MiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).[0m
+[32m2026-11-13 12:27:09.510[0m | [1mINFO    [0m | [36macestep.core.generation.handler.init_service_loader[0m:[36m_load_main_model_from_checkpoint[0m:[36m174[0m - [1m[initialize_service] Attempting to load model with attention implementation: sdpa[0m
+[32m2026-11-13 12:29:01.878[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_init[0m:[36m_init_mlx_vae[0m:[36m75[0m - [1m[MLX-VAE] Decode/encode compiled with mx.compile().[0m
+[32m2026-11-13 12:29:01.887[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_init[0m:[36m_init_mlx_vae[0m:[36m85[0m - [1m[MLX-VAE] Native MLX VAE initialized (dtype=mlx.core.float32, compiled=True).[0m
+[Probe] DiT laden (turbo): OK 314.2 s
+[32m2026-11-13 12:29:01.898[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m609[0m - [1mloading 5Hz LM tokenizer... it may take 80~90s[0m
+[32m2026-11-13 12:29:29.013[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m613[0m - [1m5Hz LM tokenizer loaded successfully in 27.11 seconds[0m
+[32m2026-11-13 12:29:29.015[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m618[0m - [1mInitializing constrained decoding processor...[0m
+[32m2026-11-13 12:29:29.016[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m624[0m - [1mSetting constrained decoding max_duration to 480s based on GPU config (tier: tier2)[0m
+[32m2026-11-13 12:29:30.197[0m | [34m[1mDEBUG   [0m | [36macestep.constrained_logits_processor[0m:[36m_precompute_audio_code_tokens[0m:[36m577[0m - [34m[1mFound 1535 audio code tokens with values outside valid range [0, 63999][0m
+[32m2026-11-13 12:29:36.538[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m632[0m - [1mConstrained processor initialized in 7.52 seconds[0m
+[32m2026-11-13 12:29:36.540[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m659[0m - [1mflash_attn not installed: disabling CUDA graph capture for nano-vllm (SDPA fallback uses .item() calls in paged-cache decode that are incompatible with CUDA graph capture)[0m
+[32m2026-11-13 12:29:36.540[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m671[0m - [1mTriton not available: disabling CUDA graph capture for nano-vllm (CUDA graphs require torch.compile which depends on Triton)[0m
+[32m2026-11-13 12:29:36.714[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m681[0m - [1mAttempting MLX backend for Apple Silicon acceleration...[0m
+[32m2026-11-13 12:29:36.714[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_load_mlx_model[0m:[36m2947[0m - [1mLoading MLX model from /Users/runner/work/_temp/checkpoints/acestep-5Hz-lm-0.6B[0m
+[32m2026-11-13 12:30:13.147[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_load_mlx_model[0m:[36m3003[0m - [1mMLX model loaded successfully in 36.43s[0m
+[Probe] Sprachmodell laden (acestep-5Hz-lm-0.6B): OK 71.3 s
+[32m2026-11-13 12:30:13.211[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=True, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=True, use_lm=True[0m
+[32m2026-11-13 12:30:13.213[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m720[0m - [1mLM chunk 1/1 (infer_type=llm_dit) (size: 1, seeds: [1234])[0m
+[32m2026-11-13 12:30:13.215[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1371[0m - [1mPhase 1: Generating CoT metadata...[0m
+[32m2026-11-13 12:30:13.290[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1377[0m - [1mgenerate_with_stop_condition: formatted_prompt=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+Calm lo-fi hip hop with warm piano chords, soft vinyl crackle and a relaxed drum groove
+
+# Lyric
+[Instrumental]
+<|im_end|>
+<|im_start|>assistant
+[0m
+[32m2026-11-13 12:30:15.107[0m | [33m[1mWARNING [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single[0m:[36m3773[0m - [33m[1mNative MLX generation failed (RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+
+), falling back to hybrid mode[0m
+[32m2026-11-13 12:30:15.167[0m | [31m[1mERROR   [0m | [36macestep.llm_inference[0m:[36mgenerate_from_formatted_prompt[0m:[36m2501[0m - [31m[1mError in generate_from_formatted_prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+
+
+Traceback (most recent call last):
+  File "/Users/runner/work/_temp/ace/acestep/llm_inference.py", line 2448, in generate_from_formatted_prompt
+    output_text = self._run_mlx(
+                  ^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ace/acestep/llm_inference.py", line 4072, in _run_mlx
+    return self._run_mlx_single(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ace/acestep/llm_inference.py", line 3865, in _run_mlx_single
+    mx.eval(logits_out)
+RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+
+
+[0m
+[Probe] Erzeugen 01-instrumental-en: FEHLER 3.7 s
+[32m2026-11-13 12:30:16.896[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=True, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=True, use_lm=True[0m
+[32m2026-11-13 12:30:16.896[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m720[0m - [1mLM chunk 1/1 (infer_type=llm_dit) (size: 1, seeds: [1234])[0m
+[32m2026-11-13 12:30:16.896[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1371[0m - [1mPhase 1: Generating CoT metadata...[0m
+[32m2026-11-13 12:30:16.898[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1377[0m - [1mgenerate_with_stop_condition: formatted_prompt=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+Ruhiges Lo-Fi-Stück mit warmem Klavier, leisem Knistern und entspanntem Schlagzeug
+
+# Lyric
+[Instrumental]
+<|im_end|>
+<|im_start|>assistant
+[0m
+[32m2026-11-13 12:30:17.009[0m | [33m[1mWARNING [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single[0m:[36m3773[0m - [33m[1mNative MLX generation failed (RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+
+), falling back to hybrid mode[0m
+[32m2026-11-13 12:30:17.046[0m | [31m[1mERROR   [0m | [36macestep.llm_inference[0m:[36mgenerate_from_formatted_prompt[0m:[36m2501[0m - [31m[1mError in generate_from_formatted_prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+
+
+Traceback (most recent call last):
+  File "/Users/runner/work/_temp/ace/acestep/llm_inference.py", line 2448, in generate_from_formatted_prompt
+    output_text = self._run_mlx(
+                  ^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ace/acestep/llm_inference.py", line 4072, in _run_mlx
+    return self._run_mlx_single(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ace/acestep/llm_inference.py", line 3865, in _run_mlx_single
+    mx.eval(logits_out)
+RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+
+
+[0m
+[Probe] Erzeugen 02-instrumental-de: FEHLER 0.4 s
+[32m2026-11-13 12:30:17.302[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=True, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=True, use_lm=True[0m
+[32m2026-11-13 12:30:17.303[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m720[0m - [1mLM chunk 1/1 (infer_type=llm_dit) (size: 1, seeds: [42])[0m
+[32m2026-11-13 12:30:17.303[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1371[0m - [1mPhase 1: Generating CoT metadata...[0m
+[32m2026-11-13 12:30:17.305[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1377[0m - [1mgenerate_with_stop_condition: formatted_prompt=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+Upbeat German pop song, female vocals, acoustic guitar, bright summer mood
+
+# Lyric
+[Verse]
+Die Sonne sinkt am alten See
+das Wasser glänzt wie Gold
+wir laufen barfuß durch den Klee
+der Abend ist uns hold
+
+[Chorus]
+Sommerabend, bleib noch hier
+die Nacht gehört nur dir und mir
+Sommerabend, sing mit mir
+die Nacht gehört nur dir und mir
+<|im_end|>
+<|im_start|>assistant
+[0m
+[32m2026-11-13 12:30:17.344[0m | [33m[1mWARNING [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single[0m:[36m3773[0m - [33m[1mNative MLX generation failed (RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+
+), falling back to hybrid mode[0m
+[32m2026-11-13 12:30:17.389[0m | [31m[1mERROR   [0m | [36macestep.llm_inference[0m:[36mgenerate_from_formatted_prompt[0m:[36m2501[0m - [31m[1mError in generate_from_formatted_prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_t_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+
+
+Traceback (most recent call last):
+  File "/Users/runner/work/_temp/ace/acestep/llm_inference.py", line 2448, in generate_from_formatted_prompt
+    output_text = self._run_mlx(
+                  ^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ace/acestep/llm_inference.py", line 4072, in _run_mlx
+    return self._run_mlx_single(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ace/acestep/llm_inference.py", line 3865, in _run_mlx_single
+    mx.eval(logits_out)
+RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_t_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+
+
+[0m
+[Probe] Erzeugen 03-gesang-de-eigener-text: FEHLER 0.3 s
+[32m2026-11-13 12:30:17.643[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mcreate_sample_from_query[0m:[36m2097[0m - [1mCreating sample from query: Ein fröhlicher deutscher Popsong über einen Sommerabend am See... (instrumental=False, vocal_language=de)[0m
+[32m2026-11-13 12:30:17.645[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mcreate_sample_from_query[0m:[36m2104[0m - [34m[1mFormatted prompt for inspiration: <|im_start|>system
+# Instruction
+Expand the user's input into a more detailed and specific musical description:
+
+<|im_end|>
+<|im_start|>user
+Ein fröhlicher deutscher Popsong über einen Sommerabend am See
+
+instrumental: false<|im_end|>
+<|im_start|>assistant
+[0m
+[32m2026-11-13 12:30:17.645[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mcreate_sample_from_query[0m:[36m2113[0m - [1mUsing user-specified language: de[0m
+[32m2026-11-13 12:30:17.678[0m | [33m[1mWARNING [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single[0m:[36m3773[0m - [33m[1mNative MLX generation failed (RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+
+), falling back to hybrid mode[0m
+[32m2026-11-13 12:30:17.708[0m | [31m[1mERROR   [0m | [36macestep.llm_inference[0m:[36mgenerate_from_formatted_prompt[0m:[36m2501[0m - [31m[1mError in generate_from_formatted_prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+
+
+Traceback (most recent call last):
+  File "/Users/runner/work/_temp/ace/acestep/llm_inference.py", line 2448, in generate_from_formatted_prompt
+    output_text = self._run_mlx(
+                  ^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ace/acestep/llm_inference.py", line 4072, in _run_mlx
+    return self._run_mlx_single(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ace/acestep/llm_inference.py", line 3865, in _run_mlx_single
+    mx.eval(logits_out)
+RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+
+
+[0m
+[Probe] KI schreibt deutschen Text (create_sample): FEHLER 0.4 s
+[32m2026-11-13 12:30:17.995[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=False, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=True, use_lm=True[0m
+[32m2026-11-13 12:30:17.995[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m720[0m - [1mLM chunk 1/1 (infer_type=dit) (size: 2, seeds: [11, 22])[0m
+[32m2026-11-13 12:30:17.995[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1369[0m - [1mBatch Phase 1: Generating CoT metadata (once for all items)...[0m
+[32m2026-11-13 12:30:17.997[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1377[0m - [1mgenerate_with_stop_condition: formatted_prompt=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+Energetic synthwave with driving bass, bright arpeggios and punchy drums
+
+# Lyric
+[Instrumental]
+<|im_end|>
+<|im_start|>assistant
+[0m
+[32m2026-11-13 12:30:18.026[0m | [33m[1mWARNING [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single[0m:[36m3773[0m - [33m[1mNative MLX generation failed (RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+
+), falling back to hybrid mode[0m
+[32m2026-11-13 12:30:18.054[0m | [31m[1mERROR   [0m | [36macestep.llm_inference[0m:[36mgenerate_from_formatted_prompt[0m:[36m2501[0m - [31m[1mError in generate_from_formatted_prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+
+
+Traceback (most recent call last):
+  File "/Users/runner/work/_temp/ace/acestep/llm_inference.py", line 2448, in generate_from_formatted_prompt
+    output_text = self._run_mlx(
+                  ^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ace/acestep/llm_inference.py", line 4072, in _run_mlx
+    return self._run_mlx_single(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ace/acestep/llm_inference.py", line 3865, in _run_mlx_single
+    mx.eval(logits_out)
+RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+
+
+[0m
+[Probe] Erzeugen 05-varianten-ohne-lm: FEHLER 0.4 s
+[Probe] fertig
+      452.36 real       101.52 user        79.74 sys
+          2030321664  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             1995683  page reclaims
+              689432  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                  37  messages sent
+                  35  messages received
+                   1  signals received
+              253885  voluntary context switches
+              821596  involuntary context switches
+            13567488  peak memory footprint

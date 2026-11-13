@@ -1,0 +1,20 @@
+ProductName:		macOS
+ProductVersion:		26.7.2
+BuildVersion:		25G332
+arm64
+Apple M1 (Virtual)
+RAM: 7 GB
+Kerne: 3
+/dev/disk2s5   320Gi   202Gi    97Gi    68%    1.9M  1.0G    0%   /System/Volumes/Data
+uv 0.13.8 (3d97a6aad 2026-11-12 aarch64-apple-darwin)
+Installation: 23 s
+Umgebung: 1.2G
+Download: 96 s
+1.3G	/Users/runner/work/_temp/checkpoints/acestep-5Hz-lm-0.6B
+3.5G	/Users/runner/work/_temp/checkpoints/acestep-5Hz-lm-1.7B
+4.5G	/Users/runner/work/_temp/checkpoints/acestep-v15-turbo
+4.0K	/Users/runner/work/_temp/checkpoints/config.json
+1.1G	/Users/runner/work/_temp/checkpoints/Qwen3-Embedding-0.6B
+8.0K	/Users/runner/work/_temp/checkpoints/README.md
+322M	/Users/runner/work/_temp/checkpoints/vae
+ 11G	/Users/runner/work/_temp/checkpoints

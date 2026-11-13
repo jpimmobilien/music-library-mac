@@ -1,0 +1,6 @@
+{
+  "whisper_model": "mlx-community/whisper-large-v3-turbo",
+  "separation": [],
+  "transcripts": [],
+  "finished": true
+}
