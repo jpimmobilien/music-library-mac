@@ -536,9 +536,12 @@ private struct KIWaveAnimation: View {
                 let bars = 64
                 let w = size.width / CGFloat(bars)
                 for i in 0..<bars {
-                    let x = Double(i) / Double(bars)
-                    let a = 0.5 + 0.5 * sin(t * 2.1 + x * 9) * cos(t * 0.7 + x * 3.3)
-                    let h = max(3, size.height * CGFloat(0.15 + 0.8 * a * (0.6 + 0.4 * sin(x * .pi))))
+                    let x: Double = Double(i) / Double(bars)
+                    let wave: Double = sin(t * 2.1 + x * 9.0) * cos(t * 0.7 + x * 3.3)
+                    let a: Double = 0.5 + 0.5 * wave
+                    let envelope: Double = 0.6 + 0.4 * sin(x * Double.pi)
+                    let level: Double = 0.15 + 0.8 * a * envelope
+                    let h: CGFloat = max(3, size.height * CGFloat(level))
                     let rect = CGRect(x: CGFloat(i) * w + w * 0.2, y: (size.height - h) / 2, width: w * 0.6, height: h)
                     g.fill(Path(roundedRect: rect, cornerRadius: w * 0.3),
                            with: .linearGradient(Gradient(colors: [colors.accent.opacity(0.95), colors.accentStrong.opacity(0.6)]),
