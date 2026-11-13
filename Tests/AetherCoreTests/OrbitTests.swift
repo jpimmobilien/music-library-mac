@@ -70,7 +70,8 @@ final class OrbitTests: XCTestCase {
         XCTAssertEqual(none.arc, 0)
         let over = OrbitRingState(kind: .cpu, fraction: 1.4, basis: .measured)
         XCTAssertEqual(over.fraction, 1)
-        XCTAssertEqual(OrbitRingState(kind: .cpu, fraction: 0.4321, basis: .measured).arc, 0.435, accuracy: 1e-9)
+        XCTAssertEqual(OrbitRingState(kind: .cpu, fraction: 0.4321, basis: .measured).arc, 0.43, accuracy: 1e-9)
+        XCTAssertEqual(OrbitRingState(kind: .cpu, fraction: 0.4337, basis: .measured).arc, 0.435, accuracy: 1e-9)
     }
 
     func testPaletteMatchesAndroid() {
