@@ -1,0 +1,117 @@
+# Machbarkeitsprobe „KI-Musik“: installiert ACE-Step 1.5 (fester Stand), lädt die Modelle, erzeugt kurze Stücke
+# lokal auf einem Apple-Silicon-Rechner und misst Zeit, Speicher und objektive Kennwerte. Danach Gesangstrennung
+# (demucs-mlx) und Spracherkennung (mlx-whisper) als Ersatz für einen Hörtest. Nur von Hand (workflow_dispatch).
+# Ergebnisse (MP3, JSON, Protokolle, Lizenzdateien) im Zweig „ci-ki-<Rechner>“.
+name: KI-Probe
+
+on:
+  workflow_dispatch:
+    inputs:
+      runner:
+        description: "Rechner (Apple Silicon: macos-15, macos-14, macos-26)"
+        default: "macos-15"
+      lm:
+        description: "Sprachmodell (acestep-5Hz-lm-0.6B oder acestep-5Hz-lm-1.7B)"
+        default: "acestep-5Hz-lm-0.6B"
+      listen:
+        description: "Trennung und Spracherkennung prüfen (1 = ja)"
+        default: "1"
+
+concurrency:
+  group: ki-probe-${{ inputs.runner }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+env:
+  ACE_COMMIT: ca1e85fe9430179831e6bc6be790c332190a3866
+
+jobs:
+  probe:
+    name: KI-Probe (${{ inputs.runner }})
+    runs-on: ${{ inputs.runner }}
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rechner
+        run: |
+          mkdir -p out/licenses
+          { sw_vers; uname -m; sysctl -n machdep.cpu.brand_string; echo "RAM: $(( $(sysctl -n hw.memsize) / 1073741824 )) GB";
+            echo "Kerne: $(sysctl -n hw.ncpu)"; df -h "$HOME" | tail -1; system_profiler SPDisplaysDataType 2>/dev/null | grep -E "Chipset|Metal|Cores" ; } | tee out/rechner.txt
+          if [ "$(uname -m)" != "arm64" ]; then echo "ACE-Step 1.5 braucht Apple Silicon (arm64) – Probe abgebrochen" | tee -a out/rechner.txt; exit 1; fi
+      - name: uv und ffmpeg
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh > out/uv-install.log 2>&1
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          command -v ffmpeg >/dev/null || brew install --quiet ffmpeg > out/brew.log 2>&1 || true
+          "$HOME/.local/bin/uv" --version | tee -a out/rechner.txt
+      - name: ACE-Step installieren
+        run: |
+          T0=$(date +%s)
+          git clone -q https://github.com/ace-step/ACE-Step-1.5.git "$RUNNER_TEMP/ace"
+          git -C "$RUNNER_TEMP/ace" checkout -q "$ACE_COMMIT"
+          cd "$RUNNER_TEMP/ace"
+          uv sync > "$GITHUB_WORKSPACE/out/uv-sync.log" 2>&1 || { tail -60 "$GITHUB_WORKSPACE/out/uv-sync.log"; exit 1; }
+          T1=$(date +%s)
+          { echo "Installation: $((T1 - T0)) s"; echo "Umgebung: $(du -sh .venv | cut -f1)"; } | tee -a "$GITHUB_WORKSPACE/out/rechner.txt"
+          uv pip list > "$GITHUB_WORKSPACE/out/packages.txt" 2>&1 || true
+          uv run --with pip-licenses pip-licenses --format=markdown --with-urls > "$GITHUB_WORKSPACE/out/licenses/python-pakete.md" 2>&1 || true
+          cp LICENSE "$GITHUB_WORKSPACE/out/licenses/ACE-Step-LICENSE.txt"
+      - name: Modelle laden
+        run: |
+          cd "$RUNNER_TEMP/ace"
+          CK="$RUNNER_TEMP/checkpoints"
+          T0=$(date +%s)
+          uv run acestep-download --dir "$CK" > "$GITHUB_WORKSPACE/out/download.log" 2>&1 || { tail -40 "$GITHUB_WORKSPACE/out/download.log"; exit 1; }
+          if [ "${{ inputs.lm }}" != "acestep-5Hz-lm-1.7B" ]; then
+            uv run acestep-download --dir "$CK" --model "${{ inputs.lm }}" --skip-main >> "$GITHUB_WORKSPACE/out/download.log" 2>&1 || { tail -40 "$GITHUB_WORKSPACE/out/download.log"; exit 1; }
+          fi
+          T1=$(date +%s)
+          { echo "Download: $((T1 - T0)) s"; du -sh "$CK"/* ; du -sh "$CK"; } | tee -a "$GITHUB_WORKSPACE/out/rechner.txt"
+          # Modellkarten (Lizenzangaben der Gewichte) sichern
+          find "$CK" -maxdepth 2 \( -iname "README.md" -o -iname "LICENSE*" \) | while read -r f; do
+            cp "$f" "$GITHUB_WORKSPACE/out/licenses/$(basename "$(dirname "$f")")-$(basename "$f")"; done
+      - name: Erzeugen (ACE-Step)
+        continue-on-error: true
+        env:
+          KI_LM: ${{ inputs.lm }}
+        run: |
+          cd "$RUNNER_TEMP/ace"
+          export ACE_ROOT="$PWD" ACESTEP_CHECKPOINTS_DIR="$RUNNER_TEMP/checkpoints"
+          /usr/bin/time -l uv run python "$GITHUB_WORKSPACE/scripts/ki/probe_acestep.py" "$RUNNER_TEMP/checkpoints" "$GITHUB_WORKSPACE/out" \
+            > "$GITHUB_WORKSPACE/out/probe.log" 2>&1
+          STATUS=$?
+          grep -E "\[Probe\]|maximum resident|real " "$GITHUB_WORKSPACE/out/probe.log" | head -60
+          tail -15 "$GITHUB_WORKSPACE/out/probe.log"
+          exit $STATUS
+      - name: Trennen und Spracherkennung
+        if: inputs.listen == '1'
+        continue-on-error: true
+        run: |
+          uv venv -q --python 3.12 "$RUNNER_TEMP/listen"
+          uv pip install -q --python "$RUNNER_TEMP/listen/bin/python" demucs-mlx mlx-whisper > out/listen-install.log 2>&1 || tail -30 out/listen-install.log
+          uv pip list --python "$RUNNER_TEMP/listen/bin/python" > out/packages-listen.txt 2>&1 || true
+          export PATH="$RUNNER_TEMP/listen/bin:$PATH"
+          /usr/bin/time -l python scripts/ki/probe_listen.py out > out/listen.log 2>&1
+          STATUS=$?
+          grep -E "\[Hören\]|\[Trennen\]|maximum resident" out/listen.log | head -40
+          tail -10 out/listen.log
+          exit $STATUS
+      - name: Ergebnisse in Zweig sichern
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BR="ci-ki-${{ inputs.runner }}"
+          cd out
+          # Audio als MP3 (192 kbit/s) – kleiner im Zweig; Kennwerte stammen aus den Originaldateien
+          find . \( -name "*.flac" -o -name "*.wav" \) | while read -r f; do
+            ffmpeg -loglevel error -y -i "$f" -codec:a libmp3lame -b:a 192k "${f%.*}.mp3" && rm "$f"; done || true
+          find . -name "*.mp3" -size +20M -delete || true
+          git init -q -b "$BR"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "KI-Probe $GITHUB_SHA ${{ inputs.runner }}" || true
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$BR"
