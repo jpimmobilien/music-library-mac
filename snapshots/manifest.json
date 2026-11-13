@@ -1,0 +1,99 @@
+{
+  "architecture" : "x86_64",
+  "images" : [
+    {
+      "elapsedMs" : "3704",
+      "file" : "60-studio-quelle-standard-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "3653.7",
+      "mainThreadLagMeanMs" : "3653.7",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2202",
+      "file" : "60-studio-quelle-standard-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "35",
+      "mainThreadLagMaxMs" : "1531.1",
+      "mainThreadLagMeanMs" : "170.2",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2240",
+      "file" : "60-studio-verlauf-hell-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "45",
+      "mainThreadLagMaxMs" : "1650.2",
+      "mainThreadLagMeanMs" : "198.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2278",
+      "file" : "60-studio-verlauf-dunkel-1520x940.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "43",
+      "mainThreadLagMaxMs" : "1500.8",
+      "mainThreadLagMeanMs" : "139.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "3148",
+      "file" : "61-studio-instagram-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "3097.8",
+      "mainThreadLagMeanMs" : "3097.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2206",
+      "file" : "61-studio-instagram-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "30",
+      "mainThreadLagMaxMs" : "1250.7",
+      "mainThreadLagMeanMs" : "170.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2243",
+      "file" : "61-studio-instagram-analyse-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "40",
+      "mainThreadLagMaxMs" : "1287.0",
+      "mainThreadLagMeanMs" : "122.5",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2247",
+      "file" : "61-studio-instagram-analyse-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "115.7",
+      "mainThreadLagMeanMs" : "33.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2271",
+      "file" : "60-studio-verlauf-loeschen-hell-440x210.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "133.4",
+      "mainThreadLagMeanMs" : "55.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2207",
+      "file" : "60-studio-verlauf-loeschen-dunkel-440x210.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "106.3",
+      "mainThreadLagMeanMs" : "37.6",
+      "method" : "window-server"
+    }
+  ],
+  "interFont" : true,
+  "liquidGlass" : true,
+  "macOS" : "Version 26.6.1 (Build 25G76)",
+  "screen" : "1920x1080 @1.0x, sichtbar 1920x959"
+}

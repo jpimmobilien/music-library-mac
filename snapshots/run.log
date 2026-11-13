@@ -1,0 +1,21 @@
+[Snapshot] ▸ 60-studio-quelle-standard hell
+[Wächter] Hauptthread reagiert seit über 6 s nicht – Aufnahme haenger-1.txt
+[Snapshot] 60-studio-quelle-standard hell: Aufbau+Warten 3704 ms, Hauptthread-Verzögerung Ø 3653.7 ms, max 3653.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-quelle-standard dunkel
+[Snapshot] 60-studio-quelle-standard dunkel: Aufbau+Warten 2202 ms, Hauptthread-Verzögerung Ø 170.2 ms, max 1531.1 ms, Hauptthread belegt 35 %
+[Snapshot] ▸ 60-studio-verlauf hell
+[Snapshot] 60-studio-verlauf hell: Aufbau+Warten 2240 ms, Hauptthread-Verzögerung Ø 198.8 ms, max 1650.2 ms, Hauptthread belegt 45 %
+[Snapshot] ▸ 60-studio-verlauf dunkel
+[Snapshot] 60-studio-verlauf dunkel: Aufbau+Warten 2278 ms, Hauptthread-Verzögerung Ø 139.8 ms, max 1500.8 ms, Hauptthread belegt 43 %
+[Snapshot] ▸ 61-studio-instagram hell
+[Snapshot] 61-studio-instagram hell: Aufbau+Warten 3148 ms, Hauptthread-Verzögerung Ø 3097.8 ms, max 3097.8 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 61-studio-instagram dunkel
+[Snapshot] 61-studio-instagram dunkel: Aufbau+Warten 2206 ms, Hauptthread-Verzögerung Ø 170.6 ms, max 1250.7 ms, Hauptthread belegt 30 %
+[Snapshot] ▸ 61-studio-instagram-analyse hell
+[Snapshot] 61-studio-instagram-analyse hell: Aufbau+Warten 2243 ms, Hauptthread-Verzögerung Ø 122.5 ms, max 1287.0 ms, Hauptthread belegt 40 %
+[Snapshot] ▸ 61-studio-instagram-analyse dunkel
+[Snapshot] 61-studio-instagram-analyse dunkel: Aufbau+Warten 2247 ms, Hauptthread-Verzögerung Ø 33.9 ms, max 115.7 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 60-studio-verlauf-loeschen hell
+[Snapshot] 60-studio-verlauf-loeschen hell: Aufbau+Warten 2271 ms, Hauptthread-Verzögerung Ø 55.0 ms, max 133.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-verlauf-loeschen dunkel
+[Snapshot] 60-studio-verlauf-loeschen dunkel: Aufbau+Warten 2207 ms, Hauptthread-Verzögerung Ø 37.6 ms, max 106.3 ms, Hauptthread belegt 0 %
