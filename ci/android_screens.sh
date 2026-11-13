@@ -114,7 +114,7 @@ adb shell wm density reset
 
 log "Bewegung gescrollt (Sensor-Globus) – gewischt wird am linken Rand, damit der Globus sich nicht dreht"
 shot "telefon-dunkel-bewegung-oben" motion --es orbit.theme GLASS_DARK
-for i in 1 2 3; do
+for i in 1 2 3 4 5 6 7; do
   adb shell input swipe 60 1900 60 700 500
   sleep 2
   adb exec-out screencap -p > "$OUT/telefon-dunkel-bewegung-gescrollt-$i.png"
