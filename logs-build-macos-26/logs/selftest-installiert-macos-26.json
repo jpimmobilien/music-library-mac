@@ -1,0 +1,225 @@
+{
+  "build" : "25",
+  "checks" : [
+    {
+      "detail" : "busy=0.049668874172185434 user=0.033112582781456956 system=0.016556291390728478",
+      "name" : "cpu.total",
+      "ok" : true
+    },
+    {
+      "detail" : "Kerne gemessen=3 logisch=3",
+      "name" : "cpu.cores",
+      "ok" : true
+    },
+    {
+      "detail" : "physisch=7516192768 belegt=4085415936 app=2013184000 fest=1418477568 komprimiert=653754368 cache=3263971328",
+      "name" : "memory.breakdown",
+      "ok" : true
+    },
+    {
+      "detail" : "Druck=1",
+      "name" : "memory.pressure",
+      "ok" : true
+    },
+    {
+      "detail" : "swap=0\/0",
+      "name" : "memory.swap",
+      "ok" : true
+    },
+    {
+      "detail" : "Startvolume=Macintosh HD Kapazität=343073095680 verfügbar=104557817974 Volumes=1",
+      "name" : "storage.startup",
+      "ok" : true
+    },
+    {
+      "detail" : "lesen=0.0",
+      "name" : "storage.io",
+      "ok" : true
+    },
+    {
+      "detail" : "Verschlüsselung des Startvolumes gelesen: nein",
+      "name" : "storage.encryption",
+      "ok" : true
+    },
+    {
+      "detail" : "nicht verfügbar mit Grund: virtualMachine (SDK-Schnittstelle: ja)",
+      "name" : "storage.smart",
+      "ok" : true
+    },
+    {
+      "detail" : "↓=0.0 Schnittstellen=en0",
+      "name" : "network.rates",
+      "ok" : true
+    },
+    {
+      "detail" : "Thermalstatus=0",
+      "name" : "thermal.state",
+      "ok" : true
+    },
+    {
+      "detail" : "kein Akku – keine Ersatzwerte gemeldet",
+      "name" : "battery.absent",
+      "ok" : true
+    },
+    {
+      "detail" : "nicht verfügbar mit Grund: virtualMachine",
+      "name" : "thermal.smc",
+      "ok" : true
+    },
+    {
+      "detail" : "nicht verfügbar mit Grund: virtualMachine",
+      "name" : "thermal.fans",
+      "ok" : true
+    },
+    {
+      "detail" : "en0(ethernet,primär) lo0(loopback) · gesamt=11",
+      "name" : "network.interfaces",
+      "ok" : true
+    },
+    {
+      "detail" : "Sockets=24 Prozessspalte=true mitProzess=24 tcp4 192.168.64.2:49207 → 20.75.202.224:443 ESTABLISHED hosted-compute-a; tcp4 192.168.64.2:49199 → 20.150.88.228:443 ESTABLISHED Runner.Worker",
+      "name" : "network.connections",
+      "ok" : true
+    },
+    {
+      "detail" : "keine WLAN-Schnittstelle (z. B. virtueller Mac) – als „nicht vorhanden“ gemeldet",
+      "name" : "network.wifi",
+      "ok" : true
+    },
+    {
+      "detail" : "geschrieben=true gelesen=1 gleich=true entfernt=true",
+      "name" : "history.database",
+      "ok" : true
+    },
+    {
+      "detail" : "Verlauf im Selbsttest aus (Standard: aus, nichts gespeichert)",
+      "name" : "history.default-off",
+      "ok" : true
+    },
+    {
+      "detail" : "geöffnet=false Schlüssel=0 Temperaturschlüssel=0 Lüfter=- virtuell=true",
+      "name" : "thermal.smc.path",
+      "ok" : true
+    },
+    {
+      "detail" : "Abschnitte=6 Zeichen=1351 Bildschirme=1",
+      "name" : "hardware.report",
+      "ok" : true
+    },
+    {
+      "detail" : "keine GPU gemeldet (virtueller Mac: true, Abfrage fehlgeschlagen: false)",
+      "name" : "gpu.devices",
+      "ok" : true
+    },
+    {
+      "detail" : "Auslastung=n. v. (notProvidedByMacOS)",
+      "name" : "gpu.utilization",
+      "ok" : true
+    },
+    {
+      "detail" : "Modell=VirtualMac2,1 Name=Apple Virtual Machine 1 Art=virtualMachine",
+      "name" : "hardware.model",
+      "ok" : true
+    },
+    {
+      "detail" : "Prozessor=Apple M1 AppleSilicon=true Rosetta=false",
+      "name" : "hardware.processor",
+      "ok" : true
+    },
+    {
+      "detail" : "Prozess=arm64 Mac=Apple Silicon",
+      "name" : "hardware.architecture",
+      "ok" : true
+    },
+    {
+      "detail" : "de,de,en,en",
+      "name" : "localization",
+      "ok" : true
+    },
+    {
+      "detail" : "Overview → Übersicht",
+      "name" : "localization.de",
+      "ok" : true
+    },
+    {
+      "detail" : "geglättet=0.184 roh=0.050 Verlauf=3",
+      "name" : "telemetry.cpu",
+      "ok" : true
+    },
+    {
+      "detail" : "Kerne=3 logisch=3",
+      "name" : "telemetry.cores",
+      "ok" : true
+    },
+    {
+      "detail" : "↓ 0 B\/s",
+      "name" : "telemetry.network",
+      "ok" : true
+    },
+    {
+      "detail" : "belegt=3.8 GB",
+      "name" : "telemetry.memory",
+      "ok" : true
+    },
+    {
+      "detail" : "sichtbare Fenster=1",
+      "name" : "window",
+      "ok" : true
+    },
+    {
+      "detail" : "Übersicht: eigene CPU 3.8 % eines Kerns · Messung 5.56 ms\/Takt · Hauptthread 0.89 ms\/Takt · Verzug 11.5 ms · 8.4 Anzeige-Aktualisierungen\/s · 1.0 Messungen\/s · 0 Stromquellen-Meldungen · je Bereich: activity 5.1 %, cpuGPU 5.5 %, memory 3.0 %, network 3.1 %, overview 3.8 %, overview-immersive 3.2 %, overview-minimal 3.7 %, overview-motion-off 3.2 %, settings 1.9 %",
+      "name" : "performance.ownCPU",
+      "ok" : true
+    }
+  ],
+  "clusters" : [
+    "Standard:3\/3"
+  ],
+  "engine" : {
+    "applyMs" : 0.89121034965717549,
+    "lateMs" : 11.482423740606812,
+    "powerNotifications" : 0,
+    "publishesPerSecond" : 8.3839238469041053,
+    "sources" : {
+      "battery" : 0.86620573349344543,
+      "cpu" : 0.15249177794800978,
+      "disk" : 1.6464644838132778,
+      "gpu" : 0.18645630171950561,
+      "memory" : 0.048762609480392786,
+      "network" : 0.65456346468478832,
+      "smc" : 0.0010113319349097012,
+      "volumes" : 50.085166000000001
+    },
+    "tickMs" : 5.5560789640622898,
+    "ticksPerSecond" : 0.97516728385277951
+  },
+  "liquidGlass" : true,
+  "macOS" : "Version 26.7.2 (Build 25G332)",
+  "ok" : true,
+  "ownCPU" : 0.03521384909808923,
+  "ownCPUBySection" : {
+    "activity" : 0.050551322410411909,
+    "cpuGPU" : 0.055107564887935341,
+    "memory" : 0.02951656176699748,
+    "network" : 0.03145445015276916,
+    "overview" : 0.037796893523578193,
+    "overview-immersive" : 0.031889395643983076,
+    "overview-minimal" : 0.03679292820507566,
+    "overview-motion-off" : 0.032041922246840555,
+    "settings" : 0.018747754357331538
+  },
+  "ownCPUSteady" : 0.037796893523578193,
+  "ownFootprint" : 82168128,
+  "process" : "arm64",
+  "profiler" : {
+    "chip" : "Apple M1 (Virtual)",
+    "cores" : 3,
+    "machineName" : "Apple Virtual Machine 1"
+  },
+  "seconds" : 90.272181034088135,
+  "systemReduceMotion" : true,
+  "systemReduceTransparency" : true,
+  "translated" : false,
+  "version" : "2.0.0",
+  "virtualMachine" : true
+}

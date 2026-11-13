@@ -1,0 +1,11 @@
+Building for production...
+[0/8] Write sources
+[3/8] Write swift-version-1977FEB4D2752686.txt
+[4/9] Compiling AetherC nvme.c
+[5/9] Compiling AetherC smc.c
+[7/9] Compiling AetherCore CPUMath.swift
+[8/10] Compiling AetherSystem CPUAndMemory.swift
+[9/11] Compiling AETHER AetherApp.swift
+[9/11] Write Objects.LinkFileList
+[10/11] Linking AETHER
+Build of product 'AETHER' complete! (242.70s)

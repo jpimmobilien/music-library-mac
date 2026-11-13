@@ -1,0 +1,492 @@
+Building for debugging...
+[0/15] Write sources
+[3/15] Write swift-version-7974D3F7F03D5E95.txt
+[4/15] /Users/runner/work/music-library-mac/music-library-mac/.build/arm64-apple-macosx/debug/AETHERPackageTests.derived/runner.swift
+[5/29] Compiling AetherC nvme.c
+[6/29] Write sources
+[8/29] Write AETHER-entitlement.plist
+[9/29] Compiling AetherC smc.c
+[11/29] Compiling AetherCore Orbit.swift
+[12/29] Compiling AetherCore Palette.swift
+[13/29] Compiling AetherCore Preferences.swift
+[14/29] Compiling AetherCore Processes.swift
+[15/29] Compiling AetherCore Provenance.swift
+[16/29] Compiling AetherCore Pulse.swift
+[17/29] Emitting module AetherCore
+[18/29] Compiling AetherCore CPUMath.swift
+[19/29] Compiling AetherCore FileLogic.swift
+[20/29] Compiling AetherCore Formatting.swift
+[21/29] Compiling AetherCore Hardware.swift
+[22/29] Compiling AetherCore MacModels.swift
+[23/29] Compiling AetherCore MemoryMath.swift
+[24/29] Compiling AetherCore NetworkAnalysis.swift
+[25/35] Compiling AetherCore Rates.swift
+[26/35] Compiling AetherCore Report.swift
+[27/35] Compiling AetherCore Sensors.swift
+[28/35] Compiling AetherCore Snapshots.swift
+[29/35] Compiling AetherCore StorageAnalysis.swift
+[30/35] Compiling AetherCore Telemetry.swift
+[31/51] Compiling AetherSystem NetworkDetails.swift
+[32/51] Compiling AetherSystem PowerAndGPU.swift
+[33/51] Compiling AetherSystem ProcessSource.swift
+[34/51] Compiling AetherCoreTests CoreTests.swift
+[35/55] Emitting module AetherSystem
+[36/55] Compiling AetherSystem CPUAndMemory.swift
+[37/55] Compiling AetherSystem HardwareSource.swift
+[38/55] Compiling AetherSystem HistoryDatabase.swift
+[39/55] Compiling AetherSystem NetworkAndStorage.swift
+[40/55] Compiling AetherSystem SMCSource.swift
+[41/55] Compiling AetherSystem SelfUsage.swift
+[42/55] Compiling AetherSystem StorageScanner.swift
+[43/55] Compiling AetherSystem Sysctl.swift
+[44/92] Emitting module AETHER
+[45/109] Emitting module AetherCoreTests
+[46/109] Compiling AETHER AetherApp.swift
+[47/109] Compiling AETHER AppModel.swift
+[48/109] Compiling AETHER AppSettings.swift
+[49/109] Compiling AETHER StatusItemController.swift
+[50/109] Compiling AETHER Charts.swift
+[51/109] Compiling AETHER Chrome.swift
+[52/111] Compiling AetherCoreTests StorageAnalysisTests.swift
+[53/111] Compiling AetherCoreTests TelemetryTests.swift
+[54/113] Emitting module AETHERPackageTests
+[55/113] Compiling AETHERPackageTests runner.swift
+[55/113] Write Objects.LinkFileList
+[56/113] Linking AETHERPackageTests
+[66/113] Compiling AETHER LiveChart.swift
+[67/113] Compiling AETHER MacArt.swift
+[68/113] Compiling AETHER Orbit.swift
+[69/113] Compiling AETHER Studio.swift
+[70/113] Compiling AETHER StudioVisuals.swift
+[71/113] Compiling AETHER Theme.swift
+[72/113] Compiling AETHER FileBrowserModel.swift
+[73/113] Compiling AETHER FileItem.swift
+[74/113] Compiling AETHER HistoryStore.swift
+[75/113] Compiling AETHER LiveStores.swift
+[76/113] Compiling AETHER MonitorEngine.swift
+[77/113] Compiling AETHER ProcessStore.swift
+[78/113] Compiling AETHER Telemetry.swift
+[79/113] Compiling AETHER NetworkDetailsStore.swift
+[80/113] Compiling AETHER StorageModels.swift
+[81/113] Compiling AETHER Localization.swift
+[82/113] Compiling AETHER MacModelGallery.swift
+[83/113] Compiling AETHER SelfTest.swift
+[84/113] Compiling AETHER SnapshotProbes.swift
+[85/113] Compiling AETHER SnapshotRunner.swift
+[86/113] Compiling AETHER ActivityView.swift
+[87/113] Compiling AETHER BatteryView.swift
+[88/113] Compiling AETHER CPUGPUView.swift
+[89/113] Compiling AETHER DiagnosticsView.swift
+[90/113] Compiling AETHER FilesSheets.swift
+[91/113] Compiling AETHER FilesView.swift
+[92/113] Compiling AETHER HardwareView.swift
+[93/113] Compiling AETHER CPUHeroes.swift
+[94/113] Compiling AETHER MemoryStorageHeroes.swift
+[95/113] Compiling AETHER NetworkHardwareHeroes.swift
+[96/113] Compiling AETHER PowerHeroes.swift
+[97/113] Compiling AETHER HistoryTimelinePanel.swift
+[98/113] Compiling AETHER LiveMonitorView.swift
+[99/113] Compiling AETHER MemoryView.swift
+[100/113] Compiling AETHER NetworkView.swift
+[101/113] Compiling AETHER OrbitCoreView.swift
+[102/113] Compiling AETHER OverviewCards.swift
+[103/113] Compiling AETHER OverviewStudio.swift
+[104/113] Compiling AETHER OverviewView.swift
+[105/113] Compiling AETHER RootView.swift
+[106/113] Compiling AETHER SettingsView.swift
+[107/113] Compiling AETHER SidebarView.swift
+[108/113] Compiling AETHER StorageAnalysisView.swift
+[109/113] Compiling AETHER StorageView.swift
+[110/113] Compiling AETHER ThermalView.swift
+[110/113] Write Objects.LinkFileList
+[111/113] Linking AETHER
+[112/113] Applying AETHER
+Build complete! (67.52s)
+Test Suite 'All tests' started at 2026-11-13 12:57:56.814.
+Test Suite 'AETHERPackageTests.xctest' started at 2026-11-13 12:57:56.816.
+Test Suite 'AdapterUnitsTests' started at 2026-11-13 12:57:56.816.
+Test Case '-[AetherCoreTests.AdapterUnitsTests testMillivoltsAndVolts]' started.
+Test Case '-[AetherCoreTests.AdapterUnitsTests testMillivoltsAndVolts]' passed (0.004 seconds).
+Test Suite 'AdapterUnitsTests' passed at 2026-11-13 12:57:56.820.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.004 (0.004) seconds
+Test Suite 'BatchRenameTests' started at 2026-11-13 12:57:56.820.
+Test Case '-[AetherCoreTests.BatchRenameTests testAddAndFormat]' started.
+Test Case '-[AetherCoreTests.BatchRenameTests testAddAndFormat]' passed (0.003 seconds).
+Test Case '-[AetherCoreTests.BatchRenameTests testConflicts]' started.
+Test Case '-[AetherCoreTests.BatchRenameTests testConflicts]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.BatchRenameTests testReplaceKeepsExtension]' started.
+Test Case '-[AetherCoreTests.BatchRenameTests testReplaceKeepsExtension]' passed (0.000 seconds).
+Test Suite 'BatchRenameTests' passed at 2026-11-13 12:57:56.828.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.004 (0.008) seconds
+Test Suite 'BatteryAndVolumeTests' started at 2026-11-13 12:57:56.828.
+Test Case '-[AetherCoreTests.BatteryAndVolumeTests testBatteryTemperatureAndAmperage]' started.
+Test Case '-[AetherCoreTests.BatteryAndVolumeTests testBatteryTemperatureAndAmperage]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.BatteryAndVolumeTests testHealthIsComputedOnlyFromPlausibleValues]' started.
+Test Case '-[AetherCoreTests.BatteryAndVolumeTests testHealthIsComputedOnlyFromPlausibleValues]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.BatteryAndVolumeTests testPowerFromVoltageAndCurrent]' started.
+Test Case '-[AetherCoreTests.BatteryAndVolumeTests testPowerFromVoltageAndCurrent]' passed (0.002 seconds).
+Test Case '-[AetherCoreTests.BatteryAndVolumeTests testVolumeUsesImportantUsageAndPurgeable]' started.
+Test Case '-[AetherCoreTests.BatteryAndVolumeTests testVolumeUsesImportantUsageAndPurgeable]' passed (0.000 seconds).
+Test Suite 'BatteryAndVolumeTests' passed at 2026-11-13 12:57:56.831.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
+Test Suite 'CPUMathTests' started at 2026-11-13 12:57:56.831.
+Test Case '-[AetherCoreTests.CPUMathTests testClusterNames]' started.
+Test Case '-[AetherCoreTests.CPUMathTests testClusterNames]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.CPUMathTests testCounterWrapAroundIsHandled]' started.
+Test Case '-[AetherCoreTests.CPUMathTests testCounterWrapAroundIsHandled]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.CPUMathTests testNoElapsedTicksGivesNilNotZero]' started.
+Test Case '-[AetherCoreTests.CPUMathTests testNoElapsedTicksGivesNilNotZero]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.CPUMathTests testTotalWeightsByTicksNotByCoreAverage]' started.
+Test Case '-[AetherCoreTests.CPUMathTests testTotalWeightsByTicksNotByCoreAverage]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.CPUMathTests testUsageFromTickDelta]' started.
+Test Case '-[AetherCoreTests.CPUMathTests testUsageFromTickDelta]' passed (0.000 seconds).
+Test Suite 'CPUMathTests' passed at 2026-11-13 12:57:56.833.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'CleanupKindTests' started at 2026-11-13 12:57:56.833.
+Test Case '-[AetherCoreTests.CleanupKindTests testRelativePathsAreInsideHome]' started.
+Test Case '-[AetherCoreTests.CleanupKindTests testRelativePathsAreInsideHome]' passed (0.001 seconds).
+Test Suite 'CleanupKindTests' passed at 2026-11-13 12:57:56.834.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'DisplayQuantizerTests' started at 2026-11-13 12:57:56.834.
+Test Case '-[AetherCoreTests.DisplayQuantizerTests testFractionStepsOfOnePercent]' started.
+Test Case '-[AetherCoreTests.DisplayQuantizerTests testFractionStepsOfOnePercent]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.DisplayQuantizerTests testOtherUnits]' started.
+Test Case '-[AetherCoreTests.DisplayQuantizerTests testOtherUnits]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.DisplayQuantizerTests testThroughputThreeSignificantDigits]' started.
+Test Case '-[AetherCoreTests.DisplayQuantizerTests testThroughputThreeSignificantDigits]' passed (0.000 seconds).
+Test Suite 'DisplayQuantizerTests' passed at 2026-11-13 12:57:56.835.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'DisplaysParserTests' started at 2026-11-13 12:57:56.835.
+Test Case '-[AetherCoreTests.DisplaysParserTests testAppleSiliconGPU]' started.
+Test Case '-[AetherCoreTests.DisplaysParserTests testAppleSiliconGPU]' passed (0.002 seconds).
+Test Case '-[AetherCoreTests.DisplaysParserTests testIntelMacWithTwoGPUs]' started.
+Test Case '-[AetherCoreTests.DisplaysParserTests testIntelMacWithTwoGPUs]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.DisplaysParserTests testUnknownAndEmpty]' started.
+Test Case '-[AetherCoreTests.DisplaysParserTests testUnknownAndEmpty]' passed (0.001 seconds).
+Test Suite 'DisplaysParserTests' passed at 2026-11-13 12:57:56.838.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+Test Suite 'FileCategoryTests' started at 2026-11-13 12:57:56.838.
+Test Case '-[AetherCoreTests.FileCategoryTests testClassification]' started.
+Test Case '-[AetherCoreTests.FileCategoryTests testClassification]' passed (0.001 seconds).
+Test Suite 'FileCategoryTests' passed at 2026-11-13 12:57:56.840.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'FileNamingTests' started at 2026-11-13 12:57:56.840.
+Test Case '-[AetherCoreTests.FileNamingTests testSplit]' started.
+Test Case '-[AetherCoreTests.FileNamingTests testSplit]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.FileNamingTests testUniqueName]' started.
+Test Case '-[AetherCoreTests.FileNamingTests testUniqueName]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.FileNamingTests testValidate]' started.
+Test Case '-[AetherCoreTests.FileNamingTests testValidate]' passed (0.000 seconds).
+Test Suite 'FileNamingTests' passed at 2026-11-13 12:57:56.842.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'FormattingTests' started at 2026-11-13 12:57:56.842.
+Test Case '-[AetherCoreTests.FormattingTests testBytes]' started.
+Test Case '-[AetherCoreTests.FormattingTests testBytes]' passed (0.005 seconds).
+Test Case '-[AetherCoreTests.FormattingTests testDuration]' started.
+Test Case '-[AetherCoreTests.FormattingTests testDuration]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.FormattingTests testIntegerGroupingAndTemperature]' started.
+Test Case '-[AetherCoreTests.FormattingTests testIntegerGroupingAndTemperature]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.FormattingTests testRatesAndPercent]' started.
+Test Case '-[AetherCoreTests.FormattingTests testRatesAndPercent]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.FormattingTests testSignificantDigits]' started.
+Test Case '-[AetherCoreTests.FormattingTests testSignificantDigits]' passed (0.000 seconds).
+Test Suite 'FormattingTests' passed at 2026-11-13 12:57:56.851.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.007 (0.009) seconds
+Test Suite 'HardwareTests' started at 2026-11-13 12:57:56.851.
+Test Case '-[AetherCoreTests.HardwareTests testAppleSiliconBrand]' started.
+Test Case '-[AetherCoreTests.HardwareTests testAppleSiliconBrand]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.HardwareTests testDeviceKinds]' started.
+Test Case '-[AetherCoreTests.HardwareTests testDeviceKinds]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.HardwareTests testIntelBrand]' started.
+Test Case '-[AetherCoreTests.HardwareTests testIntelBrand]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.HardwareTests testProfilerAppleSilicon]' started.
+Test Case '-[AetherCoreTests.HardwareTests testProfilerAppleSilicon]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.HardwareTests testProfilerIntelAndGarbage]' started.
+Test Case '-[AetherCoreTests.HardwareTests testProfilerIntelAndGarbage]' passed (0.002 seconds).
+Test Suite 'HardwareTests' passed at 2026-11-13 12:57:56.856.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.003 (0.005) seconds
+Test Suite 'HistoryLogicTests' started at 2026-11-13 12:57:56.856.
+Test Case '-[AetherCoreTests.HistoryLogicTests testAccumulatorAveragesAndKeepsMaximumLevels]' started.
+Test Case '-[AetherCoreTests.HistoryLogicTests testAccumulatorAveragesAndKeepsMaximumLevels]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.HistoryLogicTests testBatteryPowerUsesMagnitude]' started.
+Test Case '-[AetherCoreTests.HistoryLogicTests testBatteryPowerUsesMagnitude]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.HistoryLogicTests testBucketingLeavesGaps]' started.
+Test Case '-[AetherCoreTests.HistoryLogicTests testBucketingLeavesGaps]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.HistoryLogicTests testCSV]' started.
+Test Case '-[AetherCoreTests.HistoryLogicTests testCSV]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.HistoryLogicTests testEmptyMinuteIsNotStored]' started.
+Test Case '-[AetherCoreTests.HistoryLogicTests testEmptyMinuteIsNotStored]' passed (0.000 seconds).
+Test Suite 'HistoryLogicTests' passed at 2026-11-13 12:57:56.860.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+Test Suite 'InterfaceAnalysisTests' started at 2026-11-13 12:57:56.860.
+Test Case '-[AetherCoreTests.InterfaceAnalysisTests testClassification]' started.
+Test Case '-[AetherCoreTests.InterfaceAnalysisTests testClassification]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.InterfaceAnalysisTests testLinkLocalAndConnected]' started.
+Test Case '-[AetherCoreTests.InterfaceAnalysisTests testLinkLocalAndConnected]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.InterfaceAnalysisTests testPrefixLength]' started.
+Test Case '-[AetherCoreTests.InterfaceAnalysisTests testPrefixLength]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.InterfaceAnalysisTests testWiFiNames]' started.
+Test Case '-[AetherCoreTests.InterfaceAnalysisTests testWiFiNames]' passed (0.000 seconds).
+Test Suite 'InterfaceAnalysisTests' passed at 2026-11-13 12:57:56.861.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'MacModelTests' started at 2026-11-13 12:57:56.861.
+Test Case '-[AetherCoreTests.MacModelTests testDeviceKindFromNewIdentifiers]' started.
+Test Case '-[AetherCoreTests.MacModelTests testDeviceKindFromNewIdentifiers]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.MacModelTests testEstimateWhenUnknown]' started.
+Test Case '-[AetherCoreTests.MacModelTests testEstimateWhenUnknown]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.MacModelTests testEveryModelIsConsistent]' started.
+Test Case '-[AetherCoreTests.MacModelTests testEveryModelIsConsistent]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.MacModelTests testInchLabel]' started.
+Test Case '-[AetherCoreTests.MacModelTests testInchLabel]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.MacModelTests testKnownIdentifiers]' started.
+Test Case '-[AetherCoreTests.MacModelTests testKnownIdentifiers]' passed (0.000 seconds).
+Test Suite 'MacModelTests' passed at 2026-11-13 12:57:56.863.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'MemoryMathTests' started at 2026-11-13 12:57:56.863.
+Test Case '-[AetherCoreTests.MemoryMathTests testBreakdownLikeActivityMonitor]' started.
+Test Case '-[AetherCoreTests.MemoryMathTests testBreakdownLikeActivityMonitor]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.MemoryMathTests testFreeNeverNegativeAndAppNeverUnderflows]' started.
+Test Case '-[AetherCoreTests.MemoryMathTests testFreeNeverNegativeAndAppNeverUnderflows]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.MemoryMathTests testPressureLevels]' started.
+Test Case '-[AetherCoreTests.MemoryMathTests testPressureLevels]' passed (0.000 seconds).
+Test Suite 'MemoryMathTests' passed at 2026-11-13 12:57:56.864.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'NVMeHealthTests' started at 2026-11-13 12:57:56.864.
+Test Case '-[AetherCoreTests.NVMeHealthTests testDecode]' started.
+Test Case '-[AetherCoreTests.NVMeHealthTests testDecode]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.NVMeHealthTests testEmptyShortOrImplausibleLogs]' started.
+Test Case '-[AetherCoreTests.NVMeHealthTests testEmptyShortOrImplausibleLogs]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.NVMeHealthTests testUInt128]' started.
+Test Case '-[AetherCoreTests.NVMeHealthTests testUInt128]' passed (0.001 seconds).
+Test Suite 'NVMeHealthTests' passed at 2026-11-13 12:57:56.866.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'NetstatParserTests' started at 2026-11-13 12:57:56.866.
+Test Case '-[AetherCoreTests.NetstatParserTests testEndpoints]' started.
+Test Case '-[AetherCoreTests.NetstatParserTests testEndpoints]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.NetstatParserTests testFilterSearchAndSorting]' started.
+Test Case '-[AetherCoreTests.NetstatParserTests testFilterSearchAndSorting]' passed (0.002 seconds).
+Test Case '-[AetherCoreTests.NetstatParserTests testProcessColumnWithSpaces]' started.
+Test Case '-[AetherCoreTests.NetstatParserTests testProcessColumnWithSpaces]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.NetstatParserTests testStableUniqueIDs]' started.
+Test Case '-[AetherCoreTests.NetstatParserTests testStableUniqueIDs]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.NetstatParserTests testUDPWithoutStateColumnValue]' started.
+Test Case '-[AetherCoreTests.NetstatParserTests testUDPWithoutStateColumnValue]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.NetstatParserTests testVenturaTCP]' started.
+Test Case '-[AetherCoreTests.NetstatParserTests testVenturaTCP]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.NetstatParserTests testWithoutProcessColumnAndGarbage]' started.
+Test Case '-[AetherCoreTests.NetstatParserTests testWithoutProcessColumnAndGarbage]' passed (0.000 seconds).
+Test Suite 'NetstatParserTests' passed at 2026-11-13 12:57:56.875.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.007 (0.009) seconds
+Test Suite 'OrbitTests' started at 2026-11-13 12:57:56.875.
+Test Case '-[AetherCoreTests.OrbitTests testArcticBlueAccentIsReadable]' started.
+Test Case '-[AetherCoreTests.OrbitTests testArcticBlueAccentIsReadable]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.OrbitTests testEffectProfilesRespectReduceMotionFirst]' started.
+Test Case '-[AetherCoreTests.OrbitTests testEffectProfilesRespectReduceMotionFirst]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.OrbitTests testMinimalProfileHasNoDecorativeMotion]' started.
+Test Case '-[AetherCoreTests.OrbitTests testMinimalProfileHasNoDecorativeMotion]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.OrbitTests testNetworkRingIsRelativeAndNeverInvented]' started.
+Test Case '-[AetherCoreTests.OrbitTests testNetworkRingIsRelativeAndNeverInvented]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.OrbitTests testOnlyImmersiveLetsTheBackgroundLive]' started.
+Test Case '-[AetherCoreTests.OrbitTests testOnlyImmersiveLetsTheBackgroundLive]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.OrbitTests testPaletteMatchesAndroid]' started.
+Test Case '-[AetherCoreTests.OrbitTests testPaletteMatchesAndroid]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.OrbitTests testRingStateClampsAndMarksUnavailable]' started.
+Test Case '-[AetherCoreTests.OrbitTests testRingStateClampsAndMarksUnavailable]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.OrbitTests testRollingPeakForgetsOldValues]' started.
+Test Case '-[AetherCoreTests.OrbitTests testRollingPeakForgetsOldValues]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.OrbitTests testStorageAndMemoryFractions]' started.
+Test Case '-[AetherCoreTests.OrbitTests testStorageAndMemoryFractions]' passed (0.000 seconds).
+Test Suite 'OrbitTests' passed at 2026-11-13 12:57:56.879.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+Test Suite 'PaletteTests' started at 2026-11-13 12:57:56.879.
+Test Case '-[AetherCoreTests.PaletteTests testAccentsCarryReadableLabels]' started.
+Test Case '-[AetherCoreTests.PaletteTests testAccentsCarryReadableLabels]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.PaletteTests testAllThemesHaveReadableText]' started.
+Test Case '-[AetherCoreTests.PaletteTests testAllThemesHaveReadableText]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.PaletteTests testLuminanceExtremes]' started.
+Test Case '-[AetherCoreTests.PaletteTests testLuminanceExtremes]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.PaletteTests testThemeAppearances]' started.
+Test Case '-[AetherCoreTests.PaletteTests testThemeAppearances]' passed (0.001 seconds).
+Test Suite 'PaletteTests' passed at 2026-11-13 12:57:56.881.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Test Suite 'PathTests' started at 2026-11-13 12:57:56.881.
+Test Case '-[AetherCoreTests.PathTests testAncestorsAndInside]' started.
+Test Case '-[AetherCoreTests.PathTests testAncestorsAndInside]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.PathTests testPermissions]' started.
+Test Case '-[AetherCoreTests.PathTests testPermissions]' passed (0.001 seconds).
+Test Suite 'PathTests' passed at 2026-11-13 12:57:56.882.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'PowerProfilerParserTests' started at 2026-11-13 12:57:56.883.
+Test Case '-[AetherCoreTests.PowerProfilerParserTests testAppleSiliconLayout]' started.
+Test Case '-[AetherCoreTests.PowerProfilerParserTests testAppleSiliconLayout]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.PowerProfilerParserTests testDesktopWithoutBatteryReturnsNil]' started.
+Test Case '-[AetherCoreTests.PowerProfilerParserTests testDesktopWithoutBatteryReturnsNil]' passed (0.001 seconds).
+Test Suite 'PowerProfilerParserTests' passed at 2026-11-13 12:57:56.885.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'PreferencesTests' started at 2026-11-13 12:57:56.885.
+Test Case '-[AetherCoreTests.PreferencesTests testLayoutNormalizesAndRestores]' started.
+Test Case '-[AetherCoreTests.PreferencesTests testLayoutNormalizesAndRestores]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.PreferencesTests testLowImpactInterval]' started.
+Test Case '-[AetherCoreTests.PreferencesTests testLowImpactInterval]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.PreferencesTests testReadingMap]' started.
+Test Case '-[AetherCoreTests.PreferencesTests testReadingMap]' passed (0.001 seconds).
+Test Suite 'PreferencesTests' passed at 2026-11-13 12:57:56.888.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'ProcessLogicTests' started at 2026-11-13 12:57:56.888.
+Test Case '-[AetherCoreTests.ProcessLogicTests testAppBundles]' started.
+Test Case '-[AetherCoreTests.ProcessLogicTests testAppBundles]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.ProcessLogicTests testCoreClusterMap]' started.
+Test Case '-[AetherCoreTests.ProcessLogicTests testCoreClusterMap]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.ProcessLogicTests testCPUTrackerAndPIDReuse]' started.
+Test Case '-[AetherCoreTests.ProcessLogicTests testCPUTrackerAndPIDReuse]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.ProcessLogicTests testFamilies]' started.
+Test Case '-[AetherCoreTests.ProcessLogicTests testFamilies]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.ProcessLogicTests testKernelStates]' started.
+Test Case '-[AetherCoreTests.ProcessLogicTests testKernelStates]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.ProcessLogicTests testMemoryActivityAndRatio]' started.
+Test Case '-[AetherCoreTests.ProcessLogicTests testMemoryActivityAndRatio]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.ProcessLogicTests testProtection]' started.
+Test Case '-[AetherCoreTests.ProcessLogicTests testProtection]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.ProcessLogicTests testPSOutputParsing]' started.
+Test Case '-[AetherCoreTests.ProcessLogicTests testPSOutputParsing]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.ProcessLogicTests testPSTimeFormats]' started.
+Test Case '-[AetherCoreTests.ProcessLogicTests testPSTimeFormats]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.ProcessLogicTests testSearch]' started.
+Test Case '-[AetherCoreTests.ProcessLogicTests testSearch]' passed (0.000 seconds).
+Test Suite 'ProcessLogicTests' passed at 2026-11-13 12:57:56.896.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.005 (0.007) seconds
+Test Suite 'PulseTests' started at 2026-11-13 12:57:56.896.
+Test Case '-[AetherCoreTests.PulseTests testBatteryServiceFromSystemOnly]' started.
+Test Case '-[AetherCoreTests.PulseTests testBatteryServiceFromSystemOnly]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.PulseTests testCalmWhenEverythingUnavailable]' started.
+Test Case '-[AetherCoreTests.PulseTests testCalmWhenEverythingUnavailable]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.PulseTests testHighCPUNeedsTenSeconds]' started.
+Test Case '-[AetherCoreTests.PulseTests testHighCPUNeedsTenSeconds]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.PulseTests testLowDiskByFraction]' started.
+Test Case '-[AetherCoreTests.PulseTests testLowDiskByFraction]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.PulseTests testMemoryPressureAndSwap]' started.
+Test Case '-[AetherCoreTests.PulseTests testMemoryPressureAndSwap]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.PulseTests testMinimumStreakEvenWithLongInterval]' started.
+Test Case '-[AetherCoreTests.PulseTests testMinimumStreakEvenWithLongInterval]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.PulseTests testNetworkIsInfoOnly]' started.
+Test Case '-[AetherCoreTests.PulseTests testNetworkIsInfoOnly]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.PulseTests testSwapAloneIsNotAWarning]' started.
+Test Case '-[AetherCoreTests.PulseTests testSwapAloneIsNotAWarning]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.PulseTests testThermalAndDiskAreImmediate]' started.
+Test Case '-[AetherCoreTests.PulseTests testThermalAndDiskAreImmediate]' passed (0.000 seconds).
+Test Suite 'PulseTests' passed at 2026-11-13 12:57:56.899.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'RateTests' started at 2026-11-13 12:57:56.899.
+Test Case '-[AetherCoreTests.RateTests testAccumulatorAcrossInterfaces]' started.
+Test Case '-[AetherCoreTests.RateTests testAccumulatorAcrossInterfaces]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.RateTests testRateNeedsTwoSamplesAndIgnoresResets]' started.
+Test Case '-[AetherCoreTests.RateTests testRateNeedsTwoSamplesAndIgnoresResets]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.RateTests testRingBufferKeepsNewestInOrder]' started.
+Test Case '-[AetherCoreTests.RateTests testRingBufferKeepsNewestInOrder]' passed (0.001 seconds).
+Test Suite 'RateTests' passed at 2026-11-13 12:57:56.902.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
+Test Suite 'ReportFormatterTests' started at 2026-11-13 12:57:56.902.
+Test Case '-[AetherCoreTests.ReportFormatterTests testEmptySectionsSkippedAndCellsEscaped]' started.
+Test Case '-[AetherCoreTests.ReportFormatterTests testEmptySectionsSkippedAndCellsEscaped]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.ReportFormatterTests testFileName]' started.
+Test Case '-[AetherCoreTests.ReportFormatterTests testFileName]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.ReportFormatterTests testSensitiveRowsOnlyOnRequest]' started.
+Test Case '-[AetherCoreTests.ReportFormatterTests testSensitiveRowsOnlyOnRequest]' passed (0.000 seconds).
+Test Suite 'ReportFormatterTests' passed at 2026-11-13 12:57:56.904.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Test Suite 'RoutableAddressTests' started at 2026-11-13 12:57:56.904.
+Test Case '-[AetherCoreTests.RoutableAddressTests testIPv4]' started.
+Test Case '-[AetherCoreTests.RoutableAddressTests testIPv4]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.RoutableAddressTests testIPv6]' started.
+Test Case '-[AetherCoreTests.RoutableAddressTests testIPv6]' passed (0.000 seconds).
+Test Suite 'RoutableAddressTests' passed at 2026-11-13 12:57:56.905.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+Test Suite 'SMCDecoderTests' started at 2026-11-13 12:57:56.905.
+Test Case '-[AetherCoreTests.SMCDecoderTests testFloatLittleEndian]' started.
+Test Case '-[AetherCoreTests.SMCDecoderTests testFloatLittleEndian]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.SMCDecoderTests testFPE2Fan]' started.
+Test Case '-[AetherCoreTests.SMCDecoderTests testFPE2Fan]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.SMCDecoderTests testIntegersAndUnknown]' started.
+Test Case '-[AetherCoreTests.SMCDecoderTests testIntegersAndUnknown]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.SMCDecoderTests testPlausibility]' started.
+Test Case '-[AetherCoreTests.SMCDecoderTests testPlausibility]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.SMCDecoderTests testSP78]' started.
+Test Case '-[AetherCoreTests.SMCDecoderTests testSP78]' passed (0.000 seconds).
+Test Suite 'SMCDecoderTests' passed at 2026-11-13 12:57:56.906.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'SensorCatalogTests' started at 2026-11-13 12:57:56.906.
+Test Case '-[AetherCoreTests.SensorCatalogTests testAggregateComputesAverageAndMaximum]' started.
+Test Case '-[AetherCoreTests.SensorCatalogTests testAggregateComputesAverageAndMaximum]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.SensorCatalogTests testFanFraction]' started.
+Test Case '-[AetherCoreTests.SensorCatalogTests testFanFraction]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.SensorCatalogTests testHottestPrefersCPUArea]' started.
+Test Case '-[AetherCoreTests.SensorCatalogTests testHottestPrefersCPUArea]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.SensorCatalogTests testKnownAndPrefixClassification]' started.
+Test Case '-[AetherCoreTests.SensorCatalogTests testKnownAndPrefixClassification]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.SensorCatalogTests testKnownMeaningsAreNamed]' started.
+Test Case '-[AetherCoreTests.SensorCatalogTests testKnownMeaningsAreNamed]' passed (0.002 seconds).
+Test Suite 'SensorCatalogTests' passed at 2026-11-13 12:57:56.909.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
+Test Suite 'SmoothingTests' started at 2026-11-13 12:57:56.909.
+Test Case '-[AetherCoreTests.SmoothingTests testAlpha]' started.
+Test Case '-[AetherCoreTests.SmoothingTests testAlpha]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.SmoothingTests testFirstValueIsTakenAsIs]' started.
+Test Case '-[AetherCoreTests.SmoothingTests testFirstValueIsTakenAsIs]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.SmoothingTests testLargeGapRestarts]' started.
+Test Case '-[AetherCoreTests.SmoothingTests testLargeGapRestarts]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.SmoothingTests testNoneProfileIsRaw]' started.
+Test Case '-[AetherCoreTests.SmoothingTests testNoneProfileIsRaw]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.SmoothingTests testNonFiniteIgnored]' started.
+Test Case '-[AetherCoreTests.SmoothingTests testNonFiniteIgnored]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.SmoothingTests testPeakWindowKeepsSpike]' started.
+Test Case '-[AetherCoreTests.SmoothingTests testPeakWindowKeepsSpike]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.SmoothingTests testRiseIsFasterThanFall]' started.
+Test Case '-[AetherCoreTests.SmoothingTests testRiseIsFasterThanFall]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.SmoothingTests testSmootherCarriesRawAndPeak]' started.
+Test Case '-[AetherCoreTests.SmoothingTests testSmootherCarriesRawAndPeak]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.SmoothingTests testTimeDependentAlphaIsIntervalIndependent]' started.
+Test Case '-[AetherCoreTests.SmoothingTests testTimeDependentAlphaIsIntervalIndependent]' passed (0.000 seconds).
+Test Suite 'SmoothingTests' passed at 2026-11-13 12:57:56.913.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.002 (0.004) seconds
+Test Suite 'StorageTallyTests' started at 2026-11-13 12:57:56.913.
+Test Case '-[AetherCoreTests.StorageTallyTests testDuplicateCandidatesSkipHardLinksAndPackages]' started.
+Test Case '-[AetherCoreTests.StorageTallyTests testDuplicateCandidatesSkipHardLinksAndPackages]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.StorageTallyTests testGroupsFromHashesAndRemoval]' started.
+Test Case '-[AetherCoreTests.StorageTallyTests testGroupsFromHashesAndRemoval]' passed (0.003 seconds).
+Test Case '-[AetherCoreTests.StorageTallyTests testLargestAndThresholds]' started.
+Test Case '-[AetherCoreTests.StorageTallyTests testLargestAndThresholds]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.StorageTallyTests testResultRemoval]' started.
+Test Case '-[AetherCoreTests.StorageTallyTests testResultRemoval]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.StorageTallyTests testScannedFileNames]' started.
+Test Case '-[AetherCoreTests.StorageTallyTests testScannedFileNames]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.StorageTallyTests testTopLevelComponent]' started.
+Test Case '-[AetherCoreTests.StorageTallyTests testTopLevelComponent]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.StorageTallyTests testTotalsFoldersCategoriesAndRetention]' started.
+Test Case '-[AetherCoreTests.StorageTallyTests testTotalsFoldersCategoriesAndRetention]' passed (0.000 seconds).
+Test Suite 'StorageTallyTests' passed at 2026-11-13 12:57:56.918.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.005 (0.005) seconds
+Test Suite 'TimeSeriesTests' started at 2026-11-13 12:57:56.919.
+Test Case '-[AetherCoreTests.TimeSeriesTests testBucketsAfterWrapAround]' started.
+Test Case '-[AetherCoreTests.TimeSeriesTests testBucketsAfterWrapAround]' passed (0.001 seconds).
+Test Case '-[AetherCoreTests.TimeSeriesTests testBucketsKeepSpikes]' started.
+Test Case '-[AetherCoreTests.TimeSeriesTests testBucketsKeepSpikes]' passed (0.002 seconds).
+Test Case '-[AetherCoreTests.TimeSeriesTests testBucketsOnlyWindow]' started.
+Test Case '-[AetherCoreTests.TimeSeriesTests testBucketsOnlyWindow]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.TimeSeriesTests testCapacityAndOrder]' started.
+Test Case '-[AetherCoreTests.TimeSeriesTests testCapacityAndOrder]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.TimeSeriesTests testDrawOrderBridgesSparseSamplesButNotGaps]' started.
+Test Case '-[AetherCoreTests.TimeSeriesTests testDrawOrderBridgesSparseSamplesButNotGaps]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.TimeSeriesTests testGapsStayGaps]' started.
+Test Case '-[AetherCoreTests.TimeSeriesTests testGapsStayGaps]' passed (0.000 seconds).
+Test Case '-[AetherCoreTests.TimeSeriesTests testNiceScale]' started.
+Test Case '-[AetherCoreTests.TimeSeriesTests testNiceScale]' passed (0.000 seconds).
+Test Suite 'TimeSeriesTests' passed at 2026-11-13 12:57:56.923.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.004 (0.004) seconds
+Test Suite 'AETHERPackageTests.xctest' passed at 2026-11-13 12:57:56.923.
+	 Executed 141 tests, with 0 failures (0 unexpected) in 0.079 (0.106) seconds
+Test Suite 'All tests' passed at 2026-11-13 12:57:56.923.
+	 Executed 141 tests, with 0 failures (0 unexpected) in 0.079 (0.109) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

@@ -1,0 +1,43 @@
+2026-11-13 13:09:06.312 ORBIT[11565:34603] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ 01-uebersicht-liquid-glass-dark
+▸ 02-uebersicht-liquid-glass-light
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 1)
+✗ Absturz bei Szenario: 02-uebersicht-liquid-glass-light
+2026-11-13 13:09:47.338 ORBIT[12222:36362] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ 03-uebersicht-minimal-dark
+▸ 04-uebersicht-minimal-light
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 2)
+✗ Absturz bei Szenario: 04-uebersicht-minimal-light
+2026-11-13 13:10:08.479 ORBIT[12508:37069] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ 05-uebersicht-graphite
+▸ 06-uebersicht-system-hell
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 3)
+✗ Absturz bei Szenario: 06-uebersicht-system-hell
+2026-11-13 13:10:28.509 ORBIT[12860:37923] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ 07-uebersicht-system-dunkel
+▸ 08-macbook-air-13-kompakt
+▸ 09-grosses-fenster-ausfuehrlich
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 4)
+✗ Absturz bei Szenario: 09-grosses-fenster-ausfuehrlich
+2026-11-13 13:10:51.240 ORBIT[13176:38644] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ 10-uebersicht-anpassen
+▸ 11-einstellungen-dark
+▸ 12-einstellungen-light
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 5)
+✗ Absturz bei Szenario: 12-einstellungen-light
+2026-11-13 13:11:15.229 ORBIT[13627:39610] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+▸ 13-dateien
+▸ 14-glas-intensitaet-0
+▸ 15-aktivitaet
+2026-11-13 13:11:38.615 ORBIT[13627:39610] WARNING: Application performed a reentrant operation in its NSTableView delegate. This warning will become an assert in the future.
+2026-11-13 13:11:38.850 ORBIT[13627:39610] WARNING: Application performed a reentrant operation in its NSTableView delegate. This warning will become an assert in the future.
+▸ 16-cpu-gpu
+▸ 17-arbeitsspeicher
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+✗ App beendet mit Status 134 (Versuch 6)
+✗ Absturz bei Szenario: 17-arbeitsspeicher

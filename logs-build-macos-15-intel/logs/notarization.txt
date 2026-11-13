@@ -1,0 +1,1 @@
+Notarisierung übersprungen: keine Developer-ID-Zugangsdaten (DMG und App bleiben ad-hoc signiert).

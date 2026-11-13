@@ -1,0 +1,102 @@
+▸ Clean Build: .build und build werden entfernt
+▸ Swift: swift-driver version: 1.127.15 Apple Swift version 6.2.4 (swiftlang-6.2.4.1.4 clang-1700.6.4.2)
+▸ SDK:   26.2
+▸ Lokalisierung prüfen
+Warnung: [de] unbenutzt: '%@ available of %@ on “%@”'
+Warnung: [de] unbenutzt: '%@ free'
+Warnung: [de] unbenutzt: '%@ RAM'
+Warnung: [de] unbenutzt: '%@ unified memory – shared by CPU, GPU and Neural Engine'
+Warnung: [de] unbenutzt: 'Aether Blue'
+Warnung: [de] unbenutzt: 'Available on “%@”'
+Warnung: [de] unbenutzt: 'Charge, condition and power – measured values and macOS reports kept apart.'
+Warnung: [de] unbenutzt: 'Ethernet and Wi‑Fi'
+Warnung: [de] unbenutzt: 'Memory pressure: %@'
+Warnung: [de] unbenutzt: 'Real sensor values only – unavailable values are named as such.'
+Warnung: [de] unbenutzt: 'Thermal: %@'
+Lokalisierung: 967 Schlüssel im Code, 0 Fehler, 11 Warnungen
+▸ Baue arm64 (arm64-apple-macosx13.0) …
+Building for production...
+[0/8] Write sources
+[3/8] Write swift-version-1977FEB4D2752686.txt
+[4/9] Compiling AetherC nvme.c
+[5/9] Compiling AetherC smc.c
+[7/9] Compiling AetherCore CPUMath.swift
+[8/10] Compiling AetherSystem CPUAndMemory.swift
+[9/11] Compiling AETHER AetherApp.swift
+[9/11] Write Objects.LinkFileList
+[10/11] Linking AETHER
+Build of product 'AETHER' complete! (224.65s)
+▸ Baue x86_64 (x86_64-apple-macosx13.0) …
+Building for production...
+[0/8] Write sources
+[3/8] Write swift-version-1977FEB4D2752686.txt
+[4/9] Compiling AetherC nvme.c
+[5/9] Compiling AetherC smc.c
+[7/9] Compiling AetherCore CPUMath.swift
+[8/10] Compiling AetherSystem CPUAndMemory.swift
+[9/11] Compiling AETHER AetherApp.swift
+[9/11] Write Objects.LinkFileList
+[10/11] Linking AETHER
+Build of product 'AETHER' complete! (194.78s)
+▸ App-Bundle
+▸ Prüfe Architekturen
+x86_64 arm64
+  ✓ arm64 und x86_64 nativ enthalten
+  arm64: macOS ab 13.0, SDK 26.2
+  x86_64: macOS ab 13.0, SDK 26.2
+▸ Prüfe Ressourcen
+build/ORBIT.app/Contents/Info.plist: OK
+build/ORBIT.app/Contents/Resources/en.lproj/Localizable.strings: OK
+build/ORBIT.app/Contents/Resources/en.lproj/InfoPlist.strings: OK
+build/ORBIT.app/Contents/Resources/de.lproj/Localizable.strings: OK
+build/ORBIT.app/Contents/Resources/de.lproj/InfoPlist.strings: OK
+  ✓ Info.plist, Icon, Lokalisierungen (en, de)
+▸ Verknüpfte Bibliotheken (nur System-Frameworks erlaubt)
+/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit
+/System/Library/Frameworks/Combine.framework/Versions/A/Combine
+/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation
+/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics
+/System/Library/Frameworks/CoreLocation.framework/Versions/A/CoreLocation
+/System/Library/Frameworks/CoreWLAN.framework/Versions/A/CoreWLAN
+/System/Library/Frameworks/CryptoKit.framework/Versions/A/CryptoKit
+/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation
+/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit
+/System/Library/Frameworks/QuartzCore.framework/Versions/A/QuartzCore
+/System/Library/Frameworks/QuickLookThumbnailing.framework/Versions/A/QuickLookThumbnailing
+/System/Library/Frameworks/QuickLookUI.framework/Versions/A/QuickLookUI
+/System/Library/Frameworks/SwiftUI.framework/Versions/A/SwiftUI
+/System/Library/Frameworks/SystemConfiguration.framework/Versions/A/SystemConfiguration
+/usr/lib/libobjc.A.dylib
+/usr/lib/libsqlite3.dylib
+/usr/lib/libSystem.B.dylib
+/usr/lib/swift/libswift_Concurrency.dylib
+/usr/lib/swift/libswiftCore.dylib
+/usr/lib/swift/libswiftCoreFoundation.dylib
+/usr/lib/swift/libswiftCoreGraphics.dylib
+/usr/lib/swift/libswiftCoreImage.dylib
+/usr/lib/swift/libswiftCoreLocation.dylib
+/usr/lib/swift/libswiftDarwin.dylib
+/usr/lib/swift/libswiftDispatch.dylib
+/usr/lib/swift/libswiftIOKit.dylib
+/usr/lib/swift/libswiftMetal.dylib
+/usr/lib/swift/libswiftObjectiveC.dylib
+/usr/lib/swift/libswiftos.dylib
+/usr/lib/swift/libswiftOSLog.dylib
+/usr/lib/swift/libswiftQuartzCore.dylib
+/usr/lib/swift/libswiftQuickLookUI.dylib
+/usr/lib/swift/libswiftsimd.dylib
+/usr/lib/swift/libswiftSpatial.dylib
+/usr/lib/swift/libswiftUniformTypeIdentifiers.dylib
+/usr/lib/swift/libswiftXPC.dylib
+  ✓ Nur Systembibliotheken
+▸ Keine Netzwerkverbindungen (Datenschutz): Programmdatei darf keine Verbindungs-APIs referenzieren
+  ✓ keine Netzwerk-APIs referenziert
+▸ Ad-hoc-Signatur (keine Developer-ID hinterlegt)
+build/ORBIT.app: valid on disk
+build/ORBIT.app: satisfies its Designated Requirement
+Identifier=de.projectaether.macos
+Format=app bundle with Mach-O universal (x86_64 arm64)
+CodeDirectory v=20400 size=131727 flags=0x2(adhoc) hashes=4110+3 location=embedded
+Signature=adhoc
+TeamIdentifier=not set
+✓ build/ORBIT.app ( 32M)

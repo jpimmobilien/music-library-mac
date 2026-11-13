@@ -1,0 +1,35 @@
+2026-11-13 13:14:24.869 ORBIT[1506:7923] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/de.projectaether.macos.savedState
+✓ cpu.total – busy=0.19950124688279303 user=0.13466334164588528 system=0.06483790523690773
+✓ cpu.cores – Kerne gemessen=4 logisch=4
+✓ memory.breakdown – physisch=15032385536 belegt=3228590080 app=1865187328 fest=1363402752 komprimiert=0 cache=7676239872
+✓ memory.pressure – Druck=1
+✓ memory.swap – swap=0/0
+✓ storage.startup – Startvolume=Macintosh HD Kapazität=348622118912 verfügbar=116830626882 Volumes=1
+✓ storage.io – lesen=845287.1136968868
+✓ storage.encryption – Verschlüsselung des Startvolumes gelesen: nein
+✓ storage.smart – nicht verfügbar mit Grund: virtualMachine (SDK-Schnittstelle: ja)
+✓ network.rates – ↓=0.0 Schnittstellen=en0
+✓ thermal.state – Thermalstatus=0
+✓ battery.absent – kein Akku – keine Ersatzwerte gemeldet
+✓ thermal.smc – nicht verfügbar mit Grund: virtualMachine
+✓ thermal.fans – nicht verfügbar mit Grund: virtualMachine
+✓ network.interfaces – en0(ethernet,primär) lo0(loopback) · gesamt=9
+✓ network.connections – Sockets=38 Prozessspalte=true mitProzess=36 tcp4 192.168.64.3:49167 → 140.82.113.22:443 ESTABLISHED Runner.Worker; tcp4 192.168.64.3:49164 → 20.150.82.228:443 ESTABLISHED Runner.Worker
+✓ network.wifi – keine WLAN-Schnittstelle (z. B. virtueller Mac) – als „nicht vorhanden“ gemeldet
+✓ history.database – geschrieben=true gelesen=1 gleich=true entfernt=true
+✓ history.default-off – Verlauf im Selbsttest aus (Standard: aus, nichts gespeichert)
+✓ thermal.smc.path – geöffnet=true Schlüssel=653 Temperaturschlüssel=28 Lüfter=1 virtuell=true
+✓ hardware.report – Abschnitte=7 Zeichen=1470 Bildschirme=1
+✓ gpu.devices – Apple Paravirtualized Graphics Device [unknown, Metal 2, Kerne -]
+✓ gpu.utilization – Auslastung=n. v. (notProvidedByMacOS)
+✓ hardware.model – Modell=Macmini6,2 Name=Mac mini Art=macMini
+✓ hardware.processor – Prozessor=Intel Core i7-8700B AppleSilicon=false Rosetta=false
+✓ hardware.architecture – Prozess=x86_64 Mac=Intel
+✓ localization – de,de,en,en
+✓ localization.de – Overview → Übersicht
+✓ telemetry.cpu – geglättet=0.487 roh=0.200 Verlauf=3
+✓ telemetry.cores – Kerne=4 logisch=4
+✓ telemetry.network – ↓ 0 B/s
+✓ telemetry.memory – belegt=3.01 GB
+✓ window – sichtbare Fenster=1
+✓ performance.ownCPU – Übersicht: eigene CPU 9.0 % eines Kerns · Messung 32.21 ms/Takt · Hauptthread 5.07 ms/Takt · Verzug 19.3 ms · 10.8 Anzeige-Aktualisierungen/s · 1.1 Messungen/s · 0 Stromquellen-Meldungen · je Bereich: activity 19.0 %, cpuGPU 9.4 %, memory 5.2 %, network 3.4 %, overview 9.0 %, overview-immersive 3.9 %, overview-minimal 4.4 %, overview-motion-off 4.6 %, settings 0.8 %

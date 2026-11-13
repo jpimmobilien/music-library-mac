@@ -1,0 +1,35 @@
+2026-11-13 13:11:43.794 ORBIT[33825:87615] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/h5/t85nd63d71x27_8gl5gw3l_w0000gn/T/de.projectaether.macos.savedState
+✓ cpu.total – busy=0.8151815181518152 user=0.3432343234323432 system=0.47194719471947194
+✓ cpu.cores – Kerne gemessen=3 logisch=3
+✓ memory.breakdown – physisch=7516192768 belegt=3793485824 app=1588396032 fest=1486176256 komprimiert=718913536 cache=3512532992
+✓ memory.pressure – Druck=1
+✓ memory.swap – swap=0/0
+✓ storage.startup – Startvolume=Macintosh HD Kapazität=343073095680 verfügbar=104512372854 Volumes=1
+✓ storage.io – lesen=2563014.618299683
+✓ storage.encryption – Verschlüsselung des Startvolumes gelesen: nein
+✓ storage.smart – nicht verfügbar mit Grund: virtualMachine (SDK-Schnittstelle: ja)
+✓ network.rates – ↓=0.0 Schnittstellen=en0
+✓ thermal.state – Thermalstatus=0
+✓ battery.absent – kein Akku – keine Ersatzwerte gemeldet
+✓ thermal.smc – nicht verfügbar mit Grund: virtualMachine
+✓ thermal.fans – nicht verfügbar mit Grund: virtualMachine
+✓ network.interfaces – en0(ethernet,primär) lo0(loopback) · gesamt=11
+✓ network.connections – Sockets=27 Prozessspalte=true mitProzess=27 tcp4 192.168.64.2:49208 → 20.75.202.224:443 ESTABLISHED hosted-compute-a; tcp4 192.168.64.2:49193 → 20.85.130.105:443 ESTABLISHED Runner.Worker
+✓ network.wifi – keine WLAN-Schnittstelle (z. B. virtueller Mac) – als „nicht vorhanden“ gemeldet
+✓ history.database – geschrieben=true gelesen=1 gleich=true entfernt=true
+✓ history.default-off – Verlauf im Selbsttest aus (Standard: aus, nichts gespeichert)
+✓ thermal.smc.path – geöffnet=false Schlüssel=0 Temperaturschlüssel=0 Lüfter=- virtuell=true
+✓ hardware.report – Abschnitte=6 Zeichen=1406 Bildschirme=1
+✓ gpu.devices – keine GPU gemeldet (virtueller Mac: true, Abfrage fehlgeschlagen: false)
+✓ gpu.utilization – Auslastung=n. v. (notProvidedByMacOS)
+✓ hardware.model – Modell=VirtualMac2,1 Name=Mac Art=virtualMachine
+✓ hardware.processor – Prozessor=Apple M1 AppleSilicon=true Rosetta=true
+✓ hardware.architecture – Prozess=x86_64 Mac=Apple Silicon
+✓ localization – de,de,en,en
+✓ localization.de – Overview → Übersicht
+✓ telemetry.cpu – geglättet=0.938 roh=0.815 Verlauf=3
+✓ telemetry.cores – Kerne=3 logisch=3
+✓ telemetry.network – ↓ 0 B/s
+✓ telemetry.memory – belegt=3.53 GB
+✓ window – sichtbare Fenster=1
+✓ performance.ownCPU – Übersicht: eigene CPU 7.0 % eines Kerns · Messung 9.36 ms/Takt · Hauptthread 1.31 ms/Takt · Verzug 25.5 ms · 8.0 Anzeige-Aktualisierungen/s · 0.9 Messungen/s · 0 Stromquellen-Meldungen · je Bereich: activity 8.7 %, cpuGPU 9.8 %, memory 5.4 %, network 5.6 %, overview 7.0 %, overview-immersive 4.6 %, overview-minimal 4.6 %, overview-motion-off 3.3 %, settings 3.6 %

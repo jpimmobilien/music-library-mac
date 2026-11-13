@@ -1,0 +1,24 @@
+total 8
+drwxr-xr-x   3 runner  staff     96 Aug 24 05:25 .
+drwxr-xr-x  33 runner  staff   1056 Aug 24 05:24 ..
+-rw-r--r--   1 runner  staff  10176 Aug 24 05:25 NVMeSMARTLibExternal.h
+25:#define __NVME_SMART_LIB_EXTERNAL_H__
+31:#define kIOPropertyNVMeSMARTCapableKey  "NVMe SMART Capable"
+56:/*! @defined kIONVMeSMARTLibFactoryID
+57:    @discussion UUID for the IONVMeSMARTInterface Factory. */
+59:#define kIONVMeSMARTLibFactoryID			CFUUIDGetConstantUUIDWithBytes(NULL,				\
+65:/*! @defined kIONVMeSMARTUserClientTypeID
+67:#define kIONVMeSMARTUserClientTypeID		CFUUIDGetConstantUUIDWithBytes(NULL,				\
+72:/*! @defined kIONVMeSMARTInterfaceID
+73:    @discussion InterfaceID for IONVMeSMARTInterface. */
+74:#define kIONVMeSMARTInterfaceID             CFUUIDGetConstantUUIDWithBytes(NULL,				\
+94:typedef struct NVMePowerStateDescriptor
+109:typedef struct NVMeIdentifyControllerStruct
+165:typedef struct NVMeLBAFormatDataStruct
+174:typedef struct NVMeIdentifyNamespaceStruct
+201:typedef struct NVMeSMARTData
+229:typedef struct IONVMeSMARTInterface
+238:     @function      SMARTReadData
+239:     @abstract      Retrieves 512 byte device SMART data structure.
+250:	IOReturn ( *SMARTReadData ) ( void * interface, NVMeSMARTData * data );
+311:} IONVMeSMARTInterface;
