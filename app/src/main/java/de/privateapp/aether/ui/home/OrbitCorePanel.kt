@@ -91,7 +91,7 @@ fun OrbitCorePanel(graph: AppGraph, onOpenDevice: () -> Unit, onOpenStorage: () 
         Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
             Box(Modifier.size(176.dp), contentAlignment = Alignment.Center) {
                 OrbitRings(
-                    tracks = state.rings.map { OrbitTrack(if (it.basis == OrbitBasis.UNAVAILABLE) null else it.arc, ringColor(it.ring)) },
+                    tracks = state.rings.map { OrbitTrack(if (it.basis == OrbitBasis.UNAVAILABLE) null else it.arc, ringColor(it.ring, it.fraction)) },
                     modifier = Modifier
                         .size(176.dp)
                         .semantics { contentDescription = ringsDescription(state) },
@@ -133,14 +133,22 @@ fun OrbitCorePanel(graph: AppGraph, onOpenDevice: () -> Unit, onOpenStorage: () 
     }
 }
 
+/**
+ * Farbe einer Bahn nach ORBIT-Bedeutung. Thermik: Saphir im Normalbereich; Orange erst ab 60 % genutzter Reserve,
+ * Rot ab 85 % bzw. an der Drosselschwelle – Warnfarben nur für erhöhte Werte, nicht als Dekoration.
+ */
 @Composable
-private fun ringColor(ring: OrbitRing): Color {
+private fun ringColor(ring: OrbitRing, fraction: Float? = null): Color {
     val tones = Orbit.tones
     val colors = Aether.colors
     return when (ring) {
         OrbitRing.MEMORY -> tones.smart
         OrbitRing.STORAGE -> tones.system
-        OrbitRing.THERMAL -> colors.warning
+        OrbitRing.THERMAL -> when {
+            (fraction ?: 0f) >= 0.85f -> colors.critical
+            (fraction ?: 0f) >= 0.6f -> colors.warning
+            else -> tones.sapphire
+        }
         OrbitRing.NETWORK -> tones.data
         OrbitRing.BATTERY -> colors.success
     }
@@ -173,7 +181,7 @@ private fun ringsDescription(state: OrbitCoreState): String =
 private fun OrbitLegendLine(ring: OrbitRingState, value: String, expanded: Boolean, onClick: () -> Unit) {
     val colors = Aether.colors
     val type = Aether.type
-    val color = ringColor(ring.ring)
+    val color = ringColor(ring.ring, ring.fraction)
     val available = ring.basis != OrbitBasis.UNAVAILABLE
     val chevron by animateFloatAsState(if (expanded) 180f else 0f, Aether.motion.standard(), label = "chevron")
     Row(
@@ -212,12 +220,12 @@ private fun OrbitDetailCard(ring: OrbitRing, state: OrbitCoreState, onOpenDevice
             .padding(top = Spacing.m)
             .clip(RoundedCornerShape(Radii.control))
             .background(colors.fill)
-            .border(1.dp, ringColor(ring).copy(alpha = 0.35f), RoundedCornerShape(Radii.control))
+            .border(1.dp, ringColor(ring, r.fraction).copy(alpha = 0.35f), RoundedCornerShape(Radii.control))
             .padding(Spacing.m),
         verticalArrangement = Arrangement.spacedBy(Spacing.s),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(ringIcon(ring), contentDescription = null, tint = ringColor(ring), modifier = Modifier.size(18.dp))
+            Icon(ringIcon(ring), contentDescription = null, tint = ringColor(ring, r.fraction), modifier = Modifier.size(18.dp))
             Spacer(Modifier.width(8.dp))
             Text(ring.label, style = type.bodyStrong, color = colors.text)
         }

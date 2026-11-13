@@ -92,7 +92,7 @@ fun SettingsScreen(graph: AppGraph, insets: PaddingValues, reselect: Int, onNavi
         item(key = "s-appearance") { SectionLabel("Darstellung") }
         item(key = "theme") {
             Panel {
-                PanelHeader(icon = AetherIcons.Contrast, title = "Design", subtitle = "Fünf vollständig gestaltete Themes")
+                PanelHeader(icon = AetherIcons.Contrast, title = "Design", subtitle = "Sechs vollständig gestaltete Themes")
                 Spacer(Modifier.height(Spacing.l))
                 GridRows(ThemeStyle.entries, columns = 2) { theme, cellModifier ->
                     val base = PaletteSpec.base(theme, systemDark)

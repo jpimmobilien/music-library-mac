@@ -63,6 +63,41 @@ sleep 2
 adb exec-out screencap -p > "$OUT/telefon-hell-home-gescrollt.png"
 log "Foto telefon-hell-home-gescrollt"
 
+log "Bewegung gescrollt (Sensor-Globus) – gewischt wird am linken Rand, damit der Globus sich nicht dreht"
+shot "telefon-dunkel-bewegung-oben" motion --es orbit.theme GLASS_DARK
+for i in 1 2 3; do
+  adb shell input swipe 60 1900 60 700 500
+  sleep 2
+  adb exec-out screencap -p > "$OUT/telefon-dunkel-bewegung-gescrollt-$i.png"
+  log "Foto telefon-dunkel-bewegung-gescrollt-$i"
+done
+
+log "ORBIT Core: Zeile „Arbeitsspeicher“ aufgeklappt (Antippen nach Bildschirmposition)"
+shot "telefon-dunkel-home-orbit" home --es orbit.theme GLASS_DARK
+adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1 && adb pull /sdcard/ui.xml "$OUT/ui-home.xml" >/dev/null 2>&1
+B=$(python3 - "$OUT/ui-home.xml" <<'PY'
+import re,sys
+try:
+    x=open(sys.argv[1],encoding='utf-8').read()
+except Exception:
+    sys.exit(0)
+for m in re.finditer(r'<node [^>]*>', x):
+    n=m.group(0)
+    if re.search(r'text="Arbeitsspeicher', n):
+        b=re.search(r'bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"', n)
+        if b:
+            x1,y1,x2,y2=map(int,b.groups()); print((x1+x2)//2,(y1+y2)//2); break
+PY
+)
+if [ -n "$B" ]; then
+  adb shell input tap $B
+  sleep 3
+  adb exec-out screencap -p > "$OUT/telefon-dunkel-home-orbit-aufgeklappt.png"
+  log "Foto telefon-dunkel-home-orbit-aufgeklappt (Tipp bei $B)"
+else
+  log "Zeile „Arbeitsspeicher“ nicht gefunden – kein Foto aufgeklappt"
+fi
+
 log "Tablet-Größe"
 adb shell wm size 1600x2560
 adb shell wm density 320
