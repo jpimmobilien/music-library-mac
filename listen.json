@@ -1,0 +1,58 @@
+{
+  "whisper_model": "mlx-community/whisper-large-v3-turbo",
+  "separation": [
+    {
+      "file": "audio/03-gesang-de/4acdf678-dc46-bff8-fefe-5b70634f64d8.flac",
+      "label": "03-gesang-de",
+      "seconds": 88.8,
+      "returncode": 0,
+      "log": "Downloading htdemucs MLX weights (160 MB) from https://huggingface.co/ssmall256/demucs-mlx/resolve/main ...\n\nTracks:   0%|          | 0/1 [00:00<?, ?track/s]\nTracks: 100%|██████████| 1/1 [01:15<00:00, 75.96s/track]\nTracks: 100%|██████████| 1/1 [01:16<00:00, 76.22s/track]\n",
+      "stems": [
+        "separated/4acdf678-dc46-bff8-fefe-5b70634f64d8/bass.wav",
+        "separated/4acdf678-dc46-bff8-fefe-5b70634f64d8/drums.wav",
+        "separated/4acdf678-dc46-bff8-fefe-5b70634f64d8/other.wav",
+        "separated/4acdf678-dc46-bff8-fefe-5b70634f64d8/vocals.wav"
+      ]
+    },
+    {
+      "file": "audio/01-instrumental-en/01bedd69-1d38-aa78-2040-c26772ef50a8.flac",
+      "label": "01-instrumental-en",
+      "seconds": 55.8,
+      "returncode": 0,
+      "log": "\nTracks:   0%|          | 0/1 [00:00<?, ?track/s]\nTracks: 100%|██████████| 1/1 [00:47<00:00, 47.36s/track]\nTracks: 100%|██████████| 1/1 [00:48<00:00, 48.36s/track]\n",
+      "stems": [
+        "separated/01bedd69-1d38-aa78-2040-c26772ef50a8/bass.wav",
+        "separated/01bedd69-1d38-aa78-2040-c26772ef50a8/drums.wav",
+        "separated/01bedd69-1d38-aa78-2040-c26772ef50a8/other.wav",
+        "separated/01bedd69-1d38-aa78-2040-c26772ef50a8/vocals.wav"
+      ]
+    }
+  ],
+  "transcripts": [
+    {
+      "file": "audio/03-gesang-de/4acdf678-dc46-bff8-fefe-5b70634f64d8.flac",
+      "label": "03-gesang-de (Mix)",
+      "seconds": 22.1,
+      "text": "Komm wir laufen auf der Straße, komm wir rattern überall Und wir laufen mit spazieren, wir machen ein Feuerball Komm wir machen Schnaps, komm wir machen mit am Glas Komm wir machen Schnaps, komm wir machen mit am Glas",
+      "wer": 0.78,
+      "reference_words": 177
+    },
+    {
+      "file": "separated/4acdf678-dc46-bff8-fefe-5b70634f64d8/vocals.wav",
+      "label": "03-gesang-de (getrennte Stimme)",
+      "seconds": 13.4,
+      "text": "Komm wir laufen auf der Straße, komm wir ratten überall Und wir laufen mit spazieren, wir machen ein Feuerball Komm wir machen Schnaps, komm wir machen mit am Glas Komm wir machen Schnaps, komm wir machen mit am Glas",
+      "wer": 0.785,
+      "reference_words": 177
+    },
+    {
+      "file": "audio/01-instrumental-en/01bedd69-1d38-aa78-2040-c26772ef50a8.flac",
+      "label": "01-instrumental-en (Gegenprobe, sollte leer sein)",
+      "seconds": 1.8,
+      "text": "Untertitelung des ZDF, 2020",
+      "wer": null,
+      "reference_words": 0
+    }
+  ],
+  "finished": true
+}

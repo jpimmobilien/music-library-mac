@@ -1,0 +1,36 @@
+[0/1] Planning build
+Test Suite 'Selected tests' started at 2026-11-14 05:35:30.759.
+Test Suite 'MusicLibraryPackageTests.xctest' started at 2026-11-14 05:35:30.760.
+Test Suite 'KIEngineE2ETests' started at 2026-11-14 05:35:30.760.
+Test Case '-[StudioEngineTests.KIEngineE2ETests test1_InstallEnvironmentAndModels]' started.
+Test Case '-[StudioEngineTests.KIEngineE2ETests test1_InstallEnvironmentAndModels]' passed (136.240 seconds).
+Test Case '-[StudioEngineTests.KIEngineE2ETests test2_SandboxBlocksNetwork]' started.
+Test Case '-[StudioEngineTests.KIEngineE2ETests test2_SandboxBlocksNetwork]' passed (0.379 seconds).
+Test Case '-[StudioEngineTests.KIEngineE2ETests test3_GenerateOfflineInSandbox]' started.
+Test Case '-[StudioEngineTests.KIEngineE2ETests test3_GenerateOfflineInSandbox]' passed (1543.367 seconds).
+Test Case '-[StudioEngineTests.KIEngineE2ETests test4_CancelAndRecover]' started.
+Test Case '-[StudioEngineTests.KIEngineE2ETests test4_CancelAndRecover]' passed (775.892 seconds).
+Test Case '-[StudioEngineTests.KIEngineE2ETests test5_ErrorsAreReported]' started.
+Test Case '-[StudioEngineTests.KIEngineE2ETests test5_ErrorsAreReported]' passed (14.442 seconds).
+Test Suite 'KIEngineE2ETests' passed at 2026-11-14 06:16:41.091.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 2470.319 (2470.331) seconds
+Test Suite 'MusicLibraryPackageTests.xctest' passed at 2026-11-14 06:16:41.096.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 2470.319 (2470.336) seconds
+Test Suite 'Selected tests' passed at 2026-11-14 06:16:41.097.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 2470.319 (2470.338) seconds
+[KI-E2E] Umgebung: 45 s – KI-Umgebung bereit
+[KI-E2E] Umgebung erneut (sollte schnell sein): 8 s
+[KI-E2E] Grundpaket: 70 s, Fortschritt bis 1.0
+[KI-E2E] Modelle: acestep-5Hz-lm-0.6B 1.37 GB @148d8ea, Ace-Step1.5 10.11 GB @19671f4
+[KI-E2E] Sandbox: GESPERRT URLError
+[KI-E2E] Laden: 277 s
+[KI-E2E] 01 Instrumental (20 s Musik): 323 s, Datei 01bedd69-1d38-aa78-2040-c26772ef50a8.flac
+[KI-E2E] 02 Deutsch, 2 Varianten: 414 s
+[KI-E2E] 03 Text (33 s): [Intro - Synth Melody] /  / [Verse 1] / Komm wir laufen auf der Straße / Komm wir rattern überall / Und wir laufen mit Spazieren / Wir machen ein Feuerball /  / [Chorus] / Komm wir machen Schnaps / Komm wir machen mit am Glas / Komm wir machen Schnaps / Komm wir m
+[KI-E2E] 03 Gesang Deutsch (30 s): 493 s
+[KI-E2E] Abbruch: Abgebrochen.
+[KI-E2E] Fehlermeldung: Musikmodell konnte nicht geladen werden: ERROR: Failed to download DiT model 'gibt-es-nicht': Unknown DiT model: gibt-es-nicht
+◇ Test run started.
+↳ Testing Library Version: 1501
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

@@ -1,0 +1,1018 @@
+
+--- 2026-11-14 05:37:47 +0000 KI-Prozess startet ---
+W1114 05:37:56.261000 6460 .venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torchao/quantization/quant_api.py:1825: SyntaxWarning: invalid escape sequence '\.'
+  * regex for parameter names, must start with `re:`, e.g. `re:language\.layers\..+\.q_proj.weight`.
+Matplotlib is building the font cache; this may take a moment.
+[32m2026-11-14 05:38:10.530[0m | [33m[1mWARNING [0m | [36macestep.training.trainer[0m:[36m<module>[0m:[36m40[0m - [33m[1mbitsandbytes not installed. Using standard AdamW.[0m
+[32m2026-11-14 05:38:10.627[0m | [1mINFO    [0m | [36macestep.gpu_config[0m:[36mget_gpu_config[0m:[36m846[0m - [1mmacOS MPS detected (4.7 GB unified memory, tier=tier2). Applying Apple Silicon optimizations: no compile, no quantization, mlx backend, no CPU offload.[0m
+[32m2026-11-14 05:38:10.632[0m | [33m[1mWARNING [0m | [36macestep.core.generation.handler.init_service_downloads[0m:[36m_sync_model_code_if_needed[0m:[36m71[0m - [33m[1m[initialize_service] Model code mismatch detected for 'acestep-v15-turbo': ['modeling_acestep_v15_turbo.py', 'configuration_acestep_v15.py']. Auto-syncing from acestep/models/...[0m
+[32m2026-11-14 05:38:10.632[0m | [34m[1mDEBUG   [0m | [36macestep.model_downloader[0m:[36m_sync_model_code_files[0m:[36m131[0m - [34m[1m[Model Sync] Synced modeling_acestep_v15_turbo.py -> /Users/runner/work/_temp/ki/Modelle/acestep-v15-turbo/modeling_acestep_v15_turbo.py[0m
+[32m2026-11-14 05:38:10.633[0m | [34m[1mDEBUG   [0m | [36macestep.model_downloader[0m:[36m_sync_model_code_files[0m:[36m131[0m - [34m[1m[Model Sync] Synced configuration_acestep_v15.py -> /Users/runner/work/_temp/ki/Modelle/acestep-v15-turbo/configuration_acestep_v15.py[0m
+[32m2026-11-14 05:38:10.633[0m | [1mINFO    [0m | [36macestep.core.generation.handler.init_service_downloads[0m:[36m_sync_model_code_if_needed[0m:[36m76[0m - [1m[initialize_service] Model code files synced successfully.[0m
+[32m2026-11-14 05:38:10.633[0m | [1mINFO    [0m | [36macestep.core.generation.handler.init_service_loader[0m:[36m_load_main_model_from_checkpoint[0m:[36m174[0m - [1m[initialize_service] Attempting to load model with attention implementation: sdpa[0m
+[32m2026-11-14 05:40:03.771[0m | [31m[1mERROR   [0m | [36macestep.core.generation.handler.init_service_orchestrator[0m:[36minitialize_service[0m:[36m219[0m - [31m[1mError initializing model: MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 16.00 KiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+
+Traceback:
+Traceback (most recent call last):
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/init_service_orchestrator.py", line 156, in initialize_service
+    self._load_main_model_from_checkpoint(
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/init_service_loader.py", line 198, in _load_main_model_from_checkpoint
+    self.model = self.model.to(device).to(self.dtype)
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/modeling_utils.py", line 4343, in to
+    return super().to(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1381, in to
+    return self._apply(convert)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  [Previous line repeated 3 more times]
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 964, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1367, in convert
+    return t.to(
+           ^^^^^
+RuntimeError: MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 16.00 KiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32m/Users/runner/work/_temp/ki/Engine/[0m[32m[1mengine.py[0m", line [33m275[0m, in [35m<module>[0m
+    [1mmain[0m[1m([0m[1m)[0m
+    [36m└ [0m[36m[1m<function main at 0x101e796c0>[0m
+
+  File "[32m/Users/runner/work/_temp/ki/Engine/[0m[32m[1mengine.py[0m", line [33m259[0m, in [35mmain[0m
+    [1mresult[0m [35m[1m=[0m [1mengine[0m[35m[1m.[0m[1mload[0m[1m([0m[1mreq[0m[1m,[0m [1mprogress[0m[1m)[0m
+    [36m         │      │    │    └ [0m[36m[1m<function main.<locals>.progress at 0x101ec1120>[0m
+    [36m         │      │    └ [0m[36m[1m{'lm': 'acestep-5Hz-lm-0.6B', 'cmd': 'load', 'id': '937E4683-9577-41C2-A943-E70FF151A66C', 'dit': 'acestep-v15-turbo'}[0m
+    [36m         │      └ [0m[36m[1m<function Engine.load at 0x101ec0ae0>[0m
+    [36m         └ [0m[36m[1m<__main__.Engine object at 0x101ea2cc0>[0m
+
+  File "[32m/Users/runner/work/_temp/ki/Engine/[0m[32m[1mengine.py[0m", line [33m91[0m, in [35mload[0m
+    [1mmsg[0m[1m,[0m [1mok[0m [35m[1m=[0m [1mself[0m[35m[1m.[0m[1mdit[0m[35m[1m.[0m[1minitialize_service[0m[1m([0m[1mproject_root[0m[35m[1m=[0m[1mself[0m[35m[1m.[0m[1mace_root[0m[1m,[0m [1mconfig_path[0m[35m[1m=[0m[1mdit_model[0m[1m,[0m [1mdevice[0m[35m[1m=[0m[1mdevice[0m[1m,[0m
+    [36m          │    │   │                               │    │                     │                 └ [0m[36m[1m'auto'[0m
+    [36m          │    │   │                               │    │                     └ [0m[36m[1m'acestep-v15-turbo'[0m
+    [36m          │    │   │                               │    └ [0m[36m[1m'/Users/runner/work/_temp/ki/ACE-Step-1.5'[0m
+    [36m          │    │   │                               └ [0m[36m[1m<__main__.Engine object at 0x101ea2cc0>[0m
+    [36m          │    │   └ [0m[36m[1m<function InitServiceOrchestratorMixin.initialize_service at 0x107101080>[0m
+    [36m          │    └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x10230ee70>[0m
+    [36m          └ [0m[36m[1m<__main__.Engine object at 0x101ea2cc0>[0m
+
+> File "[32m/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/[0m[32m[1minit_service_orchestrator.py[0m", line [33m156[0m, in [35minitialize_service[0m
+    [1mself[0m[35m[1m.[0m[1m_load_main_model_from_checkpoint[0m[1m([0m
+    [36m│    └ [0m[36m[1m<function InitServiceLoaderMixin._load_main_model_from_checkpoint at 0x1070cbe20>[0m
+    [36m└ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x10230ee70>[0m
+
+  File "[32m/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/[0m[32m[1minit_service_loader.py[0m", line [33m198[0m, in [35m_load_main_model_from_checkpoint[0m
+    [1mself[0m[35m[1m.[0m[1mmodel[0m [35m[1m=[0m [1mself[0m[35m[1m.[0m[1mmodel[0m[35m[1m.[0m[1mto[0m[1m([0m[1mdevice[0m[1m)[0m[35m[1m.[0m[1mto[0m[1m([0m[1mself[0m[35m[1m.[0m[1mdtype[0m[1m)[0m
+    [36m│    │       │    │        │          │    └ [0m[36m[1mtorch.float32[0m
+    [36m│    │       │    │        │          └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x10230ee70>[0m
+    [36m│    │       │    │        └ [0m[36m[1m'mps'[0m
+    [36m│    │       │    └ [0m[36m[1mNone[0m
+    [36m│    │       └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x10230ee70>[0m
+    [36m│    └ [0m[36m[1mNone[0m
+    [36m└ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x10230ee70>[0m
+
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/modeling_utils.py", line 4343, in to
+    return super().to(*args, **kwargs)
+                       │       └ {}
+                       └ ('mps',)
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1381, in to
+    return self._apply(convert)
+           │    │      └ <function Module.to.<locals>.convert at 0x101ec1f80>
+           │    └ <function Module._apply at 0x103695120>
+           └ AceStepConditionGenerationModel(
+               (decoder): AceStepDiTModel(
+                 (rotary_emb): Qwen3RotaryEmbedding()
+                 (layers): ModuleL...
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x101ec1f80>
+    │      └ <function Module._apply at 0x103695120>
+    └ AceStepConditionEncoder(
+        (text_projector): Linear(in_features=1024, out_features=2048, bias=False)
+        (lyric_encoder): AceSt...
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x101ec1f80>
+    │      └ <function Module._apply at 0x103695120>
+    └ AceStepTimbreEncoder(
+        (embed_tokens): Linear(in_features=64, out_features=2048, bias=True)
+        (norm): Qwen3RMSNorm((2048,), ...
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x101ec1f80>
+    │      └ <function Module._apply at 0x103695120>
+    └ ModuleList(
+        (0-3): 4 x AceStepEncoderLayer(
+          (self_attn): AceStepAttention(
+            (q_proj): Linear(in_features=2048, out...
+  [Previous line repeated 3 more times]
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 964, in _apply
+    param_applied = fn(param)
+                    │  └ Parameter containing:
+                    │    tensor([[ 0.0369, -0.0028,  0.0085,  ..., -0.0493,  0.0361, -0.0544],
+                    │            [-0.0188, -0.0118, -0.031...
+                    └ <function Module.to.<locals>.convert at 0x101ec1f80>
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1367, in convert
+    return t.to(
+           │ └ <method 'to' of 'torch._C.TensorBase' objects>
+           └ Parameter containing:
+             tensor([[ 0.0369, -0.0028,  0.0085,  ..., -0.0493,  0.0361, -0.0544],
+                     [-0.0188, -0.0118, -0.031...
+
+[31m[1mRuntimeError[0m:[1m MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 16.00 KiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).[0m
+[32m2026-11-14 05:40:04.278[0m | [1mINFO    [0m | [36macestep.core.generation.handler.init_service_loader[0m:[36m_load_main_model_from_checkpoint[0m:[36m174[0m - [1m[initialize_service] Attempting to load model with attention implementation: sdpa[0m
+[32m2026-11-14 05:41:24.293[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_init[0m:[36m_init_mlx_vae[0m:[36m75[0m - [1m[MLX-VAE] Decode/encode compiled with mx.compile().[0m
+[32m2026-11-14 05:41:24.297[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_init[0m:[36m_init_mlx_vae[0m:[36m85[0m - [1m[MLX-VAE] Native MLX VAE initialized (dtype=mlx.core.float32, compiled=True).[0m
+[32m2026-11-14 05:41:24.381[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m609[0m - [1mloading 5Hz LM tokenizer... it may take 80~90s[0m
+[32m2026-11-14 05:41:44.396[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m613[0m - [1m5Hz LM tokenizer loaded successfully in 20.01 seconds[0m
+[32m2026-11-14 05:41:44.396[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m618[0m - [1mInitializing constrained decoding processor...[0m
+[32m2026-11-14 05:41:44.397[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m624[0m - [1mSetting constrained decoding max_duration to 480s based on GPU config (tier: tier2)[0m
+[32m2026-11-14 05:41:45.441[0m | [34m[1mDEBUG   [0m | [36macestep.constrained_logits_processor[0m:[36m_precompute_audio_code_tokens[0m:[36m577[0m - [34m[1mFound 1535 audio code tokens with values outside valid range [0, 63999][0m
+[32m2026-11-14 05:41:51.632[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m632[0m - [1mConstrained processor initialized in 7.24 seconds[0m
+[32m2026-11-14 05:41:51.633[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m659[0m - [1mflash_attn not installed: disabling CUDA graph capture for nano-vllm (SDPA fallback uses .item() calls in paged-cache decode that are incompatible with CUDA graph capture)[0m
+[32m2026-11-14 05:41:51.633[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m671[0m - [1mTriton not available: disabling CUDA graph capture for nano-vllm (CUDA graphs require torch.compile which depends on Triton)[0m
+[32m2026-11-14 05:41:51.865[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m681[0m - [1mAttempting MLX backend for Apple Silicon acceleration...[0m
+[32m2026-11-14 05:41:51.865[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_load_mlx_model[0m:[36m2947[0m - [1mLoading MLX model from /Users/runner/work/_temp/ki/Modelle/acestep-5Hz-lm-0.6B[0m
+[32m2026-11-14 05:42:25.221[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_load_mlx_model[0m:[36m3003[0m - [1mMLX model loaded successfully in 33.36s[0m
+[32m2026-11-14 05:42:25.350[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=False, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=False, use_lm=False[0m
+[32m2026-11-14 05:42:25.354[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m329[0m - [1m[generate_music] Starting generation...[0m
+[32m2026-11-14 05:42:25.354[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m332[0m - [1m[generate_music] Preparing inputs...[0m
+[32m2026-11-14 05:42:25.372[0m | [1mINFO    [0m | [36macestep.core.generation.handler.progress[0m:[36m_start_diffusion_progress_estimator[0m:[36m179[0m - [1m[progress] No timing history — using fallback estimate (2.5s/step for batch_size=1).  This will self-calibrate after the first generation.[0m
+[32m2026-11-14 05:42:25.450[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m119[0m - [1m
+======================================================================[0m
+[32m2026-11-14 05:42:25.451[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m120[0m - [1m🔍 [DEBUG] DiT TEXT ENCODER INPUT (Inference)[0m
+[32m2026-11-14 05:42:25.451[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m121[0m - [1m======================================================================[0m
+[32m2026-11-14 05:42:25.451[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m122[0m - [1mtext_prompt:
+# Instruction
+Fill the audio semantic mask based on the given conditions:
+
+# Caption
+Calm lo-fi hip hop with warm piano chords and a relaxed drum groove
+
+# Metas
+- bpm: 80
+- timesignature: N/A
+- keyscale: N/A
+- duration: 20 seconds
+<|endoftext|>
+[0m
+[32m2026-11-14 05:42:25.451[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m123[0m - [1m======================================================================[0m
+[32m2026-11-14 05:42:25.451[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m124[0m - [1mlyrics_text:
+# Languages
+unknown
+
+# Lyric
+[Instrumental]<|endoftext|>[0m
+[32m2026-11-14 05:42:25.451[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m125[0m - [1m======================================================================
+[0m
+[32m2026-11-14 05:42:25.500[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m110[0m - [1m[preprocess_batch] Inferring prompt embeddings...[0m
+[32m2026-11-14 05:42:33.830[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m113[0m - [1m[preprocess_batch] Inferring lyric embeddings...[0m
+[32m2026-11-14 05:42:33.840[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m173[0m - [1m[service_generate] Generating audio... (DiT backend: PyTorch (cpu))[0m
+[32m2026-11-14 05:43:04.518[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m276[0m - [1m[service_generate] DiT diffusion via PyTorch (cpu)...[0m
+[32m2026-11-14 05:43:15.193[0m | [1mINFO    [0m | [36macestep.models.common.dcw_correction[0m:[36m__init__[0m:[36m98[0m - [1m[DCW] Active — mode=double, scaler=0.0500, high_scaler=0.0200, wavelet='haar'[0m
+[32m2026-11-14 05:44:09.142[0m | [1mINFO    [0m | [36macestep.models.common.dcw_loader[0m:[36mget[0m:[36m84[0m - [1m[DCW] Built DWT1D for wavelet='haar' (low-pass filter taps=2, device=cpu, dtype=torch.float32).[0m
+[32m2026-11-14 05:47:07.858[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m42[0m - [1m[generate_music] Model generation completed. Decoding latents...[0m
+[32m2026-11-14 05:47:07.891[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m64[0m - [34m[1m[generate_music] pred_latents: torch.Size([1, 500, 64]), dtype=torch.float32[0m
+[32m2026-11-14 05:47:07.891[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m65[0m - [34m[1m[generate_music] time_costs: {'encoder_time_cost': 10.62686800956726, 'diffusion_time_cost': 232.60329914093018, 'diffusion_per_step_time_cost': 29.075412392616272, 'total_time_cost': 243.23016715049744, 'offload_time_cost': 0.0}[0m
+[32m2026-11-14 05:47:07.927[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m127[0m - [1m[generate_music] Decoding latents with VAE...[0m
+[32m2026-11-14 05:47:08.053[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m136[0m - [34m[1m[generate_music] Before VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-14 05:47:08.053[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m172[0m - [1m[generate_music] Using tiled VAE decode to reduce VRAM usage...[0m
+python(15941) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+[32m2026-11-14 05:47:44.312[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_decode_native[0m:[36m_mlx_vae_decode[0m:[36m66[0m - [1m[MLX-VAE] Decoded 1 sample(s), 500 latent frames -> audio in 36.25s (convert=0.097s, decode=36.13s, dtype=mlx.core.float32)[0m
+[32m2026-11-14 05:47:44.347[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m193[0m - [34m[1m[generate_music] After VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-14 05:47:47.875[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m38[0m - [1m[generate_music] VAE decode completed. Preparing audio tensors...[0m
+[32m2026-11-14 05:47:47.879[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m50[0m - [1m[generate_music] Done! Generated 1 audio tensors.[0m
+[32m2026-11-14 05:47:48.160[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1002[0m - [1m[Normalization] Audio 0 BEFORE: Peak=1.0000, Target=-1.0dB[0m
+[32m2026-11-14 05:47:48.207[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1007[0m - [1m[Normalization] Audio 0 AFTER: Peak=0.8913[0m
+[32m2026-11-14 05:47:48.413[0m | [34m[1mDEBUG   [0m | [36macestep.audio_utils[0m:[36msave_audio[0m:[36m339[0m - [34m[1m[AudioSaver] Fallback soundfile Saved audio to /Users/runner/work/music-library-mac/music-library-mac/out/audio/01-instrumental-en/01bedd69-1d38-aa78-2040-c26772ef50a8.flac (flac, 48000Hz)[0m
+[32m2026-11-14 05:47:48.450[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=True, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=True, use_lm=True[0m
+[32m2026-11-14 05:47:48.450[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m720[0m - [1mLM chunk 1/1 (infer_type=llm_dit) (size: 2, seeds: [77, 78])[0m
+[32m2026-11-14 05:47:48.450[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1369[0m - [1mBatch Phase 1: Generating CoT metadata (once for all items)...[0m
+[32m2026-11-14 05:47:48.536[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1377[0m - [1mgenerate_with_stop_condition: formatted_prompt=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+Ruhiges Lo-Fi-Stück mit warmem Klavier und entspanntem Schlagzeug
+
+# Lyric
+[Instrumental]
+<|im_end|>
+<|im_start|>assistant
+[0m
+[32m2026-11-14 05:47:59.971[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3595[0m - [1mMLX native prefill: 58 tokens in 11.18s (5.2 tok/s)[0m
+MLX Gen (native):   0%|          | 0/3500 [00:00<?, ?tok/s]MLX Gen (native):   0%|          | 1/3500 [00:01<1:23:39,  1.43s/tok]MLX Gen (native):   0%|          | 2/3500 [00:01<52:04,  1.12tok/s]  MLX Gen (native):   0%|          | 4/3500 [00:02<21:51,  2.66tok/s]MLX Gen (native):   0%|          | 7/3500 [00:02<10:36,  5.48tok/s]MLX Gen (native):   0%|          | 10/3500 [00:02<06:55,  8.41tok/s]MLX Gen (native):   0%|          | 12/3500 [00:02<05:45, 10.09tok/s]MLX Gen (native):   0%|          | 16/3500 [00:02<03:53, 14.93tok/s]MLX Gen (native):   1%|          | 20/3500 [00:02<03:03, 19.01tok/s]MLX Gen (native):   1%|          | 24/3500 [00:02<02:34, 22.45tok/s]MLX Gen (native):   1%|          | 27/3500 [00:02<02:24, 24.00tok/s]MLX Gen (native):   1%|          | 31/3500 [00:03<02:13, 26.01tok/s]MLX Gen (native):   1%|          | 35/3500 [00:03<02:05, 27.59tok/s]MLX Gen (native):   1%|          | 39/3500 [00:03<01:58, 29.11tok/s]MLX Gen (native):   1%|          | 43/3500 [00:03<01:56, 29.58tok/s]MLX Gen (native):   1%|▏         | 47/3500 [00:03<01:53, 30.48tok/s]MLX Gen (native):   1%|▏         | 51/3500 [00:03<01:53, 30.33tok/s]MLX Gen (native):   2%|▏         | 55/3500 [00:03<01:50, 31.25tok/s]MLX Gen (native):   2%|▏         | 59/3500 [00:03<01:47, 32.02tok/s]MLX Gen (native):   2%|▏         | 63/3500 [00:04<01:49, 31.49tok/s]MLX Gen (native):   2%|▏         | 67/3500 [00:04<01:51, 30.67tok/s]MLX Gen (native):   2%|▏         | 71/3500 [00:04<01:55, 29.72tok/s]MLX Gen (native):   2%|▏         | 74/3500 [00:04<01:59, 28.67tok/s]MLX Gen (native):   2%|▏         | 77/3500 [00:04<02:00, 28.38tok/s]MLX Gen (native):   2%|▏         | 81/3500 [00:04<01:56, 29.42tok/s]MLX Gen (native):   2%|▏         | 85/3500 [00:04<01:50, 31.00tok/s]MLX Gen (native):   3%|▎         | 89/3500 [00:04<01:48, 31.33tok/s]MLX Gen (native):   3%|▎         | 93/3500 [00:05<01:45, 32.30tok/s]MLX Gen (native):   3%|▎         | 97/3500 [00:05<01:56, 29.30tok/s]MLX Gen (native):   3%|▎         | 100/3500 [00:05<02:02, 27.72tok/s]MLX Gen (native):   3%|▎         | 103/3500 [00:05<02:04, 27.38tok/s]MLX Gen (native):   3%|▎         | 106/3500 [00:05<02:03, 27.56tok/s]MLX Gen (native):   3%|▎         | 110/3500 [00:05<01:56, 29.02tok/s]MLX Gen (native):   3%|▎         | 114/3500 [00:05<01:52, 30.20tok/s]MLX Gen (native):   3%|▎         | 118/3500 [00:05<01:50, 30.56tok/s]MLX Gen (native):   3%|▎         | 122/3500 [00:06<01:45, 31.89tok/s]MLX Gen (native):   4%|▎         | 126/3500 [00:06<01:43, 32.65tok/s]MLX Gen (native):   4%|▎         | 130/3500 [00:06<01:45, 32.04tok/s]MLX Gen (native):   4%|▍         | 134/3500 [00:06<01:42, 32.96tok/s]MLX Gen (native):   4%|▍         | 138/3500 [00:06<01:41, 33.11tok/s]MLX Gen (native):   4%|▍         | 142/3500 [00:06<01:40, 33.32tok/s]MLX Gen (native):   4%|▍         | 146/3500 [00:06<01:42, 32.75tok/s]MLX Gen (native):   4%|▍         | 148/3500 [00:06<02:34, 21.72tok/s]
+[32m2026-11-14 05:48:06.804[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3711[0m - [1mMLX native generation complete: 148 tokens in 6.82s (21.7 tok/s) | prefill 11.18s + decode 6.82s = 18.00s total[0m
+[32m2026-11-14 05:48:06.864[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <think>
+bpm: 30
+caption: A smooth jazz instrumental featuring an expressive alto saxophone lead that
+  glides over a relaxed groove laid down by electric piano chords, a subtle bassline,
+  and light drumming with prominent brushwork on the snare. The arrangement begins
+  with a memorable melodic theme before transitioning into more improvisational sections
+  where the saxophonist explores its full range with fluid runs and emotive phrasing.
+  A brief breakdown section highlights intricate interplay between the instruments
+  before returning to the main head-nodding theme for a concise conclusion.
+duration: 20
+keyscale: B minor
+language: unknown
+timesignature: 4
+<|im_end|>[0m
+[32m2026-11-14 05:48:06.865[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1420[0m - [1mBatch Phase 1 completed in 18.41s. Generated metadata: ['bpm', 'caption', 'duration', 'keyscale', 'language', 'timesignature'][0m
+[32m2026-11-14 05:48:06.865[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1480[0m - [1mBatch Phase 2: Generating audio codes for 2 items...[0m
+[32m2026-11-14 05:48:06.870[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1490[0m - [1mgenerate_with_stop_condition: formatted_prompt_with_cot=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+Ruhiges Lo-Fi-Stück mit warmem Klavier und entspanntem Schlagzeug
+
+# Lyric
+[Instrumental]
+<|im_end|>
+<|im_start|>assistant
+<think>
+bpm: 30
+caption: A smooth jazz instrumental featuring an expressive alto saxophone lead that
+  glides over a relaxed groove laid down by electric piano chords, a subtle bassline,
+  and light drumming with prominent brushwork on the snare. The arrangement begins
+  with a memorable melodic theme before transitioning into more improvisational sections
+  where the saxophonist explores its full range with fluid runs and emotive phrasing.
+  A brief breakdown section highlights intricate interplay between the instruments
+  before returning to the main head-nodding theme for a concise conclusion.
+duration: 20
+keyscale: B minor
+language: unknown
+timesignature: 4
+</think>
+
+[0m
+[32m2026-11-14 05:48:06.871[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx[0m:[36m4011[0m - [1mMLX batch: using optimized batch native path (batch_size=2, shared prefill)[0m
+[32m2026-11-14 05:48:06.876[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_batch_native[0m:[36m3152[0m - [1mMLX batch native: prefilling once for 2 items (shared prompt)[0m
+[32m2026-11-14 05:48:06.877[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_build_unconditional_prompt[0m:[36m395[0m - [1mCFG unconditional prompt (phase=codes, is_batch=True, negative_prompt='NO USER INPUT'):
+<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+NO USER INPUT<|im_end|>
+<|im_start|>assistant
+<think>
+
+</think>
+
+[0m
+[32m2026-11-14 05:48:07.354[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_batch_native[0m:[36m3224[0m - [1mMLX batch native prefill: 240 tokens (cond=207, uncond=33) in 0.48s (501.5 tok/s) [shared across 2 items, saved 240 redundant tokens][0m
+MLX CFG Batch Gen (native, n=2):   0%|          | 0/110 [00:00<?, ?tok/s]MLX CFG Batch Gen (native, n=2):   2%|▏         | 2/110 [00:00<00:06, 15.51tok/s]MLX CFG Batch Gen (native, n=2):   4%|▎         | 4/110 [00:00<00:09, 11.27tok/s]MLX CFG Batch Gen (native, n=2):   5%|▌         | 6/110 [00:00<00:09, 10.64tok/s]MLX CFG Batch Gen (native, n=2):   7%|▋         | 8/110 [00:00<00:10,  9.42tok/s]MLX CFG Batch Gen (native, n=2):   8%|▊         | 9/110 [00:00<00:10,  9.28tok/s]MLX CFG Batch Gen (native, n=2):   9%|▉         | 10/110 [00:01<00:11,  8.73tok/s]MLX CFG Batch Gen (native, n=2):  11%|█         | 12/110 [00:01<00:10,  9.48tok/s]MLX CFG Batch Gen (native, n=2):  13%|█▎        | 14/110 [00:01<00:09,  9.93tok/s]MLX CFG Batch Gen (native, n=2):  15%|█▍        | 16/110 [00:01<00:09, 10.36tok/s]MLX CFG Batch Gen (native, n=2):  16%|█▋        | 18/110 [00:01<00:08, 10.48tok/s]MLX CFG Batch Gen (native, n=2):  18%|█▊        | 20/110 [00:01<00:08, 10.04tok/s]MLX CFG Batch Gen (native, n=2):  20%|██        | 22/110 [00:02<00:08, 10.02tok/s]MLX CFG Batch Gen (native, n=2):  22%|██▏       | 24/110 [00:02<00:08, 10.05tok/s]MLX CFG Batch Gen (native, n=2):  24%|██▎       | 26/110 [00:02<00:08, 10.12tok/s]MLX CFG Batch Gen (native, n=2):  25%|██▌       | 28/110 [00:02<00:08, 10.14tok/s]MLX CFG Batch Gen (native, n=2):  27%|██▋       | 30/110 [00:02<00:07, 10.10tok/s]MLX CFG Batch Gen (native, n=2):  29%|██▉       | 32/110 [00:03<00:07, 10.38tok/s]MLX CFG Batch Gen (native, n=2):  31%|███       | 34/110 [00:03<00:07, 10.46tok/s]MLX CFG Batch Gen (native, n=2):  33%|███▎      | 36/110 [00:03<00:07, 10.33tok/s]MLX CFG Batch Gen (native, n=2):  35%|███▍      | 38/110 [00:03<00:06, 10.47tok/s]MLX CFG Batch Gen (native, n=2):  36%|███▋      | 40/110 [00:03<00:06, 10.36tok/s]MLX CFG Batch Gen (native, n=2):  38%|███▊      | 42/110 [00:04<00:07,  9.54tok/s]MLX CFG Batch Gen (native, n=2):  39%|███▉      | 43/110 [00:04<00:07,  9.56tok/s]MLX CFG Batch Gen (native, n=2):  40%|████      | 44/110 [00:04<00:06,  9.62tok/s]MLX CFG Batch Gen (native, n=2):  42%|████▏     | 46/110 [00:04<00:06,  9.52tok/s]MLX CFG Batch Gen (native, n=2):  43%|████▎     | 47/110 [00:04<00:06,  9.38tok/s]MLX CFG Batch Gen (native, n=2):  44%|████▎     | 48/110 [00:04<00:06,  9.41tok/s]MLX CFG Batch Gen (native, n=2):  45%|████▍     | 49/110 [00:04<00:06,  9.37tok/s]MLX CFG Batch Gen (native, n=2):  45%|████▌     | 50/110 [00:05<00:06,  8.85tok/s]MLX CFG Batch Gen (native, n=2):  46%|████▋     | 51/110 [00:05<00:06,  8.71tok/s]MLX CFG Batch Gen (native, n=2):  47%|████▋     | 52/110 [00:05<00:06,  8.99tok/s]MLX CFG Batch Gen (native, n=2):  49%|████▉     | 54/110 [00:05<00:05,  9.63tok/s]MLX CFG Batch Gen (native, n=2):  51%|█████     | 56/110 [00:05<00:05, 10.21tok/s]MLX CFG Batch Gen (native, n=2):  53%|█████▎    | 58/110 [00:05<00:04, 10.55tok/s]MLX CFG Batch Gen (native, n=2):  55%|█████▍    | 60/110 [00:06<00:04, 10.67tok/s]MLX CFG Batch Gen (native, n=2):  56%|█████▋    | 62/110 [00:06<00:04, 10.62tok/s]MLX CFG Batch Gen (native, n=2):  58%|█████▊    | 64/110 [00:06<00:04, 10.39tok/s]MLX CFG Batch Gen (native, n=2):  60%|██████    | 66/110 [00:06<00:04, 10.34tok/s]MLX CFG Batch Gen (native, n=2):  62%|██████▏   | 68/110 [00:06<00:04, 10.46tok/s]MLX CFG Batch Gen (native, n=2):  64%|██████▎   | 70/110 [00:06<00:03, 10.36tok/s]MLX CFG Batch Gen (native, n=2):  65%|██████▌   | 72/110 [00:07<00:03, 10.54tok/s]MLX CFG Batch Gen (native, n=2):  67%|██████▋   | 74/110 [00:07<00:03, 10.31tok/s]MLX CFG Batch Gen (native, n=2):  69%|██████▉   | 76/110 [00:07<00:03, 10.25tok/s]MLX CFG Batch Gen (native, n=2):  71%|███████   | 78/110 [00:07<00:03, 10.10tok/s]MLX CFG Batch Gen (native, n=2):  73%|███████▎  | 80/110 [00:07<00:02, 10.08tok/s]MLX CFG Batch Gen (native, n=2):  75%|███████▍  | 82/110 [00:08<00:02, 10.10tok/s]MLX CFG Batch Gen (native, n=2):  76%|███████▋  | 84/110 [00:08<00:02, 10.08tok/s]MLX CFG Batch Gen (native, n=2):  78%|███████▊  | 86/110 [00:08<00:02,  9.29tok/s]MLX CFG Batch Gen (native, n=2):  79%|███████▉  | 87/110 [00:08<00:02,  9.31tok/s]MLX CFG Batch Gen (native, n=2):  81%|████████  | 89/110 [00:08<00:02,  9.35tok/s]MLX CFG Batch Gen (native, n=2):  82%|████████▏ | 90/110 [00:09<00:02,  9.20tok/s]MLX CFG Batch Gen (native, n=2):  83%|████████▎ | 91/110 [00:09<00:02,  9.25tok/s]MLX CFG Batch Gen (native, n=2):  84%|████████▎ | 92/110 [00:09<00:01,  9.03tok/s]MLX CFG Batch Gen (native, n=2):  85%|████████▍ | 93/110 [00:09<00:01,  9.01tok/s]MLX CFG Batch Gen (native, n=2):  85%|████████▌ | 94/110 [00:09<00:01,  8.82tok/s]MLX CFG Batch Gen (native, n=2):  86%|████████▋ | 95/110 [00:09<00:01,  9.09tok/s]MLX CFG Batch Gen (native, n=2):  87%|████████▋ | 96/110 [00:09<00:01,  8.99tok/s]MLX CFG Batch Gen (native, n=2):  88%|████████▊ | 97/110 [00:09<00:01,  9.12tok/s]MLX CFG Batch Gen (native, n=2):  89%|████████▉ | 98/110 [00:09<00:01,  9.12tok/s]MLX CFG Batch Gen (native, n=2):  90%|█████████ | 99/110 [00:10<00:01,  8.92tok/s]MLX CFG Batch Gen (native, n=2):  91%|█████████ | 100/110 [00:10<00:01,  9.12tok/s]MLX CFG Batch Gen (native, n=2):  92%|█████████▏| 101/110 [00:10<00:00,  9.23tok/s]MLX CFG Batch Gen (native, n=2):  92%|█████████▏| 101/110 [00:10<00:00,  9.84tok/s]
+[32m2026-11-14 05:48:17.616[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_batch_native[0m:[36m3383[0m - [1mMLX batch native generation complete: 2 items, 202 total tokens (101 avg) in 10.26s (19.7 tok/s) | prefill 0.48s + decode 10.26s = 10.74s total[0m
+[32m2026-11-14 05:48:17.646[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <|audio_code_23216|><|audio_code_15231|><|audio_code_13127|><|audio_code_16215|><|audio_code_63454|><|audio_code_48111|><|audio_code_6|><|audio_code_50104|><|audio_code_21606|><|audio_code_9783|><|audio_code_2133|><|audio_code_4293|><|audio_code_11194|><|audio_code_45564|><|audio_code_29603|><|audio_code_28175|><|audio_code_12904|><|audio_code_40632|><|audio_code_12725|><|audio_code_3406|><|audio_code_21447|><|audio_code_36567|><|audio_code_20850|><|audio_code_15774|><|audio_code_14416|><|audio_code_20013|><|audio_code_59910|><|audio_code_23545|><|audio_code_10600|><|audio_code_4001|><|audio_code_52128|><|audio_code_36810|><|audio_code_50115|><|audio_code_17320|><|audio_code_25381|><|audio_code_60951|><|audio_code_39429|><|audio_code_9296|><|audio_code_9360|><|audio_code_23959|><|audio_code_63719|><|audio_code_26766|><|audio_code_23046|><|audio_code_39045|><|audio_code_31032|><|audio_code_13838|><|audio_code_9864|><|audio_code_20104|><|audio_code_17862|><|audio_code_13126|><|audio_code_27846|><|audio_code_11823|><|audio_code_39296|><|audio_code_20728|><|audio_code_50048|><|audio_code_35575|><|audio_code_14487|><|audio_code_743|><|audio_code_46359|><|audio_code_2463|><|audio_code_32982|><|audio_code_8643|><|audio_code_16779|><|audio_code_12723|><|audio_code_976|><|audio_code_63424|><|audio_code_896|><|audio_code_20448|><|audio_code_53755|><|audio_code_37336|><|audio_code_53754|><|audio_code_16354|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|audio_code_62151|><|audio_code_33807|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|im_end|>[0m
+[32m2026-11-14 05:48:17.646[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <|audio_code_10544|><|audio_code_63917|><|audio_code_2487|><|audio_code_40893|><|audio_code_16772|><|audio_code_23523|><|audio_code_33815|><|audio_code_5992|><|audio_code_6930|><|audio_code_37734|><|audio_code_25535|><|audio_code_12798|><|audio_code_63982|><|audio_code_25982|><|audio_code_27642|><|audio_code_7175|><|audio_code_6704|><|audio_code_25708|><|audio_code_25367|><|audio_code_15071|><|audio_code_20343|><|audio_code_2382|><|audio_code_6027|><|audio_code_62914|><|audio_code_8738|><|audio_code_12608|><|audio_code_12753|><|audio_code_8581|><|audio_code_53694|><|audio_code_2558|><|audio_code_20230|><|audio_code_10628|><|audio_code_13731|><|audio_code_50136|><|audio_code_32782|><|audio_code_51757|><|audio_code_34805|><|audio_code_50031|><|audio_code_47535|><|audio_code_51127|><|audio_code_29068|><|audio_code_63939|><|audio_code_52137|><|audio_code_9319|><|audio_code_33878|><|audio_code_12821|><|audio_code_38938|><|audio_code_25815|><|audio_code_16662|><|audio_code_45687|><|audio_code_40788|><|audio_code_2122|><|audio_code_24621|><|audio_code_59398|><|audio_code_31551|><|audio_code_15135|><|audio_code_10486|><|audio_code_25919|><|audio_code_38356|><|audio_code_38669|><|audio_code_27107|><|audio_code_9181|><|audio_code_51691|><|audio_code_4923|><|audio_code_63745|><|audio_code_40851|><|audio_code_1234|><|audio_code_22274|><|audio_code_55956|><|audio_code_61457|><|audio_code_5491|><|audio_code_3631|><|audio_code_30840|><|audio_code_33512|><|audio_code_40766|><|audio_code_40230|><|audio_code_25596|><|audio_code_40397|><|audio_code_12723|><|audio_code_15168|><|audio_code_48135|><|audio_code_13826|><|audio_code_8405|><|audio_code_30409|><|audio_code_8385|><|audio_code_53692|><|audio_code_38598|><|audio_code_13627|><|audio_code_528|><|audio_code_39664|><|audio_code_2885|><|audio_code_36551|><|audio_code_37047|><|audio_code_10871|><|audio_code_32855|><|audio_code_35847|><|audio_code_35847|><|audio_code_25351|><|audio_code_35847|><|audio_code_35847|><|im_end|>[0m
+[32m2026-11-14 05:48:17.647[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1584[0m - [1mBatch Phase 2 completed in 10.78s. Generated codes: [100, 100][0m
+[32m2026-11-14 05:48:17.648[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m329[0m - [1m[generate_music] Starting generation...[0m
+[32m2026-11-14 05:48:17.648[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m332[0m - [1m[generate_music] Preparing inputs...[0m
+[32m2026-11-14 05:48:17.657[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_request[0m:[36m_prepare_reference_and_source_audio[0m:[36m204[0m - [1m[generate_music] cover task: no src_audio but audio codes provided, proceeding with codes[0m
+[32m2026-11-14 05:48:17.681[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_target[0m:[36m_prepare_target_latents_and_wavs[0m:[36m78[0m - [1m[generate_music] Decoding audio codes for item 0...[0m
+[32m2026-11-14 05:48:20.756[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_target[0m:[36m_prepare_target_latents_and_wavs[0m:[36m78[0m - [1m[generate_music] Decoding audio codes for item 1...[0m
+[32m2026-11-14 05:48:21.846[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_precomputed_lm_hints[0m:[36m31[0m - [1m[generate_music] Decoding audio codes for LM hints for item 0...[0m
+[32m2026-11-14 05:48:22.596[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_precomputed_lm_hints[0m:[36m31[0m - [1m[generate_music] Decoding audio codes for LM hints for item 1...[0m
+[32m2026-11-14 05:48:23.530[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m119[0m - [1m
+======================================================================[0m
+[32m2026-11-14 05:48:23.530[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m120[0m - [1m🔍 [DEBUG] DiT TEXT ENCODER INPUT (Inference)[0m
+[32m2026-11-14 05:48:23.530[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m121[0m - [1m======================================================================[0m
+[32m2026-11-14 05:48:23.530[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m122[0m - [1mtext_prompt:
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+# Caption
+A smooth jazz instrumental featuring an expressive alto saxophone lead that glides over a relaxed groove laid down by electric piano chords, a subtle bassline, and light drumming with prominent brushwork on the snare. The arrangement begins with a memorable melodic theme before transitioning into more improvisational sections where the saxophonist explores its full range with fluid runs and emotive phrasing. A brief breakdown section highlights intricate interplay between the instruments before returning to the main head-nodding theme for a concise conclusion.
+
+# Metas
+- bpm: 30
+- timesignature: 4
+- keyscale: B minor
+- duration: 20 seconds
+<|endoftext|>
+[0m
+[32m2026-11-14 05:48:23.530[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m123[0m - [1m======================================================================[0m
+[32m2026-11-14 05:48:23.530[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m124[0m - [1mlyrics_text:
+# Languages
+unknown
+
+# Lyric
+[Instrumental]<|endoftext|>[0m
+[32m2026-11-14 05:48:23.530[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m125[0m - [1m======================================================================
+[0m
+[32m2026-11-14 05:48:23.918[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m110[0m - [1m[preprocess_batch] Inferring prompt embeddings...[0m
+[32m2026-11-14 05:48:50.666[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m113[0m - [1m[preprocess_batch] Inferring lyric embeddings...[0m
+[32m2026-11-14 05:48:50.707[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m173[0m - [1m[service_generate] Generating audio... (DiT backend: PyTorch (cpu))[0m
+Using precomputed LM hints
+[32m2026-11-14 05:49:19.084[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m276[0m - [1m[service_generate] DiT diffusion via PyTorch (cpu)...[0m
+Using precomputed LM hints
+[32m2026-11-14 05:49:31.395[0m | [1mINFO    [0m | [36macestep.models.common.dcw_correction[0m:[36m__init__[0m:[36m98[0m - [1m[DCW] Active — mode=double, scaler=0.0500, high_scaler=0.0200, wavelet='haar'[0m
+[32m2026-11-14 05:53:40.842[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m42[0m - [1m[generate_music] Model generation completed. Decoding latents...[0m
+[32m2026-11-14 05:53:40.891[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m64[0m - [34m[1m[generate_music] pred_latents: torch.Size([2, 500, 64]), dtype=torch.float32[0m
+[32m2026-11-14 05:53:40.892[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m65[0m - [34m[1m[generate_music] time_costs: {'encoder_time_cost': 12.191228866577148, 'diffusion_time_cost': 249.39333510398865, 'diffusion_per_step_time_cost': 31.17416688799858, 'total_time_cost': 261.5845639705658, 'offload_time_cost': 0.0}[0m
+[32m2026-11-14 05:53:40.922[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m127[0m - [1m[generate_music] Decoding latents with VAE...[0m
+[32m2026-11-14 05:53:40.984[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m136[0m - [34m[1m[generate_music] Before VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-14 05:53:40.984[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m172[0m - [1m[generate_music] Using tiled VAE decode to reduce VRAM usage...[0m
+[32m2026-11-14 05:54:37.520[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_decode_native[0m:[36m_mlx_vae_decode[0m:[36m66[0m - [1m[MLX-VAE] Decoded 2 sample(s), 500 latent frames -> audio in 56.52s (convert=0.041s, decode=56.44s, dtype=mlx.core.float32)[0m
+[32m2026-11-14 05:54:37.626[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m193[0m - [34m[1m[generate_music] After VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-14 05:54:42.247[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m38[0m - [1m[generate_music] VAE decode completed. Preparing audio tensors...[0m
+[32m2026-11-14 05:54:42.259[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m50[0m - [1m[generate_music] Done! Generated 2 audio tensors.[0m
+[32m2026-11-14 05:54:42.651[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1002[0m - [1m[Normalization] Audio 0 BEFORE: Peak=1.0000, Target=-1.0dB[0m
+[32m2026-11-14 05:54:42.696[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1007[0m - [1m[Normalization] Audio 0 AFTER: Peak=0.8913[0m
+[32m2026-11-14 05:54:42.950[0m | [34m[1mDEBUG   [0m | [36macestep.audio_utils[0m:[36msave_audio[0m:[36m339[0m - [34m[1m[AudioSaver] Fallback soundfile Saved audio to /Users/runner/work/music-library-mac/music-library-mac/out/audio/02-instrumental-de-varianten/fc09cf36-8746-b640-b9a8-74fe71d10476.flac (flac, 48000Hz)[0m
+[32m2026-11-14 05:54:42.978[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1002[0m - [1m[Normalization] Audio 1 BEFORE: Peak=1.0000, Target=-1.0dB[0m
+[32m2026-11-14 05:54:43.013[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1007[0m - [1m[Normalization] Audio 1 AFTER: Peak=0.8913[0m
+[32m2026-11-14 05:54:43.115[0m | [34m[1mDEBUG   [0m | [36macestep.audio_utils[0m:[36msave_audio[0m:[36m339[0m - [34m[1m[AudioSaver] Fallback soundfile Saved audio to /Users/runner/work/music-library-mac/music-library-mac/out/audio/02-instrumental-de-varianten/6b5cb25f-288c-616c-1ff6-2961fc949ad0.flac (flac, 48000Hz)[0m
+[32m2026-11-14 05:54:43.188[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mcreate_sample_from_query[0m:[36m2097[0m - [1mCreating sample from query: Ein fröhlicher deutscher Popsong über einen Sommerabend am See... (instrumental=False, vocal_language=de)[0m
+[32m2026-11-14 05:54:43.215[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mcreate_sample_from_query[0m:[36m2104[0m - [34m[1mFormatted prompt for inspiration: <|im_start|>system
+# Instruction
+Expand the user's input into a more detailed and specific musical description:
+
+<|im_end|>
+<|im_start|>user
+Ein fröhlicher deutscher Popsong über einen Sommerabend am See
+
+instrumental: false<|im_end|>
+<|im_start|>assistant
+[0m
+[32m2026-11-14 05:54:43.215[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mcreate_sample_from_query[0m:[36m2113[0m - [1mUsing user-specified language: de[0m
+[32m2026-11-14 05:54:53.778[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3595[0m - [1mMLX native prefill: 52 tokens in 10.39s (5.0 tok/s)[0m
+MLX Gen (native):   0%|          | 0/3500 [00:00<?, ?tok/s]MLX Gen (native):   0%|          | 1/3500 [00:00<09:07,  6.39tok/s]MLX Gen (native):   0%|          | 3/3500 [00:00<05:05, 11.45tok/s]MLX Gen (native):   0%|          | 6/3500 [00:00<03:19, 17.54tok/s]MLX Gen (native):   0%|          | 9/3500 [00:00<02:50, 20.45tok/s]MLX Gen (native):   0%|          | 12/3500 [00:00<02:36, 22.34tok/s]MLX Gen (native):   0%|          | 15/3500 [00:00<02:33, 22.71tok/s]MLX Gen (native):   1%|          | 18/3500 [00:00<02:29, 23.33tok/s]MLX Gen (native):   1%|          | 21/3500 [00:00<02:22, 24.40tok/s]MLX Gen (native):   1%|          | 24/3500 [00:01<02:13, 25.95tok/s]MLX Gen (native):   1%|          | 27/3500 [00:01<02:19, 24.97tok/s]MLX Gen (native):   1%|          | 30/3500 [00:01<02:12, 26.12tok/s]MLX Gen (native):   1%|          | 33/3500 [00:01<02:07, 27.13tok/s]MLX Gen (native):   1%|          | 36/3500 [00:01<02:11, 26.34tok/s]MLX Gen (native):   1%|          | 40/3500 [00:01<02:04, 27.75tok/s]MLX Gen (native):   1%|▏         | 44/3500 [00:01<01:56, 29.64tok/s]MLX Gen (native):   1%|▏         | 48/3500 [00:01<01:53, 30.31tok/s]MLX Gen (native):   1%|▏         | 52/3500 [00:02<01:54, 30.06tok/s]MLX Gen (native):   2%|▏         | 56/3500 [00:02<01:59, 28.89tok/s]MLX Gen (native):   2%|▏         | 59/3500 [00:02<01:58, 28.97tok/s]MLX Gen (native):   2%|▏         | 63/3500 [00:02<01:57, 29.32tok/s]MLX Gen (native):   2%|▏         | 66/3500 [00:02<01:58, 29.07tok/s]MLX Gen (native):   2%|▏         | 69/3500 [00:02<01:59, 28.78tok/s]MLX Gen (native):   2%|▏         | 72/3500 [00:02<01:58, 28.85tok/s]MLX Gen (native):   2%|▏         | 76/3500 [00:02<01:56, 29.50tok/s]MLX Gen (native):   2%|▏         | 79/3500 [00:02<01:55, 29.51tok/s]MLX Gen (native):   2%|▏         | 82/3500 [00:03<01:59, 28.57tok/s]MLX Gen (native):   2%|▏         | 85/3500 [00:03<02:02, 27.95tok/s]MLX Gen (native):   3%|▎         | 88/3500 [00:03<02:03, 27.57tok/s]MLX Gen (native):   3%|▎         | 91/3500 [00:03<02:06, 26.84tok/s]MLX Gen (native):   3%|▎         | 94/3500 [00:03<02:07, 26.67tok/s]MLX Gen (native):   3%|▎         | 97/3500 [00:03<02:11, 25.91tok/s]MLX Gen (native):   3%|▎         | 100/3500 [00:03<02:16, 24.94tok/s]MLX Gen (native):   3%|▎         | 103/3500 [00:03<02:11, 25.90tok/s]MLX Gen (native):   3%|▎         | 106/3500 [00:04<02:12, 25.52tok/s]MLX Gen (native):   3%|▎         | 109/3500 [00:04<02:14, 25.29tok/s]MLX Gen (native):   3%|▎         | 112/3500 [00:04<02:10, 25.96tok/s]MLX Gen (native):   3%|▎         | 115/3500 [00:04<02:16, 24.87tok/s]MLX Gen (native):   3%|▎         | 118/3500 [00:04<02:24, 23.33tok/s]MLX Gen (native):   3%|▎         | 121/3500 [00:04<02:25, 23.15tok/s]MLX Gen (native):   4%|▎         | 124/3500 [00:04<02:27, 22.94tok/s]MLX Gen (native):   4%|▎         | 127/3500 [00:04<02:30, 22.46tok/s]MLX Gen (native):   4%|▎         | 130/3500 [00:05<02:29, 22.47tok/s]MLX Gen (native):   4%|▍         | 133/3500 [00:05<02:29, 22.57tok/s]MLX Gen (native):   4%|▍         | 136/3500 [00:05<02:28, 22.69tok/s]MLX Gen (native):   4%|▍         | 139/3500 [00:05<02:27, 22.85tok/s]MLX Gen (native):   4%|▍         | 142/3500 [00:05<02:30, 22.36tok/s]MLX Gen (native):   4%|▍         | 145/3500 [00:05<02:27, 22.75tok/s]MLX Gen (native):   4%|▍         | 148/3500 [00:06<04:57, 11.26tok/s]MLX Gen (native):   4%|▍         | 151/3500 [00:06<04:17, 13.03tok/s]MLX Gen (native):   4%|▍         | 153/3500 [00:06<03:58, 14.05tok/s]MLX Gen (native):   4%|▍         | 156/3500 [00:06<03:34, 15.59tok/s]MLX Gen (native):   5%|▍         | 159/3500 [00:06<03:18, 16.84tok/s]MLX Gen (native):   5%|▍         | 162/3500 [00:07<03:07, 17.77tok/s]MLX Gen (native):   5%|▍         | 165/3500 [00:07<02:53, 19.22tok/s]MLX Gen (native):   5%|▍         | 168/3500 [00:07<02:46, 20.06tok/s]MLX Gen (native):   5%|▍         | 171/3500 [00:09<13:57,  3.97tok/s]MLX Gen (native):   5%|▍         | 174/3500 [00:09<10:18,  5.38tok/s]MLX Gen (native):   5%|▌         | 177/3500 [00:09<07:47,  7.11tok/s]MLX Gen (native):   5%|▌         | 180/3500 [00:09<06:06,  9.07tok/s]MLX Gen (native):   5%|▌         | 183/3500 [00:09<04:51, 11.37tok/s]MLX Gen (native):   5%|▌         | 186/3500 [00:09<03:58, 13.88tok/s]MLX Gen (native):   5%|▌         | 189/3500 [00:10<03:21, 16.42tok/s]MLX Gen (native):   5%|▌         | 192/3500 [00:10<02:56, 18.73tok/s]MLX Gen (native):   6%|▌         | 195/3500 [00:10<02:36, 21.11tok/s]MLX Gen (native):   6%|▌         | 198/3500 [00:10<02:25, 22.68tok/s]MLX Gen (native):   6%|▌         | 202/3500 [00:10<02:07, 25.86tok/s]MLX Gen (native):   6%|▌         | 206/3500 [00:10<02:04, 26.43tok/s]MLX Gen (native):   6%|▌         | 210/3500 [00:10<01:55, 28.41tok/s]MLX Gen (native):   6%|▌         | 214/3500 [00:10<01:52, 29.09tok/s]MLX Gen (native):   6%|▌         | 218/3500 [00:11<01:49, 29.90tok/s]MLX Gen (native):   6%|▋         | 222/3500 [00:11<01:48, 30.30tok/s]MLX Gen (native):   6%|▋         | 226/3500 [00:11<01:45, 31.00tok/s]MLX Gen (native):   7%|▋         | 230/3500 [00:11<01:44, 31.32tok/s]MLX Gen (native):   7%|▋         | 234/3500 [00:11<01:48, 30.08tok/s]MLX Gen (native):   7%|▋         | 238/3500 [00:11<01:51, 29.33tok/s]MLX Gen (native):   7%|▋         | 241/3500 [00:11<01:55, 28.14tok/s]MLX Gen (native):   7%|▋         | 244/3500 [00:11<01:54, 28.40tok/s]MLX Gen (native):   7%|▋         | 247/3500 [00:12<01:58, 27.52tok/s]MLX Gen (native):   7%|▋         | 250/3500 [00:12<02:00, 27.08tok/s]MLX Gen (native):   7%|▋         | 253/3500 [00:12<01:58, 27.35tok/s]MLX Gen (native):   7%|▋         | 256/3500 [00:12<01:58, 27.32tok/s]MLX Gen (native):   7%|▋         | 259/3500 [00:12<02:06, 25.59tok/s]MLX Gen (native):   7%|▋         | 262/3500 [00:12<02:11, 24.59tok/s]MLX Gen (native):   8%|▊         | 265/3500 [00:12<02:09, 25.04tok/s]MLX Gen (native):   8%|▊         | 268/3500 [00:12<02:10, 24.70tok/s]MLX Gen (native):   8%|▊         | 271/3500 [00:12<02:05, 25.67tok/s]MLX Gen (native):   8%|▊         | 274/3500 [00:13<02:06, 25.48tok/s]MLX Gen (native):   8%|▊         | 277/3500 [00:13<02:04, 25.94tok/s]MLX Gen (native):   8%|▊         | 280/3500 [00:13<02:00, 26.83tok/s]MLX Gen (native):   8%|▊         | 283/3500 [00:13<01:59, 27.00tok/s]MLX Gen (native):   8%|▊         | 286/3500 [00:13<01:59, 26.96tok/s]MLX Gen (native):   8%|▊         | 289/3500 [00:13<02:11, 24.34tok/s]MLX Gen (native):   8%|▊         | 292/3500 [00:13<02:10, 24.59tok/s]MLX Gen (native):   8%|▊         | 295/3500 [00:13<02:13, 24.09tok/s]MLX Gen (native):   9%|▊         | 298/3500 [00:14<02:11, 24.34tok/s]MLX Gen (native):   9%|▊         | 301/3500 [00:14<02:14, 23.82tok/s]MLX Gen (native):   9%|▊         | 304/3500 [00:14<02:11, 24.36tok/s]MLX Gen (native):   9%|▉         | 307/3500 [00:14<02:09, 24.65tok/s]MLX Gen (native):   9%|▉         | 310/3500 [00:14<02:08, 24.84tok/s]MLX Gen (native):   9%|▉         | 313/3500 [00:14<02:07, 24.91tok/s]MLX Gen (native):   9%|▉         | 316/3500 [00:14<02:06, 25.19tok/s]MLX Gen (native):   9%|▉         | 319/3500 [00:14<02:08, 24.83tok/s]MLX Gen (native):   9%|▉         | 322/3500 [00:15<02:06, 25.09tok/s]MLX Gen (native):   9%|▉         | 325/3500 [00:15<02:05, 25.34tok/s]MLX Gen (native):   9%|▉         | 328/3500 [00:15<02:06, 25.13tok/s]MLX Gen (native):   9%|▉         | 331/3500 [00:15<02:04, 25.46tok/s]MLX Gen (native):  10%|▉         | 334/3500 [00:15<02:04, 25.51tok/s]MLX Gen (native):  10%|▉         | 337/3500 [00:15<02:03, 25.69tok/s]MLX Gen (native):  10%|▉         | 340/3500 [00:15<02:03, 25.66tok/s]MLX Gen (native):  10%|▉         | 343/3500 [00:15<02:07, 24.75tok/s]MLX Gen (native):  10%|▉         | 346/3500 [00:15<02:02, 25.67tok/s]MLX Gen (native):  10%|▉         | 349/3500 [00:16<02:08, 24.45tok/s]MLX Gen (native):  10%|█         | 352/3500 [00:16<02:03, 25.52tok/s]MLX Gen (native):  10%|█         | 355/3500 [00:16<01:58, 26.52tok/s]MLX Gen (native):  10%|█         | 359/3500 [00:16<01:51, 28.24tok/s]MLX Gen (native):  10%|█         | 362/3500 [00:16<01:49, 28.64tok/s]MLX Gen (native):  10%|█         | 365/3500 [00:16<01:49, 28.65tok/s]MLX Gen (native):  11%|█         | 368/3500 [00:16<01:54, 27.37tok/s]MLX Gen (native):  11%|█         | 371/3500 [00:16<01:56, 26.75tok/s]MLX Gen (native):  11%|█         | 374/3500 [00:17<02:02, 25.50tok/s]MLX Gen (native):  11%|█         | 377/3500 [00:17<01:58, 26.39tok/s]MLX Gen (native):  11%|█         | 380/3500 [00:17<01:58, 26.27tok/s]MLX Gen (native):  11%|█         | 383/3500 [00:17<01:54, 27.19tok/s]MLX Gen (native):  11%|█         | 386/3500 [00:17<01:54, 27.10tok/s]MLX Gen (native):  11%|█         | 389/3500 [00:17<01:53, 27.43tok/s]MLX Gen (native):  11%|█         | 392/3500 [00:17<01:54, 27.21tok/s]MLX Gen (native):  11%|█▏        | 395/3500 [00:17<02:02, 25.27tok/s]MLX Gen (native):  11%|█▏        | 398/3500 [00:17<01:59, 26.06tok/s]MLX Gen (native):  11%|█▏        | 402/3500 [00:18<01:52, 27.59tok/s]MLX Gen (native):  12%|█▏        | 405/3500 [00:18<01:57, 26.40tok/s]MLX Gen (native):  12%|█▏        | 408/3500 [00:18<01:58, 26.13tok/s]MLX Gen (native):  12%|█▏        | 411/3500 [00:18<02:02, 25.25tok/s]MLX Gen (native):  12%|█▏        | 414/3500 [00:18<02:05, 24.68tok/s]MLX Gen (native):  12%|█▏        | 417/3500 [00:18<02:04, 24.71tok/s]MLX Gen (native):  12%|█▏        | 420/3500 [00:18<02:05, 24.53tok/s]MLX Gen (native):  12%|█▏        | 423/3500 [00:18<02:07, 24.09tok/s]MLX Gen (native):  12%|█▏        | 426/3500 [00:19<02:08, 23.87tok/s]MLX Gen (native):  12%|█▏        | 429/3500 [00:19<02:09, 23.63tok/s]MLX Gen (native):  12%|█▏        | 432/3500 [00:19<02:06, 24.29tok/s]MLX Gen (native):  12%|█▏        | 435/3500 [00:19<02:02, 25.00tok/s]MLX Gen (native):  13%|█▎        | 438/3500 [00:19<01:57, 26.10tok/s]MLX Gen (native):  13%|█▎        | 441/3500 [00:19<01:53, 26.97tok/s]MLX Gen (native):  13%|█▎        | 444/3500 [00:19<01:55, 26.48tok/s]MLX Gen (native):  13%|█▎        | 447/3500 [00:19<02:05, 24.41tok/s]MLX Gen (native):  13%|█▎        | 450/3500 [00:19<02:08, 23.83tok/s]MLX Gen (native):  13%|█▎        | 453/3500 [00:20<02:11, 23.22tok/s]MLX Gen (native):  13%|█▎        | 456/3500 [00:20<02:10, 23.24tok/s]MLX Gen (native):  13%|█▎        | 459/3500 [00:20<02:08, 23.70tok/s]MLX Gen (native):  13%|█▎        | 462/3500 [00:20<02:11, 23.11tok/s]MLX Gen (native):  13%|█▎        | 465/3500 [00:20<02:07, 23.72tok/s]MLX Gen (native):  13%|█▎        | 468/3500 [00:20<02:00, 25.20tok/s]MLX Gen (native):  13%|█▎        | 471/3500 [00:20<01:55, 26.29tok/s]MLX Gen (native):  14%|█▎        | 475/3500 [00:20<01:48, 27.92tok/s]MLX Gen (native):  14%|█▎        | 478/3500 [00:21<01:48, 27.94tok/s]MLX Gen (native):  14%|█▎        | 481/3500 [00:21<01:57, 25.66tok/s]MLX Gen (native):  14%|█▍        | 484/3500 [00:21<02:04, 24.17tok/s]MLX Gen (native):  14%|█▍        | 487/3500 [00:21<02:06, 23.77tok/s]MLX Gen (native):  14%|█▍        | 490/3500 [00:21<02:04, 24.19tok/s]MLX Gen (native):  14%|█▍        | 493/3500 [00:21<02:00, 25.02tok/s]MLX Gen (native):  14%|█▍        | 496/3500 [00:21<01:55, 25.98tok/s]MLX Gen (native):  14%|█▍        | 499/3500 [00:21<02:07, 23.59tok/s]MLX Gen (native):  14%|█▍        | 502/3500 [00:22<02:16, 21.92tok/s]MLX Gen (native):  14%|█▍        | 505/3500 [00:22<02:11, 22.70tok/s]MLX Gen (native):  15%|█▍        | 508/3500 [00:22<02:07, 23.46tok/s]MLX Gen (native):  15%|█▍        | 511/3500 [00:22<02:04, 23.95tok/s]MLX Gen (native):  15%|█▍        | 514/3500 [00:22<02:55, 17.06tok/s]MLX Gen (native):  15%|█▍        | 517/3500 [00:22<02:47, 17.86tok/s]MLX Gen (native):  15%|█▍        | 520/3500 [00:23<02:34, 19.33tok/s]MLX Gen (native):  15%|█▍        | 523/3500 [00:23<02:23, 20.81tok/s]MLX Gen (native):  15%|█▍        | 523/3500 [00:23<02:11, 22.55tok/s]
+[32m2026-11-14 05:55:17.038[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3711[0m - [1mMLX native generation complete: 523 tokens in 23.23s (22.5 tok/s) | prefill 10.39s + decode 23.23s = 33.61s total[0m
+[32m2026-11-14 05:55:17.057[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <think>
+bpm: 180
+caption: A playful and quirky Persian pop song with a novelty, almost children's music-like
+  quality. The track is built on a simple, bouncy drum machine beat and a clean synth
+  bassline. A prominent, accordion-like synth melody carries the main theme, complemented
+  by clean electric guitar arpeggios and fills. The male lead vocal is delivered in
+  a clear, theatrical, and slightly comical style. The arrangement includes an instrumental
+  break featuring a melodic guitar solo and a brief, stripped-down outro with acoustic
+  guitar arpeggios fading to a close.
+duration: 150
+genres:jphonya
+keyscale: D major
+language: de
+timesignature: 4
+[0m
+[32m2026-11-14 05:55:17.060[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mcreate_sample_from_query[0m:[36m2156[0m - [1mSample created successfully. Generated {'bpm': 180, 'caption': "A playful and quirky Persian pop song with a novelty, almost children's music-like quality. The track is built on a simple, bouncy drum machine beat and a clean synth bassline. A prominent, accordion-like synth melody carries the main theme, complemented by clean electric guitar arpeggios and fills. The male lead vocal is delivered in a clear, theatrical, and slightly comical style. The arrangement includes an instrumental break featuring a melodic guitar solo and a brief, stripped-down outro with acoustic guitar arpeggios fading to a close.", 'duration': 150, 'genres': 'jphonya', 'keyscale': 'D major', 'language': 'de', 'timesignature': '4', 'lyrics': '[Intro - Synth Melody]\n\n[Verse 1]\nKomm wir laufen auf der Straße\nKomm wir rattern überall\nUnd wir laufen mit Spazieren\nWir machen ein Feuerball\n\n[Chorus]\nKomm wir machen Schnaps\nKomm wir machen mit am Glas\nKomm wir machen Schnaps\nKomm wir machen mit am Glas\nKomm wir machen Schnaps\nKomm wir machen mit am Glas\nKomm wir machen Schnaps\nKomm wir machen mit am Glas\n\n[Instrumental Break - Synth Melody]\n\n[Verse 2]\nKomm wir laufen auf der Straße\nKomm wir rattern überall\nUnd wir laufen mit Spazieren\nWir machen ein Feuerball\n\n[Chorus]\nKomm wir machen Schnaps\nKomm wir machen mit am Glas\nKomm wir machen Schnaps\nKomm wir machen mit am Glas\nKomm wir machen Schnaps\nKomm wir machen mit am Glas\nKomm wir machen Schnaps\nKomm wir machen mit am Glas\n\n[Instrumental Break - Synth Melody]\n\n[Verse 3]\nKomm wir laufen auf der Straße\nKomm wir rattern überall\nUnd wir laufen mit Spazieren\nWir machen ein Feuerball\n\n[Chorus]\nKomm wir machen Schnaps\nKomm wir machen mit am Glas\nKomm wir machen Schnaps\nKomm wir machen mit am Glas\nKomm wir machen Schnaps\nKomm wir machen mit am Glas\nKomm wir machen Schnaps\nKomm wir machen mit am Glas\n\n[Outro - Synth Melody Fades Out]', 'instrumental': False} fields[0m
+[32m2026-11-14 05:55:17.090[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=True, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=True, use_lm=True[0m
+[32m2026-11-14 05:55:17.090[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m720[0m - [1mLM chunk 1/1 (infer_type=llm_dit) (size: 1, seeds: [42])[0m
+[32m2026-11-14 05:55:17.090[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1371[0m - [1mPhase 1: Generating CoT metadata...[0m
+[32m2026-11-14 05:55:17.099[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1377[0m - [1mgenerate_with_stop_condition: formatted_prompt=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+A playful and quirky Persian pop song with a novelty, almost children's music-like quality. The track is built on a simple, bouncy drum machine beat and a clean synth bassline. A prominent, accordion-like synth melody carries the main theme, complemented by clean electric guitar arpeggios and fills. The male lead vocal is delivered in a clear, theatrical, and slightly comical style. The arrangement includes an instrumental break featuring a melodic guitar solo and a brief, stripped-down outro with acoustic guitar arpeggios fading to a close.
+
+# Lyric
+[Intro - Synth Melody]
+
+[Verse 1]
+Komm wir laufen auf der Straße
+Komm wir rattern überall
+Und wir laufen mit Spazieren
+Wir machen ein Feuerball
+
+[Chorus]
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+
+[Instrumental Break - Synth Melody]
+
+[Verse 2]
+Komm wir laufen auf der Straße
+Komm wir rattern überall
+Und wir laufen mit Spazieren
+Wir machen ein Feuerball
+
+[Chorus]
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+
+[Instrumental Break - Synth Melody]
+
+[Verse 3]
+Komm wir laufen auf der Straße
+Komm wir rattern überall
+Und wir laufen mit Spazieren
+Wir machen ein Feuerball
+
+[Chorus]
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+
+[Outro - Synth Melody Fades Out]
+<|im_end|>
+<|im_start|>assistant
+[0m
+[32m2026-11-14 05:55:17.587[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3595[0m - [1mMLX native prefill: 494 tokens in 0.47s (1056.8 tok/s)[0m
+MLX Gen (native):   0%|          | 0/3500 [00:00<?, ?tok/s]MLX Gen (native):   0%|          | 3/3500 [00:00<02:09, 26.94tok/s]MLX Gen (native):   0%|          | 6/3500 [00:00<02:23, 24.35tok/s]MLX Gen (native):   0%|          | 9/3500 [00:00<02:25, 23.98tok/s]MLX Gen (native):   0%|          | 12/3500 [00:00<02:18, 25.24tok/s]MLX Gen (native):   0%|          | 15/3500 [00:00<02:20, 24.85tok/s]MLX Gen (native):   1%|          | 18/3500 [00:00<02:19, 25.01tok/s]MLX Gen (native):   1%|          | 21/3500 [00:00<02:19, 24.87tok/s]MLX Gen (native):   1%|          | 24/3500 [00:00<02:19, 24.92tok/s]MLX Gen (native):   1%|          | 27/3500 [00:01<02:26, 23.77tok/s]MLX Gen (native):   1%|          | 30/3500 [00:01<02:26, 23.64tok/s]MLX Gen (native):   1%|          | 33/3500 [00:01<02:28, 23.40tok/s]MLX Gen (native):   1%|          | 36/3500 [00:01<02:35, 22.26tok/s]MLX Gen (native):   1%|          | 39/3500 [00:01<02:28, 23.38tok/s]MLX Gen (native):   1%|          | 42/3500 [00:01<02:23, 24.16tok/s]MLX Gen (native):   1%|▏         | 45/3500 [00:01<02:22, 24.24tok/s]MLX Gen (native):   1%|▏         | 48/3500 [00:01<02:21, 24.48tok/s]MLX Gen (native):   1%|▏         | 51/3500 [00:02<02:26, 23.50tok/s]MLX Gen (native):   2%|▏         | 54/3500 [00:02<02:26, 23.57tok/s]MLX Gen (native):   2%|▏         | 57/3500 [00:02<02:22, 24.09tok/s]MLX Gen (native):   2%|▏         | 60/3500 [00:02<02:22, 24.09tok/s]MLX Gen (native):   2%|▏         | 64/3500 [00:02<02:12, 25.92tok/s]MLX Gen (native):   2%|▏         | 67/3500 [00:02<02:10, 26.24tok/s]MLX Gen (native):   2%|▏         | 70/3500 [00:02<02:12, 25.88tok/s]MLX Gen (native):   2%|▏         | 73/3500 [00:02<02:14, 25.56tok/s]MLX Gen (native):   2%|▏         | 76/3500 [00:03<02:16, 25.14tok/s]MLX Gen (native):   2%|▏         | 79/3500 [00:03<02:13, 25.56tok/s]MLX Gen (native):   2%|▏         | 83/3500 [00:03<02:07, 26.90tok/s]MLX Gen (native):   2%|▏         | 86/3500 [00:03<02:16, 24.93tok/s]MLX Gen (native):   3%|▎         | 90/3500 [00:03<02:09, 26.37tok/s]MLX Gen (native):   3%|▎         | 93/3500 [00:03<02:09, 26.36tok/s]MLX Gen (native):   3%|▎         | 96/3500 [00:03<02:07, 26.62tok/s]MLX Gen (native):   3%|▎         | 99/3500 [00:03<02:08, 26.43tok/s]MLX Gen (native):   3%|▎         | 102/3500 [00:04<02:06, 26.87tok/s]MLX Gen (native):   3%|▎         | 105/3500 [00:04<02:09, 26.16tok/s]MLX Gen (native):   3%|▎         | 108/3500 [00:04<02:11, 25.78tok/s]MLX Gen (native):   3%|▎         | 112/3500 [00:04<02:02, 27.76tok/s]MLX Gen (native):   3%|▎         | 115/3500 [00:04<02:04, 27.17tok/s]MLX Gen (native):   3%|▎         | 118/3500 [00:04<02:03, 27.41tok/s]MLX Gen (native):   3%|▎         | 121/3500 [00:04<02:01, 27.71tok/s]MLX Gen (native):   4%|▎         | 124/3500 [00:04<02:02, 27.56tok/s]MLX Gen (native):   4%|▎         | 128/3500 [00:05<01:58, 28.35tok/s]MLX Gen (native):   4%|▎         | 131/3500 [00:05<01:58, 28.43tok/s]MLX Gen (native):   4%|▍         | 134/3500 [00:05<02:00, 27.94tok/s]MLX Gen (native):   4%|▍         | 137/3500 [00:05<02:01, 27.78tok/s]MLX Gen (native):   4%|▍         | 140/3500 [00:05<02:02, 27.36tok/s]MLX Gen (native):   4%|▍         | 143/3500 [00:05<02:01, 27.73tok/s]MLX Gen (native):   4%|▍         | 146/3500 [00:05<01:59, 28.03tok/s]MLX Gen (native):   4%|▍         | 149/3500 [00:05<01:59, 28.10tok/s]MLX Gen (native):   4%|▍         | 152/3500 [00:05<02:00, 27.73tok/s]MLX Gen (native):   4%|▍         | 155/3500 [00:05<01:59, 27.98tok/s]MLX Gen (native):   5%|▍         | 158/3500 [00:06<01:59, 27.97tok/s]MLX Gen (native):   5%|▍         | 160/3500 [00:06<02:08, 25.97tok/s]
+[32m2026-11-14 05:55:23.750[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3711[0m - [1mMLX native generation complete: 160 tokens in 6.16s (26.0 tok/s) | prefill 0.47s + decode 6.16s = 6.63s total[0m
+[32m2026-11-14 05:55:23.751[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <think>
+bpm: 100
+caption: A playful and quirky Persian pop song with a novelty, almost children's music-like
+  quality. The track is built on a simple, bouncy drum machine beat and a clean synth
+  bassline. A prominent, accordion-like synth melody carries the main theme, complemented
+  by clean electric guitar arpeggios and fills. The male lead vocal is delivered in
+  a clear, theatrical, and slightly comical style. The arrangement includes an instrumental
+  break featuring a melodic guitar solo and a brief, stripped-down outro with acoustic
+  guitar arpeggios fading to a close.
+duration: 30
+keyscale: C major
+language: de
+timesignature: 4
+<|im_end|>[0m
+[32m2026-11-14 05:55:23.751[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1422[0m - [1mPhase 1 completed in 6.66s. Generated metadata: ['bpm', 'caption', 'duration', 'keyscale', 'language', 'timesignature'][0m
+[32m2026-11-14 05:55:23.751[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1482[0m - [1mPhase 2: Generating audio codes...[0m
+[32m2026-11-14 05:55:23.755[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1490[0m - [1mgenerate_with_stop_condition: formatted_prompt_with_cot=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+A playful and quirky Persian pop song with a novelty, almost children's music-like quality. The track is built on a simple, bouncy drum machine beat and a clean synth bassline. A prominent, accordion-like synth melody carries the main theme, complemented by clean electric guitar arpeggios and fills. The male lead vocal is delivered in a clear, theatrical, and slightly comical style. The arrangement includes an instrumental break featuring a melodic guitar solo and a brief, stripped-down outro with acoustic guitar arpeggios fading to a close.
+
+# Lyric
+[Intro - Synth Melody]
+
+[Verse 1]
+Komm wir laufen auf der Straße
+Komm wir rattern überall
+Und wir laufen mit Spazieren
+Wir machen ein Feuerball
+
+[Chorus]
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+
+[Instrumental Break - Synth Melody]
+
+[Verse 2]
+Komm wir laufen auf der Straße
+Komm wir rattern überall
+Und wir laufen mit Spazieren
+Wir machen ein Feuerball
+
+[Chorus]
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+
+[Instrumental Break - Synth Melody]
+
+[Verse 3]
+Komm wir laufen auf der Straße
+Komm wir rattern überall
+Und wir laufen mit Spazieren
+Wir machen ein Feuerball
+
+[Chorus]
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+
+[Outro - Synth Melody Fades Out]
+<|im_end|>
+<|im_start|>assistant
+<think>
+bpm: 100
+caption: A playful and quirky Persian pop song with a novelty, almost children's music-like
+  quality. The track is built on a simple, bouncy drum machine beat and a clean synth
+  bassline. A prominent, accordion-like synth melody carries the main theme, complemented
+  by clean electric guitar arpeggios and fills. The male lead vocal is delivered in
+  a clear, theatrical, and slightly comical style. The arrangement includes an instrumental
+  break featuring a melodic guitar solo and a brief, stripped-down outro with acoustic
+  guitar arpeggios fading to a close.
+duration: 30
+keyscale: C major
+language: de
+timesignature: 4
+</think>
+
+[0m
+[32m2026-11-14 05:55:23.758[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3514[0m - [1mMLX native: pre-transitioned FSM to CODES_GENERATION (native fast path)[0m
+[32m2026-11-14 05:55:23.759[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_build_unconditional_prompt[0m:[36m395[0m - [1mCFG unconditional prompt (phase=codes, is_batch=False, negative_prompt='NO USER INPUT'):
+<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+NO USER INPUT<|im_end|>
+<|im_start|>assistant
+<think>
+
+</think>
+
+[0m
+[32m2026-11-14 05:55:24.365[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3571[0m - [1mMLX native prefill: 688 tokens (cond=655, uncond=33) in 0.61s (1133.9 tok/s)[0m
+MLX CFG Gen (native):   0%|          | 0/160 [00:00<?, ?tok/s]MLX CFG Gen (native):   2%|▏         | 3/160 [00:00<00:05, 26.34tok/s]MLX CFG Gen (native):   4%|▍         | 6/160 [00:00<00:07, 20.66tok/s]MLX CFG Gen (native):   6%|▌         | 9/160 [00:00<00:07, 20.22tok/s]MLX CFG Gen (native):   8%|▊         | 12/160 [00:00<00:07, 20.28tok/s]MLX CFG Gen (native):   9%|▉         | 15/160 [00:00<00:07, 19.53tok/s]MLX CFG Gen (native):  11%|█         | 17/160 [00:00<00:07, 19.39tok/s]MLX CFG Gen (native):  12%|█▏        | 19/160 [00:00<00:07, 19.39tok/s]MLX CFG Gen (native):  13%|█▎        | 21/160 [00:01<00:07, 18.90tok/s]MLX CFG Gen (native):  14%|█▍        | 23/160 [00:01<00:07, 18.58tok/s]MLX CFG Gen (native):  16%|█▌        | 25/160 [00:01<00:07, 17.81tok/s]MLX CFG Gen (native):  17%|█▋        | 27/160 [00:01<00:07, 17.14tok/s]MLX CFG Gen (native):  18%|█▊        | 29/160 [00:01<00:07, 16.84tok/s]MLX CFG Gen (native):  19%|█▉        | 31/160 [00:01<00:07, 16.65tok/s]MLX CFG Gen (native):  21%|██        | 33/160 [00:01<00:07, 16.32tok/s]MLX CFG Gen (native):  22%|██▏       | 35/160 [00:01<00:07, 16.58tok/s]MLX CFG Gen (native):  23%|██▎       | 37/160 [00:02<00:07, 15.88tok/s]MLX CFG Gen (native):  24%|██▍       | 39/160 [00:02<00:07, 16.66tok/s]MLX CFG Gen (native):  26%|██▌       | 41/160 [00:02<00:06, 17.23tok/s]MLX CFG Gen (native):  27%|██▋       | 43/160 [00:02<00:06, 17.42tok/s]MLX CFG Gen (native):  28%|██▊       | 45/160 [00:02<00:06, 17.63tok/s]MLX CFG Gen (native):  29%|██▉       | 47/160 [00:02<00:06, 17.36tok/s]MLX CFG Gen (native):  31%|███       | 49/160 [00:02<00:06, 17.33tok/s]MLX CFG Gen (native):  32%|███▏      | 51/160 [00:02<00:06, 17.23tok/s]MLX CFG Gen (native):  33%|███▎      | 53/160 [00:02<00:06, 16.35tok/s]MLX CFG Gen (native):  34%|███▍      | 55/160 [00:03<00:06, 15.41tok/s]MLX CFG Gen (native):  36%|███▌      | 57/160 [00:03<00:06, 15.19tok/s]MLX CFG Gen (native):  37%|███▋      | 59/160 [00:03<00:06, 15.51tok/s]MLX CFG Gen (native):  38%|███▊      | 61/160 [00:03<00:06, 15.78tok/s]MLX CFG Gen (native):  39%|███▉      | 63/160 [00:03<00:06, 15.22tok/s]MLX CFG Gen (native):  41%|████      | 65/160 [00:03<00:06, 15.37tok/s]MLX CFG Gen (native):  42%|████▏     | 67/160 [00:03<00:06, 14.95tok/s]MLX CFG Gen (native):  43%|████▎     | 69/160 [00:04<00:05, 15.98tok/s]MLX CFG Gen (native):  44%|████▍     | 71/160 [00:04<00:05, 16.33tok/s]MLX CFG Gen (native):  46%|████▌     | 73/160 [00:04<00:05, 16.50tok/s]MLX CFG Gen (native):  47%|████▋     | 75/160 [00:04<00:05, 16.15tok/s]MLX CFG Gen (native):  48%|████▊     | 77/160 [00:04<00:05, 16.22tok/s]MLX CFG Gen (native):  49%|████▉     | 79/160 [00:04<00:04, 16.86tok/s]MLX CFG Gen (native):  51%|█████     | 81/160 [00:04<00:04, 17.27tok/s]MLX CFG Gen (native):  52%|█████▏    | 83/160 [00:04<00:04, 17.75tok/s]MLX CFG Gen (native):  53%|█████▎    | 85/160 [00:04<00:04, 17.79tok/s]MLX CFG Gen (native):  54%|█████▍    | 87/160 [00:05<00:04, 18.23tok/s]MLX CFG Gen (native):  56%|█████▌    | 89/160 [00:05<00:03, 17.92tok/s]MLX CFG Gen (native):  57%|█████▋    | 91/160 [00:05<00:03, 17.79tok/s]MLX CFG Gen (native):  58%|█████▊    | 93/160 [00:05<00:03, 17.96tok/s]MLX CFG Gen (native):  59%|█████▉    | 95/160 [00:05<00:03, 17.03tok/s]MLX CFG Gen (native):  61%|██████    | 97/160 [00:05<00:03, 16.82tok/s]MLX CFG Gen (native):  62%|██████▏   | 99/160 [00:05<00:03, 17.54tok/s]MLX CFG Gen (native):  63%|██████▎   | 101/160 [00:05<00:03, 17.63tok/s]MLX CFG Gen (native):  64%|██████▍   | 103/160 [00:05<00:03, 17.46tok/s]MLX CFG Gen (native):  66%|██████▌   | 105/160 [00:06<00:03, 16.73tok/s]MLX CFG Gen (native):  67%|██████▋   | 107/160 [00:06<00:03, 16.55tok/s]MLX CFG Gen (native):  68%|██████▊   | 109/160 [00:06<00:03, 16.29tok/s]MLX CFG Gen (native):  69%|██████▉   | 111/160 [00:06<00:02, 16.44tok/s]MLX CFG Gen (native):  71%|███████   | 113/160 [00:06<00:02, 16.43tok/s]MLX CFG Gen (native):  72%|███████▏  | 115/160 [00:06<00:03, 14.64tok/s]MLX CFG Gen (native):  73%|███████▎  | 117/160 [00:06<00:02, 15.30tok/s]MLX CFG Gen (native):  74%|███████▍  | 119/160 [00:07<00:02, 15.57tok/s]MLX CFG Gen (native):  76%|███████▌  | 121/160 [00:07<00:02, 16.01tok/s]MLX CFG Gen (native):  77%|███████▋  | 123/160 [00:07<00:02, 16.44tok/s]MLX CFG Gen (native):  79%|███████▉  | 126/160 [00:07<00:01, 17.46tok/s]MLX CFG Gen (native):  80%|████████  | 128/160 [00:07<00:01, 17.02tok/s]MLX CFG Gen (native):  81%|████████▏ | 130/160 [00:07<00:01, 16.65tok/s]MLX CFG Gen (native):  82%|████████▎ | 132/160 [00:07<00:01, 16.31tok/s]MLX CFG Gen (native):  84%|████████▍ | 134/160 [00:07<00:01, 16.33tok/s]MLX CFG Gen (native):  85%|████████▌ | 136/160 [00:08<00:01, 16.41tok/s]MLX CFG Gen (native):  86%|████████▋ | 138/160 [00:08<00:01, 17.08tok/s]MLX CFG Gen (native):  88%|████████▊ | 140/160 [00:08<00:01, 16.66tok/s]MLX CFG Gen (native):  89%|████████▉ | 142/160 [00:08<00:01, 16.09tok/s]MLX CFG Gen (native):  90%|█████████ | 144/160 [00:08<00:01, 15.06tok/s]MLX CFG Gen (native):  91%|█████████▏| 146/160 [00:08<00:00, 14.40tok/s]MLX CFG Gen (native):  92%|█████████▎| 148/160 [00:08<00:00, 14.87tok/s]MLX CFG Gen (native):  94%|█████████▍| 150/160 [00:08<00:00, 14.69tok/s]MLX CFG Gen (native):  94%|█████████▍| 151/160 [00:09<00:00, 16.73tok/s]
+[32m2026-11-14 05:55:33.394[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single_native[0m:[36m3711[0m - [1mMLX native generation complete: 151 tokens in 9.02s (16.7 tok/s) | prefill 0.61s + decode 9.02s = 9.63s total[0m
+[32m2026-11-14 05:55:33.456[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <|audio_code_3803|><|audio_code_13747|><|audio_code_40822|><|audio_code_3737|><|audio_code_13234|><|audio_code_51127|><|audio_code_50129|><|audio_code_24002|><|audio_code_38443|><|audio_code_3295|><|audio_code_37671|><|audio_code_38207|><|audio_code_19174|><|audio_code_22014|><|audio_code_39202|><|audio_code_9887|><|audio_code_26557|><|audio_code_36673|><|audio_code_6296|><|audio_code_13298|><|audio_code_38447|><|audio_code_2967|><|audio_code_13655|><|audio_code_33791|><|audio_code_11482|><|audio_code_13299|><|audio_code_36846|><|audio_code_3738|><|audio_code_434|><|audio_code_51023|><|audio_code_49617|><|audio_code_24571|><|audio_code_39467|><|audio_code_3359|><|audio_code_24359|><|audio_code_48511|><|audio_code_16687|><|audio_code_16567|><|audio_code_61438|><|audio_code_15389|><|audio_code_5555|><|audio_code_13632|><|audio_code_39367|><|audio_code_1363|><|audio_code_37948|><|audio_code_17632|><|audio_code_37189|><|audio_code_34241|><|audio_code_54726|><|audio_code_14790|><|audio_code_44680|><|audio_code_14120|><|audio_code_23037|><|audio_code_2879|><|audio_code_2127|><|audio_code_21446|><|audio_code_35964|><|audio_code_14799|><|audio_code_30844|><|audio_code_41799|><|audio_code_56213|><|audio_code_33390|><|audio_code_24638|><|audio_code_13519|><|audio_code_28620|><|audio_code_20224|><|audio_code_35676|><|audio_code_28880|><|audio_code_48141|><|audio_code_53677|><|audio_code_21486|><|audio_code_17903|><|audio_code_63452|><|audio_code_12790|><|audio_code_61160|><|audio_code_62248|><|audio_code_46590|><|audio_code_12663|><|audio_code_25732|><|audio_code_52694|><|audio_code_36091|><|audio_code_455|><|audio_code_48171|><|audio_code_15095|><|audio_code_61423|><|audio_code_14143|><|audio_code_41663|><|audio_code_2068|><|audio_code_4650|><|audio_code_13632|><|audio_code_52626|><|audio_code_20791|><|audio_code_53503|><|audio_code_2910|><|audio_code_29063|><|audio_code_42950|><|audio_code_3972|><|audio_code_37831|><|audio_code_14829|><|audio_code_786|><|audio_code_18391|><|audio_code_3014|><|audio_code_20074|><|audio_code_32867|><|audio_code_19234|><|audio_code_37263|><|audio_code_20991|><|audio_code_56261|><|audio_code_40388|><|audio_code_14280|><|audio_code_27066|><|audio_code_222|><|audio_code_1494|><|audio_code_59376|><|audio_code_17680|><|audio_code_14128|><|audio_code_22812|><|audio_code_25542|><|audio_code_44015|><|audio_code_27590|><|audio_code_57292|><|audio_code_37319|><|audio_code_14309|><|audio_code_52049|><|audio_code_16335|><|audio_code_5061|><|audio_code_20130|><|audio_code_32859|><|audio_code_19738|><|audio_code_37287|><|audio_code_8191|><|audio_code_5070|><|audio_code_40396|><|audio_code_14216|><|audio_code_17337|><|audio_code_158|><|audio_code_982|><|audio_code_59376|><|audio_code_30344|><|audio_code_16616|><|audio_code_22813|><|audio_code_27999|><|audio_code_57326|><|audio_code_52343|><|audio_code_18010|><|audio_code_12105|><|audio_code_43533|><|audio_code_14579|><|audio_code_37884|><|audio_code_25446|><|im_end|>[0m
+[32m2026-11-14 05:55:33.458[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1650[0m - [1mPhase 2 completed in 9.70s. Generated 150 audio codes[0m
+[32m2026-11-14 05:55:33.463[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m329[0m - [1m[generate_music] Starting generation...[0m
+[32m2026-11-14 05:55:33.463[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m332[0m - [1m[generate_music] Preparing inputs...[0m
+[32m2026-11-14 05:55:33.475[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_request[0m:[36m_prepare_reference_and_source_audio[0m:[36m204[0m - [1m[generate_music] cover task: no src_audio but audio codes provided, proceeding with codes[0m
+[32m2026-11-14 05:55:33.510[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_target[0m:[36m_prepare_target_latents_and_wavs[0m:[36m78[0m - [1m[generate_music] Decoding audio codes for item 0...[0m
+[32m2026-11-14 05:55:37.393[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_precomputed_lm_hints[0m:[36m31[0m - [1m[generate_music] Decoding audio codes for LM hints for item 0...[0m
+[32m2026-11-14 05:55:38.505[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m119[0m - [1m
+======================================================================[0m
+[32m2026-11-14 05:55:38.505[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m120[0m - [1m🔍 [DEBUG] DiT TEXT ENCODER INPUT (Inference)[0m
+[32m2026-11-14 05:55:38.505[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m121[0m - [1m======================================================================[0m
+[32m2026-11-14 05:55:38.505[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m122[0m - [1mtext_prompt:
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+# Caption
+A playful and quirky Persian pop song with a novelty, almost children's music-like quality. The track is built on a simple, bouncy drum machine beat and a clean synth bassline. A prominent, accordion-like synth melody carries the main theme, complemented by clean electric guitar arpeggios and fills. The male lead vocal is delivered in a clear, theatrical, and slightly comical style. The arrangement includes an instrumental break featuring a melodic guitar solo and a brief, stripped-down outro with acoustic guitar arpeggios fading to a close.
+
+# Metas
+- bpm: 100
+- timesignature: 4
+- keyscale: C major
+- duration: 30 seconds
+<|endoftext|>
+[0m
+[32m2026-11-14 05:55:38.505[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m123[0m - [1m======================================================================[0m
+[32m2026-11-14 05:55:38.505[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m124[0m - [1mlyrics_text:
+# Languages
+de
+
+# Lyric
+[Intro - Synth Melody]
+
+[Verse 1]
+Komm wir laufen auf der Straße
+Komm wir rattern überall
+Und wir laufen mit Spazieren
+Wir machen ein Feuerball
+
+[Chorus]
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+
+[Instrumental Break - Synth Melody]
+
+[Verse 2]
+Komm wir laufen auf der Straße
+Komm wir rattern überall
+Und wir laufen mit Spazieren
+Wir machen ein Feuerball
+
+[Chorus]
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+
+[Instrumental Break - Synth Melody]
+
+[Verse 3]
+Komm wir laufen auf der Straße
+Komm wir rattern überall
+Und wir laufen mit Spazieren
+Wir machen ein Feuerball
+
+[Chorus]
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+Komm wir machen Schnaps
+Komm wir machen mit am Glas
+
+[Outro - Synth Melody Fades Out]<|endoftext|>[0m
+[32m2026-11-14 05:55:38.505[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m125[0m - [1m======================================================================
+[0m
+[32m2026-11-14 05:55:38.707[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m110[0m - [1m[preprocess_batch] Inferring prompt embeddings...[0m
+[32m2026-11-14 05:56:00.997[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m113[0m - [1m[preprocess_batch] Inferring lyric embeddings...[0m
+[32m2026-11-14 05:56:01.041[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m173[0m - [1m[service_generate] Generating audio... (DiT backend: PyTorch (cpu))[0m
+Using precomputed LM hints
+[32m2026-11-14 05:56:35.198[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m276[0m - [1m[service_generate] DiT diffusion via PyTorch (cpu)...[0m
+Using precomputed LM hints
+[32m2026-11-14 05:56:47.096[0m | [1mINFO    [0m | [36macestep.models.common.dcw_correction[0m:[36m__init__[0m:[36m98[0m - [1m[DCW] Active — mode=double, scaler=0.0500, high_scaler=0.0200, wavelet='haar'[0m
+[32m2026-11-14 06:02:26.193[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m42[0m - [1m[generate_music] Model generation completed. Decoding latents...[0m
+[32m2026-11-14 06:02:26.222[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m64[0m - [34m[1m[generate_music] pred_latents: torch.Size([1, 750, 64]), dtype=torch.float32[0m
+[32m2026-11-14 06:02:26.223[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m65[0m - [34m[1m[generate_music] time_costs: {'encoder_time_cost': 11.880268096923828, 'diffusion_time_cost': 338.9945878982544, 'diffusion_per_step_time_cost': 42.3743234872818, 'total_time_cost': 350.8748559951782, 'offload_time_cost': 0.0}[0m
+[32m2026-11-14 06:02:26.250[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m127[0m - [1m[generate_music] Decoding latents with VAE...[0m
+[32m2026-11-14 06:02:26.313[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m136[0m - [34m[1m[generate_music] Before VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-14 06:02:26.313[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m172[0m - [1m[generate_music] Using tiled VAE decode to reduce VRAM usage...[0m
+[32m2026-11-14 06:03:26.425[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_decode_native[0m:[36m_mlx_vae_decode[0m:[36m66[0m - [1m[MLX-VAE] Decoded 1 sample(s), 750 latent frames -> audio in 60.10s (convert=0.080s, decode=60.02s, dtype=mlx.core.float32)[0m
+[32m2026-11-14 06:03:26.463[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m193[0m - [34m[1m[generate_music] After VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-14 06:03:30.281[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m38[0m - [1m[generate_music] VAE decode completed. Preparing audio tensors...[0m
+[32m2026-11-14 06:03:30.284[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m50[0m - [1m[generate_music] Done! Generated 1 audio tensors.[0m
+[32m2026-11-14 06:03:30.504[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1002[0m - [1m[Normalization] Audio 0 BEFORE: Peak=1.0000, Target=-1.0dB[0m
+[32m2026-11-14 06:03:30.537[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1007[0m - [1m[Normalization] Audio 0 AFTER: Peak=0.8913[0m
+[32m2026-11-14 06:03:30.670[0m | [34m[1mDEBUG   [0m | [36macestep.audio_utils[0m:[36msave_audio[0m:[36m339[0m - [34m[1m[AudioSaver] Fallback soundfile Saved audio to /Users/runner/work/music-library-mac/music-library-mac/out/audio/03-gesang-de/4acdf678-dc46-bff8-fefe-5b70634f64d8.flac (flac, 48000Hz)[0m
+
+--- 2026-11-14 06:03:30 +0000 KI-Prozess startet ---
+W1114 06:03:49.423000 31282 .venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+[32m2026-11-14 06:03:52.272[0m | [33m[1mWARNING [0m | [36macestep.training.trainer[0m:[36m<module>[0m:[36m40[0m - [33m[1mbitsandbytes not installed. Using standard AdamW.[0m
+[32m2026-11-14 06:03:52.439[0m | [1mINFO    [0m | [36macestep.gpu_config[0m:[36mget_gpu_config[0m:[36m846[0m - [1mmacOS MPS detected (4.7 GB unified memory, tier=tier2). Applying Apple Silicon optimizations: no compile, no quantization, mlx backend, no CPU offload.[0m
+[32m2026-11-14 06:03:52.541[0m | [1mINFO    [0m | [36macestep.core.generation.handler.init_service_loader[0m:[36m_load_main_model_from_checkpoint[0m:[36m174[0m - [1m[initialize_service] Attempting to load model with attention implementation: sdpa[0m
+[32m2026-11-14 06:06:19.161[0m | [31m[1mERROR   [0m | [36macestep.core.generation.handler.init_service_orchestrator[0m:[36minitialize_service[0m:[36m219[0m - [31m[1mError initializing model: MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 16.00 KiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+
+Traceback:
+Traceback (most recent call last):
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/init_service_orchestrator.py", line 156, in initialize_service
+    self._load_main_model_from_checkpoint(
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/init_service_loader.py", line 198, in _load_main_model_from_checkpoint
+    self.model = self.model.to(device).to(self.dtype)
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/modeling_utils.py", line 4343, in to
+    return super().to(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1381, in to
+    return self._apply(convert)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  [Previous line repeated 3 more times]
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 964, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1367, in convert
+    return t.to(
+           ^^^^^
+RuntimeError: MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 16.00 KiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32m/Users/runner/work/_temp/ki/Engine/[0m[32m[1mengine.py[0m", line [33m275[0m, in [35m<module>[0m
+    [1mmain[0m[1m([0m[1m)[0m
+    [36m└ [0m[36m[1m<function main at 0x1035816c0>[0m
+
+  File "[32m/Users/runner/work/_temp/ki/Engine/[0m[32m[1mengine.py[0m", line [33m259[0m, in [35mmain[0m
+    [1mresult[0m [35m[1m=[0m [1mengine[0m[35m[1m.[0m[1mload[0m[1m([0m[1mreq[0m[1m,[0m [1mprogress[0m[1m)[0m
+    [36m         │      │    │    └ [0m[36m[1m<function main.<locals>.progress at 0x1035c9080>[0m
+    [36m         │      │    └ [0m[36m[1m{'dit': 'acestep-v15-turbo', 'id': '7FC6EBDB-B840-4442-A11F-1A035C8F3AF5', 'cmd': 'load'}[0m
+    [36m         │      └ [0m[36m[1m<function Engine.load at 0x1035c8ae0>[0m
+    [36m         └ [0m[36m[1m<__main__.Engine object at 0x1035aac30>[0m
+
+  File "[32m/Users/runner/work/_temp/ki/Engine/[0m[32m[1mengine.py[0m", line [33m91[0m, in [35mload[0m
+    [1mmsg[0m[1m,[0m [1mok[0m [35m[1m=[0m [1mself[0m[35m[1m.[0m[1mdit[0m[35m[1m.[0m[1minitialize_service[0m[1m([0m[1mproject_root[0m[35m[1m=[0m[1mself[0m[35m[1m.[0m[1mace_root[0m[1m,[0m [1mconfig_path[0m[35m[1m=[0m[1mdit_model[0m[1m,[0m [1mdevice[0m[35m[1m=[0m[1mdevice[0m[1m,[0m
+    [36m          │    │   │                               │    │                     │                 └ [0m[36m[1m'auto'[0m
+    [36m          │    │   │                               │    │                     └ [0m[36m[1m'acestep-v15-turbo'[0m
+    [36m          │    │   │                               │    └ [0m[36m[1m'/Users/runner/work/_temp/ki/ACE-Step-1.5'[0m
+    [36m          │    │   │                               └ [0m[36m[1m<__main__.Engine object at 0x1035aac30>[0m
+    [36m          │    │   └ [0m[36m[1m<function InitServiceOrchestratorMixin.initialize_service at 0x111668ae0>[0m
+    [36m          │    └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x1035d4410>[0m
+    [36m          └ [0m[36m[1m<__main__.Engine object at 0x1035aac30>[0m
+
+> File "[32m/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/[0m[32m[1minit_service_orchestrator.py[0m", line [33m156[0m, in [35minitialize_service[0m
+    [1mself[0m[35m[1m.[0m[1m_load_main_model_from_checkpoint[0m[1m([0m
+    [36m│    └ [0m[36m[1m<function InitServiceLoaderMixin._load_main_model_from_checkpoint at 0x1116337e0>[0m
+    [36m└ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x1035d4410>[0m
+
+  File "[32m/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/[0m[32m[1minit_service_loader.py[0m", line [33m198[0m, in [35m_load_main_model_from_checkpoint[0m
+    [1mself[0m[35m[1m.[0m[1mmodel[0m [35m[1m=[0m [1mself[0m[35m[1m.[0m[1mmodel[0m[35m[1m.[0m[1mto[0m[1m([0m[1mdevice[0m[1m)[0m[35m[1m.[0m[1mto[0m[1m([0m[1mself[0m[35m[1m.[0m[1mdtype[0m[1m)[0m
+    [36m│    │       │    │        │          │    └ [0m[36m[1mtorch.float32[0m
+    [36m│    │       │    │        │          └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x1035d4410>[0m
+    [36m│    │       │    │        └ [0m[36m[1m'mps'[0m
+    [36m│    │       │    └ [0m[36m[1mNone[0m
+    [36m│    │       └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x1035d4410>[0m
+    [36m│    └ [0m[36m[1mNone[0m
+    [36m└ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x1035d4410>[0m
+
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/modeling_utils.py", line 4343, in to
+    return super().to(*args, **kwargs)
+                       │       └ {}
+                       └ ('mps',)
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1381, in to
+    return self._apply(convert)
+           │    │      └ <function Module.to.<locals>.convert at 0x1035c9120>
+           │    └ <function Module._apply at 0x1053a4f40>
+           └ AceStepConditionGenerationModel(
+               (decoder): AceStepDiTModel(
+                 (rotary_emb): Qwen3RotaryEmbedding()
+                 (layers): ModuleL...
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x1035c9120>
+    │      └ <function Module._apply at 0x1053a4f40>
+    └ AceStepConditionEncoder(
+        (text_projector): Linear(in_features=1024, out_features=2048, bias=False)
+        (lyric_encoder): AceSt...
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x1035c9120>
+    │      └ <function Module._apply at 0x1053a4f40>
+    └ AceStepTimbreEncoder(
+        (embed_tokens): Linear(in_features=64, out_features=2048, bias=True)
+        (norm): Qwen3RMSNorm((2048,), ...
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x1035c9120>
+    │      └ <function Module._apply at 0x1053a4f40>
+    └ ModuleList(
+        (0-3): 4 x AceStepEncoderLayer(
+          (self_attn): AceStepAttention(
+            (q_proj): Linear(in_features=2048, out...
+  [Previous line repeated 3 more times]
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 964, in _apply
+    param_applied = fn(param)
+                    │  └ Parameter containing:
+                    │    tensor([[ 0.0369, -0.0028,  0.0085,  ..., -0.0493,  0.0361, -0.0544],
+                    │            [-0.0188, -0.0118, -0.031...
+                    └ <function Module.to.<locals>.convert at 0x1035c9120>
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1367, in convert
+    return t.to(
+           │ └ <method 'to' of 'torch._C.TensorBase' objects>
+           └ Parameter containing:
+             tensor([[ 0.0369, -0.0028,  0.0085,  ..., -0.0493,  0.0361, -0.0544],
+                     [-0.0188, -0.0118, -0.031...
+
+[31m[1mRuntimeError[0m:[1m MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 16.00 KiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).[0m
+[32m2026-11-14 06:06:19.347[0m | [1mINFO    [0m | [36macestep.core.generation.handler.init_service_loader[0m:[36m_load_main_model_from_checkpoint[0m:[36m174[0m - [1m[initialize_service] Attempting to load model with attention implementation: sdpa[0m
+[32m2026-11-14 06:07:39.295[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_init[0m:[36m_init_mlx_vae[0m:[36m75[0m - [1m[MLX-VAE] Decode/encode compiled with mx.compile().[0m
+[32m2026-11-14 06:07:39.300[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_init[0m:[36m_init_mlx_vae[0m:[36m85[0m - [1m[MLX-VAE] Native MLX VAE initialized (dtype=mlx.core.float32, compiled=True).[0m
+[32m2026-11-14 06:07:39.342[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=False, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=False, use_lm=False[0m
+[32m2026-11-14 06:07:39.345[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m329[0m - [1m[generate_music] Starting generation...[0m
+[32m2026-11-14 06:07:39.345[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m332[0m - [1m[generate_music] Preparing inputs...[0m
+[32m2026-11-14 06:07:39.426[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m119[0m - [1m
+======================================================================[0m
+[32m2026-11-14 06:07:39.426[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m120[0m - [1m🔍 [DEBUG] DiT TEXT ENCODER INPUT (Inference)[0m
+[32m2026-11-14 06:07:39.426[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m121[0m - [1m======================================================================[0m
+[32m2026-11-14 06:07:39.426[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m122[0m - [1mtext_prompt:
+# Instruction
+Fill the audio semantic mask based on the given conditions:
+
+# Caption
+Energetic synthwave
+
+# Metas
+- bpm: N/A
+- timesignature: N/A
+- keyscale: N/A
+- duration: 120 seconds
+<|endoftext|>
+[0m
+[32m2026-11-14 06:07:39.426[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m123[0m - [1m======================================================================[0m
+[32m2026-11-14 06:07:39.426[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m124[0m - [1mlyrics_text:
+# Languages
+unknown
+
+# Lyric
+[Instrumental]<|endoftext|>[0m
+[32m2026-11-14 06:07:39.426[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m125[0m - [1m======================================================================
+[0m
+[32m2026-11-14 06:07:39.457[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m110[0m - [1m[preprocess_batch] Inferring prompt embeddings...[0m
+[32m2026-11-14 06:07:44.908[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m113[0m - [1m[preprocess_batch] Inferring lyric embeddings...[0m
+[32m2026-11-14 06:07:44.913[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m173[0m - [1m[service_generate] Generating audio... (DiT backend: PyTorch (cpu))[0m
+--- KI-Prozess beendet (Status 15) ---
+
+--- 2026-11-14 06:07:54 +0000 KI-Prozess startet ---
+W1114 06:08:05.932000 34839 .venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+[32m2026-11-14 06:08:08.861[0m | [33m[1mWARNING [0m | [36macestep.training.trainer[0m:[36m<module>[0m:[36m40[0m - [33m[1mbitsandbytes not installed. Using standard AdamW.[0m
+[32m2026-11-14 06:08:08.934[0m | [1mINFO    [0m | [36macestep.gpu_config[0m:[36mget_gpu_config[0m:[36m846[0m - [1mmacOS MPS detected (4.7 GB unified memory, tier=tier2). Applying Apple Silicon optimizations: no compile, no quantization, mlx backend, no CPU offload.[0m
+[32m2026-11-14 06:08:08.943[0m | [1mINFO    [0m | [36macestep.core.generation.handler.init_service_loader[0m:[36m_load_main_model_from_checkpoint[0m:[36m174[0m - [1m[initialize_service] Attempting to load model with attention implementation: sdpa[0m
+[32m2026-11-14 06:10:41.825[0m | [31m[1mERROR   [0m | [36macestep.core.generation.handler.init_service_orchestrator[0m:[36minitialize_service[0m:[36m219[0m - [31m[1mError initializing model: MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 16.00 KiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+
+Traceback:
+Traceback (most recent call last):
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/init_service_orchestrator.py", line 156, in initialize_service
+    self._load_main_model_from_checkpoint(
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/init_service_loader.py", line 198, in _load_main_model_from_checkpoint
+    self.model = self.model.to(device).to(self.dtype)
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/modeling_utils.py", line 4343, in to
+    return super().to(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1381, in to
+    return self._apply(convert)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  [Previous line repeated 3 more times]
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 964, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1367, in convert
+    return t.to(
+           ^^^^^
+RuntimeError: MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 16.00 KiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32m/Users/runner/work/_temp/ki/Engine/[0m[32m[1mengine.py[0m", line [33m275[0m, in [35m<module>[0m
+    [1mmain[0m[1m([0m[1m)[0m
+    [36m└ [0m[36m[1m<function main at 0x105a996c0>[0m
+
+  File "[32m/Users/runner/work/_temp/ki/Engine/[0m[32m[1mengine.py[0m", line [33m259[0m, in [35mmain[0m
+    [1mresult[0m [35m[1m=[0m [1mengine[0m[35m[1m.[0m[1mload[0m[1m([0m[1mreq[0m[1m,[0m [1mprogress[0m[1m)[0m
+    [36m         │      │    │    └ [0m[36m[1m<function main.<locals>.progress at 0x105ae1080>[0m
+    [36m         │      │    └ [0m[36m[1m{'dit': 'acestep-v15-turbo', 'id': '065500C7-D3B6-4E7D-B934-0940F5438D48', 'cmd': 'load'}[0m
+    [36m         │      └ [0m[36m[1m<function Engine.load at 0x105ae0ae0>[0m
+    [36m         └ [0m[36m[1m<__main__.Engine object at 0x105ac2c30>[0m
+
+  File "[32m/Users/runner/work/_temp/ki/Engine/[0m[32m[1mengine.py[0m", line [33m91[0m, in [35mload[0m
+    [1mmsg[0m[1m,[0m [1mok[0m [35m[1m=[0m [1mself[0m[35m[1m.[0m[1mdit[0m[35m[1m.[0m[1minitialize_service[0m[1m([0m[1mproject_root[0m[35m[1m=[0m[1mself[0m[35m[1m.[0m[1mace_root[0m[1m,[0m [1mconfig_path[0m[35m[1m=[0m[1mdit_model[0m[1m,[0m [1mdevice[0m[35m[1m=[0m[1mdevice[0m[1m,[0m
+    [36m          │    │   │                               │    │                     │                 └ [0m[36m[1m'auto'[0m
+    [36m          │    │   │                               │    │                     └ [0m[36m[1m'acestep-v15-turbo'[0m
+    [36m          │    │   │                               │    └ [0m[36m[1m'/Users/runner/work/_temp/ki/ACE-Step-1.5'[0m
+    [36m          │    │   │                               └ [0m[36m[1m<__main__.Engine object at 0x105ac2c30>[0m
+    [36m          │    │   └ [0m[36m[1m<function InitServiceOrchestratorMixin.initialize_service at 0x10ad4cae0>[0m
+    [36m          │    └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x105aec410>[0m
+    [36m          └ [0m[36m[1m<__main__.Engine object at 0x105ac2c30>[0m
+
+> File "[32m/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/[0m[32m[1minit_service_orchestrator.py[0m", line [33m156[0m, in [35minitialize_service[0m
+    [1mself[0m[35m[1m.[0m[1m_load_main_model_from_checkpoint[0m[1m([0m
+    [36m│    └ [0m[36m[1m<function InitServiceLoaderMixin._load_main_model_from_checkpoint at 0x10ad177e0>[0m
+    [36m└ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x105aec410>[0m
+
+  File "[32m/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/[0m[32m[1minit_service_loader.py[0m", line [33m198[0m, in [35m_load_main_model_from_checkpoint[0m
+    [1mself[0m[35m[1m.[0m[1mmodel[0m [35m[1m=[0m [1mself[0m[35m[1m.[0m[1mmodel[0m[35m[1m.[0m[1mto[0m[1m([0m[1mdevice[0m[1m)[0m[35m[1m.[0m[1mto[0m[1m([0m[1mself[0m[35m[1m.[0m[1mdtype[0m[1m)[0m
+    [36m│    │       │    │        │          │    └ [0m[36m[1mtorch.float32[0m
+    [36m│    │       │    │        │          └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x105aec410>[0m
+    [36m│    │       │    │        └ [0m[36m[1m'mps'[0m
+    [36m│    │       │    └ [0m[36m[1mNone[0m
+    [36m│    │       └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x105aec410>[0m
+    [36m│    └ [0m[36m[1mNone[0m
+    [36m└ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x105aec410>[0m
+
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/modeling_utils.py", line 4343, in to
+    return super().to(*args, **kwargs)
+                       │       └ {}
+                       └ ('mps',)
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1381, in to
+    return self._apply(convert)
+           │    │      └ <function Module.to.<locals>.convert at 0x105ae1120>
+           │    └ <function Module._apply at 0x1072fcf40>
+           └ AceStepConditionGenerationModel(
+               (decoder): AceStepDiTModel(
+                 (rotary_emb): Qwen3RotaryEmbedding()
+                 (layers): ModuleL...
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x105ae1120>
+    │      └ <function Module._apply at 0x1072fcf40>
+    └ AceStepConditionEncoder(
+        (text_projector): Linear(in_features=1024, out_features=2048, bias=False)
+        (lyric_encoder): AceSt...
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x105ae1120>
+    │      └ <function Module._apply at 0x1072fcf40>
+    └ AceStepTimbreEncoder(
+        (embed_tokens): Linear(in_features=64, out_features=2048, bias=True)
+        (norm): Qwen3RMSNorm((2048,), ...
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x105ae1120>
+    │      └ <function Module._apply at 0x1072fcf40>
+    └ ModuleList(
+        (0-3): 4 x AceStepEncoderLayer(
+          (self_attn): AceStepAttention(
+            (q_proj): Linear(in_features=2048, out...
+  [Previous line repeated 3 more times]
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 964, in _apply
+    param_applied = fn(param)
+                    │  └ Parameter containing:
+                    │    tensor([[ 0.0369, -0.0028,  0.0085,  ..., -0.0493,  0.0361, -0.0544],
+                    │            [-0.0188, -0.0118, -0.031...
+                    └ <function Module.to.<locals>.convert at 0x105ae1120>
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1367, in convert
+    return t.to(
+           │ └ <method 'to' of 'torch._C.TensorBase' objects>
+           └ Parameter containing:
+             tensor([[ 0.0369, -0.0028,  0.0085,  ..., -0.0493,  0.0361, -0.0544],
+                     [-0.0188, -0.0118, -0.031...
+
+[31m[1mRuntimeError[0m:[1m MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 16.00 KiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).[0m
+[32m2026-11-14 06:10:42.120[0m | [1mINFO    [0m | [36macestep.core.generation.handler.init_service_loader[0m:[36m_load_main_model_from_checkpoint[0m:[36m174[0m - [1m[initialize_service] Attempting to load model with attention implementation: sdpa[0m
+[32m2026-11-14 06:12:11.858[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_init[0m:[36m_init_mlx_vae[0m:[36m75[0m - [1m[MLX-VAE] Decode/encode compiled with mx.compile().[0m
+[32m2026-11-14 06:12:11.867[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_init[0m:[36m_init_mlx_vae[0m:[36m85[0m - [1m[MLX-VAE] Native MLX VAE initialized (dtype=mlx.core.float32, compiled=True).[0m
+[32m2026-11-14 06:12:11.980[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=False, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=False, use_lm=False[0m
+[32m2026-11-14 06:12:11.986[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m329[0m - [1m[generate_music] Starting generation...[0m
+[32m2026-11-14 06:12:11.986[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m332[0m - [1m[generate_music] Preparing inputs...[0m
+[32m2026-11-14 06:12:12.036[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m119[0m - [1m
+======================================================================[0m
+[32m2026-11-14 06:12:12.036[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m120[0m - [1m🔍 [DEBUG] DiT TEXT ENCODER INPUT (Inference)[0m
+[32m2026-11-14 06:12:12.036[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m121[0m - [1m======================================================================[0m
+[32m2026-11-14 06:12:12.036[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m122[0m - [1mtext_prompt:
+# Instruction
+Fill the audio semantic mask based on the given conditions:
+
+# Caption
+Short piano motif
+
+# Metas
+- bpm: N/A
+- timesignature: N/A
+- keyscale: N/A
+- duration: 10 seconds
+<|endoftext|>
+[0m
+[32m2026-11-14 06:12:12.036[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m123[0m - [1m======================================================================[0m
+[32m2026-11-14 06:12:12.036[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m124[0m - [1mlyrics_text:
+# Languages
+unknown
+
+# Lyric
+[Instrumental]<|endoftext|>[0m
+[32m2026-11-14 06:12:12.036[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m125[0m - [1m======================================================================
+[0m
+[32m2026-11-14 06:12:12.144[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m110[0m - [1m[preprocess_batch] Inferring prompt embeddings...[0m
+[32m2026-11-14 06:12:16.850[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m113[0m - [1m[preprocess_batch] Inferring lyric embeddings...[0m
+[32m2026-11-14 06:12:16.870[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m173[0m - [1m[service_generate] Generating audio... (DiT backend: PyTorch (cpu))[0m
+[32m2026-11-14 06:12:42.889[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m276[0m - [1m[service_generate] DiT diffusion via PyTorch (cpu)...[0m
+[32m2026-11-14 06:12:54.667[0m | [1mINFO    [0m | [36macestep.models.common.dcw_correction[0m:[36m__init__[0m:[36m98[0m - [1m[DCW] Active — mode=double, scaler=0.0500, high_scaler=0.0200, wavelet='haar'[0m
+[32m2026-11-14 06:13:46.250[0m | [1mINFO    [0m | [36macestep.models.common.dcw_loader[0m:[36mget[0m:[36m84[0m - [1m[DCW] Built DWT1D for wavelet='haar' (low-pass filter taps=2, device=cpu, dtype=torch.float32).[0m
+[32m2026-11-14 06:15:56.088[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m42[0m - [1m[generate_music] Model generation completed. Decoding latents...[0m
+[32m2026-11-14 06:15:56.207[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m64[0m - [34m[1m[generate_music] pred_latents: torch.Size([1, 250, 64]), dtype=torch.float32[0m
+[32m2026-11-14 06:15:56.207[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m65[0m - [34m[1m[generate_music] time_costs: {'encoder_time_cost': 11.771322250366211, 'diffusion_time_cost': 181.24677300453186, 'diffusion_per_step_time_cost': 22.655846625566483, 'total_time_cost': 193.01809525489807, 'offload_time_cost': 0.0}[0m
+[32m2026-11-14 06:15:56.255[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m127[0m - [1m[generate_music] Decoding latents with VAE...[0m
+[32m2026-11-14 06:15:56.291[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m136[0m - [34m[1m[generate_music] Before VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-14 06:15:56.291[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m172[0m - [1m[generate_music] Using tiled VAE decode to reduce VRAM usage...[0m
+[32m2026-11-14 06:16:22.317[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_decode_native[0m:[36m_mlx_vae_decode[0m:[36m66[0m - [1m[MLX-VAE] Decoded 1 sample(s), 250 latent frames -> audio in 26.01s (convert=0.043s, decode=25.94s, dtype=mlx.core.float32)[0m
+[32m2026-11-14 06:16:22.420[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m193[0m - [34m[1m[generate_music] After VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-14 06:16:26.235[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m38[0m - [1m[generate_music] VAE decode completed. Preparing audio tensors...[0m
+[32m2026-11-14 06:16:26.236[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m50[0m - [1m[generate_music] Done! Generated 1 audio tensors.[0m
+[32m2026-11-14 06:16:26.425[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1002[0m - [1m[Normalization] Audio 0 BEFORE: Peak=1.0000, Target=-1.0dB[0m
+[32m2026-11-14 06:16:26.448[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1007[0m - [1m[Normalization] Audio 0 AFTER: Peak=0.8913[0m
+[32m2026-11-14 06:16:26.588[0m | [34m[1mDEBUG   [0m | [36macestep.audio_utils[0m:[36msave_audio[0m:[36m339[0m - [34m[1m[AudioSaver] Fallback soundfile Saved audio to /Users/runner/work/music-library-mac/music-library-mac/out/audio/04-danach/ccd90c1d-e1bf-f250-0bd2-5ac1bc4c4a38.flac (flac, 48000Hz)[0m
+
+--- 2026-11-14 06:16:26 +0000 KI-Prozess startet ---
+W1114 06:16:37.297000 42404 .venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+[32m2026-11-14 06:16:41.001[0m | [33m[1mWARNING [0m | [36macestep.training.trainer[0m:[36m<module>[0m:[36m40[0m - [33m[1mbitsandbytes not installed. Using standard AdamW.[0m
+[32m2026-11-14 06:16:41.072[0m | [1mINFO    [0m | [36macestep.gpu_config[0m:[36mget_gpu_config[0m:[36m846[0m - [1mmacOS MPS detected (4.7 GB unified memory, tier=tier2). Applying Apple Silicon optimizations: no compile, no quantization, mlx backend, no CPU offload.[0m
+[32m2026-11-14 06:16:41.074[0m | [1mINFO    [0m | [36macestep.core.generation.handler.init_service_downloads[0m:[36m_ensure_models_present[0m:[36m44[0m - [1m[initialize_service] DiT model 'gibt-es-nicht' not found, starting auto-download...[0m
+Traceback (most recent call last):
+  File "/Users/runner/work/_temp/ki/Engine/engine.py", line 259, in main
+    result = engine.load(req, progress)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/Engine/engine.py", line 104, in load
+    raise RuntimeError(f"Musikmodell konnte nicht geladen werden: {msg}")
+RuntimeError: Musikmodell konnte nicht geladen werden: ERROR: Failed to download DiT model 'gibt-es-nicht': Unknown DiT model: gibt-es-nicht
