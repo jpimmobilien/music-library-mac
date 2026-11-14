@@ -1,0 +1,40 @@
+Testdateien: 8 (Erstellungsdaten 2018–2020)
+
+== Alte Version: Datenbank anlegen und Ordner einlesen
+▸ v20-erststart gestartet (PID 1554, x86_64 arm64 · Rechner x86_64)
+  ✗ v20-erststart lief nicht mehr (Status 134) – Ausgabe:
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+▸ v20-einlesen gestartet (PID 1638, x86_64 arm64 · Rechner x86_64)
+  ✗ Einlesen unvollständig: 0
+  ✗ v20-einlesen lief nicht mehr (Status 134) – Ausgabe:
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+  Stand alte Version: 0 Titel, alle mit demselben Hinzufügedatum: 0 verschiedene Werte
+
+== Neue Version: erster Start mit den Daten der alten Version
+▸ v21-erststart gestartet (PID 1777, x86_64 arm64 · Rechner x86_64)
+  ✓ Hinzufügedatum für alle Titel bestimmt
+  ✗ v21-erststart lief nicht mehr (Status 134) – Ausgabe:
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+  Prüfung der Datenbank nach dem ersten Start der neuen Version:
+  ✓ Schema ergänzt (user_version 1), alle Titel, Favoriten, Playlist, Bewertung, Statistik und Wiedergabeposition unverändert, Hinzufügedatum = Erstellungsdatum der Datei
+
+== Neue Version: erneuter Start, dazu eine neue Datei (erstellt 2021)
+▸ v21-zweitstart gestartet (PID 2036, x86_64 arm64 · Rechner x86_64)
+  ✗ neue Datei nicht eingelesen (0)
+  ✗ v21-zweitstart lief nicht mehr (Status 134) – Ausgabe:
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+  ✓ Hinzufügedaten nach dem Neustart unverändert, neue Datei mit eigenem Erstellungsdatum
+
+== Alte Version: erneuter Start mit der Datenbank der neuen Version
+▸ v20-rueckweg gestartet (PID 2223, x86_64 arm64 · Rechner x86_64)
+  ✗ v20-rueckweg lief nicht mehr (Status 134) – Ausgabe:
++[MTLLoader sliceIDForDevice:legacyDriverVersion:airntDriverVersion:]:685: failed assertion `Target device architecture is nil'
+  ✓ Datenbank nicht beiseitegelegt (keine „Library-defekt“-Datei)
+  ✓ Die alte Version öffnet die Datenbank weiterhin; alle Daten und Hinzufügedaten erhalten
+  Absturzbericht: MusicLibrary-2026-11-14-062946.ips
+  Absturzbericht: MusicLibrary-2026-11-14-062947.000.ips
+  Absturzbericht: MusicLibrary-2026-11-14-062947.0002.ips
+  Absturzbericht: MusicLibrary-2026-11-14-062947.ips
+  Absturzbericht: MusicLibrary-2026-11-14-062950.ips
+
+ERGEBNIS: Befunde siehe oben
