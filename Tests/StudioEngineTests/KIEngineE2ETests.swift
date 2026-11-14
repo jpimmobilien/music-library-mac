@@ -122,6 +122,8 @@ final class KIEngineE2ETests: XCTestCase {
         try inst.installScripts()
         let engine = KIEngine(installer: inst)
         defer { engine.shutdown() }
+        try await engine.prepare(dit: "acestep-v15-turbo", lm: nil) { _, _ in }
+        XCTAssertTrue(engine.isRunning)
         let req = KIGenerationRequest(prompt: "Energetic synthwave", lyricsMode: .instrumental, duration: 120, quality: .fast)
         let task = Task {
             try await engine.generate(params: req.engineParams(), variations: 1, seeds: nil,
@@ -134,6 +136,7 @@ final class KIEngineE2ETests: XCTestCase {
             XCTFail("Abbruch erwartet")
         } catch {
             log("Abbruch: \(error.localizedDescription)")
+            XCTAssertEqual(error as? KIEngineClient.ClientError, .cancelled)
         }
         try await Task.sleep(nanoseconds: 4_000_000_000)
         XCTAssertFalse(engine.isRunning, "Prozess ist nach dem Abbruch beendet")

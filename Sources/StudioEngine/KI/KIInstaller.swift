@@ -189,6 +189,8 @@ public final class KIInstaller: @unchecked Sendable {
         var s = loadState()
         s.environmentDate = Date()
         try saveState(s)
+        // Zwischenspeicher von uv (ca. 1,2 GB, Kopien der Pakete) wird nicht mehr gebraucht
+        try? FileManager.default.removeItem(at: paths.cache)
         progress(Progress(step: "KI-Umgebung bereit", fraction: 1))
     }
 

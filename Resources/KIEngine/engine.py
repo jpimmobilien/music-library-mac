@@ -23,6 +23,9 @@ os.environ["TRANSFORMERS_OFFLINE"] = "1"
 os.environ["HF_HUB_DISABLE_TELEMETRY"] = "1"
 os.environ["DO_NOT_TRACK"] = "1"
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+# ACE-Step bricht eine Erzeugung sonst nach 600 s ab – auf langsameren Macs zu kurz für lange Stücke.
+# Abbrechen kann der Nutzer jederzeit selbst (die App beendet dann den Prozess).
+os.environ["ACESTEP_GENERATION_TIMEOUT"] = os.environ.get("KI_GENERATION_TIMEOUT", "7200")
 for _k in ("http_proxy", "https_proxy", "HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "all_proxy"):
     os.environ.pop(_k, None)
 
