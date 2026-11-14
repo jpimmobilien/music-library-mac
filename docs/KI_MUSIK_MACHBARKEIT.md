@@ -62,6 +62,32 @@ eine bekannte Halluzination bei Musik, kein Gesang.
 sich auf der virtuellen Grafik nicht übersetzen ließen. Auf echter Hardware nicht geprüft. Die App fällt in diesem
 Fall automatisch auf PyTorch zurück; bei zu wenig Grafikspeicher rechnet das Musikmodell auf dem Prozessor.
 
+## Prüfstand KI-E2E (Code der App, 13./14.11.2026)
+
+Der Prüfstand richtet die KI-Umgebung mit `KIInstaller` ein und erzeugt über `KIEngine` – derselbe Code wie in der
+App, Rechenprozess in der Sandbox ohne Netz. Rechner: virtueller M1, 7 GB, ohne nutzbaren Grafikspeicher.
+Endstand 14.11.: **macOS 15.8 alle 5 Prüfungen bestanden**, macOS 26.7 vier von fünf (siehe letzte Zeile).
+
+| Schritt | macOS 15.8 | macOS 26.7 |
+|---|---|---|
+| Umgebung (uv, ACE-Step `ca1e85f`, Python 3.12, Pakete) | 45 s | 41 s |
+| Grundpaket (10,1 GB, Stand `19671f4`) + LM 0.6B (1,4 GB) | 70 s, Fortschritt bis 100 % | 78 s |
+| Zweiter Aufruf der Einrichtung | 8 s (nichts neu geladen) | 8 s |
+| Platz nach der Einrichtung | Umgebung 1,4 GB, Modelle 11 GB (uv-Zwischenspeicher gelöscht) | ebenso |
+| Sandbox: Verbindung ins Netz aus Python | gesperrt (URLError) | gesperrt |
+| Modelle laden | 277 s (Grafikspeicher reicht nicht → Prozessor, automatisch) | 282 s (ebenso) |
+| 20 s Instrumental, englisch, ohne Planung | 323 s | 635 s |
+| 2 × 20 s, deutsche Beschreibung, mit Planung | 414 s | 751 s (über der früheren 600-s-Grenze von ACE-Step, die die App jetzt aufhebt) |
+| KI schreibt deutschen Text (LM 0.6B) | 33 s – inhaltlich schwach („Komm wir machen Schnaps …“) | 101 s (PyTorch) – ebenfalls schwach |
+| 30 s deutscher Gesang mit diesem Text | 493 s; Whisper gibt die ersten elf Zeilen fast wörtlich wieder | ✗ Sprachmodell auf PyTorch/MPS: zu wenig Speicher (7 GB-Rechner) |
+| Abbrechen während des Erzeugens | Prozess beendet, „Abgebrochen.“, danach erneutes Laden und Erzeugen ✓ | ✓ |
+| Fehlermeldung bei unbekanntem Modell | klar, ohne Absturz ✓ | ✓ |
+| MLX-Sprachmodell scheitert (NAX-Kernel) | – | automatisch auf PyTorch umgestellt ✓ |
+
+Der Fehlschlag auf macOS 26 betrifft nur Rechner mit sehr wenig Speicher: Die App lädt auf Macs unter 12 GB gar kein
+Sprachmodell (nur „Schnell“ mit eigenem Text oder Instrumental) – der Prüfstand hat es dort absichtlich erzwungen.
+Die Zeiten gelten für den Prozessor eines virtuellen Rechners und sind kein Maß für den M5 Pro.
+
 ## Lizenzen
 
 | Bestandteil | Quelltext | Gewichte | Kommerziell | Weitergabe durch die App |
@@ -127,9 +153,9 @@ ACE-Step 1.5 (MLX/PyTorch) → FLAC → ~/Music/KI-Musik (nicht Teil der Bibliot
 | 10 | Gesang extrahieren | Probe ✓ technisch; in der App noch nicht |
 | 11 | Remix eines Teststücks | Probe ✓ technisch (eigenes erzeugtes Stück als Vorlage) |
 | 12 | Voice Conversion | offen (eigenes Modell nötig) |
-| 13 | Export in die Bibliothek | App: über „Hinzufügen“ – Prüfung offen |
-| 14 | Offlinebetrieb | App: Sandbox ohne Netz – Prüfstand KI-E2E |
-| 15 | Fehler und Abbruch | App: Prüfstand KI-E2E |
+| 13 | Export in die Bibliothek | App: über „Hinzufügen“ – automatischer Test mit Ersatzdatei ✓ |
+| 14 | Offlinebetrieb | Prüfstand KI-E2E ✓ (Sandbox ohne Netz, Erzeugen gelingt) |
+| 15 | Fehler und Abbruch | Prüfstand KI-E2E: Fehlermeldung ✓, Abbruch mit Neustart ✓ |
 
 Hörtests (Klang, Natürlichkeit, Übergänge, Aussprache) kann nur ein Mensch machen.
 
