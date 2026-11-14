@@ -1,0 +1,136 @@
+{
+ "user_version": 1,
+ "tracks": [
+  [
+   1,
+   "/Users/runner/Abnahme-Musik/Album Eins/06 Sonne.m4a",
+   null,
+   1559565720,
+   null,
+   4063,
+   "AAC",
+   192,
+   44100
+  ],
+  [
+   2,
+   "/Users/runner/Abnahme-Musik/Album Eins/02 Mittag.m4a",
+   null,
+   1549196040,
+   null,
+   4063,
+   "AAC",
+   192,
+   44100
+  ],
+  [
+   3,
+   "/Users/runner/Abnahme-Musik/Album Eins/04 Nacht.m4a",
+   null,
+   1554294480,
+   null,
+   4063,
+   "AAC",
+   192,
+   44100
+  ],
+  [
+   4,
+   "/Users/runner/Abnahme-Musik/Album Eins/03 Abend.m4a",
+   null,
+   1551615660,
+   null,
+   4063,
+   "AAC",
+   192,
+   44100
+  ],
+  [
+   5,
+   "/Users/runner/Abnahme-Musik/Album Eins/05 Regen.m4a",
+   null,
+   1556886900,
+   80,
+   4063,
+   "AAC",
+   192,
+   44100
+  ],
+  [
+   6,
+   "/Users/runner/Abnahme-Musik/Album Eins/01 Morgen.m4a",
+   null,
+   1546517220,
+   null,
+   4063,
+   "AAC",
+   192,
+   44100
+  ],
+  [
+   7,
+   "/Users/runner/Abnahme-Musik/Einzeltitel/Einzeltitel A.wav",
+   null,
+   1584273600,
+   null,
+   4000,
+   "PCM",
+   1411,
+   44100
+  ],
+  [
+   8,
+   "/Users/runner/Abnahme-Musik/Einzeltitel/Einzeltitel B.m4a",
+   null,
+   1542738600,
+   null,
+   4063,
+   "AAC",
+   192,
+   44100
+  ]
+ ],
+ "favorites": [
+  [
+   1,
+   1700000000
+  ],
+  [
+   2,
+   1700000000
+  ]
+ ],
+ "playlists": [
+  [
+   "Abnahme-Playlist",
+   6,
+   6
+  ],
+  [
+   "Abnahme-Playlist",
+   7,
+   7
+  ],
+  [
+   "Abnahme-Playlist",
+   8,
+   8
+  ]
+ ],
+ "stats": [
+  [
+   3,
+   7,
+   1700001000,
+   1690000000,
+   28000
+  ]
+ ],
+ "resume": [
+  [
+   4,
+   1500,
+   1700002000
+  ]
+ ]
+}

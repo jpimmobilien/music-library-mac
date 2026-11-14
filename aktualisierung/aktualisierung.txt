@@ -1,0 +1,47 @@
+Testdateien: 8 (Erstellungsdaten 2018–2020)
+
+== Alte Version: Datenbank anlegen und Ordner einlesen
+▸ v20-erststart gestartet (PID 3693, x86_64 arm64 · Rechner arm64)
+  v20-erststart beendet
+▸ v20-einlesen gestartet (PID 3725, x86_64 arm64 · Rechner arm64)
+  ✓ 8 Titel eingelesen
+  v20-einlesen beendet
+  Stand alte Version: 8 Titel, alle mit demselben Hinzufügedatum: 8 verschiedene Werte
+
+== Neue Version: erster Start mit den Daten der alten Version
+▸ v21-erststart gestartet (PID 4007, x86_64 arm64 · Rechner arm64)
+  ✓ Hinzufügedatum für alle Titel bestimmt
+  v21-erststart beendet
+  Prüfung der Datenbank nach dem ersten Start der neuen Version:
+    06 Sonne.m4a                       03.06.2019 12:42  Quelle 2  AAC 192 kbit/s
+    02 Mittag.m4a                      03.02.2019 12:14  Quelle 2  AAC 192 kbit/s
+    04 Nacht.m4a                       03.04.2019 12:28  Quelle 2  AAC 192 kbit/s
+    03 Abend.m4a                       03.03.2019 12:21  Quelle 2  AAC 192 kbit/s
+    05 Regen.m4a                       03.05.2019 12:35  Quelle 2  AAC 192 kbit/s
+    01 Morgen.m4a                      03.01.2019 12:07  Quelle 2  AAC 192 kbit/s
+    Einzeltitel A.wav                  15.03.2020 12:00  Quelle 2  PCM 1411 kbit/s
+    Einzeltitel B.m4a                  20.11.2018 18:30  Quelle 2  AAC 192 kbit/s
+  ✓ Schema ergänzt (user_version 1), alle Titel, Favoriten, Playlist, Bewertung, Statistik und Wiedergabeposition unverändert, Hinzufügedatum = Erstellungsdatum der Datei
+
+== Neue Version: erneuter Start, dazu eine neue Datei (erstellt 2021)
+▸ v21-zweitstart gestartet (PID 4279, x86_64 arm64 · Rechner arm64)
+  ✓ neue Datei eingelesen
+  v21-zweitstart beendet
+    06 Sonne.m4a                       03.06.2019 12:42  Quelle 2  AAC 192 kbit/s
+    02 Mittag.m4a                      03.02.2019 12:14  Quelle 2  AAC 192 kbit/s
+    04 Nacht.m4a                       03.04.2019 12:28  Quelle 2  AAC 192 kbit/s
+    03 Abend.m4a                       03.03.2019 12:21  Quelle 2  AAC 192 kbit/s
+    05 Regen.m4a                       03.05.2019 12:35  Quelle 2  AAC 192 kbit/s
+    01 Morgen.m4a                      03.01.2019 12:07  Quelle 2  AAC 192 kbit/s
+    Einzeltitel A.wav                  15.03.2020 12:00  Quelle 2  PCM 1411 kbit/s
+    Einzeltitel B.m4a                  20.11.2018 18:30  Quelle 2  AAC 192 kbit/s
+    Neu hinzugefuegt.m4a               04.07.2021 09:00  Quelle 2  AAC 192 kbit/s
+  ✓ Hinzufügedaten nach dem Neustart unverändert, neue Datei mit eigenem Erstellungsdatum
+
+== Alte Version: erneuter Start mit der Datenbank der neuen Version
+▸ v20-rueckweg gestartet (PID 4564, x86_64 arm64 · Rechner arm64)
+  v20-rueckweg beendet
+  ✓ Datenbank nicht beiseitegelegt (keine „Library-defekt“-Datei)
+  ✓ Die alte Version öffnet die Datenbank weiterhin; alle Daten und Hinzufügedaten erhalten
+
+ERGEBNIS: Aktualisierung alt → neu → alt ohne Befund

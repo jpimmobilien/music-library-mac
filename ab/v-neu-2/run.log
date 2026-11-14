@@ -1,0 +1,79 @@
+[Wächter] Hauptthread reagiert seit über 6 s nicht – Aufnahme haenger-1.txt
+[Messlauf]    0.1 s  Index aufbauen (10000 Titel): Ø 139.2 ms, p95 139.2 ms
+[Messlauf]    0.6 s  Alle Listen berechnen (Hintergrund): Ø 473.1 ms, p95 473.1 ms
+[Messlauf]    2.4 s  Suche berechnen (Hintergrund): Ø 350.5 ms, p95 388.6 ms
+[Messlauf]    2.7 s  Alle Listen nach „Hinzugefügt“ (Hintergrund): Ø 329.9 ms, p95 329.9 ms
+[Messlauf]    2.8 s  Abschnitte „Hinzugefügt“ (Titel + Alben): Ø 1.5 ms, p95 1.8 ms
+[Messlauf]    2.8 s  Abschnitte „Hinzugefügt“ ohne Zwischenspeicher: Ø 9.0 ms, p95 9.3 ms
+[Messlauf]    3.2 s  Bearbeiten 60 s: Equalizer + Begrenzer: Ø 371.5 ms, p95 371.5 ms
+[Messlauf]    3.7 s  Bearbeiten 60 s: Tempo 1,1 + 432 Hz: Ø 524.4 ms, p95 524.4 ms
+[Messlauf]    4.1 s  Bearbeiten 60 s: Auto-Tune: Ø 385.4 ms, p95 385.4 ms
+[Messlauf]    4.2 s  Bearbeiten 60 s: Lautheit messen: Ø 64.1 ms, p95 64.1 ms
+[Messlauf]   17.0 s  Bereich wechseln: Ø 218.6 ms, p95 290.7 ms
+[Messlauf]   17.9 s  Titel: Ansicht „Raster“ öffnen: Ø 97.7 ms, p95 97.7 ms
+[Messlauf]   24.7 s  Titel · Raster: Scrollschritt: Ø 45.4 ms, p95 87.3 ms
+[Messlauf]   25.5 s  Titel: Ansicht „Kompaktes Raster“ öffnen: Ø 746.2 ms, p95 746.2 ms
+[Messlauf]   37.6 s  Titel · Kompaktes Raster: Scrollschritt: Ø 108.9 ms, p95 178.1 ms
+[Messlauf]   37.9 s  Titel: Ansicht „Liste“ öffnen: Ø 345.2 ms, p95 345.2 ms
+[Messlauf]   45.1 s  Titel · Liste: Scrollschritt: Ø 41.7 ms, p95 59.2 ms
+[Messlauf]   45.3 s  Titel: Ansicht „Detailliste“ öffnen: Ø 225.1 ms, p95 225.1 ms
+[Messlauf]   54.0 s  Titel · Detailliste: Scrollschritt: Ø 44.8 ms, p95 53.4 ms
+[Messlauf]   55.6 s  Alben: Ansicht „Raster“ öffnen: Ø 0.2 ms, p95 0.2 ms
+[Messlauf]   62.6 s  Alben · Raster: Scrollschritt: Ø 42.3 ms, p95 90.5 ms
+[Messlauf]   62.8 s  Alben: Ansicht „Kompaktes Raster“ öffnen: Ø 211.2 ms, p95 211.2 ms
+[Messlauf]   72.5 s  Alben · Kompaktes Raster: Scrollschritt: Ø 78.9 ms, p95 129.4 ms
+[Messlauf]   72.8 s  Alben: Ansicht „Liste“ öffnen: Ø 265.8 ms, p95 265.8 ms
+[Messlauf]   83.4 s  Alben · Liste: Scrollschritt: Ø 86.5 ms, p95 151.6 ms
+[Messlauf]   83.6 s  Alben: Ansicht „Detailliste“ öffnen: Ø 259.5 ms, p95 259.5 ms
+[Messlauf]   92.7 s  Alben · Detailliste: Scrollschritt: Ø 44.8 ms, p95 57.6 ms
+[Messlauf]   95.8 s  Suche tippen (je Taste, Hauptthread): Ø 15.6 ms, p95 83.8 ms
+[Messlauf]   95.8 s  Suche: Ergebnis sichtbar nach letzter Taste: Ø 97.5 ms, p95 97.5 ms
+[Messlauf]   95.8 s  Suche: Ergebnis zeichnen (Hauptthread): Ø 0.1 ms, p95 0.1 ms
+[Messlauf]  112.8 s  Player öffnen/schließen (alle Designs): Ø 218.0 ms, p95 347.5 ms
+[Messlauf]  116.9 s  Leerlauf mit Wiedergabe: Verspätung je Bild: Ø 62.1 ms, p95 129.2 ms
+[Messlauf]  121.0 s  Leerlauf mit Wiedergabe: Hauptthread belegt [%]: Ø 20.6 ms, p95 20.6 ms
+[Messlauf]  121.0 s  Leerlauf mit Wiedergabe: Prozess-CPU [%]: Ø 21.1 ms, p95 21.1 ms
+[Messlauf]  126.6 s  Großer Player (Vinyl) läuft: Hauptthread belegt [%]: Ø 27.2 ms, p95 27.2 ms
+[Messlauf]  126.6 s  Großer Player (Vinyl) läuft: Prozess-CPU [%]: Ø 27.6 ms, p95 27.6 ms
+Music Library – Messlauf mit 10000 Titeln
+Version 26.7.2 (Build 25G332) · arm64 · Apple M1 (Virtual)
+Systemeinstellung „Bewegung reduzieren“: an (für die Messung übergangen – Animationen laufen)
+
+Messung                                                     Mittel     p95     Max   (ms bzw. %)
+Index aufbauen (10000 Titel)                                 139.2    139.2    139.2
+Alle Listen berechnen (Hintergrund)                          473.1    473.1    473.1
+Suche berechnen (Hintergrund)                                350.5    388.6    388.6
+Alle Listen nach „Hinzugefügt“ (Hintergrund)                 329.9    329.9    329.9
+Abschnitte „Hinzugefügt“ (Titel + Alben)                       1.5      1.8      1.8
+Abschnitte „Hinzugefügt“ ohne Zwischenspeicher                 9.0      9.3      9.3
+Bearbeiten 60 s: Equalizer + Begrenzer                       371.5    371.5    371.5
+Bearbeiten 60 s: Tempo 1,1 + 432 Hz                          524.4    524.4    524.4
+Bearbeiten 60 s: Auto-Tune                                   385.4    385.4    385.4
+Bearbeiten 60 s: Lautheit messen                              64.1     64.1     64.1
+Bereich wechseln                                             218.6    290.7    290.7
+Titel: Ansicht „Raster“ öffnen                                97.7     97.7     97.7
+Titel · Raster: Scrollschritt                                 45.4     87.3    123.9
+Titel: Ansicht „Kompaktes Raster“ öffnen                     746.2    746.2    746.2
+Titel · Kompaktes Raster: Scrollschritt                      108.9    178.1    195.6
+Titel: Ansicht „Liste“ öffnen                                345.2    345.2    345.2
+Titel · Liste: Scrollschritt                                  41.7     59.2     73.2
+Titel: Ansicht „Detailliste“ öffnen                          225.1    225.1    225.1
+Titel · Detailliste: Scrollschritt                            44.8     53.4     60.2
+Alben: Ansicht „Raster“ öffnen                                 0.2      0.2      0.2
+Alben · Raster: Scrollschritt                                 42.3     90.5    110.5
+Alben: Ansicht „Kompaktes Raster“ öffnen                     211.2    211.2    211.2
+Alben · Kompaktes Raster: Scrollschritt                       78.9    129.4    150.9
+Alben: Ansicht „Liste“ öffnen                                265.8    265.8    265.8
+Alben · Liste: Scrollschritt                                  86.5    151.6    166.6
+Alben: Ansicht „Detailliste“ öffnen                          259.5    259.5    259.5
+Alben · Detailliste: Scrollschritt                            44.8     57.6     61.7
+Suche tippen (je Taste, Hauptthread)                          15.6     83.8     83.8
+Suche: Ergebnis sichtbar nach letzter Taste                   97.5     97.5     97.5
+Suche: Ergebnis zeichnen (Hauptthread)                         0.1      0.1      0.1
+Player öffnen/schließen (alle Designs)                       218.0    347.5    347.5
+Leerlauf mit Wiedergabe: Verspätung je Bild                   62.1    129.2    130.5
+Leerlauf mit Wiedergabe: Hauptthread belegt [%]               20.6     20.6     20.6
+Leerlauf mit Wiedergabe: Prozess-CPU [%]                      21.1     21.1     21.1
+Großer Player (Vinyl) läuft: Hauptthread belegt [%]           27.2     27.2     27.2
+Großer Player (Vinyl) läuft: Prozess-CPU [%]                  27.6     27.6     27.6
+
