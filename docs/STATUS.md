@@ -1,5 +1,16 @@
 # Prüfstand – was gebaut und getestet ist (ehrlich)
 
+## Version 2.5.0 (14.11.2026, Build-Lauf 43562153928, Commit `6711a74`) – KI-Musik
+
+| Stufe | Ergebnis |
+|---|---|
+| Tests | ✅ 630 Tests, 0 Fehler (9 übersprungen: 5 KI-Ende-zu-Ende-Prüfungen laufen nur im Prüfstand KI-E2E, 4 wie bisher) auf macOS 26 Intel und macOS 15 Intel; neu: KI-Logik (Hardware, Sprachen, Anfrage, Kreationen, Schätzung), KI-Modell der App mit Ersatz-Rechenprozess (Einrichtungszustände, Erzeugen, deutscher Text ohne Übersetzung, Fehler, Abbrechen, Kreationen), Übernahme in die Bibliothek über „Hinzufügen“ |
+| KI-E2E (echtes ACE-Step 1.5, Code der App) | ✅ macOS 15.8 Apple Silicon (virtuell, 7 GB): Einrichtung (uv, ACE-Step, Python, 11,5 GB Modelle), Sandbox ohne Netz, Instrumental EN/DE, 2 Varianten, KI-Text, deutscher Gesang, Abbrechen mit Neustart, Fehlermeldung – 5/5. macOS 26.7: 4/5 (Gesang mit Sprachmodell auf 7 GB zu wenig Speicher; die App nutzt unter 12 GB kein Sprachmodell). Ergebnisse: Zweige `ci-ki-e2e-macos-15`, `ci-ki-e2e-macos-26`, [KI_MUSIK_MACHBARKEIT.md](KI_MUSIK_MACHBARKEIT.md) |
+| Vorschaubilder | KI-Musik: Einrichtung, Einrichtung läuft, bereit mit Kreationen, Ergebnisse mit KI-Text, Erzeugung läuft, schmal, Einstellungen – Hell und Dunkel; Navigation mit Studio · KI-Musik · Hinzufügen |
+| DMG | ✅ SHA-256 `1d186bacfa0d7497fab905721fea5fb7fb265055c5635afac615a6324a2bd5f1`, `x86_64 arm64`, Signatur gültig, enthält `Resources/KIEngine` (engine.py, download.py) – keine Modelle, kein Python |
+| Abnahme | ✅ Apple Silicon macOS 26: Installation, Version 2.5.0, Aktualisierung 2.4.0 → 2.5.0 → 2.4.0 ohne Befund, Leerlauf mit Wiedergabe 19–21 % (2.4.0: 19–20 %) · Intel macOS 26: ebenso, 12–14 % · Rosetta macOS 26: Installation, Start mit Vorschaubildern ✅ · Intel macOS 15 (virtuell): Start scheitert wie bei jeder Version am Metal-Fehler der virtuellen Maschine |
+| Nicht geprüft | Erzeugen auf echter Apple-Hardware mit Grafikbeschleunigung (Geschwindigkeit, MLX auf M5), Sprachmodelle 1.7B/4B, Musikmodell XL, Klang (Hörtest), Bedienung der KI-Oberfläche von Hand, macOS 13/14 |
+
 ## Version 2.4.0 (13.11.2026, Build-Lauf 43432980784, Commit `0ec8501`) – „Hinzufügen“ und „Studio“ getrennt
 
 | Stufe | Ergebnis |
