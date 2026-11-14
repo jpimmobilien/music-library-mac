@@ -1,4 +1,4 @@
-# Einschränkungen und offene Punkte (Version 2.4)
+# Einschränkungen und offene Punkte (Version 2.5)
 
 ## „Hinzufügen“ und „Studio“ (2.4)
 
@@ -9,11 +9,18 @@
 | **Ältere Verlaufseinträge** | Einträge von 2.2/2.3 tragen noch nicht, ob sie zu einem Bibliothekstitel gehören: Ersetzte Originale erscheinen im Studio, „als neue Datei geschnittene“ Bibliothekstitel aus 2.3 unter „Hinzufügen“. |
 | **Bedienung von Hand** | Wechsel zwischen den Bereichen, Titelauswahl, Ziehen auf das Studio als Vorschaubild und in automatischen Abläufen geprüft, nicht von Hand bedient. |
 
-## KI-Musik (geplant, Machbarkeit siehe [KI_MUSIK_MACHBARKEIT.md](KI_MUSIK_MACHBARKEIT.md))
+## KI-Musik (2.5)
 
-Noch nicht in der App. Der Machbarkeitsbericht zeigt: lokal auf Apple Silicon machbar, auf Intel-Macs nicht;
-Geschwindigkeit auf echter Hardware und Klang (Hörtest) ungeprüft; KI-geschriebene deutsche Texte mit dem kleinen
-Sprachmodell schlecht.
+| Punkt | Stand |
+|---|---|
+| **Nur Apple Silicon** | Auf Intel-Macs gibt es PyTorch/MLX nicht mehr; „KI-Musik“ zeigt dort nur einen Hinweis. |
+| **Geschwindigkeit auf echter Hardware** | Nicht gemessen. Geprüft nur auf virtuellen M1-Rechnern (3 Kerne, 7 GB, ohne nutzbaren Grafikspeicher): 20 s Musik in 8–11 Minuten auf dem Prozessor. Auf einem M5 Pro mit 48 GB rechnet das Modell auf der Grafik – deutlich schneller, aber ungeprüft. Die Zeitschätzung lernt aus den eigenen Läufen. |
+| **Klang** | Nicht gehört. Geprüft sind Länge, Pegel, keine Stille/kein Rauschen und die Verständlichkeit deutschen Gesangs per Spracherkennung. |
+| **KI-geschriebene Texte** | Mit dem kleinen Sprachmodell (0.6B) inhaltlich schwach („Komm wir machen Schnaps …“). Standard auf Macs ab 24 GB ist das 1.7B-Modell, ab 40 GB das 4B-Modell (separat laden) – beide ungeprüft. Eigener Text geht immer. |
+| **„Hohe Qualität“** | Braucht das XL-Modell (ca. 9 GB, separat laden); nicht geprüft. |
+| **Gesang entfernen, Spuren trennen, Remix eigener Songs, Stimmumwandlung, Mehrspuransicht** | Noch nicht in der App. Trennung und Remix sind technisch geprüft (demucs-mlx bzw. ACE-Step „cover“); Lizenz der Demucs-Gewichte ungeklärt; Stimmumwandlung braucht ein eigenes Modell. |
+| **macOS 13** | Nicht unterstützt (KI-Musik braucht macOS 14+); geprüft nur macOS 15 und 26. |
+| **Bedienung von Hand** | Oberfläche als Vorschaubild und mit Ersatz-Rechenprozess geprüft; Einrichtung und Erzeugen mit echtem ACE-Step im Prüfstand über den Code der App, nicht durch Klicken. |
 
 ## Titel bearbeiten (2.3)
 

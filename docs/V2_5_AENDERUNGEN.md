@@ -6,8 +6,9 @@ Beschreibung erzeugen – vollständig auf dem Mac, ohne Cloud, Konto oder Koste
 
 ## Voraussetzungen
 
-- Mac mit **Apple-Chip** (M1 oder neuer) und macOS 14 oder neuer. Auf Intel-Macs zeigt „KI-Musik“ nur einen
-  Hinweis – die Bibliothek bleibt unverändert nutzbar.
+- Mac mit **Apple-Chip** (M1 oder neuer) und macOS 14 oder neuer (geprüft: macOS 15 und 26). Auf Intel-Macs zeigt
+  „KI-Musik“ nur einen Hinweis – die Bibliothek bleibt unverändert nutzbar.
+- Kürzel: Studio ⌘7, **KI-Musik ⌘8**, Hinzufügen ⌘9 (bleibt ganz rechts).
 - Einmalige Einrichtung auf Knopfdruck: Python-Umgebung mit ACE-Step 1.5 (ca. 1,2 GB) und das Grundpaket der
   Modelle (ca. 10,4 GB). Abbrechen jederzeit, ein neuer Versuch setzt fort. Alles liegt unter
   `~/Library/Application Support/Music Library/KI-Musik` und lässt sich in den Einstellungen vollständig entfernen.
