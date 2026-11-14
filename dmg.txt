@@ -1,0 +1,14 @@
+ProductName:		macOS
+ProductVersion:		26.7.2
+BuildVersion:		25G332
+Rechner: arm64 · Apple M1 (Virtual)
+Music Library.dmg: OK
+hdiutil: verify: checksum of "dist/Music Library.dmg" is VALID
+/dev/disk7s1        	Apple_HFS                      	/private/var/folders/h5/t85nd63d71x27_8gl5gw3l_w0000gn/T/tmp.olNSblqgNR
+Music Library.app
+Programme
+"disk7" ejected.
+Architekturen: x86_64 arm64
+/Users/runner/Applications/Music Library.app: valid on disk
+/Users/runner/Applications/Music Library.app: satisfies its Designated Requirement
+Version: 2.5.0
