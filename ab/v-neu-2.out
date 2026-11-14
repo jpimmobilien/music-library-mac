@@ -1,0 +1,43 @@
+▸ Messlauf mit 10000 Titeln → /Users/runner/work/music-library-mac/music-library-mac/out/ab/v-neu-2 (Rechner x86_64, App-Architektur nativ)
+Music Library – Messlauf mit 10000 Titeln
+Version 26.6.1 (Build 25G76) · x86_64 · Intel(R) Core(TM) i7-8700B CPU @ 3.20GHz
+Systemeinstellung „Bewegung reduzieren“: an (für die Messung übergangen – Animationen laufen)
+
+Messung                                                     Mittel     p95     Max   (ms bzw. %)
+Index aufbauen (10000 Titel)                                 299.2    299.2    299.2
+Alle Listen berechnen (Hintergrund)                         1118.1   1118.1   1118.1
+Suche berechnen (Hintergrund)                               1123.4   1221.5   1221.5
+Alle Listen nach „Hinzugefügt“ (Hintergrund)                1244.4   1244.4   1244.4
+Abschnitte „Hinzugefügt“ (Titel + Alben)                       7.0      7.1      7.1
+Abschnitte „Hinzugefügt“ ohne Zwischenspeicher                36.9     37.6     37.6
+Bearbeiten 60 s: Equalizer + Begrenzer                      1046.3   1046.3   1046.3
+Bearbeiten 60 s: Tempo 1,1 + 432 Hz                          999.8    999.8    999.8
+Bearbeiten 60 s: Auto-Tune                                  1237.6   1237.6   1237.6
+Bearbeiten 60 s: Lautheit messen                              72.8     72.8     72.8
+Bereich wechseln                                             374.0    500.1    500.1
+Titel: Ansicht „Raster“ öffnen                               184.4    184.4    184.4
+Titel · Raster: Scrollschritt                                 45.4     83.5    109.7
+Titel: Ansicht „Kompaktes Raster“ öffnen                     993.6    993.6    993.6
+Titel · Kompaktes Raster: Scrollschritt                      152.4    258.4    277.8
+Titel: Ansicht „Liste“ öffnen                                512.0    512.0    512.0
+Titel · Liste: Scrollschritt                                  57.7     87.2    101.8
+Titel: Ansicht „Detailliste“ öffnen                          461.6    461.6    461.6
+Titel · Detailliste: Scrollschritt                            69.6     82.1     88.7
+Alben: Ansicht „Raster“ öffnen                                 0.4      0.4      0.4
+Alben · Raster: Scrollschritt                                 53.9     95.7    122.6
+Alben: Ansicht „Kompaktes Raster“ öffnen                     531.0    531.0    531.0
+Alben · Kompaktes Raster: Scrollschritt                       97.6    175.2    202.6
+Alben: Ansicht „Liste“ öffnen                                691.0    691.0    691.0
+Alben · Liste: Scrollschritt                                 132.8    208.3    257.0
+Alben: Ansicht „Detailliste“ öffnen                          616.9    616.9    616.9
+Alben · Detailliste: Scrollschritt                            72.9     88.7     94.4
+Suche tippen (je Taste, Hauptthread)                          33.3    191.3    191.3
+Suche: Ergebnis sichtbar nach letzter Taste                 1578.5   1578.5   1578.5
+Suche: Ergebnis zeichnen (Hauptthread)                         0.1      0.1      0.1
+Player öffnen/schließen (alle Designs)                       396.3    881.5    881.5
+Leerlauf mit Wiedergabe: Verspätung je Bild                   52.2    114.5    124.7
+Leerlauf mit Wiedergabe: Hauptthread belegt [%]               12.8     12.8     12.8
+Leerlauf mit Wiedergabe: Prozess-CPU [%]                      13.5     13.5     13.5
+Großer Player (Vinyl) läuft: Hauptthread belegt [%]           15.6     15.6     15.6
+Großer Player (Vinyl) läuft: Prozess-CPU [%]                  16.3     16.3     16.3
+✓ Messlauf abgeschlossen

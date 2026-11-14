@@ -1,0 +1,15 @@
+ProductName:		macOS
+ProductVersion:		26.6.1
+BuildVersion:		25G76
+Rechner: x86_64 · Intel(R) Core(TM) i7-8700B CPU @ 3.20GHz
+Music Library.dmg: OK
+hdiutil: verify: checksum of "dist/Music Library.dmg" is VALID
+/dev/disk2s1        	Apple_HFS                      	/private/var/folders/fq/bhsbs5bd52791c8x2z6s3dh40000gn/T/tmp.NjUd0HkZkH
+Music Library.app
+Programme
+"disk2" ejected.
+Architekturen: x86_64 arm64
+/Users/runner/Applications/Music Library.app: valid on disk
+/Users/runner/Applications/Music Library.app: satisfies its Designated Requirement
+Version: 2.5.0
+Vorgänger: 2.4.0
