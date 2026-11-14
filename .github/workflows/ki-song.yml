@@ -1,0 +1,92 @@
+# KI-Musik: ein Teststück mit dem Code der App erzeugen (Einrichtung, Songtext, Erzeugen in der Sandbox ohne Netz,
+# MP3 mit dem Exporter der App) und per Spracherkennung prüfen. Nur von Hand. Ergebnisse im Zweig „ci-ki-song-<Rechner>“.
+name: KI-Song
+
+on:
+  workflow_dispatch:
+    inputs:
+      runner:
+        description: "Apple-Silicon-Rechner (macos-15, macos-26)"
+        default: "macos-15"
+      prompt:
+        description: "Beschreibung"
+        default: "Fröhlicher chinesischer Popsong (Mandopop) mit heller Frauenstimme, eingängigem Refrain und moderner Synth-Pop-Produktion mit Klavier, E-Gitarre und knackigem Schlagzeug"
+      language:
+        description: "Sprache des Gesangs (ISO, z. B. zh, de, en)"
+        default: "zh"
+      duration:
+        description: "Länge in Sekunden"
+        default: "90"
+      lyrics_file:
+        description: "Eigener Text (Datei im Repository, leer = nur KI-Text)"
+        default: "scripts/ki/testsong-zh.txt"
+
+concurrency:
+  group: ki-song-${{ inputs.runner }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  song:
+    name: KI-Song (${{ inputs.runner }})
+    runs-on: ${{ inputs.runner }}
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - name: Werkzeuge
+        run: |
+          X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -n "$X" ]; then sudo xcode-select -s "$X"; fi
+          mkdir -p out/audio
+          { sw_vers; uname -m; sysctl -n machdep.cpu.brand_string; echo "RAM: $(( $(sysctl -n hw.memsize) / 1073741824 )) GB"; git log -1 --format='%h %s'; } | tee out/rechner.txt
+      - name: Bauen (Tests)
+        run: |
+          swift build --build-tests > out/build-tests.log 2>&1 || { grep -n "error:" out/build-tests.log | head -80; exit 1; }
+      - name: Teststück erzeugen
+        continue-on-error: true
+        env:
+          KI_SONG: "1"
+          KI_E2E_BASE: ${{ runner.temp }}/ki
+          KI_E2E_OUT: ${{ github.workspace }}/out/audio
+          KI_SONG_PROMPT: ${{ inputs.prompt }}
+          KI_SONG_LANG: ${{ inputs.language }}
+          KI_SONG_DURATION: ${{ inputs.duration }}
+        run: |
+          set +e
+          if [ -n "${{ inputs.lyrics_file }}" ]; then export KI_SONG_LYRICS_FILE="$GITHUB_WORKSPACE/${{ inputs.lyrics_file }}"; fi
+          swift test --skip-build --filter KIDemoSongTests > out/song.log 2>&1
+          STATUS=$?
+          grep -E "\[KI-Song\]|error:|passed|failed|skipped|Executed" out/song.log | head -60
+          cp "$RUNNER_TEMP/ki/ki-musik.log" out/ki-musik.log 2>/dev/null || true
+          exit $STATUS
+      - name: Spracherkennung
+        continue-on-error: true
+        env:
+          KI_LISTEN_LANG: ${{ inputs.language }}
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh > /dev/null 2>&1
+          export PATH="$HOME/.local/bin:$PATH"
+          command -v ffmpeg >/dev/null || brew install --quiet ffmpeg > out/brew.log 2>&1 || true
+          uv venv -q --python 3.12 "$RUNNER_TEMP/listen"
+          uv pip install -q --python "$RUNNER_TEMP/listen/bin/python" demucs-mlx mlx-whisper > out/listen-install.log 2>&1 || tail -20 out/listen-install.log
+          export PATH="$RUNNER_TEMP/listen/bin:$PATH"
+          # nur die erzeugten FLAC-Dateien prüfen (die MP3 liegen daneben)
+          python scripts/ki/probe_listen.py out > out/listen.log 2>&1
+          grep -E "\[Hören\]|\[Trennen\]" out/listen.log | head -20
+      - name: Ergebnisse in Zweig sichern
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BR="ci-ki-song-${{ inputs.runner }}"
+          cd out
+          rm -rf separated
+          find . -name "*.flac" -delete || true
+          git init -q -b "$BR"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "KI-Song $GITHUB_SHA ${{ inputs.runner }}" || true
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$BR"

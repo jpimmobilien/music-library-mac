@@ -18,6 +18,7 @@ import traceback
 
 OUT = os.path.abspath(sys.argv[1] if len(sys.argv) > 1 else "out")
 WHISPER = os.environ.get("KI_WHISPER", "mlx-community/whisper-large-v3-turbo")
+LANG = os.environ.get("KI_LISTEN_LANG", "de")
 probe_path = os.path.join(OUT, "probe.json")
 if os.path.exists(probe_path):
     probe = json.load(open(probe_path))
@@ -33,8 +34,10 @@ else:
             continue
         files = [{"path": os.path.relpath(os.path.join(d, f), OUT)} for f in sorted(os.listdir(d)) if f.endswith((".flac", ".wav", ".mp3"))]
         vocal = "gesang" in case
+        own_ref = os.path.join(audio_dir, case + ".txt")
+        lyrics = open(own_ref).read() if os.path.exists(own_ref) else reference
         probe["cases"].append({"id": case if case != "01-instrumental-en" else "01-instrumental-en", "files": files,
-                               "params": {"instrumental": not vocal, "lyrics": reference if vocal else "[Instrumental]"}})
+                               "params": {"instrumental": not vocal, "lyrics": lyrics if vocal else "[Instrumental]"}})
 result = {"whisper_model": WHISPER, "separation": [], "transcripts": []}
 
 
@@ -45,6 +48,9 @@ def save():
 
 def words(text):
     text = re.sub(r"\[[^\]]*\]", " ", text or "")
+    if LANG in ("zh", "ja", "yue"):
+        # Chinesisch/Japanisch: Zeichen statt Wörter (Zeichenfehlerrate)
+        return re.findall(r"[\u3400-\u9fff\u3040-\u30ff]", text)
     return re.findall(r"[a-zäöüß]+", text.lower())
 
 
@@ -67,7 +73,7 @@ def transcribe(path, ref, label):
     try:
         import mlx_whisper
         t0 = time.time()
-        r = mlx_whisper.transcribe(path, path_or_hf_repo=WHISPER, language="de", condition_on_previous_text=False)
+        r = mlx_whisper.transcribe(path, path_or_hf_repo=WHISPER, language=LANG, condition_on_previous_text=False)
         entry.update(seconds=round(time.time() - t0, 1), text=r.get("text", "").strip(), wer=wer(ref, r.get("text", "")),
                      reference_words=len(words(ref)))
     except Exception as e:
