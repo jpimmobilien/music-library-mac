@@ -1,0 +1,66 @@
+{
+  "whisper_model": "mlx-community/whisper-large-v3-turbo",
+  "separation": [
+    {
+      "file": "audio/A-ki-text-gesang/c917e3db-d2c8-7442-efe2-a1e6c35847d5.flac",
+      "label": "A-ki-text-gesang",
+      "seconds": 69.4,
+      "returncode": 0,
+      "log": "Downloading htdemucs MLX weights (160 MB) from https://huggingface.co/ssmall256/demucs-mlx/resolve/main ...\n\nTracks:   0%|          | 0/1 [00:00<?, ?track/s]\nTracks: 100%|██████████| 1/1 [01:01<00:00, 61.26s/track]\nTracks: 100%|██████████| 1/1 [01:01<00:00, 61.38s/track]\n",
+      "stems": [
+        "separated/c917e3db-d2c8-7442-efe2-a1e6c35847d5/bass.wav",
+        "separated/c917e3db-d2c8-7442-efe2-a1e6c35847d5/drums.wav",
+        "separated/c917e3db-d2c8-7442-efe2-a1e6c35847d5/other.wav",
+        "separated/c917e3db-d2c8-7442-efe2-a1e6c35847d5/vocals.wav"
+      ]
+    },
+    {
+      "file": "audio/B-eigener-text-gesang/4a75c814-1ad5-0499-5328-ff1a36aae1eb.flac",
+      "label": "B-eigener-text-gesang",
+      "seconds": 62.0,
+      "returncode": 0,
+      "log": "\nTracks:   0%|          | 0/1 [00:00<?, ?track/s]\nTracks: 100%|██████████| 1/1 [01:00<00:00, 60.17s/track]\nTracks: 100%|██████████| 1/1 [01:00<00:00, 60.32s/track]\n",
+      "stems": [
+        "separated/4a75c814-1ad5-0499-5328-ff1a36aae1eb/bass.wav",
+        "separated/4a75c814-1ad5-0499-5328-ff1a36aae1eb/drums.wav",
+        "separated/4a75c814-1ad5-0499-5328-ff1a36aae1eb/other.wav",
+        "separated/4a75c814-1ad5-0499-5328-ff1a36aae1eb/vocals.wav"
+      ]
+    }
+  ],
+  "transcripts": [
+    {
+      "file": "audio/A-ki-text-gesang/c917e3db-d2c8-7442-efe2-a1e6c35847d5.flac",
+      "label": "A-ki-text-gesang (Mix)",
+      "seconds": 61.3,
+      "text": "好皮 放不加班 吃饭 羊衣服忘了吗 我只有一个爸妈他们都是一角色多话你抓住搞笑只想你给我鼓衷Hey I got a sweetieI can't stop thinking about youThat's why I have a sweetieI can't stop thinking about youI have a sweetieno I can't stop thinking about youI have a sweetieno I can't stop thinking about youoh oh oh吃饭鸯一碰这个当你太饱了饱了吗我只以为饱了吗他们都是一召秀他们的口气多话你抓住搞笑只想你给我补充Hey I got a sweetieI can't stop thinking about youThat's why I have a sweetieI can't stop thinking about youI have a sweetieNo I can't stop thinking about youI have a sweetieNo I can't stop thinking about you想要告诉何必加都想来的专手但是现在要放手妈妈要我进发发但我只能原谅她难道要我吃饭吧闭上眼大声笑着好像不够夸Hey I got it sweetie",
+      "wer": 0.888,
+      "reference_words": 623
+    },
+    {
+      "file": "separated/c917e3db-d2c8-7442-efe2-a1e6c35847d5/vocals.wav",
+      "label": "A-ki-text-gesang (getrennte Stimme)",
+      "seconds": 30.7,
+      "text": "好比方不加班 吃饭洋衣服忘了吗 我只有一个爸妈他们都是一角兽如果话你抓住搞笑只想你给我鼓衷Hey I got a sweetieI can't stop thinking about youThat's why I have a sweetieI can't stop thinking about youI have a sweetieno i can't stop thinking about youi have a sweetieno i can't stop thinking about youvoke voke voke吃饭鸭蜜这个当你太饱了饱了吗我是有一个宝宝吗他们都是一招手吗他们的宝宝他们的宝宝如果你抓住搞笑只想你给我补充Hey I got a sweetieI can't stop thinking about youThat's why I have a sweetieI can't stop thinking about youI have a sweetieNo I can't stop thinking about youI have a sweetieNo I can't stop thinking about you想要告诉何必加想来打转手但是现在要放手妈妈要我亲爸爸但我只能原谅她难道要我吃饭吧闭上眼大声笑却好像不够话Hey I got it sweetie",
+      "wer": 0.886,
+      "reference_words": 623
+    },
+    {
+      "file": "audio/B-eigener-text-gesang/4a75c814-1ad5-0499-5328-ff1a36aae1eb.flac",
+      "label": "B-eigener-text-gesang (Mix)",
+      "seconds": 34.2,
+      "text": "SrA-B-A-B-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A-A你说过的话还在耳边徘徊乡下的雨雨落下又不肯离开如果时间能够听一听我想把这一刻好好看清我们在霓虹下奔跑情调比音乐还要吵把所有烦恼都跑掉今晚只想和你一起微笑我们在霓虹下奔跑星星也为我们闪了就算明刻还很遥远这一刻已经刚刚好优优独播剧场——YoYo Television Series Exclusive",
+      "wer": 0.289,
+      "reference_words": 128
+    },
+    {
+      "file": "separated/4a75c814-1ad5-0499-5328-ff1a36aae1eb/vocals.wav",
+      "label": "B-eigener-text-gesang (getrennte Stimme)",
+      "seconds": 19.5,
+      "text": "词曲 李宗盛你说过的话还在耳边徘徊乡下的雨落下又不可以离开如果时间能够听一听我想把这一刻好好看清我们在霓虹下奔跑请调避音乐还要吵把所有烦恼都抛掉今晚只想和你一起微笑我们在你红下奔跑清晰因为我们闪亮就算明刻还很遥远这一刻已经当更好请不吝点赞 订阅 转发 打赏支持明镜与点点栏目",
+      "wer": 0.461,
+      "reference_words": 128
+    }
+  ],
+  "finished": true
+}

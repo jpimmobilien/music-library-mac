@@ -1,0 +1,7 @@
+ProductName:		macOS
+ProductVersion:		15.8.2
+BuildVersion:		24H232
+arm64
+Apple M1 (Virtual)
+RAM: 7 GB
+a3e232f Prüfstand KI-Song: Teststück mit dem Code von 2.5.0 (chinesischer Popsong) [skip ci]
