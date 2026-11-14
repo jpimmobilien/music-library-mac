@@ -1,0 +1,120 @@
+[Wächter] Hauptthread reagiert seit über 6 s nicht – Aufnahme haenger-1.txt
+[Messlauf]    0.3 s  Index aufbauen (10000 Titel): Ø 334.7 ms, p95 334.7 ms
+[Messlauf]    1.0 s  Alle Listen berechnen (Hintergrund): Ø 697.8 ms, p95 697.8 ms
+[Messlauf]    3.9 s  Suche berechnen (Hintergrund): Ø 571.9 ms, p95 602.3 ms
+[Messlauf]    4.5 s  Alle Listen nach „Hinzugefügt“ (Hintergrund): Ø 549.3 ms, p95 549.3 ms
+[Messlauf]    4.6 s  Abschnitte „Hinzugefügt“ (Titel + Alben): Ø 2.5 ms, p95 2.7 ms
+[Messlauf]    4.6 s  Abschnitte „Hinzugefügt“ ohne Zwischenspeicher: Ø 27.8 ms, p95 28.6 ms
+[Messlauf]    5.5 s  Bearbeiten 60 s: Equalizer + Begrenzer: Ø 782.8 ms, p95 782.8 ms
+[Messlauf]    6.1 s  Bearbeiten 60 s: Tempo 1,1 + 432 Hz: Ø 617.0 ms, p95 617.0 ms
+[Wächter] Hauptthread reagiert seit über 6 s nicht – Aufnahme haenger-2.txt
+[Messlauf]    7.6 s  Bearbeiten 60 s: Auto-Tune: Ø 1490.9 ms, p95 1490.9 ms
+[Messlauf]    7.8 s  Bearbeiten 60 s: Lautheit messen: Ø 176.3 ms, p95 176.3 ms
+[Messlauf]   26.1 s  Bereich wechseln: Ø 642.7 ms, p95 1057.1 ms
+[Messlauf]   27.3 s  Titel: Ansicht „Raster“ öffnen: Ø 303.4 ms, p95 303.4 ms
+[Messlauf]   35.5 s  Titel · Raster: Scrollschritt: Ø 53.0 ms, p95 99.6 ms
+[Messlauf]   36.6 s  Titel: Ansicht „Kompaktes Raster“ öffnen: Ø 1095.8 ms, p95 1095.8 ms
+[Messlauf]   64.3 s  Titel · Kompaktes Raster: Scrollschritt: Ø 297.3 ms, p95 625.6 ms
+[Messlauf]   65.7 s  Titel: Ansicht „Liste“ öffnen: Ø 1450.4 ms, p95 1450.4 ms
+[Messlauf]   76.9 s  Titel · Liste: Scrollschritt: Ø 79.8 ms, p95 159.4 ms
+[Messlauf]   78.2 s  Titel: Ansicht „Detailliste“ öffnen: Ø 1306.0 ms, p95 1306.0 ms
+[Messlauf]   93.5 s  Titel · Detailliste: Scrollschritt: Ø 155.3 ms, p95 243.0 ms
+[Messlauf]   94.6 s  Titel: Ansicht „Cover Flow“ öffnen: Ø 1079.6 ms, p95 1079.6 ms
+[Messlauf]   97.4 s  Alben: Ansicht „Raster“ öffnen: Ø 0.5 ms, p95 0.5 ms
+[Messlauf]  108.0 s  Alben · Raster: Scrollschritt: Ø 65.0 ms, p95 157.7 ms
+[Messlauf]  109.5 s  Alben: Ansicht „Kompaktes Raster“ öffnen: Ø 1475.8 ms, p95 1475.8 ms
+[Messlauf]  132.3 s  Alben · Kompaktes Raster: Scrollschritt: Ø 235.4 ms, p95 424.6 ms
+[Messlauf]  134.3 s  Alben: Ansicht „Liste“ öffnen: Ø 2045.2 ms, p95 2045.2 ms
+[Messlauf]  151.4 s  Alben · Liste: Scrollschritt: Ø 200.9 ms, p95 318.8 ms
+[Messlauf]  152.7 s  Alben: Ansicht „Detailliste“ öffnen: Ø 1315.0 ms, p95 1315.0 ms
+[Messlauf]  166.1 s  Alben · Detailliste: Scrollschritt: Ø 111.2 ms, p95 191.8 ms
+[Messlauf]  166.7 s  Alben: Ansicht „Cover Flow“ öffnen: Ø 602.3 ms, p95 602.3 ms
+[Messlauf]  169.5 s  Interpreten: Ansicht „Raster“ öffnen: Ø 224.1 ms, p95 224.1 ms
+[Messlauf]  178.8 s  Interpreten · Raster: Scrollschritt: Ø 53.7 ms, p95 98.7 ms
+[Messlauf]  180.4 s  Interpreten: Ansicht „Kompaktes Raster“ öffnen: Ø 1578.5 ms, p95 1578.5 ms
+[Messlauf]  195.0 s  Interpreten · Kompaktes Raster: Scrollschritt: Ø 135.6 ms, p95 213.4 ms
+[Messlauf]  196.0 s  Interpreten: Ansicht „Liste“ öffnen: Ø 991.0 ms, p95 991.0 ms
+[Messlauf]  208.0 s  Interpreten · Liste: Scrollschritt: Ø 81.9 ms, p95 123.8 ms
+[Messlauf]  208.6 s  Interpreten: Ansicht „Detailliste“ öffnen: Ø 628.4 ms, p95 628.4 ms
+[Messlauf]  219.9 s  Interpreten · Detailliste: Scrollschritt: Ø 69.4 ms, p95 115.2 ms
+[Messlauf]  220.5 s  Interpreten: Ansicht „Cover Flow“ öffnen: Ø 535.7 ms, p95 535.7 ms
+[Messlauf]  223.3 s  Genres: Ansicht „Raster“ öffnen: Ø 0.8 ms, p95 0.8 ms
+[Messlauf]  226.6 s  Genres · Raster: Scrollschritt: Ø 0.4 ms, p95 0.7 ms
+[Messlauf]  227.1 s  Genres: Ansicht „Kompaktes Raster“ öffnen: Ø 409.9 ms, p95 409.9 ms
+[Messlauf]  228.7 s  Genres: Ansicht „Liste“ öffnen: Ø 395.7 ms, p95 395.7 ms
+[Messlauf]  230.3 s  Genres: Ansicht „Detailliste“ öffnen: Ø 294.6 ms, p95 294.6 ms
+[Messlauf]  234.4 s  Genres · Detailliste: Scrollschritt: Ø 0.3 ms, p95 0.6 ms
+[Messlauf]  234.7 s  Genres: Ansicht „Cover Flow“ öffnen: Ø 365.0 ms, p95 365.0 ms
+[Messlauf]  239.6 s  Suche tippen (je Taste, Hauptthread): Ø 38.6 ms, p95 385.0 ms
+[Messlauf]  240.0 s  Suche: Ergebnis sichtbar nach letzter Taste: Ø 546.6 ms, p95 546.6 ms
+[Messlauf]  240.0 s  Suche: Ergebnis zeichnen (Hauptthread): Ø 0.3 ms, p95 0.3 ms
+[Messlauf]  260.6 s  Player öffnen/schließen (alle Designs): Ø 453.3 ms, p95 661.9 ms
+[Messlauf]  264.8 s  Leerlauf mit Wiedergabe: Verspätung je Bild: Ø 60.3 ms, p95 108.4 ms
+[Messlauf]  268.8 s  Leerlauf mit Wiedergabe: Hauptthread belegt [%]: Ø 5.7 ms, p95 5.7 ms
+[Messlauf]  268.8 s  Leerlauf mit Wiedergabe: Prozess-CPU [%]: Ø 6.2 ms, p95 6.2 ms
+[Messlauf]  274.5 s  Großer Player (Vinyl) läuft: Hauptthread belegt [%]: Ø 6.3 ms, p95 6.3 ms
+[Messlauf]  274.5 s  Großer Player (Vinyl) läuft: Prozess-CPU [%]: Ø 6.8 ms, p95 6.8 ms
+Music Library – Messlauf mit 10000 Titeln
+Version 15.8.2 (Build 24H232) · x86_64 · Apple M1 (Virtual)
+Systemeinstellung „Bewegung reduzieren“: an (für die Messung übergangen – Animationen laufen)
+
+Messung                                                     Mittel     p95     Max   (ms bzw. %)
+Index aufbauen (10000 Titel)                                 334.7    334.7    334.7
+Alle Listen berechnen (Hintergrund)                          697.8    697.8    697.8
+Suche berechnen (Hintergrund)                                571.9    602.3    602.3
+Alle Listen nach „Hinzugefügt“ (Hintergrund)                 549.3    549.3    549.3
+Abschnitte „Hinzugefügt“ (Titel + Alben)                       2.5      2.7      2.7
+Abschnitte „Hinzugefügt“ ohne Zwischenspeicher                27.8     28.6     28.6
+Bearbeiten 60 s: Equalizer + Begrenzer                       782.8    782.8    782.8
+Bearbeiten 60 s: Tempo 1,1 + 432 Hz                          617.0    617.0    617.0
+Bearbeiten 60 s: Auto-Tune                                  1490.9   1490.9   1490.9
+Bearbeiten 60 s: Lautheit messen                             176.3    176.3    176.3
+Bereich wechseln                                             642.7   1057.1   1057.1
+Titel: Ansicht „Raster“ öffnen                               303.4    303.4    303.4
+Titel · Raster: Scrollschritt                                 53.0     99.6    128.7
+Titel: Ansicht „Kompaktes Raster“ öffnen                    1095.8   1095.8   1095.8
+Titel · Kompaktes Raster: Scrollschritt                      297.3    625.6    726.5
+Titel: Ansicht „Liste“ öffnen                               1450.4   1450.4   1450.4
+Titel · Liste: Scrollschritt                                  79.8    159.4    209.3
+Titel: Ansicht „Detailliste“ öffnen                         1306.0   1306.0   1306.0
+Titel · Detailliste: Scrollschritt                           155.3    243.0    266.2
+Titel: Ansicht „Cover Flow“ öffnen                          1079.6   1079.6   1079.6
+Alben: Ansicht „Raster“ öffnen                                 0.5      0.5      0.5
+Alben · Raster: Scrollschritt                                 65.0    157.7    227.8
+Alben: Ansicht „Kompaktes Raster“ öffnen                    1475.8   1475.8   1475.8
+Alben · Kompaktes Raster: Scrollschritt                      235.4    424.6    535.0
+Alben: Ansicht „Liste“ öffnen                               2045.2   2045.2   2045.2
+Alben · Liste: Scrollschritt                                 200.9    318.8    401.7
+Alben: Ansicht „Detailliste“ öffnen                         1315.0   1315.0   1315.0
+Alben · Detailliste: Scrollschritt                           111.2    191.8    225.4
+Alben: Ansicht „Cover Flow“ öffnen                           602.3    602.3    602.3
+Interpreten: Ansicht „Raster“ öffnen                         224.1    224.1    224.1
+Interpreten · Raster: Scrollschritt                           53.7     98.7    199.6
+Interpreten: Ansicht „Kompaktes Raster“ öffnen              1578.5   1578.5   1578.5
+Interpreten · Kompaktes Raster: Scrollschritt                135.6    213.4    257.7
+Interpreten: Ansicht „Liste“ öffnen                          991.0    991.0    991.0
+Interpreten · Liste: Scrollschritt                            81.9    123.8    139.2
+Interpreten: Ansicht „Detailliste“ öffnen                    628.4    628.4    628.4
+Interpreten · Detailliste: Scrollschritt                      69.4    115.2    127.1
+Interpreten: Ansicht „Cover Flow“ öffnen                     535.7    535.7    535.7
+Genres: Ansicht „Raster“ öffnen                                0.8      0.8      0.8
+Genres · Raster: Scrollschritt                                 0.4      0.7      1.1
+Genres: Ansicht „Kompaktes Raster“ öffnen                    409.9    409.9    409.9
+Genres: Ansicht „Liste“ öffnen                               395.7    395.7    395.7
+Genres: Ansicht „Detailliste“ öffnen                         294.6    294.6    294.6
+Genres · Detailliste: Scrollschritt                            0.3      0.6      0.9
+Genres: Ansicht „Cover Flow“ öffnen                          365.0    365.0    365.0
+Suche tippen (je Taste, Hauptthread)                          38.6    385.0    385.0
+Suche: Ergebnis sichtbar nach letzter Taste                  546.6    546.6    546.6
+Suche: Ergebnis zeichnen (Hauptthread)                         0.3      0.3      0.3
+Player öffnen/schließen (alle Designs)                       453.3    661.9    661.9
+Leerlauf mit Wiedergabe: Verspätung je Bild                   60.3    108.4    131.5
+Leerlauf mit Wiedergabe: Hauptthread belegt [%]                5.7      5.7      5.7
+Leerlauf mit Wiedergabe: Prozess-CPU [%]                       6.2      6.2      6.2
+Großer Player (Vinyl) läuft: Hauptthread belegt [%]            6.3      6.3      6.3
+Großer Player (Vinyl) läuft: Prozess-CPU [%]                   6.8      6.8      6.8
+
+Hinweise:
+- Genres/Kompaktes Raster: keine Scrollfläche gefunden
+- Genres/Liste: keine Scrollfläche gefunden
+

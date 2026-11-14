@@ -1,0 +1,604 @@
+[Snapshot] ▸ 01-bibliothek hell
+[Snapshot] 01-bibliothek hell: Aufbau+Warten 2230 ms, Hauptthread-Verzögerung Ø 5.6 ms, max 12.5 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 01-bibliothek dunkel
+[Snapshot] 01-bibliothek dunkel: Aufbau+Warten 2211 ms, Hauptthread-Verzögerung Ø 4.3 ms, max 10.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 02-titel hell
+[Snapshot] 02-titel hell: Aufbau+Warten 2202 ms, Hauptthread-Verzögerung Ø 11.5 ms, max 61.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 02-titel dunkel
+[Snapshot] 02-titel dunkel: Aufbau+Warten 2250 ms, Hauptthread-Verzögerung Ø 23.2 ms, max 62.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 02-titel-klein hell
+[Snapshot] 02-titel-klein hell: Aufbau+Warten 2282 ms, Hauptthread-Verzögerung Ø 29.3 ms, max 73.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 02-titel-klein dunkel
+[Snapshot] 02-titel-klein dunkel: Aufbau+Warten 2290 ms, Hauptthread-Verzögerung Ø 23.0 ms, max 68.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 03-alben hell
+[Snapshot] 03-alben hell: Aufbau+Warten 2209 ms, Hauptthread-Verzögerung Ø 34.2 ms, max 80.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 03-alben dunkel
+[Snapshot] 03-alben dunkel: Aufbau+Warten 2205 ms, Hauptthread-Verzögerung Ø 38.7 ms, max 69.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 03-album-detail hell
+[Snapshot] 03-album-detail hell: Aufbau+Warten 2226 ms, Hauptthread-Verzögerung Ø 19.7 ms, max 71.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 03-album-detail dunkel
+[Snapshot] 03-album-detail dunkel: Aufbau+Warten 2234 ms, Hauptthread-Verzögerung Ø 15.4 ms, max 69.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 03-album-detail-klein hell
+[Snapshot] 03-album-detail-klein hell: Aufbau+Warten 2262 ms, Hauptthread-Verzögerung Ø 30.7 ms, max 74.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 03-album-detail-klein dunkel
+[Snapshot] 03-album-detail-klein dunkel: Aufbau+Warten 2268 ms, Hauptthread-Verzögerung Ø 62.8 ms, max 146.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 04-interpreten hell
+[Snapshot] 04-interpreten hell: Aufbau+Warten 2248 ms, Hauptthread-Verzögerung Ø 68.3 ms, max 156.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 04-interpreten dunkel
+[Snapshot] 04-interpreten dunkel: Aufbau+Warten 2259 ms, Hauptthread-Verzögerung Ø 42.1 ms, max 126.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 04-interpret-detail hell
+[Snapshot] 04-interpret-detail hell: Aufbau+Warten 2219 ms, Hauptthread-Verzögerung Ø 23.8 ms, max 101.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 04-interpret-detail dunkel
+[Snapshot] 04-interpret-detail dunkel: Aufbau+Warten 2236 ms, Hauptthread-Verzögerung Ø 25.7 ms, max 111.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 05-genres hell
+[Snapshot] 05-genres hell: Aufbau+Warten 2225 ms, Hauptthread-Verzögerung Ø 33.1 ms, max 106.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 05-genres dunkel
+[Snapshot] 05-genres dunkel: Aufbau+Warten 2220 ms, Hauptthread-Verzögerung Ø 35.6 ms, max 101.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 05-genre-detail hell
+[Snapshot] 05-genre-detail hell: Aufbau+Warten 2247 ms, Hauptthread-Verzögerung Ø 32.4 ms, max 136.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 05-genre-detail dunkel
+[Snapshot] 05-genre-detail dunkel: Aufbau+Warten 2303 ms, Hauptthread-Verzögerung Ø 70.1 ms, max 147.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 06-playlists hell
+[Snapshot] 06-playlists hell: Aufbau+Warten 2365 ms, Hauptthread-Verzögerung Ø 41.2 ms, max 128.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 06-playlists dunkel
+[Snapshot] 06-playlists dunkel: Aufbau+Warten 2309 ms, Hauptthread-Verzögerung Ø 47.6 ms, max 125.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 06-playlist-detail hell
+[Snapshot] 06-playlist-detail hell: Aufbau+Warten 2217 ms, Hauptthread-Verzögerung Ø 78.6 ms, max 156.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 06-playlist-detail dunkel
+[Snapshot] 06-playlist-detail dunkel: Aufbau+Warten 2209 ms, Hauptthread-Verzögerung Ø 74.3 ms, max 131.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 06-verlauf hell
+[Snapshot] 06-verlauf hell: Aufbau+Warten 2227 ms, Hauptthread-Verzögerung Ø 81.3 ms, max 138.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 06-verlauf dunkel
+[Snapshot] 06-verlauf dunkel: Aufbau+Warten 2221 ms, Hauptthread-Verzögerung Ø 56.0 ms, max 136.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 07-favoriten hell
+[Snapshot] 07-favoriten hell: Aufbau+Warten 2270 ms, Hauptthread-Verzögerung Ø 47.3 ms, max 122.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 07-favoriten dunkel
+[Snapshot] 07-favoriten dunkel: Aufbau+Warten 2272 ms, Hauptthread-Verzögerung Ø 33.6 ms, max 149.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 07-duplikate hell
+[Snapshot] 07-duplikate hell: Aufbau+Warten 2257 ms, Hauptthread-Verzögerung Ø 22.9 ms, max 76.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 07-duplikate dunkel
+[Snapshot] 07-duplikate dunkel: Aufbau+Warten 2231 ms, Hauptthread-Verzögerung Ø 83.4 ms, max 149.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 08-mini-player hell
+[Snapshot] 08-mini-player hell: Aufbau+Warten 2304 ms, Hauptthread-Verzögerung Ø 64.5 ms, max 147.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 08-mini-player dunkel
+[Snapshot] 08-mini-player dunkel: Aufbau+Warten 2202 ms, Hauptthread-Verzögerung Ø 34.5 ms, max 137.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 09-vollbild-classic hell
+[Snapshot] 09-vollbild-classic hell: Aufbau+Warten 2229 ms, Hauptthread-Verzögerung Ø 31.3 ms, max 123.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 09-vollbild-classic dunkel
+[Snapshot] 09-vollbild-classic dunkel: Aufbau+Warten 2267 ms, Hauptthread-Verzögerung Ø 33.2 ms, max 150.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 10-vinyl hell
+[Snapshot] 10-vinyl hell: Aufbau+Warten 2237 ms, Hauptthread-Verzögerung Ø 43.6 ms, max 110.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 10-vinyl dunkel
+[Snapshot] 10-vinyl dunkel: Aufbau+Warten 2240 ms, Hauptthread-Verzögerung Ø 68.4 ms, max 150.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 10-vinyl-klein hell
+[Snapshot] 10-vinyl-klein hell: Aufbau+Warten 2253 ms, Hauptthread-Verzögerung Ø 26.1 ms, max 150.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 10-vinyl-klein dunkel
+[Snapshot] 10-vinyl-klein dunkel: Aufbau+Warten 2251 ms, Hauptthread-Verzögerung Ø 51.8 ms, max 145.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 11-cd hell
+[Snapshot] 11-cd hell: Aufbau+Warten 2236 ms, Hauptthread-Verzögerung Ø 43.6 ms, max 142.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 11-cd dunkel
+[Snapshot] 11-cd dunkel: Aufbau+Warten 2252 ms, Hauptthread-Verzögerung Ø 58.5 ms, max 136.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 12-kassette hell
+[Snapshot] 12-kassette hell: Aufbau+Warten 2243 ms, Hauptthread-Verzögerung Ø 42.2 ms, max 143.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 12-kassette dunkel
+[Snapshot] 12-kassette dunkel: Aufbau+Warten 2213 ms, Hauptthread-Verzögerung Ø 48.9 ms, max 150.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 13-equalizer hell
+[Snapshot] 13-equalizer hell: Aufbau+Warten 2213 ms, Hauptthread-Verzögerung Ø 51.0 ms, max 131.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 13-equalizer dunkel
+[Snapshot] 13-equalizer dunkel: Aufbau+Warten 2229 ms, Hauptthread-Verzögerung Ø 65.1 ms, max 135.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 14-metadaten hell
+[Snapshot] 14-metadaten hell: Aufbau+Warten 2219 ms, Hauptthread-Verzögerung Ø 45.6 ms, max 119.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 14-metadaten dunkel
+[Snapshot] 14-metadaten dunkel: Aufbau+Warten 2243 ms, Hauptthread-Verzögerung Ø 36.9 ms, max 110.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 14-metadaten-mehrfach hell
+[Snapshot] 14-metadaten-mehrfach hell: Aufbau+Warten 2227 ms, Hauptthread-Verzögerung Ø 43.0 ms, max 138.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 14-metadaten-mehrfach dunkel
+[Snapshot] 14-metadaten-mehrfach dunkel: Aufbau+Warten 2255 ms, Hauptthread-Verzögerung Ø 28.5 ms, max 111.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 15-cover hell
+[Snapshot] 15-cover hell: Aufbau+Warten 2203 ms, Hauptthread-Verzögerung Ø 35.4 ms, max 105.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 15-cover dunkel
+[Snapshot] 15-cover dunkel: Aufbau+Warten 2213 ms, Hauptthread-Verzögerung Ø 25.5 ms, max 126.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 16-liedtext hell
+[Snapshot] 16-liedtext hell: Aufbau+Warten 2354 ms, Hauptthread-Verzögerung Ø 50.9 ms, max 149.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 16-liedtext dunkel
+[Snapshot] 16-liedtext dunkel: Aufbau+Warten 2226 ms, Hauptthread-Verzögerung Ø 33.9 ms, max 139.8 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 16-liedtext-bearbeiten hell
+[Snapshot] 16-liedtext-bearbeiten hell: Aufbau+Warten 2256 ms, Hauptthread-Verzögerung Ø 75.7 ms, max 204.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 16-liedtext-bearbeiten dunkel
+[Snapshot] 16-liedtext-bearbeiten dunkel: Aufbau+Warten 2272 ms, Hauptthread-Verzögerung Ø 40.3 ms, max 104.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 17-einstellungen hell
+[Snapshot] 17-einstellungen hell: Aufbau+Warten 2232 ms, Hauptthread-Verzögerung Ø 38.0 ms, max 115.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 17-einstellungen dunkel
+[Snapshot] 17-einstellungen dunkel: Aufbau+Warten 2224 ms, Hauptthread-Verzögerung Ø 45.8 ms, max 124.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 13-player-equalizer-blatt hell
+[Snapshot] 13-player-equalizer-blatt hell: Aufbau+Warten 2209 ms, Hauptthread-Verzögerung Ø 31.5 ms, max 136.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 13-player-equalizer-blatt dunkel
+[Snapshot] 13-player-equalizer-blatt dunkel: Aufbau+Warten 2204 ms, Hauptthread-Verzögerung Ø 17.0 ms, max 142.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 20-titel-raster hell
+[Snapshot] 20-titel-raster hell: Aufbau+Warten 2233 ms, Hauptthread-Verzögerung Ø 28.0 ms, max 129.8 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 20-titel-raster dunkel
+[Snapshot] 20-titel-raster dunkel: Aufbau+Warten 2220 ms, Hauptthread-Verzögerung Ø 39.6 ms, max 142.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 20-titel-detailliste hell
+[Snapshot] 20-titel-detailliste hell: Aufbau+Warten 2232 ms, Hauptthread-Verzögerung Ø 86.1 ms, max 136.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 20-titel-detailliste dunkel
+[Snapshot] 20-titel-detailliste dunkel: Aufbau+Warten 2309 ms, Hauptthread-Verzögerung Ø 54.7 ms, max 106.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 20-titel-coverflow hell
+[Snapshot] 20-titel-coverflow hell: Aufbau+Warten 2230 ms, Hauptthread-Verzögerung Ø 58.9 ms, max 120.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 20-titel-coverflow dunkel
+[Snapshot] 20-titel-coverflow dunkel: Aufbau+Warten 2273 ms, Hauptthread-Verzögerung Ø 50.8 ms, max 145.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 21-alben-kompakt hell
+[Snapshot] 21-alben-kompakt hell: Aufbau+Warten 2259 ms, Hauptthread-Verzögerung Ø 62.6 ms, max 150.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 21-alben-kompakt dunkel
+[Snapshot] 21-alben-kompakt dunkel: Aufbau+Warten 2300 ms, Hauptthread-Verzögerung Ø 65.1 ms, max 120.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 21-alben-liste hell
+[Snapshot] 21-alben-liste hell: Aufbau+Warten 2258 ms, Hauptthread-Verzögerung Ø 66.6 ms, max 150.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 21-alben-liste dunkel
+[Snapshot] 21-alben-liste dunkel: Aufbau+Warten 2358 ms, Hauptthread-Verzögerung Ø 78.8 ms, max 145.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 21-alben-detailliste hell
+[Snapshot] 21-alben-detailliste hell: Aufbau+Warten 2249 ms, Hauptthread-Verzögerung Ø 59.7 ms, max 149.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 21-alben-detailliste dunkel
+[Snapshot] 21-alben-detailliste dunkel: Aufbau+Warten 2224 ms, Hauptthread-Verzögerung Ø 52.3 ms, max 125.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 21-alben-coverflow hell
+[Snapshot] 21-alben-coverflow hell: Aufbau+Warten 2242 ms, Hauptthread-Verzögerung Ø 68.4 ms, max 150.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 21-alben-coverflow dunkel
+[Snapshot] 21-alben-coverflow dunkel: Aufbau+Warten 2241 ms, Hauptthread-Verzögerung Ø 46.6 ms, max 138.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 21-alben-coverflow-klein hell
+[Snapshot] 21-alben-coverflow-klein hell: Aufbau+Warten 2387 ms, Hauptthread-Verzögerung Ø 63.1 ms, max 150.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 21-alben-coverflow-klein dunkel
+[Snapshot] 21-alben-coverflow-klein dunkel: Aufbau+Warten 2217 ms, Hauptthread-Verzögerung Ø 66.6 ms, max 150.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 21-alben-gefiltert hell
+[Snapshot] 21-alben-gefiltert hell: Aufbau+Warten 2207 ms, Hauptthread-Verzögerung Ø 25.2 ms, max 139.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 21-alben-gefiltert dunkel
+[Snapshot] 21-alben-gefiltert dunkel: Aufbau+Warten 2266 ms, Hauptthread-Verzögerung Ø 27.2 ms, max 92.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 22-interpreten-liste hell
+[Snapshot] 22-interpreten-liste hell: Aufbau+Warten 2222 ms, Hauptthread-Verzögerung Ø 89.6 ms, max 146.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 22-interpreten-liste dunkel
+[Snapshot] 22-interpreten-liste dunkel: Aufbau+Warten 2238 ms, Hauptthread-Verzögerung Ø 31.1 ms, max 126.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 22-interpreten-coverflow hell
+[Snapshot] 22-interpreten-coverflow hell: Aufbau+Warten 2327 ms, Hauptthread-Verzögerung Ø 57.9 ms, max 137.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 22-interpreten-coverflow dunkel
+[Snapshot] 22-interpreten-coverflow dunkel: Aufbau+Warten 2215 ms, Hauptthread-Verzögerung Ø 26.1 ms, max 65.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 23-genres-detailliste hell
+[Snapshot] 23-genres-detailliste hell: Aufbau+Warten 2290 ms, Hauptthread-Verzögerung Ø 39.5 ms, max 151.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 23-genres-detailliste dunkel
+[Snapshot] 23-genres-detailliste dunkel: Aufbau+Warten 2229 ms, Hauptthread-Verzögerung Ø 52.0 ms, max 124.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 24-playlists-liste hell
+[Snapshot] 24-playlists-liste hell: Aufbau+Warten 2328 ms, Hauptthread-Verzögerung Ø 69.8 ms, max 160.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 24-playlists-liste dunkel
+[Snapshot] 24-playlists-liste dunkel: Aufbau+Warten 2242 ms, Hauptthread-Verzögerung Ø 34.9 ms, max 139.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 25-favoriten-alben-raster hell
+[Snapshot] 25-favoriten-alben-raster hell: Aufbau+Warten 2208 ms, Hauptthread-Verzögerung Ø 55.9 ms, max 149.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 25-favoriten-alben-raster dunkel
+[Snapshot] 25-favoriten-alben-raster dunkel: Aufbau+Warten 2215 ms, Hauptthread-Verzögerung Ø 64.5 ms, max 121.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 25-favoriten-titel-detailliste hell
+[Snapshot] 25-favoriten-titel-detailliste hell: Aufbau+Warten 2205 ms, Hauptthread-Verzögerung Ø 82.9 ms, max 150.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 25-favoriten-titel-detailliste dunkel
+[Snapshot] 25-favoriten-titel-detailliste dunkel: Aufbau+Warten 2277 ms, Hauptthread-Verzögerung Ø 69.5 ms, max 114.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 30-modern-glass hell
+[Snapshot] 30-modern-glass hell: Aufbau+Warten 2248 ms, Hauptthread-Verzögerung Ø 45.8 ms, max 150.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 30-modern-glass dunkel
+[Snapshot] 30-modern-glass dunkel: Aufbau+Warten 2247 ms, Hauptthread-Verzögerung Ø 75.1 ms, max 150.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 30-modern-glass-klein hell
+[Snapshot] 30-modern-glass-klein hell: Aufbau+Warten 2289 ms, Hauptthread-Verzögerung Ø 29.6 ms, max 130.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 30-modern-glass-klein dunkel
+[Snapshot] 30-modern-glass-klein dunkel: Aufbau+Warten 2374 ms, Hauptthread-Verzögerung Ø 70.8 ms, max 151.8 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 31-aurora hell
+[Snapshot] 31-aurora hell: Aufbau+Warten 2354 ms, Hauptthread-Verzögerung Ø 32.8 ms, max 150.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 31-aurora dunkel
+[Snapshot] 31-aurora dunkel: Aufbau+Warten 2283 ms, Hauptthread-Verzögerung Ø 58.5 ms, max 147.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 32-studio-reel hell
+[Snapshot] 32-studio-reel hell: Aufbau+Warten 2227 ms, Hauptthread-Verzögerung Ø 43.1 ms, max 150.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 32-studio-reel dunkel
+[Snapshot] 32-studio-reel dunkel: Aufbau+Warten 2249 ms, Hauptthread-Verzögerung Ø 35.8 ms, max 121.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 33-kassette-rose hell
+[Snapshot] 33-kassette-rose hell: Aufbau+Warten 2247 ms, Hauptthread-Verzögerung Ø 29.0 ms, max 141.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 33-kassette-rose dunkel
+[Snapshot] 33-kassette-rose dunkel: Aufbau+Warten 2372 ms, Hauptthread-Verzögerung Ø 60.2 ms, max 139.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 33-kassette-ozean hell
+[Snapshot] 33-kassette-ozean hell: Aufbau+Warten 2257 ms, Hauptthread-Verzögerung Ø 56.2 ms, max 97.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 33-kassette-ozean dunkel
+[Snapshot] 33-kassette-ozean dunkel: Aufbau+Warten 2298 ms, Hauptthread-Verzögerung Ø 88.1 ms, max 151.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 34-mini-kompakt hell
+[Snapshot] 34-mini-kompakt hell: Aufbau+Warten 2306 ms, Hauptthread-Verzögerung Ø 112.1 ms, max 155.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 34-mini-kompakt dunkel
+[Snapshot] 34-mini-kompakt dunkel: Aufbau+Warten 2293 ms, Hauptthread-Verzögerung Ø 79.5 ms, max 149.8 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 34-mini-gross hell
+[Snapshot] 34-mini-gross hell: Aufbau+Warten 2334 ms, Hauptthread-Verzögerung Ø 82.2 ms, max 133.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 34-mini-gross dunkel
+[Snapshot] 34-mini-gross dunkel: Aufbau+Warten 2208 ms, Hauptthread-Verzögerung Ø 58.4 ms, max 144.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 40-einstellungen-darstellung hell
+[Snapshot] 40-einstellungen-darstellung hell: Aufbau+Warten 2345 ms, Hauptthread-Verzögerung Ø 120.5 ms, max 160.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 40-einstellungen-darstellung dunkel
+[Snapshot] 40-einstellungen-darstellung dunkel: Aufbau+Warten 2386 ms, Hauptthread-Verzögerung Ø 85.5 ms, max 155.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 40-einstellungen-player hell
+[Snapshot] 40-einstellungen-player hell: Aufbau+Warten 2210 ms, Hauptthread-Verzögerung Ø 95.6 ms, max 156.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 40-einstellungen-player dunkel
+[Snapshot] 40-einstellungen-player dunkel: Aufbau+Warten 2376 ms, Hauptthread-Verzögerung Ø 51.6 ms, max 155.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 40-einstellungen-equalizer hell
+[Snapshot] 40-einstellungen-equalizer hell: Aufbau+Warten 2210 ms, Hauptthread-Verzögerung Ø 75.2 ms, max 145.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 40-einstellungen-equalizer dunkel
+[Snapshot] 40-einstellungen-equalizer dunkel: Aufbau+Warten 2265 ms, Hauptthread-Verzögerung Ø 69.3 ms, max 152.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 40-einstellungen-tonhoehe hell
+[Snapshot] 40-einstellungen-tonhoehe hell: Aufbau+Warten 2371 ms, Hauptthread-Verzögerung Ø 120.3 ms, max 160.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 40-einstellungen-tonhoehe dunkel
+[Snapshot] 40-einstellungen-tonhoehe dunkel: Aufbau+Warten 2201 ms, Hauptthread-Verzögerung Ø 79.3 ms, max 155.8 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 40-einstellungen-speicher hell
+[Snapshot] 40-einstellungen-speicher hell: Aufbau+Warten 2283 ms, Hauptthread-Verzögerung Ø 78.9 ms, max 137.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 40-einstellungen-speicher dunkel
+[Snapshot] 40-einstellungen-speicher dunkel: Aufbau+Warten 2230 ms, Hauptthread-Verzögerung Ø 93.7 ms, max 160.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 40-einstellungen-kurzbefehle hell
+[Snapshot] 40-einstellungen-kurzbefehle hell: Aufbau+Warten 2212 ms, Hauptthread-Verzögerung Ø 90.2 ms, max 160.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 40-einstellungen-kurzbefehle dunkel
+[Snapshot] 40-einstellungen-kurzbefehle dunkel: Aufbau+Warten 2229 ms, Hauptthread-Verzögerung Ø 72.4 ms, max 142.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 35-popover-tonhoehe hell
+[Snapshot] 35-popover-tonhoehe hell: Aufbau+Warten 2276 ms, Hauptthread-Verzögerung Ø 85.5 ms, max 157.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 35-popover-tonhoehe dunkel
+[Snapshot] 35-popover-tonhoehe dunkel: Aufbau+Warten 2280 ms, Hauptthread-Verzögerung Ø 77.6 ms, max 149.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 35-popover-equalizer hell
+[Snapshot] 35-popover-equalizer hell: Aufbau+Warten 2231 ms, Hauptthread-Verzögerung Ø 110.0 ms, max 160.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 35-popover-equalizer dunkel
+[Snapshot] 35-popover-equalizer dunkel: Aufbau+Warten 2252 ms, Hauptthread-Verzögerung Ø 39.8 ms, max 143.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 35-popover-designs hell
+[Snapshot] 35-popover-designs hell: Aufbau+Warten 2342 ms, Hauptthread-Verzögerung Ø 89.4 ms, max 157.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 35-popover-designs dunkel
+[Snapshot] 35-popover-designs dunkel: Aufbau+Warten 2357 ms, Hauptthread-Verzögerung Ø 82.5 ms, max 145.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 13-equalizer-eigene hell
+[Snapshot] 13-equalizer-eigene hell: Aufbau+Warten 2369 ms, Hauptthread-Verzögerung Ø 84.2 ms, max 154.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 13-equalizer-eigene dunkel
+[Snapshot] 13-equalizer-eigene dunkel: Aufbau+Warten 2310 ms, Hauptthread-Verzögerung Ø 87.8 ms, max 115.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 34-mini-kassette hell
+[Snapshot] 34-mini-kassette hell: Aufbau+Warten 2201 ms, Hauptthread-Verzögerung Ø 41.7 ms, max 138.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 34-mini-kassette dunkel
+[Snapshot] 34-mini-kassette dunkel: Aufbau+Warten 2202 ms, Hauptthread-Verzögerung Ø 18.5 ms, max 112.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 20-titel-detailliste-klein hell
+[Snapshot] 20-titel-detailliste-klein hell: Aufbau+Warten 2244 ms, Hauptthread-Verzögerung Ø 37.4 ms, max 150.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 20-titel-detailliste-klein dunkel
+[Snapshot] 20-titel-detailliste-klein dunkel: Aufbau+Warten 2260 ms, Hauptthread-Verzögerung Ø 39.4 ms, max 142.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 24-playlists-raster hell
+[Snapshot] 24-playlists-raster hell: Aufbau+Warten 2305 ms, Hauptthread-Verzögerung Ø 65.3 ms, max 132.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 24-playlists-raster dunkel
+[Snapshot] 24-playlists-raster dunkel: Aufbau+Warten 2367 ms, Hauptthread-Verzögerung Ø 86.7 ms, max 140.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 26-titel-raster-gescrollt hell
+[Snapshot] 26-titel-raster-gescrollt hell: Aufbau+Warten 2303 ms, Hauptthread-Verzögerung Ø 77.9 ms, max 149.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 26-titel-raster-gescrollt dunkel
+[Snapshot] 26-titel-raster-gescrollt dunkel: Aufbau+Warten 2239 ms, Hauptthread-Verzögerung Ø 80.5 ms, max 136.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 26-titel-liste-gescrollt hell
+[Snapshot] 26-titel-liste-gescrollt hell: Aufbau+Warten 2205 ms, Hauptthread-Verzögerung Ø 68.0 ms, max 150.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 26-titel-liste-gescrollt dunkel
+[Snapshot] 26-titel-liste-gescrollt dunkel: Aufbau+Warten 2283 ms, Hauptthread-Verzögerung Ø 50.6 ms, max 137.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 56-alben-abschnitte-jahr hell
+[Snapshot] 56-alben-abschnitte-jahr hell: Aufbau+Warten 2298 ms, Hauptthread-Verzögerung Ø 103.5 ms, max 143.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 56-alben-abschnitte-jahr dunkel
+[Snapshot] 56-alben-abschnitte-jahr dunkel: Aufbau+Warten 2219 ms, Hauptthread-Verzögerung Ø 77.8 ms, max 139.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 56-alben-abschnitte-jahr-gescrollt hell
+[Snapshot] 56-alben-abschnitte-jahr-gescrollt hell: Aufbau+Warten 2209 ms, Hauptthread-Verzögerung Ø 77.0 ms, max 147.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 56-alben-abschnitte-jahr-gescrollt dunkel
+[Snapshot] 56-alben-abschnitte-jahr-gescrollt dunkel: Aufbau+Warten 2249 ms, Hauptthread-Verzögerung Ø 105.1 ms, max 143.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 56-alben-abschnitte-hinzugefuegt-liste hell
+[Snapshot] 56-alben-abschnitte-hinzugefuegt-liste hell: Aufbau+Warten 2258 ms, Hauptthread-Verzögerung Ø 85.5 ms, max 152.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 56-alben-abschnitte-hinzugefuegt-liste dunkel
+[Snapshot] 56-alben-abschnitte-hinzugefuegt-liste dunkel: Aufbau+Warten 2224 ms, Hauptthread-Verzögerung Ø 44.6 ms, max 151.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 56-alben-abschnitte-jahr-detail hell
+[Snapshot] 56-alben-abschnitte-jahr-detail hell: Aufbau+Warten 2318 ms, Hauptthread-Verzögerung Ø 126.4 ms, max 158.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 56-alben-abschnitte-jahr-detail dunkel
+[Snapshot] 56-alben-abschnitte-jahr-detail dunkel: Aufbau+Warten 2259 ms, Hauptthread-Verzögerung Ø 68.4 ms, max 159.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 56-titel-abschnitte-hinzugefuegt-liste hell
+[Snapshot] 56-titel-abschnitte-hinzugefuegt-liste hell: Aufbau+Warten 2216 ms, Hauptthread-Verzögerung Ø 84.0 ms, max 145.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 56-titel-abschnitte-hinzugefuegt-liste dunkel
+[Snapshot] 56-titel-abschnitte-hinzugefuegt-liste dunkel: Aufbau+Warten 2305 ms, Hauptthread-Verzögerung Ø 107.9 ms, max 159.8 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 56-titel-abschnitte-jahr-raster hell
+[Snapshot] 56-titel-abschnitte-jahr-raster hell: Aufbau+Warten 2246 ms, Hauptthread-Verzögerung Ø 71.6 ms, max 150.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 56-titel-abschnitte-jahr-raster dunkel
+[Snapshot] 56-titel-abschnitte-jahr-raster dunkel: Aufbau+Warten 2327 ms, Hauptthread-Verzögerung Ø 77.4 ms, max 145.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 56-titel-abschnitte-jahr-klein hell
+[Snapshot] 56-titel-abschnitte-jahr-klein hell: Aufbau+Warten 2356 ms, Hauptthread-Verzögerung Ø 117.0 ms, max 152.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 56-titel-abschnitte-jahr-klein dunkel
+[Snapshot] 56-titel-abschnitte-jahr-klein dunkel: Aufbau+Warten 2337 ms, Hauptthread-Verzögerung Ø 90.2 ms, max 145.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 26-alben-raster-max hell
+[Snapshot] 26-alben-raster-max hell: Aufbau+Warten 2310 ms, Hauptthread-Verzögerung Ø 106.1 ms, max 151.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 26-alben-raster-max dunkel
+[Snapshot] 26-alben-raster-max dunkel: Aufbau+Warten 2318 ms, Hauptthread-Verzögerung Ø 121.7 ms, max 155.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 26-alben-raster-max-breit hell
+[Snapshot] 26-alben-raster-max-breit hell: Aufbau+Warten 2343 ms, Hauptthread-Verzögerung Ø 82.1 ms, max 160.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 26-alben-raster-max-breit dunkel
+[Snapshot] 26-alben-raster-max-breit dunkel: Aufbau+Warten 2218 ms, Hauptthread-Verzögerung Ø 99.2 ms, max 158.8 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 27-auswahl-alben hell
+[Snapshot] 27-auswahl-alben hell: Aufbau+Warten 2282 ms, Hauptthread-Verzögerung Ø 112.1 ms, max 154.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 27-auswahl-alben dunkel
+[Snapshot] 27-auswahl-alben dunkel: Aufbau+Warten 2240 ms, Hauptthread-Verzögerung Ø 91.1 ms, max 160.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 27-auswahl-titel hell
+[Snapshot] 27-auswahl-titel hell: Aufbau+Warten 2214 ms, Hauptthread-Verzögerung Ø 66.2 ms, max 145.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 27-auswahl-titel dunkel
+[Snapshot] 27-auswahl-titel dunkel: Aufbau+Warten 2284 ms, Hauptthread-Verzögerung Ø 65.5 ms, max 138.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 28-loeschen-album hell
+[Snapshot] 28-loeschen-album hell: Aufbau+Warten 2222 ms, Hauptthread-Verzögerung Ø 73.9 ms, max 151.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 28-loeschen-album dunkel
+[Snapshot] 28-loeschen-album dunkel: Aufbau+Warten 2376 ms, Hauptthread-Verzögerung Ø 102.6 ms, max 157.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 28-loeschen-papierkorb hell
+[Snapshot] 28-loeschen-papierkorb hell: Aufbau+Warten 2306 ms, Hauptthread-Verzögerung Ø 86.4 ms, max 158.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 28-loeschen-papierkorb dunkel
+[Snapshot] 28-loeschen-papierkorb dunkel: Aufbau+Warten 2227 ms, Hauptthread-Verzögerung Ø 77.5 ms, max 145.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 29-als-album-zusammenfassen hell
+[Snapshot] 29-als-album-zusammenfassen hell: Aufbau+Warten 2394 ms, Hauptthread-Verzögerung Ø 101.0 ms, max 156.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 29-als-album-zusammenfassen dunkel
+[Snapshot] 29-als-album-zusammenfassen dunkel: Aufbau+Warten 2319 ms, Hauptthread-Verzögerung Ø 79.1 ms, max 119.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 50-mini-klein hell
+[Snapshot] 50-mini-klein hell: Aufbau+Warten 2242 ms, Hauptthread-Verzögerung Ø 73.6 ms, max 145.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 50-mini-klein dunkel
+[Snapshot] 50-mini-klein dunkel: Aufbau+Warten 2240 ms, Hauptthread-Verzögerung Ø 71.3 ms, max 128.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 50-mini-mittel hell
+[Snapshot] 50-mini-mittel hell: Aufbau+Warten 2256 ms, Hauptthread-Verzögerung Ø 89.2 ms, max 124.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 50-mini-mittel dunkel
+[Snapshot] 50-mini-mittel dunkel: Aufbau+Warten 2358 ms, Hauptthread-Verzögerung Ø 63.6 ms, max 160.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 50-mini-gross hell
+[Snapshot] 50-mini-gross hell: Aufbau+Warten 2240 ms, Hauptthread-Verzögerung Ø 71.0 ms, max 131.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 50-mini-gross dunkel
+[Snapshot] 50-mini-gross dunkel: Aufbau+Warten 2323 ms, Hauptthread-Verzögerung Ø 79.3 ms, max 155.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 50-mini-sehr-gross hell
+[Snapshot] 50-mini-sehr-gross hell: Aufbau+Warten 2227 ms, Hauptthread-Verzögerung Ø 127.2 ms, max 158.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 50-mini-sehr-gross dunkel
+[Snapshot] 50-mini-sehr-gross dunkel: Aufbau+Warten 2328 ms, Hauptthread-Verzögerung Ø 86.9 ms, max 149.8 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 50-mini-sehr-gross-schmal hell
+[Snapshot] 50-mini-sehr-gross-schmal hell: Aufbau+Warten 2297 ms, Hauptthread-Verzögerung Ø 90.0 ms, max 148.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 50-mini-sehr-gross-schmal dunkel
+[Snapshot] 50-mini-sehr-gross-schmal dunkel: Aufbau+Warten 2227 ms, Hauptthread-Verzögerung Ø 67.9 ms, max 133.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 50-mini-riesig hell
+[Snapshot] 50-mini-riesig hell: Aufbau+Warten 2297 ms, Hauptthread-Verzögerung Ø 73.8 ms, max 150.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 50-mini-riesig dunkel
+[Snapshot] 50-mini-riesig dunkel: Aufbau+Warten 2316 ms, Hauptthread-Verzögerung Ø 66.3 ms, max 143.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 50-mini-riesig-schmal hell
+[Snapshot] 50-mini-riesig-schmal hell: Aufbau+Warten 2203 ms, Hauptthread-Verzögerung Ø 94.1 ms, max 153.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 50-mini-riesig-schmal dunkel
+[Snapshot] 50-mini-riesig-schmal dunkel: Aufbau+Warten 2264 ms, Hauptthread-Verzögerung Ø 85.6 ms, max 160.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 51-hintergrund-rauchglas hell
+[Snapshot] 51-hintergrund-rauchglas hell: Aufbau+Warten 2206 ms, Hauptthread-Verzögerung Ø 74.0 ms, max 152.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 51-hintergrund-rauchglas dunkel
+[Snapshot] 51-hintergrund-rauchglas dunkel: Aufbau+Warten 2305 ms, Hauptthread-Verzögerung Ø 110.5 ms, max 156.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 51-hintergrund-weiss-kassette hell
+[Snapshot] 51-hintergrund-weiss-kassette hell: Aufbau+Warten 2246 ms, Hauptthread-Verzögerung Ø 134.4 ms, max 158.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 51-hintergrund-weiss-kassette dunkel
+[Snapshot] 51-hintergrund-weiss-kassette dunkel: Aufbau+Warten 2232 ms, Hauptthread-Verzögerung Ø 107.4 ms, max 156.8 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 51-hintergrund-blau-modern-glass hell
+[Snapshot] 51-hintergrund-blau-modern-glass hell: Aufbau+Warten 2205 ms, Hauptthread-Verzögerung Ø 49.9 ms, max 154.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 51-hintergrund-blau-modern-glass dunkel
+[Snapshot] 51-hintergrund-blau-modern-glass dunkel: Aufbau+Warten 2264 ms, Hauptthread-Verzögerung Ø 138.1 ms, max 158.8 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 51-hintergrund-eigene-farbe-classic hell
+[Snapshot] 51-hintergrund-eigene-farbe-classic hell: Aufbau+Warten 2355 ms, Hauptthread-Verzögerung Ø 85.4 ms, max 154.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 51-hintergrund-eigene-farbe-classic dunkel
+[Snapshot] 51-hintergrund-eigene-farbe-classic dunkel: Aufbau+Warten 2366 ms, Hauptthread-Verzögerung Ø 85.1 ms, max 150.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 51-hintergrund-schwarz-cd hell
+[Snapshot] 51-hintergrund-schwarz-cd hell: Aufbau+Warten 2317 ms, Hauptthread-Verzögerung Ø 96.6 ms, max 150.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 51-hintergrund-schwarz-cd dunkel
+[Snapshot] 51-hintergrund-schwarz-cd dunkel: Aufbau+Warten 2377 ms, Hauptthread-Verzögerung Ø 86.2 ms, max 160.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 51-hintergrund-mini-getoent hell
+[Snapshot] 51-hintergrund-mini-getoent hell: Aufbau+Warten 2243 ms, Hauptthread-Verzögerung Ø 69.8 ms, max 130.8 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 51-hintergrund-mini-getoent dunkel
+[Snapshot] 51-hintergrund-mini-getoent dunkel: Aufbau+Warten 2341 ms, Hauptthread-Verzögerung Ø 84.3 ms, max 151.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 52-player-formatzeile hell
+[Snapshot] 52-player-formatzeile hell: Aufbau+Warten 2301 ms, Hauptthread-Verzögerung Ø 67.9 ms, max 153.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 52-player-formatzeile dunkel
+[Snapshot] 52-player-formatzeile dunkel: Aufbau+Warten 2356 ms, Hauptthread-Verzögerung Ø 80.7 ms, max 148.8 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 52-player-formatzeile-hochkant hell
+[Snapshot] 52-player-formatzeile-hochkant hell: Aufbau+Warten 2248 ms, Hauptthread-Verzögerung Ø 99.2 ms, max 151.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 52-player-formatzeile-hochkant dunkel
+[Snapshot] 52-player-formatzeile-hochkant dunkel: Aufbau+Warten 2347 ms, Hauptthread-Verzögerung Ø 78.2 ms, max 142.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 52-player-balken-cd hell
+[Snapshot] 52-player-balken-cd hell: Aufbau+Warten 2294 ms, Hauptthread-Verzögerung Ø 110.8 ms, max 158.6 ms, Hauptthread belegt 9 %
+[Snapshot] ▸ 52-player-balken-cd dunkel
+[Snapshot] 52-player-balken-cd dunkel: Aufbau+Warten 2209 ms, Hauptthread-Verzögerung Ø 68.9 ms, max 150.5 ms, Hauptthread belegt 7 %
+[Snapshot] ▸ 52-player-balken-cd-klein hell
+[Snapshot] 52-player-balken-cd-klein hell: Aufbau+Warten 2232 ms, Hauptthread-Verzögerung Ø 103.2 ms, max 156.2 ms, Hauptthread belegt 8 %
+[Snapshot] ▸ 52-player-balken-cd-klein dunkel
+[Snapshot] 52-player-balken-cd-klein dunkel: Aufbau+Warten 2281 ms, Hauptthread-Verzögerung Ø 76.4 ms, max 152.2 ms, Hauptthread belegt 7 %
+[Snapshot] ▸ 53-equalizer-fenster-pop hell
+[Snapshot] 53-equalizer-fenster-pop hell: Aufbau+Warten 2240 ms, Hauptthread-Verzögerung Ø 32.9 ms, max 101.5 ms, Hauptthread belegt 5 %
+[Snapshot] ▸ 53-equalizer-fenster-pop dunkel
+[Snapshot] 53-equalizer-fenster-pop dunkel: Aufbau+Warten 2225 ms, Hauptthread-Verzögerung Ø 32.1 ms, max 148.9 ms, Hauptthread belegt 4 %
+[Snapshot] ▸ 53-equalizer-fenster-aus hell
+[Snapshot] 53-equalizer-fenster-aus hell: Aufbau+Warten 2296 ms, Hauptthread-Verzögerung Ø 42.1 ms, max 148.3 ms, Hauptthread belegt 5 %
+[Snapshot] ▸ 53-equalizer-fenster-aus dunkel
+[Snapshot] 53-equalizer-fenster-aus dunkel: Aufbau+Warten 2334 ms, Hauptthread-Verzögerung Ø 91.1 ms, max 155.7 ms, Hauptthread belegt 4 %
+[Snapshot] ▸ 54-einstellungen-hinzufuegedatum hell
+[Snapshot] 54-einstellungen-hinzufuegedatum hell: Aufbau+Warten 2217 ms, Hauptthread-Verzögerung Ø 54.4 ms, max 150.3 ms, Hauptthread belegt 4 %
+[Snapshot] ▸ 54-einstellungen-hinzufuegedatum dunkel
+[Snapshot] 54-einstellungen-hinzufuegedatum dunkel: Aufbau+Warten 2247 ms, Hauptthread-Verzögerung Ø 25.9 ms, max 85.6 ms, Hauptthread belegt 5 %
+[Snapshot] ▸ 54-einstellungen-player-hintergrund hell
+[Snapshot] 54-einstellungen-player-hintergrund hell: Aufbau+Warten 2209 ms, Hauptthread-Verzögerung Ø 27.9 ms, max 146.3 ms, Hauptthread belegt 4 %
+[Snapshot] ▸ 54-einstellungen-player-hintergrund dunkel
+[Snapshot] 54-einstellungen-player-hintergrund dunkel: Aufbau+Warten 2219 ms, Hauptthread-Verzögerung Ø 39.5 ms, max 140.0 ms, Hauptthread belegt 5 %
+[Snapshot] ▸ 55-alben-hinzugefuegt-neueste hell
+[Snapshot] 55-alben-hinzugefuegt-neueste hell: Aufbau+Warten 2205 ms, Hauptthread-Verzögerung Ø 81.7 ms, max 155.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 55-alben-hinzugefuegt-neueste dunkel
+[Snapshot] 55-alben-hinzugefuegt-neueste dunkel: Aufbau+Warten 2304 ms, Hauptthread-Verzögerung Ø 94.1 ms, max 160.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 55-titel-hinzugefuegt-aelteste hell
+[Snapshot] 55-titel-hinzugefuegt-aelteste hell: Aufbau+Warten 2201 ms, Hauptthread-Verzögerung Ø 72.4 ms, max 150.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 55-titel-hinzugefuegt-aelteste dunkel
+[Snapshot] 55-titel-hinzugefuegt-aelteste dunkel: Aufbau+Warten 2303 ms, Hauptthread-Verzögerung Ø 103.2 ms, max 142.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-leer hell
+[Snapshot] 60-studio-leer hell: Aufbau+Warten 2208 ms, Hauptthread-Verzögerung Ø 93.8 ms, max 160.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-leer dunkel
+[Snapshot] 60-studio-leer dunkel: Aufbau+Warten 2280 ms, Hauptthread-Verzögerung Ø 95.8 ms, max 160.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-leer-schmal hell
+[Snapshot] 60-studio-leer-schmal hell: Aufbau+Warten 2370 ms, Hauptthread-Verzögerung Ø 98.9 ms, max 156.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-leer-schmal dunkel
+[Snapshot] 60-studio-leer-schmal dunkel: Aufbau+Warten 2228 ms, Hauptthread-Verzögerung Ø 66.8 ms, max 121.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-quelle hell
+[Snapshot] 60-studio-quelle hell: Aufbau+Warten 2375 ms, Hauptthread-Verzögerung Ø 58.5 ms, max 160.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-quelle dunkel
+[Snapshot] 60-studio-quelle dunkel: Aufbau+Warten 2387 ms, Hauptthread-Verzögerung Ø 86.6 ms, max 160.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-quelle-standard hell
+[Snapshot] 60-studio-quelle-standard hell: Aufbau+Warten 2245 ms, Hauptthread-Verzögerung Ø 82.2 ms, max 155.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-quelle-standard dunkel
+[Snapshot] 60-studio-quelle-standard dunkel: Aufbau+Warten 2305 ms, Hauptthread-Verzögerung Ø 85.4 ms, max 152.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-zoom-blenden hell
+[Snapshot] 60-studio-zoom-blenden hell: Aufbau+Warten 2258 ms, Hauptthread-Verzögerung Ø 68.8 ms, max 136.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-zoom-blenden dunkel
+[Snapshot] 60-studio-zoom-blenden dunkel: Aufbau+Warten 2243 ms, Hauptthread-Verzögerung Ø 57.3 ms, max 119.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-export-mp3 hell
+[Snapshot] 60-studio-export-mp3 hell: Aufbau+Warten 2239 ms, Hauptthread-Verzögerung Ø 81.6 ms, max 155.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-export-mp3 dunkel
+[Snapshot] 60-studio-export-mp3 dunkel: Aufbau+Warten 2254 ms, Hauptthread-Verzögerung Ø 82.8 ms, max 150.2 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 60-studio-export-wav hell
+[Snapshot] 60-studio-export-wav hell: Aufbau+Warten 2218 ms, Hauptthread-Verzögerung Ø 65.3 ms, max 144.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-export-wav dunkel
+[Snapshot] 60-studio-export-wav dunkel: Aufbau+Warten 2367 ms, Hauptthread-Verzögerung Ø 86.2 ms, max 153.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-export-flac hell
+[Snapshot] 60-studio-export-flac hell: Aufbau+Warten 2220 ms, Hauptthread-Verzögerung Ø 82.5 ms, max 126.8 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-export-flac dunkel
+[Snapshot] 60-studio-export-flac dunkel: Aufbau+Warten 2293 ms, Hauptthread-Verzögerung Ø 90.2 ms, max 151.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-metadaten hell
+[Snapshot] 60-studio-metadaten hell: Aufbau+Warten 2232 ms, Hauptthread-Verzögerung Ø 100.7 ms, max 149.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-metadaten dunkel
+[Snapshot] 60-studio-metadaten dunkel: Aufbau+Warten 2318 ms, Hauptthread-Verzögerung Ø 85.2 ms, max 159.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-ziel hell
+[Snapshot] 60-studio-ziel hell: Aufbau+Warten 2310 ms, Hauptthread-Verzögerung Ø 93.0 ms, max 149.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-ziel dunkel
+[Snapshot] 60-studio-ziel dunkel: Aufbau+Warten 2308 ms, Hauptthread-Verzögerung Ø 113.3 ms, max 150.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-warteschlange hell
+[Snapshot] 60-studio-warteschlange hell: Aufbau+Warten 2204 ms, Hauptthread-Verzögerung Ø 96.9 ms, max 156.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-warteschlange dunkel
+[Snapshot] 60-studio-warteschlange dunkel: Aufbau+Warten 2347 ms, Hauptthread-Verzögerung Ø 67.5 ms, max 154.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-verlauf hell
+[Snapshot] 60-studio-verlauf hell: Aufbau+Warten 2276 ms, Hauptthread-Verzögerung Ø 70.1 ms, max 152.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-verlauf dunkel
+[Snapshot] 60-studio-verlauf dunkel: Aufbau+Warten 2231 ms, Hauptthread-Verzögerung Ø 125.7 ms, max 160.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-werkzeuge hell
+[Snapshot] 60-studio-werkzeuge hell: Aufbau+Warten 2264 ms, Hauptthread-Verzögerung Ø 76.9 ms, max 136.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-werkzeuge dunkel
+[Snapshot] 60-studio-werkzeuge dunkel: Aufbau+Warten 2245 ms, Hauptthread-Verzögerung Ø 81.7 ms, max 134.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-werkzeuge-installation hell
+[Snapshot] 60-studio-werkzeuge-installation hell: Aufbau+Warten 2282 ms, Hauptthread-Verzögerung Ø 74.4 ms, max 160.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-werkzeuge-installation dunkel
+[Snapshot] 60-studio-werkzeuge-installation dunkel: Aufbau+Warten 2315 ms, Hauptthread-Verzögerung Ø 119.3 ms, max 152.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-werkzeuge-fehlen hell
+[Snapshot] 60-studio-werkzeuge-fehlen hell: Aufbau+Warten 2223 ms, Hauptthread-Verzögerung Ø 85.6 ms, max 148.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-werkzeuge-fehlen dunkel
+[Snapshot] 60-studio-werkzeuge-fehlen dunkel: Aufbau+Warten 2200 ms, Hauptthread-Verzögerung Ø 105.7 ms, max 158.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-spotify hell
+[Snapshot] 60-studio-spotify hell: Aufbau+Warten 2313 ms, Hauptthread-Verzögerung Ø 78.5 ms, max 130.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-spotify dunkel
+[Snapshot] 60-studio-spotify dunkel: Aufbau+Warten 2273 ms, Hauptthread-Verzögerung Ø 98.7 ms, max 160.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-doppelt hell
+[Snapshot] 60-studio-doppelt hell: Aufbau+Warten 2378 ms, Hauptthread-Verzögerung Ø 74.8 ms, max 160.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-doppelt dunkel
+[Snapshot] 60-studio-doppelt dunkel: Aufbau+Warten 2266 ms, Hauptthread-Verzögerung Ø 85.5 ms, max 160.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 61-studio-instagram hell
+[Snapshot] 61-studio-instagram hell: Aufbau+Warten 2250 ms, Hauptthread-Verzögerung Ø 88.4 ms, max 159.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 61-studio-instagram dunkel
+[Snapshot] 61-studio-instagram dunkel: Aufbau+Warten 2213 ms, Hauptthread-Verzögerung Ø 112.7 ms, max 155.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 61-studio-instagram-analyse hell
+[Snapshot] 61-studio-instagram-analyse hell: Aufbau+Warten 2212 ms, Hauptthread-Verzögerung Ø 150.0 ms, max 151.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 61-studio-instagram-analyse dunkel
+[Snapshot] 61-studio-instagram-analyse dunkel: Aufbau+Warten 2374 ms, Hauptthread-Verzögerung Ø 149.6 ms, max 150.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-analyse hell
+[Snapshot] 60-studio-analyse hell: Aufbau+Warten 2304 ms, Hauptthread-Verzögerung Ø 150.3 ms, max 151.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-analyse dunkel
+[Snapshot] 60-studio-analyse dunkel: Aufbau+Warten 2288 ms, Hauptthread-Verzögerung Ø 128.6 ms, max 150.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-laden hell
+[Snapshot] 60-studio-laden hell: Aufbau+Warten 2211 ms, Hauptthread-Verzögerung Ø 51.6 ms, max 144.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-laden dunkel
+[Snapshot] 60-studio-laden dunkel: Aufbau+Warten 2247 ms, Hauptthread-Verzögerung Ø 84.3 ms, max 142.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-laden-noetig hell
+[Snapshot] 60-studio-laden-noetig hell: Aufbau+Warten 2350 ms, Hauptthread-Verzögerung Ø 94.4 ms, max 149.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-laden-noetig dunkel
+[Snapshot] 60-studio-laden-noetig dunkel: Aufbau+Warten 2224 ms, Hauptthread-Verzögerung Ø 105.5 ms, max 157.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-wellenform-berechnung hell
+[Snapshot] 60-studio-wellenform-berechnung hell: Aufbau+Warten 2328 ms, Hauptthread-Verzögerung Ø 149.2 ms, max 151.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-wellenform-berechnung dunkel
+[Snapshot] 60-studio-wellenform-berechnung dunkel: Aufbau+Warten 2273 ms, Hauptthread-Verzögerung Ø 150.0 ms, max 152.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-schneiden hell
+[Snapshot] 60-studio-schneiden hell: Aufbau+Warten 2349 ms, Hauptthread-Verzögerung Ø 70.1 ms, max 153.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-schneiden dunkel
+[Snapshot] 60-studio-schneiden dunkel: Aufbau+Warten 2232 ms, Hauptthread-Verzögerung Ø 63.5 ms, max 131.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-schneiden-speichern hell
+[Snapshot] 60-studio-schneiden-speichern hell: Aufbau+Warten 2341 ms, Hauptthread-Verzögerung Ø 98.5 ms, max 147.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-schneiden-speichern dunkel
+[Snapshot] 60-studio-schneiden-speichern dunkel: Aufbau+Warten 2235 ms, Hauptthread-Verzögerung Ø 96.8 ms, max 145.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-schneiden-bestaetigen hell
+[Snapshot] 60-studio-schneiden-bestaetigen hell: Aufbau+Warten 2332 ms, Hauptthread-Verzögerung Ø 92.6 ms, max 154.8 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-schneiden-bestaetigen dunkel
+[Snapshot] 60-studio-schneiden-bestaetigen dunkel: Aufbau+Warten 2359 ms, Hauptthread-Verzögerung Ø 117.2 ms, max 157.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 62-studio-bearbeiten hell
+[Snapshot] 62-studio-bearbeiten hell: Aufbau+Warten 2270 ms, Hauptthread-Verzögerung Ø 61.9 ms, max 160.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 62-studio-bearbeiten dunkel
+[Snapshot] 62-studio-bearbeiten dunkel: Aufbau+Warten 2223 ms, Hauptthread-Verzögerung Ø 77.6 ms, max 153.9 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 62-studio-bearbeiten-standard hell
+[Snapshot] 62-studio-bearbeiten-standard hell: Aufbau+Warten 2350 ms, Hauptthread-Verzögerung Ø 118.3 ms, max 160.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 62-studio-bearbeiten-standard dunkel
+[Snapshot] 62-studio-bearbeiten-standard dunkel: Aufbau+Warten 2392 ms, Hauptthread-Verzögerung Ø 100.0 ms, max 154.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 62-studio-bearbeiten-regler hell
+[Snapshot] 62-studio-bearbeiten-regler hell: Aufbau+Warten 2376 ms, Hauptthread-Verzögerung Ø 101.6 ms, max 155.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 62-studio-bearbeiten-regler dunkel
+[Snapshot] 62-studio-bearbeiten-regler dunkel: Aufbau+Warten 2282 ms, Hauptthread-Verzögerung Ø 103.3 ms, max 153.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 62-studio-bearbeiten-werkzeuge hell
+[Snapshot] 62-studio-bearbeiten-werkzeuge hell: Aufbau+Warten 2328 ms, Hauptthread-Verzögerung Ø 85.7 ms, max 148.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 62-studio-bearbeiten-werkzeuge dunkel
+[Snapshot] 62-studio-bearbeiten-werkzeuge dunkel: Aufbau+Warten 2241 ms, Hauptthread-Verzögerung Ø 70.0 ms, max 150.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 62-studio-bearbeiten-schmal hell
+[Snapshot] 62-studio-bearbeiten-schmal hell: Aufbau+Warten 2258 ms, Hauptthread-Verzögerung Ø 111.0 ms, max 156.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 62-studio-bearbeiten-schmal dunkel
+[Snapshot] 62-studio-bearbeiten-schmal dunkel: Aufbau+Warten 2308 ms, Hauptthread-Verzögerung Ø 79.8 ms, max 115.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 62-studio-bearbeiten-bestaetigen hell
+[Snapshot] 62-studio-bearbeiten-bestaetigen hell: Aufbau+Warten 2322 ms, Hauptthread-Verzögerung Ø 85.0 ms, max 157.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 62-studio-bearbeiten-bestaetigen dunkel
+[Snapshot] 62-studio-bearbeiten-bestaetigen dunkel: Aufbau+Warten 2243 ms, Hauptthread-Verzögerung Ø 83.8 ms, max 141.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-verlauf-loeschen hell
+[Snapshot] 60-studio-verlauf-loeschen hell: Aufbau+Warten 2224 ms, Hauptthread-Verzögerung Ø 60.3 ms, max 108.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-verlauf-loeschen dunkel
+[Snapshot] 60-studio-verlauf-loeschen dunkel: Aufbau+Warten 2236 ms, Hauptthread-Verzögerung Ø 70.8 ms, max 150.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-schmal hell
+[Snapshot] 60-studio-schmal hell: Aufbau+Warten 2315 ms, Hauptthread-Verzögerung Ø 125.2 ms, max 151.9 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-schmal dunkel
+[Snapshot] 60-studio-schmal dunkel: Aufbau+Warten 2224 ms, Hauptthread-Verzögerung Ø 150.0 ms, max 151.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-schmal-export hell
+[Snapshot] 60-studio-schmal-export hell: Aufbau+Warten 2409 ms, Hauptthread-Verzögerung Ø 154.9 ms, max 178.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-schmal-export dunkel
+[Snapshot] 60-studio-schmal-export dunkel: Aufbau+Warten 2214 ms, Hauptthread-Verzögerung Ø 137.9 ms, max 150.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 63-studio-auswahl hell
+[Snapshot] 63-studio-auswahl hell: Aufbau+Warten 2236 ms, Hauptthread-Verzögerung Ø 84.6 ms, max 151.8 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 63-studio-auswahl dunkel
+[Snapshot] 63-studio-auswahl dunkel: Aufbau+Warten 2239 ms, Hauptthread-Verzögerung Ø 75.9 ms, max 150.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 63-studio-auswahl-breit hell
+[Snapshot] 63-studio-auswahl-breit hell: Aufbau+Warten 2249 ms, Hauptthread-Verzögerung Ø 118.8 ms, max 153.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 63-studio-auswahl-breit dunkel
+[Snapshot] 63-studio-auswahl-breit dunkel: Aufbau+Warten 2343 ms, Hauptthread-Verzögerung Ø 67.2 ms, max 160.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 63-studio-auswahl-schmal hell
+[Snapshot] 63-studio-auswahl-schmal hell: Aufbau+Warten 2250 ms, Hauptthread-Verzögerung Ø 67.7 ms, max 156.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 63-studio-auswahl-schmal dunkel
+[Snapshot] 63-studio-auswahl-schmal dunkel: Aufbau+Warten 2217 ms, Hauptthread-Verzögerung Ø 100.0 ms, max 159.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 63-studio-verlauf-loeschen hell
+[Snapshot] 63-studio-verlauf-loeschen hell: Aufbau+Warten 2355 ms, Hauptthread-Verzögerung Ø 70.9 ms, max 142.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 63-studio-verlauf-loeschen dunkel
+[Snapshot] 63-studio-verlauf-loeschen dunkel: Aufbau+Warten 2341 ms, Hauptthread-Verzögerung Ø 94.8 ms, max 156.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-einstellungen hell
+[Snapshot] 60-studio-einstellungen hell: Aufbau+Warten 2316 ms, Hauptthread-Verzögerung Ø 95.0 ms, max 152.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 60-studio-einstellungen dunkel
+[Snapshot] 60-studio-einstellungen dunkel: Aufbau+Warten 2209 ms, Hauptthread-Verzögerung Ø 99.1 ms, max 155.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 70-ki-einrichten hell
+[Snapshot] 70-ki-einrichten hell: Aufbau+Warten 2208 ms, Hauptthread-Verzögerung Ø 95.9 ms, max 139.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 70-ki-einrichten dunkel
+[Snapshot] 70-ki-einrichten dunkel: Aufbau+Warten 2258 ms, Hauptthread-Verzögerung Ø 74.2 ms, max 121.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 70-ki-einrichten-laeuft hell
+[Snapshot] 70-ki-einrichten-laeuft hell: Aufbau+Warten 2284 ms, Hauptthread-Verzögerung Ø 75.2 ms, max 153.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 70-ki-einrichten-laeuft dunkel
+[Snapshot] 70-ki-einrichten-laeuft dunkel: Aufbau+Warten 2309 ms, Hauptthread-Verzögerung Ø 76.9 ms, max 156.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 70-ki-bereit hell
+[Snapshot] 70-ki-bereit hell: Aufbau+Warten 2323 ms, Hauptthread-Verzögerung Ø 52.4 ms, max 147.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 70-ki-bereit dunkel
+[Snapshot] 70-ki-bereit dunkel: Aufbau+Warten 2238 ms, Hauptthread-Verzögerung Ø 98.5 ms, max 153.3 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 70-ki-erzeugt hell
+[Snapshot] 70-ki-erzeugt hell: Aufbau+Warten 2225 ms, Hauptthread-Verzögerung Ø 81.6 ms, max 133.2 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 70-ki-erzeugt dunkel
+[Snapshot] 70-ki-erzeugt dunkel: Aufbau+Warten 2241 ms, Hauptthread-Verzögerung Ø 65.3 ms, max 160.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 70-ki-laeuft hell
+[Snapshot] 70-ki-laeuft hell: Aufbau+Warten 2205 ms, Hauptthread-Verzögerung Ø 42.1 ms, max 113.7 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 70-ki-laeuft dunkel
+[Snapshot] 70-ki-laeuft dunkel: Aufbau+Warten 2246 ms, Hauptthread-Verzögerung Ø 66.9 ms, max 146.7 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 70-ki-schmal hell
+[Snapshot] 70-ki-schmal hell: Aufbau+Warten 2310 ms, Hauptthread-Verzögerung Ø 87.8 ms, max 132.7 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 70-ki-schmal dunkel
+[Snapshot] 70-ki-schmal dunkel: Aufbau+Warten 2255 ms, Hauptthread-Verzögerung Ø 88.4 ms, max 145.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 70-ki-einstellungen hell
+[Snapshot] 70-ki-einstellungen hell: Aufbau+Warten 2232 ms, Hauptthread-Verzögerung Ø 51.0 ms, max 111.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 70-ki-einstellungen dunkel
+[Snapshot] 70-ki-einstellungen dunkel: Aufbau+Warten 2226 ms, Hauptthread-Verzögerung Ø 77.6 ms, max 146.5 ms, Hauptthread belegt 0 %

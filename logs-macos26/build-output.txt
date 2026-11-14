@@ -1,0 +1,637 @@
+▸ Swift: swift-driver version: 1.148.6 Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+▸ Baue arm64 (arm64-apple-macosx13.0) …
+Building for production...
+[0/196] Compiling dsfproperties.cpp
+[1/196] Write swift-version-7974D3F7F03D5E95.txt
+[2/196] Compiling dsffile.cpp
+[3/196] Compiling fileref.cpp
+[4/196] Compiling flacfile.cpp
+[5/196] Compiling xmproperties.cpp
+[6/196] Compiling xmfile.cpp
+[7/196] Compiling trueaudioproperties.cpp
+[8/196] Compiling wavpackproperties.cpp
+[9/196] Compiling wavpackfile.cpp
+[10/196] Compiling tversionnumber.cpp
+[11/196] Compiling trueaudiofile.cpp
+[12/196] Compiling tzlib.cpp
+[13/196] Compiling tstringlist.cpp
+[14/196] Compiling tpropertymap.cpp
+[15/196] Compiling tstring.cpp
+[16/196] Compiling tpicturetype.cpp
+[17/196] Compiling tvariant.cpp
+[18/196] Compiling tiostream.cpp
+[19/196] Compiling tdebug.cpp
+[20/196] Compiling tfilestream.cpp
+[21/196] Compiling tdebuglistener.cpp
+[22/196] Compiling tfile.cpp
+[23/196] Compiling tbytevectorstream.cpp
+[24/196] Compiling tbytevectorlist.cpp
+[25/196] Compiling tagutils.cpp
+[26/196] Compiling tagunion.cpp
+[27/196] Compiling tbytevector.cpp
+[28/196] Compiling shortenproperties.cpp
+[29/196] Compiling tag.cpp
+[30/196] Compiling s3mproperties.cpp
+[31/196] Compiling shortentag.cpp
+[32/196] Compiling shortenfile.cpp
+[33/196] Compiling s3mfile.cpp
+[34/196] Compiling wavproperties.cpp
+[35/196] Compiling wavfile.cpp
+[36/196] Compiling rifffile.cpp
+[37/196] Compiling infotag.cpp
+[38/196] Compiling aiffproperties.cpp
+[39/196] Compiling aifffile.cpp
+[40/196] Compiling vorbisproperties.cpp
+[41/196] Compiling vorbisfile.cpp
+[42/196] Compiling speexproperties.cpp
+[43/196] Compiling xiphcomment.cpp
+[44/196] Compiling speexfile.cpp
+[45/196] Compiling opusproperties.cpp
+[46/196] Compiling opusfile.cpp
+[47/196] Compiling oggpageheader.cpp
+[48/196] Compiling oggflacfile.cpp
+[49/196] Compiling oggpage.cpp
+[50/196] Compiling oggfile.cpp
+[51/196] Compiling xingheader.cpp
+[52/196] Compiling mpegproperties.cpp
+[53/196] Compiling mpegheader.cpp
+[54/196] Compiling mpegfile.cpp
+[55/196] Compiling id3v2synchdata.cpp
+[56/196] Compiling id3v2header.cpp
+[57/196] Compiling id3v2tag.cpp
+[58/196] Compiling id3v2footer.cpp
+[59/196] Compiling id3v2framefactory.cpp
+[60/196] Compiling id3v2frame.cpp
+[61/196] Compiling id3v2extendedheader.cpp
+[62/196] Compiling urllinkframe.cpp
+[63/196] Compiling unknownframe.cpp
+[64/196] Compiling unsynchronizedlyricsframe.cpp
+[65/196] Compiling uniquefileidentifierframe.cpp
+[66/196] Compiling synchronizedlyricsframe.cpp
+[67/196] Compiling textidentificationframe.cpp
+[68/196] Compiling tableofcontentsframe.cpp
+[69/196] Compiling relativevolumeframe.cpp
+[70/196] Compiling privateframe.cpp
+[71/196] Compiling popularimeterframe.cpp
+[72/196] Compiling podcastframe.cpp
+[73/196] Compiling ownershipframe.cpp
+[74/196] Compiling generalencapsulatedobjectframe.cpp
+[75/196] Compiling eventtimingcodesframe.cpp
+[76/196] Compiling commentsframe.cpp
+[77/196] Compiling chapterframe.cpp
+[78/196] Compiling attachedpictureframe.cpp
+[79/196] Compiling id3v1tag.cpp
+[80/196] Compiling id3v1genres.cpp
+[81/196] Compiling mpcproperties.cpp
+[82/196] Compiling mpcfile.cpp
+[83/196] Compiling mp4stem.cpp
+[84/196] Compiling mp4properties.cpp
+[85/196] Compiling mp4tag.cpp
+[86/196] Compiling mp4nerochapterlist.cpp
+[87/196] Compiling mp4qtchapterlist.cpp
+[88/196] Compiling mp4item.cpp
+[89/196] Compiling mp4file.cpp
+[90/196] Compiling mp4coverart.cpp
+[91/196] Compiling mp4itemfactory.cpp
+[92/196] Compiling mp4chapter.cpp
+[93/196] Compiling modtag.cpp
+[94/196] Compiling modproperties.cpp
+[95/196] Compiling mp4atom.cpp
+[96/196] Compiling modfilebase.cpp
+[97/196] Compiling modfile.cpp
+[98/196] Compiling matroskasimpletag.cpp
+[99/196] Compiling matroskasegment.cpp
+[100/196] Compiling matroskaproperties.cpp
+[101/196] Compiling matroskatag.cpp
+[102/196] Compiling matroskaseekhead.cpp
+[103/196] Compiling matroskaelement.cpp
+[104/196] Compiling matroskachapters.cpp
+[105/196] Compiling matroskacues.cpp
+[106/196] Compiling matroskafile.cpp
+[107/196] Compiling matroskachapteredition.cpp
+[108/196] Compiling matroskachapter.cpp
+[109/196] Compiling matroskaattachments.cpp
+[110/196] Compiling matroskaattachedfile.cpp
+[111/196] Compiling ebmlvoidelement.cpp
+[112/196] Compiling ebmluintelement.cpp
+[113/196] Compiling ebmlutils.cpp
+[114/196] Compiling ebmlstringelement.cpp
+[115/196] Compiling ebmlmktracks.cpp
+[116/196] Compiling ebmlmkseekhead.cpp
+[117/196] Compiling ebmlmktags.cpp
+[118/196] Compiling ebmlmkinfo.cpp
+[119/196] Compiling ebmlmksegment.cpp
+[120/196] Compiling ebmlmkcues.cpp
+[121/196] Compiling ebmlmkattachments.cpp
+[122/196] Compiling ebmlmkchapters.cpp
+[123/196] Compiling ebmlmasterelement.cpp
+[124/196] Compiling ebmlfloatelement.cpp
+[125/196] Compiling ebmldeferredbinaryelement.cpp
+[126/196] Compiling ebmlbinaryelement.cpp
+[127/196] Compiling ebmlelement.cpp
+[128/196] Compiling itproperties.cpp
+[129/196] Compiling flacproperties.cpp
+[130/196] Compiling flacunknownmetadatablock.cpp
+[131/196] Compiling itfile.cpp
+[132/196] Compiling flacpicture.cpp
+[133/196] Compiling flacmetadatablock.cpp
+[134/196] Compiling dsdiffproperties.cpp
+[135/196] Compiling audioproperties.cpp
+[136/196] Compiling dsdiffdiintag.cpp
+[137/196] Compiling dsdifffile.cpp
+[138/196] Compiling asfproperties.cpp
+[139/196] Compiling asfpicture.cpp
+[140/196] Compiling asffile.cpp
+[141/196] Compiling asfattribute.cpp
+[142/196] Compiling asftag.cpp
+[143/196] Compiling apefooter.cpp
+[144/196] Compiling apeproperties.cpp
+[145/196] Compiling apeitem.cpp
+[146/196] Write sources
+[154/197] Compiling apetag.cpp
+[155/198] Compiling apefile.cpp
+[156/198] Compiling CVorbis cvorbis.c
+[157/198] Compiling version.c
+[158/199] Compiling TagBridge.cpp
+[160/199] Compiling OggVorbis VorbisDecoder.swift
+[160/199] Compiling vbrquantize.c
+[161/199] Compiling util.c
+[162/199] Compiling tables.c
+[163/199] Compiling set_get.c
+[164/199] Compiling reservoir.c
+[165/199] Compiling takehiro.c
+[166/199] Compiling quantize_pvt.c
+[167/199] Compiling quantize.c
+[168/199] Compiling presets.c
+[169/199] Compiling psymodel.c
+[170/199] Compiling newmdct.c
+[171/199] Compiling lame.c
+[172/199] Compiling id3tag.c
+[173/199] Compiling gain_analysis.c
+[174/199] Compiling fft.c
+[175/199] Compiling encoder.c
+[176/199] Compiling VbrTag.c
+[177/199] Compiling bitstream.c
+[178/199] Compiling stream_encoder_framing.c
+[179/199] Compiling window.c
+[180/199] Compiling stream_encoder.c
+[181/199] Compiling stream_decoder.c
+[182/199] Compiling metadata_object.c
+[183/199] Compiling memory.c
+[184/199] Compiling md5.c
+[185/199] Compiling metadata_iterators.c
+[186/199] Compiling format.c
+[187/199] Compiling float.c
+[188/199] Compiling lpc.c
+[189/199] Compiling fixed.c
+[190/199] Compiling cpu.c
+[191/199] Compiling crc.c
+[192/199] Compiling bitreader.c
+[193/199] Compiling bitwriter.c
+[194/199] Compiling bitmath.c
+[196/199] Compiling MLRender CassetteRenderer.swift
+[197/199] Compiling MLCore AutoTuneProcessor.swift
+[198/202] Compiling MLStore LibraryStore.swift
+[199/202] Compiling MLTags BridgeFile.swift
+[200/202] Compiling MLStudio KIMusic.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:97:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 95 |     /// Wartet, solange angehalten ist. Kehrt sofort zurück, wenn nicht angehalten.
+ 96 |     public func waitIfPaused() async {
+ 97 |         lock.lock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 98 |         if !paused { lock.unlock(); return }
+ 99 |         lock.unlock()
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:98:27: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 96 |     public func waitIfPaused() async {
+ 97 |         lock.lock()
+ 98 |         if !paused { lock.unlock(); return }
+    |                           `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 99 |         lock.unlock()
+100 |         await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:99:14: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 97 |         lock.lock()
+ 98 |         if !paused { lock.unlock(); return }
+ 99 |         lock.unlock()
+    |              `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+100 |         await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+101 |             lock.lock()
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+[201/203] Compiling StudioEngine LocalSourceAnalyzer.swift
+[202/204] Compiling MusicLibrary AppModel.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[202/204] Write Objects.LinkFileList
+[203/204] Linking MusicLibrary
+Build of product 'MusicLibrary' complete! (579.25s)
+▸ Baue x86_64 (x86_64-apple-macosx13.0) …
+Building for production...
+[0/196] Write swift-version-7974D3F7F03D5E95.txt
+[1/196] Compiling xmproperties.cpp
+[2/196] Compiling wavpackproperties.cpp
+[3/196] Compiling xmfile.cpp
+[4/196] Compiling wavpackfile.cpp
+[5/196] Compiling trueaudioproperties.cpp
+[6/196] Compiling tzlib.cpp
+[7/196] Compiling tversionnumber.cpp
+[8/196] Compiling trueaudiofile.cpp
+[9/196] Compiling tstringlist.cpp
+[10/196] Compiling tpropertymap.cpp
+[11/196] Compiling tstring.cpp
+[12/196] Compiling tvariant.cpp
+[13/196] Compiling tpicturetype.cpp
+[14/196] Compiling tiostream.cpp
+[15/196] Compiling tdebug.cpp
+[16/196] Compiling tfilestream.cpp
+[17/196] Compiling tdebuglistener.cpp
+[18/196] Compiling tfile.cpp
+[19/196] Compiling tbytevectorstream.cpp
+[20/196] Compiling tbytevectorlist.cpp
+[21/196] Compiling tagutils.cpp
+[22/196] Compiling tagunion.cpp
+[23/196] Compiling tbytevector.cpp
+[24/196] Compiling shortenproperties.cpp
+[25/196] Compiling tag.cpp
+[26/196] Compiling shortentag.cpp
+[27/196] Compiling s3mproperties.cpp
+[28/196] Compiling shortenfile.cpp
+[29/196] Compiling s3mfile.cpp
+[30/196] Compiling wavproperties.cpp
+[31/196] Compiling wavfile.cpp
+[32/196] Compiling aiffproperties.cpp
+[33/196] Compiling rifffile.cpp
+[34/196] Compiling infotag.cpp
+[35/196] Compiling aifffile.cpp
+[36/196] Compiling vorbisproperties.cpp
+[37/196] Compiling vorbisfile.cpp
+[38/196] Compiling speexproperties.cpp
+[39/196] Compiling xiphcomment.cpp
+[40/196] Compiling opusproperties.cpp
+[41/196] Compiling speexfile.cpp
+[42/196] Compiling opusfile.cpp
+[43/196] Compiling oggpageheader.cpp
+[44/196] Compiling oggpage.cpp
+[45/196] Compiling oggflacfile.cpp
+[46/196] Compiling oggfile.cpp
+[47/196] Compiling xingheader.cpp
+[48/196] Compiling mpegproperties.cpp
+[49/196] Compiling mpegheader.cpp
+[50/196] Compiling mpegfile.cpp
+[51/196] Compiling id3v2synchdata.cpp
+[52/196] Compiling id3v2header.cpp
+[53/196] Compiling id3v2tag.cpp
+[54/196] Compiling id3v2framefactory.cpp
+[55/196] Compiling id3v2footer.cpp
+[56/196] Compiling id3v2frame.cpp
+[57/196] Compiling id3v2extendedheader.cpp
+[58/196] Compiling urllinkframe.cpp
+[59/196] Compiling unsynchronizedlyricsframe.cpp
+[60/196] Compiling unknownframe.cpp
+[61/196] Compiling uniquefileidentifierframe.cpp
+[62/196] Compiling synchronizedlyricsframe.cpp
+[63/196] Compiling textidentificationframe.cpp
+[64/196] Compiling tableofcontentsframe.cpp
+[65/196] Compiling relativevolumeframe.cpp
+[66/196] Compiling privateframe.cpp
+[67/196] Compiling popularimeterframe.cpp
+[68/196] Compiling podcastframe.cpp
+[69/196] Compiling ownershipframe.cpp
+[70/196] Compiling generalencapsulatedobjectframe.cpp
+[71/196] Compiling eventtimingcodesframe.cpp
+[72/196] Compiling commentsframe.cpp
+[73/196] Compiling attachedpictureframe.cpp
+[74/196] Compiling chapterframe.cpp
+[75/196] Compiling id3v1tag.cpp
+[76/196] Compiling id3v1genres.cpp
+[77/196] Compiling mpcproperties.cpp
+[78/196] Compiling mpcfile.cpp
+[79/196] Compiling mp4stem.cpp
+[80/196] Compiling mp4properties.cpp
+[81/196] Compiling mp4tag.cpp
+[82/196] Compiling mp4nerochapterlist.cpp
+[83/196] Compiling mp4qtchapterlist.cpp
+[84/196] Compiling mp4item.cpp
+[85/196] Compiling mp4coverart.cpp
+[86/196] Compiling mp4file.cpp
+[87/196] Compiling mp4chapter.cpp
+[88/196] Compiling mp4itemfactory.cpp
+[89/196] Compiling modproperties.cpp
+[90/196] Compiling mp4atom.cpp
+[91/196] Compiling modtag.cpp
+[92/196] Compiling modfilebase.cpp
+[93/196] Compiling modfile.cpp
+[94/196] Compiling matroskasimpletag.cpp
+[95/196] Compiling matroskasegment.cpp
+[96/196] Compiling matroskaproperties.cpp
+[97/196] Compiling matroskaseekhead.cpp
+[98/196] Compiling matroskatag.cpp
+[99/196] Compiling matroskaelement.cpp
+[100/196] Compiling matroskachapters.cpp
+[101/196] Compiling matroskacues.cpp
+[102/196] Compiling matroskafile.cpp
+[103/196] Compiling matroskachapteredition.cpp
+[104/196] Compiling matroskachapter.cpp
+[105/196] Compiling matroskaattachments.cpp
+[106/196] Compiling matroskaattachedfile.cpp
+[107/196] Compiling ebmlvoidelement.cpp
+[108/196] Compiling ebmluintelement.cpp
+[109/196] Compiling ebmlutils.cpp
+[110/196] Compiling ebmlstringelement.cpp
+[111/196] Compiling ebmlmktracks.cpp
+[112/196] Compiling ebmlmkseekhead.cpp
+[113/196] Compiling ebmlmktags.cpp
+[114/196] Compiling ebmlmkinfo.cpp
+[115/196] Compiling ebmlmksegment.cpp
+[116/196] Compiling ebmlmkcues.cpp
+[117/196] Compiling ebmlmkattachments.cpp
+[118/196] Compiling ebmlmkchapters.cpp
+[119/196] Compiling ebmlmasterelement.cpp
+[120/196] Compiling ebmlfloatelement.cpp
+[121/196] Compiling ebmldeferredbinaryelement.cpp
+[122/196] Compiling ebmlelement.cpp
+[123/196] Compiling ebmlbinaryelement.cpp
+[123/196] Compiling itproperties.cpp
+[125/196] Compiling flacunknownmetadatablock.cpp
+[126/196] Compiling flacproperties.cpp
+[127/196] Compiling itfile.cpp
+[128/196] Compiling flacpicture.cpp
+[129/196] Compiling flacmetadatablock.cpp
+[130/196] Compiling dsfproperties.cpp
+[131/196] Compiling fileref.cpp
+[132/196] Compiling dsdiffproperties.cpp
+[133/196] Compiling flacfile.cpp
+[134/196] Compiling dsffile.cpp
+[135/196] Compiling audioproperties.cpp
+[136/196] Compiling dsdiffdiintag.cpp
+[137/196] Compiling asfproperties.cpp
+[138/196] Compiling dsdifffile.cpp
+[139/196] Compiling asfpicture.cpp
+[140/196] Compiling asfattribute.cpp
+[141/196] Compiling asftag.cpp
+[142/196] Compiling asffile.cpp
+[143/196] Compiling apeproperties.cpp
+[144/196] Compiling apefooter.cpp
+[145/196] Compiling apeitem.cpp
+[146/196] Write sources
+[154/197] Compiling apetag.cpp
+[155/198] Compiling apefile.cpp
+[156/198] Compiling CVorbis cvorbis.c
+[157/198] Compiling version.c
+[159/199] Compiling OggVorbis VorbisDecoder.swift
+[159/199] Compiling vbrquantize.c
+[160/199] Compiling util.c
+[161/199] Compiling takehiro.c
+[162/199] Compiling tables.c
+[163/199] Compiling TagBridge.cpp
+[164/199] Compiling set_get.c
+[165/199] Compiling reservoir.c
+[166/199] Compiling quantize_pvt.c
+[167/199] Compiling quantize.c
+[168/199] Compiling presets.c
+[169/199] Compiling psymodel.c
+[170/199] Compiling newmdct.c
+[171/199] Compiling lame.c
+[172/199] Compiling gain_analysis.c
+[173/199] Compiling id3tag.c
+[174/199] Compiling fft.c
+[175/199] Compiling encoder.c
+[176/199] Compiling VbrTag.c
+[177/199] Compiling bitstream.c
+[178/199] Compiling stream_encoder_framing.c
+[179/199] Compiling window.c
+[180/199] Compiling stream_decoder.c
+[181/199] Compiling stream_encoder.c
+[182/199] Compiling metadata_object.c
+[183/199] Compiling memory.c
+[184/199] Compiling md5.c
+[185/199] Compiling metadata_iterators.c
+[186/199] Compiling lpc.c
+[187/199] Compiling float.c
+[188/199] Compiling format.c
+[189/199] Compiling crc.c
+[190/199] Compiling cpu.c
+[191/199] Compiling fixed.c
+[192/199] Compiling bitwriter.c
+[193/199] Compiling bitreader.c
+[194/199] Compiling bitmath.c
+[196/199] Compiling MLRender CassetteRenderer.swift
+[197/199] Compiling MLCore AutoTuneProcessor.swift
+[198/202] Compiling MLStore LibraryStore.swift
+[199/202] Compiling MLTags BridgeFile.swift
+[200/202] Compiling MLStudio KIMusic.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:97:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 95 |     /// Wartet, solange angehalten ist. Kehrt sofort zurück, wenn nicht angehalten.
+ 96 |     public func waitIfPaused() async {
+ 97 |         lock.lock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 98 |         if !paused { lock.unlock(); return }
+ 99 |         lock.unlock()
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:98:27: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 96 |     public func waitIfPaused() async {
+ 97 |         lock.lock()
+ 98 |         if !paused { lock.unlock(); return }
+    |                           `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 99 |         lock.unlock()
+100 |         await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:99:14: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 97 |         lock.lock()
+ 98 |         if !paused { lock.unlock(); return }
+ 99 |         lock.unlock()
+    |              `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+100 |         await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+101 |             lock.lock()
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+[201/203] Compiling StudioEngine LocalSourceAnalyzer.swift
+[202/204] Compiling MusicLibrary AppModel.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[202/204] Write Objects.LinkFileList
+[203/204] Linking MusicLibrary
+Build of product 'MusicLibrary' complete! (383.32s)
+▸ Erstelle App-Bundle …
+▸ Prüfe Architekturen …
+Architectures in the fat file: build/Music Library.app/Contents/MacOS/MusicLibrary are: x86_64 arm64 
+▸ Mindest-macOS je Architektur:
+    minos 13.0
+    minos 13.0
+▸ Ad-hoc-Signatur …
+build/Music Library.app: valid on disk
+build/Music Library.app: satisfies its Designated Requirement
+✓ build/Music Library.app

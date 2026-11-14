@@ -1,0 +1,531 @@
+{
+  "architecture" : "x86_64",
+  "images" : [
+    {
+      "elapsedMs" : "2224",
+      "file" : "01-bibliothek-hell-1520x940.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "10",
+      "mainThreadLagMaxMs" : "37.4",
+      "mainThreadLagMeanMs" : "7.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2241",
+      "file" : "01-bibliothek-dunkel-1520x940.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "3",
+      "mainThreadLagMaxMs" : "11.2",
+      "mainThreadLagMeanMs" : "5.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2252",
+      "file" : "03-alben-hell-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "3",
+      "mainThreadLagMaxMs" : "13.5",
+      "mainThreadLagMeanMs" : "5.1",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2202",
+      "file" : "03-alben-dunkel-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "75.3",
+      "mainThreadLagMeanMs" : "33.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2217",
+      "file" : "03-album-detail-hell-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "75.1",
+      "mainThreadLagMeanMs" : "31.5",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2241",
+      "file" : "03-album-detail-dunkel-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "62.9",
+      "mainThreadLagMeanMs" : "37.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2231",
+      "file" : "03-album-detail-klein-hell-940x660.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "75.0",
+      "mainThreadLagMeanMs" : "40.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2248",
+      "file" : "03-album-detail-klein-dunkel-940x660.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "72.8",
+      "mainThreadLagMeanMs" : "40.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2210",
+      "file" : "10-vinyl-hell-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "29",
+      "mainThreadLagMaxMs" : "190.3",
+      "mainThreadLagMeanMs" : "87.1",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2282",
+      "file" : "10-vinyl-dunkel-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "8",
+      "mainThreadLagMaxMs" : "76.4",
+      "mainThreadLagMeanMs" : "58.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2235",
+      "file" : "10-vinyl-klein-hell-940x660.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "3",
+      "mainThreadLagMaxMs" : "76.0",
+      "mainThreadLagMeanMs" : "63.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2221",
+      "file" : "10-vinyl-klein-dunkel-940x660.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "104.4",
+      "mainThreadLagMeanMs" : "76.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2289",
+      "file" : "12-kassette-hell-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "14",
+      "mainThreadLagMaxMs" : "83.6",
+      "mainThreadLagMeanMs" : "67.7",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2246",
+      "file" : "12-kassette-dunkel-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "75.7",
+      "mainThreadLagMeanMs" : "39.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2260",
+      "file" : "13-equalizer-hell-640x720.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "79.7",
+      "mainThreadLagMeanMs" : "39.3",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2221",
+      "file" : "13-equalizer-dunkel-640x720.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "75.0",
+      "mainThreadLagMeanMs" : "33.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2247",
+      "file" : "14-metadaten-hell-780x780.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "79.4",
+      "mainThreadLagMeanMs" : "41.5",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2204",
+      "file" : "14-metadaten-dunkel-780x780.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "76.9",
+      "mainThreadLagMeanMs" : "60.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2214",
+      "file" : "14-metadaten-mehrfach-hell-780x780.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "75.1",
+      "mainThreadLagMeanMs" : "52.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2265",
+      "file" : "14-metadaten-mehrfach-dunkel-780x780.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "75.6",
+      "mainThreadLagMeanMs" : "40.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2209",
+      "file" : "17-einstellungen-hell-860x680.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "75.1",
+      "mainThreadLagMeanMs" : "31.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2223",
+      "file" : "17-einstellungen-dunkel-860x680.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "69.0",
+      "mainThreadLagMeanMs" : "36.5",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2223",
+      "file" : "21-alben-detailliste-hell-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "76.6",
+      "mainThreadLagMeanMs" : "58.3",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2228",
+      "file" : "21-alben-detailliste-dunkel-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "76.0",
+      "mainThreadLagMeanMs" : "45.2",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2274",
+      "file" : "21-alben-coverflow-hell-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "77.6",
+      "mainThreadLagMeanMs" : "41.2",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2230",
+      "file" : "21-alben-coverflow-dunkel-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "70.0",
+      "mainThreadLagMeanMs" : "37.7",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2277",
+      "file" : "21-alben-coverflow-klein-hell-940x660.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "69.9",
+      "mainThreadLagMeanMs" : "40.1",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2225",
+      "file" : "21-alben-coverflow-klein-dunkel-940x660.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "69.9",
+      "mainThreadLagMeanMs" : "30.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2236",
+      "file" : "30-modern-glass-hell-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "5",
+      "mainThreadLagMaxMs" : "75.2",
+      "mainThreadLagMeanMs" : "60.1",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2268",
+      "file" : "30-modern-glass-dunkel-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "74.9",
+      "mainThreadLagMeanMs" : "42.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2219",
+      "file" : "30-modern-glass-klein-hell-940x660.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "79.2",
+      "mainThreadLagMeanMs" : "50.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2253",
+      "file" : "30-modern-glass-klein-dunkel-940x660.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "75.0",
+      "mainThreadLagMeanMs" : "57.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2242",
+      "file" : "31-aurora-hell-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "6",
+      "mainThreadLagMaxMs" : "76.2",
+      "mainThreadLagMeanMs" : "57.5",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2206",
+      "file" : "31-aurora-dunkel-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "3",
+      "mainThreadLagMaxMs" : "79.7",
+      "mainThreadLagMeanMs" : "37.7",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2270",
+      "file" : "32-studio-reel-hell-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "12",
+      "mainThreadLagMaxMs" : "77.6",
+      "mainThreadLagMeanMs" : "61.2",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2207",
+      "file" : "32-studio-reel-dunkel-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "76.5",
+      "mainThreadLagMeanMs" : "46.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2229",
+      "file" : "34-mini-gross-hell-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "74.3",
+      "mainThreadLagMeanMs" : "32.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2257",
+      "file" : "34-mini-gross-dunkel-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "74.4",
+      "mainThreadLagMeanMs" : "14.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2233",
+      "file" : "40-einstellungen-equalizer-hell-860x680.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "68.0",
+      "mainThreadLagMeanMs" : "19.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2206",
+      "file" : "40-einstellungen-equalizer-dunkel-860x680.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "55.3",
+      "mainThreadLagMeanMs" : "14.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2221",
+      "file" : "35-popover-tonhoehe-hell-380x460.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "40.7",
+      "mainThreadLagMeanMs" : "12.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2256",
+      "file" : "35-popover-tonhoehe-dunkel-380x460.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "69.9",
+      "mainThreadLagMeanMs" : "13.5",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2214",
+      "file" : "13-equalizer-eigene-hell-640x720.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "65.1",
+      "mainThreadLagMeanMs" : "13.5",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2221",
+      "file" : "13-equalizer-eigene-dunkel-640x720.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "44.2",
+      "mainThreadLagMeanMs" : "9.1",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2237",
+      "file" : "26-titel-raster-gescrollt-hell-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "75.0",
+      "mainThreadLagMeanMs" : "37.3",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2220",
+      "file" : "26-titel-raster-gescrollt-dunkel-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "76.0",
+      "mainThreadLagMeanMs" : "25.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2228",
+      "file" : "27-auswahl-alben-hell-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "76.6",
+      "mainThreadLagMeanMs" : "29.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2247",
+      "file" : "27-auswahl-alben-dunkel-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "75.6",
+      "mainThreadLagMeanMs" : "16.7",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2244",
+      "file" : "50-mini-riesig-hell-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "70.7",
+      "mainThreadLagMeanMs" : "20.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2242",
+      "file" : "50-mini-riesig-dunkel-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "79.6",
+      "mainThreadLagMeanMs" : "16.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2307",
+      "file" : "50-mini-riesig-schmal-hell-940x660.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "72.3",
+      "mainThreadLagMeanMs" : "19.7",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2236",
+      "file" : "50-mini-riesig-schmal-dunkel-940x660.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "65.0",
+      "mainThreadLagMeanMs" : "11.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2217",
+      "file" : "52-player-formatzeile-hell-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "5",
+      "mainThreadLagMaxMs" : "76.1",
+      "mainThreadLagMeanMs" : "37.3",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2245",
+      "file" : "52-player-formatzeile-dunkel-1280x820.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "74.8",
+      "mainThreadLagMeanMs" : "28.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2207",
+      "file" : "52-player-formatzeile-hochkant-hell-900x1080.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "74.5",
+      "mainThreadLagMeanMs" : "29.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2254",
+      "file" : "52-player-formatzeile-hochkant-dunkel-900x1080.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "74.9",
+      "mainThreadLagMeanMs" : "51.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2236",
+      "file" : "53-equalizer-fenster-pop-hell-640x720.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "64.3",
+      "mainThreadLagMeanMs" : "29.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2215",
+      "file" : "53-equalizer-fenster-pop-dunkel-640x720.png",
+      "glass" : "fallback",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "75.6",
+      "mainThreadLagMeanMs" : "36.0",
+      "method" : "window-server"
+    }
+  ],
+  "interFont" : true,
+  "liquidGlass" : false,
+  "macOS" : "Version 15.8.2 (Build 24H232)",
+  "screen" : "1024x768 @1.0x, sichtbar 1024x684"
+}
