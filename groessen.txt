@@ -1,0 +1,7 @@
+1.3G	/Users/runner/work/_temp/ki/ACE-Step-1.5
+ 20K	/Users/runner/work/_temp/ki/Engine
+4.0K	/Users/runner/work/_temp/ki/installation.json
+132K	/Users/runner/work/_temp/ki/ki-musik.log
+ 11G	/Users/runner/work/_temp/ki/Modelle
+ 73M	/Users/runner/work/_temp/ki/python
+ 27M	/Users/runner/work/_temp/ki/uv

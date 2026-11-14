@@ -1,0 +1,1087 @@
+
+--- 2026-11-14 05:37:34 +0000 KI-Prozess startet ---
+W1114 05:37:43.165000 14842 .venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torchao/quantization/quant_api.py:1825: SyntaxWarning: invalid escape sequence '\.'
+  * regex for parameter names, must start with `re:`, e.g. `re:language\.layers\..+\.q_proj.weight`.
+Matplotlib is building the font cache; this may take a moment.
+[32m2026-11-14 05:38:02.564[0m | [33m[1mWARNING [0m | [36macestep.training.trainer[0m:[36m<module>[0m:[36m40[0m - [33m[1mbitsandbytes not installed. Using standard AdamW.[0m
+[32m2026-11-14 05:38:02.721[0m | [1mINFO    [0m | [36macestep.gpu_config[0m:[36mget_gpu_config[0m:[36m846[0m - [1mmacOS MPS detected (4.7 GB unified memory, tier=tier2). Applying Apple Silicon optimizations: no compile, no quantization, mlx backend, no CPU offload.[0m
+[32m2026-11-14 05:38:02.732[0m | [33m[1mWARNING [0m | [36macestep.core.generation.handler.init_service_downloads[0m:[36m_sync_model_code_if_needed[0m:[36m71[0m - [33m[1m[initialize_service] Model code mismatch detected for 'acestep-v15-turbo': ['modeling_acestep_v15_turbo.py', 'configuration_acestep_v15.py']. Auto-syncing from acestep/models/...[0m
+[32m2026-11-14 05:38:02.740[0m | [34m[1mDEBUG   [0m | [36macestep.model_downloader[0m:[36m_sync_model_code_files[0m:[36m131[0m - [34m[1m[Model Sync] Synced modeling_acestep_v15_turbo.py -> /Users/runner/work/_temp/ki/Modelle/acestep-v15-turbo/modeling_acestep_v15_turbo.py[0m
+[32m2026-11-14 05:38:02.741[0m | [34m[1mDEBUG   [0m | [36macestep.model_downloader[0m:[36m_sync_model_code_files[0m:[36m131[0m - [34m[1m[Model Sync] Synced configuration_acestep_v15.py -> /Users/runner/work/_temp/ki/Modelle/acestep-v15-turbo/configuration_acestep_v15.py[0m
+[32m2026-11-14 05:38:02.742[0m | [1mINFO    [0m | [36macestep.core.generation.handler.init_service_downloads[0m:[36m_sync_model_code_if_needed[0m:[36m76[0m - [1m[initialize_service] Model code files synced successfully.[0m
+[32m2026-11-14 05:38:02.742[0m | [1mINFO    [0m | [36macestep.core.generation.handler.init_service_loader[0m:[36m_load_main_model_from_checkpoint[0m:[36m174[0m - [1m[initialize_service] Attempting to load model with attention implementation: sdpa[0m
+[32m2026-11-14 05:40:15.842[0m | [31m[1mERROR   [0m | [36macestep.core.generation.handler.init_service_orchestrator[0m:[36minitialize_service[0m:[36m219[0m - [31m[1mError initializing model: MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 16.00 KiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+
+Traceback:
+Traceback (most recent call last):
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/init_service_orchestrator.py", line 156, in initialize_service
+    self._load_main_model_from_checkpoint(
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/init_service_loader.py", line 198, in _load_main_model_from_checkpoint
+    self.model = self.model.to(device).to(self.dtype)
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/modeling_utils.py", line 4343, in to
+    return super().to(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1381, in to
+    return self._apply(convert)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  [Previous line repeated 3 more times]
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 964, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1367, in convert
+    return t.to(
+           ^^^^^
+RuntimeError: MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 16.00 KiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32m/Users/runner/work/_temp/ki/Engine/[0m[32m[1mengine.py[0m", line [33m275[0m, in [35m<module>[0m
+    [1mmain[0m[1m([0m[1m)[0m
+    [36m└ [0m[36m[1m<function main at 0x1089916c0>[0m
+
+  File "[32m/Users/runner/work/_temp/ki/Engine/[0m[32m[1mengine.py[0m", line [33m259[0m, in [35mmain[0m
+    [1mresult[0m [35m[1m=[0m [1mengine[0m[35m[1m.[0m[1mload[0m[1m([0m[1mreq[0m[1m,[0m [1mprogress[0m[1m)[0m
+    [36m         │      │    │    └ [0m[36m[1m<function main.<locals>.progress at 0x1089d9120>[0m
+    [36m         │      │    └ [0m[36m[1m{'id': 'A801C1E1-03D8-4BC4-8FFA-5B0085182ACA', 'dit': 'acestep-v15-turbo', 'lm': 'acestep-5Hz-lm-0.6B', 'cmd': 'load'}[0m
+    [36m         │      └ [0m[36m[1m<function Engine.load at 0x1089d8ae0>[0m
+    [36m         └ [0m[36m[1m<__main__.Engine object at 0x1089baae0>[0m
+
+  File "[32m/Users/runner/work/_temp/ki/Engine/[0m[32m[1mengine.py[0m", line [33m91[0m, in [35mload[0m
+    [1mmsg[0m[1m,[0m [1mok[0m [35m[1m=[0m [1mself[0m[35m[1m.[0m[1mdit[0m[35m[1m.[0m[1minitialize_service[0m[1m([0m[1mproject_root[0m[35m[1m=[0m[1mself[0m[35m[1m.[0m[1mace_root[0m[1m,[0m [1mconfig_path[0m[35m[1m=[0m[1mdit_model[0m[1m,[0m [1mdevice[0m[35m[1m=[0m[1mdevice[0m[1m,[0m
+    [36m          │    │   │                               │    │                     │                 └ [0m[36m[1m'auto'[0m
+    [36m          │    │   │                               │    │                     └ [0m[36m[1m'acestep-v15-turbo'[0m
+    [36m          │    │   │                               │    └ [0m[36m[1m'/Users/runner/work/_temp/ki/ACE-Step-1.5'[0m
+    [36m          │    │   │                               └ [0m[36m[1m<__main__.Engine object at 0x1089baae0>[0m
+    [36m          │    │   └ [0m[36m[1m<function InitServiceOrchestratorMixin.initialize_service at 0x10dc21080>[0m
+    [36m          │    └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x108dc7020>[0m
+    [36m          └ [0m[36m[1m<__main__.Engine object at 0x1089baae0>[0m
+
+> File "[32m/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/[0m[32m[1minit_service_orchestrator.py[0m", line [33m156[0m, in [35minitialize_service[0m
+    [1mself[0m[35m[1m.[0m[1m_load_main_model_from_checkpoint[0m[1m([0m
+    [36m│    └ [0m[36m[1m<function InitServiceLoaderMixin._load_main_model_from_checkpoint at 0x10dc53e20>[0m
+    [36m└ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x108dc7020>[0m
+
+  File "[32m/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/[0m[32m[1minit_service_loader.py[0m", line [33m198[0m, in [35m_load_main_model_from_checkpoint[0m
+    [1mself[0m[35m[1m.[0m[1mmodel[0m [35m[1m=[0m [1mself[0m[35m[1m.[0m[1mmodel[0m[35m[1m.[0m[1mto[0m[1m([0m[1mdevice[0m[1m)[0m[35m[1m.[0m[1mto[0m[1m([0m[1mself[0m[35m[1m.[0m[1mdtype[0m[1m)[0m
+    [36m│    │       │    │        │          │    └ [0m[36m[1mtorch.float32[0m
+    [36m│    │       │    │        │          └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x108dc7020>[0m
+    [36m│    │       │    │        └ [0m[36m[1m'mps'[0m
+    [36m│    │       │    └ [0m[36m[1mNone[0m
+    [36m│    │       └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x108dc7020>[0m
+    [36m│    └ [0m[36m[1mNone[0m
+    [36m└ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x108dc7020>[0m
+
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/modeling_utils.py", line 4343, in to
+    return super().to(*args, **kwargs)
+                       │       └ {}
+                       └ ('mps',)
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1381, in to
+    return self._apply(convert)
+           │    │      └ <function Module.to.<locals>.convert at 0x1089d9f80>
+           │    └ <function Module._apply at 0x10a1ad120>
+           └ AceStepConditionGenerationModel(
+               (decoder): AceStepDiTModel(
+                 (rotary_emb): Qwen3RotaryEmbedding()
+                 (layers): ModuleL...
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x1089d9f80>
+    │      └ <function Module._apply at 0x10a1ad120>
+    └ AceStepConditionEncoder(
+        (text_projector): Linear(in_features=1024, out_features=2048, bias=False)
+        (lyric_encoder): AceSt...
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x1089d9f80>
+    │      └ <function Module._apply at 0x10a1ad120>
+    └ AceStepTimbreEncoder(
+        (embed_tokens): Linear(in_features=64, out_features=2048, bias=True)
+        (norm): Qwen3RMSNorm((2048,), ...
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x1089d9f80>
+    │      └ <function Module._apply at 0x10a1ad120>
+    └ ModuleList(
+        (0-3): 4 x AceStepEncoderLayer(
+          (self_attn): AceStepAttention(
+            (q_proj): Linear(in_features=2048, out...
+  [Previous line repeated 3 more times]
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 964, in _apply
+    param_applied = fn(param)
+                    │  └ Parameter containing:
+                    │    tensor([[ 0.0369, -0.0028,  0.0085,  ..., -0.0493,  0.0361, -0.0544],
+                    │            [-0.0188, -0.0118, -0.031...
+                    └ <function Module.to.<locals>.convert at 0x1089d9f80>
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1367, in convert
+    return t.to(
+           │ └ <method 'to' of 'torch._C.TensorBase' objects>
+           └ Parameter containing:
+             tensor([[ 0.0369, -0.0028,  0.0085,  ..., -0.0493,  0.0361, -0.0544],
+                     [-0.0188, -0.0118, -0.031...
+
+[31m[1mRuntimeError[0m:[1m MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 16.00 KiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).[0m
+[32m2026-11-14 05:40:16.172[0m | [1mINFO    [0m | [36macestep.core.generation.handler.init_service_loader[0m:[36m_load_main_model_from_checkpoint[0m:[36m174[0m - [1m[initialize_service] Attempting to load model with attention implementation: sdpa[0m
+[32m2026-11-14 05:41:25.280[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_init[0m:[36m_init_mlx_vae[0m:[36m75[0m - [1m[MLX-VAE] Decode/encode compiled with mx.compile().[0m
+[32m2026-11-14 05:41:25.285[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_init[0m:[36m_init_mlx_vae[0m:[36m85[0m - [1m[MLX-VAE] Native MLX VAE initialized (dtype=mlx.core.float32, compiled=True).[0m
+[32m2026-11-14 05:41:25.346[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m609[0m - [1mloading 5Hz LM tokenizer... it may take 80~90s[0m
+[32m2026-11-14 05:41:43.277[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m613[0m - [1m5Hz LM tokenizer loaded successfully in 17.93 seconds[0m
+[32m2026-11-14 05:41:43.278[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m618[0m - [1mInitializing constrained decoding processor...[0m
+[32m2026-11-14 05:41:43.278[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m624[0m - [1mSetting constrained decoding max_duration to 480s based on GPU config (tier: tier2)[0m
+[32m2026-11-14 05:41:44.062[0m | [34m[1mDEBUG   [0m | [36macestep.constrained_logits_processor[0m:[36m_precompute_audio_code_tokens[0m:[36m577[0m - [34m[1mFound 1535 audio code tokens with values outside valid range [0, 63999][0m
+[32m2026-11-14 05:41:47.765[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m632[0m - [1mConstrained processor initialized in 4.49 seconds[0m
+[32m2026-11-14 05:41:47.766[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m659[0m - [1mflash_attn not installed: disabling CUDA graph capture for nano-vllm (SDPA fallback uses .item() calls in paged-cache decode that are incompatible with CUDA graph capture)[0m
+[32m2026-11-14 05:41:47.766[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m671[0m - [1mTriton not available: disabling CUDA graph capture for nano-vllm (CUDA graphs require torch.compile which depends on Triton)[0m
+[32m2026-11-14 05:41:47.830[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m681[0m - [1mAttempting MLX backend for Apple Silicon acceleration...[0m
+[32m2026-11-14 05:41:47.830[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_load_mlx_model[0m:[36m2947[0m - [1mLoading MLX model from /Users/runner/work/_temp/ki/Modelle/acestep-5Hz-lm-0.6B[0m
+[32m2026-11-14 05:42:16.991[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_load_mlx_model[0m:[36m3003[0m - [1mMLX model loaded successfully in 29.16s[0m
+[32m2026-11-14 05:42:17.144[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=False, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=False, use_lm=False[0m
+[32m2026-11-14 05:42:17.147[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m329[0m - [1m[generate_music] Starting generation...[0m
+[32m2026-11-14 05:42:17.147[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m332[0m - [1m[generate_music] Preparing inputs...[0m
+[32m2026-11-14 05:42:17.205[0m | [1mINFO    [0m | [36macestep.core.generation.handler.progress[0m:[36m_start_diffusion_progress_estimator[0m:[36m179[0m - [1m[progress] No timing history — using fallback estimate (2.5s/step for batch_size=1).  This will self-calibrate after the first generation.[0m
+[32m2026-11-14 05:42:17.299[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m119[0m - [1m
+======================================================================[0m
+[32m2026-11-14 05:42:17.299[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m120[0m - [1m🔍 [DEBUG] DiT TEXT ENCODER INPUT (Inference)[0m
+[32m2026-11-14 05:42:17.299[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m121[0m - [1m======================================================================[0m
+[32m2026-11-14 05:42:17.299[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m122[0m - [1mtext_prompt:
+# Instruction
+Fill the audio semantic mask based on the given conditions:
+
+# Caption
+Calm lo-fi hip hop with warm piano chords and a relaxed drum groove
+
+# Metas
+- bpm: 80
+- timesignature: N/A
+- keyscale: N/A
+- duration: 20 seconds
+<|endoftext|>
+[0m
+[32m2026-11-14 05:42:17.299[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m123[0m - [1m======================================================================[0m
+[32m2026-11-14 05:42:17.299[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m124[0m - [1mlyrics_text:
+# Languages
+unknown
+
+# Lyric
+[Instrumental]<|endoftext|>[0m
+[32m2026-11-14 05:42:17.300[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m125[0m - [1m======================================================================
+[0m
+[32m2026-11-14 05:42:17.392[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m110[0m - [1m[preprocess_batch] Inferring prompt embeddings...[0m
+[32m2026-11-14 05:42:26.464[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m113[0m - [1m[preprocess_batch] Inferring lyric embeddings...[0m
+[32m2026-11-14 05:42:26.474[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m173[0m - [1m[service_generate] Generating audio... (DiT backend: PyTorch (cpu))[0m
+[32m2026-11-14 05:43:06.118[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m276[0m - [1m[service_generate] DiT diffusion via PyTorch (cpu)...[0m
+[32m2026-11-14 05:43:22.089[0m | [1mINFO    [0m | [36macestep.models.common.dcw_correction[0m:[36m__init__[0m:[36m98[0m - [1m[DCW] Active — mode=double, scaler=0.0500, high_scaler=0.0200, wavelet='haar'[0m
+[32m2026-11-14 05:44:55.951[0m | [1mINFO    [0m | [36macestep.models.common.dcw_loader[0m:[36mget[0m:[36m84[0m - [1m[DCW] Built DWT1D for wavelet='haar' (low-pass filter taps=2, device=cpu, dtype=torch.float32).[0m
+[32m2026-11-14 05:50:37.138[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m42[0m - [1m[generate_music] Model generation completed. Decoding latents...[0m
+[32m2026-11-14 05:50:37.283[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m64[0m - [34m[1m[generate_music] pred_latents: torch.Size([1, 500, 64]), dtype=torch.float32[0m
+[32m2026-11-14 05:50:37.285[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m65[0m - [34m[1m[generate_music] time_costs: {'encoder_time_cost': 15.916741847991943, 'diffusion_time_cost': 434.98502707481384, 'diffusion_per_step_time_cost': 54.37312838435173, 'total_time_cost': 450.9017689228058, 'offload_time_cost': 0.0}[0m
+[32m2026-11-14 05:50:37.378[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m127[0m - [1m[generate_music] Decoding latents with VAE...[0m
+[32m2026-11-14 05:50:37.510[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m136[0m - [34m[1m[generate_music] Before VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-14 05:50:37.517[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m172[0m - [1m[generate_music] Using tiled VAE decode to reduce VRAM usage...[0m
+python(31267) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+[32m2026-11-14 05:50:39.733[0m | [33m[1mWARNING [0m | [36macestep.core.generation.handler.vae_decode[0m:[36mtiled_decode[0m:[36m45[0m - [33m[1m[tiled_decode] MLX VAE decode failed (RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_float32_float32_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_t_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEfffiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEfffiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEfffiJEEEEE.MTL_SIZEAS
+
+), falling back to PyTorch VAE...[0m
+[32m2026-11-14 05:50:39.742[0m | [1mINFO    [0m | [36macestep.core.generation.handler.vae_decode[0m:[36mtiled_decode[0m:[36m56[0m - [1m[tiled_decode] chunk_size=256, offload_wav_to_cpu=True, latents_shape=torch.Size([1, 64, 500])[0m
+[32m2026-11-14 05:52:41.991[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m193[0m - [34m[1m[generate_music] After VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-14 05:52:51.516[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m38[0m - [1m[generate_music] VAE decode completed. Preparing audio tensors...[0m
+[32m2026-11-14 05:52:51.524[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m50[0m - [1m[generate_music] Done! Generated 1 audio tensors.[0m
+[32m2026-11-14 05:52:51.995[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1002[0m - [1m[Normalization] Audio 0 BEFORE: Peak=1.0000, Target=-1.0dB[0m
+[32m2026-11-14 05:52:52.009[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1007[0m - [1m[Normalization] Audio 0 AFTER: Peak=0.8913[0m
+[32m2026-11-14 05:52:52.400[0m | [34m[1mDEBUG   [0m | [36macestep.audio_utils[0m:[36msave_audio[0m:[36m339[0m - [34m[1m[AudioSaver] Fallback soundfile Saved audio to /Users/runner/work/music-library-mac/music-library-mac/out/audio/01-instrumental-en/01bedd69-1d38-aa78-2040-c26772ef50a8.flac (flac, 48000Hz)[0m
+[32m2026-11-14 05:52:52.456[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=True, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=True, use_lm=True[0m
+[32m2026-11-14 05:52:52.456[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m720[0m - [1mLM chunk 1/1 (infer_type=llm_dit) (size: 2, seeds: [77, 78])[0m
+[32m2026-11-14 05:52:52.457[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1369[0m - [1mBatch Phase 1: Generating CoT metadata (once for all items)...[0m
+[32m2026-11-14 05:52:52.530[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1377[0m - [1mgenerate_with_stop_condition: formatted_prompt=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+Ruhiges Lo-Fi-Stück mit warmem Klavier und entspanntem Schlagzeug
+
+# Lyric
+[Instrumental]
+<|im_end|>
+<|im_start|>assistant
+[0m
+[32m2026-11-14 05:52:58.692[0m | [33m[1mWARNING [0m | [36macestep.llm_inference[0m:[36m_run_mlx_single[0m:[36m3773[0m - [33m[1mNative MLX generation failed (RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+
+), falling back to hybrid mode[0m
+[32m2026-11-14 05:52:58.774[0m | [31m[1mERROR   [0m | [36macestep.llm_inference[0m:[36mgenerate_from_formatted_prompt[0m:[36m2501[0m - [31m[1mError in generate_from_formatted_prompt: RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+
+
+Traceback (most recent call last):
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/llm_inference.py", line 2448, in generate_from_formatted_prompt
+    output_text = self._run_mlx(
+                  ^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/llm_inference.py", line 4072, in _run_mlx
+    return self._run_mlx_single(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/llm_inference.py", line 3865, in _run_mlx_single
+    mx.eval(logits_out)
+RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_bfloat16_bfloat16_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIDF16bNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEDF16bDF16bfiJEEEEE.MTL_SIZEAS
+
+
+[0m
+[32m2026-11-14 05:52:59.907[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m609[0m - [1mloading 5Hz LM tokenizer... it may take 80~90s[0m
+[32m2026-11-14 05:53:17.247[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m613[0m - [1m5Hz LM tokenizer loaded successfully in 17.34 seconds[0m
+[32m2026-11-14 05:53:17.248[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m618[0m - [1mInitializing constrained decoding processor...[0m
+[32m2026-11-14 05:53:17.248[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m624[0m - [1mSetting constrained decoding max_duration to 480s based on GPU config (tier: tier2)[0m
+[32m2026-11-14 05:53:17.979[0m | [34m[1mDEBUG   [0m | [36macestep.constrained_logits_processor[0m:[36m_precompute_audio_code_tokens[0m:[36m577[0m - [34m[1mFound 1535 audio code tokens with values outside valid range [0, 63999][0m
+[32m2026-11-14 05:53:19.635[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m632[0m - [1mConstrained processor initialized in 2.39 seconds[0m
+[32m2026-11-14 05:53:19.636[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m659[0m - [1mflash_attn not installed: disabling CUDA graph capture for nano-vllm (SDPA fallback uses .item() calls in paged-cache decode that are incompatible with CUDA graph capture)[0m
+[32m2026-11-14 05:53:19.636[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36minitialize[0m:[36m671[0m - [1mTriton not available: disabling CUDA graph capture for nano-vllm (CUDA graphs require torch.compile which depends on Triton)[0m
+[32m2026-11-14 05:53:52.401[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_load_pytorch_model[0m:[36m412[0m - [1m5Hz LM initialized successfully using PyTorch backend on mps[0m
+[KI] Sprachmodell auf PyTorch umgestellt: ✅ 5Hz LM initialized successfully
+Model: /Users/runner/work/_temp/ki/Modelle/acestep-5Hz-lm-0.6B
+Backend: PyTorch
+Device: mps
+[32m2026-11-14 05:53:52.408[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=True, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=True, use_lm=True[0m
+[32m2026-11-14 05:53:52.410[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m720[0m - [1mLM chunk 1/1 (infer_type=llm_dit) (size: 2, seeds: [77, 78])[0m
+[32m2026-11-14 05:53:52.410[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1369[0m - [1mBatch Phase 1: Generating CoT metadata (once for all items)...[0m
+[32m2026-11-14 05:53:52.423[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1377[0m - [1mgenerate_with_stop_condition: formatted_prompt=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+Ruhiges Lo-Fi-Stück mit warmem Klavier und entspanntem Schlagzeug
+
+# Lyric
+[Instrumental]
+<|im_end|>
+<|im_start|>assistant
+[0m
+[32m2026-11-14 05:54:26.237[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <think>
+bpm: 30
+caption: An upbeat instrumental funk track driven by a tight rhythm section featuring
+  a groovy electric bassline and crisp acoustic drums. A clean-toned electric guitar
+  plays rhythmic chords while an organ provides harmonic color. The main melodic focus
+  is a bright, expressive saxophone which delivers catchy hooks before launching into
+  energetic, improvisational solos filled with fast runs and soulful phrasing. The
+  arrangement includes brief breakdowns where the texture thins to just piano-like
+  keys and bass before rebuilding intensity for more prominent sax-led sections.
+duration: 20
+keyscale: D major
+language: unknown
+timesignature: 4
+<|im_end|>[0m
+[32m2026-11-14 05:54:26.245[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1420[0m - [1mBatch Phase 1 completed in 33.83s. Generated metadata: ['bpm', 'caption', 'duration', 'keyscale', 'language', 'timesignature'][0m
+[32m2026-11-14 05:54:26.246[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1480[0m - [1mBatch Phase 2: Generating audio codes for 2 items...[0m
+[32m2026-11-14 05:54:26.263[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1490[0m - [1mgenerate_with_stop_condition: formatted_prompt_with_cot=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+Ruhiges Lo-Fi-Stück mit warmem Klavier und entspanntem Schlagzeug
+
+# Lyric
+[Instrumental]
+<|im_end|>
+<|im_start|>assistant
+<think>
+bpm: 30
+caption: An upbeat instrumental funk track driven by a tight rhythm section featuring
+  a groovy electric bassline and crisp acoustic drums. A clean-toned electric guitar
+  plays rhythmic chords while an organ provides harmonic color. The main melodic focus
+  is a bright, expressive saxophone which delivers catchy hooks before launching into
+  energetic, improvisational solos filled with fast runs and soulful phrasing. The
+  arrangement includes brief breakdowns where the texture thins to just piano-like
+  keys and bass before rebuilding intensity for more prominent sax-led sections.
+duration: 20
+keyscale: D major
+language: unknown
+timesignature: 4
+</think>
+
+[0m
+[32m2026-11-14 05:54:26.318[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_build_unconditional_prompt[0m:[36m395[0m - [1mCFG unconditional prompt (phase=codes, is_batch=False, negative_prompt='NO USER INPUT'):
+<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+NO USER INPUT<|im_end|>
+<|im_start|>assistant
+<think>
+
+</think>
+
+[0m
+[32m2026-11-14 05:54:57.259[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_build_unconditional_prompt[0m:[36m395[0m - [1mCFG unconditional prompt (phase=codes, is_batch=False, negative_prompt='NO USER INPUT'):
+<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+NO USER INPUT<|im_end|>
+<|im_start|>assistant
+<think>
+
+</think>
+
+[0m
+[32m2026-11-14 05:55:10.363[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <|audio_code_25594|><|audio_code_1383|><|audio_code_15845|><|audio_code_53723|><|audio_code_56132|><|audio_code_26402|><|audio_code_26870|><|audio_code_44539|><|audio_code_45574|><|audio_code_4901|><|audio_code_803|><|audio_code_17899|><|audio_code_52731|><|audio_code_27981|><|audio_code_23861|><|audio_code_51018|><|audio_code_23996|><|audio_code_37827|><|audio_code_1444|><|audio_code_62357|><|audio_code_16763|><|audio_code_11251|><|audio_code_188|><|audio_code_11955|><|audio_code_48301|><|audio_code_33763|><|audio_code_8021|><|audio_code_53181|><|audio_code_13010|><|audio_code_26819|><|audio_code_21443|><|audio_code_18345|><|audio_code_10694|><|audio_code_38247|><|audio_code_14914|><|audio_code_256|><|audio_code_25135|><|audio_code_8223|><|audio_code_29759|><|audio_code_20055|><|audio_code_1218|><|audio_code_55970|><|audio_code_13372|><|audio_code_17862|><|audio_code_14398|><|audio_code_6144|><|audio_code_26192|><|audio_code_45398|><|audio_code_14324|><|audio_code_924|><|audio_code_24572|><|audio_code_19845|><|audio_code_14884|><|audio_code_39296|><|audio_code_27663|><|audio_code_45647|><|audio_code_23078|><|audio_code_38711|><|audio_code_16263|><|audio_code_9000|><|audio_code_37947|><|audio_code_51542|><|audio_code_5142|><|audio_code_5696|><|audio_code_25840|><|audio_code_1274|><|audio_code_30651|><|audio_code_19451|><|audio_code_62733|><|audio_code_27822|><|audio_code_40454|><|audio_code_15641|><|audio_code_32935|><|audio_code_35903|><|audio_code_1055|><|audio_code_33799|><|audio_code_41159|><|audio_code_14608|><|audio_code_3100|><|audio_code_6341|><|audio_code_27878|><|audio_code_40580|><|audio_code_48640|><|audio_code_26200|><|audio_code_25923|><|audio_code_33258|><|audio_code_60511|><|audio_code_49967|><|audio_code_12561|><|audio_code_10500|><|audio_code_45631|><|audio_code_32999|><|audio_code_30383|><|audio_code_51775|><|audio_code_33807|><|audio_code_35847|><|audio_code_25367|><|audio_code_35847|><|audio_code_27815|><|audio_code_35855|><|im_end|>[0m
+[32m2026-11-14 05:55:10.365[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <|audio_code_23995|><|audio_code_15836|><|audio_code_23957|><|audio_code_38380|><|audio_code_4564|><|audio_code_32220|><|audio_code_22|><|audio_code_13000|><|audio_code_30638|><|audio_code_13262|><|audio_code_10117|><|audio_code_22844|><|audio_code_13764|><|audio_code_27983|><|audio_code_51652|><|audio_code_5665|><|audio_code_12690|><|audio_code_38236|><|audio_code_10390|><|audio_code_2092|><|audio_code_48189|><|audio_code_51758|><|audio_code_48142|><|audio_code_37910|><|audio_code_25159|><|audio_code_62126|><|audio_code_19006|><|audio_code_38470|><|audio_code_14398|><|audio_code_63589|><|audio_code_14479|><|audio_code_9093|><|audio_code_5052|><|audio_code_50164|><|audio_code_9725|><|audio_code_17396|><|audio_code_49141|><|audio_code_12711|><|audio_code_16197|><|audio_code_47589|><|audio_code_25588|><|audio_code_12750|><|audio_code_11212|><|audio_code_56340|><|audio_code_27752|><|audio_code_20399|><|audio_code_2020|><|audio_code_26269|><|audio_code_13116|><|audio_code_14276|><|audio_code_23999|><|audio_code_32212|><|audio_code_1028|><|audio_code_13200|><|audio_code_27806|><|audio_code_53382|><|audio_code_30|><|audio_code_38925|><|audio_code_41511|><|audio_code_46|><|audio_code_32311|><|audio_code_10524|><|audio_code_23421|><|audio_code_61190|><|audio_code_693|><|audio_code_14902|><|audio_code_9853|><|audio_code_22|><|audio_code_15109|><|audio_code_48207|><|audio_code_36495|><|audio_code_33543|><|audio_code_61445|><|audio_code_40463|><|audio_code_63571|><|audio_code_6461|><|audio_code_48268|><|audio_code_1726|><|audio_code_9982|><|audio_code_12556|><|audio_code_13866|><|audio_code_53296|><|audio_code_563|><|audio_code_37938|><|audio_code_26729|><|audio_code_11884|><|audio_code_43211|><|audio_code_23676|><|audio_code_37587|><|audio_code_24105|><|audio_code_8832|><|audio_code_9740|><|audio_code_56325|><|audio_code_1589|><|audio_code_25446|><|audio_code_48839|><|audio_code_32855|><|audio_code_35847|><|audio_code_35847|><|audio_code_35847|><|im_end|>[0m
+[32m2026-11-14 05:55:10.365[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1584[0m - [1mBatch Phase 2 completed in 44.12s. Generated codes: [100, 100][0m
+[32m2026-11-14 05:55:10.369[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m329[0m - [1m[generate_music] Starting generation...[0m
+[32m2026-11-14 05:55:10.369[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m332[0m - [1m[generate_music] Preparing inputs...[0m
+[32m2026-11-14 05:55:10.378[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_request[0m:[36m_prepare_reference_and_source_audio[0m:[36m204[0m - [1m[generate_music] cover task: no src_audio but audio codes provided, proceeding with codes[0m
+[32m2026-11-14 05:55:10.399[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_target[0m:[36m_prepare_target_latents_and_wavs[0m:[36m78[0m - [1m[generate_music] Decoding audio codes for item 0...[0m
+[32m2026-11-14 05:55:14.927[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_target[0m:[36m_prepare_target_latents_and_wavs[0m:[36m78[0m - [1m[generate_music] Decoding audio codes for item 1...[0m
+[32m2026-11-14 05:55:15.104[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_precomputed_lm_hints[0m:[36m31[0m - [1m[generate_music] Decoding audio codes for LM hints for item 0...[0m
+[32m2026-11-14 05:55:15.274[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_precomputed_lm_hints[0m:[36m31[0m - [1m[generate_music] Decoding audio codes for LM hints for item 1...[0m
+[32m2026-11-14 05:55:15.444[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m119[0m - [1m
+======================================================================[0m
+[32m2026-11-14 05:55:15.444[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m120[0m - [1m🔍 [DEBUG] DiT TEXT ENCODER INPUT (Inference)[0m
+[32m2026-11-14 05:55:15.444[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m121[0m - [1m======================================================================[0m
+[32m2026-11-14 05:55:15.444[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m122[0m - [1mtext_prompt:
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+# Caption
+An upbeat instrumental funk track driven by a tight rhythm section featuring a groovy electric bassline and crisp acoustic drums. A clean-toned electric guitar plays rhythmic chords while an organ provides harmonic color. The main melodic focus is a bright, expressive saxophone which delivers catchy hooks before launching into energetic, improvisational solos filled with fast runs and soulful phrasing. The arrangement includes brief breakdowns where the texture thins to just piano-like keys and bass before rebuilding intensity for more prominent sax-led sections.
+
+# Metas
+- bpm: 30
+- timesignature: 4
+- keyscale: D major
+- duration: 20 seconds
+<|endoftext|>
+[0m
+[32m2026-11-14 05:55:15.444[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m123[0m - [1m======================================================================[0m
+[32m2026-11-14 05:55:15.444[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m124[0m - [1mlyrics_text:
+# Languages
+unknown
+
+# Lyric
+[Instrumental]<|endoftext|>[0m
+[32m2026-11-14 05:55:15.444[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m125[0m - [1m======================================================================
+[0m
+[32m2026-11-14 05:55:15.541[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m110[0m - [1m[preprocess_batch] Inferring prompt embeddings...[0m
+[32m2026-11-14 05:55:36.962[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m113[0m - [1m[preprocess_batch] Inferring lyric embeddings...[0m
+[32m2026-11-14 05:55:36.983[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m173[0m - [1m[service_generate] Generating audio... (DiT backend: PyTorch (cpu))[0m
+Using precomputed LM hints
+[32m2026-11-14 05:56:07.097[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m276[0m - [1m[service_generate] DiT diffusion via PyTorch (cpu)...[0m
+Using precomputed LM hints
+[32m2026-11-14 05:56:11.234[0m | [1mINFO    [0m | [36macestep.models.common.dcw_correction[0m:[36m__init__[0m:[36m98[0m - [1m[DCW] Active — mode=double, scaler=0.0500, high_scaler=0.0200, wavelet='haar'[0m
+[32m2026-11-14 06:03:36.591[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m42[0m - [1m[generate_music] Model generation completed. Decoding latents...[0m
+[32m2026-11-14 06:03:36.633[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m64[0m - [34m[1m[generate_music] pred_latents: torch.Size([2, 500, 64]), dtype=torch.float32[0m
+[32m2026-11-14 06:03:36.633[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m65[0m - [34m[1m[generate_music] time_costs: {'encoder_time_cost': 4.117211818695068, 'diffusion_time_cost': 445.29202795028687, 'diffusion_per_step_time_cost': 55.66150349378586, 'total_time_cost': 449.40923976898193, 'offload_time_cost': 0.0}[0m
+[32m2026-11-14 06:03:36.658[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m127[0m - [1m[generate_music] Decoding latents with VAE...[0m
+[32m2026-11-14 06:03:36.728[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m136[0m - [34m[1m[generate_music] Before VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-14 06:03:36.729[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m172[0m - [1m[generate_music] Using tiled VAE decode to reduce VRAM usage...[0m
+[32m2026-11-14 06:03:37.218[0m | [33m[1mWARNING [0m | [36macestep.core.generation.handler.vae_decode[0m:[36mtiled_decode[0m:[36m45[0m - [33m[1m[tiled_decode] MLX VAE decode failed (RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_float32_float32_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_t_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEfffiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEfffiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEfffiJEEEEE.MTL_SIZEAS
+
+), falling back to PyTorch VAE...[0m
+[32m2026-11-14 06:03:37.223[0m | [1mINFO    [0m | [36macestep.core.generation.handler.vae_decode[0m:[36mtiled_decode[0m:[36m56[0m - [1m[tiled_decode] chunk_size=256, offload_wav_to_cpu=True, latents_shape=torch.Size([2, 64, 500])[0m
+[32m2026-11-14 06:03:37.225[0m | [1mINFO    [0m | [36macestep.core.generation.handler.vae_decode_chunks[0m:[36m_tiled_decode_inner[0m:[36m19[0m - [1m[tiled_decode] Batch size 2 > 1; decoding samples sequentially to save VRAM[0m
+[32m2026-11-14 06:05:20.593[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m193[0m - [34m[1m[generate_music] After VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-14 06:05:23.541[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m38[0m - [1m[generate_music] VAE decode completed. Preparing audio tensors...[0m
+[32m2026-11-14 06:05:23.541[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m50[0m - [1m[generate_music] Done! Generated 2 audio tensors.[0m
+[32m2026-11-14 06:05:23.726[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1002[0m - [1m[Normalization] Audio 0 BEFORE: Peak=1.0000, Target=-1.0dB[0m
+[32m2026-11-14 06:05:23.732[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1007[0m - [1m[Normalization] Audio 0 AFTER: Peak=0.8913[0m
+[32m2026-11-14 06:05:23.836[0m | [34m[1mDEBUG   [0m | [36macestep.audio_utils[0m:[36msave_audio[0m:[36m339[0m - [34m[1m[AudioSaver] Fallback soundfile Saved audio to /Users/runner/work/music-library-mac/music-library-mac/out/audio/02-instrumental-de-varianten/5c283627-6c62-fde6-474d-7b95c4003456.flac (flac, 48000Hz)[0m
+[32m2026-11-14 06:05:23.837[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1002[0m - [1m[Normalization] Audio 1 BEFORE: Peak=1.0000, Target=-1.0dB[0m
+[32m2026-11-14 06:05:23.839[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1007[0m - [1m[Normalization] Audio 1 AFTER: Peak=0.8913[0m
+[32m2026-11-14 06:05:23.879[0m | [34m[1mDEBUG   [0m | [36macestep.audio_utils[0m:[36msave_audio[0m:[36m339[0m - [34m[1m[AudioSaver] Fallback soundfile Saved audio to /Users/runner/work/music-library-mac/music-library-mac/out/audio/02-instrumental-de-varianten/465c8f92-69e7-9a04-dbca-3e182a8ec6cf.flac (flac, 48000Hz)[0m
+[32m2026-11-14 06:05:23.906[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mcreate_sample_from_query[0m:[36m2097[0m - [1mCreating sample from query: Ein fröhlicher deutscher Popsong über einen Sommerabend am See... (instrumental=False, vocal_language=de)[0m
+[32m2026-11-14 06:05:23.916[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mcreate_sample_from_query[0m:[36m2104[0m - [34m[1mFormatted prompt for inspiration: <|im_start|>system
+# Instruction
+Expand the user's input into a more detailed and specific musical description:
+
+<|im_end|>
+<|im_start|>user
+Ein fröhlicher deutscher Popsong über einen Sommerabend am See
+
+instrumental: false<|im_end|>
+<|im_start|>assistant
+[0m
+[32m2026-11-14 06:05:23.916[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mcreate_sample_from_query[0m:[36m2113[0m - [1mUsing user-specified language: de[0m
+[32m2026-11-14 06:07:05.272[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <think>
+bpm: 180
+caption: A playful and funky track driven by a groovy, melodic synth bassline and
+  a tight, punchy drum machine beat. A clean electric guitar adds funky chord stabs
+  and licks, creating a retro, city-pop-infused vibe. The lead female vocal is clear
+  and expressive, delivered in a rhythmic, almost conversational style, with layered
+  harmonies enriching the catchy chorus. The song features a dynamic structure, including
+  a brief, slower-paced bridge with sustained synth pads and a more emotional vocal
+  performance, before launching back into the high-energy chorus and concluding with
+  a funky instrumental outro and a final, lighthearted chuckle.
+duration: 160
+genres:city-pop
+keyscale: G# minor
+language: de
+timesignature: 4
+[0m
+[32m2026-11-14 06:07:05.308[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mcreate_sample_from_query[0m:[36m2156[0m - [1mSample created successfully. Generated {'bpm': 180, 'caption': 'A playful and funky track driven by a groovy, melodic synth bassline and a tight, punchy drum machine beat. A clean electric guitar adds funky chord stabs and licks, creating a retro, city-pop-infused vibe. The lead female vocal is clear and expressive, delivered in a rhythmic, almost conversational style, with layered harmonies enriching the catchy chorus. The song features a dynamic structure, including a brief, slower-paced bridge with sustained synth pads and a more emotional vocal performance, before launching back into the high-energy chorus and concluding with a funky instrumental outro and a final, lighthearted chuckle.', 'duration': 160, 'genres': 'city-pop', 'keyscale': 'G# minor', 'language': 'de', 'timesignature': '4', 'lyrics': "[Intro]\nUh, uh\n\n[Verse 1]\nDer Wecker schreit, ich denk mir klar\nIch muss heut leben, ja, was braucht er da?\nAdé, der Schneemann ist schon wieder am Start\nDoch ich kann kaum das nicht, so schnell wie möglich geh'n\nIch frage mich, wie lange nehm' ich dich noch heute?\nKannst du mich nicht heute?\nDoch die Zeit rennt schneller, so wie jeder hier\nIch will, dass du sagst, ich will endlich bei dir\nIch will gut sein, ohne Angst\nAber du bleibst doch draußen wie ein Witz\n\n[Chorus]\nNoch heute, doch adé\nIch will heut Nacht nur dich\nNoch heute, doch adé\nAber du bist mein Glück\nOhne dich zu spät, ich gewinn, ich gewinn\nAber du bist mein Herz\nMein Glück\n\n[Verse 2]\nAch Kölle, du bist wie ein Wahnsinn\nUnd ich will, dass du's noch einmal fühlst\nIch weiß, ich möchte dich, du bist so schön\nDoch mein Kopf sagt nein, also halt mich fest\nIch kann nicht schlafen, aber ich mag, wie du lachst\nIch will, dass du's noch einmal fühlst\n\n[Chorus]\nNoch heute, doch adé\nIch will heut Nacht nur dich\nNoch heute, doch adé\nAber du bist mein Glück\nOhne dich zu spät, ich gewinn, ich gewinn\nAber du bist mein Herz\nMein Glück\n\n[Bridge]\nDu bist mein Engel, mein bester Freund\nKein Weg ist zu weit, nur ein Traum, der vergeht\nIch warte stets über dich, bis du schreibst\nWeil du zu mir kommst, auch wenn ich...\n[Vocal run]\n\n[Chorus]\nNoch heute, doch adé\nIch will heut Nacht nur dich\nNoch heute, doch adé\nAber du bist mein Glück\nOhne dich zu spät, ich gewinn, ich gewinn\nAber du bist mein Herz\nMein Glück\n\n[Outro]\nNoch heute, doch adé\nAber in mir drin bist du mein Ziel\n[Instrumental fade out]\nNoch heute, doch adé\nAber in mir drin bist du mein Ziel\n[Laughter]", 'instrumental': False} fields[0m
+[32m2026-11-14 06:07:05.368[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=True, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=True, use_lm=True[0m
+[32m2026-11-14 06:07:05.370[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m720[0m - [1mLM chunk 1/1 (infer_type=llm_dit) (size: 1, seeds: [42])[0m
+[32m2026-11-14 06:07:05.372[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1371[0m - [1mPhase 1: Generating CoT metadata...[0m
+[32m2026-11-14 06:07:05.440[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1377[0m - [1mgenerate_with_stop_condition: formatted_prompt=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+A playful and funky track driven by a groovy, melodic synth bassline and a tight, punchy drum machine beat. A clean electric guitar adds funky chord stabs and licks, creating a retro, city-pop-infused vibe. The lead female vocal is clear and expressive, delivered in a rhythmic, almost conversational style, with layered harmonies enriching the catchy chorus. The song features a dynamic structure, including a brief, slower-paced bridge with sustained synth pads and a more emotional vocal performance, before launching back into the high-energy chorus and concluding with a funky instrumental outro and a final, lighthearted chuckle.
+
+# Lyric
+[Intro]
+Uh, uh
+
+[Verse 1]
+Der Wecker schreit, ich denk mir klar
+Ich muss heut leben, ja, was braucht er da?
+Adé, der Schneemann ist schon wieder am Start
+Doch ich kann kaum das nicht, so schnell wie möglich geh'n
+Ich frage mich, wie lange nehm' ich dich noch heute?
+Kannst du mich nicht heute?
+Doch die Zeit rennt schneller, so wie jeder hier
+Ich will, dass du sagst, ich will endlich bei dir
+Ich will gut sein, ohne Angst
+Aber du bleibst doch draußen wie ein Witz
+
+[Chorus]
+Noch heute, doch adé
+Ich will heut Nacht nur dich
+Noch heute, doch adé
+Aber du bist mein Glück
+Ohne dich zu spät, ich gewinn, ich gewinn
+Aber du bist mein Herz
+Mein Glück
+
+[Verse 2]
+Ach Kölle, du bist wie ein Wahnsinn
+Und ich will, dass du's noch einmal fühlst
+Ich weiß, ich möchte dich, du bist so schön
+Doch mein Kopf sagt nein, also halt mich fest
+Ich kann nicht schlafen, aber ich mag, wie du lachst
+Ich will, dass du's noch einmal fühlst
+
+[Chorus]
+Noch heute, doch adé
+Ich will heut Nacht nur dich
+Noch heute, doch adé
+Aber du bist mein Glück
+Ohne dich zu spät, ich gewinn, ich gewinn
+Aber du bist mein Herz
+Mein Glück
+
+[Bridge]
+Du bist mein Engel, mein bester Freund
+Kein Weg ist zu weit, nur ein Traum, der vergeht
+Ich warte stets über dich, bis du schreibst
+Weil du zu mir kommst, auch wenn ich...
+[Vocal run]
+
+[Chorus]
+Noch heute, doch adé
+Ich will heut Nacht nur dich
+Noch heute, doch adé
+Aber du bist mein Glück
+Ohne dich zu spät, ich gewinn, ich gewinn
+Aber du bist mein Herz
+Mein Glück
+
+[Outro]
+Noch heute, doch adé
+Aber in mir drin bist du mein Ziel
+[Instrumental fade out]
+Noch heute, doch adé
+Aber in mir drin bist du mein Ziel
+[Laughter]
+<|im_end|>
+<|im_start|>assistant
+[0m
+[32m2026-11-14 06:07:33.455[0m | [34m[1mDEBUG   [0m | [36macestep.llm_inference[0m:[36mparse_lm_output[0m:[36m2813[0m - [34m[1mDebug output text: <think>
+bpm: 190
+caption: A playful and funky track driven by a groovy, melodic synth bassline and a
+  tight, punchy drum machine beat. A clean electric guitar adds funky chord stabs
+  and licks, creating a retro, city-pop-infused vibe. The lead female vocal is clear
+  and expressive, delivered in a rhythmic, almost conversational style, with layered
+  harmonies enriching the catchy chorus. The song features a dynamic structure, including
+  a brief, slower-paced bridge with sustained synth pads and a more emotional vocal
+  performance, before launching back into the high-energy chorus and concluding with
+  a funky instrumental outro and a final, lighthearted chuckle.
+duration: 30
+keyscale: D minor
+language: de
+timesignature: 4
+<|im_end|>[0m
+[32m2026-11-14 06:07:33.460[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1422[0m - [1mPhase 1 completed in 28.08s. Generated metadata: ['bpm', 'caption', 'duration', 'keyscale', 'language', 'timesignature'][0m
+[32m2026-11-14 06:07:33.460[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1482[0m - [1mPhase 2: Generating audio codes...[0m
+[32m2026-11-14 06:07:33.487[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36mgenerate_with_stop_condition[0m:[36m1490[0m - [1mgenerate_with_stop_condition: formatted_prompt_with_cot=<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+A playful and funky track driven by a groovy, melodic synth bassline and a tight, punchy drum machine beat. A clean electric guitar adds funky chord stabs and licks, creating a retro, city-pop-infused vibe. The lead female vocal is clear and expressive, delivered in a rhythmic, almost conversational style, with layered harmonies enriching the catchy chorus. The song features a dynamic structure, including a brief, slower-paced bridge with sustained synth pads and a more emotional vocal performance, before launching back into the high-energy chorus and concluding with a funky instrumental outro and a final, lighthearted chuckle.
+
+# Lyric
+[Intro]
+Uh, uh
+
+[Verse 1]
+Der Wecker schreit, ich denk mir klar
+Ich muss heut leben, ja, was braucht er da?
+Adé, der Schneemann ist schon wieder am Start
+Doch ich kann kaum das nicht, so schnell wie möglich geh'n
+Ich frage mich, wie lange nehm' ich dich noch heute?
+Kannst du mich nicht heute?
+Doch die Zeit rennt schneller, so wie jeder hier
+Ich will, dass du sagst, ich will endlich bei dir
+Ich will gut sein, ohne Angst
+Aber du bleibst doch draußen wie ein Witz
+
+[Chorus]
+Noch heute, doch adé
+Ich will heut Nacht nur dich
+Noch heute, doch adé
+Aber du bist mein Glück
+Ohne dich zu spät, ich gewinn, ich gewinn
+Aber du bist mein Herz
+Mein Glück
+
+[Verse 2]
+Ach Kölle, du bist wie ein Wahnsinn
+Und ich will, dass du's noch einmal fühlst
+Ich weiß, ich möchte dich, du bist so schön
+Doch mein Kopf sagt nein, also halt mich fest
+Ich kann nicht schlafen, aber ich mag, wie du lachst
+Ich will, dass du's noch einmal fühlst
+
+[Chorus]
+Noch heute, doch adé
+Ich will heut Nacht nur dich
+Noch heute, doch adé
+Aber du bist mein Glück
+Ohne dich zu spät, ich gewinn, ich gewinn
+Aber du bist mein Herz
+Mein Glück
+
+[Bridge]
+Du bist mein Engel, mein bester Freund
+Kein Weg ist zu weit, nur ein Traum, der vergeht
+Ich warte stets über dich, bis du schreibst
+Weil du zu mir kommst, auch wenn ich...
+[Vocal run]
+
+[Chorus]
+Noch heute, doch adé
+Ich will heut Nacht nur dich
+Noch heute, doch adé
+Aber du bist mein Glück
+Ohne dich zu spät, ich gewinn, ich gewinn
+Aber du bist mein Herz
+Mein Glück
+
+[Outro]
+Noch heute, doch adé
+Aber in mir drin bist du mein Ziel
+[Instrumental fade out]
+Noch heute, doch adé
+Aber in mir drin bist du mein Ziel
+[Laughter]
+<|im_end|>
+<|im_start|>assistant
+<think>
+bpm: 190
+caption: A playful and funky track driven by a groovy, melodic synth bassline and
+  a tight, punchy drum machine beat. A clean electric guitar adds funky chord stabs
+  and licks, creating a retro, city-pop-infused vibe. The lead female vocal is clear
+  and expressive, delivered in a rhythmic, almost conversational style, with layered
+  harmonies enriching the catchy chorus. The song features a dynamic structure, including
+  a brief, slower-paced bridge with sustained synth pads and a more emotional vocal
+  performance, before launching back into the high-energy chorus and concluding with
+  a funky instrumental outro and a final, lighthearted chuckle.
+duration: 30
+keyscale: D minor
+language: de
+timesignature: 4
+</think>
+
+[0m
+[32m2026-11-14 06:07:33.501[0m | [1mINFO    [0m | [36macestep.llm_inference[0m:[36m_build_unconditional_prompt[0m:[36m395[0m - [1mCFG unconditional prompt (phase=codes, is_batch=False, negative_prompt='NO USER INPUT'):
+<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+NO USER INPUT<|im_end|>
+<|im_start|>assistant
+<think>
+
+</think>
+
+[0m
+[32m2026-11-14 06:07:36.341[0m | [31m[1mERROR   [0m | [36macestep.llm_inference[0m:[36mgenerate_from_formatted_prompt[0m:[36m2501[0m - [31m[1mError in generate_from_formatted_prompt: RuntimeError: MPS backend out of memory (MPS allocated: 3.88 GiB, other allocations: 3.98 GiB, max allowed: 7.93 GiB). Tried to allocate 92.18 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+Traceback (most recent call last):
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/llm_inference.py", line 2473, in generate_from_formatted_prompt
+    output_text = self._run_pt(
+                  ^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/llm_inference.py", line 1223, in _run_pt
+    return self._run_pt_single(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/llm_inference.py", line 1072, in _run_pt_single
+    outputs = self._generate_with_cfg_custom(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/llm_inference.py", line 2681, in _generate_with_cfg_custom
+    outputs = self._forward_pass(model, generated_ids, model_kwargs, past_key_values, use_cache)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/llm_inference.py", line 477, in _forward_pass
+    outputs = model(
+              ^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 480, in forward
+    outputs: BaseModelOutputWithPast = self.model(
+                                       ^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/utils/generic.py", line 1072, in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 410, in forward
+    hidden_states = decoder_layer(
+                    ^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/modeling_layers.py", line 94, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/utils/deprecation.py", line 172, in wrapped_func
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 260, in forward
+    hidden_states, _ = self.self_attn(
+                       ^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/utils/deprecation.py", line 172, in wrapped_func
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 216, in forward
+    attn_output, attn_weights = attention_interface(
+                                ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/integrations/sdpa_attention.py", line 96, in sdpa_attention_forward
+    attn_output = torch.nn.functional.scaled_dot_product_attention(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: MPS backend out of memory (MPS allocated: 3.88 GiB, other allocations: 3.98 GiB, max allowed: 7.93 GiB). Tried to allocate 92.18 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+[0m
+Traceback (most recent call last):
+  File "/Users/runner/work/_temp/ki/Engine/engine.py", line 263, in main
+    result = engine.generate(req, progress)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/Engine/engine.py", line 163, in generate
+    return self._generate(req, progress)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/Engine/engine.py", line 193, in _generate
+    raise RuntimeError(res.error or res.status_message or "Erzeugen fehlgeschlagen")
+RuntimeError: ❌ Error generating from formatted prompt: RuntimeError: MPS backend out of memory (MPS allocated: 3.88 GiB, other allocations: 3.98 GiB, max allowed: 7.93 GiB). Tried to allocate 92.18 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+
+--- 2026-11-14 06:07:43 +0000 KI-Prozess startet ---
+W1114 06:07:51.975000 52449 .venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+[32m2026-11-14 06:07:54.516[0m | [33m[1mWARNING [0m | [36macestep.training.trainer[0m:[36m<module>[0m:[36m40[0m - [33m[1mbitsandbytes not installed. Using standard AdamW.[0m
+[32m2026-11-14 06:07:54.577[0m | [1mINFO    [0m | [36macestep.gpu_config[0m:[36mget_gpu_config[0m:[36m846[0m - [1mmacOS MPS detected (4.7 GB unified memory, tier=tier2). Applying Apple Silicon optimizations: no compile, no quantization, mlx backend, no CPU offload.[0m
+[32m2026-11-14 06:07:54.584[0m | [1mINFO    [0m | [36macestep.core.generation.handler.init_service_loader[0m:[36m_load_main_model_from_checkpoint[0m:[36m174[0m - [1m[initialize_service] Attempting to load model with attention implementation: sdpa[0m
+[32m2026-11-14 06:10:21.984[0m | [31m[1mERROR   [0m | [36macestep.core.generation.handler.init_service_orchestrator[0m:[36minitialize_service[0m:[36m219[0m - [31m[1mError initializing model: MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 16.00 KiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+
+Traceback:
+Traceback (most recent call last):
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/init_service_orchestrator.py", line 156, in initialize_service
+    self._load_main_model_from_checkpoint(
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/init_service_loader.py", line 198, in _load_main_model_from_checkpoint
+    self.model = self.model.to(device).to(self.dtype)
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/modeling_utils.py", line 4343, in to
+    return super().to(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1381, in to
+    return self._apply(convert)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  [Previous line repeated 3 more times]
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 964, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1367, in convert
+    return t.to(
+           ^^^^^
+RuntimeError: MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 16.00 KiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32m/Users/runner/work/_temp/ki/Engine/[0m[32m[1mengine.py[0m", line [33m275[0m, in [35m<module>[0m
+    [1mmain[0m[1m([0m[1m)[0m
+    [36m└ [0m[36m[1m<function main at 0x1063f16c0>[0m
+
+  File "[32m/Users/runner/work/_temp/ki/Engine/[0m[32m[1mengine.py[0m", line [33m259[0m, in [35mmain[0m
+    [1mresult[0m [35m[1m=[0m [1mengine[0m[35m[1m.[0m[1mload[0m[1m([0m[1mreq[0m[1m,[0m [1mprogress[0m[1m)[0m
+    [36m         │      │    │    └ [0m[36m[1m<function main.<locals>.progress at 0x106439080>[0m
+    [36m         │      │    └ [0m[36m[1m{'id': '5994E368-7AE9-450F-BAC3-F458C31D8188', 'cmd': 'load', 'dit': 'acestep-v15-turbo'}[0m
+    [36m         │      └ [0m[36m[1m<function Engine.load at 0x106438ae0>[0m
+    [36m         └ [0m[36m[1m<__main__.Engine object at 0x10641adb0>[0m
+
+  File "[32m/Users/runner/work/_temp/ki/Engine/[0m[32m[1mengine.py[0m", line [33m91[0m, in [35mload[0m
+    [1mmsg[0m[1m,[0m [1mok[0m [35m[1m=[0m [1mself[0m[35m[1m.[0m[1mdit[0m[35m[1m.[0m[1minitialize_service[0m[1m([0m[1mproject_root[0m[35m[1m=[0m[1mself[0m[35m[1m.[0m[1mace_root[0m[1m,[0m [1mconfig_path[0m[35m[1m=[0m[1mdit_model[0m[1m,[0m [1mdevice[0m[35m[1m=[0m[1mdevice[0m[1m,[0m
+    [36m          │    │   │                               │    │                     │                 └ [0m[36m[1m'auto'[0m
+    [36m          │    │   │                               │    │                     └ [0m[36m[1m'acestep-v15-turbo'[0m
+    [36m          │    │   │                               │    └ [0m[36m[1m'/Users/runner/work/_temp/ki/ACE-Step-1.5'[0m
+    [36m          │    │   │                               └ [0m[36m[1m<__main__.Engine object at 0x10641adb0>[0m
+    [36m          │    │   └ [0m[36m[1m<function InitServiceOrchestratorMixin.initialize_service at 0x10b55cae0>[0m
+    [36m          │    └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x106821070>[0m
+    [36m          └ [0m[36m[1m<__main__.Engine object at 0x10641adb0>[0m
+
+> File "[32m/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/[0m[32m[1minit_service_orchestrator.py[0m", line [33m156[0m, in [35minitialize_service[0m
+    [1mself[0m[35m[1m.[0m[1m_load_main_model_from_checkpoint[0m[1m([0m
+    [36m│    └ [0m[36m[1m<function InitServiceLoaderMixin._load_main_model_from_checkpoint at 0x10b5277e0>[0m
+    [36m└ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x106821070>[0m
+
+  File "[32m/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/[0m[32m[1minit_service_loader.py[0m", line [33m198[0m, in [35m_load_main_model_from_checkpoint[0m
+    [1mself[0m[35m[1m.[0m[1mmodel[0m [35m[1m=[0m [1mself[0m[35m[1m.[0m[1mmodel[0m[35m[1m.[0m[1mto[0m[1m([0m[1mdevice[0m[1m)[0m[35m[1m.[0m[1mto[0m[1m([0m[1mself[0m[35m[1m.[0m[1mdtype[0m[1m)[0m
+    [36m│    │       │    │        │          │    └ [0m[36m[1mtorch.float32[0m
+    [36m│    │       │    │        │          └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x106821070>[0m
+    [36m│    │       │    │        └ [0m[36m[1m'mps'[0m
+    [36m│    │       │    └ [0m[36m[1mNone[0m
+    [36m│    │       └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x106821070>[0m
+    [36m│    └ [0m[36m[1mNone[0m
+    [36m└ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x106821070>[0m
+
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/modeling_utils.py", line 4343, in to
+    return super().to(*args, **kwargs)
+                       │       └ {}
+                       └ ('mps',)
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1381, in to
+    return self._apply(convert)
+           │    │      └ <function Module.to.<locals>.convert at 0x106439120>
+           │    └ <function Module._apply at 0x107b0cf40>
+           └ AceStepConditionGenerationModel(
+               (decoder): AceStepDiTModel(
+                 (rotary_emb): Qwen3RotaryEmbedding()
+                 (layers): ModuleL...
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x106439120>
+    │      └ <function Module._apply at 0x107b0cf40>
+    └ AceStepConditionEncoder(
+        (text_projector): Linear(in_features=1024, out_features=2048, bias=False)
+        (lyric_encoder): AceSt...
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x106439120>
+    │      └ <function Module._apply at 0x107b0cf40>
+    └ AceStepTimbreEncoder(
+        (embed_tokens): Linear(in_features=64, out_features=2048, bias=True)
+        (norm): Qwen3RMSNorm((2048,), ...
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x106439120>
+    │      └ <function Module._apply at 0x107b0cf40>
+    └ ModuleList(
+        (0-3): 4 x AceStepEncoderLayer(
+          (self_attn): AceStepAttention(
+            (q_proj): Linear(in_features=2048, out...
+  [Previous line repeated 3 more times]
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 964, in _apply
+    param_applied = fn(param)
+                    │  └ Parameter containing:
+                    │    tensor([[ 0.0369, -0.0028,  0.0085,  ..., -0.0493,  0.0361, -0.0544],
+                    │            [-0.0188, -0.0118, -0.031...
+                    └ <function Module.to.<locals>.convert at 0x106439120>
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1367, in convert
+    return t.to(
+           │ └ <method 'to' of 'torch._C.TensorBase' objects>
+           └ Parameter containing:
+             tensor([[ 0.0369, -0.0028,  0.0085,  ..., -0.0493,  0.0361, -0.0544],
+                     [-0.0188, -0.0118, -0.031...
+
+[31m[1mRuntimeError[0m:[1m MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 16.00 KiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).[0m
+[32m2026-11-14 06:10:22.270[0m | [1mINFO    [0m | [36macestep.core.generation.handler.init_service_loader[0m:[36m_load_main_model_from_checkpoint[0m:[36m174[0m - [1m[initialize_service] Attempting to load model with attention implementation: sdpa[0m
+[32m2026-11-14 06:11:41.680[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_init[0m:[36m_init_mlx_vae[0m:[36m75[0m - [1m[MLX-VAE] Decode/encode compiled with mx.compile().[0m
+[32m2026-11-14 06:11:41.699[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_init[0m:[36m_init_mlx_vae[0m:[36m85[0m - [1m[MLX-VAE] Native MLX VAE initialized (dtype=mlx.core.float32, compiled=True).[0m
+[32m2026-11-14 06:11:41.814[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=False, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=False, use_lm=False[0m
+[32m2026-11-14 06:11:41.818[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m329[0m - [1m[generate_music] Starting generation...[0m
+[32m2026-11-14 06:11:41.819[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m332[0m - [1m[generate_music] Preparing inputs...[0m
+[32m2026-11-14 06:11:42.300[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m119[0m - [1m
+======================================================================[0m
+[32m2026-11-14 06:11:42.300[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m120[0m - [1m🔍 [DEBUG] DiT TEXT ENCODER INPUT (Inference)[0m
+[32m2026-11-14 06:11:42.300[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m121[0m - [1m======================================================================[0m
+[32m2026-11-14 06:11:42.300[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m122[0m - [1mtext_prompt:
+# Instruction
+Fill the audio semantic mask based on the given conditions:
+
+# Caption
+Energetic synthwave
+
+# Metas
+- bpm: N/A
+- timesignature: N/A
+- keyscale: N/A
+- duration: 120 seconds
+<|endoftext|>
+[0m
+[32m2026-11-14 06:11:42.300[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m123[0m - [1m======================================================================[0m
+[32m2026-11-14 06:11:42.300[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m124[0m - [1mlyrics_text:
+# Languages
+unknown
+
+# Lyric
+[Instrumental]<|endoftext|>[0m
+[32m2026-11-14 06:11:42.300[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m125[0m - [1m======================================================================
+[0m
+[32m2026-11-14 06:11:42.363[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m110[0m - [1m[preprocess_batch] Inferring prompt embeddings...[0m
+[32m2026-11-14 06:11:44.962[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m113[0m - [1m[preprocess_batch] Inferring lyric embeddings...[0m
+[32m2026-11-14 06:11:44.965[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m173[0m - [1m[service_generate] Generating audio... (DiT backend: PyTorch (cpu))[0m
+--- KI-Prozess beendet (Status 15) ---
+
+--- 2026-11-14 06:11:54 +0000 KI-Prozess startet ---
+W1114 06:12:00.936000 57249 .venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+[32m2026-11-14 06:12:02.390[0m | [33m[1mWARNING [0m | [36macestep.training.trainer[0m:[36m<module>[0m:[36m40[0m - [33m[1mbitsandbytes not installed. Using standard AdamW.[0m
+[32m2026-11-14 06:12:02.461[0m | [1mINFO    [0m | [36macestep.gpu_config[0m:[36mget_gpu_config[0m:[36m846[0m - [1mmacOS MPS detected (4.7 GB unified memory, tier=tier2). Applying Apple Silicon optimizations: no compile, no quantization, mlx backend, no CPU offload.[0m
+[32m2026-11-14 06:12:02.466[0m | [1mINFO    [0m | [36macestep.core.generation.handler.init_service_loader[0m:[36m_load_main_model_from_checkpoint[0m:[36m174[0m - [1m[initialize_service] Attempting to load model with attention implementation: sdpa[0m
+[32m2026-11-14 06:14:12.595[0m | [31m[1mERROR   [0m | [36macestep.core.generation.handler.init_service_orchestrator[0m:[36minitialize_service[0m:[36m219[0m - [31m[1mError initializing model: MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 16.00 KiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+
+Traceback:
+Traceback (most recent call last):
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/init_service_orchestrator.py", line 156, in initialize_service
+    self._load_main_model_from_checkpoint(
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/init_service_loader.py", line 198, in _load_main_model_from_checkpoint
+    self.model = self.model.to(device).to(self.dtype)
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/modeling_utils.py", line 4343, in to
+    return super().to(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1381, in to
+    return self._apply(convert)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  [Previous line repeated 3 more times]
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 964, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1367, in convert
+    return t.to(
+           ^^^^^
+RuntimeError: MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 16.00 KiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).
+[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32m/Users/runner/work/_temp/ki/Engine/[0m[32m[1mengine.py[0m", line [33m275[0m, in [35m<module>[0m
+    [1mmain[0m[1m([0m[1m)[0m
+    [36m└ [0m[36m[1m<function main at 0x1087b96c0>[0m
+
+  File "[32m/Users/runner/work/_temp/ki/Engine/[0m[32m[1mengine.py[0m", line [33m259[0m, in [35mmain[0m
+    [1mresult[0m [35m[1m=[0m [1mengine[0m[35m[1m.[0m[1mload[0m[1m([0m[1mreq[0m[1m,[0m [1mprogress[0m[1m)[0m
+    [36m         │      │    │    └ [0m[36m[1m<function main.<locals>.progress at 0x108801080>[0m
+    [36m         │      │    └ [0m[36m[1m{'id': '3F4780EB-BD7E-4F2A-B635-9660A6696E88', 'dit': 'acestep-v15-turbo', 'cmd': 'load'}[0m
+    [36m         │      └ [0m[36m[1m<function Engine.load at 0x108800ae0>[0m
+    [36m         └ [0m[36m[1m<__main__.Engine object at 0x1087e2d80>[0m
+
+  File "[32m/Users/runner/work/_temp/ki/Engine/[0m[32m[1mengine.py[0m", line [33m91[0m, in [35mload[0m
+    [1mmsg[0m[1m,[0m [1mok[0m [35m[1m=[0m [1mself[0m[35m[1m.[0m[1mdit[0m[35m[1m.[0m[1minitialize_service[0m[1m([0m[1mproject_root[0m[35m[1m=[0m[1mself[0m[35m[1m.[0m[1mace_root[0m[1m,[0m [1mconfig_path[0m[35m[1m=[0m[1mdit_model[0m[1m,[0m [1mdevice[0m[35m[1m=[0m[1mdevice[0m[1m,[0m
+    [36m          │    │   │                               │    │                     │                 └ [0m[36m[1m'auto'[0m
+    [36m          │    │   │                               │    │                     └ [0m[36m[1m'acestep-v15-turbo'[0m
+    [36m          │    │   │                               │    └ [0m[36m[1m'/Users/runner/work/_temp/ki/ACE-Step-1.5'[0m
+    [36m          │    │   │                               └ [0m[36m[1m<__main__.Engine object at 0x1087e2d80>[0m
+    [36m          │    │   └ [0m[36m[1m<function InitServiceOrchestratorMixin.initialize_service at 0x10d920ae0>[0m
+    [36m          │    └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x108c99700>[0m
+    [36m          └ [0m[36m[1m<__main__.Engine object at 0x1087e2d80>[0m
+
+> File "[32m/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/[0m[32m[1minit_service_orchestrator.py[0m", line [33m156[0m, in [35minitialize_service[0m
+    [1mself[0m[35m[1m.[0m[1m_load_main_model_from_checkpoint[0m[1m([0m
+    [36m│    └ [0m[36m[1m<function InitServiceLoaderMixin._load_main_model_from_checkpoint at 0x10d8eb7e0>[0m
+    [36m└ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x108c99700>[0m
+
+  File "[32m/Users/runner/work/_temp/ki/ACE-Step-1.5/acestep/core/generation/handler/[0m[32m[1minit_service_loader.py[0m", line [33m198[0m, in [35m_load_main_model_from_checkpoint[0m
+    [1mself[0m[35m[1m.[0m[1mmodel[0m [35m[1m=[0m [1mself[0m[35m[1m.[0m[1mmodel[0m[35m[1m.[0m[1mto[0m[1m([0m[1mdevice[0m[1m)[0m[35m[1m.[0m[1mto[0m[1m([0m[1mself[0m[35m[1m.[0m[1mdtype[0m[1m)[0m
+    [36m│    │       │    │        │          │    └ [0m[36m[1mtorch.float32[0m
+    [36m│    │       │    │        │          └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x108c99700>[0m
+    [36m│    │       │    │        └ [0m[36m[1m'mps'[0m
+    [36m│    │       │    └ [0m[36m[1mNone[0m
+    [36m│    │       └ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x108c99700>[0m
+    [36m│    └ [0m[36m[1mNone[0m
+    [36m└ [0m[36m[1m<acestep.handler.AceStepHandler object at 0x108c99700>[0m
+
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/transformers/modeling_utils.py", line 4343, in to
+    return super().to(*args, **kwargs)
+                       │       └ {}
+                       └ ('mps',)
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1381, in to
+    return self._apply(convert)
+           │    │      └ <function Module.to.<locals>.convert at 0x108801120>
+           │    └ <function Module._apply at 0x109ed4f40>
+           └ AceStepConditionGenerationModel(
+               (decoder): AceStepDiTModel(
+                 (rotary_emb): Qwen3RotaryEmbedding()
+                 (layers): ModuleL...
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x108801120>
+    │      └ <function Module._apply at 0x109ed4f40>
+    └ AceStepConditionEncoder(
+        (text_projector): Linear(in_features=1024, out_features=2048, bias=False)
+        (lyric_encoder): AceSt...
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x108801120>
+    │      └ <function Module._apply at 0x109ed4f40>
+    └ AceStepTimbreEncoder(
+        (embed_tokens): Linear(in_features=64, out_features=2048, bias=True)
+        (norm): Qwen3RMSNorm((2048,), ...
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+    │      │      └ <function Module.to.<locals>.convert at 0x108801120>
+    │      └ <function Module._apply at 0x109ed4f40>
+    └ ModuleList(
+        (0-3): 4 x AceStepEncoderLayer(
+          (self_attn): AceStepAttention(
+            (q_proj): Linear(in_features=2048, out...
+  [Previous line repeated 3 more times]
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 964, in _apply
+    param_applied = fn(param)
+                    │  └ Parameter containing:
+                    │    tensor([[ 0.0369, -0.0028,  0.0085,  ..., -0.0493,  0.0361, -0.0544],
+                    │            [-0.0188, -0.0118, -0.031...
+                    └ <function Module.to.<locals>.convert at 0x108801120>
+  File "/Users/runner/work/_temp/ki/ACE-Step-1.5/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1367, in convert
+    return t.to(
+           │ └ <method 'to' of 'torch._C.TensorBase' objects>
+           └ Parameter containing:
+             tensor([[ 0.0369, -0.0028,  0.0085,  ..., -0.0493,  0.0361, -0.0544],
+                     [-0.0188, -0.0118, -0.031...
+
+[31m[1mRuntimeError[0m:[1m MPS backend out of memory (MPS allocated: 7.91 GiB, other allocations: 16.00 KiB, max allowed: 7.93 GiB). Tried to allocate 48.00 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).[0m
+[32m2026-11-14 06:14:12.983[0m | [1mINFO    [0m | [36macestep.core.generation.handler.init_service_loader[0m:[36m_load_main_model_from_checkpoint[0m:[36m174[0m - [1m[initialize_service] Attempting to load model with attention implementation: sdpa[0m
+[32m2026-11-14 06:15:25.522[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_init[0m:[36m_init_mlx_vae[0m:[36m75[0m - [1m[MLX-VAE] Decode/encode compiled with mx.compile().[0m
+[32m2026-11-14 06:15:25.529[0m | [1mINFO    [0m | [36macestep.core.generation.handler.mlx_vae_init[0m:[36m_init_mlx_vae[0m:[36m85[0m - [1m[MLX-VAE] Native MLX VAE initialized (dtype=mlx.core.float32, compiled=True).[0m
+[32m2026-11-14 06:15:25.593[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m662[0m - [1m[generate_music] LLM usage decision: thinking=False, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=False, use_lm=False[0m
+[32m2026-11-14 06:15:25.597[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m329[0m - [1m[generate_music] Starting generation...[0m
+[32m2026-11-14 06:15:25.598[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music[0m:[36mgenerate_music[0m:[36m332[0m - [1m[generate_music] Preparing inputs...[0m
+[32m2026-11-14 06:15:25.638[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m119[0m - [1m
+======================================================================[0m
+[32m2026-11-14 06:15:25.638[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m120[0m - [1m🔍 [DEBUG] DiT TEXT ENCODER INPUT (Inference)[0m
+[32m2026-11-14 06:15:25.638[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m121[0m - [1m======================================================================[0m
+[32m2026-11-14 06:15:25.638[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m122[0m - [1mtext_prompt:
+# Instruction
+Fill the audio semantic mask based on the given conditions:
+
+# Caption
+Short piano motif
+
+# Metas
+- bpm: N/A
+- timesignature: N/A
+- keyscale: N/A
+- duration: 10 seconds
+<|endoftext|>
+[0m
+[32m2026-11-14 06:15:25.638[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m123[0m - [1m======================================================================[0m
+[32m2026-11-14 06:15:25.638[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m124[0m - [1mlyrics_text:
+# Languages
+unknown
+
+# Lyric
+[Instrumental]<|endoftext|>[0m
+[32m2026-11-14 06:15:25.638[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_text[0m:[36m_prepare_text_conditioning_inputs[0m:[36m125[0m - [1m======================================================================
+[0m
+[32m2026-11-14 06:15:25.684[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m110[0m - [1m[preprocess_batch] Inferring prompt embeddings...[0m
+[32m2026-11-14 06:15:30.300[0m | [1mINFO    [0m | [36macestep.core.generation.handler.conditioning_embed[0m:[36mpreprocess_batch[0m:[36m113[0m - [1m[preprocess_batch] Inferring lyric embeddings...[0m
+[32m2026-11-14 06:15:30.305[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m173[0m - [1m[service_generate] Generating audio... (DiT backend: PyTorch (cpu))[0m
+[32m2026-11-14 06:16:03.820[0m | [1mINFO    [0m | [36macestep.core.generation.handler.service_generate_execute[0m:[36m_execute_service_generate_diffusion[0m:[36m276[0m - [1m[service_generate] DiT diffusion via PyTorch (cpu)...[0m
+[32m2026-11-14 06:16:11.610[0m | [1mINFO    [0m | [36macestep.models.common.dcw_correction[0m:[36m__init__[0m:[36m98[0m - [1m[DCW] Active — mode=double, scaler=0.0500, high_scaler=0.0200, wavelet='haar'[0m
+[32m2026-11-14 06:17:16.407[0m | [1mINFO    [0m | [36macestep.models.common.dcw_loader[0m:[36mget[0m:[36m84[0m - [1m[DCW] Built DWT1D for wavelet='haar' (low-pass filter taps=2, device=cpu, dtype=torch.float32).[0m
+[32m2026-11-14 06:20:12.910[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m42[0m - [1m[generate_music] Model generation completed. Decoding latents...[0m
+[32m2026-11-14 06:20:13.005[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m64[0m - [34m[1m[generate_music] pred_latents: torch.Size([1, 250, 64]), dtype=torch.float32[0m
+[32m2026-11-14 06:20:13.007[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_prepare_generate_music_decode_state[0m:[36m65[0m - [34m[1m[generate_music] time_costs: {'encoder_time_cost': 7.780426025390625, 'diffusion_time_cost': 241.18419814109802, 'diffusion_per_step_time_cost': 30.148024767637253, 'total_time_cost': 248.96462416648865, 'offload_time_cost': 0.0}[0m
+[32m2026-11-14 06:20:13.087[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m127[0m - [1m[generate_music] Decoding latents with VAE...[0m
+[32m2026-11-14 06:20:13.163[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m136[0m - [34m[1m[generate_music] Before VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-14 06:20:13.164[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m172[0m - [1m[generate_music] Using tiled VAE decode to reduce VRAM usage...[0m
+[32m2026-11-14 06:20:14.121[0m | [33m[1mWARNING [0m | [36macestep.core.generation.handler.vae_decode[0m:[36mtiled_decode[0m:[36m45[0m - [33m[1m[tiled_decode] MLX VAE decode failed (RuntimeError: [metal::Device] Unable to load kernel steel_gemm_fused_nax_nt_float32_float32_bm128_bn128_bk512_wm4_wn4_has_batch_n_use_out_source_n_do_axpby_n_align_M_n_align_N_t_align_K_t
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE0ENS_20execution_simdgroupsILm1EEEfffiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE1ENS_20execution_simdgroupsILm1EEEfffiJEEEEE.MTL_SIZEAS
+error: unsupported deferred-static-alloca-size function body in _ZN5metal18cooperative_tensorIfNS_7extentsIiJLm18446744073709551615ELm18446744073709551615EEEEN3mpp10tensor_ops17__mutmul2d_detail16__operand_layoutIXtlNS4_19matmul2d_descriptorELi16ELi32ELi16ELb0ELb1ELb1ELNS7_4modeE1EEELNS5_36__matmul2d_cooperative_operand_indexE2ENS_20execution_simdgroupsILm1EEEfffiJEEEEE.MTL_SIZEAS
+
+), falling back to PyTorch VAE...[0m
+[32m2026-11-14 06:20:14.132[0m | [1mINFO    [0m | [36macestep.core.generation.handler.vae_decode[0m:[36mtiled_decode[0m:[36m56[0m - [1m[tiled_decode] chunk_size=256, offload_wav_to_cpu=True, latents_shape=torch.Size([1, 64, 250])[0m
+[32m2026-11-14 06:20:59.580[0m | [34m[1mDEBUG   [0m | [36macestep.core.generation.handler.generate_music_decode[0m:[36m_decode_generate_music_pred_latents[0m:[36m193[0m - [34m[1m[generate_music] After VAE decode: allocated=0.00GB, max=0.00GB[0m
+[32m2026-11-14 06:21:03.683[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m38[0m - [1m[generate_music] VAE decode completed. Preparing audio tensors...[0m
+[32m2026-11-14 06:21:03.684[0m | [1mINFO    [0m | [36macestep.core.generation.handler.generate_music_payload[0m:[36m_build_generate_music_success_payload[0m:[36m50[0m - [1m[generate_music] Done! Generated 1 audio tensors.[0m
+[32m2026-11-14 06:21:03.808[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1002[0m - [1m[Normalization] Audio 0 BEFORE: Peak=1.0000, Target=-1.0dB[0m
+[32m2026-11-14 06:21:03.814[0m | [1mINFO    [0m | [36macestep.inference[0m:[36mgenerate_music[0m:[36m1007[0m - [1m[Normalization] Audio 0 AFTER: Peak=0.8913[0m
+[32m2026-11-14 06:21:03.899[0m | [34m[1mDEBUG   [0m | [36macestep.audio_utils[0m:[36msave_audio[0m:[36m339[0m - [34m[1m[AudioSaver] Fallback soundfile Saved audio to /Users/runner/work/music-library-mac/music-library-mac/out/audio/04-danach/ccd90c1d-e1bf-f250-0bd2-5ac1bc4c4a38.flac (flac, 48000Hz)[0m
+
+--- 2026-11-14 06:21:03 +0000 KI-Prozess startet ---
+W1114 06:21:12.307000 67891 .venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+[32m2026-11-14 06:21:14.577[0m | [33m[1mWARNING [0m | [36macestep.training.trainer[0m:[36m<module>[0m:[36m40[0m - [33m[1mbitsandbytes not installed. Using standard AdamW.[0m
+[32m2026-11-14 06:21:14.651[0m | [1mINFO    [0m | [36macestep.gpu_config[0m:[36mget_gpu_config[0m:[36m846[0m - [1mmacOS MPS detected (4.7 GB unified memory, tier=tier2). Applying Apple Silicon optimizations: no compile, no quantization, mlx backend, no CPU offload.[0m
+[32m2026-11-14 06:21:14.652[0m | [1mINFO    [0m | [36macestep.core.generation.handler.init_service_downloads[0m:[36m_ensure_models_present[0m:[36m44[0m - [1m[initialize_service] DiT model 'gibt-es-nicht' not found, starting auto-download...[0m
+Traceback (most recent call last):
+  File "/Users/runner/work/_temp/ki/Engine/engine.py", line 259, in main
+    result = engine.load(req, progress)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/_temp/ki/Engine/engine.py", line 104, in load
+    raise RuntimeError(f"Musikmodell konnte nicht geladen werden: {msg}")
+RuntimeError: Musikmodell konnte nicht geladen werden: ERROR: Failed to download DiT model 'gibt-es-nicht': Unknown DiT model: gibt-es-nicht

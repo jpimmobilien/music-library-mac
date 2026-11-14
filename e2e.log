@@ -1,0 +1,36 @@
+[0/1] Planning build
+Test Suite 'Selected tests' started at 2026-11-14 05:35:18.216.
+Test Suite 'MusicLibraryPackageTests.xctest' started at 2026-11-14 05:35:18.221.
+Test Suite 'KIEngineE2ETests' started at 2026-11-14 05:35:18.221.
+Test Case '-[StudioEngineTests.KIEngineE2ETests test1_InstallEnvironmentAndModels]' started.
+Test Case '-[StudioEngineTests.KIEngineE2ETests test1_InstallEnvironmentAndModels]' passed (136.141 seconds).
+Test Case '-[StudioEngineTests.KIEngineE2ETests test2_SandboxBlocksNetwork]' started.
+Test Case '-[StudioEngineTests.KIEngineE2ETests test2_SandboxBlocksNetwork]' passed (0.095 seconds).
+Test Case '-[StudioEngineTests.KIEngineE2ETests test3_GenerateOfflineInSandbox]' started.
+/Users/runner/work/music-library-mac/music-library-mac/Sources/StudioEngine/KI/KIEngineClient.swift:175: error: -[StudioEngineTests.KIEngineE2ETests test3_GenerateOfflineInSandbox] : failed: caught error: "engine("❌ Error generating from formatted prompt: RuntimeError: MPS backend out of memory (MPS allocated: 3.88 GiB, other allocations: 3.98 GiB, max allowed: 7.93 GiB). Tried to allocate 92.18 MiB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).")"
+Test Case '-[StudioEngineTests.KIEngineE2ETests test3_GenerateOfflineInSandbox]' failed (1809.438 seconds).
+Test Case '-[StudioEngineTests.KIEngineE2ETests test4_CancelAndRecover]' started.
+Test Case '-[StudioEngineTests.KIEngineE2ETests test4_CancelAndRecover]' passed (800.056 seconds).
+Test Case '-[StudioEngineTests.KIEngineE2ETests test5_ErrorsAreReported]' started.
+Test Case '-[StudioEngineTests.KIEngineE2ETests test5_ErrorsAreReported]' passed (10.707 seconds).
+Test Suite 'KIEngineE2ETests' failed at 2026-11-14 06:21:14.666.
+	 Executed 5 tests, with 1 failure (1 unexpected) in 2756.438 (2756.446) seconds
+Test Suite 'MusicLibraryPackageTests.xctest' failed at 2026-11-14 06:21:14.671.
+	 Executed 5 tests, with 1 failure (1 unexpected) in 2756.438 (2756.450) seconds
+Test Suite 'Selected tests' failed at 2026-11-14 06:21:14.671.
+	 Executed 5 tests, with 1 failure (1 unexpected) in 2756.438 (2756.455) seconds
+[KI-E2E] Umgebung: 41 s – KI-Umgebung bereit
+[KI-E2E] Umgebung erneut (sollte schnell sein): 8 s
+[KI-E2E] Grundpaket: 78 s, Fortschritt bis 1.0
+[KI-E2E] Modelle: acestep-5Hz-lm-0.6B 1.37 GB @148d8ea, Ace-Step1.5 10.09 GB @19671f4
+[KI-E2E] Sandbox: GESPERRT URLError
+[KI-E2E] Laden: 282 s
+[KI-E2E] 01 Instrumental (20 s Musik): 635 s, Datei 01bedd69-1d38-aa78-2040-c26772ef50a8.flac
+[KI-E2E] 02 Deutsch, 2 Varianten: 751 s
+[KI-E2E] 03 Text (101 s): [Intro] / Uh, uh /  / [Verse 1] / Der Wecker schreit, ich denk mir klar / Ich muss heut leben, ja, was braucht er da? / Adé, der Schneemann ist schon wieder am Start / Doch ich kann kaum das nicht, so schnell wie möglich geh'n / Ich frage mich, wie lange n
+[KI-E2E] Abbruch: Abgebrochen.
+[KI-E2E] Fehlermeldung: Musikmodell konnte nicht geladen werden: ERROR: Failed to download DiT model 'gibt-es-nicht': Unknown DiT model: gibt-es-nicht
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

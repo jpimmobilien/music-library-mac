@@ -1,0 +1,7 @@
+ProductName:		macOS
+ProductVersion:		26.7.2
+BuildVersion:		25G332
+arm64
+Apple M1 (Virtual)
+RAM: 7 GB
+Xcode 26.6

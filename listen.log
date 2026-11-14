@@ -1,0 +1,4 @@
+Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Fetching 4 files:  25%|██▌       | 1/4 [00:00<00:00,  7.47it/s]Fetching 4 files: 100%|██████████| 4/4 [00:08<00:00,  2.34s/it]Fetching 4 files: 100%|██████████| 4/4 [00:08<00:00,  2.17s/it]
+[Hören] 01-instrumental-en (Gegenprobe, sollte leer sein): WER None – Untertitelung des ZDF, 2020
+[Trennen] 01-instrumental-en: 34.6 s, Spuren ['separated/01bedd69-1d38-aa78-2040-c26772ef50a8/bass.wav', 'separated/01bedd69-1d38-aa78-2040-c26772ef50a8/drums.wav', 'separated/01bedd69-1d38-aa78-2040-c26772ef50a8/other.wav', 'separated/01bedd69-1d38-aa78-2040-c26772ef50a8/vocals.wav']

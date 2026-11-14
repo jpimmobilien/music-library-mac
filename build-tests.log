@@ -1,0 +1,2251 @@
+Building for debugging...
+[0/214] /Users/runner/work/music-library-mac/music-library-mac/.build/arm64-apple-macosx/debug/MusicLibraryPackageTests.derived/runner.swift
+[1/214] Compiling reservoir.c
+[2/214] Compiling tables.c
+[3/214] Compiling set_get.c
+[4/214] Write swift-version-7974D3F7F03D5E95.txt
+[5/214] Compiling xmproperties.cpp
+[6/214] Compiling wavpackproperties.cpp
+[7/214] Compiling xmfile.cpp
+[8/214] Compiling trueaudioproperties.cpp
+[9/214] Compiling wavpackfile.cpp
+[10/214] Compiling trueaudiofile.cpp
+[11/214] Compiling tzlib.cpp
+[12/214] Compiling tversionnumber.cpp
+[13/214] Compiling tstringlist.cpp
+[14/214] Compiling tvariant.cpp
+[15/214] Compiling tstring.cpp
+[16/214] Compiling tpropertymap.cpp
+[17/214] Compiling tpicturetype.cpp
+[18/214] Compiling tiostream.cpp
+[19/214] Compiling tfilestream.cpp
+[20/214] Compiling tdebug.cpp
+[21/214] Compiling tdebuglistener.cpp
+[22/214] Compiling tfile.cpp
+[23/214] Compiling tbytevectorstream.cpp
+[24/214] Compiling tbytevectorlist.cpp
+[25/214] Compiling tbytevector.cpp
+[26/214] Compiling tagutils.cpp
+[27/214] Compiling tagunion.cpp
+[28/214] Compiling tag.cpp
+[29/214] Compiling shortenproperties.cpp
+[30/214] Compiling shortentag.cpp
+[31/214] Compiling s3mproperties.cpp
+[32/214] Compiling shortenfile.cpp
+[33/214] Compiling s3mfile.cpp
+[34/214] Compiling wavproperties.cpp
+[35/214] Compiling wavfile.cpp
+[36/214] Compiling rifffile.cpp
+[37/214] Compiling infotag.cpp
+[38/214] Compiling aiffproperties.cpp
+[39/214] Compiling aifffile.cpp
+[40/214] Compiling xiphcomment.cpp
+[41/214] Compiling vorbisproperties.cpp
+[42/214] Compiling vorbisfile.cpp
+[43/214] Compiling speexproperties.cpp
+[44/214] Compiling speexfile.cpp
+[45/214] Compiling opusproperties.cpp
+[46/214] Compiling oggpageheader.cpp
+[47/214] Compiling opusfile.cpp
+[48/214] Compiling oggpage.cpp
+[49/214] Compiling oggflacfile.cpp
+[50/214] Compiling oggfile.cpp
+[51/214] Compiling xingheader.cpp
+[52/214] Compiling mpegproperties.cpp
+[53/214] Compiling mpegheader.cpp
+[54/214] Compiling mpegfile.cpp
+[55/214] Compiling id3v2synchdata.cpp
+[56/214] Compiling id3v2header.cpp
+[57/214] Compiling id3v2tag.cpp
+[58/214] Compiling id3v2framefactory.cpp
+[59/214] Compiling id3v2footer.cpp
+[60/214] Compiling id3v2frame.cpp
+[61/214] Compiling id3v2extendedheader.cpp
+[62/214] Compiling urllinkframe.cpp
+[63/214] Compiling unknownframe.cpp
+[64/214] Compiling unsynchronizedlyricsframe.cpp
+[65/214] Compiling uniquefileidentifierframe.cpp
+[66/214] Compiling tableofcontentsframe.cpp
+[67/214] Compiling textidentificationframe.cpp
+[68/214] Compiling synchronizedlyricsframe.cpp
+[69/214] Compiling privateframe.cpp
+[70/214] Compiling relativevolumeframe.cpp
+[71/214] Compiling popularimeterframe.cpp
+[72/214] Compiling podcastframe.cpp
+[73/214] Compiling ownershipframe.cpp
+[74/214] Compiling generalencapsulatedobjectframe.cpp
+[75/214] Compiling eventtimingcodesframe.cpp
+[76/214] Compiling commentsframe.cpp
+[77/214] Compiling chapterframe.cpp
+[78/214] Compiling attachedpictureframe.cpp
+[79/214] Compiling id3v1tag.cpp
+[80/214] Compiling id3v1genres.cpp
+[81/214] Compiling mpcproperties.cpp
+[82/214] Compiling mpcfile.cpp
+[83/214] Compiling mp4stem.cpp
+[84/214] Compiling mp4tag.cpp
+[85/214] Compiling mp4qtchapterlist.cpp
+[86/214] Compiling mp4properties.cpp
+[87/214] Compiling mp4nerochapterlist.cpp
+[88/214] Compiling mp4item.cpp
+[89/214] Compiling mp4itemfactory.cpp
+[90/214] Compiling mp4file.cpp
+[91/214] Compiling mp4coverart.cpp
+[92/214] Compiling mp4chapter.cpp
+[93/214] Compiling modproperties.cpp
+[94/214] Compiling mp4atom.cpp
+[95/214] Compiling modtag.cpp
+[96/214] Compiling modfilebase.cpp
+[97/214] Compiling modfile.cpp
+[98/214] Compiling matroskasimpletag.cpp
+[99/214] Compiling matroskasegment.cpp
+[100/214] Compiling matroskatag.cpp
+[101/214] Compiling matroskaproperties.cpp
+[102/214] Compiling matroskaseekhead.cpp
+[103/214] Compiling matroskafile.cpp
+[104/214] Compiling matroskaelement.cpp
+[105/214] Compiling matroskacues.cpp
+[106/214] Compiling matroskachapters.cpp
+[107/214] Compiling matroskachapteredition.cpp
+[108/214] Compiling matroskachapter.cpp
+[109/214] Compiling matroskaattachedfile.cpp
+[110/214] Compiling matroskaattachments.cpp
+[111/214] Compiling ebmlvoidelement.cpp
+[112/214] Compiling ebmlstringelement.cpp
+[113/214] Compiling ebmluintelement.cpp
+[114/214] Compiling ebmlutils.cpp
+[115/214] Compiling ebmlmktracks.cpp
+[116/214] Compiling ebmlmktags.cpp
+[117/214] Compiling ebmlmksegment.cpp
+[118/214] Compiling ebmlmkseekhead.cpp
+[119/214] Compiling ebmlmkinfo.cpp
+[120/214] Compiling ebmlmkcues.cpp
+[121/214] Compiling ebmlmkchapters.cpp
+[122/214] Compiling ebmlmkattachments.cpp
+[123/214] Compiling ebmlmasterelement.cpp
+[124/214] Compiling ebmlfloatelement.cpp
+[125/214] Compiling ebmlelement.cpp
+[126/214] Compiling ebmldeferredbinaryelement.cpp
+[127/214] Compiling itproperties.cpp
+[128/214] Compiling ebmlbinaryelement.cpp
+[129/214] Compiling itfile.cpp
+[130/214] Compiling flacunknownmetadatablock.cpp
+[131/214] Compiling flacproperties.cpp
+[132/214] Compiling flacpicture.cpp
+[133/214] Compiling flacmetadatablock.cpp
+[134/214] Compiling dsfproperties.cpp
+[135/214] Compiling flacfile.cpp
+[136/214] Compiling fileref.cpp
+[137/214] Compiling dsdiffproperties.cpp
+[138/214] Compiling dsffile.cpp
+[139/214] Compiling audioproperties.cpp
+[140/214] Compiling dsdifffile.cpp
+[141/214] Compiling dsdiffdiintag.cpp
+[142/214] Compiling asfproperties.cpp
+[143/214] Compiling asfpicture.cpp
+[144/214] Compiling asftag.cpp
+[145/214] Compiling asffile.cpp
+[146/214] Compiling asfattribute.cpp
+[147/214] Compiling apetag.cpp
+[148/214] Compiling apeproperties.cpp
+[149/214] Compiling apeitem.cpp
+[150/214] Compiling apefooter.cpp
+[151/214] Write sources
+[155/214] Copying Info.plist
+[156/214] Copying Fixtures
+[157/214] Copying Info.plist
+[158/214] Copying Fixtures
+[159/214] Write sources
+[162/214] Write MusicLibrary-entitlement.plist
+[163/214] Write sources
+[172/221] Compiling apefile.cpp
+[173/221] Write sources
+[174/221] Compiling CVorbis cvorbis.c
+[175/252] Compiling TagBridge.cpp
+[177/254] Emitting module MLRender
+[178/257] Emitting module MLCore
+[179/272] Compiling MLCore ArtistsAndGenres.swift
+[180/272] Compiling MLCore DuplicateFinder.swift
+[181/272] Compiling MLCore LibraryFilter.swift
+[182/272] Compiling MLCore SVGPath.swift
+[183/272] Compiling MLCore AlbumGrouping.swift
+[184/272] Compiling MLCore ArtistNames.swift
+[185/272] Compiling OggVorbis VorbisDecoder.swift
+[186/272] Emitting module OggVorbis
+[187/272] Compiling MLRender RasterKit.swift
+[188/272] Compiling MLRender TurntableGeometry.swift
+[189/272] Compiling MLRender VinylRenderer.swift
+[189/272] Compiling version.c
+[191/280] Compiling MLCore AutoTuneProcessor.swift
+[192/280] Compiling MLCore Biquad.swift
+[193/280] Compiling MLCore EditChain.swift
+[194/280] Compiling MLCore LoudnessMeter.swift
+[195/280] Compiling MLCore PeakLimiter.swift
+[196/280] Compiling MLCore PitchAnalysis.swift
+[197/280] Compiling MLCore EqualizerModel.swift
+[198/280] Compiling MLCore FloatFifo.swift
+[199/280] Compiling MLCore PhaseVocoder.swift
+[200/280] Compiling MLCore RealFFT.swift
+[201/280] Compiling MLCore SincResampler.swift
+[202/280] Compiling MLCore TimePitchEngine.swift
+[203/280] Compiling MLCore TimePitchProcessor.swift
+[204/280] Compiling MLCore CoverPalette.swift
+[205/280] Compiling MLCore FallbackArtwork.swift
+[206/280] Compiling MLCore Track.swift
+[207/280] Compiling MLCore UserData.swift
+[208/280] Compiling MLCore HistoryRule.swift
+[209/280] Compiling MLCore PlayQueue.swift
+[210/280] Compiling MLCore PlaybackRules.swift
+[211/280] Compiling MLCore ResumeRule.swift
+[212/280] Compiling MLCore SleepTimerLogic.swift
+[213/280] Compiling MLCore StartFirstShuffleOrder.swift
+[214/280] Compiling MLCore AppSettings.swift
+[215/280] Compiling MLCore ViewOptions.swift
+[216/280] Compiling MLCore TagMerge.swift
+[217/280] Compiling MLCore Formatting.swift
+[218/280] Compiling MLCore LogicSupport.swift
+[219/280] Compiling MLCore NaturalOrder.swift
+[220/280] Compiling MLCore TextNorm.swift
+[221/280] Compiling MLRenderTests CassetteTests.swift
+[222/280] Compiling MLRenderTests CoverLabelAndMotionTests.swift
+[223/280] Compiling MLRenderTests KotlinReferenceTests.swift
+[224/280] Compiling MLRenderTests PortableCdTests.swift
+[230/280] Compiling MLCore SmartPlaylists.swift
+[231/280] Compiling MLCore Sorting.swift
+[232/280] Compiling MLCore SyncPlanner.swift
+[233/280] Compiling MLCore LyricsParser.swift
+[234/280] Compiling MLCore DateAdded.swift
+[235/280] Compiling MLCore Tags.swift
+[235/280] Compiling vbrquantize.c
+[237/286] Compiling MLTags SHA256.swift
+[238/286] Compiling MLTags SafeTagWriter.swift
+[239/288] Emitting module MLTags
+[240/288] Compiling MLTags BridgeFile.swift
+[241/288] Compiling MLTags FileSystem.swift
+[242/288] Compiling MLTags ImageProbe.swift
+[243/288] Compiling MLTags TagError.swift
+[244/288] Compiling MLTags TagFile.swift
+[245/296] Compiling MLStudio StudioServices.swift
+[246/296] Compiling MLStudio KIMusic.swift
+[247/297] Compiling MLStudio StudioPreview.swift
+[248/297] Compiling MLStudio StudioRemoteLookup.swift
+[249/297] Emitting module MLRenderTests
+[250/297] Compiling OggVorbisTests VorbisDecoderTests.swift
+[251/297] Compiling OggVorbisTests resource_bundle_accessor.swift
+[252/297] Emitting module OggVorbisTests
+[253/304] Compiling MLRenderTests TurntableTests.swift
+[254/307] Compiling MLTagsTests AudioIntegrityTests.swift
+[255/307] Compiling MLTagsTests BridgeAPITests.swift
+[256/307] Compiling MLTagsTests FixtureSupport.swift
+[257/307] Compiling MLStudio StudioMetadata.swift
+[258/307] Emitting module MLStudio
+[259/307] Compiling MLTagsTests FormatSpecificTests.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:97:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 95 |     /// Wartet, solange angehalten ist. Kehrt sofort zurück, wenn nicht angehalten.
+ 96 |     public func waitIfPaused() async {
+ 97 |         lock.lock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 98 |         if !paused { lock.unlock(); return }
+ 99 |         lock.unlock()
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:98:27: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 96 |     public func waitIfPaused() async {
+ 97 |         lock.lock()
+ 98 |         if !paused { lock.unlock(); return }
+    |                           `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 99 |         lock.unlock()
+100 |         await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:99:14: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 97 |         lock.lock()
+ 98 |         if !paused { lock.unlock(); return }
+ 99 |         lock.unlock()
+    |              `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+100 |         await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+101 |             lock.lock()
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+[260/307] Compiling MLTagsTests ImageProbeTests.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:97:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 95 |     /// Wartet, solange angehalten ist. Kehrt sofort zurück, wenn nicht angehalten.
+ 96 |     public func waitIfPaused() async {
+ 97 |         lock.lock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 98 |         if !paused { lock.unlock(); return }
+ 99 |         lock.unlock()
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:98:27: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 96 |     public func waitIfPaused() async {
+ 97 |         lock.lock()
+ 98 |         if !paused { lock.unlock(); return }
+    |                           `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 99 |         lock.unlock()
+100 |         await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:99:14: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 97 |         lock.lock()
+ 98 |         if !paused { lock.unlock(); return }
+ 99 |         lock.unlock()
+    |              `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+100 |         await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+101 |             lock.lock()
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+[261/307] Compiling MLTagsTests SafeTagWriterTests.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:97:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 95 |     /// Wartet, solange angehalten ist. Kehrt sofort zurück, wenn nicht angehalten.
+ 96 |     public func waitIfPaused() async {
+ 97 |         lock.lock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 98 |         if !paused { lock.unlock(); return }
+ 99 |         lock.unlock()
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:98:27: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 96 |     public func waitIfPaused() async {
+ 97 |         lock.lock()
+ 98 |         if !paused { lock.unlock(); return }
+    |                           `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 99 |         lock.unlock()
+100 |         await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MLStudio/StudioServices.swift:99:14: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 97 |         lock.lock()
+ 98 |         if !paused { lock.unlock(); return }
+ 99 |         lock.unlock()
+    |              `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+100 |         await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+101 |             lock.lock()
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+[265/312] Compiling MLStore SQLite.swift
+[266/312] Compiling MLStore LibraryStore.swift
+[267/312] Emitting module MLStore
+[268/313] Compiling MLStore Schema.swift
+[269/330] Emitting module MLTagsTests
+[270/330] Compiling MLCoreTests AlbumGroupingTests.swift
+[271/330] Compiling MLCoreTests CoverPaletteTests.swift
+[272/330] Compiling MLCoreTests DuplicateFinderTests.swift
+[273/330] Compiling MLCoreTests LyricsParserTests.swift
+[274/330] Compiling MLCoreTests NaturalOrderJvmTests.swift
+[276/333] Compiling MLCoreTests PlayQueueTests.swift
+[277/333] Compiling MLCoreTests PlaybackLogicTests.swift
+[278/333] Emitting module MLStoreTests
+[279/333] Compiling MLStoreTests LibraryStoreTests.swift
+[280/333] Compiling MLStoreTests DateAddedStoreTests.swift
+[280/333] Compiling util.c
+[281/336] Compiling takehiro.c
+[282/336] Compiling quantize_pvt.c
+[283/336] Compiling quantize.c
+[285/336] Compiling MLStudioTests KIMusicTests.swift
+[286/336] Emitting module MLStudioTests
+[287/336] Compiling MLStudioTests MLStudioTests.swift
+[287/336] Compiling presets.c
+[288/336] Compiling newmdct.c
+[292/336] Compiling MLCoreTests ResumeAndHistoryTests.swift
+[293/336] Compiling MLCoreTests SVGPathTests.swift
+[294/336] Compiling MLCoreTests SectioningTests.swift
+[295/336] Compiling MLCoreTests SettingsTests.swift
+[296/336] Compiling MLCoreTests SyncPlannerTests.swift
+[297/336] Compiling MLCoreTests TagMergeTests.swift
+[297/344] Compiling lame.c
+[298/344] Compiling psymodel.c
+[299/344] Compiling gain_analysis.c
+[300/344] Compiling fft.c
+[305/344] Compiling MLCoreTests EditDSPTests.swift
+[306/344] Compiling MLCoreTests EqualizerModelTests.swift
+[307/344] Compiling MLCoreTests LibraryLogicTests.swift
+[310/344] Emitting module MLCoreTests
+[310/344] Compiling encoder.c
+[311/344] Compiling id3tag.c
+[312/344] Compiling VbrTag.c
+[313/344] Compiling bitstream.c
+[314/344] Compiling stream_encoder_framing.c
+[315/344] Compiling window.c
+[316/344] Compiling stream_decoder.c
+[317/344] Compiling stream_encoder.c
+[318/344] Compiling metadata_object.c
+[319/344] Compiling memory.c
+[320/344] Compiling md5.c
+[321/344] Compiling metadata_iterators.c
+[322/344] Compiling lpc.c
+[323/344] Compiling float.c
+[324/344] Compiling format.c
+[325/344] Compiling crc.c
+[326/344] Compiling cpu.c
+[327/344] Compiling fixed.c
+[328/344] Compiling bitwriter.c
+[329/344] Compiling bitreader.c
+[330/344] Compiling bitmath.c
+[332/371] Compiling StudioEngine AssetPCMReader.swift
+[333/371] Compiling StudioEngine AudioTrackFormat.swift
+[334/371] Compiling StudioEngine OggPCMReader.swift
+[335/371] Compiling StudioEngine PCMReader.swift
+[336/371] Compiling StudioEngine SourceOpener.swift
+[337/371] Compiling StudioEngine AACEncoder.swift
+[338/371] Compiling StudioEngine AIFFEncoder.swift
+[339/371] Compiling StudioEngine BinaryFile.swift
+[340/371] Emitting module StudioEngine
+[341/384] Compiling StudioEngine LocalSourceAnalyzer.swift
+[342/384] Compiling StudioEngine TrackEditAnalyzer.swift
+[343/384] Compiling StudioEngine AVFileReader.swift
+[352/384] Compiling StudioEngine EncoderVersions.swift
+[353/384] Compiling StudioEngine FLACEncoder.swift
+[354/384] Compiling StudioEngine FloatBlock.swift
+[355/384] Compiling StudioEngine Resampler.swift
+[356/384] Compiling StudioEngine SampleProcessing.swift
+[357/384] Compiling StudioEngine StudioHTTP.swift
+[358/384] Compiling StudioEngine StudioProcess.swift
+[359/384] Compiling StudioEngine StudioToolManager.swift
+[360/384] Compiling StudioEngine ToolChecksum.swift
+[361/384] Compiling StudioEngine YtDlpOutput.swift
+[362/384] Compiling StudioEngine YtDlpSourceProvider.swift
+[363/384] Compiling StudioEngine StudioEngineInfo.swift
+[364/384] Compiling StudioEngine CoverImage.swift
+[365/384] Compiling StudioEngine StudioTagWriter.swift
+[366/384] Compiling StudioEngine WaveformAnalyzer.swift
+[367/384] Compiling StudioEngine MP3Encoder.swift
+[368/384] Compiling StudioEngine PCMEncoder.swift
+[369/384] Compiling StudioEngine WAVEncoder.swift
+[370/384] Compiling StudioEngine AudioExporter.swift
+[371/384] Compiling StudioEngine ExportJob.swift
+[372/384] Compiling StudioEngine ExportSupport.swift
+[373/384] Compiling StudioEngine M4APassthrough.swift
+[374/384] Compiling StudioEngine MP3Stream.swift
+[375/384] Compiling StudioEngine ResultInspector.swift
+[376/384] Compiling StudioEngine KIEngine.swift
+[377/384] Compiling StudioEngine KIEngineClient.swift
+[378/384] Compiling StudioEngine KIInstaller.swift
+[379/384] Compiling StudioEngine StudioPreviewPlayer.swift
+[380/436] Emitting module MusicLibrary
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[381/456] Compiling MusicLibrary PitchShiftUnit.swift
+[382/456] Compiling MusicLibrary PlayerService.swift
+[383/456] Compiling MusicLibrary Artwork.swift
+[384/456] Compiling MusicLibrary Controls.swift
+[385/456] Compiling MusicLibrary Glass.swift
+[386/460] Emitting module StudioEngineTests
+[387/460] Compiling MusicLibrary AppModel.swift
+[388/460] Compiling MusicLibrary MusicLibraryApp.swift
+[389/460] Compiling MusicLibrary Navigation.swift
+[390/460] Compiling MusicLibrary AudioEngine.swift
+[391/460] Compiling MusicLibrary OggTranscoder.swift
+[392/460] Compiling StudioEngineTests StudioSourceTests.swift
+[393/460] Compiling StudioEngineTests StudioTestSupport.swift
+[394/460] Compiling StudioEngineTests StudioTrackEditTests.swift
+[395/460] Compiling StudioEngineTests StudioVendorTests.swift
+[396/460] Compiling MusicLibrary Benchmark.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[397/460] Compiling MusicLibrary DemoLibrary.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[398/460] Compiling MusicLibrary HangWatchdog.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[399/460] Compiling MusicLibrary SnapshotRunner.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[400/460] Compiling MusicLibrary StudioDemoServices.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[401/460] Compiling MusicLibrary StudioFileOps.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[402/460] Compiling MusicLibrary StudioKIImport.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[403/460] Compiling MusicLibrary StudioLibraryBridge.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[404/460] Compiling MusicLibrary StudioModel.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[405/460] Compiling MusicLibrary StudioQueueRunner.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[406/460] Compiling MusicLibrary StudioServicesWiring.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[407/460] Compiling MusicLibrary StudioTrackEdit.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[408/460] Compiling MusicLibrary StudioEditorControls.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[409/460] Compiling MusicLibrary StudioExportViews.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[410/460] Compiling MusicLibrary StudioQueueViews.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[411/460] Compiling MusicLibrary StudioSettingsPane.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[412/460] Compiling MusicLibrary StudioSourceViews.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[413/460] Compiling MusicLibrary StudioToolsAndDialogs.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[414/460] Compiling MusicLibrary StudioTrackPicker.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+[415/460] Compiling MusicLibrary StudioView.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/StudioTrackEdit.swift:111:45: warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+109 |                 let result = try await analyzer.analyze(file) { value in
+110 |                     guard throttle.allow(force: value >= 1) else { return }
+111 |                     Task { @MainActor [weak self] in
+    |                                             `- warning: reference to captured var 'self' in concurrently-executing code; this is an error in the Swift 6 language mode [#SendableClosureCaptures]
+112 |                         guard let self, generation == self.sourceGeneration, self.trackAnalysis == nil else { return }
+113 |                         self.trackAnalysisProgress = value
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:89:30: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 87 |     nonisolated static func recentTracks(_ tracks: [Track]) -> [Track] {
+ 88 |         var best: [Track] = []
+ 89 |         best.reserveCapacity(recentLimit + 1)
+    |                              `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:91:29: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 89 |         best.reserveCapacity(recentLimit + 1)
+ 90 |         for t in tracks {
+ 91 |             if best.count < recentLimit || t.dateAdded > best[best.count - 1].dateAdded {
+    |                             `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Studio/Views/StudioTrackPicker.swift:94:33: warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 19 |     /// Höchstens so viele Zeilen (Suche bzw. „Zuletzt hinzugefügt“) – große Bibliotheken bleiben flüssig.
+ 20 |     static let searchLimit = 80
+ 21 |     static let recentLimit = 40
+    |                `- note: static property declared here
+ 22 | 
+ 23 |     var body: some View {
+    :
+ 92 |                 let i = best.firstIndex(where: { t.dateAdded > $0.dateAdded }) ?? best.count
+ 93 |                 best.insert(t, at: i)
+ 94 |                 if best.count > recentLimit { best.removeLast() }
+    |                                 `- warning: main actor-isolated static property 'recentLimit' can not be referenced from a nonisolated context
+ 95 |             }
+ 96 |         }
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[430/480] Compiling MusicLibrary WindowDrag.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[431/480] Compiling MusicLibrary KIMusicDemo.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[432/480] Compiling MusicLibrary KIMusicModel.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[433/480] Compiling MusicLibrary KIMusicSettingsPane.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[434/480] Compiling MusicLibrary KIMusicView.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[435/480] Compiling MusicLibrary DateAddedService.swift
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:477:17: warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+475 | /// Typlöschende einfügbare Form (für Kreis/Rechteck-Wechsel).
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+    |                 |- warning: stored property 'pathBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGRect) -> Path'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+479 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Sources/MusicLibrary/Design/Artwork.swift:478:17: warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+476 | struct AnyInsettableShape: InsettableShape {
+477 |     private let pathBuilder: (CGRect) -> Path
+478 |     private let insetBuilder: (CGFloat) -> AnyInsettableShape
+    |                 |- warning: stored property 'insetBuilder' of 'Sendable'-conforming struct 'AnyInsettableShape' has non-Sendable type '(CGFloat) -> AnyInsettableShape'; this is an error in the Swift 6 language mode
+    |                 `- note: a function type must be marked '@Sendable' to conform to 'Sendable'
+479 | 
+480 |     init<S: InsettableShape>(_ shape: S) {
+[436/480] Compiling MusicLibrary LibraryService.swift
+[437/480] Compiling MusicLibrary CoverLyricsTabs.swift
+[438/480] Compiling MusicLibrary EditorSession.swift
+[439/480] Compiling MusicLibrary EditorView.swift
+[440/480] Compiling MusicLibrary MetadataService.swift
+[441/480] Compiling MusicLibrary AuroraHero.swift
+[442/480] Compiling MusicLibrary CassetteCDHero.swift
+[443/480] Compiling MusicLibrary FullPlayerView.swift
+[444/480] Compiling MusicLibrary MiniHeroes.swift
+[445/480] Compiling MusicLibrary MiniPlayerBar.swift
+[446/480] Compiling MusicLibrary MiniWindows.swift
+[447/480] Compiling MusicLibrary ModernGlassHero.swift
+[448/480] Compiling MusicLibrary PlayerBackdrop.swift
+[449/480] Compiling MusicLibrary PlayerSheets.swift
+[450/480] Compiling MusicLibrary PlayerSupport.swift
+[451/480] Compiling MusicLibrary ReelToReelHero.swift
+[452/480] Compiling MusicLibrary SidePanels.swift
+[453/480] Compiling MusicLibrary VinylClassicHero.swift
+[454/480] Compiling MusicLibrary Visualizer.swift
+[455/480] Compiling MusicLibrary SettingsView.swift
+[456/480] Compiling MusicLibrary StudioViewSupport.swift
+[457/480] Compiling MusicLibrary StudioWaveformViews.swift
+[458/480] Compiling MusicLibrary TrackEditViews.swift
+[459/480] Compiling MusicLibrary FavoritesAndTools.swift
+[460/480] Compiling MusicLibrary CoverFlow.swift
+[461/480] Compiling MusicLibrary FilterPanel.swift
+[462/480] Compiling MusicLibrary LibraryCollection.swift
+[463/480] Compiling MusicLibrary LibraryDialogs.swift
+[464/480] Compiling MusicLibrary LibraryKit.swift
+[465/480] Compiling MusicLibrary LibrarySections.swift
+[466/480] Compiling MusicLibrary LibraryToolbar.swift
+[467/480] Compiling MusicLibrary MarqueeSelection.swift
+[468/480] Compiling MusicLibrary SectionCollections.swift
+[469/480] Compiling MusicLibrary SelectionBar.swift
+[470/480] Compiling MusicLibrary ViewOptionsPanel.swift
+[471/480] Compiling MusicLibrary LibraryViews.swift
+[472/480] Compiling MusicLibrary MainWindow.swift
+[473/480] Compiling MusicLibrary PlaylistViews.swift
+[474/480] Compiling MusicLibrary Scaffold.swift
+[475/480] Compiling MusicLibrary TrackList.swift
+[475/480] Write Objects.LinkFileList
+[476/480] Linking MusicLibrary
+[477/480] Applying MusicLibrary
+[479/487] Compiling MusicLibraryTests EditorSessionTests.swift
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:20:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 18 | 
+ 19 |     func prepare(dit: String, lm: String?, progress: @escaping @Sendable (Double, String) -> Void) async throws {
+ 20 |         lock.lock(); running = true; prepared.append((dit, lm)); lock.unlock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 21 |         progress(1, "Bereit")
+ 22 |     }
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:20:71: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 18 | 
+ 19 |     func prepare(dit: String, lm: String?, progress: @escaping @Sendable (Double, String) -> Void) async throws {
+ 20 |         lock.lock(); running = true; prepared.append((dit, lm)); lock.unlock()
+    |                                                                       `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 21 |         progress(1, "Bereit")
+ 22 |     }
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:26:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 24 |     func writeLyrics(query: String, caption: String, lyrics: String, language: String?, instrumental: Bool,
+ 25 |                      progress: @escaping @Sendable (Double, String) -> Void) async throws -> KILyricsResult {
+ 26 |         lock.lock(); lyricsCalls += 1; lock.unlock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 27 |         return KILyricsResult(caption: "German pop, female vocals", lyrics: "[Verse]\nDie Sonne sinkt am See", language: language)
+ 28 |     }
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:26:45: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 24 |     func writeLyrics(query: String, caption: String, lyrics: String, language: String?, instrumental: Bool,
+ 25 |                      progress: @escaping @Sendable (Double, String) -> Void) async throws -> KILyricsResult {
+ 26 |         lock.lock(); lyricsCalls += 1; lock.unlock()
+    |                                             `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 27 |         return KILyricsResult(caption: "German pop, female vocals", lyrics: "[Verse]\nDie Sonne sinkt am See", language: language)
+ 28 |     }
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:32:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 30 |     func generate(params: [String: KIValue], variations: Int, seeds: [Int]?, saveDirectory: URL, usePlanning: Bool,
+ 31 |                   progress: @escaping @Sendable (Double, String) -> Void) async throws -> KIGenerationResult {
+ 32 |         lock.lock(); generated.append(params); lock.unlock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 33 |         progress(0.5, "Generating …")
+ 34 |         while hold {
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:32:53: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 30 |     func generate(params: [String: KIValue], variations: Int, seeds: [Int]?, saveDirectory: URL, usePlanning: Bool,
+ 31 |                   progress: @escaping @Sendable (Double, String) -> Void) async throws -> KIGenerationResult {
+ 32 |         lock.lock(); generated.append(params); lock.unlock()
+    |                                                     `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 33 |         progress(0.5, "Generating …")
+ 34 |         while hold {
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+[480/487] Compiling MusicLibraryTests KIMusicModelTests.swift
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:20:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 18 | 
+ 19 |     func prepare(dit: String, lm: String?, progress: @escaping @Sendable (Double, String) -> Void) async throws {
+ 20 |         lock.lock(); running = true; prepared.append((dit, lm)); lock.unlock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 21 |         progress(1, "Bereit")
+ 22 |     }
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:20:71: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 18 | 
+ 19 |     func prepare(dit: String, lm: String?, progress: @escaping @Sendable (Double, String) -> Void) async throws {
+ 20 |         lock.lock(); running = true; prepared.append((dit, lm)); lock.unlock()
+    |                                                                       `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 21 |         progress(1, "Bereit")
+ 22 |     }
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:26:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 24 |     func writeLyrics(query: String, caption: String, lyrics: String, language: String?, instrumental: Bool,
+ 25 |                      progress: @escaping @Sendable (Double, String) -> Void) async throws -> KILyricsResult {
+ 26 |         lock.lock(); lyricsCalls += 1; lock.unlock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 27 |         return KILyricsResult(caption: "German pop, female vocals", lyrics: "[Verse]\nDie Sonne sinkt am See", language: language)
+ 28 |     }
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:26:45: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 24 |     func writeLyrics(query: String, caption: String, lyrics: String, language: String?, instrumental: Bool,
+ 25 |                      progress: @escaping @Sendable (Double, String) -> Void) async throws -> KILyricsResult {
+ 26 |         lock.lock(); lyricsCalls += 1; lock.unlock()
+    |                                             `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 27 |         return KILyricsResult(caption: "German pop, female vocals", lyrics: "[Verse]\nDie Sonne sinkt am See", language: language)
+ 28 |     }
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:32:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 30 |     func generate(params: [String: KIValue], variations: Int, seeds: [Int]?, saveDirectory: URL, usePlanning: Bool,
+ 31 |                   progress: @escaping @Sendable (Double, String) -> Void) async throws -> KIGenerationResult {
+ 32 |         lock.lock(); generated.append(params); lock.unlock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 33 |         progress(0.5, "Generating …")
+ 34 |         while hold {
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:32:53: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 30 |     func generate(params: [String: KIValue], variations: Int, seeds: [Int]?, saveDirectory: URL, usePlanning: Bool,
+ 31 |                   progress: @escaping @Sendable (Double, String) -> Void) async throws -> KIGenerationResult {
+ 32 |         lock.lock(); generated.append(params); lock.unlock()
+    |                                                     `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 33 |         progress(0.5, "Generating …")
+ 34 |         while hold {
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+[481/487] Compiling MusicLibraryTests LibraryListsTests.swift
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:20:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 18 | 
+ 19 |     func prepare(dit: String, lm: String?, progress: @escaping @Sendable (Double, String) -> Void) async throws {
+ 20 |         lock.lock(); running = true; prepared.append((dit, lm)); lock.unlock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 21 |         progress(1, "Bereit")
+ 22 |     }
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:20:71: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 18 | 
+ 19 |     func prepare(dit: String, lm: String?, progress: @escaping @Sendable (Double, String) -> Void) async throws {
+ 20 |         lock.lock(); running = true; prepared.append((dit, lm)); lock.unlock()
+    |                                                                       `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 21 |         progress(1, "Bereit")
+ 22 |     }
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:26:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 24 |     func writeLyrics(query: String, caption: String, lyrics: String, language: String?, instrumental: Bool,
+ 25 |                      progress: @escaping @Sendable (Double, String) -> Void) async throws -> KILyricsResult {
+ 26 |         lock.lock(); lyricsCalls += 1; lock.unlock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 27 |         return KILyricsResult(caption: "German pop, female vocals", lyrics: "[Verse]\nDie Sonne sinkt am See", language: language)
+ 28 |     }
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:26:45: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 24 |     func writeLyrics(query: String, caption: String, lyrics: String, language: String?, instrumental: Bool,
+ 25 |                      progress: @escaping @Sendable (Double, String) -> Void) async throws -> KILyricsResult {
+ 26 |         lock.lock(); lyricsCalls += 1; lock.unlock()
+    |                                             `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 27 |         return KILyricsResult(caption: "German pop, female vocals", lyrics: "[Verse]\nDie Sonne sinkt am See", language: language)
+ 28 |     }
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:32:14: warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 30 |     func generate(params: [String: KIValue], variations: Int, seeds: [Int]?, saveDirectory: URL, usePlanning: Bool,
+ 31 |                   progress: @escaping @Sendable (Double, String) -> Void) async throws -> KIGenerationResult {
+ 32 |         lock.lock(); generated.append(params); lock.unlock()
+    |              `- warning: instance method 'lock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 33 |         progress(0.5, "Generating …")
+ 34 |         while hold {
+
+Foundation.NSLock.lock:2:11: note: 'lock()' declared here
+1 | class NSLock {
+2 | open func lock()}
+  |           `- note: 'lock()' declared here
+3 | 
+
+/Users/runner/work/music-library-mac/music-library-mac/Tests/MusicLibraryTests/KIMusicModelTests.swift:32:53: warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 30 |     func generate(params: [String: KIValue], variations: Int, seeds: [Int]?, saveDirectory: URL, usePlanning: Bool,
+ 31 |                   progress: @escaping @Sendable (Double, String) -> Void) async throws -> KIGenerationResult {
+ 32 |         lock.lock(); generated.append(params); lock.unlock()
+    |                                                     `- warning: instance method 'unlock' is unavailable from asynchronous contexts; Use async-safe scoped locking instead; this is an error in the Swift 6 language mode
+ 33 |         progress(0.5, "Generating …")
+ 34 |         while hold {
+
+Foundation.NSLock.unlock:2:11: note: 'unlock()' declared here
+1 | class NSLock {
+2 | open func unlock()}
+  |           `- note: 'unlock()' declared here
+3 | 
+[482/489] Emitting module MusicLibraryTests
+[483/489] Compiling MusicLibraryTests AudioEngineTests.swift
+[484/489] Compiling MusicLibraryTests DateAddedServiceTests.swift
+[485/489] Compiling MusicLibraryTests DesignResourceTests.swift
+[486/489] Compiling MusicLibraryTests OggPlaybackTests.swift
+[487/489] Compiling MusicLibraryTests StudioModelTests.swift
+[488/491] Emitting module MusicLibraryPackageTests
+[489/491] Compiling MusicLibraryPackageTests runner.swift
+[489/491] Write Objects.LinkFileList
+[490/491] Linking MusicLibraryPackageTests
+Build complete! (115.60s)
