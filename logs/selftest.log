@@ -1,0 +1,18 @@
+2026-11-16 23:29:26.624 Panora[1304:7415] Panora: AppModel bereit
+2026-11-16 23:29:26.890 Panora[1304:7415] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/h5/t85nd63d71x27_8gl5gw3l_w0000gn/T/de.panora.app.savedState
+2026-11-16 23:29:27.549 Panora[1304:7415] Panora: Dienste werden gestartet
+2026-11-16 23:29:27.553 Panora[1304:7415] Panora: Start abgeschlossen (selfTest(file:///Users/runner/work/music-library-mac/music-library-mac/logs/selftest.json))
+2026-11-16 23:29:27.966 Panora[1304:7415] Panora-Selbsttest: Bundle-ID – ok (de.panora.app)
+2026-11-16 23:29:27.966 Panora[1304:7415] Panora-Selbsttest: App-Symbol – ok (AppIcon.icns)
+2026-11-16 23:29:27.966 Panora[1304:7415] Panora-Selbsttest: MLX-Metal-Shader im Bundle – ok (default.metallib)
+2026-11-16 23:29:27.967 Panora[1304:7415] Panora-Selbsttest: Arbeitsspeicher erkannt – ok (7,5 GB)
+2026-11-16 23:29:27.967 Panora[1304:7415] Panora-Selbsttest: Prozessor erkannt – ok (Apple M1 (Virtual))
+2026-11-16 23:29:27.967 Panora[1304:7415] Panora-Selbsttest: Verfügbarer Speicher – ok (3,2 GB)
+2026-11-16 23:29:27.970 Panora[1304:7415] Panora-Selbsttest: Laufwerke erkannt – ok (Macintosh HD (Interne SSD (Startvolume)))
+2026-11-16 23:29:27.996 Panora[1304:7415] Panora-Selbsttest: Modellordner erkannt – ok (Qwen3 8B, 40K, KV 147456 B/Token)
+2026-11-16 23:29:27.998 Panora[1304:7415] Panora-Selbsttest: AUTO: Coding-Aufgabe – ok (Qwen3.6 35B A3B übernimmt: Code schreiben.)
+2026-11-16 23:29:27.998 Panora[1304:7415] Panora-Selbsttest: AUTO: Wechsel bei Textaufgabe – ok (Qwen3.6 35B A3B arbeitet weiter (Text schreiben).)
+2026-11-16 23:29:28.000 Panora[1304:7415] Panora-Selbsttest: MANUELL wird nicht überschrieben – ok (gpt-oss 20B arbeitet (manuell gewählt).)
+2026-11-16 23:29:28.001 Panora[1304:7415] Panora-Selbsttest: Kontextübergabe beim Wechsel – ok (4 Nachrichten, ca. 228 Tokens)
+2026-11-16 23:29:28.001 Panora[1304:7415] Panora-Selbsttest: Netzwerkstatus – ok (online)
+2026-11-16 23:29:28.315 Panora[1304:7415] Panora-Selbsttest: Ollama (optional) – ok (nicht installiert)

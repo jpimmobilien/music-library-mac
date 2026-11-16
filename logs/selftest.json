@@ -1,0 +1,79 @@
+{
+  "checks" : [
+    {
+      "detail" : "de.panora.app",
+      "name" : "Bundle-ID",
+      "ok" : true
+    },
+    {
+      "detail" : "AppIcon.icns",
+      "name" : "App-Symbol",
+      "ok" : true
+    },
+    {
+      "detail" : "default.metallib",
+      "name" : "MLX-Metal-Shader im Bundle",
+      "ok" : true
+    },
+    {
+      "detail" : "7,5 GB",
+      "name" : "Arbeitsspeicher erkannt",
+      "ok" : true
+    },
+    {
+      "detail" : "Apple M1 (Virtual)",
+      "name" : "Prozessor erkannt",
+      "ok" : true
+    },
+    {
+      "detail" : "3,2 GB",
+      "name" : "Verfügbarer Speicher",
+      "ok" : true
+    },
+    {
+      "detail" : "Macintosh HD (Interne SSD (Startvolume))",
+      "name" : "Laufwerke erkannt",
+      "ok" : true
+    },
+    {
+      "detail" : "Qwen3 8B, 40K, KV 147456 B\/Token",
+      "name" : "Modellordner erkannt",
+      "ok" : true
+    },
+    {
+      "detail" : "Qwen3.6 35B A3B übernimmt: Code schreiben.",
+      "name" : "AUTO: Coding-Aufgabe",
+      "ok" : true
+    },
+    {
+      "detail" : "Qwen3.6 35B A3B arbeitet weiter (Text schreiben).",
+      "name" : "AUTO: Wechsel bei Textaufgabe",
+      "ok" : true
+    },
+    {
+      "detail" : "gpt-oss 20B arbeitet (manuell gewählt).",
+      "name" : "MANUELL wird nicht überschrieben",
+      "ok" : true
+    },
+    {
+      "detail" : "4 Nachrichten, ca. 228 Tokens",
+      "name" : "Kontextübergabe beim Wechsel",
+      "ok" : true
+    },
+    {
+      "detail" : "online",
+      "name" : "Netzwerkstatus",
+      "ok" : true
+    },
+    {
+      "detail" : "nicht installiert",
+      "name" : "Ollama (optional)",
+      "ok" : true
+    }
+  ],
+  "liquidGlass" : true,
+  "macOS" : "Version 26.7.2 (Build 25G332)",
+  "ok" : true,
+  "process" : "Panora",
+  "translated" : false
+}

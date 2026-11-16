@@ -1,0 +1,10 @@
+{
+  "answer" : "Die Hauptstadt von Frankreich ist Paris.",
+  "generatedTokens" : 9,
+  "loadSeconds" : 1.0356780290603638,
+  "model" : "mlx-community__Qwen3-0.6B-4bit",
+  "ok" : true,
+  "raw" : "Die Hauptstadt von Frankreich ist Paris.",
+  "reasoning" : "",
+  "tokensPerSecond" : 60.9314445836185
+}

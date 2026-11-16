@@ -1,0 +1,4 @@
+2026-11-16 23:31:08.247 Panora[2944:13366] Panora: AppModel bereit
+2026-11-16 23:31:08.376 Panora[2944:13366] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/h5/t85nd63d71x27_8gl5gw3l_w0000gn/T/de.panora.app.savedState
+2026-11-16 23:31:08.412 Panora[2944:13366] Panora: Start abgeschlossen (e2e(model: file:///Users/runner/work/_temp/e2e-models/mlx-community__Qwen3-0.6B-4bit/, output: file:///Users/runner/work/music-library-mac/music-library-mac/logs/e2e.json))
+2026-11-16 23:31:08.412 Panora[2944:13366] Panora: Dienste werden gestartet
