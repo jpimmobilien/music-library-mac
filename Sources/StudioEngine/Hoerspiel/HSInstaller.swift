@@ -284,6 +284,9 @@ public final class HSInstaller: @unchecked Sendable {
         env["HF_HOME"] = paths.models.path
         env["HF_HUB_OFFLINE"] = "1"
         env["HF_HUB_DISABLE_TELEMETRY"] = "1"
+        // Jedes Modell vollständig in seinem eigenen Ordner (kein gemeinsamer Blob-Speicher von huggingface_hub 2.x):
+        // nur so stimmen Größenanzeige und „Entfernen“ gibt den Platz wirklich frei.
+        env["HF_HUB_DISABLE_SHARED_BLOBS"] = "1"
         return env
     }
 

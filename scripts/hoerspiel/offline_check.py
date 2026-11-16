@@ -52,11 +52,23 @@ def main():
             fp = os.path.join(root, n)
             store.append((os.path.relpath(fp, home), os.path.islink(fp), os.path.getsize(fp) if os.path.exists(fp) else None))
     result["store"] = sorted(store)
-    result["ok"] = p.returncode == 0 and off.returncode == 0 and bool(done) and \
+    # Alles muss im Ordner des Modells liegen (sonst stimmen Größe und Entfernen in der App nicht)
+    repo_dir = os.path.join(home, "hub", "models--" + repo.replace("/", "--"))
+    outside = [f for f in files if not os.path.realpath(os.path.join(snap, f)).startswith(os.path.realpath(repo_dir) + os.sep)]
+    real = 0
+    for root, _, names in os.walk(repo_dir):
+        for n in names:
+            fp = os.path.join(root, n)
+            if not os.path.islink(fp):
+                real += os.path.getsize(fp)
+    result["outside_repo_folder"] = outside
+    result["repo_folder_bytes"] = real
+    result["download_reported_bytes"] = (done or {}).get("bytes")
+    result["ok"] = not outside and p.returncode == 0 and off.returncode == 0 and bool(done) and \
         (not revision or done.get("revision") == revision) and result["offline_path"].endswith(done["revision"])
     with open(os.path.join(out, "offline.json"), "w") as f:
         json.dump(result, f, indent=2, ensure_ascii=False)
-    print("[Offline]", json.dumps({k: result[k] for k in ("repo", "download_exit", "offline_exit", "offline_path", "ok", "files")}))
+    print("[Offline]", json.dumps({k: result[k] for k in ("repo", "download_exit", "offline_exit", "offline_path", "ok", "files", "outside_repo_folder", "repo_folder_bytes", "download_reported_bytes")}))
     for row in result["store"]:
         print("[Offline] Speicher", row)
     if not result["ok"]:

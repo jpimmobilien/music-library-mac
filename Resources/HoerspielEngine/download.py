@@ -21,6 +21,9 @@ os.environ["DO_NOT_TRACK"] = "1"
 os.environ.pop("HF_HUB_OFFLINE", None)
 os.environ.pop("HF_TOKEN", None)
 os.environ["HF_HUB_DISABLE_PROGRESS_BARS"] = "1"
+# Jedes Modell vollständig im eigenen Ordner models--<org>--<name> (kein gemeinsamer Blob-Speicher, den
+# huggingface_hub 2.x sonst anlegt): Fortschritt, Größenanzeige und „Entfernen“ der App zählen diesen Ordner.
+os.environ["HF_HUB_DISABLE_SHARED_BLOBS"] = "1"
 
 _out = sys.stdout
 sys.stdout = sys.stderr
