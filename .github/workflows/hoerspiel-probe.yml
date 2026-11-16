@@ -25,6 +25,9 @@ on:
       llm_quant:
         description: "Quantisierung (Teil des Dateinamens)"
         default: "Q3_K_M"
+      tts_only:
+        description: "Nur diese Sprachausgaben (leer = alle; z. B. qwen_design,qwen_clone,chatterbox)"
+        default: ""
       mlx_llm:
         description: "Kleines MLX-Sprachmodell für den Mac-Test"
         default: "mlx-community/Qwen3.5-4B-MLX-4bit"
@@ -139,28 +142,39 @@ jobs:
     if: contains(inputs.jobs, 'tts')
     name: Sprachausgabe (${{ inputs.runner }})
     runs-on: ${{ inputs.runner }}
-    timeout-minutes: 240
+    timeout-minutes: 340
     steps:
       - uses: actions/checkout@v4
       - name: Rechner und Umgebung
         run: |
           mkdir -p out
-          { sw_vers; uname -m; sysctl -n machdep.cpu.brand_string; echo "RAM: $(( $(sysctl -n hw.memsize) / 1073741824 )) GB"; df -h "$HOME" | tail -1; } | tee out/rechner.txt
-          command -v ffmpeg >/dev/null || brew install --quiet ffmpeg > out/brew.log 2>&1 || true
+          if [ "$RUNNER_OS" = macOS ]; then
+            { sw_vers; uname -m; sysctl -n machdep.cpu.brand_string; echo "RAM: $(( $(sysctl -n hw.memsize) / 1073741824 )) GB"; df -h "$HOME" | tail -1; } | tee out/rechner.txt
+            command -v ffmpeg >/dev/null || brew install --quiet ffmpeg > out/brew.log 2>&1 || true
+            EXTRA=""
+          else
+            # Linux: MLX nur auf dem Prozessor – für Qualitätsmessungen, Geschwindigkeit ist nicht mit dem Mac vergleichbar
+            { uname -a; nproc; free -g; lscpu | grep "Model name"; } | tee out/rechner.txt
+            command -v ffmpeg >/dev/null || { sudo apt-get update -q && sudo apt-get install -y -q ffmpeg; } > out/apt.log 2>&1 || true
+            EXTRA="mlx[cpu]"
+          fi
           curl -LsSf https://astral.sh/uv/install.sh | sh > /dev/null 2>&1
           export PATH="$HOME/.local/bin:$PATH"
           uv venv -q --python 3.12 "$RUNNER_TEMP/hs"
-          uv pip install -q --python "$RUNNER_TEMP/hs/bin/python" "$MLX_AUDIO" mlx-whisper mlx-lm soundfile scipy piper-tts > out/install.log 2>&1 || tail -30 out/install.log
+          uv pip install -q --python "$RUNNER_TEMP/hs/bin/python" "$MLX_AUDIO" $EXTRA mlx-whisper mlx-lm soundfile scipy piper-tts > out/install.log 2>&1 || tail -30 out/install.log
           uv pip list --python "$RUNNER_TEMP/hs/bin/python" > out/pakete.txt
           uv pip install -q --python "$RUNNER_TEMP/hs/bin/python" pip-licenses > /dev/null 2>&1 && "$RUNNER_TEMP/hs/bin/pip-licenses" --format=markdown --with-urls > out/lizenzen-pakete.md 2>/dev/null || true
       - name: Sprachausgabe vergleichen
         continue-on-error: true
         run: |
-          /usr/bin/time -l "$RUNNER_TEMP/hs/bin/python" scripts/hoerspiel/probe_tts.py out > out/tts.log 2>&1
+          export HS_TTS_ONLY="${{ inputs.tts_only }}"
+          if [ "$RUNNER_OS" = macOS ]; then TF="-l"; else TF="-v"; fi
+          /usr/bin/time $TF "$RUNNER_TEMP/hs/bin/python" scripts/hoerspiel/probe_tts.py out > out/tts.log 2>&1
           STATUS=$?
-          grep -E "\[Probe\]|maximum resident" out/tts.log | cut -c1-400 | head -60
+          grep -E "\[Probe\]|maximum resident|Maximum resident" out/tts.log | cut -c1-400 | head -60
           exit $STATUS
       - name: Kleines Sprachmodell (MLX) schreibt eine Kurzgeschichte
+        if: runner.os == 'macOS'
         continue-on-error: true
         run: |
           export HS_LLM_MLX="${{ inputs.mlx_llm }}" HS_LLM_LABEL=mlx-story
