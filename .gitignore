@@ -1,0 +1,10 @@
+.build/
+build/
+dist/
+logs/
+snapshots/
+Xcode/
+Panora.xcodeproj/
+*.dmg
+.DS_Store
+.swiftpm/
