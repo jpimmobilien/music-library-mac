@@ -1,0 +1,18 @@
+OK      mlx-community/Qwen3-Coder-Next-4bit                            44.8 GB  Lizenz: apache-2.0
+OK      mlx-community/Qwen3.6-35B-A3B-4bit                             20.4 GB  Lizenz: apache-2.0
+OK      mlx-community/Qwen3-Coder-30B-A3B-Instruct-4bit                17.2 GB  Lizenz: apache-2.0
+OK      mlx-community/Devstral-Small-2-24B-Instruct-2512-4bit          15.1 GB  Lizenz: apache-2.0
+OK      mlx-community/Qwen3.6-27B-4bit                                 16.1 GB  Lizenz: apache-2.0
+OK      mlx-community/gemma-4-31b-it-4bit                              18.4 GB  Lizenz: apache-2.0
+OK      mlx-community/gemma-4-26b-a4b-it-4bit                          15.3 GB  Lizenz: apache-2.0
+OK      mlx-community/gpt-oss-20b-MXFP4-Q8                             12.1 GB  Lizenz: apache-2.0
+OK      mlx-community/Qwen3-30B-A3B-4bit                               17.2 GB  Lizenz: apache-2.0
+OK      mlx-community/Qwen3-8B-4bit                                     4.6 GB  Lizenz: apache-2.0
+OK      mlx-community/gemma-4-e4b-it-4bit                               5.1 GB  Lizenz: gemma
+OK      mlx-community/Qwen3-4B-4bit                                     2.3 GB  Lizenz: apache-2.0
+OK      mlx-community/DeepSeek-R1-Distill-Qwen-7B-4bit                  4.3 GB  Lizenz: ?
+OK      mlx-community/Meta-Llama-3.1-8B-Instruct-4bit                   4.5 GB  Lizenz: llama3.1
+OK      mlx-community/Mistral-Nemo-Instruct-2407-4bit                   6.9 GB  Lizenz: apache-2.0
+OK      mlx-community/Ministral-3-3B-Instruct-2512-4bit                 2.7 GB  Lizenz: apache-2.0
+
+16 Einträge, 0 nicht gefunden

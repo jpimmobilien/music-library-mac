@@ -1,0 +1,103 @@
+Building for debugging...
+[0/7] Write sources
+[0/7] /Users/runner/work/music-library-mac/music-library-mac/.build/x86_64-apple-macosx/debug/PanoraPackageTests.derived/runner.swift
+[3/7] Write sources
+[4/7] Write swift-version-7974D3F7F03D5E95.txt
+[6/16] Compiling PanoraCore Catalog.swift
+[7/16] Compiling PanoraCore ContextEngine.swift
+[8/16] Compiling PanoraCore Conversation.swift
+[9/16] Emitting module PanoraCore
+[10/16] Compiling PanoraCore Models.swift
+[11/16] Compiling PanoraCore ProjectScanner.swift
+[12/16] Compiling PanoraCore Experts.swift
+[13/16] Compiling PanoraCore Formatting.swift
+[14/16] Compiling PanoraCore HuggingFace.swift
+[15/18] Compiling PanoraCore Router.swift
+[16/18] Compiling PanoraCore TaskAnalyzer.swift
+[17/20] Compiling PanoraCoreTests CoreTests.swift
+[18/20] Emitting module PanoraCoreTests
+[19/22] Compiling PanoraPackageTests runner.swift
+[20/22] Emitting module PanoraPackageTests
+[20/22] Write Objects.LinkFileList
+[21/22] Linking PanoraPackageTests
+Build complete! (56.54s)
+Test Suite 'All tests' started at 2026-11-16 23:09:14.027.
+Test Suite 'PanoraPackageTests.xctest' started at 2026-11-16 23:09:14.031.
+Test Suite 'ContextEngineTests' started at 2026-11-16 23:09:14.031.
+Test Case '-[PanoraCoreTests.ContextEngineTests testBudgetSummarizesOlderMessages]' started.
+Test Case '-[PanoraCoreTests.ContextEngineTests testBudgetSummarizesOlderMessages]' passed (0.157 seconds).
+Test Case '-[PanoraCoreTests.ContextEngineTests testCompletedTasksAreRemoved]' started.
+Test Case '-[PanoraCoreTests.ContextEngineTests testCompletedTasksAreRemoved]' passed (0.001 seconds).
+Test Case '-[PanoraCoreTests.ContextEngineTests testExpertBriefContainsQuestion]' started.
+Test Case '-[PanoraCoreTests.ContextEngineTests testExpertBriefContainsQuestion]' passed (0.001 seconds).
+Test Case '-[PanoraCoreTests.ContextEngineTests testHandoffAndStateOnSwitch]' started.
+Test Case '-[PanoraCoreTests.ContextEngineTests testHandoffAndStateOnSwitch]' passed (0.001 seconds).
+Test Suite 'ContextEngineTests' passed at 2026-11-16 23:09:14.192.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.159 (0.161) seconds
+Test Suite 'RouterTests' started at 2026-11-16 23:09:14.192.
+Test Case '-[PanoraCoreTests.RouterTests testAutoPicksCoder]' started.
+Test Case '-[PanoraCoreTests.RouterTests testAutoPicksCoder]' passed (0.003 seconds).
+Test Case '-[PanoraCoreTests.RouterTests testContextWindowExclusion]' started.
+Test Case '-[PanoraCoreTests.RouterTests testContextWindowExclusion]' passed (0.001 seconds).
+Test Case '-[PanoraCoreTests.RouterTests testManualIsNeverOverridden]' started.
+Test Case '-[PanoraCoreTests.RouterTests testManualIsNeverOverridden]' passed (0.001 seconds).
+Test Case '-[PanoraCoreTests.RouterTests testManualUnavailableFailsInsteadOfReplacing]' started.
+Test Case '-[PanoraCoreTests.RouterTests testManualUnavailableFailsInsteadOfReplacing]' passed (0.001 seconds).
+Test Case '-[PanoraCoreTests.RouterTests testMemoryExclusion]' started.
+Test Case '-[PanoraCoreTests.RouterTests testMemoryExclusion]' passed (0.001 seconds).
+Test Case '-[PanoraCoreTests.RouterTests testPlannerUnloadsLeastRecentlyUsed]' started.
+Test Case '-[PanoraCoreTests.RouterTests testPlannerUnloadsLeastRecentlyUsed]' passed (0.000 seconds).
+Test Case '-[PanoraCoreTests.RouterTests testSmallSpecialistBeatsLargeGeneralist]' started.
+Test Case '-[PanoraCoreTests.RouterTests testSmallSpecialistBeatsLargeGeneralist]' passed (0.001 seconds).
+Test Case '-[PanoraCoreTests.RouterTests testStickinessAvoidsNeedlessSwitch]' started.
+Test Case '-[PanoraCoreTests.RouterTests testStickinessAvoidsNeedlessSwitch]' passed (0.002 seconds).
+Test Case '-[PanoraCoreTests.RouterTests testSwitchWhenTaskChanges]' started.
+Test Case '-[PanoraCoreTests.RouterTests testSwitchWhenTaskChanges]' passed (0.002 seconds).
+Test Suite 'RouterTests' passed at 2026-11-16 23:09:14.208.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.013 (0.015) seconds
+Test Suite 'SupportTests' started at 2026-11-16 23:09:14.208.
+Test Case '-[PanoraCoreTests.SupportTests testCatalogIsConsistent]' started.
+Test Case '-[PanoraCoreTests.SupportTests testCatalogIsConsistent]' passed (0.001 seconds).
+Test Case '-[PanoraCoreTests.SupportTests testConfigParse]' started.
+Test Case '-[PanoraCoreTests.SupportTests testConfigParse]' passed (0.001 seconds).
+Test Case '-[PanoraCoreTests.SupportTests testExpertRequests]' started.
+Test Case '-[PanoraCoreTests.SupportTests testExpertRequests]' passed (0.001 seconds).
+Test Case '-[PanoraCoreTests.SupportTests testFormatting]' started.
+Test Case '-[PanoraCoreTests.SupportTests testFormatting]' passed (0.000 seconds).
+Test Case '-[PanoraCoreTests.SupportTests testHuggingFaceParsing]' started.
+Test Case '-[PanoraCoreTests.SupportTests testHuggingFaceParsing]' passed (0.001 seconds).
+Test Case '-[PanoraCoreTests.SupportTests testLicenses]' started.
+Test Case '-[PanoraCoreTests.SupportTests testLicenses]' passed (0.000 seconds).
+Test Case '-[PanoraCoreTests.SupportTests testNameParser]' started.
+Test Case '-[PanoraCoreTests.SupportTests testNameParser]' passed (0.001 seconds).
+Test Case '-[PanoraCoreTests.SupportTests testProjectScanner]' started.
+Test Case '-[PanoraCoreTests.SupportTests testProjectScanner]' passed (0.011 seconds).
+Test Case '-[PanoraCoreTests.SupportTests testReasoningSplitter]' started.
+Test Case '-[PanoraCoreTests.SupportTests testReasoningSplitter]' passed (0.000 seconds).
+Test Suite 'SupportTests' passed at 2026-11-16 23:09:14.226.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.016 (0.018) seconds
+Test Suite 'TaskAnalyzerTests' started at 2026-11-16 23:09:14.226.
+Test Case '-[PanoraCoreTests.TaskAnalyzerTests testAndroidPhases]' started.
+Test Case '-[PanoraCoreTests.TaskAnalyzerTests testAndroidPhases]' passed (0.002 seconds).
+Test Case '-[PanoraCoreTests.TaskAnalyzerTests testCodingRequest]' started.
+Test Case '-[PanoraCoreTests.TaskAnalyzerTests testCodingRequest]' passed (0.001 seconds).
+Test Case '-[PanoraCoreTests.TaskAnalyzerTests testDebuggingWithStacktrace]' started.
+Test Case '-[PanoraCoreTests.TaskAnalyzerTests testDebuggingWithStacktrace]' passed (0.001 seconds).
+Test Case '-[PanoraCoreTests.TaskAnalyzerTests testLongDocument]' started.
+Test Case '-[PanoraCoreTests.TaskAnalyzerTests testLongDocument]' passed (0.754 seconds).
+Test Case '-[PanoraCoreTests.TaskAnalyzerTests testMathExpression]' started.
+Test Case '-[PanoraCoreTests.TaskAnalyzerTests testMathExpression]' passed (0.001 seconds).
+Test Case '-[PanoraCoreTests.TaskAnalyzerTests testSmallTalkAndContinuation]' started.
+Test Case '-[PanoraCoreTests.TaskAnalyzerTests testSmallTalkAndContinuation]' passed (0.001 seconds).
+Test Case '-[PanoraCoreTests.TaskAnalyzerTests testTranslationAndSummary]' started.
+Test Case '-[PanoraCoreTests.TaskAnalyzerTests testTranslationAndSummary]' passed (0.002 seconds).
+Test Suite 'TaskAnalyzerTests' passed at 2026-11-16 23:09:14.992.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.764 (0.766) seconds
+Test Suite 'PanoraPackageTests.xctest' passed at 2026-11-16 23:09:14.992.
+	 Executed 29 tests, with 0 failures (0 unexpected) in 0.952 (0.961) seconds
+Test Suite 'All tests' passed at 2026-11-16 23:09:14.992.
+	 Executed 29 tests, with 0 failures (0 unexpected) in 0.952 (0.965) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: x86_64-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

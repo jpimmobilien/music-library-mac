@@ -1,0 +1,94 @@
+Building for debugging...
+[Pre-planning 1 / 124]
+[Planning deferred tasks]
+[33 / 56] PanoraCore
+[34 / 56] PanoraCore
+[42 / 60] PanoraCoreTests-product
+[46 / 60] PanoraCore
+[50 / 61] PanoraCoreTests-product
+[54 / 62] PanoraCoreTests-product
+[55 / 62] PanoraCoreTests-test-runner
+[58 / 65] PanoraCoreTests-test-runner
+[62 / 65] PanoraCoreTests-test-runner
+[66 / 66] PanoraCoreTests-test-runner
+Build complete! (11.43 secs)
+Test Suite 'All tests' started at 2026-11-16 23:04:56.378
+Test Suite 'Debug-linux-x86_64.xctest' started at 2026-11-16 23:04:56.420
+Test Suite 'ContextEngineTests' started at 2026-11-16 23:04:56.420
+Test Case 'ContextEngineTests.testBudgetSummarizesOlderMessages' started at 2026-11-16 23:04:56.420
+Test Case 'ContextEngineTests.testBudgetSummarizesOlderMessages' passed (0.154 seconds)
+Test Case 'ContextEngineTests.testCompletedTasksAreRemoved' started at 2026-11-16 23:04:56.574
+Test Case 'ContextEngineTests.testCompletedTasksAreRemoved' passed (0.001 seconds)
+Test Case 'ContextEngineTests.testExpertBriefContainsQuestion' started at 2026-11-16 23:04:56.575
+Test Case 'ContextEngineTests.testExpertBriefContainsQuestion' passed (0.0 seconds)
+Test Case 'ContextEngineTests.testHandoffAndStateOnSwitch' started at 2026-11-16 23:04:56.575
+Test Case 'ContextEngineTests.testHandoffAndStateOnSwitch' passed (0.0 seconds)
+Test Suite 'ContextEngineTests' passed at 2026-11-16 23:04:56.576
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.156 (0.156) seconds
+Test Suite 'RouterTests' started at 2026-11-16 23:04:56.576
+Test Case 'RouterTests.testAutoPicksCoder' started at 2026-11-16 23:04:56.576
+Test Case 'RouterTests.testAutoPicksCoder' passed (0.001 seconds)
+Test Case 'RouterTests.testContextWindowExclusion' started at 2026-11-16 23:04:56.577
+Test Case 'RouterTests.testContextWindowExclusion' passed (0.0 seconds)
+Test Case 'RouterTests.testManualIsNeverOverridden' started at 2026-11-16 23:04:56.577
+Test Case 'RouterTests.testManualIsNeverOverridden' passed (0.0 seconds)
+Test Case 'RouterTests.testManualUnavailableFailsInsteadOfReplacing' started at 2026-11-16 23:04:56.578
+Test Case 'RouterTests.testManualUnavailableFailsInsteadOfReplacing' passed (0.0 seconds)
+Test Case 'RouterTests.testMemoryExclusion' started at 2026-11-16 23:04:56.578
+Test Case 'RouterTests.testMemoryExclusion' passed (0.0 seconds)
+Test Case 'RouterTests.testPlannerUnloadsLeastRecentlyUsed' started at 2026-11-16 23:04:56.578
+Test Case 'RouterTests.testPlannerUnloadsLeastRecentlyUsed' passed (0.0 seconds)
+Test Case 'RouterTests.testSmallSpecialistBeatsLargeGeneralist' started at 2026-11-16 23:04:56.578
+Test Case 'RouterTests.testSmallSpecialistBeatsLargeGeneralist' passed (0.0 seconds)
+Test Case 'RouterTests.testStickinessAvoidsNeedlessSwitch' started at 2026-11-16 23:04:56.579
+Test Case 'RouterTests.testStickinessAvoidsNeedlessSwitch' passed (0.0 seconds)
+Test Case 'RouterTests.testSwitchWhenTaskChanges' started at 2026-11-16 23:04:56.579
+Test Case 'RouterTests.testSwitchWhenTaskChanges' passed (0.0 seconds)
+Test Suite 'RouterTests' passed at 2026-11-16 23:04:56.579
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.004 (0.004) seconds
+Test Suite 'SupportTests' started at 2026-11-16 23:04:56.579
+Test Case 'SupportTests.testCatalogIsConsistent' started at 2026-11-16 23:04:56.579
+Test Case 'SupportTests.testCatalogIsConsistent' passed (0.0 seconds)
+Test Case 'SupportTests.testConfigParse' started at 2026-11-16 23:04:56.579
+Test Case 'SupportTests.testConfigParse' passed (0.001 seconds)
+Test Case 'SupportTests.testExpertRequests' started at 2026-11-16 23:04:56.580
+Test Case 'SupportTests.testExpertRequests' passed (0.005 seconds)
+Test Case 'SupportTests.testFormatting' started at 2026-11-16 23:04:56.585
+Test Case 'SupportTests.testFormatting' passed (0.0 seconds)
+Test Case 'SupportTests.testHuggingFaceParsing' started at 2026-11-16 23:04:56.585
+Test Case 'SupportTests.testHuggingFaceParsing' passed (0.0 seconds)
+Test Case 'SupportTests.testLicenses' started at 2026-11-16 23:04:56.585
+Test Case 'SupportTests.testLicenses' passed (0.0 seconds)
+Test Case 'SupportTests.testNameParser' started at 2026-11-16 23:04:56.585
+Test Case 'SupportTests.testNameParser' passed (0.0 seconds)
+Test Case 'SupportTests.testProjectScanner' started at 2026-11-16 23:04:56.585
+Test Case 'SupportTests.testProjectScanner' passed (0.003 seconds)
+Test Case 'SupportTests.testReasoningSplitter' started at 2026-11-16 23:04:56.588
+Test Case 'SupportTests.testReasoningSplitter' passed (0.0 seconds)
+Test Suite 'SupportTests' passed at 2026-11-16 23:04:56.588
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.009 (0.009) seconds
+Test Suite 'TaskAnalyzerTests' started at 2026-11-16 23:04:56.588
+Test Case 'TaskAnalyzerTests.testAndroidPhases' started at 2026-11-16 23:04:56.588
+Test Case 'TaskAnalyzerTests.testAndroidPhases' passed (0.001 seconds)
+Test Case 'TaskAnalyzerTests.testCodingRequest' started at 2026-11-16 23:04:56.590
+Test Case 'TaskAnalyzerTests.testCodingRequest' passed (0.001 seconds)
+Test Case 'TaskAnalyzerTests.testDebuggingWithStacktrace' started at 2026-11-16 23:04:56.590
+Test Case 'TaskAnalyzerTests.testDebuggingWithStacktrace' passed (0.001 seconds)
+Test Case 'TaskAnalyzerTests.testLongDocument' started at 2026-11-16 23:04:56.591
+Test Case 'TaskAnalyzerTests.testLongDocument' passed (0.209 seconds)
+Test Case 'TaskAnalyzerTests.testMathExpression' started at 2026-11-16 23:04:56.800
+Test Case 'TaskAnalyzerTests.testMathExpression' passed (0.101 seconds)
+Test Case 'TaskAnalyzerTests.testSmallTalkAndContinuation' started at 2026-11-16 23:04:56.901
+Test Case 'TaskAnalyzerTests.testSmallTalkAndContinuation' passed (0.0 seconds)
+Test Case 'TaskAnalyzerTests.testTranslationAndSummary' started at 2026-11-16 23:04:56.901
+Test Case 'TaskAnalyzerTests.testTranslationAndSummary' passed (0.001 seconds)
+Test Suite 'TaskAnalyzerTests' passed at 2026-11-16 23:04:56.902
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.314 (0.314) seconds
+Test Suite 'Debug-linux-x86_64.xctest' passed at 2026-11-16 23:04:56.902
+	 Executed 29 tests, with 0 failures (0 unexpected) in 0.482 (0.482) seconds
+Test Suite 'All tests' passed at 2026-11-16 23:04:56.902
+	 Executed 29 tests, with 0 failures (0 unexpected) in 0.482 (0.482) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.4.2 (288a2328ff84644)
+↳ Target Platform: x86_64-unknown-linux-gnu
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

@@ -1,0 +1,35 @@
+▸ Info.plist (Version 0.1.0, Build 4)
+▸ App-Symbol (iconutil)
+⚙️  Generating plists...
+⚙️  Generating project...
+⚙️  Writing project...
+Created project at /Users/runner/work/music-library-mac/music-library-mac/Panora.xcodeproj
+▸ Pakete auflösen
+Resolved source packages:
+  swift-asn1: https://github.com/apple/swift-asn1.git @ 1.7.4
+  yyjson: https://github.com/ibireme/yyjson.git @ 0.13.0
+  swift-crypto: https://github.com/apple/swift-crypto.git @ 4.5.2
+  swift-transformers: https://github.com/huggingface/swift-transformers @ 1.4.0
+  swift-huggingface: https://github.com/huggingface/swift-huggingface.git @ 1.0.0
+  swift-syntax: https://github.com/swiftlang/swift-syntax.git @ 603.0.2
+  mlx-swift-lm: https://github.com/ml-explore/mlx-swift-lm @ 3.32.3
+  mlx-swift: https://github.com/ml-explore/mlx-swift @ 0.32.3
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.7.6
+  EventSource: https://github.com/mattt/EventSource.git @ 1.6.0
+  swift-numerics: https://github.com/apple/swift-numerics @ 1.1.1
+  Jinja: https://github.com/huggingface/swift-jinja.git @ 3.2.0
+▸ Kompilieren (Release, arm64)
+** BUILD SUCCEEDED **
+▸ Bundle prüfen
+  Architektur: arm64
+  Metal-Shader: Contents/Resources/mlx-swift_Cmlx.bundle/Contents/Resources/default.metallib
+de.panora.app
+0.1.0
+▸ Ad-hoc-Signatur
+build/Panora.app: replacing existing signature
+--prepared:/Users/runner/work/music-library-mac/music-library-mac/build/Panora.app/Contents/Frameworks/libswiftCompatibilitySpan.dylib
+--validated:/Users/runner/work/music-library-mac/music-library-mac/build/Panora.app/Contents/Frameworks/libswiftCompatibilitySpan.dylib
+build/Panora.app: valid on disk
+build/Panora.app: satisfies its Designated Requirement
+ 52M	build/Panora.app
+✓ build/Panora.app

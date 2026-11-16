@@ -1,0 +1,6 @@
+Lauf: 4 (3f3d01d579b4506bda089e981963c25815dea633)
+core: success
+build: success
+dmg: Panora.dmg
+dmg: Panora.dmg.sha256
+Mon Nov 16 23:28:11 UTC 2026
