@@ -84,6 +84,32 @@ final class HoerspielTests: XCTestCase {
         XCTAssertTrue(accent.descriptionEN.contains("leicht bairisch"))
     }
 
+    func testVoiceTargetFromReference() throws {
+        let profile: [String: Any] = ["speakers": [["id": "S1", "role_guess": "Erzähler (geschätzt)", "share": 0.3,
+                                                    "description_de": "weiblich", "voice_en": "An adult woman",
+                                                    "f0_median_hz": 202.5, "syllables_per_second": 4.1],
+                                                   ["id": "S2", "role_guess": "Hauptfigur", "share": 0.2]],
+                                      "recording": ["bandwidth_hz": 4800, "noise_floor_dbfs": -63]]
+        let ref = HSReference.from(profile: profile, name: "Kassette", sources: ["a.mp3"])
+        XCTAssertEqual(ref.speakers[0].f0, 202.5)
+        XCTAssertEqual(ref.speakers[0].syllablesPerSecond, 4.1)
+        XCTAssertNil(ref.speakers[1].f0)
+        let t = HSVoiceTarget(f0: ref.speakers[0].f0, syllablesPerSecond: ref.speakers[0].syllablesPerSecond)
+        XCTAssertEqual(t.json["f0_median_hz"] as? Double, 202.5)
+        XCTAssertTrue(HSVoiceTarget(f0: nil, syllablesPerSecond: nil).isEmpty)
+        var v = HSVoiceProfile(name: "x", kind: .styleOnly)
+        v.target = t
+        let back = try JSONDecoder().decode(HSVoiceProfile.self, from: JSONEncoder().encode(v))
+        XCTAssertEqual(back.target, t)
+        XCTAssertFalse(back.canSpeak, "Stilprofil mit Merkmalen spricht trotzdem nicht")
+        // ältere Referenz ohne Messwerte bleibt lesbar
+        var obj = try XCTUnwrap(try JSONSerialization.jsonObject(with: JSONEncoder().encode(ref)) as? [String: Any])
+        var sp = try XCTUnwrap(obj["speakers"] as? [[String: Any]])
+        sp[0].removeValue(forKey: "f0")
+        obj["speakers"] = sp
+        XCTAssertNil(try JSONDecoder().decode(HSReference.self, from: JSONSerialization.data(withJSONObject: obj)).speakers[0].f0)
+    }
+
     func testStyleProfileNeverSpeaks() {
         var v = HSVoiceProfile(name: "Stil S1", kind: .styleOnly)
         v.referenceFile = "irgendwas.wav"

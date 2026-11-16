@@ -6,9 +6,10 @@ import StudioEngine
 
 /// Stimmenstudio, Referenzanalyse und Geräuschbibliothek.
 extension HoerspielModel {
-    /// Mindest-Ähnlichkeit zwischen gesprochener Einwilligung und Stimmprobe (ECAPA, Kosinus). Kalibriert im
-    /// Prüfstand an echten deutschen Sprechern (docs/KI_HOERSPIEL_MACHBARKEIT.md, Prüfung E).
-    static let consentThreshold = 0.5
+    /// Mindest-Ähnlichkeit zwischen gesprochener Einwilligung und Stimmprobe (ECAPA, Kosinus). Kalibriert am
+    /// 16.11.2026 auf Apple Silicon an 14 deutschen Sprechern (MLS, Prüfung E): verschiedene Sprecher höchstens
+    /// 0,545, gleiche Sprecher im 5-%-Quantil 0,665 → 0,6 (docs/KI_HOERSPIEL_MACHBARKEIT.md).
+    static let consentThreshold = 0.6
 
     // MARK: Stimmen entwerfen
 
@@ -26,9 +27,13 @@ extension HoerspielModel {
             let file = "\(target.id.uuidString)-\(target.seed).wav"
             let out = m.store.voicesDir.appendingPathComponent(file)
             try FileManager.default.createDirectory(at: m.store.voicesDir, withIntermediateDirectories: true)
-            m.report("„\(target.name)“ wird entworfen …", 0.2)
-            let v = try await e.designVoice(instruct: target.designDescription, seed: target.seed, out: out, progress: m.reporter(range: 0.2...1))
+            let matching = target.target.map { !$0.isEmpty } ?? false
+            m.report(matching ? "„\(target.name)“: drei Kandidaten, der mit der passendsten Tonhöhe und dem passendsten Tempo …"
+                     : "„\(target.name)“ wird entworfen …", 0.2)
+            let v = try await e.designVoice(instruct: target.designDescription, seed: target.seed, out: out, target: target.target,
+                                            candidates: matching ? 3 : 1, progress: m.reporter(range: 0.2...1))
             var saved = target
+            saved.seed = v.seed
             saved.referenceFile = file
             saved.referenceText = v.text
             var list = m.voices.filter { $0.id != saved.id }
@@ -45,6 +50,7 @@ extension HoerspielModel {
             var v = HSVoiceProfile(name: "\(ref.name) – \(s.id) \(s.role.replacingOccurrences(of: " (geschätzt)", with: ""))", kind: .styleOnly,
                                    customDescriptionEN: s.voiceEN)
             v.sourceReference = ref.name
+            v.target = HSVoiceTarget(f0: s.f0, syllablesPerSecond: s.syllablesPerSecond)
             v.settings.notes = s.descriptionDE
             list.append(v)
         }
@@ -58,6 +64,7 @@ extension HoerspielModel {
         var v = HSVoiceProfile(name: style.name.replacingOccurrences(of: " – ", with: " · ") + " (entworfen)", kind: .designed,
                                settings: style.settings, customDescriptionEN: style.customDescriptionEN)
         v.sourceReference = style.sourceReference
+        v.target = style.target
         setVoices([v] + voices)
         designVoice(name: v.name, settings: v.settings, custom: v.customDescriptionEN, replacing: v.id)
     }

@@ -99,15 +99,27 @@ public final class HSEngine: @unchecked Sendable {
         public let path: String
         public let text: String
         public let duration: Double
+        /// Gewählter Startwert (bei mehreren Kandidaten der passendste).
+        public let seed: Int
+        /// Gemessene Tonhöhe/Tempo der gewählten Stimme (nur bei Ziel-Merkmalen).
+        public let f0: Double?
+        public let syllablesPerSecond: Double?
     }
 
+    /// Stimme entwerfen. Mit `target` (Tonhöhe/Tempo aus einem Stilprofil) entstehen `candidates` Kandidaten, der
+    /// passendste wird genommen.
     public func designVoice(instruct: String, text: String? = nil, seed: Int, out: URL, language: String = "de",
-                            progress: Progress? = nil) async throws -> DesignedVoice {
+                            target: HSVoiceTarget? = nil, candidates: Int = 1, progress: Progress? = nil) async throws -> DesignedVoice {
         var payload: [String: Any] = ["instruct": instruct, "seed": seed, "out": out.path, "language": language]
         if let text { payload["text"] = text }
+        if let target, !target.isEmpty, candidates > 1 {
+            payload["target"] = target.json
+            payload["candidates"] = candidates
+        }
         let r = try await client.request("design_voice", payload, progress: progress)
         return DesignedVoice(path: r["path"] as? String ?? out.path, text: r["text"] as? String ?? text ?? "",
-                             duration: (r["duration"] as? Double) ?? 0)
+                             duration: HSJSON.double(r["duration"]) ?? 0, seed: HSJSON.int(r["seed"]) ?? seed,
+                             f0: HSJSON.double(r["f0_median_hz"]), syllablesPerSecond: HSJSON.double(r["syllables_per_second"]))
     }
 
     public struct LineRequest: Sendable {

@@ -238,7 +238,9 @@ if src:
         text = V.REFERENCE_TEXT
         fid = []
         for i, sp in enumerate(src["speakers"]):
-            a, sr = m.speak(text, sp["voice_en"], "de", 300 + i)
+            target = {"f0_median_hz": sp.get("f0_median_hz"), "syllables_per_second": sp.get("syllables_per_second")}
+            # wie die App: drei Kandidaten, der mit der passendsten Tonhöhe/Tempo gewinnt
+            a, sr, seed, _, _, tried = V.design_matching(m, text, sp["voice_en"], "de", target, 3, 300 + i)
             a = A.trim_silence(a, sr)
             p = os.path.join(WORK, "profil-stimmen", f"{sp['id']}.wav")
             A.write_wav(p, a, sr)
@@ -251,7 +253,11 @@ if src:
             got = {"f0_median_hz": round(float(np.median(f0)), 1) if f0.size else None,
                    "syllables_per_second": round(syl / speech, 2)}
             want = {"f0_median_hz": sp.get("f0_median_hz"), "syllables_per_second": sp.get("syllables_per_second")}
-            entry = {"speaker": sp["id"], "voice_en": sp["voice_en"], "want": want, "got": got}
+            entry = {"speaker": sp["id"], "voice_en": sp["voice_en"], "want": want, "got": got, "seed": seed,
+                     "candidates": tried}
+            first = tried[0]
+            if want["f0_median_hz"] and first.get("f0_median_hz"):
+                entry["f0_error_first_candidate"] = round(float(12 * np.log2(first["f0_median_hz"] / want["f0_median_hz"])), 1)
             if want["f0_median_hz"] and got["f0_median_hz"]:
                 entry["f0_error_semitones"] = round(float(12 * np.log2(got["f0_median_hz"] / want["f0_median_hz"])), 1)
             fid.append(entry)

@@ -161,10 +161,17 @@ class Engine:
         t0 = time.time()
         language = req.get("language", "de")
         text = req.get("text") or V.reference_text(language)
-        audio, sr = self.design.speak(text, req["instruct"], language, req.get("seed"))
+        target = req.get("target") or {}
+        extra = {}
+        if target and int(req.get("candidates", 1)) > 1:
+            audio, sr, seed, f0, rate, tried = V.design_matching(self.design, text, req["instruct"], language, target,
+                                                                 int(req.get("candidates", 3)), int(req.get("seed") or 1))
+            extra = {"seed": seed, "f0_median_hz": f0, "syllables_per_second": rate, "candidates": tried}
+        else:
+            audio, sr = self.design.speak(text, req["instruct"], language, req.get("seed"))
         audio = A.trim_silence(audio, sr)
         A.write_wav(req["out"], audio, sr)
-        return {"path": req["out"], "text": text, "duration": round(len(audio) / sr, 2),
+        return {**extra, "path": req["out"], "text": text, "duration": round(len(audio) / sr, 2),
                 "seconds": round(time.time() - t0, 1)}
 
     def speak(self, req, progress):
@@ -227,7 +234,7 @@ class Engine:
         models = self._analysis(progress)
         progress(0.15, "Sprecher, Text und Klang werden analysiert …")
         r = H.analyze(req["path"], models, log=lambda *a: print(*a, file=sys.stderr),
-                      threshold=float(req.get("threshold", 0.65)), language=req.get("language", "de"))
+                      threshold=float(req.get("threshold", H.DEFAULT_THRESHOLD)), language=req.get("language", "de"))
         if req.get("out"):
             with open(req["out"], "w") as f:
                 json.dump(r, f, ensure_ascii=False, indent=2, default=str)

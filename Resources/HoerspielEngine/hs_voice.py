@@ -9,6 +9,7 @@ hs_consent) – nie aus einer analysierten Referenzaufnahme.
 """
 
 import gc
+import math
 import time
 
 import numpy as np
@@ -189,6 +190,43 @@ EMOTION_HINTS = {
 def emotion_en(emotion):
     e = (emotion or "").lower()
     return next((v for k, v in EMOTION_HINTS.items() if k in e), "")
+
+
+def measure_voice(audio, sr, text):
+    """Tonhöhe (Median, Hz) und Silben je Sekunde einer gesprochenen Referenz."""
+    import hs_analyze as H
+    x16 = A.resample(A.trim_silence(audio, sr), sr, 16000)
+    f0 = H.f0_yin(x16)
+    f0 = f0[np.isfinite(f0)]
+    syl = sum(H.syllables(w) for w in (text or "").split())
+    dur = max(len(x16) / 16000, 0.1)
+    return (round(float(np.median(f0)), 1) if f0.size > 20 else None), round(syl / dur, 2)
+
+
+def voice_distance(f0, rate, target):
+    """Abstand zum Ziel: Halbtöne Tonhöhe + halbes Gewicht für das Tempo (Silben/s)."""
+    d = 0.0
+    if target.get("f0_median_hz") and f0:
+        d += abs(12 * math.log2(f0 / target["f0_median_hz"]))
+    if target.get("syllables_per_second") and rate:
+        d += 0.5 * abs(rate - target["syllables_per_second"])
+    return d
+
+
+def design_matching(model, text, instruct, language, target, candidates=3, seed_base=1):
+    """Mehrere Kandidaten entwerfen und den mit der passendsten Tonhöhe/Tempo nehmen (allgemeine Merkmale, keine
+    Nachbildung einer Person). Gibt (audio, sr, seed, f0, rate, liste) zurück."""
+    best, tried = None, []
+    for k in range(max(1, candidates)):
+        s = seed_base + k * 7919
+        audio, sr = model.speak(text, instruct, language, s)
+        f0, rate = measure_voice(audio, sr, text)
+        d = voice_distance(f0, rate, target or {})
+        tried.append({"seed": s, "f0_median_hz": f0, "syllables_per_second": rate, "distance": round(d, 2)})
+        if best is None or d < best[0]:
+            best = (d, audio, sr, s, f0, rate)
+    _, audio, sr, s, f0, rate = best
+    return audio, sr, s, f0, rate, tried
 
 
 def design_instruct(figure):

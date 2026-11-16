@@ -57,6 +57,9 @@ public struct HSReference: Codable, Hashable, Identifiable, Sendable {
         public var share: Double
         public var descriptionDE: String
         public var voiceEN: String
+        /// Gemessene Tonhöhe (Hz) und Sprechtempo (Silben/s); optional (ältere Referenzen haben sie nicht).
+        public var f0: Double?
+        public var syllablesPerSecond: Double?
     }
 
     public init(id: UUID = UUID(), name: String, sources: [String], analyzed: Date = Date(), summary: String, styleHint: String,
@@ -75,7 +78,8 @@ public struct HSReference: Codable, Hashable, Identifiable, Sendable {
     public static func from(profile p: [String: Any], name: String, sources: [String]) -> HSReference {
         let speakers = (p["speakers"] as? [[String: Any]] ?? []).map {
             Speaker(id: HSJSON.str($0["id"]), role: HSJSON.str($0["role_guess"]), share: HSJSON.double($0["share"]) ?? 0,
-                    descriptionDE: HSJSON.str($0["description_de"]), voiceEN: HSJSON.str($0["voice_en"]))
+                    descriptionDE: HSJSON.str($0["description_de"]), voiceEN: HSJSON.str($0["voice_en"]),
+                    f0: HSJSON.double($0["f0_median_hz"]), syllablesPerSecond: HSJSON.double($0["syllables_per_second"]))
         }
         let rec = p["recording"] as? [String: Any] ?? [:]
         let dialog = p["dialog"] as? [String: Any] ?? [:]

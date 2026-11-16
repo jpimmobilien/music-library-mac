@@ -189,6 +189,9 @@ public struct HSVoiceProfile: Codable, Hashable, Identifiable, Sendable {
     public var seed: Int
     /// Herkunft eines Stilprofils (Name der analysierten Referenz).
     public var sourceReference: String?
+    /// Gemessene allgemeine Merkmale eines Stilprofils (Tonhöhe, Tempo). Beim Entwerfen daraus wählt die App unter
+    /// mehreren Kandidaten den passendsten – allgemeiner Stimmcharakter, keine Nachbildung der Person.
+    public var target: HSVoiceTarget?
     public var consent: HSConsent?
     public var created: Date
 
@@ -215,6 +218,23 @@ public struct HSVoiceProfile: Codable, Hashable, Identifiable, Sendable {
         case .styleOnly: return false
         case .authorized: return referenceFile != nil && (consent?.isVerified ?? false)
         }
+    }
+}
+
+/// Allgemeine, messbare Merkmale einer Stimme: Tonhöhe (Median, Hz) und Sprechtempo (Silben je Sekunde).
+public struct HSVoiceTarget: Codable, Hashable, Sendable {
+    public var f0: Double?
+    public var syllablesPerSecond: Double?
+    public init(f0: Double?, syllablesPerSecond: Double?) {
+        self.f0 = f0
+        self.syllablesPerSecond = syllablesPerSecond
+    }
+    public var isEmpty: Bool { f0 == nil && syllablesPerSecond == nil }
+    public var json: [String: Any] {
+        var d: [String: Any] = [:]
+        if let f0 { d["f0_median_hz"] = f0 }
+        if let syllablesPerSecond { d["syllables_per_second"] = syllablesPerSecond }
+        return d
     }
 }
 

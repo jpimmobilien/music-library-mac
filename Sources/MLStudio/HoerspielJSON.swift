@@ -141,25 +141,25 @@ public enum HSJSON {
         return String(repeating: "0", count: max(0, width - s.count)) + s
     }
 
-    static func str(_ v: Any?) -> String {
+    public static func str(_ v: Any?) -> String {
         if let s = v as? String { return s.trimmingCharacters(in: .whitespacesAndNewlines) }
         if let n = v as? NSNumber { return n.stringValue }
         return ""
     }
 
-    static func nonEmpty(_ v: Any?) -> String? {
+    public static func nonEmpty(_ v: Any?) -> String? {
         let s = str(v)
         return s.isEmpty ? nil : s
     }
 
-    static func int(_ v: Any?) -> Int? {
+    public static func int(_ v: Any?) -> Int? {
         if let n = v as? Int { return n }
         if let n = v as? NSNumber { return n.intValue }
         if let s = v as? String { return Int(s.trimmingCharacters(in: .whitespaces)) }
         return nil
     }
 
-    static func double(_ v: Any?) -> Double? {
+    public static func double(_ v: Any?) -> Double? {
         if let n = v as? Double { return n }
         if let n = v as? NSNumber { return n.doubleValue }
         if let s = v as? String { return Double(s) }

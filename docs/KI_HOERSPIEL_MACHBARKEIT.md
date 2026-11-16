@@ -96,7 +96,29 @@ Die Stability AI Community License erlaubt die Nutzung kostenlos für Privatpers
 
 <!-- MESSUNGEN -->
 
-<!-- REFERENZ -->
+## Referenzanalyse – gemessen auf Apple Silicon (macOS 26.7, virtueller M1, 7 GB)
+
+Testaufnahme mit bekannter Wahrheit: 4,5 Minuten „Hörspiel“ aus fünf echten deutschen Sprechern (Multilingual
+LibriSpeech), Erzähler plus vier Rollen, mit Pausen, Raumhall und Bandbreite wie von Kassette.
+
+| Messung | Ergebnis |
+|---|---|
+| Sprechertrennung, Schwelle 0,65 (bisher) | 6 statt 5 Sprecher, Fehlerrate (DER) 22,1 % – davon verpasste Sprache 17,8 %, Verwechslung 3,6 % |
+| Sprechertrennung, Schwelle 0,70–0,75 | **5 von 5 Sprechern, Verwechslung 0 %**, DER 18,5 % (nur verpasste Sprache an Satzrändern) → neue Standardschwelle 0,7 |
+| Rechenzeit | Sprechertrennung 17 s, Whisper-Text 150 s, gesamt 184 s für 4,5 min Audio |
+| Einwilligungsprüfung (ECAPA) | 14 Sprecher, 210 gleiche und 182 verschiedene Paare: gleiche Sprecher Median 0,836 (5 %-Quantil 0,665), verschiedene Median 0,146, höchstens 0,545 → **Schwelle 0,6** (vorher 0,5: ein fremder Sprecher hätte sie übertroffen) |
+| Stimmprofil → neue Stimme (erste Fassung) | Tonhöhe der entworfenen Stimmen 3,6–8,8 Halbtöne zu hoch: „female or teenage voice, medium pitch“ wurde zu 250–314 Hz statt ~200 Hz |
+
+Daraus geändert:
+- Beschreibungen nennen das Geschlecht eindeutig („adult man/woman“) und die Tonlage in Worten, die das
+  Stimm-Design-Modell versteht; die Klangfarbe wird relativ zu den anderen Stimmen derselben Aufnahme beurteilt
+  (vorher hieß jede Stimme der bandbegrenzten Aufnahme „dunkel, warm“).
+- Beim Entwerfen aus einem Stilprofil entstehen drei Kandidaten; die App misst Tonhöhe und Tempo und nimmt den
+  passendsten (allgemeiner Stimmcharakter, keine Nachbildung der Person). Messung der neuen Fassung: siehe Nachtrag.
+- Nicht verlässlich: Nachhallschätzung (1,47 s für nahe aufgenommene Hörbuchsprecher ist zu hoch) – wird nur als
+  „geschätzt“ angezeigt und nicht für Entscheidungen genutzt.
+- Öffentliche LibriVox-Hörspiele ließen sich vom Prüfrechner nicht laden (archive.org: HTTP 403) – Prüfung C entfiel.
+
 
 ## Stimmrechte: drei Arten von Stimmprofilen
 

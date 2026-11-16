@@ -223,20 +223,32 @@ def spectral(x, sr):
     return centroid, float(f[np.searchsorted(c, 0.99)]), f, P
 
 
-def describe_voice(sp):
-    """Allgemeine Stimmbeschreibung (deutsch und englisch für das Design-Modell). Nur geschätzt."""
+def describe_voice(sp, ref_brightness=None):
+    """Allgemeine Stimmbeschreibung (deutsch und englisch für das Design-Modell). Nur geschätzt.
+
+    Gemessen am 16.11.2026: „female or teenage voice with medium pitch“ ergab beim Stimm-Design 250–314 Hz statt
+    ~200 Hz (3,6–8,8 Halbtöne zu hoch). Deshalb eindeutige Wörter (adult man/woman) und die Tonlage ausdrücklich;
+    die App wählt beim Entwerfen außerdem unter mehreren Kandidaten den mit der passendsten Tonhöhe."""
     f0 = sp.get("f0_median_hz") or 0
     if not f0:
         return "Stimme nicht auswertbar", "A natural voice speaking German"
-    if f0 < 145:
-        g_de, g_en, kind = "männlich (geschätzt)", "male", "m"
-    elif f0 < 255:
-        g_de, g_en, kind = "weiblich oder jugendlich (geschätzt)", "female or teenage", "w"
+    if f0 < 158:
+        g_de, g_en, kind = "männlich (geschätzt)", "adult man", "m"
+    elif f0 < 265:
+        g_de, g_en, kind = "weiblich (geschätzt)", "adult woman", "w"
     else:
-        g_de, g_en, kind = "kindlich oder sehr hoch (geschätzt)", "child-like or very high", "k"
-    norm = {"m": 115, "w": 205, "k": 290}[kind]
-    pitch_de, pitch_en = (("tief", "low") if f0 < norm * 0.88 else ("hoch", "high") if f0 > norm * 1.12
-                          else ("mittel", "medium"))
+        g_de, g_en, kind = "kindlich oder sehr hoch (geschätzt)", "child", "k"
+    norm = {"m": 118, "w": 205, "k": 290}[kind]
+    if f0 < norm * 0.85:
+        pitch_de, pitch_en = "tief", "a deep, low-pitched voice"
+    elif f0 < norm * 0.95:
+        pitch_de, pitch_en = "eher tief", "a fairly low voice"
+    elif f0 > norm * 1.15:
+        pitch_de, pitch_en = "hoch", "a high-pitched voice"
+    elif f0 > norm * 1.05:
+        pitch_de, pitch_en = "eher hoch", "a slightly high voice"
+    else:
+        pitch_de, pitch_en = "mittel", "a medium-pitched voice"
     rate = sp.get("syllables_per_second") or 0
     tempo_de, tempo_en = (("langsam", "slow") if rate and rate < 3.6 else ("schnell", "fast") if rate > 5.4
                           else ("mittleres Tempo", "moderate pace"))
@@ -245,11 +257,13 @@ def describe_voice(sp):
                         ("sehr lebhaft, ausdrucksstark", "very lively and expressive") if expr > 4.0 else
                         ("lebendig", "lively"))
     bright = sp.get("brightness_hz") or 0
-    timbre_de, timbre_en = (("dunkel, warm", "dark, warm") if bright and bright < 900 else
-                            ("hell, klar", "bright, clear") if bright > 1500 else ("ausgewogen", "balanced"))
+    # Helligkeit relativ zu den anderen Stimmen derselben Aufnahme (die Bandbreite der Aufnahme verschiebt alle gleich)
+    ref = ref_brightness or 1200
+    timbre_de, timbre_en = (("dunkel, warm", "dark, warm") if bright and bright < ref * 0.85 else
+                            ("hell, klar", "bright, clear") if bright > ref * 1.15 else ("ausgewogen", "balanced"))
     de = f"{g_de}, Tonlage {pitch_de} (~{round(f0)} Hz), {timbre_de}, {tempo_de}, {expr_de}"
-    en = (f"A {g_en} voice with {pitch_en} pitch, {timbre_en} timbre, {tempo_en} delivery, {expr_en}. "
-          f"Speaks native German.")
+    en = (f"An {g_en} with {pitch_en}, {timbre_en} timbre, {tempo_en} delivery, {expr_en}. "
+          f"Speaks native German.").replace("An child", "A child")
     return de, en
 
 
@@ -380,7 +394,10 @@ def non_speech_content(x, sr, segments, noise_floor_db):
             "music_bridge_mean_seconds": round(float(np.mean([g["end"] - g["start"] for g in music])), 1) if music else None}
 
 
-def analyze(path, models, log=print, threshold=0.65, language="de", truth=None):
+DEFAULT_THRESHOLD = 0.7  # gemessen am 16.11.2026 (Apple Silicon): 0.65 → 6 statt 5 Sprecher, 0.7 → 5, Verwechslung 0 %
+
+
+def analyze(path, models, log=print, threshold=DEFAULT_THRESHOLD, language="de", truth=None):
     """Vollständige Referenzanalyse einer Datei. truth: optionale Sprecher-Wahrheit [{start,end,speaker}]."""
     t0 = time.time()
     x, sr = A.load_audio(path)
@@ -398,6 +415,11 @@ def analyze(path, models, log=print, threshold=0.65, language="de", truth=None):
         sp = speaker_features(x16, turns, spk, words)
         sp["id"] = f"S{spk + 1}"
         speakers.append(sp)
+    bright = [sp["brightness_hz"] for sp in speakers if sp.get("brightness_hz")]
+    if len(bright) > 1:
+        med = float(np.median(bright))
+        for sp in speakers:
+            sp["description_de"], sp["voice_en"] = describe_voice(sp, med)
     guess_roles(speakers)
     rec = recording_features(x, sr, segments)
     speech = sum(e - s for s, e in segments)
