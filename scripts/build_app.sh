@@ -46,6 +46,8 @@ cp Resources/Licenses/* "$APP/Contents/Resources/Licenses/"
 # KI-Musik: Skripte des lokalen Rechenprozesses (Python wird erst auf Wunsch eingerichtet)
 mkdir -p "$APP/Contents/Resources/KIEngine"
 cp Resources/KIEngine/*.py "$APP/Contents/Resources/KIEngine/"
+mkdir -p "$APP/Contents/Resources/HoerspielEngine"
+cp Resources/HoerspielEngine/*.py Resources/HoerspielEngine/requirements.txt "$APP/Contents/Resources/HoerspielEngine/"
 
 
 echo "▸ Prüfe Architekturen …"

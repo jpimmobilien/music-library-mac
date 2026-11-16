@@ -141,6 +141,10 @@ struct SectionHost: View {
                 KIMusicView(ki: model.ki)
                     .id(MainWorkspace.ai)
                     .transition(.opacity.combined(with: .offset(x: 12)))
+            } else if model.workspace == .audiobooks {
+                HoerspielView(hs: model.hoerspiel)
+                    .id(MainWorkspace.audiobooks)
+                    .transition(.opacity.combined(with: .offset(x: 12)))
             } else {
                 ZStack {
                     switch destination {

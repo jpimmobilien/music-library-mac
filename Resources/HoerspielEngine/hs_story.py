@@ -11,6 +11,7 @@ Sprachmodell-Anbindungen:
 """
 
 import json
+import math
 import re
 import time
 
@@ -192,17 +193,34 @@ MIRA: Das ist doch seit Jahren verlassen.
 JONAS: Jetzt nicht mehr."""
 
 
+PROSE_RULES = """Format – Hörbuch: Jede Zeile beginnt mit „ERZÄHLER:“ und enthält einen Absatz Erzähltext.
+Wörtliche Rede steht in Anführungszeichen innerhalb der Erzählung („…“, sagte Mira). Keine Geräusch- oder
+Musikhinweise. Für einen deutlichen Einschnitt darf eine Zeile [PAUSE: 1.5] stehen.
+
+Beispiel:
+ERZÄHLER: Der alte Bahnhof lag still in der Mittagshitze. Jonas blieb stehen und deutete auf das Stellwerk.
+ERZÄHLER: „Siehst du das Licht?“, flüsterte er. Mira schüttelte den Kopf. „Das ist seit Jahren verlassen.“"""
+
+NARRATION_STYLES = {
+    "klassisch": "klassisch und ruhig erzählt, klare Sätze",
+    "spannend": "spannend, mit kurzen Sätzen an den Höhepunkten",
+    "humorvoll": "humorvoll und augenzwinkernd",
+    "märchenhaft": "märchenhaft und bildreich",
+    "sachlich": "sachlich und knapp",
+}
+
+
 def scene_prompt(concept, chapter, scene, story_so_far, previous_tail, target_words, is_first, is_last):
+    mode = concept.get("_mode", "hoerspiel")
     figs = "\n".join(f"- {f['id']}: {f.get('name', '')}, {f.get('rolle', '')}, {f.get('beschreibung', '')}"
                      for f in concept.get("figuren", []))
-    intro = "Beginne mit [MUSIK: Titelmusik | ...] und einer kurzen Einleitung des Erzählers.\n" if is_first else ""
-    outro = ("Dies ist die letzte Szene: Löse den Fall vollständig auf und ende mit einem kurzen Schlusswort des "
-             "Erzählers und [MUSIK: Abspann | ...].\n" if is_last else "")
-    return f"""Hörspiel „{concept.get('titel', '')}“ – {concept.get('logline', '')}
+    head = f"""{'Hörbuch' if mode == 'hoerbuch' else 'Hörspiel'} „{concept.get('titel', '')}“ – {concept.get('logline', '')}
 Epoche und Ort: {concept.get('epoche_ort', '')}. Ton: {concept.get('ton', '')}.
 
 Figuren (Kennung: Beschreibung):
 {figs}
+
+Geplante Auflösung (nur zur Orientierung – nicht vorwegnehmen): {concept.get('aufloesung', '') or 'offen'}
 
 Bisherige Handlung:
 {story_so_far or '(Dies ist der Anfang.)'}
@@ -212,7 +230,21 @@ Bisherige Handlung:
 Schreibe jetzt Kapitel {chapter.get('nr')} „{chapter.get('titel', '')}“, Szene {scene.get('nr')} „{scene.get('titel', '')}“.
 Ort: {scene.get('ort', '')}. Beteiligte: {', '.join(scene.get('figuren', []))}.
 Inhalt: {scene.get('inhalt', '')}
+"""
+    if mode == "hoerbuch":
+        style = NARRATION_STYLES.get(concept.get("_style", ""), concept.get("_style") or "lebendig erzählt")
+        ending = ("Dies ist der letzte Abschnitt: Führe die Handlung zu einem runden Ende.\n" if is_last else "")
+        return head + f"""
+Länge: etwa {target_words} Wörter. Erzählstil: {style}. Natürliche Dialoge in wörtlicher Rede, jede Figur mit eigener
+Art zu sprechen. Keine Wiederholungen, keine Zusammenfassung am Ende.
+{ending}
+{PROSE_RULES}
 
+Schreibe nur den Text dieses Abschnitts."""
+    intro = "Beginne mit [MUSIK: Titelmusik | ...] und einer kurzen Einleitung des Erzählers.\n" if is_first else ""
+    outro = ("Dies ist die letzte Szene: Löse den Fall vollständig auf und ende mit einem kurzen Schlusswort des "
+             "Erzählers und [MUSIK: Abspann | ...].\n" if is_last else "")
+    return head + f"""
 Länge: etwa {target_words} gesprochene Wörter. Überwiegend Dialog (mindestens zwei Drittel), der Erzähler nur
 für kurze Übergänge. Lebendige, natürliche Sprache, jede Figur mit eigener Art zu sprechen. Keine Wiederholungen,
 keine Zusammenfassungen am Ende. Verwende nur die Kennungen aus der Figurenliste.
@@ -238,9 +270,11 @@ def added_figure(name):
 
 def plan_size(minutes):
     """Kapitel und Szenen für eine Ziel-Länge."""
-    scenes_total = max(3, round(minutes / 1.7))
-    chapters = max(1, round(minutes / 12))
-    per_chapter = max(3, round(scenes_total / chapters))
+    def rnd(x):  # kaufmännisch runden wie Swift (.rounded()), nicht wie Pythons round()
+        return int(math.floor(x + 0.5))
+    scenes_total = max(3, rnd(minutes / 1.7))
+    chapters = max(1, rnd(minutes / 12))
+    per_chapter = max(3, rnd(scenes_total / chapters))
     return chapters, per_chapter
 
 
@@ -252,7 +286,7 @@ class StoryWriter:
     def _ask(self, messages, **kw):
         return self.llm.chat(messages, **kw)
 
-    def concept(self, prompt, minutes=10, mode="hoerspiel", user_characters=None, style=None):
+    def concept(self, prompt, minutes=10, mode="hoerspiel", user_characters=None, style=None, narration=None):
         chapters, per_chapter = plan_size(minutes)
         msgs = [{"role": "system", "content": SYSTEM},
                 {"role": "user", "content": concept_prompt(prompt, minutes, mode, chapters, per_chapter,
@@ -265,6 +299,8 @@ class StoryWriter:
                 self._check_concept(c)
                 c["_minutes"] = minutes
                 c["_mode"] = mode
+                if narration:
+                    c["_style"] = narration
                 return c
             except (ValueError, KeyError, TypeError) as e:
                 last_error = e
@@ -336,6 +372,24 @@ class StoryWriter:
         return {"chapter": chapter.get("nr"), "scene": scene.get("nr"), "title": scene.get("titel", ""),
                 "room": scene.get("raum", ""), "atmo_en": scene.get("atmo_en", ""), "text": text, "items": items,
                 **score}
+
+    def rewrite_line(self, concept, scene_text, speaker, line, hint=""):
+        """Eine einzelne Replik neu formulieren – Rest der Szene bleibt unverändert."""
+        fig = next((f for f in concept.get("figuren", []) if f.get("id") == speaker), {})
+        msgs = [{"role": "system", "content": SYSTEM},
+                {"role": "user", "content": f"""Hörspiel „{concept.get('titel', '')}“. Figur {speaker}: {fig.get('beschreibung', '')}
+
+Szene:
+{scene_text[:6000]}
+
+Formuliere nur diese eine Replik von {speaker} neu{(' – ' + hint) if hint else ''}:
+„{line}“
+
+Sie muss an derselben Stelle in die Szene passen, denselben Inhalt transportieren und natürlich klingen.
+Antworte nur mit dem neuen Satz, ohne Kennung und ohne Anführungszeichen."""}]
+        out = self._ask(msgs, max_tokens=300, temperature=0.8).strip()
+        out = re.sub(r"^[A-ZÄÖÜ]{2,}\s*(\([^)]*\))?\s*:\s*", "", out).strip().strip('"„“')
+        return out.splitlines()[0].strip() if out else line
 
     def summarize(self, scene_text):
         msgs = [{"role": "system", "content": "Du fasst Hörspielszenen sachlich zusammen."},

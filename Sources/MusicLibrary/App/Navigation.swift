@@ -13,15 +13,16 @@ enum Destination: Hashable {
 }
 
 /// Was das Hauptfenster zeigt: die Bibliothek (sechs Bereiche) oder einen Arbeitsbereich mit eigenem Eintrag
-/// in der Navigation (2.4: „Studio“ und „Hinzufügen“, 2.5: „KI-Musik“).
+/// in der Navigation (2.4: „Studio“ und „Hinzufügen“, 2.5: „KI-Musik“, 2.6: „KI-Hörbücher“).
 enum MainWorkspace: String, Hashable, CaseIterable {
     case library
     case add
     case studio
     case ai
+    case audiobooks
 
     /// Einträge rechts in der Navigation, in dieser Reihenfolge – „Hinzufügen“ immer ganz rechts.
-    static let navigationEntries: [MainWorkspace] = [.studio, .ai, .add]
+    static let navigationEntries: [MainWorkspace] = [.studio, .ai, .audiobooks, .add]
 
     var label: String {
         switch self {
@@ -29,13 +30,19 @@ enum MainWorkspace: String, Hashable, CaseIterable {
         case .add: return "Hinzufügen"
         case .studio: return "Studio"
         case .ai: return "KI-Musik"
+        case .audiobooks: return "KI-Hörbücher"
         }
     }
 
-    /// Tastenkürzel (⌘7, ⌘8, ⌘9) – direkt nach den sechs Bereichen.
+    /// Tastenkürzel: Studio ⌘7, KI-Musik ⌘8, Hinzufügen ⌘9 (wie bisher), KI-Hörbücher ⌘0.
     var shortcutDigit: Int? {
-        guard let i = Self.navigationEntries.firstIndex(of: self) else { return nil }
-        return 7 + i
+        switch self {
+        case .library: return nil
+        case .studio: return 7
+        case .ai: return 8
+        case .add: return 9
+        case .audiobooks: return 0
+        }
     }
 
     func icon(selected: Bool) -> String {
@@ -44,6 +51,7 @@ enum MainWorkspace: String, Hashable, CaseIterable {
         case .add: return selected ? Icons.addMusicFill : Icons.addMusic
         case .studio: return selected ? Icons.studioFill : Icons.studio
         case .ai: return Icons.autoAwesome
+        case .audiobooks: return selected ? Icons.audiobookFill : Icons.audiobook
         }
     }
 
@@ -53,6 +61,7 @@ enum MainWorkspace: String, Hashable, CaseIterable {
         case .add: return "Hinzufügen – Musik aus dem Netz oder von deinem Mac (⌘9)"
         case .studio: return "Studio – Titel der Bibliothek schneiden und bearbeiten (⌘7)"
         case .ai: return "KI-Musik – Musik aus einer Beschreibung erzeugen, lokal (⌘8)"
+        case .audiobooks: return "KI-Hörbücher – Hörbücher und Hörspiele erzeugen, lokal (⌘0)"
         }
     }
 }

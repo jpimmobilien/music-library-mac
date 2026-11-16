@@ -427,6 +427,8 @@ struct StudioCommands: Commands {
                 .keyboardShortcut("8", modifiers: .command)
             Button("Hinzufügen öffnen") { model.open(.add) }
                 .keyboardShortcut("9", modifiers: .command)
+            Button("KI-Hörbücher öffnen") { model.open(.audiobooks) }
+                .keyboardShortcut("0", modifiers: .command)
             Divider()
             Group {
                 Button("Datei öffnen …") {
@@ -465,7 +467,7 @@ struct StudioCommands: Commands {
         case .library: return nil
         case .add: return adder
         case .studio: return studio
-        case .ai: return nil
+        case .ai, .audiobooks: return nil
         }
     }
 }

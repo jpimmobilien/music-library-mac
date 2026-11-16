@@ -1,0 +1,9 @@
+# KI-Hörbücher – Python-Pakete der Hörspiel-Umgebung (Apple Silicon, Python 3.12).
+# Feste Stände: geprüft im Prüfstand „Hoerspiel-Probe“ (docs/KI_HOERSPIEL_MACHBARKEIT.md).
+mlx-audio==0.6.5
+mlx-lm
+mlx-whisper
+soundfile
+scipy
+numpy
+huggingface_hub

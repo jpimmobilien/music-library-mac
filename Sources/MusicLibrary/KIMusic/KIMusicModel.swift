@@ -400,6 +400,30 @@ final class KIMusicModel: ObservableObject {
 
     // MARK: Prompt-Verlauf und Entwurf
 
+    /// Für „KI-Hörbücher“: ein Instrumentalstück erzeugen (Qualität „Schnell“, ohne Sprachmodell), ohne Eintrag in
+    /// „Meine KI-Kreationen“. Nutzt denselben Rechenprozess; läuft gerade eine eigene Erzeugung, wird abgelehnt.
+    func instrumental(caption: String, seconds: Double, seed: Int, into dir: URL,
+                      progress: @escaping @Sendable (Double, String) -> Void) async throws -> URL {
+        guard setup == .ready, let installer else { throw StudioError.other("KI-Musik ist nicht eingerichtet (Einstellungen → KI-Musik).") }
+        guard !isWorking else { throw StudioError.other("KI-Musik erzeugt gerade selbst – bitte warten.") }
+        try installer.installScripts()
+        let engine = self.engine ?? KIEngine(installer: installer)
+        self.engine = engine
+        idleTimer?.invalidate()
+        defer { scheduleUnload() }
+        var req = KIGenerationRequest()
+        req.prompt = caption
+        req.lyricsMode = .instrumental
+        req.duration = seconds
+        req.seed = seed
+        req.quality = .fast
+        try await engine.prepare(dit: req.quality.ditModel, lm: nil, progress: progress)
+        let result = try await engine.generate(params: req.engineParams(), variations: 1, seeds: [seed], saveDirectory: dir,
+                                               usePlanning: false, progress: progress)
+        guard let file = result.files.first?.url else { throw StudioError.other("Keine Musik erzeugt.") }
+        return file
+    }
+
     private func saveDraft() {
         if let data = try? JSONEncoder().encode(request) { defaults.set(data, forKey: "ki.draft") }
     }

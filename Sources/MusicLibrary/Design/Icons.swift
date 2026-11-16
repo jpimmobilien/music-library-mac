@@ -329,6 +329,13 @@ enum Icons {
     static let live = "live"
     static let swap = "swap_horiz"
     static let previewSelection = "preview_selection"
+
+    // v2.6 KI-Hörbücher & Hörspiele (eigene Zeichnungen, siehe `HandDrawnIcons`)
+    static let audiobook = "audiobook"
+    static let audiobookFill = "audiobook_fill"
+    static let drama = "drama"
+    static let voice = "voice"
+    static let sfx = "sfx"
 }
 
 /// Eigene Symbole des Audio Studios (Version 2.2), von Hand im Stil von Material Symbols Rounded gezeichnet
@@ -406,6 +413,22 @@ enum HandDrawnIcons {
                          stroke("M5.6,5.6a9,9 0 0 0 0,12.8"), stroke("M18.4,5.6a9,9 0 0 1 0,12.8")])
         case "swap_horiz":
             return icon([stroke("M4.5,8.5h14"), stroke("M15.5,5.5l3,3l-3,3"), stroke("M19.5,15.5h-14"), stroke("M8.5,12.5l-3,3l3,3")])
+        case "audiobook":
+            return icon([stroke("M12,6.6C10,5.2 7.4,4.5 4.5,4.5v13c2.9,0 5.5,0.7 7.5,2.1c2,-1.4 4.6,-2.1 7.5,-2.1v-13c-2.9,0 -5.5,0.7 -7.5,2.1z", 1.8),
+                         stroke("M12,6.6v13", 1.8)])
+        case "audiobook_fill":
+            return icon([fill("M12,6.6C10,5.2 7.4,4.5 4.5,4.5v13c2.9,0 5.5,0.7 7.5,2.1c2,-1.4 4.6,-2.1 7.5,-2.1v-13c-2.9,0 -5.5,0.7 -7.5,2.1z", 0.24),
+                         stroke("M12,6.6C10,5.2 7.4,4.5 4.5,4.5v13c2.9,0 5.5,0.7 7.5,2.1c2,-1.4 4.6,-2.1 7.5,-2.1v-13c-2.9,0 -5.5,0.7 -7.5,2.1z", 2.1),
+                         stroke("M12,6.6v13", 2.1)])
+        case "drama":
+            return icon([stroke("M5.7,4.5h7.6a1.7,1.7 0 0 1 1.7,1.7v4.6a1.7,1.7 0 0 1 -1.7,1.7H9.2l-3,2.4v-2.4H5.7a1.7,1.7 0 0 1 -1.7,-1.7V6.2A1.7,1.7 0 0 1 5.7,4.5z", 1.8),
+                         stroke("M17.5,9.5h0.8a1.7,1.7 0 0 1 1.7,1.7v4.6a1.7,1.7 0 0 1 -1.7,1.7h-0.5v2.4l-3,-2.4h-3.6a1.7,1.7 0 0 1 -1.7,-1.7v-0.3", 1.8)])
+        case "voice":
+            return icon([stroke("M9,4.5a3.5,3.5 0 1 0 0,7a3.5,3.5 0 1 0 0,-7z", 1.8), stroke("M3.5,19.5c0,-3 2.5,-5 5.5,-5s5.5,2 5.5,5", 1.8),
+                         stroke("M16.5,7.2a3.6,3.6 0 0 1 0,4.6", 1.8), stroke("M19,5a6.8,6.8 0 0 1 0,9", 1.8)])
+        case "sfx":
+            return icon([stroke("M4.5,9.5h3l4,-3.5v12l-4,-3.5h-3z", 1.8), stroke("M15,9a4,4 0 0 1 0,6", 1.8),
+                         stroke("M17.8,6.5a7.5,7.5 0 0 1 0,11", 1.8)])
         case "preview_selection":
             return icon(brackets + [fill("M10,8.6v6.8a0.8,0.8 0 0 0 1.2,0.7l5.2,-3.4a0.8,0.8 0 0 0 0,-1.4L11.2,7.9A0.8,0.8 0 0 0 10,8.6z")])
         default:

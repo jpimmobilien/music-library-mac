@@ -16,14 +16,18 @@ public final class KIEngineClient: @unchecked Sendable {
         /// Prozess in einer Sandbox ohne Netzwerkzugriff starten (`sandbox-exec`): Die Erzeugung kann dann
         /// nachweislich nichts senden oder laden.
         public var denyNetwork: Bool
+        /// Zusätzliche Umgebungsvariablen (z. B. HF_HOME für den Hörspiel-Prozess); überschreiben die Vorgaben.
+        public var environment: [String: String]
 
-        public init(python: URL, script: URL, aceRoot: URL, checkpoints: URL, log: URL, denyNetwork: Bool = true) {
+        public init(python: URL, script: URL, aceRoot: URL, checkpoints: URL, log: URL, denyNetwork: Bool = true,
+                    environment: [String: String] = [:]) {
             self.python = python
             self.script = script
             self.aceRoot = aceRoot
             self.checkpoints = checkpoints
             self.log = log
             self.denyNetwork = denyNetwork
+            self.environment = environment
         }
     }
 
@@ -95,6 +99,7 @@ public final class KIEngineClient: @unchecked Sendable {
         env["HF_HUB_DISABLE_TELEMETRY"] = "1"
         env["PYTHONNOUSERSITE"] = "1"
         env["PYTHONPATH"] = config.aceRoot.path
+        for (k, v) in config.environment { env[k] = v }
         p.environment = env
         p.currentDirectoryURL = config.aceRoot
         // Hintergrund-Priorität: die Wiedergabe darf nicht leiden

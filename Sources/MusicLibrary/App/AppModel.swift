@@ -23,6 +23,8 @@ final class AppModel: ObservableObject {
     private(set) var studio: StudioModel!
     /// „KI-Musik“ (2.5): lokale Musikerzeugung mit ACE-Step 1.5.
     private(set) var ki: KIMusicModel!
+    /// „KI-Hörbücher“ (2.6): Hörbücher und Hörspiele aus einer Beschreibung, lokal.
+    private(set) var hoerspiel: HoerspielModel!
     /// Demo-Modus (Vorschaubilder/Snapshots): keine Dateizugriffe, keine Wiedergabe.
     let demo: Bool
 
@@ -75,7 +77,7 @@ final class AppModel: ObservableObject {
         case .library: return nil
         case .add: return addStudio
         case .studio: return studio
-        case .ai: return nil
+        case .ai, .audiobooks: return nil
         }
     }
     @Published var sidePanel: SidePanel?
@@ -138,6 +140,8 @@ final class AppModel: ObservableObject {
         self.studio = StudioModel(app: self, services: demo ? .demo : .live, preview: demo ? nil : StudioPreviewFactory.make(), demo: demo,
                                   workspace: .edit, queueHost: adder)
         self.ki = KIMusicModel(demo: demo, preview: demo ? nil : StudioPreviewFactory.make())
+        self.hoerspiel = HoerspielModel(demo: demo, preview: demo ? nil : StudioPreviewFactory.make())
+        self.hoerspiel.ki = self.ki
         player.model = self
         library.model = self
         metadata.model = self
