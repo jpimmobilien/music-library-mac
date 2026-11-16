@@ -79,6 +79,9 @@ final class HoerspielModel: ObservableObject {
     private let defaults: UserDefaults
 
     @Published var section: Section = .hoerspiel
+    /// Gewählter Bereich im Geschichten-Editor (bleibt beim Wechsel zwischen Bereichen erhalten).
+    @Published var editorTab: EditorTab = .script
+    enum EditorTab: String, CaseIterable { case script, figures, pronunciation, multitrack }
     @Published private(set) var setup: Setup = .needsEnvironment
     @Published private(set) var installTask: InstallActivity = .idle
     @Published private(set) var installState = HSInstaller.State()

@@ -11,15 +11,12 @@ struct HSEditorView: View {
     @ObservedObject var hs: HoerspielModel
     @Environment(\.musicColors) private var colors
     @State private var sceneIndex = 0
-    @State private var tab: Tab = .script
-
-    enum Tab: String, CaseIterable { case script, figures, pronunciation, multitrack }
 
     var body: some View {
         if let p = hs.current {
             VStack(alignment: .leading, spacing: 14) {
                 header(p)
-                SegmentedControl(options: Tab.allCases, selection: $tab, label: { t in
+                SegmentedControl(options: HoerspielModel.EditorTab.allCases, selection: $hs.editorTab, label: { t in
                     switch t {
                     case .script: return "Kapitel & Szenen"
                     case .figures: return "Figuren & Stimmen"
@@ -28,7 +25,7 @@ struct HSEditorView: View {
                     }
                 })
                 .frame(maxWidth: 640)
-                switch tab {
+                switch hs.editorTab {
                 case .script:
                     if p.scenes.isEmpty {
                         StudioNotice(icon: Icons.info, title: "Noch kein Drehbuch", text: "Die Geschichte wird gerade geschrieben oder wurde noch nicht begonnen.") {

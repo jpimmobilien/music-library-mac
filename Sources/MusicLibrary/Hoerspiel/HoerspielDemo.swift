@@ -68,8 +68,35 @@ enum HoerspielDemo {
                                          items: [HSScriptItem(kind: .line, speaker: "ERZÄHLER", text: String(repeating: "Wort ", count: 380))]) }
         for s in HSStep.allCases where s != .sfx { p.set(s, .done) }
         p.useSFX = false
-        p.mix = HSMixInfo(master: "mix/master.wav", stems: [:], chapters: [], duration: 1834, loudness: -16.0, speechToBackground: 21.4)
+        p.mix = HSMixInfo(master: "mix/master.wav", stems: [:],
+                          chapters: p.chapters.enumerated().map { HSChapterMark(title: "Kapitel \($0.offset + 1): \($0.element.title)", start: Double($0.offset) * 611) },
+                          duration: 1834, loudness: -16.0, speechToBackground: 21.4, timeline: "mix/zeitleiste.json")
+        p.review = HSReview(problems: [
+            HSReviewProblem(scene: 4, problem: "Die Karte liegt am Ende von Abschnitt 3 noch im Atelier, in Abschnitt 4 trägt Lio sie ohne Erklärung bei sich",
+                            fix: "Lio steckt die Karte vor dem Aufbruch ein"),
+            HSReviewProblem(scene: 8, problem: "Meisterin Ilse duzt Lio, sonst siezt sie ihn", fix: "einheitlich duzen"),
+        ], revised: [4])
+        p.scenes[3].replaceItems(p.scenes[3].items, note: "vor dem Lektorat")
         return p
+    }
+
+    /// Zeitleiste für die Vorschau des Mehrspur-Editors (Demo ohne Audiodateien).
+    static func timeline(_ p: HSProduction) -> HSTimeline {
+        var clips: [HSClip] = []
+        var t = 24.0
+        clips.append(HSClip(id: "m0", track: "Musik", file: "", start: 0, duration: 24, fadeOut: 3, label: "Titelmusik"))
+        for (i, s) in p.scenes.enumerated() {
+            let d = Double(s.spokenWords) / 2.3
+            clips.append(HSClip(id: "e\(i)", track: "Erzähler", file: "", start: t, duration: d, label: s.title))
+            t += d + 1.2
+            if i % 3 == 2 && i < p.scenes.count - 1 {
+                clips.append(HSClip(id: "u\(i)", track: "Musik", file: "", start: t, duration: 12, fadeIn: 1, fadeOut: 2, label: "Übergang"))
+                t += 12.5
+            }
+        }
+        clips.append(HSClip(id: "m9", track: "Musik", file: "", start: t, duration: 22, fadeIn: 2, fadeOut: 4, label: "Abspann"))
+        return HSTimeline(tracks: [HSTrack(name: "Erzähler"), HSTrack(name: "Musik", gainDB: -4)], clips: clips,
+                          chapters: p.mix?.chapters ?? [])
     }
 
     static func voices() -> [HSVoiceProfile] {

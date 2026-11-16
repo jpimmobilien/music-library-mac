@@ -473,6 +473,13 @@ enum SnapshotRunner {
             }, view: main),
             Scenario(name: "80-hoerspiel-produktionen", size: big, prepare: hs(.productions), view: main),
             Scenario(name: "80-hoerspiel-editor", size: big, prepare: hs(.editor), view: main),
+            Scenario(name: "80-hoerspiel-lektorat", size: big, prepare: hs(.editor) { _, h in
+                h.currentID = h.productions.first { $0.mode == .hoerbuch }?.id
+            }, view: main),
+            Scenario(name: "80-hoerspiel-mehrspur", size: big, prepare: hs(.editor) { _, h in
+                h.currentID = h.productions.first { $0.mode == .hoerbuch }?.id
+                h.editorTab = .multitrack
+            }, view: main),
             Scenario(name: "80-hoerspiel-stimmen", size: big, prepare: hs(.voices), view: main),
             Scenario(name: "80-hoerspiel-referenz", size: big, prepare: hs(.reference), view: main),
             Scenario(name: "80-hoerspiel-sounddesign", size: big, prepare: hs(.sound), view: main),

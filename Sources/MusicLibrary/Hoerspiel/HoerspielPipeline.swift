@@ -366,6 +366,7 @@ extension HoerspielModel {
     // MARK: Mehrspur-Editor
 
     func loadTimeline(_ p: HSProduction) -> HSTimeline? {
+        if demo { return p.mix == nil ? nil : HoerspielDemo.timeline(p) }
         guard let path = p.mix?.timeline, let data = try? Data(contentsOf: file(path, in: p)) else { return nil }
         return try? JSONDecoder().decode(HSTimeline.self, from: data)
     }
