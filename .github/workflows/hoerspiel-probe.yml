@@ -5,6 +5,8 @@
 #   produce  Mac: 10-Minuten-Hörspiel aus der Geschichte (Stimmen, Geräusche, Musik über die KI-Musik, Mischung)
 #   app      Mac: Abnahme mit der gebauten App (--hoerspiel-e2e): Einrichtung, Hörspiel, Editor, Mehrspur, Export,
 #            Hörbuch, Stimmenstudio, Referenzanalyse – derselbe Code wie beim Klicken
+#   samples  Linux: Hörproben mit dem PyTorch-Original von Qwen3-TTS (dieselben Gewichte, nicht der App-Code) – solange
+#            keine Apple-Silicon-Rechner zugeteilt werden
 #   analyze  Mac: Referenzanalyse (MLS-Testaufnahme mit Wahrheit, eigene Produktion, LibriVox), Stimmprofile
 # Ergebnisse je Teil im Zweig „ci-hoerspiel-<teil>-<rechner>“ (Geschichte: „ci-hoerspiel-story“).
 name: Hoerspiel-Probe
@@ -13,7 +15,7 @@ on:
   workflow_dispatch:
     inputs:
       jobs:
-        description: "Teile (catalog,story,tts,produce,analyze,app)"
+        description: "Teile (catalog,story,tts,produce,analyze,app,samples)"
         default: "story,tts,produce,analyze"
       runner:
         description: "Apple-Silicon-Rechner"
@@ -387,4 +389,44 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A && git commit -q -m "Hörspiel-Probe app $GITHUB_SHA" || true
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$BR"
+
+  samples:
+    if: contains(inputs.jobs, 'samples')
+    name: Hörproben (Linux, PyTorch)
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+      - name: Umgebung
+        run: |
+          mkdir -p out
+          { uname -a; nproc; free -g; lscpu | grep "Model name"; } | tee out/rechner.txt
+          sudo apt-get update -q > /dev/null && sudo apt-get install -y -q ffmpeg sox > out/apt.log 2>&1
+          python3 -m venv "$RUNNER_TEMP/pt"
+          P="$RUNNER_TEMP/pt/bin/pip"
+          $P install -q --upgrade pip
+          $P install -q torch torchaudio --index-url https://download.pytorch.org/whl/cpu > out/install.log 2>&1
+          $P install -q "git+https://github.com/QwenLM/Qwen3-TTS@022e286b98fbec7e1e916cb940cdf532cd9f488e" faster-whisper soundfile scipy >> out/install.log 2>&1 || tail -30 out/install.log
+          $P list > out/pakete.txt
+          git clone -q --depth 1 -b "ci-hoerspiel-story${{ inputs.tag && format('-{0}', inputs.tag) || '' }}" "https://github.com/${GITHUB_REPOSITORY}.git" story-in
+          ls story-in
+      - name: Hörproben erzeugen
+        run: |
+          "$RUNNER_TEMP/pt/bin/python" scripts/hoerspiel/probe_torch_samples.py story-in/story.json out 90 > out/proben.log 2>&1
+          STATUS=$?
+          grep "\[Probe\]" out/proben.log | cut -c1-500
+          exit $STATUS
+      - name: Ergebnisse in Zweig sichern
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BR="ci-hoerspiel-samples"
+          cd out
+          find . -name "*.wav" -delete || true
+          git init -q -b "$BR"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A && git commit -q -m "Hörspiel-Probe samples $GITHUB_SHA" || true
           git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$BR"
