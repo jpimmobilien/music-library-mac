@@ -427,6 +427,23 @@ final class HoerspielModel: ObservableObject {
         }
     }
 
+    /// Ab einer Position abspielen (Mehrspur-Editor). Erneuter Klick hält an.
+    func playFrom(_ url: URL, key: String, at seconds: Double) {
+        guard let preview else { return }
+        if playingKey == key {
+            preview.stop()
+            playingKey = nil
+            return
+        }
+        do {
+            try preview.load(url)
+            preview.play(from: max(0, seconds), to: nil)
+            playingKey = key
+        } catch {
+            phase = .failed("Abspielen fehlgeschlagen: \(StudioModel.message(error))")
+        }
+    }
+
     func stopPlayback() {
         preview?.stop()
         playingKey = nil

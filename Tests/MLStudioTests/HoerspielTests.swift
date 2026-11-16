@@ -253,4 +253,44 @@ final class HoerspielTests: XCTestCase {
         XCTAssertEqual(scenes[2].trackNumber, 3)
         XCTAssertEqual(HSExportPlan.items(for: p, scope: .stems).count, 2)
     }
+
+    func testTimelineEditing() throws {
+        let json = """
+        {"sample_rate": 48000, "tracks": [{"name": "Musik", "gain_db": 0, "mute": false, "solo": false},
+                                           {"name": "Sprecher LENA", "gain_db": 0, "mute": false, "solo": false},
+                                           {"name": "Erzähler", "gain_db": 0, "mute": false, "solo": false}],
+         "clips": [{"id": "c0001", "track": "Erzähler", "file": "clips/c0001.wav", "start": 1.0, "offset": 0, "duration": 4.0,
+                    "gain_db": 0, "fade_in": 0, "fade_out": 0, "label": "ERZÄHLER: Es war still.", "pan": 0.3},
+                   {"id": "c0002", "track": "Musik", "file": "clips/c0002.wav", "start": 0, "offset": 0, "duration": 20,
+                    "gain_db": -3, "fade_in": 0, "fade_out": 3, "label": "Titel"}],
+         "chapters": [{"title": "Szene 1: A", "start": 0}]}
+        """
+        var t = try JSONDecoder().decode(HSTimeline.self, from: Data(json.utf8))
+        XCTAssertEqual(t.orderedTracks.map(\.name), ["Erzähler", "Sprecher LENA", "Musik"])
+        XCTAssertEqual(t.duration, 20)
+        let second = try XCTUnwrap(t.split("c0001", at: 2.5))
+        XCTAssertEqual(t.clips(on: "Erzähler").map(\.duration), [1.5, 2.5])
+        XCTAssertEqual(t.clips.first { $0.id == second }?.offset, 1.5)
+        XCTAssertNil(t.split("c0001", at: 1.01), "zu nah am Rand")
+        t.move(second, to: 6.234)
+        XCTAssertEqual(t.clips.first { $0.id == second }?.start, 6.23)
+        t.update("c0002") { $0.fadeIn = 50; $0.gainDB = -99 }
+        XCTAssertEqual(t.clips.first { $0.id == "c0002" }?.fadeIn, 20)
+        XCTAssertEqual(t.clips.first { $0.id == "c0002" }?.fadeOut, 0)
+        XCTAssertEqual(t.clips.first { $0.id == "c0002" }?.gainDB, -40)
+        t.setTrack("Musik") { $0.solo = true }
+        XCTAssertTrue(t.audible("Musik"))
+        XCTAssertFalse(t.audible("Erzähler"))
+        t.setTrack("Musik") { $0.solo = false; $0.mute = true }
+        XCTAssertFalse(t.audible("Musik"))
+        XCTAssertTrue(t.audible("Erzähler"))
+        t.shift(from: 6, by: 1.5)
+        XCTAssertEqual(t.clips.first { $0.id == second }?.start, 7.73)
+        let data = try JSONEncoder().encode(t)
+        let back = try JSONDecoder().decode(HSTimeline.self, from: data)
+        XCTAssertEqual(back.clips.count, 3)
+        XCTAssertTrue(String(decoding: data, as: UTF8.self).contains("\"fade_in\""), "Format wie die Engine")
+        t.remove(second)
+        XCTAssertEqual(t.clips.count, 2)
+    }
 }

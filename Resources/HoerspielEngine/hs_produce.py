@@ -286,36 +286,49 @@ def assemble(story, voice_files, sfx_files, music_files, retro_amount=1.0, targe
     return mix(tl, retro_amount, target_lufs) + (chapters,)
 
 
+def is_voice(track):
+    return track == "Erzähler" or track.startswith("Sprecher")
+
+
 def mix(tl, retro_amount=1.0, target_lufs=-16.0):
+    """Abmischen: Spuren (mit Stummschalten/Solo/Pegel), Ducking von Musik/Atmo/Geräuschen unter Sprache,
+    Bus-Kompressor, Retro-Klang, Lautheit. Liefert Master, Stems und Messwerte."""
     length = tl.duration + 0.5
     names = list(tl.tracks)
     stems = {n: tl.render_track(n, length) for n in names}
-    voice = sum((stems[n] for n in names if n == "Erzähler" or n.startswith("Sprecher")), np.zeros((2, 1)))
-    if np.ndim(voice) != 2 or voice.shape[1] == 1:
-        voice = np.zeros_like(next(iter(stems.values())))
+    n_samples = int(length * SR) + 1
+    voice = np.zeros((2, n_samples), dtype=np.float32)
+    for n in names:
+        if is_voice(n) and tl.audible(n):
+            voice += stems[n]
     duck_music = A.duck_gain(voice, SR, depth_db=-13, threshold_db=-42)
     duck_atmo = A.duck_gain(voice, SR, depth_db=-6, threshold_db=-42)
+    duck_sfx = A.duck_gain(voice, SR, depth_db=-3, threshold_db=-42)
     for n in names:
         if n == "Musik":
             stems[n] = stems[n] * duck_music[None, :]
         elif n == "Atmo":
             stems[n] = stems[n] * duck_atmo[None, :]
         elif n == "Geräusche":
-            stems[n] = stems[n] * A.duck_gain(voice, SR, depth_db=-3, threshold_db=-42)[None, :]
-    bus = sum(stems.values())
+            stems[n] = stems[n] * duck_sfx[None, :]
+    bus = np.zeros((2, n_samples), dtype=np.float32)
+    for n in names:
+        if tl.audible(n):
+            bus += stems[n]
     bus = A.compressor(bus, SR, threshold_db=-22, ratio=2.0, attack=0.015, release=0.25, makeup_db=0)
     if retro_amount > 0:
         bus = A.retro(bus, SR, retro_amount)
     master = A.normalize_lufs(bus, SR, target_lufs, -1.0)
     # Sprachverständlichkeit: Abstand Sprache ↔ Hintergrund während gesprochen wird
-    bg = sum((stems[n] for n in names if n in ("Musik", "Atmo", "Geräusche")), np.zeros_like(master))
+    bg = np.zeros_like(voice)
+    for n in names:
+        if n in ("Musik", "Atmo", "Geräusche") and tl.audible(n):
+            bg += stems[n]
     env = A.envelope(voice, SR, 0.01, 0.2)
     speaking = env > A.gain(-40)
     ratio = None
     if speaking.any():
-        v = A.to_mono(voice)[speaking]
-        b = A.to_mono(bg)[speaking] if np.ndim(bg) == 2 else np.zeros(1)
-        ratio = round(A.rms_db(v) - A.rms_db(b), 1)
+        ratio = round(A.rms_db(A.to_mono(voice)[speaking]) - A.rms_db(A.to_mono(bg)[speaking]), 1)
     return master, stems, tl, {"speech_to_background_db": ratio, "duration_s": round(master.shape[1] / SR, 1),
                                "loudness_lufs": A.loudness_lufs(master, SR), "peak_dbfs": round(A.peak_db(master), 2)}
 

@@ -383,18 +383,28 @@ def retro(x, sr, amount=1.0, seed=3):
 # MARK: Zeitleiste
 
 class Timeline:
-    """Spuren mit Clips (Start in Sekunden). Ergebnis: Stereo-Stems je Spur und die Summe."""
+    """Spuren mit Clips (Start in Sekunden) – bearbeitbar (verschieben, schneiden, blenden, Lautstärke) und speicherbar.
+    Ein Clip verweist auf sein Quellsignal (bereits mit Raumklang/Panorama); Blenden und Pegel werden erst beim
+    Abmischen angewendet, damit jede Änderung verlustfrei bleibt."""
 
     def __init__(self, sr=SR):
         self.sr = sr
-        self.tracks = {}
+        self.tracks = {}       # Name → [Clip]
+        self.track_settings = {}  # Name → {"gain_db", "mute", "solo"}
+        self._n = 0
 
-    def add(self, track, audio, start, gain_db=0.0, pan_pos=0.0, fade_in=0.0, fade_out=0.0, label=""):
+    def add(self, track, audio, start, gain_db=0.0, pan_pos=0.0, fade_in=0.0, fade_out=0.0, label="", clip_id=None,
+            offset=0.0, duration=None, file=None):
         a = np.asarray(audio, dtype=np.float32)
         a = pan(a, pan_pos) if a.ndim == 1 else a
-        clip = {"audio": fade(a, self.sr, fade_in, fade_out) * gain(gain_db), "start": max(0.0, float(start)),
-                "label": label, "gain_db": gain_db, "duration": a.shape[1] / self.sr}
+        self._n += 1
+        full = a.shape[1] / self.sr
+        clip = {"id": clip_id or f"c{self._n:04d}", "track": track, "source": a, "start": max(0.0, float(start)),
+                "offset": max(0.0, float(offset)), "duration": float(duration if duration is not None else full - offset),
+                "gain_db": float(gain_db), "fade_in": float(fade_in), "fade_out": float(fade_out), "label": label, "file": file}
+        clip["duration"] = max(0.0, min(clip["duration"], full - clip["offset"]))
         self.tracks.setdefault(track, []).append(clip)
+        self.track_settings.setdefault(track, {"gain_db": 0.0, "mute": False, "solo": False})
         return clip
 
     @property
@@ -402,16 +412,56 @@ class Timeline:
         ends = [c["start"] + c["duration"] for clips in self.tracks.values() for c in clips]
         return max(ends) if ends else 0.0
 
+    def clip_audio(self, c):
+        a = c["source"][:, int(c["offset"] * self.sr): int((c["offset"] + c["duration"]) * self.sr)]
+        return fade(a, self.sr, c["fade_in"], c["fade_out"]) * gain(c["gain_db"])
+
     def render_track(self, track, length=None):
         n = int((length or self.duration) * self.sr) + 1
         out = np.zeros((2, n), dtype=np.float32)
         for c in self.tracks.get(track, []):
             s = int(c["start"] * self.sr)
-            a = c["audio"][:, : max(0, n - s)]
+            a = self.clip_audio(c)[:, : max(0, n - s)]
             out[:, s: s + a.shape[1]] += a
-        return out
+        return out * gain(self.track_settings.get(track, {}).get("gain_db", 0.0))
+
+    def audible(self, track):
+        """Spur hörbar? (Stummschalten, Solo)"""
+        st = self.track_settings.get(track, {})
+        if st.get("mute"):
+            return False
+        solos = [t for t, v in self.track_settings.items() if v.get("solo")]
+        return not solos or track in solos
 
     def clips(self):
-        """Schnittliste (für Kapitelmarken, Prüfungen und später den Mehrspur-Editor)."""
-        return [{"track": t, "start": round(c["start"], 3), "duration": round(c["duration"], 3), "label": c["label"],
+        """Schnittliste (für Kapitelmarken, Prüfungen und den Mehrspur-Editor)."""
+        return [{"id": c["id"], "track": t, "start": round(c["start"], 3), "duration": round(c["duration"], 3), "label": c["label"],
                  "gain_db": c["gain_db"]} for t, clips in self.tracks.items() for c in clips]
+
+    def save(self, folder):
+        """Clips als WAV und die bearbeitbare Zeitleiste als Dict (→ JSON)."""
+        os.makedirs(os.path.join(folder, "clips"), exist_ok=True)
+        out = {"sample_rate": self.sr, "tracks": [], "clips": []}
+        for t, clips in self.tracks.items():
+            out["tracks"].append({"name": t, **self.track_settings.get(t, {"gain_db": 0.0, "mute": False, "solo": False})})
+            for c in clips:
+                if not c.get("file"):
+                    c["file"] = os.path.join("clips", f"{c['id']}.wav")
+                    write_wav(os.path.join(folder, c["file"]), c["source"], self.sr, bits=16)
+                out["clips"].append({k: (round(v, 4) if isinstance(v, float) else v) for k, v in c.items() if k != "source"})
+        return out
+
+    @classmethod
+    def load(cls, data, folder, sr=SR):
+        tl = cls(sr)
+        cache = {}
+        for t in data.get("tracks", []):
+            tl.track_settings[t["name"]] = {"gain_db": float(t.get("gain_db", 0)), "mute": bool(t.get("mute")), "solo": bool(t.get("solo"))}
+            tl.tracks.setdefault(t["name"], [])
+        for c in data.get("clips", []):
+            path = c["file"] if os.path.isabs(c["file"]) else os.path.join(folder, c["file"])
+            if path not in cache:
+                cache[path] = to_stereo(load_audio(path, sr=sr)[0])
+            tl.add(c["track"], cache[path], c["start"], c.get("gain_db", 0.0), 0.0, c.get("fade_in", 0.0), c.get("fade_out", 0.0),
+                   c.get("label", ""), clip_id=c.get("id"), offset=c.get("offset", 0.0), duration=c.get("duration"), file=c["file"])
+        return tl

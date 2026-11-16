@@ -293,6 +293,16 @@ TBStatus tb_save(TBFile *file);
 void tb_string_list_free(TBStringList *list);
 void tb_picture_list_free(TBPictureList *list);
 
+/* ---------------------------------------------------------------------------------- */
+/* Chapters (audiobooks / radio plays)                                                  */
+/* ---------------------------------------------------------------------------------- */
+
+/* Writes chapter markers into an MP3 (ID3v2 CHAP + CTOC, existing chapters replaced) or an
+ * MP4/M4A file (Nero "chpl" and QuickTime chapter track). starts_ms ascending; the last chapter
+ * ends at total_ms. All other tags stay untouched. Returns TB_OK or an error status. */
+TBStatus tb_write_chapters(const char *path, size_t count, const char *const *titles, const uint32_t *starts_ms,
+                           uint32_t total_ms);
+
 #ifdef __cplusplus
 }
 #endif

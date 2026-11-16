@@ -13,7 +13,7 @@ struct HSEditorView: View {
     @State private var sceneIndex = 0
     @State private var tab: Tab = .script
 
-    enum Tab: String, CaseIterable { case script, figures, pronunciation }
+    enum Tab: String, CaseIterable { case script, figures, pronunciation, multitrack }
 
     var body: some View {
         if let p = hs.current {
@@ -24,9 +24,10 @@ struct HSEditorView: View {
                     case .script: return "Kapitel & Szenen"
                     case .figures: return "Figuren & Stimmen"
                     case .pronunciation: return "Aussprache"
+                    case .multitrack: return "Mehrspur"
                     }
                 })
-                .frame(maxWidth: 520)
+                .frame(maxWidth: 640)
                 switch tab {
                 case .script:
                     if p.scenes.isEmpty {
@@ -41,6 +42,7 @@ struct HSEditorView: View {
                     }
                 case .figures: HSFiguresEditor(hs: hs, productionID: p.id)
                 case .pronunciation: HSPronunciationEditor(hs: hs, productionID: p.id)
+                case .multitrack: HSMultitrackView(hs: hs, productionID: p.id)
                 }
             }
         } else {

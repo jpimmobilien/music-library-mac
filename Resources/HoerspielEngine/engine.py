@@ -235,7 +235,6 @@ class Engine:
     # MARK: Mischung
 
     def mix(self, req, progress):
-        import hs_audio as A
         import hs_produce as P
         progress(0.1, "Zeitleiste wird aufgebaut …")
         story = req["story"]
@@ -245,17 +244,41 @@ class Engine:
                                                           target_lufs=float(req.get("lufs", -16)))
         out = req["out_dir"]
         os.makedirs(out, exist_ok=True)
-        progress(0.8, "Spuren werden geschrieben …")
+        progress(0.75, "Zeitleiste und Spuren werden gespeichert …")
+        timeline = tl.save(out)
+        timeline["chapters"] = chapters
+        with open(os.path.join(out, "zeitleiste.json"), "w") as f:
+            json.dump(timeline, f, ensure_ascii=False, indent=1)
+        return self._write_mix(out, master, stems, tl, metrics, chapters, req.get("stems", True))
+
+    def render_timeline(self, req, progress):
+        """Bearbeitete Zeitleiste (Mehrspur-Editor) neu abmischen."""
+        import hs_audio as A
+        import hs_produce as P
+        out = req["out_dir"]
+        progress(0.1, "Clips werden geladen …")
+        tl = A.Timeline.load(req["timeline"], out)
+        progress(0.4, "Abmischen …")
+        master, stems, tl, metrics = P.mix(tl, float(req.get("retro", 0)), float(req.get("lufs", -16)))
+        chapters = req["timeline"].get("chapters", [])
+        with open(os.path.join(out, "zeitleiste.json"), "w") as f:
+            json.dump({**req["timeline"]}, f, ensure_ascii=False, indent=1)
+        return self._write_mix(out, master, stems, tl, metrics, chapters, req.get("stems", True))
+
+    def _write_mix(self, out, master, stems, tl, metrics, chapters, write_stems):
+        import hs_audio as A
+        import hs_produce as P
         A.write_wav(os.path.join(out, "master.wav"), master, P.SR)
         stem_files = {}
-        if req.get("stems", True):
+        if write_stems:
             for name, st in stems.items():
                 p = os.path.join(out, "spuren", f"{name.replace(' ', '_')}.wav")
                 A.write_wav(p, st, P.SR, bits=16)
                 stem_files[name] = p
         with open(os.path.join(out, "schnittliste.json"), "w") as f:
             json.dump({"chapters": chapters, "clips": tl.clips(), "metrics": metrics}, f, ensure_ascii=False, indent=2)
-        return {"master": os.path.join(out, "master.wav"), "stems": stem_files, "chapters": chapters, "metrics": metrics}
+        return {"master": os.path.join(out, "master.wav"), "stems": stem_files, "chapters": chapters, "metrics": metrics,
+                "timeline": os.path.join(out, "zeitleiste.json")}
 
 
 def main():
@@ -263,7 +286,7 @@ def main():
     send({"event": "ready", "pid": os.getpid()})
     commands = {name: getattr(engine, name) for name in (
         "status", "load_llm", "concept", "scene", "summarize", "rewrite_line", "music_plan", "unload_llm", "design_voice", "speak", "unload_tts",
-        "sfx", "analyze", "verify_consent", "mix", "unload")}
+        "sfx", "analyze", "verify_consent", "mix", "render_timeline", "unload")}
     for line in sys.stdin:
         line = line.strip()
         if not line:

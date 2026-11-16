@@ -312,10 +312,32 @@ extension HoerspielModel {
         let r = try await e.mix(story: HSJSON.story(p), voiceFiles: voiceFiles, sfxFiles: p.useSFX ? p.sfxFiles : [:],
                                 musicFiles: p.useMusic ? p.musicFiles : [:], retro: p.retroAmount, lufs: -16, outDir: out,
                                 progress: reporter(range: 0.05...1))
+        apply(r, to: id)
+    }
+
+    func apply(_ r: HSEngine.MixResult, to id: UUID) {
         update(id) {
             $0.mix = HSMixInfo(master: r.master, stems: r.stems, chapters: r.chapters.map { HSChapterMark(title: $0.title, start: $0.start) },
-                               duration: r.duration, loudness: r.loudness, speechToBackground: r.speechToBackground)
+                               duration: r.duration, loudness: r.loudness, speechToBackground: r.speechToBackground, timeline: r.timeline)
             $0.set(.mix, .done)
+        }
+    }
+
+    // MARK: Mehrspur-Editor
+
+    func loadTimeline(_ p: HSProduction) -> HSTimeline? {
+        guard let path = p.mix?.timeline, let data = try? Data(contentsOf: file(path, in: p)) else { return nil }
+        return try? JSONDecoder().decode(HSTimeline.self, from: data)
+    }
+
+    /// Bearbeitete Zeitleiste abmischen (Clips bleiben unverändert, nur Lage/Pegel/Blenden/Spuren werden neu gerechnet).
+    func renderTimeline(_ id: UUID, _ timeline: HSTimeline) {
+        run("Neu abmischen") { m, e in
+            guard let p = m.production(id) else { return }
+            let r = try await e.renderTimeline(timeline, retro: p.retroAmount, lufs: -16,
+                                               outDir: m.folder(p).appendingPathComponent("mix", isDirectory: true),
+                                               progress: m.reporter(range: 0...1))
+            m.apply(r, to: id)
         }
     }
 }

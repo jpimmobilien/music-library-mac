@@ -48,6 +48,8 @@
 #include "popularimeterframe.h"
 #include "textidentificationframe.h"
 #include "unsynchronizedlyricsframe.h"
+#include "chapterframe.h"
+#include "tableofcontentsframe.h"
 
 #include "mp4file.h"
 #include "mp4tag.h"
@@ -56,6 +58,9 @@
 #include "mp4coverart.h"
 #include "mp4itemfactory.h"
 #include "mp4properties.h"
+#include "mp4chapter.h"
+#include "mp4nerochapterlist.h"
+#include "mp4qtchapterlist.h"
 
 #include "flacfile.h"
 #include "flacpicture.h"
@@ -3242,3 +3247,71 @@ void tb_picture_list_free(TBPictureList *list) {
 }
 
 } // extern "C"
+
+
+/* ---------------------------------------------------------------------------------- */
+/* Kapitel                                                                              */
+/* ---------------------------------------------------------------------------------- */
+
+extern "C" TBStatus tb_write_chapters(const char *path, size_t count, const char *const *titles, const uint32_t *starts_ms,
+                                      uint32_t total_ms) {
+    if (!path || (count > 0 && (!titles || !starts_ms))) return TB_ERROR_INVALID_ARGUMENT;
+    try {
+        std::string p(path);
+        std::string ext = p.size() >= 4 ? p.substr(p.size() - 4) : "";
+        std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
+        if (ext == ".mp3") {
+            TagLib::MPEG::File f(path, false);
+            if (!f.isValid() || f.readOnly()) return TB_ERROR_READ_ONLY;
+            TagLib::ID3v2::Tag *tag = f.ID3v2Tag(true);
+            int version = (tag->header() && tag->header()->majorVersion() == 3) ? 3 : 4;
+            for (const char *id : {"CHAP", "CTOC"}) {
+                TagLib::ID3v2::FrameList existing = tag->frameList(id);
+                for (auto *frame : existing) tag->removeFrame(frame, true);
+            }
+            TagLib::ByteVectorList children;
+            for (size_t i = 0; i < count; ++i) children.append(TagLib::ByteVector(("ch" + std::to_string(i + 1)).c_str()));
+            auto *toc = new TagLib::ID3v2::TableOfContentsFrame(TagLib::ByteVector("toc"), children);
+            toc->setIsTopLevel(true);
+            toc->setIsOrdered(true);
+            tag->addFrame(toc);
+            for (size_t i = 0; i < count; ++i) {
+                uint32_t start = starts_ms[i];
+                uint32_t end = i + 1 < count ? starts_ms[i + 1] : total_ms;
+                auto *title = new TagLib::ID3v2::TextIdentificationFrame("TIT2", TagLib::String::UTF8);
+                title->setText(TagLib::String(titles[i] ? titles[i] : "", TagLib::String::UTF8));
+                TagLib::ID3v2::FrameList embedded;
+                embedded.append(title);
+                tag->addFrame(new TagLib::ID3v2::ChapterFrame(TagLib::ByteVector(("ch" + std::to_string(i + 1)).c_str()),
+                                                             start, end, 0xFFFFFFFF, 0xFFFFFFFF, embedded));
+            }
+            bool ok = f.save(TagLib::MPEG::File::AllTags, TagLib::File::StripNone,
+                             version == 3 ? TagLib::ID3v2::v3 : TagLib::ID3v2::v4, TagLib::File::DoNotDuplicate);
+            return ok ? TB_OK : TB_ERROR_SAVE_FAILED;
+        }
+        if (ext == ".m4a" || ext == ".m4b" || ext == ".mp4") {
+            TagLib::MP4::ChapterList chapters;
+            for (size_t i = 0; i < count; ++i)
+                chapters.append(TagLib::MP4::Chapter(TagLib::String(titles[i] ? titles[i] : "", TagLib::String::UTF8),
+                                                     static_cast<long long>(starts_ms[i])));
+            {
+                TagLib::MP4::File f(path, false);
+                if (!f.isValid() || f.readOnly()) return TB_ERROR_READ_ONLY;
+                TagLib::MP4::NeroChapterList nero;
+                nero.setChapters(chapters);
+                if (!nero.write(&f)) return TB_ERROR_SAVE_FAILED;
+            }
+            {
+                TagLib::MP4::File f(path, false);
+                if (!f.isValid()) return TB_ERROR_READ_ONLY;
+                TagLib::MP4::QtChapterList qt;
+                qt.setChapters(chapters);
+                if (!qt.write(&f)) return TB_ERROR_SAVE_FAILED;
+            }
+            return TB_OK;
+        }
+        return TB_ERROR_UNSUPPORTED_FORMAT;
+    } catch (...) {
+        return TB_ERROR_SAVE_FAILED;
+    }
+}

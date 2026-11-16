@@ -327,6 +327,8 @@ public struct HSCast: Codable, Hashable, Sendable {
 public struct HSMixInfo: Codable, Hashable, Sendable {
     public var master: String
     public var stems: [String: String]
+    /// Bearbeitbare Zeitleiste (zeitleiste.json im Ordner der Mischung) für den Mehrspur-Editor.
+    public var timeline: String?
     public var chapters: [HSChapterMark]
     public var duration: Double
     public var loudness: Double?
@@ -334,9 +336,10 @@ public struct HSMixInfo: Codable, Hashable, Sendable {
     public var date: Date
 
     public init(master: String, stems: [String: String], chapters: [HSChapterMark], duration: Double, loudness: Double?,
-                speechToBackground: Double?, date: Date = Date()) {
+                speechToBackground: Double?, timeline: String? = nil, date: Date = Date()) {
         self.master = master
         self.stems = stems
+        self.timeline = timeline
         self.chapters = chapters
         self.duration = duration
         self.loudness = loudness

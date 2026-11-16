@@ -159,6 +159,7 @@ public final class HSEngine: @unchecked Sendable {
         public let loudness: Double?
         public let speechToBackground: Double?
         public let duration: Double
+        public let timeline: String?
     }
 
     public func mix(story: [String: Any], voiceFiles: [String: String], sfxFiles: [String: String], musicFiles: [String: String],
@@ -166,11 +167,24 @@ public final class HSEngine: @unchecked Sendable {
         let r = try await client.request("mix", ["story": story, "voice_files": voiceFiles, "sfx_files": sfxFiles,
                                                  "music_files": musicFiles, "retro": retro, "lufs": lufs, "out_dir": outDir.path],
                                          progress: progress)
+        return Self.mixResult(r)
+    }
+
+    /// Bearbeitete Zeitleiste (Mehrspur-Editor) neu abmischen.
+    public func renderTimeline(_ timeline: HSTimeline, retro: Double, lufs: Double, outDir: URL, progress: Progress? = nil) async throws -> MixResult {
+        let data = try JSONEncoder().encode(timeline)
+        let plain = try JSONSerialization.jsonObject(with: data)
+        let r = try await client.request("render_timeline", ["timeline": plain, "retro": retro, "lufs": lufs, "out_dir": outDir.path],
+                                         progress: progress)
+        return Self.mixResult(r)
+    }
+
+    static func mixResult(_ r: [String: Any]) -> MixResult {
         let metrics = r["metrics"] as? [String: Any] ?? [:]
         let chapters = (r["chapters"] as? [[String: Any]] ?? []).map { (title: $0["title"] as? String ?? "", start: ($0["start"] as? Double) ?? 0) }
         return MixResult(master: r["master"] as? String ?? "", stems: r["stems"] as? [String: String] ?? [:], chapters: chapters,
                          loudness: metrics["loudness_lufs"] as? Double, speechToBackground: metrics["speech_to_background_db"] as? Double,
-                         duration: (metrics["duration_s"] as? Double) ?? 0)
+                         duration: (metrics["duration_s"] as? Double) ?? 0, timeline: r["timeline"] as? String)
     }
 
     public func unloadAll() async throws { _ = try await client.request("unload") }

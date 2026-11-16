@@ -2,6 +2,7 @@ import SwiftUI
 import AppKit
 import MLCore
 import MLStudio
+import MLTags
 import StudioEngine
 
 // „Meine Produktionen“: alle Hörbücher/Hörspiele mit Stand, Anhören, Fortsetzen, Bearbeiten, Exportieren.
@@ -171,11 +172,19 @@ struct HSExportSheet: View {
 
     private var note: String {
         switch scope {
-        case .whole: return "Eine Datei mit der fertigen Mischung."
+        case .whole: return "Eine Datei mit der fertigen Mischung – bei MP3 und M4A mit Kapitelmarken (Kapitel bzw. Szenen)."
         case .chapters: return "Je Kapitel eine Datei, nummeriert – so bleibt die Kapitelstruktur in jedem Player erhalten."
         case .scenes: return "Je Szene eine Datei, nummeriert."
         case .stems: return "Jede Spur (Erzähler, Figuren, Musik, Geräusche, Atmo) als eigene Datei – zum Weiterbearbeiten."
         }
+    }
+
+    /// Kapitelmarken der Gesamtdatei: Kapitel, wenn es mehrere gibt, sonst Szenen.
+    static func chapterMarks(_ p: HSProduction) -> [ChapterWriter.Chapter] {
+        if p.chapters.count > 1 {
+            return HSExportPlan.items(for: p, scope: .chapters).compactMap { i in i.trim.map { ChapterWriter.Chapter(title: i.title, start: $0.start) } }
+        }
+        return (p.mix?.chapters ?? []).map { ChapterWriter.Chapter(title: $0.title, start: $0.start) }
     }
 
     private func pickCover() {
@@ -212,8 +221,11 @@ struct HSExportSheet: View {
                     let out = dir.appendingPathComponent(item.fileName).appendingPathExtension(format.fileExtension)
                     let req = ExportRequest(input: hs.file(item.source, in: p), trim: item.trim, options: options, metadata: m, output: out)
                     let base = Double(done) / Double(items.count)
-                    _ = try await AudioExporter().export(req, pause: nil) { v in
+                    let r = try await AudioExporter().export(req, pause: nil) { v in
                         Task { @MainActor in progress = base + v / Double(items.count) }
+                    }
+                    if scope == .whole, ChapterWriter.supportedExtensions.contains(format.fileExtension) {
+                        try ChapterWriter.write(Self.chapterMarks(p), total: r.duration, to: r.output)
                     }
                     done += 1
                 }
