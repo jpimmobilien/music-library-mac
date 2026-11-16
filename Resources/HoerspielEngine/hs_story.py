@@ -15,7 +15,7 @@ import math
 import re
 import time
 
-from hs_text import parse_script, repetition_ratio, spoken_words
+from hs_text import parse_script, repetition_ratio, speaker_key, spoken_words
 
 WORDS_PER_MINUTE = 140   # Hörspiel-Sprechtempo inkl. kurzer Pausen
 SPEECH_SHARE = 0.85      # Rest: Musik, Geräusche, Übergänge
@@ -316,7 +316,7 @@ class StoryWriter:
             raise ValueError("Figuren oder Kapitel fehlen")
         ids = set()
         for f in c["figuren"]:
-            f["id"] = re.sub(r"[^A-ZÄÖÜ0-9]", "", str(f.get("id") or f.get("name", "")).upper()) or "FIGUR"
+            f["id"] = speaker_key(str(f.get("id") or f.get("name", ""))) or "FIGUR"
             ids.add(f["id"])
         if "ERZÄHLER" not in ids:
             c["figuren"].insert(0, {"id": "ERZÄHLER", "name": "Erzähler", "rolle": "Erzähler", "alter": 45,
@@ -333,6 +333,7 @@ class StoryWriter:
         scenes = self.scene_list(concept)
         chapter, scene = scenes[index]
         ids = [f["id"] for f in concept["figuren"]]
+        aliases = {f.get("name", ""): f["id"] for f in concept["figuren"] if f.get("name")}
         msgs = [{"role": "system", "content": SYSTEM},
                 {"role": "user", "content": scene_prompt(concept, chapter, scene, "\n".join(summaries), previous_tail,
                                                          target_words, index == 0, index == len(scenes) - 1)}]
@@ -340,7 +341,7 @@ class StoryWriter:
         for attempt in range(3):
             text = self._ask(msgs, max_tokens=min(4096, int(target_words * 3.2) + 400),
                              temperature=0.85 if attempt == 0 else 0.75, repetition_penalty=1.08)
-            items = parse_script(text, ids)
+            items = parse_script(text, ids, aliases)
             rep = repetition_ratio(" ".join(i["text"] for i in items if i["type"] == "line"))
             if rep >= 0.2:
                 self.log(f"[Geschichte] Szene {index + 1}: Wiederholungen ({rep}) – neuer Versuch")
@@ -358,7 +359,7 @@ class StoryWriter:
                                           f"etwa {target_words - words} Wörter), ohne etwas zu wiederholen. Nur neue Zeilen."}],
                                  max_tokens=min(3000, int((target_words - words) * 3.2) + 300), temperature=0.8)
                 text2 = text.rstrip() + "\n" + more.strip()
-                items2 = parse_script(text2, ids)
+                items2 = parse_script(text2, ids, aliases)
                 rep2 = repetition_ratio(" ".join(i["text"] for i in items2 if i["type"] == "line"))
                 if rep2 >= 0.2 or spoken_words(items2) <= words:
                     break

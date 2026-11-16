@@ -140,6 +140,7 @@ final class HoerspielModel: ObservableObject {
     func draft(_ mode: HSMode) -> Draft { drafts[mode] ?? Draft() }
 
     private func saveDrafts() {
+        guard !demo else { return }
         var d: [String: Draft] = [:]
         for (k, v) in drafts { d[k.rawValue] = v }
         if let data = try? JSONEncoder().encode(d) { defaults.set(data, forKey: "hs.drafts") }

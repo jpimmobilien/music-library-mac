@@ -172,17 +172,25 @@ def normalize_for_speech(text):
 CUE_TYPES = {"GERÄUSCH": "sfx", "GERAEUSCH": "sfx", "SFX": "sfx", "ATMO": "atmo", "ATMOSPHÄRE": "atmo",
              "MUSIK": "music", "MUSIC": "music", "PAUSE": "pause", "SZENE": "scene"}
 _CUE = re.compile(r"^\s*\[\s*([A-ZÄÖÜa-zäöü]+)\s*:?\s*([^\]]*)\]\s*$")
-_LINE = re.compile(r"^\s*\**([A-ZÄÖÜ][A-Za-zÄÖÜäöüß0-9 .'\-]{0,40}?)\**\s*(?:\(([^)]{1,60})\))?\s*:\s*(.+?)\s*$")
+_LINE = re.compile(r"^\s*\**([A-ZÄÖÜ][A-Za-zÄÖÜäöüß0-9 ._'\-]{0,40}?)\**\s*(?:\(([^)]{1,60})\))?\s*:\s*(.+?)\s*$")
 
 
-def parse_script(text, known_speakers=None):
+def speaker_key(name):
+    """Vergleichsschlüssel für Sprecher: „Frau Meyer“, „FRAU_MEYER“ und „FRAUMEYER“ sind dieselbe Figur."""
+    return re.sub(r"[^A-ZÄÖÜ0-9]", "", (name or "").upper().replace("ß", "SS"))
+
+
+def parse_script(text, known_speakers=None, aliases=None):
     """Drehbuchtext in Elemente zerlegen.
 
     Liefert eine Liste von Dicts: {"type": "line", "speaker", "emotion", "text"} bzw.
-    {"type": "sfx"|"atmo"|"music"|"pause", "de", "en", "seconds"}. Zeilen, die weder Rolle noch Hinweis sind,
-    werden dem Erzähler zugeordnet (kleine Modelle vergessen das Präfix gelegentlich)."""
+    {"type": "sfx"|"atmo"|"music"|"pause", "de", "en", "seconds"}. known_speakers: Kennungen; aliases: weitere
+    Schreibweisen → Kennung (z. B. Namen). Schreibweisen wie „FRAU MEYER“/„FRAU_MEYER“ werden der Kennung „FRAUMEYER“
+    zugeordnet. Zeilen ohne Rolle gehen an den Erzähler (kleine Modelle vergessen das Präfix gelegentlich)."""
     items = []
-    known = {s.upper(): s for s in (known_speakers or [])}
+    known = {speaker_key(s): s for s in (known_speakers or [])}
+    for k, v in (aliases or {}).items():
+        known.setdefault(speaker_key(k), v)
     for raw in (text or "").splitlines():
         line = raw.strip()
         if not line or line.startswith(("```", "---", "#")):
@@ -203,12 +211,15 @@ def parse_script(text, known_speakers=None):
             items.append(item)
             continue
         m = _LINE.match(line)
-        if m and (m.group(1).strip().upper() in known or m.group(1).isupper() or known_speakers is None):
-            speaker = m.group(1).strip().strip("*")
-            speaker = known.get(speaker.upper(), speaker)
-            items.append({"type": "line", "speaker": speaker, "emotion": (m.group(2) or "").strip(),
-                          "text": m.group(3).strip().strip('"„“')})
-            continue
+        if m:
+            raw_name = m.group(1).strip().strip("*")
+            key = speaker_key(raw_name)
+            is_role = key in known or raw_name.replace("_", " ").replace("-", " ").isupper() or known_speakers is None
+            if is_role and key:
+                speaker = known.get(key, key)
+                items.append({"type": "line", "speaker": speaker, "emotion": (m.group(2) or "").strip(),
+                              "text": m.group(3).strip().strip('"„“')})
+                continue
         if re.search(r"[A-Za-zÄÖÜäöüß]{3}", line):
             items.append({"type": "line", "speaker": "ERZÄHLER", "emotion": "", "text": line.strip('"„“')})
     return items

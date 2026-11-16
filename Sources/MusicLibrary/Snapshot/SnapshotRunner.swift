@@ -446,6 +446,42 @@ enum SnapshotRunner {
                 WindowRouter.shared.pendingSettingsCategory = SettingsCategory.ki.rawValue
             }, view: { AnyView(SettingsView()) }),
         ]
+        // KI-Hörbücher (2.6) – feste Zustände, keine Erzeugung
+        func hs(_ section: HoerspielModel.Section, _ setup: @escaping @MainActor (AppModel, HoerspielModel) -> Void = { _, _ in })
+            -> @MainActor (AppModel) -> Void {
+            return studio { m, _ in
+                m.workspace = .audiobooks
+                let h = m.hoerspiel!
+                h.section = section
+                let running = HoerspielDemo.production()
+                h.applyDemo(setup: .ready, productions: [running, HoerspielDemo.finished()], voices: HoerspielDemo.voices(),
+                            references: HoerspielDemo.references(), sfx: HoerspielDemo.sfx(), current: running.id)
+                h.drafts[.hoerspiel] = HoerspielModel.Draft(prompt: HSCreateView.examples[0].1, minutes: 10,
+                                                            characters: ["Paula, 14, Fotografin"], retro: 0.6)
+                setup(m, h)
+            }
+        }
+        list += [
+            Scenario(name: "80-hoerspiel-einrichten", size: big, prepare: hs(.hoerspiel) { _, h in h.applyDemo(setup: .needsEnvironment) }, view: main),
+            Scenario(name: "80-hoerspiel-erstellen", size: big, prepare: hs(.hoerspiel), view: main),
+            Scenario(name: "80-hoerbuch-erstellen", size: big, prepare: hs(.hoerbuch), view: main),
+            Scenario(name: "80-hoerspiel-laeuft", size: big, prepare: hs(.hoerspiel) { _, h in
+                h.applyDemo(setup: .ready, phase: .working(title: "Produktion", detail: "Szene 2 von 6: Die Fahrkarte", progress: 0.31,
+                                                           started: Date().addingTimeInterval(-412)),
+                            productions: [HoerspielDemo.production()], current: h.productions.first?.id)
+                h.currentID = h.productions.first?.id
+            }, view: main),
+            Scenario(name: "80-hoerspiel-produktionen", size: big, prepare: hs(.productions), view: main),
+            Scenario(name: "80-hoerspiel-editor", size: big, prepare: hs(.editor), view: main),
+            Scenario(name: "80-hoerspiel-stimmen", size: big, prepare: hs(.voices), view: main),
+            Scenario(name: "80-hoerspiel-referenz", size: big, prepare: hs(.reference), view: main),
+            Scenario(name: "80-hoerspiel-sounddesign", size: big, prepare: hs(.sound), view: main),
+            Scenario(name: "80-hoerspiel-schmal", size: small, prepare: hs(.hoerspiel), view: main),
+            Scenario(name: "80-hoerspiel-einstellungen", size: CGSize(width: 860, height: 900), prepare: hs(.hoerspiel) { m, _ in
+                m.workspace = .library
+                WindowRouter.shared.pendingSettingsCategory = SettingsCategory.hoerspiel.rawValue
+            }, view: { AnyView(SettingsView()) }),
+        ]
         return list
     }
 
