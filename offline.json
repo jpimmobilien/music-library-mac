@@ -1,0 +1,120 @@
+{
+  "repo": "mlx-community/silero-vad",
+  "revision": "7bc17f22d3c0451bd3a6cd71e759b009271ff49a",
+  "download_exit": 0,
+  "events": 2,
+  "done": {
+    "event": "done",
+    "revision": "7bc17f22d3c0451bd3a6cd71e759b009271ff49a",
+    "path": "/tmp/hf-f3_rdv79/hub/models--mlx-community--silero-vad/snapshots/7bc17f22d3c0451bd3a6cd71e759b009271ff49a",
+    "bytes": 2182795
+  },
+  "stderr": "Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n",
+  "offline_exit": 0,
+  "offline_path": "/tmp/hf-f3_rdv79/hub/models--mlx-community--silero-vad/snapshots/7bc17f22d3c0451bd3a6cd71e759b009271ff49a",
+  "offline_error": "",
+  "files": {
+    "model.safetensors": {
+      "bytes": 2179454,
+      "link": true
+    },
+    "README.md": {
+      "bytes": 602,
+      "link": true
+    },
+    ".gitattributes": {
+      "bytes": 1519,
+      "link": true
+    },
+    "config.json": {
+      "bytes": 549,
+      "link": true
+    }
+  },
+  "store": [
+    [
+      "hub/.locks/models--mlx-community--silero-vad/185e0bc3ee2c48ce425a37209fe917a1aca22ab6b85799430dd1b4894087a8b8.lock",
+      false,
+      0
+    ],
+    [
+      "hub/.locks/models--mlx-community--silero-vad/2bfe53f1800809fddf9fc2b73eb0ae5f83d15e1d.lock",
+      false,
+      0
+    ],
+    [
+      "hub/.locks/models--mlx-community--silero-vad/a6344aac8c09253b3b630fb776ae94478aa0275b.lock",
+      false,
+      0
+    ],
+    [
+      "hub/.locks/models--mlx-community--silero-vad/af83a8c743562a75af3edad522a6c94d1f885115.lock",
+      false,
+      0
+    ],
+    [
+      "hub/CACHEDIR.TAG",
+      false,
+      191
+    ],
+    [
+      "hub/models--mlx-community--silero-vad/blobs/185e0bc3ee2c48ce425a37209fe917a1aca22ab6b85799430dd1b4894087a8b8",
+      false,
+      2179454
+    ],
+    [
+      "hub/models--mlx-community--silero-vad/blobs/2bfe53f1800809fddf9fc2b73eb0ae5f83d15e1d",
+      false,
+      602
+    ],
+    [
+      "hub/models--mlx-community--silero-vad/blobs/a6344aac8c09253b3b630fb776ae94478aa0275b",
+      false,
+      1519
+    ],
+    [
+      "hub/models--mlx-community--silero-vad/blobs/af83a8c743562a75af3edad522a6c94d1f885115",
+      false,
+      549
+    ],
+    [
+      "hub/models--mlx-community--silero-vad/refs/main",
+      false,
+      40
+    ],
+    [
+      "hub/models--mlx-community--silero-vad/snapshots/7bc17f22d3c0451bd3a6cd71e759b009271ff49a/.gitattributes",
+      true,
+      1519
+    ],
+    [
+      "hub/models--mlx-community--silero-vad/snapshots/7bc17f22d3c0451bd3a6cd71e759b009271ff49a/README.md",
+      true,
+      602
+    ],
+    [
+      "hub/models--mlx-community--silero-vad/snapshots/7bc17f22d3c0451bd3a6cd71e759b009271ff49a/config.json",
+      true,
+      549
+    ],
+    [
+      "hub/models--mlx-community--silero-vad/snapshots/7bc17f22d3c0451bd3a6cd71e759b009271ff49a/model.safetensors",
+      true,
+      2179454
+    ],
+    [
+      "hub/models--mlx-community--silero-vad/trees/7bc17f22d3c0451bd3a6cd71e759b009271ff49a.json",
+      false,
+      631
+    ],
+    [
+      "xet/logs/xet_20261116T173940647+0000_3004.log",
+      false,
+      31904
+    ]
+  ],
+  "outside_repo_folder": [],
+  "repo_folder_bytes": 2182795,
+  "download_reported_bytes": 2182795,
+  "ok": true
+}

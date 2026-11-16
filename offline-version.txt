@@ -1,0 +1,2 @@
+Name: huggingface_hub
+Version: 2.4.0
