@@ -371,7 +371,7 @@ jobs:
           HS_E2E_STORY: ${{ inputs.mlx_llm }}
           HS_E2E_MINUTES: "3"
         run: |
-          "build/Music Library.app/Contents/MacOS/Music Library" --hoerspiel-e2e "$PWD/out/e2e" > out/app.log 2>&1
+          "build/Music Library.app/Contents/MacOS/MusicLibrary" --hoerspiel-e2e "$PWD/out/e2e" > out/app.log 2>&1
           STATUS=$?
           cat out/e2e/e2e.log 2>/dev/null | cut -c1-400
           exit $STATUS
