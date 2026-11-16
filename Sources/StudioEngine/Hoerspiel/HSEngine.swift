@@ -49,6 +49,24 @@ public final class HSEngine: @unchecked Sendable {
 
     public func unloadLLM() async throws { _ = try await client.request("unload_llm") }
 
+    /// Lektorat der ganzen Geschichte: Widersprüche und Logiklücken (höchstens fünf, die wichtigsten zuerst).
+    public func review(concept: [String: Any], scenes: [(title: String, text: String)],
+                       progress: Progress? = nil) async throws -> [HSReviewProblem] {
+        let r = try await client.request("review", ["concept": concept,
+                                                    "scenes": scenes.map { ["title": $0.title, "text": $0.text] }],
+                                         progress: progress)
+        return HSJSON.problems(r["problems"] as? [[String: Any]] ?? [], sceneCount: scenes.count)
+    }
+
+    /// Eine Szene gezielt korrigieren; nil, wenn die Überarbeitung schlechter war und verworfen wurde.
+    public func reviseScene(concept: [String: Any], index: Int, text: String, problems: [HSReviewProblem], targetWords: Int,
+                            progress: Progress? = nil) async throws -> [String: Any]? {
+        let r = try await client.request("revise_scene", ["concept": concept, "index": index, "text": text,
+                                                          "problems": problems.map(HSJSON.problemJSON),
+                                                          "target_words": targetWords], progress: progress)
+        return r["scene"] as? [String: Any]
+    }
+
     /// Eine einzelne Replik neu formulieren.
     public func rewriteLine(concept: [String: Any], sceneText: String, speaker: String, line: String, hint: String,
                             progress: Progress? = nil) async throws -> String {

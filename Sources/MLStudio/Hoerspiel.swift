@@ -239,6 +239,10 @@ public struct HSProduction: Codable, Identifiable, Sendable {
     public var mix: HSMixInfo?
     public var useMusic: Bool
     public var useSFX: Bool
+    /// Geplante Spuren/Hinweise aus dem Konzept (optional: ältere Produktionen haben keine).
+    public var clues: [HSClue]?
+    /// Ergebnis des Lektorats (Widersprüche, überarbeitete Szenen); nil = noch nicht geprüft.
+    public var review: HSReview?
     public var created: Date
     public var modified: Date
 
@@ -322,6 +326,45 @@ public struct HSCast: Codable, Hashable, Sendable {
 
     /// Fingerabdruck der Stimme (ändert sich die Stimme, sind die gesprochenen Zeilen veraltet).
     public var fingerprint: String { HSHash.string("\(referenceFile)|\(referenceText)|\(seed)|\(profileID?.uuidString ?? "")") }
+}
+
+/// Eine geplante Spur (Hinweis, Gegenstand, falsche Fährte) und die Szene, in der sie zuerst vorkommt (ab 1).
+public struct HSClue: Codable, Hashable, Sendable {
+    public var clue: String
+    public var scene: Int
+    public var meaning: String
+    public init(clue: String, scene: Int, meaning: String = "") {
+        self.clue = clue
+        self.scene = scene
+        self.meaning = meaning
+    }
+}
+
+/// Ein Fund des Lektorats.
+public struct HSReviewProblem: Codable, Hashable, Sendable {
+    /// Szene ab 1.
+    public var scene: Int
+    public var problem: String
+    public var fix: String
+    public init(scene: Int, problem: String, fix: String = "") {
+        self.scene = scene
+        self.problem = problem
+        self.fix = fix
+    }
+}
+
+public struct HSReview: Codable, Hashable, Sendable {
+    public var problems: [HSReviewProblem]
+    /// Szenen (ab 1), die das Lektorat überarbeitet hat; die vorige Fassung liegt in den Versionen der Szene.
+    public var revised: [Int]
+    public var date: Date
+    public init(problems: [HSReviewProblem], revised: [Int], date: Date = Date()) {
+        self.problems = problems
+        self.revised = revised
+        self.date = date
+    }
+    /// Hinweise, die nach dem Lektorat noch offen sind (Szene nicht überarbeitet).
+    public var open: [HSReviewProblem] { problems.filter { !revised.contains($0.scene) } }
 }
 
 public struct HSMixInfo: Codable, Hashable, Sendable {

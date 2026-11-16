@@ -62,6 +62,13 @@ final class HoerspielTests: XCTestCase {
         XCTAssertEqual(back.state(.story), .done)
         XCTAssertEqual(back.figures.first?.voiceEN, "calm narrator")
         XCTAssertEqual(back.mode, .hoerbuch)
+        // Gespeicherte Produktion ohne die später hinzugekommenen Felder (Spuren, Lektorat) lässt sich lesen
+        var obj = try XCTUnwrap(try JSONSerialization.jsonObject(with: data) as? [String: Any])
+        obj.removeValue(forKey: "clues")
+        obj.removeValue(forKey: "review")
+        let old = try JSONDecoder().decode(HSProduction.self, from: JSONSerialization.data(withJSONObject: obj))
+        XCTAssertNil(old.review)
+        XCTAssertNil(old.clues)
     }
 
     func testVoiceSettingsDescriptions() {
@@ -119,7 +126,9 @@ final class HoerspielTests: XCTestCase {
                      {"id": "Lena", "name": "Lena", "rolle": "Hauptfigur", "alter": 14, "geschlecht": "w", "voice_en": "girl"}],
          "kapitel": [{"nr": 1, "titel": "Der Bahnhof", "szenen": [
             {"nr": 1, "titel": "Ankunft", "ort": "Bahnsteig", "raum": "Draußen", "figuren": ["LENA"], "inhalt": "x", "atmo_en": "wind"},
-            {"nr": 2, "titel": "Stellwerk", "raum": "", "inhalt": "y"}]}]}
+            {"nr": 2, "titel": "Stellwerk", "raum": "", "inhalt": "y"}]}],
+         "spuren": [{"spur": "Messingsiegel", "szene": 2, "bedeutung": "Wappen"}, {"spur": "", "szene": 1}, {"spur": "ohne Szene"}],
+         "aufloesung": "Der Onkel"}
         """
         let c = try XCTUnwrap(try JSONSerialization.jsonObject(with: Data(conceptJSON.utf8)) as? [String: Any])
         var p = HSProduction(mode: .hoerspiel, prompt: "Krimi")
@@ -161,6 +170,28 @@ final class HoerspielTests: XCTestCase {
         let back = HSJSON.concept(p)
         let chapters = try XCTUnwrap(back["kapitel"] as? [[String: Any]])
         XCTAssertEqual((chapters[0]["szenen"] as? [[String: Any]])?.count, 2)
+        // Spuren: ungültige verworfen, Rundreise vollständig
+        XCTAssertEqual(p.clues, [HSClue(clue: "Messingsiegel", scene: 2, meaning: "Wappen")])
+        XCTAssertEqual((back["spuren"] as? [[String: Any]])?.first?["spur"] as? String, "Messingsiegel")
+        XCTAssertEqual(back["aufloesung"] as? String, "Der Onkel")
+
+        // Lektorat: ungültige Szenen verworfen; Überarbeitung sichert die vorige Fassung mit eigenem Vermerk
+        let probs = HSJSON.problems([["szene": 2, "problem": "Kiste verschwindet", "korrektur": "Lena trägt sie"],
+                                     ["szene": 7, "problem": "gibt es nicht"], ["szene": 1, "problem": ""]], sceneCount: 2)
+        XCTAssertEqual(probs, [HSReviewProblem(scene: 2, problem: "Kiste verschwindet", fix: "Lena trägt sie")])
+        XCTAssertEqual(HSJSON.problemJSON(probs[0])["korrektur"] as? String, "Lena trägt sie")
+        let before = p.scenes[0].versions.count
+        HSJSON.apply(scene: sc, at: 0, to: &p, note: "vor dem Lektorat")
+        XCTAssertEqual(p.scenes[0].versions.last?.note, "vor dem Lektorat")
+        XCTAssertEqual(p.scenes[0].versions.count, before + 1)
+        p.review = HSReview(problems: probs + [HSReviewProblem(scene: 1, problem: "Anrede wechselt")], revised: [2])
+        XCTAssertEqual(p.review?.open.map(\.scene), [1])
+        let decoded = try JSONDecoder().decode(HSProduction.self, from: JSONEncoder().encode(p))
+        XCTAssertEqual(decoded.review, p.review)
+        XCTAssertEqual(decoded.clues, p.clues)
+        // Neues Konzept setzt das Lektorat zurück
+        HSJSON.apply(concept: c, to: &p)
+        XCTAssertNil(p.review)
     }
 
     func testHardwareRecommendation() {

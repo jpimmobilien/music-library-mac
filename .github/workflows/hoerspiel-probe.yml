@@ -25,6 +25,9 @@ on:
       llm_quant:
         description: "Quantisierung (Teil des Dateinamens)"
         default: "Q3_K_M"
+      tag:
+        description: "Kennung für den Ergebnis-Zweig der Geschichte (leer = ci-hoerspiel-story)"
+        default: ""
       tts_only:
         description: "Nur diese Sprachausgaben (leer = alle; z. B. qwen_design,qwen_clone,chatterbox)"
         default: ""
@@ -135,8 +138,9 @@ jobs:
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
         run: |
-          BR="ci-hoerspiel-story"
+          BR="ci-hoerspiel-story${TAG:+-$TAG}"
           cd out
           git init -q -b "$BR"
           git config user.name "github-actions[bot]"

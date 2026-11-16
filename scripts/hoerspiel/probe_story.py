@@ -49,7 +49,16 @@ try:
     report.step("Geschichte fertig", seconds=round(time.time() - t0, 1), words=story["words"],
                 estimated_minutes=story["estimated_minutes"], scenes=len(story["scenes"]),
                 figures=len(story["concept"]["figuren"]),
-                tokens_per_second=round(st["completion_tokens"] / max(st["seconds"], 1e-6), 1), llm_stats=st)
+                tokens_per_second=round(st["completion_tokens"] / max(st["seconds"], 1e-6), 1), llm_stats=st,
+                review=story.get("review"), clues=story["concept"].get("spuren"))
+    # Vorher/Nachher der vom Lektorat überarbeiteten Szenen zum Nachlesen
+    with open(os.path.join(OUT, f"{LABEL}-lektorat.md"), "w") as f:
+        f.write("# Lektorat\n\n")
+        for pr in (story.get("review") or {}).get("problems", []):
+            f.write(f"- Szene {pr['szene']}: {pr['problem']} → {pr['korrektur']}\n")
+        for sc in story["scenes"]:
+            if sc.get("previous_text"):
+                f.write(f"\n## Szene „{sc['title']}“ – vorher\n\n{sc['previous_text']}\n\n## nachher\n\n{sc['text']}\n")
 except Exception as e:  # noqa: BLE001
     report.step("Geschichte Fehler", error=repr(e), trace=traceback.format_exc()[-3000:])
     sys.exit(1)

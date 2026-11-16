@@ -14,6 +14,12 @@ public enum HSJSON {
         p.era = str(c["epoche_ort"])
         p.tone = str(c["ton"])
         p.resolution = str(c["aufloesung"])
+        p.clues = (c["spuren"] as? [[String: Any]] ?? []).compactMap { d in
+            let text = str(d["spur"])
+            guard !text.isEmpty, let n = int(d["szene"]) else { return nil }
+            return HSClue(clue: text, scene: n, meaning: str(d["bedeutung"]))
+        }
+        p.review = nil
         p.figures = (c["figuren"] as? [[String: Any]] ?? []).map(figure)
         p.chapters = []
         p.scenes = []
@@ -47,6 +53,7 @@ public enum HSJSON {
         }
         return ["titel": p.title, "untertitel": p.subtitle, "logline": p.logline, "epoche_ort": p.era, "ton": p.tone,
                 "aufloesung": p.resolution, "figuren": p.figures.map(figureJSON), "kapitel": chapters,
+                "spuren": (p.clues ?? []).map { ["spur": $0.clue, "szene": $0.scene, "bedeutung": $0.meaning] },
                 "_mode": p.mode.rawValue, "_style": p.narration, "_minutes": p.targetMinutes]
     }
 
@@ -56,6 +63,18 @@ public enum HSJSON {
         if let a = f.age { d["alter"] = a }
         if let g = f.gender { d["geschlecht"] = g }
         return d
+    }
+
+    /// Funde des Lektorats aus der Antwort des Prozesses (ungültige Szenennummern werden verworfen).
+    public static func problems(_ list: [[String: Any]], sceneCount: Int) -> [HSReviewProblem] {
+        list.compactMap { d in
+            guard let n = int(d["szene"]), (1...max(1, sceneCount)).contains(n), !str(d["problem"]).isEmpty else { return nil }
+            return HSReviewProblem(scene: n, problem: str(d["problem"]), fix: str(d["korrektur"]))
+        }
+    }
+
+    public static func problemJSON(_ p: HSReviewProblem) -> [String: Any] {
+        ["szene": p.scene, "problem": p.problem, "korrektur": p.fix]
     }
 
     // MARK: Szene
@@ -84,13 +103,13 @@ public enum HSJSON {
     }
 
     /// Ergebnis einer geschriebenen Szene übernehmen; neue Nebenfiguren werden ergänzt.
-    public static func apply(scene s: [String: Any], at index: Int, to p: inout HSProduction) {
+    public static func apply(scene s: [String: Any], at index: Int, to p: inout HSProduction, note: String = "neu geschrieben") {
         guard p.scenes.indices.contains(index) else { return }
         let newItems = items(s["items"] as? [[String: Any]] ?? [])
         if p.scenes[index].items.isEmpty {
             p.scenes[index].items = newItems
         } else {
-            p.scenes[index].replaceItems(newItems, note: "neu geschrieben")
+            p.scenes[index].replaceItems(newItems, note: note)
         }
         p.scenes[index].summary = str(s["summary"])
         for sp in Set(newItems.compactMap(\.speaker)) where p.figure(sp) == nil {

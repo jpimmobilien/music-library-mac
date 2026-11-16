@@ -93,6 +93,12 @@ class StoryTests(unittest.TestCase):
             if self.n == 2:
                 return json.dumps({"titel": "Test", "figuren": [{"id": "Lena", "name": "Lena"}],
                                    "kapitel": [{"nr": 1, "titel": "A", "szenen": [{"nr": 1, "titel": "S1"}, {"nr": 2, "titel": "S2"}]}]})
+            if "Finde echte Widersprüche" in u:
+                return "Hier: " + json.dumps({"probleme": [{"szene": 2, "problem": "Die Kiste verschwindet", "korrektur": "Lena trägt sie"},
+                                                           {"szene": 9, "problem": "gibt es nicht"}]})
+            if "Überarbeite die Szene" in u:
+                return ("ERZÄHLER: Still. Lena trägt die schwere Kiste unter dem Arm.\nLENA (leise): Hörst du das? Die Kiste klappert.\n"
+                        "PETRA: Ich bin neu hier und helfe tragen.\n" + "\n".join(f"LENA: Zeile {i} geht weiter {i * 7}." for i in range(8)))
             if "zusammen" in u:
                 return "Lena hört etwas."
             if "Setze die Szene" in u:
@@ -106,8 +112,30 @@ class StoryTests(unittest.TestCase):
         self.assertIn("ERZÄHLER", ids)
         self.assertIn("PETRA", ids, "spontane Nebenfigur wird ergänzt")
         self.assertTrue(all(s["continued"] >= 1 for s in story["scenes"]))
+        self.assertEqual([p["szene"] for p in story["review"]["problems"]], [2], "Lektorat: nur gültige Szenen")
+        self.assertEqual(story["review"]["revised"], [2])
+        self.assertIn("Kiste", story["scenes"][1]["text"])
+        self.assertIn("previous_text", story["scenes"][1], "alte Fassung bleibt erhalten")
+        self.assertNotIn("previous_text", story["scenes"][0])
         self.assertEqual(S.plan_size(10), (1, 6))
         self.assertEqual(S.plan_size(30), (3, 6), "kaufmännisch gerundet wie Swift")
+
+    def test_revision_rejected_when_worse(self):
+        class Short(self.Mock):
+            def chat(self, messages, **kw):
+                return "LENA: Kurz."
+        w = S.StoryWriter(Short(), log=lambda *a: None)
+        c = {"titel": "T", "figuren": [{"id": "ERZÄHLER"}, {"id": "LENA", "name": "Lena"}]}
+        old = "\n".join(f"LENA: Eine lange Zeile Nummer {i} mit Inhalt {i * 3}." for i in range(10))
+        self.assertIsNone(w.revise_scene(c, 0, old, [{"problem": "x", "korrektur": "y"}], 100))
+
+    def test_clues_in_scene_prompt(self):
+        c = {"titel": "T", "figuren": [], "kapitel": [{"nr": 1, "szenen": [{"nr": 1}, {"nr": 2}]}],
+             "spuren": [{"spur": "Messingsiegel", "szene": 2, "bedeutung": "Wappen der Familie"}, {"spur": "x", "szene": "?"}]}
+        p2 = S.scene_prompt(c, c["kapitel"][0], c["kapitel"][0]["szenen"][1], "", "", 200, False, False, 2)
+        p1 = S.scene_prompt(c, c["kapitel"][0], c["kapitel"][0]["szenen"][0], "", "", 200, True, False, 1)
+        self.assertIn("Messingsiegel", p2)
+        self.assertNotIn("Messingsiegel", p1)
 
     def test_audiobook_prompt(self):
         c = {"titel": "T", "_mode": "hoerbuch", "_style": "spannend", "figuren": [], "kapitel": [{"nr": 1, "szenen": [{"nr": 1}]}]}

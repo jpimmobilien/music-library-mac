@@ -85,11 +85,51 @@ extension HoerspielModel {
                                                              range: base...(base + 0.86 / Double(total))))
             update(id) { HSJSON.apply(scene: scene, at: index, to: &$0) }
         }
+        if production(id)?.review == nil, total > 1 {
+            try await review(id, e, perScene: perScene, range: 0.98...0.999)
+        }
         update(id) {
             $0.set(.story, .done)
             $0.set(.chapters, .done)
         }
         try await e.unloadLLM()
+    }
+
+    /// Lektorat: Widersprüche und Logiklücken der ganzen Geschichte finden und betroffene Szenen gezielt überarbeiten
+    /// (höchstens drei; die vorige Fassung bleibt als Version der Szene erhalten). Das Ergebnis wird gespeichert.
+    func review(_ id: UUID, _ e: HSEngine, perScene: Int, range: ClosedRange<Double>) async throws {
+        guard let p = production(id) else { return }
+        report("Lektorat: Widersprüche und Logiklücken …", range.lowerBound)
+        let width = range.upperBound - range.lowerBound
+        let problems = try await e.review(concept: HSJSON.concept(p), scenes: p.scenes.map { ($0.title, $0.scriptText) },
+                                          progress: reporter(prefix: "Lektorat: ", range: range.lowerBound...(range.lowerBound + width * 0.4)))
+        var revised: [Int] = []
+        let scenes = Array(Set(problems.map(\.scene))).sorted().prefix(3)
+        for (i, n) in scenes.enumerated() {
+            try Task.checkCancellation()
+            guard let cur = production(id), cur.scenes.indices.contains(n - 1) else { continue }
+            let mine = problems.filter { $0.scene == n }
+            let base = range.lowerBound + width * (0.4 + 0.6 * Double(i) / Double(scenes.count))
+            report("Lektorat: Szene \(n) wird überarbeitet …", base)
+            if let sc = try await e.reviseScene(concept: HSJSON.concept(cur), index: n - 1, text: cur.scenes[n - 1].scriptText,
+                                                problems: mine, targetWords: perScene,
+                                                progress: reporter(prefix: "Lektorat Szene \(n): ",
+                                                                   range: base...(base + width * 0.6 / Double(scenes.count)))) {
+                update(id) { HSJSON.apply(scene: sc, at: n - 1, to: &$0, note: "vor dem Lektorat") }
+                revised.append(n)
+            }
+        }
+        update(id) { $0.review = HSReview(problems: problems, revised: revised) }
+    }
+
+    /// Lektorat erneut ausführen (z. B. nach eigenen Änderungen am Drehbuch).
+    func reviewAgain(_ id: UUID) {
+        run("Lektorat") { m, e in
+            guard let model = m.storyModel, let p = m.production(id), p.scenes.count > 1 else { return }
+            try await e.loadLLM(model, progress: m.reporter(range: 0...0.15))
+            let words = max(80, HSPlan.targetWords(minutes: p.targetMinutes) / max(1, p.scenes.count))
+            try await m.review(id, e, perScene: words, range: 0.15...1)
+        }
     }
 
     /// Eine Szene neu schreiben (die bisherige Fassung bleibt als Version erhalten).

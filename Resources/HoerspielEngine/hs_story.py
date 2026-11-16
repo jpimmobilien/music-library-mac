@@ -1,9 +1,10 @@
 """KI-Hörspiel – Geschichten mit einem lokalen Sprachmodell schreiben.
 
 Ablauf (auch für lange Produktionen): 1. Konzept mit Figuren und Kapitel-/Szenenplan (JSON) → 2. jede Szene
-einzeln als Drehbuch im Zeilenformat (siehe hs_text) mit Zusammenfassung der bisherigen Handlung → 3. Prüfung
-(Länge, Wiederholungen, unbekannte Sprecher) mit gezielter Nachbesserung. Eine Szene neu zu schreiben ändert
-die anderen nicht.
+einzeln als Drehbuch im Zeilenformat (siehe hs_text) mit Zusammenfassung und Stand der bisherigen Handlung und den
+geplanten Spuren der Szene → 3. Prüfung (Länge, Wiederholungen, unbekannte Sprecher) mit gezielter Nachbesserung →
+4. Lektorat der ganzen Geschichte (Widersprüche, ungeklärte Rätsel) und gezielte Überarbeitung betroffener Szenen.
+Eine Szene neu zu schreiben ändert die anderen nicht.
 
 Sprachmodell-Anbindungen:
 - MLXChat: mlx-lm im selben Prozess (die App auf dem Mac)
@@ -165,6 +166,10 @@ Anforderungen:
 - Kennung ("id") jeder Figur: ein Wort in GROSSBUCHSTABEN, z. B. "LENA". Der Erzähler hat die Kennung "ERZÄHLER".
 - Für jede Szene: Ort, Raumklang (eines von: {ROOM_WORDS}), beteiligte Figuren, Inhalt in 2–3 Sätzen und eine
   englische Beschreibung der Hintergrundgeräusche ("atmo_en").
+- "spuren": die Hinweise, Gegenstände und falschen Fährten, die die Auflösung tragen – je mit der Szene
+  ("szene": laufende Nummer ab 1 über alle Kapitel), in der sie zum ersten Mal vorkommen.
+- "aufloesung": erklärt JEDES rätselhafte Element der Handlung schlüssig (wer, was, warum, wie) – nichts bleibt
+  ungeklärt, nichts widerspricht den Spuren.
 
 Antworte NUR mit JSON in genau dieser Form:
 {{"titel": "", "untertitel": "", "logline": "", "epoche_ort": "", "ton": "",
@@ -172,6 +177,7 @@ Antworte NUR mit JSON in genau dieser Form:
    "beschreibung": "", "stimme": "", "voice_en": ""}}],
  "kapitel": [{{"nr": 1, "titel": "", "szenen": [{{"nr": 1, "titel": "", "ort": "", "raum": "draußen",
    "figuren": ["ERZÄHLER"], "inhalt": "", "atmo_en": ""}}]}}],
+ "spuren": [{{"spur": "", "szene": 1, "bedeutung": ""}}],
  "aufloesung": ""}}"""
 
 
@@ -210,7 +216,21 @@ NARRATION_STYLES = {
 }
 
 
-def scene_prompt(concept, chapter, scene, story_so_far, previous_tail, target_words, is_first, is_last):
+def _clues_for(concept, number):
+    """Spuren, die laut Konzept in dieser Szene zum ersten Mal vorkommen (leer, wenn keine)."""
+    if not number:
+        return ""
+    clues = []
+    for c in concept.get("spuren") or []:
+        try:
+            if int(c.get("szene", 0)) == number and c.get("spur"):
+                clues.append(f"- {c['spur']}" + (f" (Bedeutung, nicht verraten: {c['bedeutung']})" if c.get("bedeutung") else ""))
+        except (TypeError, ValueError, AttributeError):
+            continue
+    return ("In dieser Szene einführen:\n" + "\n".join(clues) + "\n") if clues else ""
+
+
+def scene_prompt(concept, chapter, scene, story_so_far, previous_tail, target_words, is_first, is_last, scene_number=0):
     mode = concept.get("_mode", "hoerspiel")
     figs = "\n".join(f"- {f['id']}: {f.get('name', '')}, {f.get('rolle', '')}, {f.get('beschreibung', '')}"
                      for f in concept.get("figuren", []))
@@ -221,8 +241,8 @@ Figuren (Kennung: Beschreibung):
 {figs}
 
 Geplante Auflösung (nur zur Orientierung – nicht vorwegnehmen): {concept.get('aufloesung', '') or 'offen'}
-
-Bisherige Handlung:
+{_clues_for(concept, scene_number)}
+Bisherige Handlung (mit Stand am Ende jeder Szene – daran anknüpfen, nichts widersprechen):
 {story_so_far or '(Dies ist der Anfang.)'}
 
 {('Letzte Zeilen der vorigen Szene:' + chr(10) + previous_tail) if previous_tail else ''}
@@ -336,7 +356,8 @@ class StoryWriter:
         aliases = {f.get("name", ""): f["id"] for f in concept["figuren"] if f.get("name")}
         msgs = [{"role": "system", "content": SYSTEM},
                 {"role": "user", "content": scene_prompt(concept, chapter, scene, "\n".join(summaries), previous_tail,
-                                                         target_words, index == 0, index == len(scenes) - 1)}]
+                                                         target_words, index == 0, index == len(scenes) - 1,
+                                                         index + 1)}]
         best = None
         for attempt in range(3):
             text = self._ask(msgs, max_tokens=min(4096, int(target_words * 3.2) + 400),
@@ -392,11 +413,84 @@ Antworte nur mit dem neuen Satz, ohne Kennung und ohne Anführungszeichen."""}]
         out = re.sub(r"^[A-ZÄÖÜ]{2,}\s*(\([^)]*\))?\s*:\s*", "", out).strip().strip('"„“')
         return out.splitlines()[0].strip() if out else line
 
+    def review(self, concept, scenes):
+        """Lektorat der ganzen Geschichte: echte Widersprüche und Logiklücken finden (Gegenstände, Orte, Wissen der
+        Figuren, Namen, Verwandtschaft, ungeklärte Rätsel, Auflösung passt nicht zu den Spuren).
+        scenes: [{"title", "text"}]. Ergebnis: [{"szene": Nummer ab 1, "problem": "", "korrektur": ""}]."""
+        body = "\n\n".join(f"### Szene {i + 1}: {sc.get('title', '')}\n{sc.get('text', '')}" for i, sc in enumerate(scenes))
+        figs = "\n".join(f"- {f['id']}: {f.get('name', '')}, {f.get('rolle', '')}, {f.get('beschreibung', '')}"
+                         for f in concept.get("figuren", []))
+        msgs = [{"role": "system", "content": "Du bist eine erfahrene Hörspiel-Lektorin. Du prüfst Logik und "
+                                              "Kontinuität, nicht den Stil."},
+                {"role": "user", "content": f"""Hörspiel „{concept.get('titel', '')}“. Figuren:
+{figs}
+
+Geplante Auflösung: {concept.get('aufloesung', '')}
+
+Drehbuch:
+{body[:60000]}
+
+Finde echte Widersprüche und Logikfehler: Gegenstände, die ohne Erklärung den Ort oder Besitzer wechseln; Figuren,
+die etwas wissen, was sie nicht wissen können; falsche Namen, Rollen oder Verwandtschaften; Rätsel oder Spuren, die
+am Ende nicht aufgelöst werden; eine Auflösung, die den Spuren widerspricht oder nicht überzeugt; Anrede (du/Sie),
+die ohne Grund wechselt. Keine Stilkritik, keine Geschmacksfragen. Höchstens 5 Punkte, die wichtigsten zuerst.
+
+Antworte NUR mit JSON: {{"probleme": [{{"szene": 1, "problem": "", "korrektur": ""}}]}}
+Wenn alles schlüssig ist: {{"probleme": []}}"""}]
+        try:
+            data = extract_json(self._ask(msgs, max_tokens=1500, temperature=0.2))
+        except (ValueError, ChatError) as e:
+            self.log(f"[Geschichte] Lektorat ohne Ergebnis ({e})")
+            return []
+        out = []
+        for p in data.get("probleme") or []:
+            try:
+                n = int(p.get("szene", 0))
+            except (TypeError, ValueError):
+                continue
+            if 1 <= n <= len(scenes) and (p.get("problem") or "").strip():
+                out.append({"szene": n, "problem": p["problem"].strip(), "korrektur": (p.get("korrektur") or "").strip()})
+        return out[:5]
+
+    def revise_scene(self, concept, index, scene_text, problems, target_words):
+        """Eine Szene gezielt korrigieren: alles bleibt, nur die genannten Probleme werden behoben. Gibt die neue
+        Szene zurück oder None, wenn die Überarbeitung schlechter ist (zu kurz, Wiederholungen, fremde Sprecher)."""
+        ids = [f["id"] for f in concept["figuren"]]
+        aliases = {f.get("name", ""): f["id"] for f in concept["figuren"] if f.get("name")}
+        fixes = "\n".join(f"- {p['problem']}" + (f" → {p['korrektur']}" if p.get("korrektur") else "") for p in problems)
+        rules = PROSE_RULES if concept.get("_mode") == "hoerbuch" else FORMAT_RULES
+        msgs = [{"role": "system", "content": SYSTEM},
+                {"role": "user", "content": f"""Hörspiel „{concept.get('titel', '')}“, Szene {index + 1}.
+Geplante Auflösung: {concept.get('aufloesung', '')}
+
+Bisherige Fassung der Szene:
+{scene_text[:8000]}
+
+Überarbeite die Szene so, dass diese Probleme behoben sind:
+{fixes}
+
+Alles andere bleibt so nah wie möglich am Original (Ablauf, Länge, Figuren, Geräusche, Ton).
+{rules}
+
+Gib nur das vollständige, überarbeitete Drehbuch der Szene aus."""}]
+        text = self._ask(msgs, max_tokens=min(4096, int(target_words * 3.6) + 600), temperature=0.5, repetition_penalty=1.05)
+        items = parse_script(text, ids, aliases)
+        old_words = spoken_words(parse_script(scene_text, ids, aliases))
+        words = spoken_words(items)
+        rep = repetition_ratio(" ".join(i["text"] for i in items if i["type"] == "line"))
+        unknown = sorted({i["speaker"] for i in items if i["type"] == "line" and i["speaker"] not in ids})
+        if words < 0.7 * old_words or rep >= 0.2 or unknown:
+            self.log(f"[Geschichte] Überarbeitung Szene {index + 1} verworfen ({words}/{old_words} Wörter, "
+                     f"Wiederholungen {rep}, fremde Sprecher {unknown})")
+            return None
+        return {"text": text, "items": items, "words": words, "repetition": rep, "unknown_speakers": []}
+
     def summarize(self, scene_text):
         msgs = [{"role": "system", "content": "Du fasst Hörspielszenen sachlich zusammen."},
-                {"role": "user", "content": "Fasse diese Szene in zwei Sätzen zusammen (Wer, was, welche neue "
-                                            "Information oder Spur):\n\n" + scene_text[:6000]}]
-        return self._ask(msgs, max_tokens=200, temperature=0.3).strip().replace("\n", " ")
+                {"role": "user", "content": "Fasse diese Szene in höchstens drei Sätzen zusammen: wer, was, welche "
+                                            "neue Information oder Spur – und der Stand am Ende (wo sind die "
+                                            "Figuren und wichtige Gegenstände, wer weiß was).\n\n" + scene_text[:6000]}]
+        return self._ask(msgs, max_tokens=260, temperature=0.3).strip().replace("\n", " ")
 
     def write(self, prompt, minutes=10, mode="hoerspiel", user_characters=None, style=None, progress=None):
         t0 = time.time()
@@ -424,8 +518,28 @@ Antworte nur mit dem neuen Satz, ohne Kennung und ohne Anführungszeichen."""}]
             out.append(sc)
             self.log(f"[Geschichte] Szene {idx + 1}/{len(scenes)} „{sc['title']}“: {sc['words']} Wörter, "
                      f"Wiederholungen {sc['repetition']}, {sc['seconds']} s")
+        review = {"problems": [], "revised": []}
+        if len(out) > 1:
+            if progress:
+                progress(0.97, "Lektorat …")
+            tr = time.time()
+            problems = self.review(concept, out)
+            review["problems"] = problems
+            self.log(f"[Geschichte] Lektorat: {len(problems)} Probleme ({round(time.time() - tr)} s)")
+            for p in problems:
+                self.log(f"[Geschichte]   Szene {p['szene']}: {p['problem']} → {p['korrektur']}")
+            for n in sorted({p["szene"] for p in problems})[:3]:
+                sc = out[n - 1]
+                new = self.revise_scene(concept, n - 1, sc["text"], [p for p in problems if p["szene"] == n], per_scene)
+                if new:
+                    sc["previous_text"] = sc["text"]
+                    sc.update(new)
+                    sc["summary"] = self.summarize(sc["text"])
+                    review["revised"].append(n)
+                    self.log(f"[Geschichte] Szene {n} überarbeitet ({new['words']} Wörter)")
+            review["seconds"] = round(time.time() - tr, 1)
         words = sum(s["words"] for s in out)
-        return {"concept": concept, "scenes": out, "words": words,
+        return {"concept": concept, "scenes": out, "words": words, "review": review,
                 "estimated_minutes": round(words / (WORDS_PER_MINUTE * SPEECH_SHARE), 1),
                 "seconds": round(time.time() - t0, 1), "llm": getattr(self.llm, "name", "?"),
                 "llm_stats": dict(self.llm.stats)}

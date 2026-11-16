@@ -35,9 +35,12 @@ struct HSEditorView: View {
                             PillButton(title: "Geschichte schreiben", style: .filled) { hs.runStep(.story, p.id) }.disabled(hs.isWorking)
                         }
                     } else {
-                        HStack(alignment: .top, spacing: 16) {
-                            sceneList(p).frame(width: 270)
-                            HSSceneEditor(hs: hs, productionID: p.id, index: min(sceneIndex, p.scenes.count - 1))
+                        VStack(alignment: .leading, spacing: 12) {
+                            reviewCard(p)
+                            HStack(alignment: .top, spacing: 16) {
+                                sceneList(p).frame(width: 270)
+                                HSSceneEditor(hs: hs, productionID: p.id, index: min(sceneIndex, p.scenes.count - 1))
+                            }
                         }
                     }
                 case .figures: HSFiguresEditor(hs: hs, productionID: p.id)
@@ -102,6 +105,49 @@ struct HSEditorView: View {
         }
         .padding(8)
         .glassSurface(RoundedRectangle(cornerRadius: Radius.card, style: .continuous))
+    }
+
+    /// Ergebnis des Lektorats: offene Hinweise mit Sprung zur Szene; erneut ausführen nach eigenen Änderungen.
+    @ViewBuilder private func reviewCard(_ p: HSProduction) -> some View {
+        let written = p.scenes.count > 1 && p.scenes.allSatisfy { !$0.items.isEmpty }
+        if written {
+            VStack(alignment: .leading, spacing: 6) {
+                HStack(spacing: 10) {
+                    Icon(Icons.info, size: 15, color: colors.textSecondary)
+                    if let r = p.review {
+                        Text("Lektorat: " + (r.problems.isEmpty ? "keine Widersprüche gefunden"
+                                             : "\(r.problems.count) Hinweis\(r.problems.count == 1 ? "" : "e") · "
+                                               + (r.revised.isEmpty ? "keine Szene überarbeitet"
+                                                  : "Szene \(r.revised.map(String.init).joined(separator: ", ")) überarbeitet")))
+                            .textStyle(Typo.bodySmall).foregroundColor(colors.textPrimary)
+                    } else {
+                        Text("Noch nicht lektoriert – das Sprachmodell prüft die ganze Geschichte auf Widersprüche und Logiklücken.")
+                            .textStyle(Typo.bodySmall).foregroundColor(colors.textSecondary)
+                    }
+                    Spacer()
+                    PillButton(title: p.review == nil ? "Lektorat ausführen" : "Erneut prüfen", style: .plain) { hs.reviewAgain(p.id) }
+                        .disabled(hs.isWorking || hs.setup != .ready)
+                        .help("Prüft die aktuelle Fassung; überarbeitete Szenen behalten ihre vorige Fassung unter „Fassungen“.")
+                }
+                if let r = p.review {
+                    ForEach(Array(r.problems.enumerated()), id: \.offset) { _, prob in
+                        Button { sceneIndex = prob.scene - 1 } label: {
+                            HStack(alignment: .firstTextBaseline, spacing: 6) {
+                                Text("Szene \(prob.scene)").font(Typo.inter(11, .semibold)).foregroundColor(colors.accentText)
+                                Text(prob.problem + (prob.fix.isEmpty ? "" : " → " + prob.fix))
+                                    .font(Typo.inter(11.5, .regular)).foregroundColor(colors.textSecondary)
+                                    .strikethrough(r.revised.contains(prob.scene), color: colors.textTertiary)
+                                    .lineLimit(2).multilineTextAlignment(.leading)
+                            }
+                        }
+                        .buttonStyle(.plain)
+                        .help(r.revised.contains(prob.scene) ? "In der Überarbeitung behoben – zur Szene springen" : "Offen – zur Szene springen")
+                    }
+                }
+            }
+            .padding(.horizontal, 14).padding(.vertical, 10)
+            .glassSurface(RoundedRectangle(cornerRadius: Radius.card, style: .continuous))
+        }
     }
 
     private func sceneInfo(_ s: HSScene, _ p: HSProduction) -> String {

@@ -112,6 +112,22 @@ class Engine:
     def summarize(self, req, progress):
         return {"summary": self._writer().summarize(req["text"])}
 
+    def review(self, req, progress):
+        """Lektorat: Widersprüche und Logiklücken der ganzen Geschichte (scenes: [{"title", "text"}])."""
+        progress(0.1, "Lektorat …")
+        return {"problems": self._writer().review(req["concept"], req.get("scenes", [])), "stats": self.llm.stats}
+
+    def revise_scene(self, req, progress):
+        """Eine Szene gezielt korrigieren; scene ist null, wenn die Überarbeitung verworfen wurde."""
+        w = self._writer()
+        progress(0.1, "Szene wird überarbeitet …")
+        sc = w.revise_scene(req["concept"], int(req["index"]), req["text"], req.get("problems", []),
+                            int(req.get("target_words", 200)))
+        if sc:
+            progress(0.85, "Zusammenfassung …")
+            sc["summary"] = w.summarize(sc["text"])
+        return {"scene": sc, "stats": self.llm.stats}
+
     def rewrite_line(self, req, progress):
         progress(0.2, "Replik wird neu formuliert …")
         return {"text": self._writer().rewrite_line(req["concept"], req.get("scene_text", ""), req["speaker"], req["line"],
@@ -285,7 +301,7 @@ def main():
     engine = Engine()
     send({"event": "ready", "pid": os.getpid()})
     commands = {name: getattr(engine, name) for name in (
-        "status", "load_llm", "concept", "scene", "summarize", "rewrite_line", "music_plan", "unload_llm", "design_voice", "speak", "unload_tts",
+        "status", "load_llm", "concept", "scene", "summarize", "review", "revise_scene", "rewrite_line", "music_plan", "unload_llm", "design_voice", "speak", "unload_tts",
         "sfx", "analyze", "verify_consent", "mix", "render_timeline", "unload")}
     for line in sys.stdin:
         line = line.strip()

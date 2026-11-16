@@ -36,7 +36,63 @@ Python-Prozess Resources/HoerspielEngine/engine.py in Sandbox ohne Netz (sandbox
 - **Musik** kommt aus der vorhandenen KI-Musik (ACE-Step 1.5, Qualität „Schnell“, instrumental): Titel, Übergang,
   Spannung, Finale, Abspann – je Produktion nur einmal erzeugt und wiederverwendet.
 
-<!-- MODELLE -->
+## Modelle: Auswahl und Vergleich
+
+Alle Repos wurden am 16.11.2026 über die Hugging-Face-API geprüft (`scripts/hoerspiel/catalog_check.py`, Lauf
+„Modellkatalog“): Es gibt sie, sie sind frei zugänglich (nicht „gated“), Größe = Summe aller Dateien. Die App lädt
+genau den geprüften Stand (Commit), nicht den jeweils neuesten.
+
+### Geschichten (Sprachmodell, mlx-lm)
+
+| Modell | Größe | Lizenz | Einsatz |
+|---|---|---|---|
+| **Gemma 4 26B-A4B** (4 bit, MoE, 3,8 Mrd. aktiv) | 15,4 GB | Apache-2.0 | **Standard ab 32 GB** (M5 Pro 48 GB) |
+| Qwen3.5 9B (4 bit) | 6,0 GB | Apache-2.0 | Macs mit 16–32 GB |
+| Qwen3.5 4B (4 bit) | 3,1 GB | Apache-2.0 | Macs mit 8–16 GB, deutlich schwächer |
+| Qwen3.6 35B-A3B (4 bit) | 20,4 GB | Apache-2.0 | geprüft, nicht im Katalog: kaum Vorteil bei mehr Speicher |
+| Qwen3.5 27B (4 bit, dicht) | 16,1 GB | Apache-2.0 | geprüft, nicht im Katalog: dicht = deutlich langsamer als MoE |
+
+Gemma 4 wurde gewählt, weil es unter den offenen Modellen dieser Größe das beste Deutsch schreibt und als MoE mit
+3,8 Mrd. aktiven Parametern schnell genug für lange Geschichten ist. Der Prüfstand nutzt dasselbe Modell als GGUF
+(Q3_K_M) mit llama.cpp auf einem Linux-Rechner, weil dort genug Arbeitsspeicher frei ist – die 3-bit-Fassung ist
+etwas schwächer als die 4-bit-Fassung der App.
+
+### Stimmen (Sprachausgabe, mlx-audio 0.6.5)
+
+| Modell | Größe | Lizenz | Deutsch | Ergebnis |
+|---|---|---|---|---|
+| **Qwen3-TTS 1.7B VoiceDesign** | 4,5 GB | Apache-2.0 | ja | **gewählt**: Stimme aus einer Beschreibung entwerfen |
+| **Qwen3-TTS 1.7B Base** | 4,5 GB | Apache-2.0 | ja | **gewählt**: jede Zeile aus dem entworfenen Referenzsatz klonen (gleiche Stimme über alle Kapitel) |
+| VoxCPM2 (8 bit) | 3,2 GB | Apache-2.0 | ja (30 Sprachen) | Vergleich im Prüfstand |
+| Chatterbox Multilingual v3 | 2,7 GB | MIT (Wasserzeichen „Perth“) | ja | Vergleich; Regler für Ausdrucksstärke |
+| Piper (thorsten-high) | klein | Code GPL-3.0 | ja | nur Messlatte „klassische Sprachausgabe“, nicht in der App |
+| XTTS-v2 | – | CPML, nicht kommerziell; Coqui eingestellt | ja | ausgeschlossen |
+| Kokoro | – | Apache-2.0 | nein | ausgeschlossen (kein Deutsch) |
+| Voxtral TTS, Fish S2, Higgs Audio | – | nicht kommerziell | teils | ausgeschlossen (Lizenz) |
+| MOSS-TTS (4B/8B) | groß | Apache-2.0 | ja | Kandidat für später, auf dem Prüfrechner zu groß |
+
+### Referenzanalyse
+
+| Modell | Größe | Lizenz | Aufgabe |
+|---|---|---|---|
+| Silero VAD | 2 MB | MIT | Sprache erkennen |
+| SpeechBrain ECAPA (MLX) | 42 MB | Apache-2.0 | Sprecher unterscheiden, Stimmen vergleichen, Einwilligung prüfen |
+| Whisper large-v3-turbo | 1,6 GB | MIT | Text mit Wortzeiten |
+| eigene Tonhöhenmessung (YIN), Raum- und Klangmerkmale | – | eigener Code | Stimm- und Aufnahmeprofil |
+
+Nicht verwendet: Sortformer (CC BY-NC, höchstens 4 Sprecher), pyannote (Zugang nur nach Anmeldung), Nemotron-
+Sprechertrennung (nur zur Evaluierung).
+
+### Geräusche und Musik
+
+| Modell | Größe | Lizenz | Aufgabe |
+|---|---|---|---|
+| Stable Audio 3 small-sfx (MLX) | 3,5 GB | Stability AI Community License | Geräusche und Atmosphären aus Beschreibung (Bibliothek mit Herkunftsangabe je Datei) |
+| ACE-Step 1.5 (vorhandene KI-Musik) | – | Apache-2.0 | Titel, Übergang, Spannung, Finale, Abspann (instrumental, 1980er-Synthesizer) |
+
+Die Stability AI Community License erlaubt die Nutzung kostenlos für Privatpersonen und Organisationen unter
+1 Mio. US-Dollar Jahresumsatz; darüber ist eine Unternehmenslizenz nötig. Eigene Geräusche (Import) sind jederzeit möglich.
+
 
 <!-- MESSUNGEN -->
 
@@ -58,10 +114,54 @@ Prüfung einer berechtigten Stimme (umgesetzt, nicht nur ein Häkchen):
 Aufnahmen aus Hörspielen, Filmen oder dem Internet erfüllen das nicht – eine Nachbildung bekannter Sprecher alter
 Hörspiele ist damit ohne deren eigene Einwilligung nicht möglich. Die Oberfläche zeigt bei jedem Profil die Art an.
 
-<!-- LIZENZEN -->
+## Lizenzen (Code und Gewichte getrennt geprüft)
+
+**Code, den die App mitbringt:** nur eigene Python-Skripte (`Resources/HoerspielEngine`) und Swift-Code. Die
+Python-Pakete werden **nicht** mit der App ausgeliefert, sondern auf Knopfdruck in die eigene Umgebung des Nutzers
+installiert (feste Versionen, `requirements.txt`):
+
+| Paket | Lizenz |
+|---|---|
+| mlx, mlx-lm, mlx-whisper, mlx-audio | MIT |
+| huggingface_hub | Apache-2.0 |
+| numpy, scipy, soundfile | BSD-3-Clause (soundfile bindet libsndfile, LGPL-2.1, dynamisch) |
+
+Die vollständige Paketliste mit Lizenzen erzeugt der Prüflauf (`lizenzen-pakete.md` im Ergebnis-Zweig).
+Piper (GPL-3.0) wird nur im Prüfstand als Vergleich installiert, nicht in der App.
+
+**Gewichte:** siehe Tabellen oben. Kommerziell ohne Einschränkung: Qwen3-TTS, Gemma 4, Qwen3.5, Whisper, Silero,
+ECAPA, ACE-Step. Mit Bedingung: Stable Audio 3 (Umsatzgrenze 1 Mio. US-Dollar), Chatterbox (MIT, setzt aber ein
+unhörbares Wasserzeichen – nur im Vergleich, nicht in der App).
+
+**Stimmen und Ergebnisse:** Entworfene Stimmen sind synthetisch und gehören zu keiner realen Person. Stilprofile aus
+Referenzaufnahmen enthalten nur allgemeine Merkmale (kein Audio, kein Stimmabdruck) und können nicht sprechen. Eine
+individuelle Stimme nachzubilden ist nur mit geprüfter Einwilligung der Person möglich (siehe oben). Für erzeugte
+Geschichten gilt: Das Sprachmodell soll eigene Geschichten schreiben; genannte Serien dienen nur als allgemeine
+Stilrichtung (Epoche, Atmosphäre, Erzähltempo) – der Systemauftrag verbietet Figuren, Namen und Handlungen
+bestehender Werke.
+
 
 <!-- RISIKEN -->
 
 <!-- PLAN -->
 
-<!-- QUELLEN -->
+## Quellen
+
+- Modellkarten und Lizenzangaben: Hugging-Face-API, abgefragt am 16.11.2026 (Ergebnis im Zweig `ci-hoerspiel-catalog`,
+  Dateien `katalog.md`/`katalog.json`) – u. a.
+  [Qwen3-TTS VoiceDesign (MLX)](https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-1.7B-VoiceDesign-bf16),
+  [Qwen3-TTS Base (MLX)](https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-1.7B-Base-bf16),
+  [Gemma 4 26B-A4B (MLX)](https://huggingface.co/mlx-community/gemma-4-26b-a4b-it-4bit),
+  [VoxCPM2](https://huggingface.co/openbmb/VoxCPM2),
+  [Chatterbox Multilingual (MLX)](https://huggingface.co/mlx-community/chatterbox-multilingual-v3),
+  [Stable Audio 3 small-sfx (MLX)](https://huggingface.co/mlx-community/stable-audio-3-small-sfx),
+  [SpeechBrain ECAPA (MLX)](https://huggingface.co/aufklarer/SpeechBrain-ECAPA-VoxCeleb-20M-MLX),
+  [Whisper large-v3-turbo (MLX)](https://huggingface.co/mlx-community/whisper-large-v3-turbo)
+- [Gemma 4 Modellkarte (Google)](https://ai.google.dev/gemma/docs/core/model_card_4),
+  [Gemma 4 unter Apache 2.0 (VentureBeat)](https://venturebeat.com/technology/google-releases-gemma-4-under-apache-2-0-and-that-license-change-may-matter)
+- [Stability AI Lizenzen](https://stability.ai/license),
+  [Stable Audio 3 (Stability AI)](https://stability.ai/news-updates/meet-stable-audio-3-the-model-family-built-for-artistic-experimentation-with-open-weight-models)
+- [XTTS-v2: Lizenz und Einstellung von Coqui (Diskussion)](https://github.com/coqui-ai/TTS/discussions/4145)
+- [mlx-audio](https://github.com/Blaizzy/mlx-audio) (Quelltext 0.6.5),
+  [ACE-Step 1.5](https://github.com/ace-step/ACE-Step-1.5)
+

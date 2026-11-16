@@ -21,7 +21,8 @@ final class ChapterWriterTests: TagTestCase {
             let data = try bytes(url)
             XCTAssertEqual(count(Data("CHAP".utf8), in: data), 3, name)
             XCTAssertEqual(count(Data("CTOC".utf8), in: data), 1, name)
-            XCTAssertNotNil(data.range(of: Data("Kapitel 3: Auflösung".utf8)) ?? data.range(of: Data("Kapitel 3: Aufl".utf8)), name)
+            // ID3v2.4 speichert UTF-8, ID3v2.3 UTF-16 (TagLib wandelt beim Schreiben um)
+            XCTAssertTrue(contains("Kapitel 3: Auflösung", in: data), name)
             try assertMarkers(Fixtures.named(name), in: url)
         }
     }
@@ -36,13 +37,18 @@ final class ChapterWriterTests: TagTestCase {
             assertSameAudio(before.audio, after.audio, name)
             let data = try bytes(url)
             XCTAssertNotNil(data.range(of: Data("chpl".utf8)), "\(name): Nero-Kapitel")
-            XCTAssertNotNil(data.range(of: Data("Kapitel 2: Das Stellwerk".utf8)), name)
+            XCTAssertTrue(contains("Kapitel 2: Das Stellwerk", in: data), name)
         }
     }
 
     func testUnsupportedFormat() throws {
         let url = try copyFixture("flac.flac")
         XCTAssertThrowsError(try ChapterWriter.write(chapters, total: 1, to: url))
+    }
+
+    private func contains(_ text: String, in data: Data) -> Bool {
+        let encodings: [String.Encoding] = [.utf8, .utf16LittleEndian, .utf16BigEndian, .isoLatin1]
+        return encodings.contains { enc in text.data(using: enc).map { data.range(of: $0) != nil } ?? false }
     }
 
     private func count(_ needle: Data, in data: Data) -> Int {
