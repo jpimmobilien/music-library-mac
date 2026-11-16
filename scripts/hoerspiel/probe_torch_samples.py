@@ -175,6 +175,8 @@ try:
                  {"title": story["concept"].get("titel", "Hörprobe"), "artist": "KI-Hörspiel (Hörprobe, Linux/PyTorch)",
                   "comment": "Stimmen entworfen mit Qwen3-TTS, keine realen Personen. Ohne Geräusche und Musik."},
                  metrics["duration_s"], bitrate="192k")
+    if not metrics.get("speech_to_background_db") or metrics["speech_to_background_db"] > 120:
+        metrics["speech_to_background_db"] = None  # ohne Geräusche/Musik nicht aussagekräftig
     step("Gemischt", metrics=metrics)
 except Exception as e:  # noqa: BLE001
     step("Mischen Fehler", error=repr(e), trace=traceback.format_exc()[-3000:])
@@ -186,7 +188,13 @@ try:
     wm = WhisperModel("large-v3-turbo", device="cpu", compute_type="int8")
 
     def hear(path):
-        segs, _ = wm.transcribe(path, language="de", beam_size=5)
+        # Audio selbst laden (faster-whisper öffnet Dateien über PyAV; dessen neue Fassung kennt
+        # „metadata_errors“ nicht mehr – erster Lauf scheiterte daran)
+        a, sr = sf.read(path, dtype="float32", always_2d=False)
+        if a.ndim > 1:
+            a = a.mean(axis=1)
+        a = A.resample(a, sr, 16000).astype(np.float32)
+        segs, _ = wm.transcribe(a, language="de", beam_size=5)
         return " ".join(s.text.strip() for s in segs)
 
     for t in REPORT["tests"]:
@@ -207,6 +215,7 @@ for root, _, names in os.walk(OUT):
     for n in names:
         if n.endswith(".wav"):
             p = os.path.join(root, n)
-            mp3(p, "128k" if "stimmen" in root or "pruefsaetze" in root else "96k")
+            if not os.path.exists(p[:-4] + ".mp3"):  # Hörprobe hat schon ihre MP3 mit Kapiteln (192 kbit/s)
+                mp3(p, "128k" if "stimmen" in root or "pruefsaetze" in root else "96k")
             os.remove(p)
 step("Fertig")

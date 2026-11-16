@@ -413,7 +413,7 @@ jobs:
           ls story-in
       - name: Hörproben erzeugen
         run: |
-          "$RUNNER_TEMP/pt/bin/python" scripts/hoerspiel/probe_torch_samples.py story-in/story.json out 90 > out/proben.log 2>&1
+          "$RUNNER_TEMP/pt/bin/python" scripts/hoerspiel/probe_torch_samples.py story-in/story.json out 200 > out/proben.log 2>&1
           STATUS=$?
           grep "\[Probe\]" out/proben.log | cut -c1-500
           exit $STATUS
