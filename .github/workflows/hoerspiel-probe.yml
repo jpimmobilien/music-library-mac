@@ -1,4 +1,5 @@
 # Machbarkeitsprobe „KI-Hörspiel“ (Phase 1). Nur von Hand.
+#   catalog  Linux: Modellkatalog gegen Hugging Face prüfen (gibt es das Repo, frei zugänglich, Größe, Lizenz)
 #   story    Linux: Geschichte mit Gemma 4 26B-A4B (llama.cpp, Q3_K_M) – Stellvertreter für das große Modell auf dem Mac
 #   tts      Mac: deutsche Sprachausgabe im Vergleich (Qwen3-TTS, VoxCPM2, Chatterbox, Piper) + kleines MLX-Sprachmodell
 #   produce  Mac: 10-Minuten-Hörspiel aus der Geschichte (Stimmen, Geräusche, Musik über die KI-Musik, Mischung)
@@ -10,7 +11,7 @@ on:
   workflow_dispatch:
     inputs:
       jobs:
-        description: "Teile (story,tts,produce,analyze)"
+        description: "Teile (catalog,story,tts,produce,analyze)"
         default: "story,tts,produce,analyze"
       runner:
         description: "Apple-Silicon-Rechner"
@@ -40,6 +41,28 @@ env:
   MLX_AUDIO: "mlx-audio==0.6.5"
 
 jobs:
+  catalog:
+    if: contains(inputs.jobs, 'catalog')
+    name: Modellkatalog (Linux)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prüfen
+        run: python3 scripts/hoerspiel/catalog_check.py out
+      - name: Ergebnisse in Zweig sichern
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BR="ci-hoerspiel-catalog"
+          cd out
+          git init -q -b "$BR"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A && git commit -q -m "Hörspiel-Probe catalog $GITHUB_SHA" || true
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$BR"
+
   story:
     if: contains(inputs.jobs, 'story')
     name: Geschichte (Linux, llama.cpp)
