@@ -1,0 +1,274 @@
+# Machbarkeitsprobe „KI-Hörspiel“ (Phase 1). Nur von Hand.
+#   story    Linux: Geschichte mit Gemma 4 26B-A4B (llama.cpp, Q3_K_M) – Stellvertreter für das große Modell auf dem Mac
+#   tts      Mac: deutsche Sprachausgabe im Vergleich (Qwen3-TTS, VoxCPM2, Chatterbox, Piper) + kleines MLX-Sprachmodell
+#   produce  Mac: 10-Minuten-Hörspiel aus der Geschichte (Stimmen, Geräusche, Musik über die KI-Musik, Mischung)
+#   analyze  Mac: Referenzanalyse (MLS-Testaufnahme mit Wahrheit, eigene Produktion, LibriVox), Stimmprofile
+# Ergebnisse je Teil im Zweig „ci-hoerspiel-<teil>“.
+name: Hoerspiel-Probe
+
+on:
+  workflow_dispatch:
+    inputs:
+      jobs:
+        description: "Teile (story,tts,produce,analyze)"
+        default: "story,tts,produce,analyze"
+      runner:
+        description: "Apple-Silicon-Rechner"
+        default: "macos-15"
+      minutes:
+        description: "Länge des Hörspiels in Minuten"
+        default: "10"
+      llm_repo:
+        description: "GGUF-Modell für die Geschichte (Hugging Face)"
+        default: "bartowski/google_gemma-4-26B-A4B-it-GGUF"
+      llm_quant:
+        description: "Quantisierung (Teil des Dateinamens)"
+        default: "Q3_K_M"
+      mlx_llm:
+        description: "Kleines MLX-Sprachmodell für den Mac-Test"
+        default: "mlx-community/Qwen3.5-4B-MLX-4bit"
+
+concurrency:
+  group: hoerspiel-probe
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+env:
+  ACE_COMMIT: ca1e85fe9430179831e6bc6be790c332190a3866
+  MLX_AUDIO: "mlx-audio==0.6.5"
+
+jobs:
+  story:
+    if: contains(inputs.jobs, 'story')
+    name: Geschichte (Linux, llama.cpp)
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rechner
+        run: |
+          mkdir -p out
+          { uname -a; nproc; free -g; df -h . | tail -1; } | tee out/rechner.txt
+      - name: llama.cpp
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/llama" && cd "$RUNNER_TEMP/llama"
+          if gh release download -R ggml-org/llama.cpp -p "llama-*-bin-ubuntu-x64.zip" > /dev/null 2>&1; then
+            unzip -q llama-*-bin-ubuntu-x64.zip
+          else
+            git clone -q --depth 1 https://github.com/ggml-org/llama.cpp src
+            cmake -S src -B build -DCMAKE_BUILD_TYPE=Release -DLLAMA_CURL=OFF > /dev/null
+            cmake --build build -j "$(nproc)" --target llama-server > /dev/null
+          fi
+          SERVER=$(find "$RUNNER_TEMP/llama" -name llama-server -type f | head -1)
+          chmod +x "$SERVER"
+          echo "SERVER=$SERVER" >> "$GITHUB_ENV"
+          "$SERVER" --version 2>&1 | tail -2 | tee -a "$GITHUB_WORKSPACE/out/rechner.txt"
+      - name: Modell laden
+        run: |
+          python3 -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install -q huggingface_hub numpy scipy
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
+          "$RUNNER_TEMP/venv/bin/python" - <<'EOF'
+          import os, sys
+          from huggingface_hub import HfApi, hf_hub_download
+          repo, quant = "${{ inputs.llm_repo }}", "${{ inputs.llm_quant }}"
+          files = [f for f in HfApi().list_repo_files(repo) if f.endswith(".gguf") and quant.lower() in f.lower()]
+          files = [f for f in files if "mmproj" not in f.lower()]
+          print("Kandidaten:", files)
+          if not files: sys.exit("kein passendes GGUF")
+          p = hf_hub_download(repo, sorted(files, key=len)[0], local_dir=os.environ["RUNNER_TEMP"] + "/gguf")
+          print("Modell:", p, os.path.getsize(p) // 2**20, "MB")
+          open(os.environ["GITHUB_ENV"], "a").write(f"GGUF={p}\nGGUF_NAME={os.path.basename(p)}\n")
+          EOF
+          echo "Modell: $GGUF_NAME" | tee -a out/rechner.txt
+      - name: Geschichte schreiben
+        run: |
+          "$SERVER" -m "$GGUF" -c 16384 -t "$(nproc)" --port 8080 --jinja -ngl 0 > out/llama-server.log 2>&1 &
+          for i in $(seq 1 120); do curl -sf http://127.0.0.1:8080/health > /dev/null && break; sleep 5; done
+          curl -s http://127.0.0.1:8080/health; echo
+          export HS_LLM_URL=http://127.0.0.1:8080 HS_LLM_NAME="$GGUF_NAME" HS_LLM_LABEL=story
+          python scripts/hoerspiel/probe_story.py out "${{ inputs.minutes }}" 2>&1 | tee out/story.log | grep -E "\[Geschichte\]|\[Probe\]|Error|Traceback"
+          test -f out/story.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: story
+          path: out/story.json
+          if-no-files-found: ignore
+      - name: Ergebnisse in Zweig sichern
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BR="ci-hoerspiel-story"
+          cd out
+          git init -q -b "$BR"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A && git commit -q -m "Hörspiel-Probe story $GITHUB_SHA" || true
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$BR"
+
+  tts:
+    if: contains(inputs.jobs, 'tts')
+    name: Sprachausgabe (${{ inputs.runner }})
+    runs-on: ${{ inputs.runner }}
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rechner und Umgebung
+        run: |
+          mkdir -p out
+          { sw_vers; uname -m; sysctl -n machdep.cpu.brand_string; echo "RAM: $(( $(sysctl -n hw.memsize) / 1073741824 )) GB"; df -h "$HOME" | tail -1; } | tee out/rechner.txt
+          command -v ffmpeg >/dev/null || brew install --quiet ffmpeg > out/brew.log 2>&1 || true
+          curl -LsSf https://astral.sh/uv/install.sh | sh > /dev/null 2>&1
+          export PATH="$HOME/.local/bin:$PATH"
+          uv venv -q --python 3.12 "$RUNNER_TEMP/hs"
+          uv pip install -q --python "$RUNNER_TEMP/hs/bin/python" "$MLX_AUDIO" mlx-whisper mlx-lm soundfile scipy piper-tts > out/install.log 2>&1 || tail -30 out/install.log
+          uv pip list --python "$RUNNER_TEMP/hs/bin/python" > out/pakete.txt
+          uv pip install -q --python "$RUNNER_TEMP/hs/bin/python" pip-licenses > /dev/null 2>&1 && "$RUNNER_TEMP/hs/bin/pip-licenses" --format=markdown --with-urls > out/lizenzen-pakete.md 2>/dev/null || true
+      - name: Sprachausgabe vergleichen
+        continue-on-error: true
+        run: |
+          /usr/bin/time -l "$RUNNER_TEMP/hs/bin/python" scripts/hoerspiel/probe_tts.py out > out/tts.log 2>&1
+          STATUS=$?
+          grep -E "\[Probe\]|maximum resident" out/tts.log | cut -c1-400 | head -60
+          exit $STATUS
+      - name: Kleines Sprachmodell (MLX) schreibt eine Kurzgeschichte
+        continue-on-error: true
+        run: |
+          export HS_LLM_MLX="${{ inputs.mlx_llm }}" HS_LLM_LABEL=mlx-story
+          "$RUNNER_TEMP/hs/bin/python" scripts/hoerspiel/probe_story.py out 3 > out/mlx-story.log 2>&1 || \
+            { export HS_LLM_MLX="mlx-community/Qwen3-4B-Instruct-2507-4bit"; "$RUNNER_TEMP/hs/bin/python" scripts/hoerspiel/probe_story.py out 3 >> out/mlx-story.log 2>&1; }
+          grep -E "\[Geschichte\]|\[Probe\]" out/mlx-story.log | cut -c1-300
+      - name: Ergebnisse in Zweig sichern
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BR="ci-hoerspiel-tts"
+          cd out
+          rm -rf piper-voices
+          find . -name "*.wav" -delete || true
+          git init -q -b "$BR"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A && git commit -q -m "Hörspiel-Probe tts $GITHUB_SHA" || true
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$BR"
+
+  produce:
+    needs: [story]
+    if: always() && contains(inputs.jobs, 'produce')
+    name: Produktion (${{ inputs.runner }})
+    runs-on: ${{ inputs.runner }}
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: story
+          path: story-in
+      - name: Geschichte bereitstellen
+        run: |
+          mkdir -p out
+          if [ ! -f story-in/story.json ]; then
+            git clone -q --depth 1 -b ci-hoerspiel-story "https://github.com/${GITHUB_REPOSITORY}.git" story-branch
+            mkdir -p story-in && cp story-branch/story.json story-in/
+          fi
+          python3 -c "import json;s=json.load(open('story-in/story.json'));print(s['concept'].get('titel'), len(s['scenes']), 'Szenen', s['words'], 'Wörter')"
+          { sw_vers; uname -m; sysctl -n machdep.cpu.brand_string; echo "RAM: $(( $(sysctl -n hw.memsize) / 1073741824 )) GB"; df -h "$HOME" | tail -1; } | tee out/rechner.txt
+      - name: Umgebungen (Hörspiel und KI-Musik)
+        run: |
+          command -v ffmpeg >/dev/null || brew install --quiet ffmpeg > out/brew.log 2>&1 || true
+          curl -LsSf https://astral.sh/uv/install.sh | sh > /dev/null 2>&1
+          export PATH="$HOME/.local/bin:$PATH"
+          uv venv -q --python 3.12 "$RUNNER_TEMP/hs"
+          uv pip install -q --python "$RUNNER_TEMP/hs/bin/python" "$MLX_AUDIO" mlx-whisper soundfile scipy > out/install.log 2>&1 || tail -30 out/install.log
+          git clone -q https://github.com/ace-step/ACE-Step-1.5.git "$RUNNER_TEMP/ace"
+          git -C "$RUNNER_TEMP/ace" checkout -q "$ACE_COMMIT"
+          cd "$RUNNER_TEMP/ace" && uv sync > "$GITHUB_WORKSPACE/out/uv-sync.log" 2>&1 || tail -40 "$GITHUB_WORKSPACE/out/uv-sync.log"
+          uv run acestep-download --dir "$RUNNER_TEMP/checkpoints" > "$GITHUB_WORKSPACE/out/ace-download.log" 2>&1 || tail -20 "$GITHUB_WORKSPACE/out/ace-download.log"
+      - name: Hörspiel produzieren
+        env:
+          KI_PYTHON: ${{ runner.temp }}/ace/.venv/bin/python
+          KI_ACE_ROOT: ${{ runner.temp }}/ace
+          KI_CHECKPOINTS: ${{ runner.temp }}/checkpoints
+        run: |
+          /usr/bin/time -l "$RUNNER_TEMP/hs/bin/python" scripts/hoerspiel/probe_produce.py story-in/story.json out > out/produce.log 2>&1
+          STATUS=$?
+          grep -E "\[Probe\]|maximum resident" out/produce.log | cut -c1-500 | head -80
+          cp "$RUNNER_TEMP/ki-musik-hoerspiel.log" out/ 2>/dev/null || true
+          exit $STATUS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: produktion
+          path: |
+            out/hoerspiel.mp3
+            out/sprecher-wahrheit.json
+          if-no-files-found: ignore
+      - name: Ergebnisse in Zweig sichern
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BR="ci-hoerspiel-produce"
+          cd out
+          find . -name "*.wav" -size +1M -delete || true
+          find . -name "*.flac" | while read -r f; do ffmpeg -loglevel error -y -i "$f" -b:a 128k "${f%.*}.mp3" && rm "$f"; done || true
+          git init -q -b "$BR"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A && git commit -q -m "Hörspiel-Probe produce $GITHUB_SHA" || true
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$BR"
+
+  analyze:
+    needs: [produce]
+    if: always() && contains(inputs.jobs, 'analyze')
+    name: Referenzanalyse (${{ inputs.runner }})
+    runs-on: ${{ inputs.runner }}
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: produktion
+          path: prod-in
+      - name: Umgebung
+        run: |
+          mkdir -p out prod-in
+          if [ ! -f prod-in/hoerspiel.mp3 ]; then
+            git clone -q --depth 1 -b ci-hoerspiel-produce "https://github.com/${GITHUB_REPOSITORY}.git" prod-branch 2>/dev/null && \
+              cp prod-branch/hoerspiel.mp3 prod-branch/sprecher-wahrheit.json prod-in/ 2>/dev/null || true
+          fi
+          { sw_vers; uname -m; sysctl -n machdep.cpu.brand_string; echo "RAM: $(( $(sysctl -n hw.memsize) / 1073741824 )) GB"; } | tee out/rechner.txt
+          command -v ffmpeg >/dev/null || brew install --quiet ffmpeg > out/brew.log 2>&1 || true
+          curl -LsSf https://astral.sh/uv/install.sh | sh > /dev/null 2>&1
+          export PATH="$HOME/.local/bin:$PATH"
+          uv venv -q --python 3.12 "$RUNNER_TEMP/hs"
+          uv pip install -q --python "$RUNNER_TEMP/hs/bin/python" "$MLX_AUDIO" mlx-whisper soundfile scipy pyarrow huggingface_hub > out/install.log 2>&1 || tail -30 out/install.log
+      - name: Analysieren
+        run: |
+          /usr/bin/time -l "$RUNNER_TEMP/hs/bin/python" scripts/hoerspiel/probe_analyze.py out prod-in > out/analyze.log 2>&1
+          STATUS=$?
+          grep -E "\[Probe\]|maximum resident" out/analyze.log | cut -c1-600 | head -60
+          exit $STATUS
+      - name: Ergebnisse in Zweig sichern
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BR="ci-hoerspiel-analyze"
+          cd out
+          find . -name "*.wav" -size +1M -delete || true
+          rm -f analyse/librivox.mp3
+          git init -q -b "$BR"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A && git commit -q -m "Hörspiel-Probe analyze $GITHUB_SHA" || true
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$BR"
