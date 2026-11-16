@@ -164,6 +164,12 @@ final class HoerspielTests: XCTestCase {
     }
 
     func testHardwareRecommendation() {
+        for m in HSModel.all {
+            XCTAssertEqual(m.revision.count, 40, m.repo)
+            XCTAssertTrue(m.revision.allSatisfy { $0.isHexDigit }, m.repo)
+            XCTAssertGreaterThan(m.bytes, 1_000_000, m.repo)
+        }
+        XCTAssertEqual(Set(HSModel.all.map(\.repo)).count, HSModel.all.count)
         XCTAssertEqual(HSHardware.storyModel(memoryGB: 48), HSModel.storyLarge)
         XCTAssertEqual(HSHardware.storyModel(memoryGB: 24), HSModel.storyMedium)
         XCTAssertEqual(HSHardware.storyModel(memoryGB: 8), HSModel.storySmall)

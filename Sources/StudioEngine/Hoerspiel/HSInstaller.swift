@@ -222,7 +222,7 @@ public final class HSInstaller: @unchecked Sendable {
         progress(Progress(step: "\(model.title): Dateiliste wird geladen …", fraction: nil))
         var env = pythonEnvironment()
         env.removeValue(forKey: "HF_HUB_OFFLINE")
-        let r = try await StudioProcess.run(paths.python.path, ["-I", paths.downloadScript.path, model.repo],
+        let r = try await StudioProcess.run(paths.python.path, ["-I", paths.downloadScript.path, model.repo, model.revision],
                                             environment: env, currentDirectory: paths.base, timeout: 6 * 3600) { line, stream in
             guard stream == .stdout, let obj = (try? JSONSerialization.jsonObject(with: Data(line.utf8))) as? [String: Any] else { return }
             switch obj["event"] as? String {

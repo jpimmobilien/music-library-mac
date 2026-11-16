@@ -53,6 +53,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: Prüfen
         run: python3 scripts/hoerspiel/catalog_check.py out
+      - name: Ladeweg der App (download.py, danach ohne Netz)
+        if: always()
+        run: |
+          python3 -m venv "$RUNNER_TEMP/hub" && "$RUNNER_TEMP/hub/bin/pip" install -q huggingface_hub
+          "$RUNNER_TEMP/hub/bin/python" scripts/hoerspiel/offline_check.py out mlx-community/silero-vad 7bc17f22d3c0451bd3a6cd71e759b009271ff49a
+          "$RUNNER_TEMP/hub/bin/pip" show huggingface_hub | head -2 | tee -a out/offline-version.txt
       - name: Ergebnisse in Zweig sichern
         if: always()
         env:

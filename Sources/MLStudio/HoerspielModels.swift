@@ -1,7 +1,8 @@
 import Foundation
 
 // KI-Hörspiel – Modellkatalog und Eignung des Macs (reine Logik, unter Linux getestet).
-// Größen: Angaben der Modellseiten bzw. Messung im Prüfstand (docs/KI_HOERSPIEL_MACHBARKEIT.md).
+// Größen und Stände: gemessen am 16.11.2026 mit scripts/hoerspiel/catalog_check.py (Hugging-Face-API, alle Dateien
+// des Repos; alle Repos frei zugänglich, nicht „gated“) – siehe docs/KI_HOERSPIEL_MACHBARKEIT.md.
 
 public struct HSModel: Hashable, Sendable, Identifiable {
     public enum Purpose: String, Sendable { case story, voiceDesign, voiceClone, analysis, sfx }
@@ -17,38 +18,49 @@ public struct HSModel: Hashable, Sendable, Identifiable {
     public let license: String
     /// Mindest-Arbeitsspeicher, ab dem das Modell sinnvoll ist (GB).
     public let minMemoryGB: Double
+    /// Geprüfter Stand (Commit auf Hugging Face). Geladen wird genau dieser Stand, nicht der jeweils neueste.
+    public let revision: String
 
     // Geschichten (mlx-lm)
     public static let storyLarge = HSModel(repo: "mlx-community/gemma-4-26b-a4b-it-4bit", title: "Gemma 4 26B-A4B (4 bit)",
                                            purpose: .story, detail: "Geschichten und Dialoge – empfohlen ab 32 GB (MoE, 3,8B aktiv)",
-                                           bytes: 15_600_000_000, license: "Apache-2.0", minMemoryGB: 32)
+                                           bytes: 15_373_588_575, license: "Apache-2.0", minMemoryGB: 32,
+                                           revision: "0d77464eeb233a2da68ebf9d7dc4edaac7db956d")
     public static let storyMedium = HSModel(repo: "mlx-community/Qwen3.5-9B-MLX-4bit", title: "Qwen3.5 9B (4 bit)",
                                             purpose: .story, detail: "Geschichten – für Macs mit 16–32 GB",
-                                            bytes: 5_600_000_000, license: "Apache-2.0", minMemoryGB: 16)
+                                            bytes: 5_977_074_591, license: "Apache-2.0", minMemoryGB: 16,
+                                            revision: "938d8919941c6e7efd3c7150eff7fe9d12afa631")
     public static let storySmall = HSModel(repo: "mlx-community/Qwen3.5-4B-MLX-4bit", title: "Qwen3.5 4B (4 bit)",
                                            purpose: .story, detail: "Geschichten – nur für kleine Macs, deutlich schwächer",
-                                           bytes: 2_900_000_000, license: "Apache-2.0", minMemoryGB: 8)
+                                           bytes: 3_061_132_920, license: "Apache-2.0", minMemoryGB: 8,
+                                           revision: "32f3e8ecf65426fc3306969496342d504bfa13f3")
     // Stimmen (mlx-audio, Qwen3-TTS)
     public static let voiceDesign = HSModel(repo: "mlx-community/Qwen3-TTS-12Hz-1.7B-VoiceDesign-bf16",
                                             title: "Qwen3-TTS 1.7B VoiceDesign", purpose: .voiceDesign,
-                                            detail: "Stimmen aus einer Beschreibung entwerfen", bytes: 4_500_000_000,
-                                            license: "Apache-2.0", minMemoryGB: 8)
+                                            detail: "Stimmen aus einer Beschreibung entwerfen", bytes: 4_520_194_992,
+                                            license: "Apache-2.0", minMemoryGB: 8,
+                                            revision: "7d3824abff87e49756bb0f83fb5411de75d160c4")
     public static let voiceClone = HSModel(repo: "mlx-community/Qwen3-TTS-12Hz-1.7B-Base-bf16", title: "Qwen3-TTS 1.7B Base",
                                            purpose: .voiceClone, detail: "Alle Zeilen in der entworfenen Stimme sprechen",
-                                           bytes: 4_500_000_000, license: "Apache-2.0", minMemoryGB: 8)
+                                           bytes: 4_544_212_739, license: "Apache-2.0", minMemoryGB: 8,
+                                           revision: "a6eb4f68e4b056f1215157bb696209bc82a6db48")
     // Analyse
     public static let whisper = HSModel(repo: "mlx-community/whisper-large-v3-turbo", title: "Whisper large-v3-turbo",
-                                        purpose: .analysis, detail: "Text und Wortzeiten einer Referenz", bytes: 1_610_000_000,
-                                        license: "MIT", minMemoryGB: 8)
+                                        purpose: .analysis, detail: "Text und Wortzeiten einer Referenz", bytes: 1_613_979_758,
+                                        license: "MIT", minMemoryGB: 8,
+                                        revision: "a4aaeec0636e6fef84abdcbe3544cb2bf7e9f6fb")
     public static let vad = HSModel(repo: "mlx-community/silero-vad", title: "Silero VAD", purpose: .analysis,
-                                    detail: "Sprache erkennen", bytes: 2_500_000, license: "MIT", minMemoryGB: 8)
+                                    detail: "Sprache erkennen", bytes: 2_182_124, license: "MIT", minMemoryGB: 8,
+                                    revision: "7bc17f22d3c0451bd3a6cd71e759b009271ff49a")
     public static let speaker = HSModel(repo: "aufklarer/SpeechBrain-ECAPA-VoxCeleb-20M-MLX", title: "SpeechBrain ECAPA",
                                         purpose: .analysis, detail: "Sprecher unterscheiden, Stimmen vergleichen",
-                                        bytes: 83_000_000, license: "Apache-2.0", minMemoryGB: 8)
+                                        bytes: 41_669_792, license: "Apache-2.0", minMemoryGB: 8,
+                                        revision: "e749e6e08557f4a3ceb6ce3bf6f0b79efe592a77")
     // Geräusche
     public static let sfx = HSModel(repo: "mlx-community/stable-audio-3-small-sfx", title: "Stable Audio 3 small (Geräusche)",
                                     purpose: .sfx, detail: "Geräusche und Atmosphären aus einer Beschreibung",
-                                    bytes: 3_000_000_000, license: "Stability AI Community License", minMemoryGB: 8)
+                                    bytes: 3_492_142_228, license: "Stability AI Community License", minMemoryGB: 8,
+                                    revision: "ca6c38718d27cd2b446a4661c8851f1f3d0a3870")
 
     public static let story: [HSModel] = [storyLarge, storyMedium, storySmall]
     public static let voices: [HSModel] = [voiceDesign, voiceClone]

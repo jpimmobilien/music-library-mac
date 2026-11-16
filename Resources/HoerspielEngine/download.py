@@ -66,7 +66,20 @@ def main():
         path = snapshot_download(repo_id=repo, revision=info.sha, token=False)
     finally:
         stop.set()
+    pin_main(folder, info.sha)
     emit({"event": "done", "revision": info.sha, "path": path, "bytes": disk_bytes(folder)})
+
+
+def pin_main(folder, sha):
+    """Der Rechenprozess lädt ohne Netz über den Repo-Namen (Zweig „main“). Wird mit einer Commit-Kennung geladen,
+    legt huggingface_hub keinen Verweis „refs/main“ an – ohne ihn findet der Offline-Modus den Stand nicht. Der
+    Verweis zeigt auf genau den geprüften Stand (atomar geschrieben)."""
+    refs = os.path.join(folder, "refs")
+    os.makedirs(refs, exist_ok=True)
+    tmp = os.path.join(refs, ".main.tmp")
+    with open(tmp, "w") as f:
+        f.write(sha)
+    os.replace(tmp, os.path.join(refs, "main"))
 
 
 if __name__ == "__main__":
