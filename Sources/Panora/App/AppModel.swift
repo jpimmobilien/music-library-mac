@@ -66,6 +66,9 @@ enum LaunchMode: Equatable {
 
 @MainActor
 final class AppModel: ObservableObject {
+    /// Eine Instanz für App und AppDelegate (Automatikmodi starten ohne auf das Fenster zu warten).
+    static let shared = AppModel()
+
     @Published var section: AppSection = .chat
     @Published var selectedModelID: String?
     @Published var historyGrid = true
@@ -105,6 +108,7 @@ final class AppModel: ObservableObject {
         chat = ChatController(settings: settings, library: library, engine: engine, hardware: hardware, storage: storage,
                               chats: chats, projects: projects, network: network, experts: experts)
         downloads.library = library
+        NSLog("Panora: AppModel bereit")
     }
 
     var isOffline: Bool { !network.online || settings.forceOffline }

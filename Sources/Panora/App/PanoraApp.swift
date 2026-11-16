@@ -5,7 +5,7 @@ import Combine
 @main
 struct PanoraApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
-    @StateObject private var model = AppModel()
+    @StateObject private var model = AppModel.shared
 
     var body: some Scene {
         Window("Panora", id: "main") {
@@ -39,9 +39,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var cancellables: Set<AnyCancellable> = []
     private var attached = false
 
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        NSLog("Panora: Start abgeschlossen (%@)", String(describing: AppModel.shared.launchMode))
+        // Automatikmodi und Dienste unabhängig vom ersten Erscheinen des Fensters starten
+        attach(AppModel.shared)
+    }
+
     func attach(_ model: AppModel) {
         guard !attached else { return }
         attached = true
+        NSLog("Panora: Dienste werden gestartet")
         model.settings.$appearance
             .sink { mode in
                 switch mode {

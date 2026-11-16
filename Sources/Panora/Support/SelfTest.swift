@@ -17,7 +17,10 @@ enum SelfTest {
 
     static func run(model: AppModel, output: URL) async {
         var checks: [Check] = []
-        func add(_ name: String, _ ok: Bool, _ detail: String) { checks.append(Check(name: name, ok: ok, detail: detail)) }
+        func add(_ name: String, _ ok: Bool, _ detail: String) {
+            NSLog("Panora-Selbsttest: %@ – %@ (%@)", name, ok ? "ok" : "FEHLER", detail)
+            checks.append(Check(name: name, ok: ok, detail: detail))
+        }
 
         // Bundle und Ressourcen
         let bundle = Bundle.main
