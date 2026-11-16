@@ -1,0 +1,453 @@
+{
+  "environment": {
+    "python": "3.12.3",
+    "machine": "x86_64",
+    "system": "Linux",
+    "cores": 4,
+    "ram_gb": 15.6,
+    "mlx": "?",
+    "mlx_audio": "?",
+    "mlx_lm": "0.32.2",
+    "mlx_whisper": "0.4.3",
+    "mlx_device": "Device(cpu, 0)"
+  },
+  "steps": [
+    {
+      "name": "Qwen VoiceDesign geladen",
+      "time": "17:23:04",
+      "seconds": 30.5,
+      "repo": "mlx-community/Qwen3-TTS-12Hz-1.7B-VoiceDesign-bf16"
+    },
+    {
+      "name": "Qwen VoiceDesign fertig",
+      "time": "22:20:20",
+      "peak_mb": 6215.7
+    },
+    {
+      "name": "Qwen Base geladen",
+      "time": "22:20:44",
+      "seconds": 23.6,
+      "repo": "mlx-community/Qwen3-TTS-12Hz-1.7B-Base-bf16"
+    }
+  ],
+  "clips": [
+    {
+      "engine": "qwen_design",
+      "voice": "ERZAEHLER",
+      "sentence": "00_referenz",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ERZAEHLER_00_referenz.wav",
+      "text": "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+      "seconds": 689.47,
+      "duration": 8.39,
+      "ref": null,
+      "rtf": 82.18
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "JUNGE",
+      "sentence": "00_referenz",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/JUNGE_00_referenz.wav",
+      "text": "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+      "seconds": 603.86,
+      "duration": 7.44,
+      "ref": null,
+      "rtf": 81.16
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "MAEDCHEN",
+      "sentence": "00_referenz",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/MAEDCHEN_00_referenz.wav",
+      "text": "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+      "seconds": 596.02,
+      "duration": 7.37,
+      "ref": null,
+      "rtf": 80.87
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "ALTER_MANN",
+      "sentence": "00_referenz",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ALTER_MANN_00_referenz.wav",
+      "text": "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+      "seconds": 660.3,
+      "duration": 8.08,
+      "ref": null,
+      "rtf": 81.72
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "ERZAEHLER",
+      "sentence": "01_neutral",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ERZAEHLER_01_neutral.wav",
+      "text": "Über den Gleisen des alten Bahnhofs lag ein seltsamer Nebel, und niemand wusste, woher die Geräusche kamen.",
+      "seconds": 513.79,
+      "duration": 6.08,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ERZAEHLER_00_referenz.wav",
+      "rtf": 84.5
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "ERZAEHLER",
+      "sentence": "02_aufgeregt",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ERZAEHLER_02_aufgeregt.wav",
+      "text": "Hast du das gehört? Da drüben, hinter der Güterhalle – da bewegt sich etwas!",
+      "seconds": 388.52,
+      "duration": 4.51,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ERZAEHLER_00_referenz.wav",
+      "rtf": 86.15
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "ERZAEHLER",
+      "sentence": "03_neutral",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ERZAEHLER_03_neutral.wav",
+      "text": "Der Schlüssel muss irgendwo im Stellwerk liegen. Wir suchen zuerst unter den Hebeln.",
+      "seconds": 416.23,
+      "duration": 4.91,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ERZAEHLER_00_referenz.wav",
+      "rtf": 84.77
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "ERZAEHLER",
+      "sentence": "04_zahlen",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ERZAEHLER_04_zahlen.wav",
+      "text": "Am 14. Juli 1984 um 22:15 Uhr verschwand der Nachtzug nach Hamburg.",
+      "seconds": 652.87,
+      "duration": 8.01,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ERZAEHLER_00_referenz.wav",
+      "rtf": 81.51
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "ERZAEHLER",
+      "sentence": "05_umlaute",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ERZAEHLER_05_umlaute.wav",
+      "text": "Grüß Gott, Frau Müller! Ihre Brötchen sind heute aber besonders knusprig.",
+      "seconds": 402.16,
+      "duration": 4.86,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ERZAEHLER_00_referenz.wav",
+      "rtf": 82.75
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "ERZAEHLER",
+      "sentence": "06_komposita",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ERZAEHLER_06_komposita.wav",
+      "text": "Eisenbahnverkehrsunternehmen, Fahrkartenschalter und Bahnhofsvorsteher: Das ist unser Fall.",
+      "seconds": 468.4,
+      "duration": 5.6,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ERZAEHLER_00_referenz.wav",
+      "rtf": 83.64
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "ERZAEHLER",
+      "sentence": "07_aengstlich",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ERZAEHLER_07_aengstlich.wav",
+      "text": "Nein! Lass mich los! Ich habe nichts damit zu tun!",
+      "seconds": 414.08,
+      "duration": 4.86,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ERZAEHLER_00_referenz.wav",
+      "rtf": 85.2
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "ERZAEHLER",
+      "sentence": "08_fluesternd",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ERZAEHLER_08_fluesternd.wav",
+      "text": "Psst, leise. Wenn uns hier jemand findet, sind wir geliefert.",
+      "seconds": 433.84,
+      "duration": 5.17,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ERZAEHLER_00_referenz.wav",
+      "rtf": 83.91
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "JUNGE",
+      "sentence": "01_neutral",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/JUNGE_01_neutral.wav",
+      "text": "Über den Gleisen des alten Bahnhofs lag ein seltsamer Nebel, und niemand wusste, woher die Geräusche kamen.",
+      "seconds": 585.25,
+      "duration": 7.07,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/JUNGE_00_referenz.wav",
+      "rtf": 82.78
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "JUNGE",
+      "sentence": "02_aufgeregt",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/JUNGE_02_aufgeregt.wav",
+      "text": "Hast du das gehört? Da drüben, hinter der Güterhalle – da bewegt sich etwas!",
+      "seconds": 435.13,
+      "duration": 5.16,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/JUNGE_00_referenz.wav",
+      "rtf": 84.33
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "JUNGE",
+      "sentence": "03_neutral",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/JUNGE_03_neutral.wav",
+      "text": "Der Schlüssel muss irgendwo im Stellwerk liegen. Wir suchen zuerst unter den Hebeln.",
+      "seconds": 495.44,
+      "duration": 6.01,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/JUNGE_00_referenz.wav",
+      "rtf": 82.44
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "JUNGE",
+      "sentence": "04_zahlen",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/JUNGE_04_zahlen.wav",
+      "text": "Am 14. Juli 1984 um 22:15 Uhr verschwand der Nachtzug nach Hamburg.",
+      "seconds": 506.1,
+      "duration": 6.07,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/JUNGE_00_referenz.wav",
+      "rtf": 83.38
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "JUNGE",
+      "sentence": "05_umlaute",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/JUNGE_05_umlaute.wav",
+      "text": "Grüß Gott, Frau Müller! Ihre Brötchen sind heute aber besonders knusprig.",
+      "seconds": 340.52,
+      "duration": 3.88,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/JUNGE_00_referenz.wav",
+      "rtf": 87.76
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "JUNGE",
+      "sentence": "06_komposita",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/JUNGE_06_komposita.wav",
+      "text": "Eisenbahnverkehrsunternehmen, Fahrkartenschalter und Bahnhofsvorsteher: Das ist unser Fall.",
+      "seconds": 490.09,
+      "duration": 5.84,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/JUNGE_00_referenz.wav",
+      "rtf": 83.92
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "JUNGE",
+      "sentence": "07_aengstlich",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/JUNGE_07_aengstlich.wav",
+      "text": "Nein! Lass mich los! Ich habe nichts damit zu tun!",
+      "seconds": 309.72,
+      "duration": 3.54,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/JUNGE_00_referenz.wav",
+      "rtf": 87.49
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "JUNGE",
+      "sentence": "08_fluesternd",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/JUNGE_08_fluesternd.wav",
+      "text": "Psst, leise. Wenn uns hier jemand findet, sind wir geliefert.",
+      "seconds": 432.25,
+      "duration": 5.19,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/JUNGE_00_referenz.wav",
+      "rtf": 83.29
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "MAEDCHEN",
+      "sentence": "01_neutral",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/MAEDCHEN_01_neutral.wav",
+      "text": "Über den Gleisen des alten Bahnhofs lag ein seltsamer Nebel, und niemand wusste, woher die Geräusche kamen.",
+      "seconds": 657.14,
+      "duration": 8.12,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/MAEDCHEN_00_referenz.wav",
+      "rtf": 80.93
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "MAEDCHEN",
+      "sentence": "02_aufgeregt",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/MAEDCHEN_02_aufgeregt.wav",
+      "text": "Hast du das gehört? Da drüben, hinter der Güterhalle – da bewegt sich etwas!",
+      "seconds": 373.44,
+      "duration": 4.44,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/MAEDCHEN_00_referenz.wav",
+      "rtf": 84.11
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "MAEDCHEN",
+      "sentence": "03_neutral",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/MAEDCHEN_03_neutral.wav",
+      "text": "Der Schlüssel muss irgendwo im Stellwerk liegen. Wir suchen zuerst unter den Hebeln.",
+      "seconds": 442.99,
+      "duration": 5.33,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/MAEDCHEN_00_referenz.wav",
+      "rtf": 83.11
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "MAEDCHEN",
+      "sentence": "04_zahlen",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/MAEDCHEN_04_zahlen.wav",
+      "text": "Am 14. Juli 1984 um 22:15 Uhr verschwand der Nachtzug nach Hamburg.",
+      "seconds": 600.99,
+      "duration": 7.34,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/MAEDCHEN_00_referenz.wav",
+      "rtf": 81.88
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "MAEDCHEN",
+      "sentence": "05_umlaute",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/MAEDCHEN_05_umlaute.wav",
+      "text": "Grüß Gott, Frau Müller! Ihre Brötchen sind heute aber besonders knusprig.",
+      "seconds": 485.26,
+      "duration": 5.83,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/MAEDCHEN_00_referenz.wav",
+      "rtf": 83.23
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "MAEDCHEN",
+      "sentence": "06_komposita",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/MAEDCHEN_06_komposita.wav",
+      "text": "Eisenbahnverkehrsunternehmen, Fahrkartenschalter und Bahnhofsvorsteher: Das ist unser Fall.",
+      "seconds": 566.18,
+      "duration": 6.91,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/MAEDCHEN_00_referenz.wav",
+      "rtf": 81.94
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "MAEDCHEN",
+      "sentence": "07_aengstlich",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/MAEDCHEN_07_aengstlich.wav",
+      "text": "Nein! Lass mich los! Ich habe nichts damit zu tun!",
+      "seconds": 355.85,
+      "duration": 4.17,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/MAEDCHEN_00_referenz.wav",
+      "rtf": 85.34
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "MAEDCHEN",
+      "sentence": "08_fluesternd",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/MAEDCHEN_08_fluesternd.wav",
+      "text": "Psst, leise. Wenn uns hier jemand findet, sind wir geliefert.",
+      "seconds": 393.21,
+      "duration": 4.61,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/MAEDCHEN_00_referenz.wav",
+      "rtf": 85.3
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "ALTER_MANN",
+      "sentence": "01_neutral",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ALTER_MANN_01_neutral.wav",
+      "text": "Über den Gleisen des alten Bahnhofs lag ein seltsamer Nebel, und niemand wusste, woher die Geräusche kamen.",
+      "seconds": 593.87,
+      "duration": 7.03,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ALTER_MANN_00_referenz.wav",
+      "rtf": 84.48
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "ALTER_MANN",
+      "sentence": "02_aufgeregt",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ALTER_MANN_02_aufgeregt.wav",
+      "text": "Hast du das gehört? Da drüben, hinter der Güterhalle – da bewegt sich etwas!",
+      "seconds": 552.32,
+      "duration": 6.59,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ALTER_MANN_00_referenz.wav",
+      "rtf": 83.81
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "ALTER_MANN",
+      "sentence": "03_neutral",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ALTER_MANN_03_neutral.wav",
+      "text": "Der Schlüssel muss irgendwo im Stellwerk liegen. Wir suchen zuerst unter den Hebeln.",
+      "seconds": 483.49,
+      "duration": 5.8,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ALTER_MANN_00_referenz.wav",
+      "rtf": 83.36
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "ALTER_MANN",
+      "sentence": "04_zahlen",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ALTER_MANN_04_zahlen.wav",
+      "text": "Am 14. Juli 1984 um 22:15 Uhr verschwand der Nachtzug nach Hamburg.",
+      "seconds": 715.38,
+      "duration": 8.66,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ALTER_MANN_00_referenz.wav",
+      "rtf": 82.61
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "ALTER_MANN",
+      "sentence": "05_umlaute",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ALTER_MANN_05_umlaute.wav",
+      "text": "Grüß Gott, Frau Müller! Ihre Brötchen sind heute aber besonders knusprig.",
+      "seconds": 411.59,
+      "duration": 4.86,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ALTER_MANN_00_referenz.wav",
+      "rtf": 84.69
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "ALTER_MANN",
+      "sentence": "06_komposita",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ALTER_MANN_06_komposita.wav",
+      "text": "Eisenbahnverkehrsunternehmen, Fahrkartenschalter und Bahnhofsvorsteher: Das ist unser Fall.",
+      "seconds": 560.6,
+      "duration": 6.84,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ALTER_MANN_00_referenz.wav",
+      "rtf": 81.96
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "ALTER_MANN",
+      "sentence": "07_aengstlich",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ALTER_MANN_07_aengstlich.wav",
+      "text": "Nein! Lass mich los! Ich habe nichts damit zu tun!",
+      "seconds": 404.37,
+      "duration": 4.83,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ALTER_MANN_00_referenz.wav",
+      "rtf": 83.72
+    },
+    {
+      "engine": "qwen_design",
+      "voice": "ALTER_MANN",
+      "sentence": "08_fluesternd",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ALTER_MANN_08_fluesternd.wav",
+      "text": "Psst, leise. Wenn uns hier jemand findet, sind wir geliefert.",
+      "seconds": 405.69,
+      "duration": 4.72,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ALTER_MANN_00_referenz.wav",
+      "rtf": 85.95
+    },
+    {
+      "engine": "qwen_clone",
+      "voice": "ERZAEHLER",
+      "sentence": "01_neutral",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_clone/ERZAEHLER_01_neutral.wav",
+      "text": "Über den Gleisen des alten Bahnhofs lag ein seltsamer Nebel, und niemand wusste, woher die Geräusche kamen.",
+      "seconds": 956.31,
+      "duration": 5.58,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ERZAEHLER_00_referenz.wav",
+      "rtf": 171.38
+    },
+    {
+      "engine": "qwen_clone",
+      "voice": "ERZAEHLER",
+      "sentence": "02_aufgeregt",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_clone/ERZAEHLER_02_aufgeregt.wav",
+      "text": "Hast du das gehört? Da drüben, hinter der Güterhalle – da bewegt sich etwas!",
+      "seconds": 883.99,
+      "duration": 5.12,
+      "ref": "/home/runner/work/music-library-mac/music-library-mac/out/tts/qwen_design/ERZAEHLER_00_referenz.wav",
+      "rtf": 172.65
+    }
+  ]
+}
