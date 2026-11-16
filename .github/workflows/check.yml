@@ -6,6 +6,10 @@ on:
   push:
     branches: [dev]
   workflow_dispatch:
+    inputs:
+      tests:
+        description: "Testfilter (swift test --filter)"
+        default: "V21|DateAdded|AlbumShuffle|AudioEngineTests|TimePitch|LibraryStoreTests|PlayQueue"
 
 concurrency:
   group: check-${{ github.ref }}
@@ -58,9 +62,11 @@ jobs:
           exit $STATUS
       - name: Tests ausführen (MLCore, MLStore, Klangkette)
         if: success() && matrix.os == 'macos-26-intel'
+        env:
+          TESTS: ${{ inputs.tests }}
         run: |
           set +e
-          swift test --skip-build --filter "V21|DateAdded|AlbumShuffle|AudioEngineTests|TimePitch|LibraryStoreTests|PlayQueue" > run.log 2>&1
+          swift test --skip-build --filter "${TESTS:-V21|DateAdded|AlbumShuffle|AudioEngineTests|TimePitch|LibraryStoreTests|PlayQueue}" > run.log 2>&1
           STATUS=$?
           grep -E "error|failed|passed|\\[Audio\\]|\\[Pitch\\]" run.log | head -150
           tail -5 run.log

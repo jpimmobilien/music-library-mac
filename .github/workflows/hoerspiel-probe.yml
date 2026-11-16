@@ -3,7 +3,7 @@
 #   tts      Mac: deutsche Sprachausgabe im Vergleich (Qwen3-TTS, VoxCPM2, Chatterbox, Piper) + kleines MLX-Sprachmodell
 #   produce  Mac: 10-Minuten-Hörspiel aus der Geschichte (Stimmen, Geräusche, Musik über die KI-Musik, Mischung)
 #   analyze  Mac: Referenzanalyse (MLS-Testaufnahme mit Wahrheit, eigene Produktion, LibriVox), Stimmprofile
-# Ergebnisse je Teil im Zweig „ci-hoerspiel-<teil>“.
+# Ergebnisse je Teil im Zweig „ci-hoerspiel-<teil>-<rechner>“ (Geschichte: „ci-hoerspiel-story“).
 name: Hoerspiel-Probe
 
 on:
@@ -149,7 +149,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          BR="ci-hoerspiel-tts"
+          BR="ci-hoerspiel-tts-${{ inputs.runner }}"
           cd out
           rm -rf piper-voices
           find . -name "*.wav" -delete || true
@@ -216,7 +216,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          BR="ci-hoerspiel-produce"
+          BR="ci-hoerspiel-produce-${{ inputs.runner }}"
           cd out
           find . -name "*.wav" -size +1M -delete || true
           find . -name "*.flac" | while read -r f; do ffmpeg -loglevel error -y -i "$f" -b:a 128k "${f%.*}.mp3" && rm "$f"; done || true
@@ -243,8 +243,11 @@ jobs:
         run: |
           mkdir -p out prod-in
           if [ ! -f prod-in/hoerspiel.mp3 ]; then
-            git clone -q --depth 1 -b ci-hoerspiel-produce "https://github.com/${GITHUB_REPOSITORY}.git" prod-branch 2>/dev/null && \
-              cp prod-branch/hoerspiel.mp3 prod-branch/sprecher-wahrheit.json prod-in/ 2>/dev/null || true
+            for b in "ci-hoerspiel-produce-${{ inputs.runner }}" ci-hoerspiel-produce-macos-15 ci-hoerspiel-produce-macos-14 ci-hoerspiel-produce-macos-26 ci-hoerspiel-produce; do
+              rm -rf prod-branch
+              git clone -q --depth 1 -b "$b" "https://github.com/${GITHUB_REPOSITORY}.git" prod-branch 2>/dev/null && \
+                cp prod-branch/hoerspiel.mp3 prod-branch/sprecher-wahrheit.json prod-in/ 2>/dev/null && { echo "Produktion aus $b"; break; }
+            done || true
           fi
           { sw_vers; uname -m; sysctl -n machdep.cpu.brand_string; echo "RAM: $(( $(sysctl -n hw.memsize) / 1073741824 )) GB"; } | tee out/rechner.txt
           command -v ffmpeg >/dev/null || brew install --quiet ffmpeg > out/brew.log 2>&1 || true
@@ -263,7 +266,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          BR="ci-hoerspiel-analyze"
+          BR="ci-hoerspiel-analyze-${{ inputs.runner }}"
           cd out
           find . -name "*.wav" -size +1M -delete || true
           rm -f analyse/librivox.mp3
