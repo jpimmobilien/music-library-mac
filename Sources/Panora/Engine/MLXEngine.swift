@@ -1,3 +1,4 @@
+#if !PANORA_NO_MLX
 import Foundation
 import MLX
 import MLXLLM
@@ -11,34 +12,6 @@ import PanoraCore
 // und gibt den Speicher beim Entladen wieder frei. MLX ist für Apple Silicon optimiert und nutzt den
 // Unified Memory direkt über Metal.
 // =============================================================================================
-
-enum GenerationEvent: Sendable {
-    case chunk(String)
-    case finished(GenerationStats)
-}
-
-struct GenerationStats: Sendable {
-    var promptTokens: Int
-    var generatedTokens: Int
-    var tokensPerSecond: Double
-    var promptTokensPerSecond: Double
-}
-
-enum EngineError: Error, LocalizedError {
-    case notLoaded(String)
-    case folderMissing(String)
-    case unsupported(String)
-    case ollama(String)
-
-    var errorDescription: String? {
-        switch self {
-        case .notLoaded(let name): return "\(name) ist nicht geladen."
-        case .folderMissing(let path): return "Der Modellordner fehlt: \(path). Ist das Laufwerk angeschlossen?"
-        case .unsupported(let message): return message
-        case .ollama(let message): return "Ollama: \(message)"
-        }
-    }
-}
 
 /// Brücke zwischen swift-transformers und mlx-swift-lm (entspricht dem Makro #huggingFaceTokenizerLoader).
 struct PanoraTokenizerLoader: MLXLMCommon.TokenizerLoader {
@@ -175,3 +148,24 @@ actor MLXEngine {
         continuation.yield(.finished(stats))
     }
 }
+
+#else
+import Foundation
+import PanoraCore
+
+/// Vorschau-Build ohne MLX (z. B. Intel-Mac in der CI): gleiche Schnittstelle, lädt aber keine Modelle.
+actor MLXEngine {
+    func isLoaded(_ id: String) -> Bool { false }
+    var loadedIDs: [String] { [] }
+    func load(id: String, directory: URL) async throws {
+        throw EngineError.unsupported("MLX ist in diesem Vorschau-Build nicht enthalten (nur Apple Silicon).")
+    }
+    func unload(id: String) {}
+    func unloadAll() {}
+    func activeMemory() -> Int { 0 }
+    nonisolated func stream(id: String, messages: [PromptMessage], maxTokens: Int, temperature: Double,
+                            thinking: Bool?) -> AsyncThrowingStream<GenerationEvent, Error> {
+        AsyncThrowingStream { $0.finish(throwing: EngineError.notLoaded(id)) }
+    }
+}
+#endif

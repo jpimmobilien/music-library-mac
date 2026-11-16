@@ -23,8 +23,12 @@ enum SelfTest {
         let bundle = Bundle.main
         add("Bundle-ID", bundle.bundleIdentifier == "de.panora.app", bundle.bundleIdentifier ?? "–")
         add("App-Symbol", NSApp.applicationIconImage != nil, "vorhanden")
+        #if PANORA_NO_MLX
+        add("MLX-Metal-Shader im Bundle", true, "Vorschau-Build ohne MLX (Intel)")
+        #else
         let metallibs = findFiles(in: bundle.bundleURL, suffix: ".metallib")
         add("MLX-Metal-Shader im Bundle", !metallibs.isEmpty, metallibs.map { $0.lastPathComponent }.joined(separator: ", "))
+        #endif
 
         // Hardware
         model.hardware.sample()

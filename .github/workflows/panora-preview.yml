@@ -1,0 +1,91 @@
+# Panora – Oberfläche ohne MLX auf einem Intel-Runner: Selbsttest und Bildschirmfotos.
+# Manuell gestartet (Apple-Silicon-Runner sind bei GitHub oft knapp). Ergebnisse → „ci-ergebnisse-panora-preview“.
+name: Panora Vorschau (Intel)
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: panora-preview-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    name: Oberfläche (macOS 26 · Intel, ohne MLX)
+    runs-on: macos-26-intel
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Werkzeuge
+        run: |
+          mkdir -p logs
+          X=$(ls -d /Applications/Xcode_2[6-9]*.app 2>/dev/null | grep -vi -E "beta|rc" | sort -V | tail -1)
+          if [ -n "$X" ]; then sudo xcode-select -s "$X"; fi
+          { sw_vers; uname -m; xcodebuild -version; } 2>&1 | tee logs/system.txt
+          brew install xcodegen >/dev/null 2>&1 || brew install xcodegen
+      - name: Vorschau bauen
+        run: |
+          set -o pipefail
+          scripts/build_preview.sh 2>&1 | tee logs/build-preview.txt
+      - name: Selbsttest
+        run: |
+          RUN_LOG=logs/selftest.log scripts/run_app_mode.sh build/PanoraPreview.app 180 --selftest "$PWD/logs/selftest.json" || true
+          cat logs/selftest.json || true
+      - name: Bildschirmfotos (Liquid Glass)
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: |
+          mkdir -p snapshots/liquid-glass
+          RUN_LOG=logs/snapshots.log scripts/run_app_mode.sh build/PanoraPreview.app 600 --snapshot "$PWD/snapshots/liquid-glass"
+      - name: Bildschirmfotos (ohne Liquid Glass)
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        env:
+          PANORA_FORCE_GLASS_FALLBACK: "1"
+        run: |
+          mkdir -p snapshots/fallback
+          RUN_LOG=logs/snapshots-fallback.log scripts/run_app_mode.sh build/PanoraPreview.app 600 --snapshot "$PWD/snapshots/fallback"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: preview
+          path: |
+            logs/
+            snapshots/
+          if-no-files-found: ignore
+
+  results:
+    name: Ergebnisse sichern
+    if: always()
+    needs: [preview]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: preview
+          path: ergebnisse
+      - name: In Zweig „ci-ergebnisse-panora-preview“ schreiben
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 -m pip install --quiet --user --break-system-packages pillow
+          python3 - <<'PY'
+          import pathlib
+          from PIL import Image
+          for p in pathlib.Path("ergebnisse").rglob("*.png"):
+              Image.open(p).convert("RGB").save(p.with_suffix(".jpg"), quality=86, optimize=True)
+              p.unlink()
+          PY
+          cd ergebnisse
+          { echo "Lauf: ${GITHUB_RUN_NUMBER} (${GITHUB_SHA})"; echo "preview: ${{ needs.preview.result }}"; date -u; } > ERGEBNIS.txt
+          git init -q -b ci-ergebnisse-panora-preview
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Vorschau Panora Lauf ${GITHUB_RUN_NUMBER}"
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" ci-ergebnisse-panora-preview

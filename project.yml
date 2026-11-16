@@ -66,3 +66,24 @@ targets:
       - package: SwiftTransformers
         product: Tokenizers
     scheme: {}
+  # Vorschau ohne MLX (z. B. auf Intel-Runnern der CI): gleiche Oberfläche, keine Modelle – nur für Tests und Bilder.
+  PanoraPreview:
+    type: application
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - path: Sources/Panora
+      - path: Resources/AppIcon.icns
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_NAME: Panora
+        PRODUCT_BUNDLE_IDENTIFIER: de.panora.app
+        INFOPLIST_FILE: Xcode/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        SWIFT_ACTIVE_COMPILATION_CONDITIONS: "$(inherited) PANORA_NO_MLX"
+        ASSETCATALOG_COMPILER_APPICON_NAME: ""
+    dependencies:
+      - package: PanoraPackage
+        product: PanoraCore
+    scheme: {}
