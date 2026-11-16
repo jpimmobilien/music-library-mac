@@ -116,6 +116,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if SnapshotRunner.isRequested {
             return SnapshotRunner.makeDemoModel()
         }
+        if HoerspielE2E.isRequested {
+            return HoerspielE2E.makeModel()
+        }
         if Benchmark.isRequested {
             return Benchmark.makeModel()
         }
@@ -152,6 +155,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             let model = AppDelegate.makeModel()
             if SnapshotRunner.isRequested {
                 SnapshotRunner.run(model: model)
+                return
+            }
+            if HoerspielE2E.isRequested {
+                HoerspielE2E.run(model: model)
                 return
             }
             if Benchmark.isRequested {

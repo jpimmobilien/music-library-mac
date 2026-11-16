@@ -455,6 +455,8 @@ final class HoerspielModel: ObservableObject {
     // MARK: Hilfen für Unterklassen der Abläufe
 
     func setNotice(_ text: String?) { notice = text }
+    /// Weitere Meldung desselben Ablaufs anhängen (z. B. Geräusche und Musik übersprungen).
+    func addNotice(_ text: String) { notice = [notice, text].compactMap { $0 }.joined(separator: "\n") }
     func setVoices(_ v: [HSVoiceProfile]) {
         voices = v
         if !demo { try? store.saveVoices(v) }

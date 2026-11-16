@@ -283,6 +283,11 @@ extension HoerspielModel {
             update(id) { $0.set(.sfx, .done) }
             return
         }
+        guard isInstalled(.sfx) else {
+            addNotice("Geräusche übersprungen: Das Geräuschmodell ist nicht geladen (Einstellungen → KI-Hörbücher). "
+                      + "Die Mischung entsteht ohne die \(missing.count) fehlenden Geräusche.")
+            return
+        }
         update(id) { $0.set(.sfx, .running) }
         let lib = store.sfxDir.appendingPathComponent("erzeugt", isDirectory: true)
         for (n, w) in missing.enumerated() {
@@ -306,7 +311,7 @@ extension HoerspielModel {
     func stepMusic(_ id: UUID, _ e: HSEngine) async throws {
         guard let p = production(id) else { return }
         guard let ki, ki.setup == .ready else {
-            setNotice("Musik übersprungen: KI-Musik ist nicht eingerichtet (Einstellungen → KI-Musik). Die Mischung entsteht ohne Musik.")
+            addNotice("Musik übersprungen: KI-Musik ist nicht eingerichtet (Einstellungen → KI-Musik). Die Mischung entsteht ohne Musik.")
             return
         }
         let plan = try await e.musicPlan(story: HSJSON.story(p))

@@ -3,6 +3,8 @@
 #   story    Linux: Geschichte mit Gemma 4 26B-A4B (llama.cpp, Q3_K_M) – Stellvertreter für das große Modell auf dem Mac
 #   tts      Mac: deutsche Sprachausgabe im Vergleich (Qwen3-TTS, VoxCPM2, Chatterbox, Piper) + kleines MLX-Sprachmodell
 #   produce  Mac: 10-Minuten-Hörspiel aus der Geschichte (Stimmen, Geräusche, Musik über die KI-Musik, Mischung)
+#   app      Mac: Abnahme mit der gebauten App (--hoerspiel-e2e): Einrichtung, Hörspiel, Editor, Mehrspur, Export,
+#            Hörbuch, Stimmenstudio, Referenzanalyse – derselbe Code wie beim Klicken
 #   analyze  Mac: Referenzanalyse (MLS-Testaufnahme mit Wahrheit, eigene Produktion, LibriVox), Stimmprofile
 # Ergebnisse je Teil im Zweig „ci-hoerspiel-<teil>-<rechner>“ (Geschichte: „ci-hoerspiel-story“).
 name: Hoerspiel-Probe
@@ -11,7 +13,7 @@ on:
   workflow_dispatch:
     inputs:
       jobs:
-        description: "Teile (catalog,story,tts,produce,analyze)"
+        description: "Teile (catalog,story,tts,produce,analyze,app)"
         default: "story,tts,produce,analyze"
       runner:
         description: "Apple-Silicon-Rechner"
@@ -342,4 +344,47 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A && git commit -q -m "Hörspiel-Probe analyze $GITHUB_SHA" || true
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$BR"
+
+  app:
+    if: contains(inputs.jobs, 'app')
+    name: App-Abnahme (${{ inputs.runner }})
+    runs-on: ${{ inputs.runner }}
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+      - name: Werkzeuge
+        run: |
+          X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -n "$X" ]; then sudo xcode-select -s "$X"; fi
+          mkdir -p out
+          { sw_vers; uname -m; sysctl -n machdep.cpu.brand_string; echo "RAM: $(( $(sysctl -n hw.memsize) / 1073741824 )) GB"; df -h "$HOME" | tail -1; xcodebuild -version | head -1; } | tee out/rechner.txt
+          command -v ffmpeg >/dev/null || brew install --quiet ffmpeg > out/brew.log 2>&1 || true
+      - name: App bauen
+        run: |
+          ARCHS="$(uname -m)" scripts/build_app.sh > out/build-app.log 2>&1 || { grep -n "error:" out/build-app.log | head -50; tail -40 out/build-app.log; exit 1; }
+          ls -la "build/Music Library.app/Contents/Resources/HoerspielEngine"
+      - name: Abnahme
+        env:
+          HS_E2E_STORY: ${{ inputs.mlx_llm }}
+          HS_E2E_MINUTES: "3"
+        run: |
+          "build/Music Library.app/Contents/MacOS/Music Library" --hoerspiel-e2e "$PWD/out/e2e" > out/app.log 2>&1
+          STATUS=$?
+          cat out/e2e/e2e.log 2>/dev/null | cut -c1-400
+          exit $STATUS
+      - name: Ergebnisse in Zweig sichern
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BR="ci-hoerspiel-app-${{ inputs.runner }}"
+          cd out
+          rm -rf e2e/Umgebung
+          find . -name "*.wav" -size +1M -delete || true
+          find . -name "*.m4a" -size +20M -delete || true
+          git init -q -b "$BR"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A && git commit -q -m "Hörspiel-Probe app $GITHUB_SHA" || true
           git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$BR"

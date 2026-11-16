@@ -202,9 +202,6 @@ struct HSExportSheet: View {
         panel.prompt = "Hierhin exportieren"
         panel.directoryURL = hs.store.root
         guard panel.runModal() == .OK, let dir = panel.url else { return }
-        let items = HSExportPlan.items(for: production, scope: scope)
-        var options = ExportOptions.defaults(for: format)
-        options.mp3Bitrate = bitrate
         let meta = StudioMetadata(title: title, artist: artist, album: production.title, albumArtist: artist,
                                   year: Calendar.current.component(.year, from: Date()), genre: genre, cover: cover)
         running = true
@@ -212,30 +209,44 @@ struct HSExportSheet: View {
         result = nil
         let p = production
         Task { @MainActor in
-            var done = 0
             do {
-                for item in items {
-                    var m = meta
-                    m.title = scope == .whole ? title : item.title
-                    m.trackNumber = item.trackNumber
-                    let out = dir.appendingPathComponent(item.fileName).appendingPathExtension(format.fileExtension)
-                    let req = ExportRequest(input: hs.file(item.source, in: p), trim: item.trim, options: options, metadata: m, output: out)
-                    let base = Double(done) / Double(items.count)
-                    let r = try await AudioExporter().export(req, pause: nil) { v in
-                        Task { @MainActor in progress = base + v / Double(items.count) }
-                    }
-                    if scope == .whole, ChapterWriter.supportedExtensions.contains(format.fileExtension) {
-                        try ChapterWriter.write(Self.chapterMarks(p), total: r.duration, to: r.output)
-                    }
-                    done += 1
+                let files = try await hs.export(p, scope: scope, format: format, bitrate: bitrate, metadata: meta, to: dir) { v in
+                    Task { @MainActor in progress = v }
                 }
-                result = "\(done) Datei\(done == 1 ? "" : "en") exportiert nach \(dir.path)."
-                hs.update(p.id) { $0.set(.export, .done) }
+                result = "\(files.count) Datei\(files.count == 1 ? "" : "en") exportiert nach \(dir.path)."
                 NSWorkspace.shared.activateFileViewerSelecting([dir])
             } catch {
-                result = "Export nach \(done) Datei(en) abgebrochen: \(StudioModel.message(error))"
+                result = "Export abgebrochen: \(StudioModel.message(error))"
             }
             running = false
         }
+    }
+}
+
+extension HoerspielModel {
+    /// Export wie im Dialog „Exportieren“: ganze Produktion, Kapitel oder Szenen; bei der ganzen Produktion als MP3/M4A
+    /// mit Kapitelmarken. Gibt die geschriebenen Dateien zurück.
+    func export(_ p: HSProduction, scope: HSExportScope, format: StudioFormat, bitrate: Int, metadata meta: StudioMetadata, to dir: URL,
+                progress: @escaping @Sendable (Double) -> Void) async throws -> [URL] {
+        let items = HSExportPlan.items(for: p, scope: scope)
+        var options = ExportOptions.defaults(for: format)
+        options.mp3Bitrate = bitrate
+        var files: [URL] = []
+        for item in items {
+            var m = meta
+            m.title = scope == .whole ? (meta.title.isEmpty ? p.title : meta.title) : item.title
+            m.trackNumber = item.trackNumber
+            let out = dir.appendingPathComponent(item.fileName).appendingPathExtension(format.fileExtension)
+            let req = ExportRequest(input: file(item.source, in: p), trim: item.trim, options: options, metadata: m, output: out)
+            let base = Double(files.count) / Double(items.count)
+            let count = Double(items.count)
+            let r = try await AudioExporter().export(req, pause: nil) { v in progress(base + v / count) }
+            if scope == .whole, ChapterWriter.supportedExtensions.contains(format.fileExtension) {
+                try ChapterWriter.write(HSExportSheet.chapterMarks(p), total: r.duration, to: r.output)
+            }
+            files.append(r.output)
+        }
+        update(p.id) { $0.set(.export, .done) }
+        return files
     }
 }

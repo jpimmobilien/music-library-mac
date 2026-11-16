@@ -183,7 +183,12 @@ private struct HSAuthorizedVoiceSheet: View {
                     hs.addAuthorizedVoice(name: name, person: person, grantedTo: grantedTo, scope: scope, sample: s, consent: c, document: document)
                     dismiss()
                 }
-                .disabled(name.isEmpty || person.isEmpty || grantedTo.isEmpty || sample == nil || consent == nil || hs.isWorking || hs.setup != .ready)
+                .disabled(name.isEmpty || person.isEmpty || grantedTo.isEmpty || sample == nil || consent == nil || hs.isWorking
+                          || hs.setup != .ready || !HSModel.analysis.allSatisfy { hs.isInstalled($0) })
+            }
+            if !HSModel.analysis.allSatisfy({ hs.isInstalled($0) }) {
+                Text("Für die Prüfung werden Whisper, Silero VAD und SpeechBrain-ECAPA gebraucht (ca. 1,7 GB) – laden unter Einstellungen → KI-Hörbücher.")
+                    .textStyle(Typo.bodySmall).foregroundColor(colors.danger)
             }
         }
         .padding(22)

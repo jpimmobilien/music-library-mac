@@ -88,6 +88,11 @@ extension HoerspielModel {
     func addAuthorizedVoice(name: String, person: String, grantedTo: String, scope: String, sample: URL, consent: URL, document: URL?) {
         let n = name.trimmingCharacters(in: .whitespacesAndNewlines), who = person.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !n.isEmpty, !who.isEmpty else { return }
+        guard HSModel.analysis.allSatisfy({ isInstalled($0) }) else {
+            setNotice("Für die Prüfung der Einwilligung werden Whisper, Silero VAD und SpeechBrain-ECAPA gebraucht (ca. 1,7 GB) – "
+                      + "laden unter Einstellungen → KI-Hörbücher.")
+            return
+        }
         run("Einwilligung prüfen") { m, e in
             let fm = FileManager.default
             try fm.createDirectory(at: m.store.voicesDir, withIntermediateDirectories: true)
