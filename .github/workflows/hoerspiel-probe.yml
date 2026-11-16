@@ -29,7 +29,7 @@ on:
         default: "mlx-community/Qwen3.5-4B-MLX-4bit"
 
 concurrency:
-  group: hoerspiel-probe
+  group: hoerspiel-probe-${{ inputs.jobs }}-${{ inputs.runner }}
   cancel-in-progress: false
 
 permissions:
