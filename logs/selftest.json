@@ -1,0 +1,79 @@
+{
+  "checks" : [
+    {
+      "detail" : "de.panora.app",
+      "name" : "Bundle-ID",
+      "ok" : true
+    },
+    {
+      "detail" : "AppIcon.icns",
+      "name" : "App-Symbol",
+      "ok" : true
+    },
+    {
+      "detail" : "Vorschau-Build ohne MLX (Intel)",
+      "name" : "MLX-Metal-Shader im Bundle",
+      "ok" : true
+    },
+    {
+      "detail" : "15,0 GB",
+      "name" : "Arbeitsspeicher erkannt",
+      "ok" : true
+    },
+    {
+      "detail" : "Intel(R) Core(TM) i7-8700B CPU @ 3.20GHz",
+      "name" : "Prozessor erkannt",
+      "ok" : true
+    },
+    {
+      "detail" : "9,3 GB",
+      "name" : "Verfügbarer Speicher",
+      "ok" : true
+    },
+    {
+      "detail" : "Macintosh HD (Interne SSD (Startvolume))",
+      "name" : "Laufwerke erkannt",
+      "ok" : true
+    },
+    {
+      "detail" : "Qwen3 8B, 40K, KV 147456 B\/Token",
+      "name" : "Modellordner erkannt",
+      "ok" : true
+    },
+    {
+      "detail" : "Qwen3.6 35B A3B übernimmt: Code schreiben.",
+      "name" : "AUTO: Coding-Aufgabe",
+      "ok" : true
+    },
+    {
+      "detail" : "Qwen3.6 35B A3B arbeitet weiter (Text schreiben).",
+      "name" : "AUTO: Wechsel bei Textaufgabe",
+      "ok" : true
+    },
+    {
+      "detail" : "gpt-oss 20B arbeitet (manuell gewählt).",
+      "name" : "MANUELL wird nicht überschrieben",
+      "ok" : true
+    },
+    {
+      "detail" : "4 Nachrichten, ca. 228 Tokens",
+      "name" : "Kontextübergabe beim Wechsel",
+      "ok" : true
+    },
+    {
+      "detail" : "online",
+      "name" : "Netzwerkstatus",
+      "ok" : true
+    },
+    {
+      "detail" : "nicht installiert",
+      "name" : "Ollama (optional)",
+      "ok" : true
+    }
+  ],
+  "liquidGlass" : true,
+  "macOS" : "Version 26.6.1 (Build 25G76)",
+  "ok" : true,
+  "process" : "Panora",
+  "translated" : false
+}

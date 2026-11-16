@@ -1,0 +1,18 @@
+2026-11-16 23:12:16.546 Panora[19880:58808] Panora: AppModel bereit
+2026-11-16 23:12:17.607 Panora[19880:58808] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/fq/bhsbs5bd52791c8x2z6s3dh40000gn/T/de.panora.app.savedState
+2026-11-16 23:12:18.524 Panora[19880:58808] Panora: Start abgeschlossen (selfTest(file:///Users/runner/work/music-library-mac/music-library-mac/logs/selftest.json))
+2026-11-16 23:12:18.524 Panora[19880:58808] Panora: Dienste werden gestartet
+2026-11-16 23:12:18.822 Panora[19880:58808] Panora-Selbsttest: Bundle-ID – ok (de.panora.app)
+2026-11-16 23:12:18.823 Panora[19880:58808] Panora-Selbsttest: App-Symbol – ok (AppIcon.icns)
+2026-11-16 23:12:18.823 Panora[19880:58808] Panora-Selbsttest: MLX-Metal-Shader im Bundle – ok (Vorschau-Build ohne MLX (Intel))
+2026-11-16 23:12:18.824 Panora[19880:58808] Panora-Selbsttest: Arbeitsspeicher erkannt – ok (15,0 GB)
+2026-11-16 23:12:18.824 Panora[19880:58808] Panora-Selbsttest: Prozessor erkannt – ok (Intel(R) Core(TM) i7-8700B CPU @ 3.20GHz)
+2026-11-16 23:12:18.825 Panora[19880:58808] Panora-Selbsttest: Verfügbarer Speicher – ok (9,3 GB)
+2026-11-16 23:12:18.839 Panora[19880:58808] Panora-Selbsttest: Laufwerke erkannt – ok (Macintosh HD (Interne SSD (Startvolume)))
+2026-11-16 23:12:18.845 Panora[19880:58808] Panora-Selbsttest: Modellordner erkannt – ok (Qwen3 8B, 40K, KV 147456 B/Token)
+2026-11-16 23:12:18.848 Panora[19880:58808] Panora-Selbsttest: AUTO: Coding-Aufgabe – ok (Qwen3.6 35B A3B übernimmt: Code schreiben.)
+2026-11-16 23:12:18.849 Panora[19880:58808] Panora-Selbsttest: AUTO: Wechsel bei Textaufgabe – ok (Qwen3.6 35B A3B arbeitet weiter (Text schreiben).)
+2026-11-16 23:12:18.849 Panora[19880:58808] Panora-Selbsttest: MANUELL wird nicht überschrieben – ok (gpt-oss 20B arbeitet (manuell gewählt).)
+2026-11-16 23:12:18.850 Panora[19880:58808] Panora-Selbsttest: Kontextübergabe beim Wechsel – ok (4 Nachrichten, ca. 228 Tokens)
+2026-11-16 23:12:18.850 Panora[19880:58808] Panora-Selbsttest: Netzwerkstatus – ok (online)
+2026-11-16 23:12:19.560 Panora[19880:58808] Panora-Selbsttest: Ollama (optional) – ok (nicht installiert)

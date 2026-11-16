@@ -1,0 +1,18 @@
+2026-11-16 23:12:20.965 Panora[19968:59186] Panora: AppModel bereit
+2026-11-16 23:12:21.179 Panora[19968:59186] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/fq/bhsbs5bd52791c8x2z6s3dh40000gn/T/de.panora.app.savedState
+2026-11-16 23:12:22.105 Panora[19968:59186] Panora: Start abgeschlossen (snapshot(file:///Users/runner/work/music-library-mac/music-library-mac/snapshots/liquid-glass/))
+2026-11-16 23:12:22.105 Panora[19968:59186] Panora: Dienste werden gestartet
+▸ 01-chat-dunkel
+▸ 02-chat-hell
+▸ 03-start-dunkel
+▸ 04-verlauf-dunkel
+▸ 05-modelle-dunkel
+▸ 06-modelle-hell
+▸ 07-entdecken-dunkel
+▸ 08-projekte-hell
+▸ 09-hardware-dunkel
+▸ 10-speicher-dunkel
+▸ 11-einstellungen-dunkel
+▸ 12-chat-manuell-hell
+▸ 13-erster-start-hell
+▸ 14-chat-kompakt-dunkel

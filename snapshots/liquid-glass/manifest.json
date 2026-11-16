@@ -1,0 +1,91 @@
+{
+  "data" : "Vorführdaten (nur Fotomodus)",
+  "images" : [
+    {
+      "dark" : true,
+      "file" : "01-chat-dunkel-1440x940.png",
+      "method" : "window-server",
+      "section" : "chat"
+    },
+    {
+      "dark" : false,
+      "file" : "02-chat-hell-1440x940.png",
+      "method" : "window-server",
+      "section" : "chat"
+    },
+    {
+      "dark" : true,
+      "file" : "03-start-dunkel-1440x940.png",
+      "method" : "window-server",
+      "section" : "chat"
+    },
+    {
+      "dark" : true,
+      "file" : "04-verlauf-dunkel-1440x940.png",
+      "method" : "window-server",
+      "section" : "history"
+    },
+    {
+      "dark" : true,
+      "file" : "05-modelle-dunkel-1440x940.png",
+      "method" : "window-server",
+      "section" : "models"
+    },
+    {
+      "dark" : false,
+      "file" : "06-modelle-hell-1440x940.png",
+      "method" : "window-server",
+      "section" : "models"
+    },
+    {
+      "dark" : true,
+      "file" : "07-entdecken-dunkel-1440x940.png",
+      "method" : "window-server",
+      "section" : "discover"
+    },
+    {
+      "dark" : false,
+      "file" : "08-projekte-hell-1440x940.png",
+      "method" : "window-server",
+      "section" : "projects"
+    },
+    {
+      "dark" : true,
+      "file" : "09-hardware-dunkel-1440x940.png",
+      "method" : "window-server",
+      "section" : "hardware"
+    },
+    {
+      "dark" : true,
+      "file" : "10-speicher-dunkel-1440x940.png",
+      "method" : "window-server",
+      "section" : "storage"
+    },
+    {
+      "dark" : true,
+      "file" : "11-einstellungen-dunkel-1440x940.png",
+      "method" : "window-server",
+      "section" : "settings"
+    },
+    {
+      "dark" : false,
+      "file" : "12-chat-manuell-hell-1440x940.png",
+      "method" : "window-server",
+      "section" : "chat"
+    },
+    {
+      "dark" : false,
+      "file" : "13-erster-start-hell-1440x940.png",
+      "method" : "window-server",
+      "section" : "chat"
+    },
+    {
+      "dark" : true,
+      "file" : "14-chat-kompakt-dunkel-1100x720.png",
+      "method" : "window-server",
+      "section" : "chat"
+    }
+  ],
+  "liquidGlass" : true,
+  "macOS" : "Version 26.6.1 (Build 25G76)"
+}
