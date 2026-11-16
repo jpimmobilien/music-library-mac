@@ -13,7 +13,7 @@ struct SettingsView: View {
         PageScaffold(title: "Einstellungen", subtitle: "Panora arbeitet lokal. Alles hier bleibt auf diesem Mac.", bottomInset: 120) {
             EmptyView()
         } content: {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 420), spacing: 18)], alignment: .leading, spacing: 18) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 420), spacing: 18, alignment: .top)], alignment: .leading, spacing: 18) {
                 PanelCard(title: "AUTO MODE", systemImage: "wand.and.stars") {
                     Picker("Standard für neue Chats", selection: $settings.defaultMode) {
                         Text("Auto").tag(RoutingMode.auto)

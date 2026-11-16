@@ -37,7 +37,7 @@ struct HistoryView: View {
                 let items = groups[month] ?? []
                 SectionHeader(title: month, count: Formatting.count(items.count, "Chat", "Chats"))
                 if model.historyGrid {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 210, maximum: 260), spacing: 26)], alignment: .leading, spacing: 26) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 210, maximum: 260), spacing: 26, alignment: .top)], alignment: .leading, spacing: 26) {
                         ForEach(items) { c in ChatCard(conversation: c) }
                     }
                     .padding(.bottom, 18)
@@ -205,7 +205,7 @@ struct ModelsView: View {
                 let items = filtered.filter { $0.spec.family == family }
                 SectionHeader(title: family, count: Formatting.count(items.count, "Modell", "Modelle"))
                 if model.modelsGrid {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 200, maximum: 250), spacing: 26)], alignment: .leading, spacing: 26) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 200, maximum: 250), spacing: 26, alignment: .top)], alignment: .leading, spacing: 26) {
                         ForEach(items) { m in
                             ModelCard(item: m) { detail = m }
                         }
@@ -501,7 +501,7 @@ struct DiscoverView: View {
                 VStack(spacing: 6) { ForEach(hub.results) { HubRow(summary: $0) } }.padding(.bottom, 18)
             }
             SectionHeader(title: "Empfohlen für deinen Mac", count: Formatting.count(ModelCatalog.entries.count, "Modell", "Modelle"))
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 200, maximum: 250), spacing: 26)], alignment: .leading, spacing: 26) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 200, maximum: 250), spacing: 26, alignment: .top)], alignment: .leading, spacing: 26) {
                 ForEach(ModelCatalog.entries) { CatalogCard(entry: $0) }
             }
             .padding(.bottom, 24)

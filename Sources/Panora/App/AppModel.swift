@@ -164,6 +164,6 @@ final class AppModel: ObservableObject {
         let need = Int64(Double(sizeBytes) * 1.04) + Int64(kvPerToken) * 8192 + MemoryPlanner.overheadBytes
         if need <= Int64(Double(budget) * 0.8) { return ("passt", true) }
         if need <= budget { return ("passt knapp", nil) }
-        return ("zu groß für \(Formatting.bytes(hardware.totalMemory))", false)
+        return ("zu groß", false)
     }
 }

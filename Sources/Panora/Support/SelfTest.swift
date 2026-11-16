@@ -71,8 +71,8 @@ enum SelfTest {
                                                        candidates: candidates, hardware: fakeHW, currentModelID: coding.chosen?.id))
         add("AUTO: Wechsel bei Textaufgabe", writing.chosen != nil, writing.summary)
         let manual = ModelRouter.route(RoutingRequest(profile: TaskAnalyzer.analyze("Implementiere einen Compiler"), candidates: candidates,
-                                                      hardware: fakeHW, mode: .manual, pinnedModelID: entries.last?.id))
-        add("MANUELL wird nicht überschrieben", manual.chosen?.id == entries.last?.id, manual.summary)
+                                                      hardware: fakeHW, mode: .manual, pinnedModelID: candidates.last?.spec.id))
+        add("MANUELL wird nicht überschrieben", manual.chosen != nil && manual.chosen?.id == candidates.last?.spec.id, manual.summary)
         let messages = [ChatMessage(role: .user, text: "Entscheidung: Wir nehmen Jetpack Compose."),
                         ChatMessage(role: .assistant, text: "- [ ] LoginScreen.kt anlegen", modelName: "Qwen3.6 27B"),
                         ChatMessage(role: .user, text: "Implementiere den LoginScreen")]

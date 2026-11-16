@@ -29,7 +29,7 @@ struct ProjectsView: View {
                                text: "Füge einen Projektordner hinzu (z. B. deine Android- oder macOS-App). Panora liest Struktur, Build-Dateien und angefragte Dateien als Kontext – offline.",
                                actionTitle: "Projekt hinzufügen") { Task { _ = await projects.chooseAndAdd() } }
             }
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 360, maximum: 520), spacing: 20)], alignment: .leading, spacing: 20) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 360, maximum: 520), spacing: 20, alignment: .top)], alignment: .leading, spacing: 20) {
                 ForEach(list) { p in ProjectCard(project: p) }
             }
             if !list.isEmpty {
@@ -112,7 +112,7 @@ struct HardwareView: View {
                 }
             }
         } content: {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 380), spacing: 18)], alignment: .leading, spacing: 18) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 380), spacing: 18, alignment: .top)], alignment: .leading, spacing: 18) {
                 PanelCard(title: "Arbeitsspeicher", systemImage: "memorychip", trailing: "live") {
                     let used = hardware.totalMemory - hardware.availableMemory
                     InfoRow(label: "Belegt", value: "\(Formatting.bytes(used)) von \(Formatting.bytes(hardware.totalMemory))")
@@ -242,7 +242,7 @@ struct StorageView: View {
                     .padding(.bottom, 12)
             }
             SectionHeader(title: "Laufwerke", count: Formatting.count(storage.volumes.count, "verbunden", "verbunden"))
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 380), spacing: 18)], alignment: .leading, spacing: 18) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 380), spacing: 18, alignment: .top)], alignment: .leading, spacing: 18) {
                 ForEach(storage.volumes) { v in VolumeCard(volume: v) }
             }
             .padding(.bottom, 20)
@@ -308,8 +308,8 @@ private struct VolumeCard: View {
         PanelCard(title: volume.name, systemImage: volume.isInternal ? "internaldrive" : "externaldrive", trailing: volume.kindLabel) {
             MeterBar(fraction: Double(volume.used) / Double(max(volume.total, 1)), color: volume.isInternal ? colors.textSecondary : colors.accent, height: 8)
             InfoRow(label: "Frei", value: "\(Formatting.bytes(volume.available)) von \(Formatting.bytes(volume.total))")
-            if let media = volume.media { InfoRow(label: "Gerät", value: media) }
-            if let bus = volume.bus {
+            if let media = volume.media?.trimmingCharacters(in: .whitespaces), !media.isEmpty { InfoRow(label: "Gerät", value: media) }
+            if let bus = volume.bus, !bus.isEmpty {
                 InfoRow(label: "Anschluss", value: bus + (volume.solidState == true ? " · SSD" : ""))
             }
             if let r = storage.speedResults[volume.path] {
