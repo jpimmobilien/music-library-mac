@@ -1,0 +1,89 @@
+
+********
+Warning: flash-attn is not installed. Will only run the manual PyTorch version. Please install flash-attn for faster inference.
+********
+ 
+[Probe] Auswahl {"scenes": ["Hitze und alte Geschichten", "Der Schatten im Schuppen", "Die Begegnung mit Krause"], "lines": 43, "words": 547, "speakers": ["ERZÄHLER", "BENNI", "HERRKRAUSE", "LISA", "MARCO", "TÖPPE"], "time": "23:20:55"}
+Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]Fetching 4 files:  25%|██▌       | 1/4 [00:00<00:00,  9.13it/s]Fetching 4 files: 100%|██████████| 4/4 [00:06<00:00,  1.69s/it]Fetching 4 files: 100%|██████████| 4/4 [00:06<00:00,  1.69s/it]
+[Probe] VoiceDesign geladen {"seconds": 30.1, "dtype": "torch.bfloat16", "time": "23:21:25"}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+[Probe] Stimme ERZÄHLER {"instruct": "45, male, deep, warm, steady, storytelling tone. Speaks native German with clear, natural pronunciation.", "duration": 7.72, "seconds": 26.1, "rtf": 3.39, "time": "23:21:51"}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+[Probe] Stimme BENNI {"instruct": "13, male, medium, slightly nasal, nervous, funny. Speaks native German with clear, natural pronunciation.", "duration": 7.12, "seconds": 23.7, "rtf": 3.33, "time": "23:22:15"}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+[Probe] Stimme HERRKRAUSE {"instruct": "60, male, deep, raspy, grumpy, authoritative. Speaks native German with clear, natural pronunciation.", "duration": 7.53, "seconds": 30.4, "rtf": 4.04, "time": "23:22:46"}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+[Probe] Stimme LISA {"instruct": "14, female, high, crisp, fast-paced, intelligent. Speaks native German with clear, natural pronunciation.", "duration": 6.16, "seconds": 20.8, "rtf": 3.38, "time": "23:23:06"}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+[Probe] Stimme MARCO {"instruct": "15, male, medium-high, bright, energetic, confident. Speaks native German with clear, natural pronunciation.", "duration": 6.63, "seconds": 22.7, "rtf": 3.43, "time": "23:23:29"}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+[Probe] Stimme TÖPPE {"instruct": "15, male, medium, relaxed, laid-back, casual. Speaks native German with clear, natural pronunciation.", "duration": 8.36, "seconds": 28.1, "rtf": 3.36, "time": "23:23:57"}
+Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]Fetching 4 files:  25%|██▌       | 1/4 [00:00<00:00,  9.25it/s]Fetching 4 files: 100%|██████████| 4/4 [00:05<00:00,  1.42s/it]Fetching 4 files: 100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+[Probe] Base geladen {"seconds": 27.9, "time": "23:24:25"}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+[Probe] Zeile 1/43 {"audio_s": 11.5, "rtf": 4.02, "time": "23:25:13"}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+[Probe] Zeile 6/43 {"audio_s": 34.3, "rtf": 4.1, "time": "23:26:48"}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+[Probe] Zeile 11/43 {"audio_s": 58.3, "rtf": 4.02, "time": "23:28:21"}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+[Probe] Zeile 16/43 {"audio_s": 83.5, "rtf": 4.07, "time": "23:30:07"}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+[Probe] Zeile 21/43 {"audio_s": 104.8, "rtf": 4.07, "time": "23:31:34"}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+[Probe] Zeile 26/43 {"audio_s": 126.8, "rtf": 4.09, "time": "23:33:06"}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+[Probe] Zeile 31/43 {"audio_s": 145.2, "rtf": 4.1, "time": "23:34:22"}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+[Probe] Zeile 36/43 {"audio_s": 160.8, "rtf": 4.13, "time": "23:35:30"}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+[Probe] Zeile 41/43 {"audio_s": 186.3, "rtf": 4.12, "time": "23:37:14"}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+[Probe] Zeilen fertig {"lines": 43, "audio_s": 193.6, "seconds": 800.7, "rtf": 4.14, "time": "23:37:48"}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+[Probe] Prüfsätze fertig {"count": 10, "time": "23:41:22"}
+[Probe] Gemischt {"metrics": {"speech_to_background_db": null, "duration_s": 213.7, "loudness_lufs": -16.06, "peak_dbfs": -1.0}, "time": "23:41:34"}
+[Probe] Whisper {"wer_mean": 0.01, "wer_tests": 0.01, "wer_lines": 0.01, "time": "23:46:00"}
+[Probe] Fertig {"time": "23:46:03"}

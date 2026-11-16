@@ -1,0 +1,843 @@
+{
+  "steps": [
+    {
+      "scenes": [
+        "Hitze und alte Geschichten",
+        "Der Schatten im Schuppen",
+        "Die Begegnung mit Krause"
+      ],
+      "lines": 43,
+      "words": 547,
+      "speakers": [
+        "ERZÄHLER",
+        "BENNI",
+        "HERRKRAUSE",
+        "LISA",
+        "MARCO",
+        "TÖPPE"
+      ],
+      "name": "Auswahl",
+      "time": "23:20:55"
+    },
+    {
+      "seconds": 30.1,
+      "dtype": "torch.bfloat16",
+      "name": "VoiceDesign geladen",
+      "time": "23:21:25"
+    },
+    {
+      "instruct": "45, male, deep, warm, steady, storytelling tone. Speaks native German with clear, natural pronunciation.",
+      "duration": 7.72,
+      "seconds": 26.1,
+      "rtf": 3.39,
+      "name": "Stimme ERZÄHLER",
+      "time": "23:21:51"
+    },
+    {
+      "instruct": "13, male, medium, slightly nasal, nervous, funny. Speaks native German with clear, natural pronunciation.",
+      "duration": 7.12,
+      "seconds": 23.7,
+      "rtf": 3.33,
+      "name": "Stimme BENNI",
+      "time": "23:22:15"
+    },
+    {
+      "instruct": "60, male, deep, raspy, grumpy, authoritative. Speaks native German with clear, natural pronunciation.",
+      "duration": 7.53,
+      "seconds": 30.4,
+      "rtf": 4.04,
+      "name": "Stimme HERRKRAUSE",
+      "time": "23:22:46"
+    },
+    {
+      "instruct": "14, female, high, crisp, fast-paced, intelligent. Speaks native German with clear, natural pronunciation.",
+      "duration": 6.16,
+      "seconds": 20.8,
+      "rtf": 3.38,
+      "name": "Stimme LISA",
+      "time": "23:23:06"
+    },
+    {
+      "instruct": "15, male, medium-high, bright, energetic, confident. Speaks native German with clear, natural pronunciation.",
+      "duration": 6.63,
+      "seconds": 22.7,
+      "rtf": 3.43,
+      "name": "Stimme MARCO",
+      "time": "23:23:29"
+    },
+    {
+      "instruct": "15, male, medium, relaxed, laid-back, casual. Speaks native German with clear, natural pronunciation.",
+      "duration": 8.36,
+      "seconds": 28.1,
+      "rtf": 3.36,
+      "name": "Stimme TÖPPE",
+      "time": "23:23:57"
+    },
+    {
+      "seconds": 27.9,
+      "name": "Base geladen",
+      "time": "23:24:25"
+    },
+    {
+      "audio_s": 11.5,
+      "rtf": 4.02,
+      "name": "Zeile 1/43",
+      "time": "23:25:13"
+    },
+    {
+      "audio_s": 34.3,
+      "rtf": 4.1,
+      "name": "Zeile 6/43",
+      "time": "23:26:48"
+    },
+    {
+      "audio_s": 58.3,
+      "rtf": 4.02,
+      "name": "Zeile 11/43",
+      "time": "23:28:21"
+    },
+    {
+      "audio_s": 83.5,
+      "rtf": 4.07,
+      "name": "Zeile 16/43",
+      "time": "23:30:07"
+    },
+    {
+      "audio_s": 104.8,
+      "rtf": 4.07,
+      "name": "Zeile 21/43",
+      "time": "23:31:34"
+    },
+    {
+      "audio_s": 126.8,
+      "rtf": 4.09,
+      "name": "Zeile 26/43",
+      "time": "23:33:06"
+    },
+    {
+      "audio_s": 145.2,
+      "rtf": 4.1,
+      "name": "Zeile 31/43",
+      "time": "23:34:22"
+    },
+    {
+      "audio_s": 160.8,
+      "rtf": 4.13,
+      "name": "Zeile 36/43",
+      "time": "23:35:30"
+    },
+    {
+      "audio_s": 186.3,
+      "rtf": 4.12,
+      "name": "Zeile 41/43",
+      "time": "23:37:14"
+    },
+    {
+      "lines": 43,
+      "audio_s": 193.6,
+      "seconds": 800.7,
+      "rtf": 4.14,
+      "name": "Zeilen fertig",
+      "time": "23:37:48"
+    },
+    {
+      "count": 10,
+      "name": "Prüfsätze fertig",
+      "time": "23:41:22"
+    },
+    {
+      "metrics": {
+        "speech_to_background_db": null,
+        "duration_s": 213.7,
+        "loudness_lufs": -16.06,
+        "peak_dbfs": -1.0
+      },
+      "name": "Gemischt",
+      "time": "23:41:34"
+    },
+    {
+      "wer_mean": 0.01,
+      "wer_tests": 0.01,
+      "wer_lines": 0.01,
+      "name": "Whisper",
+      "time": "23:46:00"
+    },
+    {
+      "name": "Fertig",
+      "time": "23:46:03"
+    }
+  ],
+  "lines": [
+    {
+      "key": "s01_001",
+      "scene": 0,
+      "item": 1,
+      "speaker": "ERZÄHLER",
+      "text": "Sommer 1984. Die Hitze flimmert über den staubigen Feldwegen von Birkenbruch. Wo früher Züge pfiffen, regiert heute nur noch die Stille – eine Stille, die bald gebrochen werden wird.",
+      "emotion": "",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s01_001.wav",
+      "duration": 11.5,
+      "seconds": 46.2,
+      "hyp": "Sommer 1984. Die Hitze flimmert über den staubigen Feldwegen von Birkenbruch. Wo früher Züge pfiffen, regiert heute nur noch die Stille, eine Stille, die bald gebrochen werden wird.",
+      "wer": 0.0
+    },
+    {
+      "key": "s01_003",
+      "scene": 0,
+      "item": 3,
+      "speaker": "BENNI",
+      "text": "Leute, ich sag’s euch... Wenn wir so weiterlaufen, verwandeln wir uns in getrocknete Zwiebeln.",
+      "emotion": "keuchend",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s01_003.wav",
+      "duration": 5.14,
+      "seconds": 19.7,
+      "hyp": "Leute, ich sag's euch, wenn wir so weiterlaufen, verwandeln wir uns in getrocknete Zwiebeln.",
+      "wer": 0.0
+    },
+    {
+      "key": "s01_004",
+      "scene": 0,
+      "item": 4,
+      "speaker": "MARCO",
+      "text": "Stell dich nicht so an, Benni. Das ist nur ein bisschen Sommerhitze.",
+      "emotion": "",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s01_004.wav",
+      "duration": 3.49,
+      "seconds": 14.0,
+      "hyp": "Stell dich nicht so an, Benni. Das ist nur ein bisschen Sommerhitze.",
+      "wer": 0.0
+    },
+    {
+      "key": "s01_005",
+      "scene": 0,
+      "item": 5,
+      "speaker": "BENNI",
+      "text": "Ein bisschen? Ich sehe schon Geister! Die fangen an, uns zu verfolgen, weil wir ihnen das Wasser weggenommen haben!",
+      "emotion": "grinsend",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s01_005.wav",
+      "duration": 6.65,
+      "seconds": 25.3,
+      "hyp": "Ein bisschen? Ich sehe schon Geister. Die fangen an, uns zu verfolgen, weil wir ihnen das Wasser weggenommen haben.",
+      "wer": 0.0
+    },
+    {
+      "key": "s01_006",
+      "scene": 0,
+      "item": 6,
+      "speaker": "LISA",
+      "text": "Wenn du noch einmal von Geistern redest, Benni, dann wandern wir direkt um. Das ist unlogisch und nervt.",
+      "emotion": "genervt",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s01_006.wav",
+      "duration": 6.58,
+      "seconds": 28.1,
+      "hyp": "Wenn du noch einmal von Geistern redest, Benni, dann wandern wir direkt um. Das ist unlogisch und nervt.",
+      "wer": 0.0
+    },
+    {
+      "key": "s01_007",
+      "scene": 0,
+      "item": 7,
+      "speaker": "TÖPPE",
+      "text": "Chillt mal...",
+      "emotion": "gedanklich versunken",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s01_007.wav",
+      "duration": 0.99,
+      "seconds": 7.5,
+      "hyp": "Chillt mal.",
+      "wer": 0.0
+    },
+    {
+      "key": "s01_009",
+      "scene": 0,
+      "item": 9,
+      "speaker": "TÖPPE",
+      "text": "Ich hab hier die neue Mixtape-Kassette. Die rettet uns vor der Langeweile.",
+      "emotion": "",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s01_009.wav",
+      "duration": 4.62,
+      "seconds": 19.8,
+      "hyp": "Ich hab hier die neue Mixtape-Kassette. Die rettet uns vor der Langeweile.",
+      "wer": 0.0
+    },
+    {
+      "key": "s01_010",
+      "scene": 0,
+      "item": 10,
+      "speaker": "MARCO",
+      "text": "Habt ihr eigentlich auch diese Geräusche gehört? Letzte Nacht, als ich im Fenster saß...",
+      "emotion": "leiser, ernst",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s01_010.wav",
+      "duration": 4.63,
+      "seconds": 18.3,
+      "hyp": "Habt ihr eigentlich auch diese Geräusche gehört? Letzte Nacht, als ich im Fenster saß,",
+      "wer": 0.0
+    },
+    {
+      "key": "s01_011",
+      "scene": 0,
+      "item": 11,
+      "speaker": "LISA",
+      "text": "Marco, das war sicher nur ein Fuchs oder der Wind in den alten Weichen.",
+      "emotion": "skeptisch",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s01_011.wav",
+      "duration": 3.86,
+      "seconds": 15.8,
+      "hyp": "Marco, das war sicher nur ein Fuchs oder der Wind in den alten Weichen.",
+      "wer": 0.0
+    },
+    {
+      "key": "s01_012",
+      "scene": 0,
+      "item": 12,
+      "speaker": "MARCO",
+      "text": "Nein, Lisa. Es klang fast wie... metallisches Schlagen. Ganz rhythmisch. Als würde jemand am Gleis arbeiten.",
+      "emotion": "",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s01_012.wav",
+      "duration": 6.76,
+      "seconds": 23.7,
+      "hyp": "Nein, Lisa, es klang fast wie metallisches Schlagen, ganz rhythmisch, als würde jemand am Gleis arbeiten.",
+      "wer": 0.0
+    },
+    {
+      "key": "s01_014",
+      "scene": 0,
+      "item": 14,
+      "speaker": "BENNI",
+      "text": "Metallisches Schlagen? Das klingt nach dem Phantom vom Birkenbruch!",
+      "emotion": "ängstlich",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s01_014.wav",
+      "duration": 4.05,
+      "seconds": 15.9,
+      "hyp": "Metallisches Schlagen? Das klingt nach dem Phantom vom Birkenbruch.",
+      "wer": 0.0
+    },
+    {
+      "key": "s01_015",
+      "scene": 0,
+      "item": 15,
+      "speaker": "LISA",
+      "text": "Sei still, Benni! Wir sind fast da.",
+      "emotion": "",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s01_015.wav",
+      "duration": 2.23,
+      "seconds": 9.8,
+      "hyp": "Sei still, Benni. Wir sind fast da.",
+      "wer": 0.0
+    },
+    {
+      "key": "s01_016",
+      "scene": 0,
+      "item": 16,
+      "speaker": "ERZÄHLER",
+      "text": "Der Wald öffnet sich und vor ihnen liegt das Ziel ihrer Neugier: der vergessene Bahnhof.",
+      "emotion": "",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s01_016.wav",
+      "duration": 5.5,
+      "seconds": 23.2,
+      "hyp": "Der Wald öffnet sich und vor ihnen liegt das Ziel ihrer Neugier, der vergessene Bahnhof.",
+      "wer": 0.0
+    },
+    {
+      "key": "s02_001",
+      "scene": 1,
+      "item": 1,
+      "speaker": "ERZÄHLER",
+      "text": "Die Hitze flimmert über den verrosteten Gleisen. Das Gebäude der Bahnhofshalle ragt wie ein Skelett aus dem Gebüsch.",
+      "emotion": "",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s02_001.wav",
+      "duration": 6.2,
+      "seconds": 25.5,
+      "hyp": "Die Hitze flimmert über den verrosteten Gleisen. Das Gebäude der Bahnhofshalle ragt wie ein Skelett aus dem Gebüsch.",
+      "wer": 0.0
+    },
+    {
+      "key": "s02_003",
+      "scene": 1,
+      "item": 3,
+      "speaker": "TÖPPE",
+      "text": "Mein Walkman zieht sich bei der Hitze bestimmt das Band ein. Ich brauch' Musik, sonst dreh ich durch.",
+      "emotion": "genervt",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s02_003.wav",
+      "duration": 6.07,
+      "seconds": 25.3,
+      "hyp": "Mein Wahlkilometerrand zieht sich bei der Hitze bestimmt das Band ein. Ich brauch Musik, sonst dreh ich durch.",
+      "wer": 0.056
+    },
+    {
+      "key": "s02_004",
+      "scene": 1,
+      "item": 4,
+      "speaker": "BENNI",
+      "text": "Können wir nicht einfach umkehren? Das hier sieht aus wie der Anfang von einem Horrorfilm.",
+      "emotion": "ängstlich",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s02_004.wav",
+      "duration": 5.28,
+      "seconds": 22.2,
+      "hyp": "Können wir nicht einfach umkehren? Das hier sieht aus wie der Anfang von einem Horrorfilm.",
+      "wer": 0.0
+    },
+    {
+      "key": "s02_005",
+      "scene": 1,
+      "item": 5,
+      "speaker": "MARCO",
+      "text": "Keine Sorge, Benni. Schau dir das an. Der Bahnhof ist zwar alt, aber er wirkt... bewohnt.",
+      "emotion": "",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s02_005.wav",
+      "duration": 5.68,
+      "seconds": 22.3,
+      "hyp": "Keine Sorge, Benni, schau dir das an. Der Bahnhof ist zwar alt, aber er wirkt bewohnt.",
+      "wer": 0.0
+    },
+    {
+      "key": "s02_006",
+      "scene": 1,
+      "item": 6,
+      "speaker": "LISA",
+      "text": "Bewohnt? Marco, hier wohnt seit Jahrzehnten niemand mehr. Das sind nur Schatten.",
+      "emotion": "skeptisch",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s02_006.wav",
+      "duration": 5.08,
+      "seconds": 20.7,
+      "hyp": "Bewohnt? Marco, hier wohnt seit Jahrzehnten niemand mehr. Das sind nur Schatten.",
+      "wer": 0.0
+    },
+    {
+      "key": "s02_009",
+      "scene": 1,
+      "item": 9,
+      "speaker": "BENNI",
+      "text": "Habt ihr das gehört? Das war es! Das Phantom!",
+      "emotion": "flüsternd",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s02_009.wav",
+      "duration": 3.04,
+      "seconds": 13.4,
+      "hyp": "Habt ihr das gehört? Das war es. Das Phantom.",
+      "wer": 0.0
+    },
+    {
+      "key": "s02_010",
+      "scene": 1,
+      "item": 10,
+      "speaker": "MARCO",
+      "text": "Das kommt aus dem Güterschuppen da hinten. Komm, wir müssen näher ran.",
+      "emotion": "",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s02_010.wav",
+      "duration": 4.07,
+      "seconds": 16.1,
+      "hyp": "Das kommt aus dem Güterschuppen da hinten. Komm, wir müssen näher ran.",
+      "wer": 0.0
+    },
+    {
+      "key": "s02_011",
+      "scene": 1,
+      "item": 11,
+      "speaker": "LISA",
+      "text": "Vorsichtig sein. Wir wissen nicht, wer oder was dort ist.",
+      "emotion": "",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s02_011.wav",
+      "duration": 3.35,
+      "seconds": 14.0,
+      "hyp": "Vorsichtig sein. Wir wissen nicht, wer oder was dort ist.",
+      "wer": 0.0
+    },
+    {
+      "key": "s02_013",
+      "scene": 1,
+      "item": 13,
+      "speaker": "TÖPPE",
+      "text": "Hey, guckt mal! Da liegt eine Taschenlampe im Dreck. Sieht fast so aus, als hätte sie jemand hier vergessen.",
+      "emotion": "erstaunt",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s02_013.wav",
+      "duration": 6.37,
+      "seconds": 24.3,
+      "hyp": "Hey, guckt mal! Da liegt eine Taschenlampe im Dreck. Sieht fast so aus, als hätte sie jemand hier vergessen.",
+      "wer": 0.0
+    },
+    {
+      "key": "s02_014",
+      "scene": 1,
+      "item": 14,
+      "speaker": "MARCO",
+      "text": "Dann probieren wir's mal. Lisa, gib mir die Lampe.",
+      "emotion": "entschlossen",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s02_014.wav",
+      "duration": 3.03,
+      "seconds": 12.7,
+      "hyp": "Dann probieren wir's mal. Lisa, gib mir die Lampe.",
+      "wer": 0.0
+    },
+    {
+      "key": "s02_016",
+      "scene": 1,
+      "item": 16,
+      "speaker": "ERZÄHLER",
+      "text": "Der Lichtstrahl der Taschenlampe schneidet durch den Staub der Bahnhofshalle und weist den Weg zum dunklen Schuppen.",
+      "emotion": "",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s02_016.wav",
+      "duration": 5.65,
+      "seconds": 24.8,
+      "hyp": "Der Lichtstrahl der Taschenlampe schneidet durch den Staub der Bahnhofshalle und weist den Weg zum dunklen Schuppen.",
+      "wer": 0.0
+    },
+    {
+      "key": "s02_019",
+      "scene": 1,
+      "item": 19,
+      "speaker": "BENNI",
+      "text": "Das wird immer lauter! Rennt, bevor uns das Phantom erwischt!",
+      "emotion": "panisch",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s02_019.wav",
+      "duration": 3.42,
+      "seconds": 16.0,
+      "hyp": "Das wird immer lauter, rennt, bevor uns das Phantom erwischt.",
+      "wer": 0.0
+    },
+    {
+      "key": "s02_020",
+      "scene": 1,
+      "item": 20,
+      "speaker": "LISA",
+      "text": "Warte doch! Marco, schau mal durch das Schlüsselloch der Schuppentür.",
+      "emotion": "beherrscht",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s02_020.wav",
+      "duration": 3.58,
+      "seconds": 14.7,
+      "hyp": "Warte doch. Marco, schau mal durch das Schlüsselloch der Schuppentür.",
+      "wer": 0.0
+    },
+    {
+      "key": "s02_021",
+      "scene": 1,
+      "item": 21,
+      "speaker": "MARCO",
+      "text": "Ich mach’s... aber wer ist da drin?",
+      "emotion": "flüsternd",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s02_021.wav",
+      "duration": 2.54,
+      "seconds": 10.5,
+      "hyp": "Ich mach's. Aber wer ist da drin?",
+      "wer": 0.0
+    },
+    {
+      "key": "s03_001",
+      "scene": 2,
+      "item": 1,
+      "speaker": "ERZÄHLER",
+      "text": "Der Schweiß steht den Jugendlichen auf der Stirn, während sie vor der massiven Güterschuppentür lauschen.",
+      "emotion": "",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s03_001.wav",
+      "duration": 5.63,
+      "seconds": 23.4,
+      "hyp": "Der Schweiß steht den Jugendlichen auf der Stirn, während sie vor der massiven Güterschuppentür lauschen.",
+      "wer": 0.0
+    },
+    {
+      "key": "s03_003",
+      "scene": 2,
+      "item": 3,
+      "speaker": "BENNI",
+      "text": "Marco, lass das! Das ist kein Phantom, das ist eine Abrissbirne!",
+      "emotion": "zitternd",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s03_003.wav",
+      "duration": 4.37,
+      "seconds": 17.3,
+      "hyp": "Marco, lass das! Das ist kein Phantom, das ist eine Abrissbirne!",
+      "wer": 0.0
+    },
+    {
+      "key": "s03_004",
+      "scene": 2,
+      "item": 4,
+      "speaker": "MARCO",
+      "text": "Ich seh' was... da bewegt sich ein Schatten...",
+      "emotion": "konzentriert",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s03_004.wav",
+      "duration": 2.83,
+      "seconds": 11.1,
+      "hyp": "Ich sehe was, da bewegt sich ein Schatten.",
+      "wer": 0.125
+    },
+    {
+      "key": "s03_007",
+      "scene": 2,
+      "item": 7,
+      "speaker": "HERRKRAUSE",
+      "text": "Was haben wir denn hier? Ein Spionen-Trupp aus der Stadt?",
+      "emotion": "brüllend",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s03_007.wav",
+      "duration": 3.02,
+      "seconds": 13.7,
+      "hyp": "Was haben wir denn hier? Ein Spionentrupp aus der Stadt?",
+      "wer": 0.182
+    },
+    {
+      "key": "s03_008",
+      "scene": 2,
+      "item": 8,
+      "speaker": "TÖPPE",
+      "text": "Ach du meine Güte!",
+      "emotion": "keuchend",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s03_008.wav",
+      "duration": 1.6,
+      "seconds": 7.1,
+      "hyp": "Ach du meine Güte.",
+      "wer": 0.0
+    },
+    {
+      "key": "s03_009",
+      "scene": 2,
+      "item": 9,
+      "speaker": "LISA",
+      "text": "Herr Krause? Sie sind das?",
+      "emotion": "überrascht",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s03_009.wav",
+      "duration": 2.02,
+      "seconds": 10.1,
+      "hyp": "Herr Krause? Sie sind das?",
+      "wer": 0.0
+    },
+    {
+      "key": "s03_010",
+      "scene": 2,
+      "item": 10,
+      "speaker": "HERRKRAUSE",
+      "text": "Schleicht euch! Verschwindet von meinem Gleis, ihr neugierigen Frechdachs!",
+      "emotion": "wütend",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s03_010.wav",
+      "duration": 4.63,
+      "seconds": 19.7,
+      "hyp": "Schleicht euch! Verschwindet von meinem Gleis, ihr neugierigen Frechdachs!",
+      "wer": 0.0
+    },
+    {
+      "key": "s03_011",
+      "scene": 2,
+      "item": 11,
+      "speaker": "BENNI",
+      "text": "Er sieht aus, als würde er uns gleich fressen.",
+      "emotion": "flüsternd",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s03_011.wav",
+      "duration": 2.13,
+      "seconds": 10.3,
+      "hyp": "Er sieht aus, als würde er uns gleich fressen.",
+      "wer": 0.0
+    },
+    {
+      "key": "s03_012",
+      "scene": 2,
+      "item": 12,
+      "speaker": "HERRKRAUSE",
+      "text": "Ich hab' euch gehört! Ihr steckt doch sicher mit den Spähern unter einer Decke! Weg hier, sofort!",
+      "emotion": "zornig",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s03_012.wav",
+      "duration": 5.21,
+      "seconds": 20.9,
+      "hyp": "Ich hab euch gehört. Ihr steckt doch sicher mit den Spähern unter einer Decke. Weg hier! Sofort!",
+      "wer": 0.0
+    },
+    {
+      "key": "s03_013",
+      "scene": 2,
+      "item": 13,
+      "speaker": "MARCO",
+      "text": "Wir wollten doch gar nichts kaputt machen, wir haben nur die Geräusche gehört.",
+      "emotion": "mutig",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s03_013.wav",
+      "duration": 3.46,
+      "seconds": 13.9,
+      "hyp": "Wir wollten doch gar nichts kaputt machen. Wir haben nur die Geräusche gehört.",
+      "wer": 0.0
+    },
+    {
+      "key": "s03_014",
+      "scene": 2,
+      "item": 14,
+      "speaker": "HERRKRAUSE",
+      "text": "Die Geräusche sind mir egal! Wenn ich euch noch einmal hier am Schuppen sehe, dann rufen wir die Dorfpolizei! Abmarsch!",
+      "emotion": "drohend",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s03_014.wav",
+      "duration": 6.66,
+      "seconds": 25.8,
+      "hyp": "Die Geräusche sind mir egal. Wenn ich euch noch einmal hier am Schuppen sehe, dann rufen wir die Dorfpolizei. Abmarsch!",
+      "wer": 0.0
+    },
+    {
+      "key": "s03_016",
+      "scene": 2,
+      "item": 16,
+      "speaker": "ERZÄHLER",
+      "text": "Die Gruppe blickt sich erschrocken an; der alte Gleiswärter steht wie ein Fels vor dem Eingang.",
+      "emotion": "",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s03_016.wav",
+      "duration": 4.89,
+      "seconds": 21.3,
+      "hyp": "Die Gruppe blickt sich erschrocken an. Der alte Gleiswärter steht wie ein Fels vor dem Eingang.",
+      "wer": 0.0
+    },
+    {
+      "key": "s03_017",
+      "scene": 2,
+      "item": 17,
+      "speaker": "LISA",
+      "text": "Er wirkt extrem nervös, Marco. Als hätte er etwas zu verbergen.",
+      "emotion": "flüsternd",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s03_017.wav",
+      "duration": 4.2,
+      "seconds": 17.5,
+      "hyp": "Er wirkt extrem nervös, Marco, als hätte er etwas zu verbergen.",
+      "wer": 0.0
+    },
+    {
+      "key": "s03_020",
+      "scene": 2,
+      "item": 20,
+      "speaker": "TÖPPE",
+      "text": "Leute, mein Walkman spielt gerade den falschen Song... ich hab total das Zittern.",
+      "emotion": "flüsternd",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s03_020.wav",
+      "duration": 6.31,
+      "seconds": 25.1,
+      "hyp": "Leute, mein Wahlkilometeran spielt gerade den falschen Song, ich hab total das Zittern.",
+      "wer": 0.077
+    },
+    {
+      "key": "s03_021",
+      "scene": 2,
+      "item": 21,
+      "speaker": "MARCO",
+      "text": "Wir gehen jetzt, aber wir lassen das nicht auf uns sitzen.",
+      "emotion": "entschlossen",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s03_021.wav",
+      "duration": 3.16,
+      "seconds": 13.2,
+      "hyp": "Wir gehen jetzt, aber wir lassen das nicht auf uns sitzen.",
+      "wer": 0.0
+    },
+    {
+      "key": "s03_023",
+      "scene": 2,
+      "item": 23,
+      "speaker": "ERZÄHLER",
+      "text": "Die Freunde flüchten davon, doch die Fragen bleiben schwerer als der Sommerstaub.",
+      "emotion": "",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/zeilen/s03_023.wav",
+      "duration": 4.09,
+      "seconds": 20.4,
+      "hyp": "Die Freunde flüchten davon, doch die Fragen bleiben schwerer als der Sommerstaub.",
+      "wer": 0.0
+    }
+  ],
+  "tests": [
+    {
+      "voice": "ERZÄHLER",
+      "id": "01_umlaute",
+      "text": "Grüß Gott, Frau Müller! Ihre Brötchen sind heute aber besonders knusprig.",
+      "spoken": "Grüß Gott, Frau Müller! Ihre Brötchen sind heute aber besonders knusprig.",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/pruefsaetze/ERZÄHLER_01_umlaute.wav",
+      "duration": 4.62,
+      "seconds": 18.8,
+      "hyp": "Grüß Gott, Frau Müller. Ihre Brötchen sind heute aber besonders knusprig.",
+      "wer": 0.0
+    },
+    {
+      "voice": "ERZÄHLER",
+      "id": "02_zahlen",
+      "text": "Am 14. Juli 1984 um 22:15 Uhr verschwand der Nachtzug nach Hamburg.",
+      "spoken": "Am vierzehnten Juli neunzehnhundertvierundachtzig um zweiundzwanzig Uhr fünfzehn verschwand der Nachtzug nach Hamburg.",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/pruefsaetze/ERZÄHLER_02_zahlen.wav",
+      "duration": 6.04,
+      "seconds": 27.4,
+      "hyp": "Am 14. Juli 1984 um 22.15 Uhr verschwand der Nachtzug nach Hamburg.",
+      "wer": 0.0
+    },
+    {
+      "voice": "ERZÄHLER",
+      "id": "03_komposita",
+      "text": "Eisenbahnverkehrsunternehmen, Fahrkartenschalter und Bahnhofsvorsteher: Das ist unser Fall.",
+      "spoken": "Eisenbahnverkehrsunternehmen, Fahrkartenschalter und Bahnhofsvorsteher: Das ist unser Fall.",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/pruefsaetze/ERZÄHLER_03_komposita.wav",
+      "duration": 5.34,
+      "seconds": 24.0,
+      "hyp": "Eisenbahnverkehrsunternehmen, Fahrkartenschalter und Bahnhofsvorsteher – das ist unser Fall.",
+      "wer": 0.0
+    },
+    {
+      "voice": "ERZÄHLER",
+      "id": "04_aufgeregt",
+      "text": "Hast du das gehört? Da drüben, hinter der Güterhalle – da bewegt sich etwas!",
+      "spoken": "Hast du das gehört? Da drüben, hinter der Güterhalle, da bewegt sich etwas!",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/pruefsaetze/ERZÄHLER_04_aufgeregt.wav",
+      "duration": 5.31,
+      "seconds": 22.2,
+      "hyp": "Hast du das gehört? Da drüben, hinter der Güterhalle, da bewegt sich etwas.",
+      "wer": 0.0
+    },
+    {
+      "voice": "ERZÄHLER",
+      "id": "05_fluesternd",
+      "text": "Psst, leise. Wenn uns hier jemand findet, sind wir geliefert.",
+      "spoken": "Psst, leise. Wenn uns hier jemand findet, sind wir geliefert.",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/pruefsaetze/ERZÄHLER_05_fluesternd.wav",
+      "duration": 4.71,
+      "seconds": 19.7,
+      "hyp": "Psst! Leise. Wenn uns hier jemand findet, sind wir geliefert.",
+      "wer": 0.0
+    },
+    {
+      "voice": "BENNI",
+      "id": "01_umlaute",
+      "text": "Grüß Gott, Frau Müller! Ihre Brötchen sind heute aber besonders knusprig.",
+      "spoken": "Grüß Gott, Frau Müller! Ihre Brötchen sind heute aber besonders knusprig.",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/pruefsaetze/BENNI_01_umlaute.wav",
+      "duration": 4.3,
+      "seconds": 17.8,
+      "hyp": "Grüß Gott, Frau Müller. Ihre Brötchen sind heute aber besonders knusprig.",
+      "wer": 0.0
+    },
+    {
+      "voice": "BENNI",
+      "id": "02_zahlen",
+      "text": "Am 14. Juli 1984 um 22:15 Uhr verschwand der Nachtzug nach Hamburg.",
+      "spoken": "Am vierzehnten Juli neunzehnhundertvierundachtzig um zweiundzwanzig Uhr fünfzehn verschwand der Nachtzug nach Hamburg.",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/pruefsaetze/BENNI_02_zahlen.wav",
+      "duration": 6.11,
+      "seconds": 25.6,
+      "hyp": "Am 14. Juli 1984 um 22.15 Uhr verschwand der Nachtzug nach Hamburg.",
+      "wer": 0.0
+    },
+    {
+      "voice": "BENNI",
+      "id": "03_komposita",
+      "text": "Eisenbahnverkehrsunternehmen, Fahrkartenschalter und Bahnhofsvorsteher: Das ist unser Fall.",
+      "spoken": "Eisenbahnverkehrsunternehmen, Fahrkartenschalter und Bahnhofsvorsteher: Das ist unser Fall.",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/pruefsaetze/BENNI_03_komposita.wav",
+      "duration": 5.36,
+      "seconds": 22.7,
+      "hyp": "Eisenbahnverkehrsunternehmen, Fahrkartenschalter und Bahnhofsvorsteher, das ist unser Fall.",
+      "wer": 0.0
+    },
+    {
+      "voice": "BENNI",
+      "id": "04_aufgeregt",
+      "text": "Hast du das gehört? Da drüben, hinter der Güterhalle – da bewegt sich etwas!",
+      "spoken": "Hast du das gehört? Da drüben, hinter der Güterhalle, da bewegt sich etwas!",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/pruefsaetze/BENNI_04_aufgeregt.wav",
+      "duration": 4.53,
+      "seconds": 19.5,
+      "hyp": "Hast du das gehört? Da drüben, hinter der Güterhalle, da bewegt sich etwas.",
+      "wer": 0.0
+    },
+    {
+      "voice": "BENNI",
+      "id": "05_fluesternd",
+      "text": "Psst, leise. Wenn uns hier jemand findet, sind wir geliefert.",
+      "spoken": "Psst, leise. Wenn uns hier jemand findet, sind wir geliefert.",
+      "path": "/home/runner/work/music-library-mac/music-library-mac/out/pruefsaetze/BENNI_05_fluesternd.wav",
+      "duration": 3.88,
+      "seconds": 16.6,
+      "hyp": "Leise. Wenn uns hier jemand findet, sind wir geliefert.",
+      "wer": 0.1
+    }
+  ]
+}
