@@ -1,0 +1,84 @@
+{
+  "environment": {
+    "python": "3.12.3",
+    "machine": "x86_64",
+    "system": "Linux",
+    "cores": 4,
+    "ram_gb": 15.3
+  },
+  "steps": [
+    {
+      "name": "Sprachmodell bereit",
+      "time": "17:42:09",
+      "model": "google_gemma-4-26B-A4B-it-Q3_K_M.gguf",
+      "load_seconds": 0.0
+    },
+    {
+      "name": "Geschichte fertig",
+      "time": "18:25:39",
+      "seconds": 2609.4,
+      "words": 1126,
+      "estimated_minutes": 9.5,
+      "scenes": 6,
+      "figures": 7,
+      "tokens_per_second": 3.5,
+      "llm_stats": {
+        "prompt_tokens": 32393,
+        "completion_tokens": 9222,
+        "seconds": 2609.280109643936
+      },
+      "review": {
+        "problems": [
+          {
+            "szene": 4,
+            "problem": "Logikfehler bei der Ortsbeschreibung und dem Fundort: In Szene 2 befinden sich die Jugendlichen im Güterschuppen/Bahnhofshalle. In Szene 4 sind sie plötzlich in einem 'feuchten Keller' (Atmo/Erzähler), finden dort aber eine Kiste und eine silberne Kette, die laut Auflösung unter der Kette liegen sollten. Es wird nicht erklärt, wie sie vom Schuppen in den Keller gelangt sind oder warum die Kiste/Kette dort liegt, wenn Krause im Schuppen gearbeitet hat.",
+            "korrektur": "Die Jugendlichen müssen entweder im Schuppen eine versteckte Kellertür finden, oder der Fundort der Kiste muss konsistent zum Schuppen bleiben."
+          },
+          {
+            "szene": 4,
+            "problem": "Widerspruch zur Auflösung bezüglich der Kette: Die Auflösung besagt, die Urkunden liegen 'in der Kiste unter der silbernen Kette'. In Szene 4 finden sie aber zuerst die Kette und dann die Kiste. Zudem wird die Kette als 'Rätsel' und 'Modeschmuck' beschrieben, aber in Szene 6 wird sie plötzlich als Teil des Siegels der Urkunden bezeichnet, was den Zweck der Kette (als bloßes Objekt/Schlüssel) unklar lässt.",
+            "korrektur": "Die Kette sollte als Siegelring oder Schlüssel zum Schloss der Kiste etabliert werden, damit ihr Wert für die Urkunden logisch ist."
+          },
+          {
+            "szene": 5,
+            "problem": "Unlogische Bewegung/Präsenz: In Szene 4 sind die Jugendlichen im Keller. In Szene 5 hören sie Schritte 'über ihnen' und glauben, Krause sei es. Dann taucht Frau Weiss im Keller auf. Es wird nicht erklärt, wie sie in den Keller gekommen ist, ohne dass die Jugendlichen (die dort lauschen) sie bemerken oder wie sie dort mit Krause interagieren kann, wenn dieser laut Szene 4/5 noch 'oben' oder im Schuppen ist.",
+            "korrektur": "Ein klarer Übergang oder eine Begegnung an einer Treppe/einem Eingang ist nötig."
+          },
+          {
+            "szene": 6,
+            "problem": "Widerspruch in der Verwandtschaft: Herr Krause sagt: 'Ich bin hier nicht, um zu stehlen, sondern um das Erbe meines Bruders zu bewahren.' Die Auflösung besagt jedoch, Frau Weiss sei die Enkelin des ehemaligen Bahnhofsbesitzers. Wenn Krause der Bruder des Besitzers wäre, wäre er ihr Onkel, nicht nur ein 'ehemaliger Gleiswärter'. Die Verwandtschaftsgrade zwischen Krause und Weiss sind im Skript unklar/widersprüchlich zur Auflösung.",
+            "korrektur": "Krause muss als Onkel oder Großvater (bzw. Verwandter des Besitzers) eingeführt werden, um die Verbindung zu Frau Weiss logisch zu machen."
+          },
+          {
+            "szene": 6,
+            "problem": "Unlogische Ortswechsel im Finale: Die Szene beginnt in der 'feuchten Keller-Atmosphäre' (Erzähler), aber die Atmo und die Regieanweisung beschreiben plötzlich eine 'große, leere Bahnhofshalle'. Die Jugendlichen sind innerhalb einer Sekunde von einem engen Keller in eine große Halle gesprungen, ohne dass dies als Bewegung markiert wurde.",
+            "korrektur": "Die Szene muss entweder im Keller bleiben oder der Aufstieg aus dem Keller in die Halle muss akustisch/erzählerisch markiert werden."
+          }
+        ],
+        "revised": [
+          4,
+          5,
+          6
+        ],
+        "seconds": 995.4
+      },
+      "clues": [
+        {
+          "spur": "Metallisches Klappern",
+          "szene": 1,
+          "bedeutung": "Es deutet auf die versteckten Aktivitäten im Schuppen hin."
+        },
+        {
+          "spur": "Silberne Kette mit Siegel",
+          "szene": 4,
+          "bedeutung": "Das eigentliche Objekt der Suche, das den Wert des Bahnhofgrundstücks belegt."
+        },
+        {
+          "spur": "Aufgerissene Holzkiste",
+          "szene": 4,
+          "bedeutung": "Zeigt, dass bereits jemand nach dem Inhalt gesucht hat."
+        }
+      ]
+    }
+  ]
+}

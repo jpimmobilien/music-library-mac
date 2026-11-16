@@ -1,0 +1,1110 @@
+{
+  "concept": {
+    "titel": "Das Echo der Gleise",
+    "untertitel": "Das Geheimnis vom Bahnhof Birkenbruch",
+    "logline": "Im Sommer 1984 entdecken vier Freunde, dass das Schweigen eines verlassenen Bahnhofs eine gefährliche Wahrheit verbirgt.",
+    "epoche_ort": "Sommer 1984, ländliches Deutschland, ein stillgelegter Bahnhof",
+    "ton": "Nostalgisch, spannend, abenteuerlich, klassischer Jugendkrimi-Stil der 80er Jahre",
+    "figuren": [
+      {
+        "id": "ERZÄHLER",
+        "name": "Erzähler",
+        "rolle": "Erzähler",
+        "alter": 45,
+        "geschlecht": "m",
+        "beschreibung": "Ein weiser, atmosphärischer Begleiter der Geschichte.",
+        "stimme": "Tief, ruhig, erzählerisch mit leichtem Mysterium.",
+        "voice_en": "45, male, deep, warm, steady, storytelling tone"
+      },
+      {
+        "id": "MARCO",
+        "name": "Marco",
+        "rolle": "Hauptfigur",
+        "alter": 15,
+        "geschlecht": "m",
+        "beschreibung": "Mutig, etwas ungestüm, der Anführer der Gruppe.",
+        "stimme": "Klar, energisch, jugendlich-frisch.",
+        "voice_en": "15, male, medium-high, bright, energetic, confident"
+      },
+      {
+        "id": "LISA",
+        "name": "Lisa",
+        "rolle": "Hauptfigur",
+        "alter": 14,
+        "geschlecht": "w",
+        "beschreibung": "Intelligent, skeptisch, die Logikerin der Gruppe.",
+        "stimme": "Etwas höher, schnell sprechend, bestimmt.",
+        "voice_en": "14, female, high, crisp, fast-paced, intelligent"
+      },
+      {
+        "id": "BENNI",
+        "name": "Benni",
+        "rolle": "Hauptfigur",
+        "alter": 13,
+        "geschlecht": "m",
+        "beschreibung": "Der vorsichtige, humorvolle Tollpatsch der Gruppe.",
+        "stimme": "Etwas gepresst, nervös, sympathisch.",
+        "voice_en": "13, male, medium, slightly nasal, nervous, funny"
+      },
+      {
+        "id": "TÖPPE",
+        "name": "Töppe",
+        "rolle": "Hauptfigur",
+        "alter": 15,
+        "geschlecht": "m",
+        "beschreibung": "Der lockere Typ, liebt sein Walkman-Tape.",
+        "stimme": "Entspannt, fast schon lethargisch.",
+        "voice_en": "15, male, medium, relaxed, laid-back, casual"
+      },
+      {
+        "id": "HERRKRAUSE",
+        "name": "Herr Krause",
+        "rolle": "Verdächtiger",
+        "alter": 60,
+        "geschlecht": "m",
+        "beschreibung": "Der grummelige alte Gleiswärter im Ruhestand.",
+        "stimme": "Rau, heiser, autoritär.",
+        "voice_en": "60, male, deep, raspy, grumpy, authoritative"
+      },
+      {
+        "id": "FRAUWEISS",
+        "name": "Frau Weiss",
+        "rolle": "Verdächtige/Geheimnisträgerin",
+        "alter": 35,
+        "geschlecht": "w",
+        "beschreibung": "Die mysteriöse Frau, die im Dorf ein Haus gemietet hat.",
+        "stimme": "Sanft, aber mit einem Unterton von Geheimnisvollem.",
+        "voice_en": "35, female, medium, soft, mysterious, calm"
+      }
+    ],
+    "kapitel": [
+      {
+        "nr": 1,
+        "titel": "Das Phantom am Gleis",
+        "szenen": [
+          {
+            "nr": 1,
+            "titel": "Hitze und alte Geschichten",
+            "ort": "Waldrand",
+            "raum": "draußen",
+            "figuren": [
+              "ERZÄHLER",
+              "MARCO",
+              "LISA",
+              "BENNI",
+              "TÖPPE"
+            ],
+            "inhalt": "Die vier Freunde wandern an einem heißen Sommertag Richtung dem verlassenen Bahnhof Birkenbruch. Benni erzählt sich Witze über Geister, während Marco von den Geräuschen berichtet, die er nachts gehört hat.",
+            "atmo_en": "cicadas buzzing, birds chirping, footsteps on gravel, summer wind"
+          },
+          {
+            "nr": 2,
+            "titel": "Der Schatten im Schuppen",
+            "ort": "Bahnhofshalle",
+            "raum": "bahnhofshalle",
+            "figuren": [
+              "ERZÄHLER",
+              "MARCO",
+              "LISA",
+              "BENNI",
+              "TÖPPE"
+            ],
+            "inhalt": "Die Gruppe erreicht das Gebäude. Sie entdecken eine Taschenlampe, die im Staub liegt, und hören ein metallisches Klappern aus dem alten Güterschuppen.",
+            "atmo_en": "echoing footsteps in a large hall, hollow metallic clanking, dust motes in silence"
+          },
+          {
+            "nr": 3,
+            "titel": "Die Begegnung mit Krause",
+            "ort": "Bahnhofshalle",
+            "raum": "bahnhofshalle",
+            "figuren": [
+              "ERZÄHLER",
+              "MARCO",
+              "LISA",
+              "BENNI",
+              "TÖPPE",
+              "HERR KRAUSE"
+            ],
+            "inhalt": "Plötzlich taucht der grummelige Herr Krause auf und beschimpft sie als Spione. Er warnt sie eindringlich, den Bahnhof sofort zu verlassen.",
+            "atmo_en": "heavy footsteps, aggressive voice reverb, creaking wooden floorboards"
+          },
+          {
+            "nr": 4,
+            "titel": "Eine seltsame Entdeckung",
+            "ort": "Keller",
+            "raum": "keller",
+            "figuren": [
+              "ERZÄHLER",
+              "MARCO",
+              "LISA",
+              "BENNI",
+              "TÖPPE"
+            ],
+            "inhalt": "Nachdem Krause weg ist, schleichen sie in den Keller des Bahnhofs. Lisa findet eine alte, silberne Kette mit einem seltsamen Siegel, die dort neben einer aufgerissenen Holzkiste liegt.",
+            "atmo_en": "dripping water, low hum, muffled breathing, scraping wood"
+          },
+          {
+            "nr": 5,
+            "titel": "Die falsche Fährte",
+            "ort": "Keller",
+            "raum": "keller",
+            "figuren": [
+              "ERZÄHLER",
+              "MARCO",
+              "LISA",
+              "BENNI",
+              "TÖPPE",
+              "FRAU WEISS"
+            ],
+            "inhalt": "Sie hören Schritte von oben und denken, es sei Krause. Doch Frau Weiss erscheint im Lichtkegel der Taschenlampe und wirkt extrem nervös, als sie nach dem 'verlorenen Erbstück' sucht.",
+            "atmo_en": "heavy door creaking, flashlight clicking, tense silence"
+          },
+          {
+            "nr": 6,
+            "titel": "Das Finale im Schuppen",
+            "ort": "Bahnhofshalle",
+            "raum": "bahnhofshalle",
+            "figuren": [
+              "ERZÄHLER",
+              "MARCO",
+              "LISA",
+              "BENNI",
+              "TÖPPE",
+              "HERR KRAUSE",
+              "FRAU WEISS"
+            ],
+            "inhalt": "Die Gruppe stellt fest, dass Krause und Frau Weiss gar nicht gegeneinander arbeiten, sondern gemeinsam alte Dokumente aus dem Bahnhof retten. Die Kette gehört zu einer alten Urkunde, die den Besitz des Grundstücks beweist. Die Jugendlichen helfen beim Schließen der Kiste, bevor die Polizei (wegen des Lärms) eintrifft.",
+            "atmo_en": "clattering boxes, dramatic musical swell, police sirens in the distance"
+          }
+        ]
+      }
+    ],
+    "spuren": [
+      {
+        "spur": "Metallisches Klappern",
+        "szene": 1,
+        "bedeutung": "Es deutet auf die versteckten Aktivitäten im Schuppen hin."
+      },
+      {
+        "spur": "Silberne Kette mit Siegel",
+        "szene": 4,
+        "bedeutung": "Das eigentliche Objekt der Suche, das den Wert des Bahnhofgrundstücks belegt."
+      },
+      {
+        "spur": "Aufgerissene Holzkiste",
+        "szene": 4,
+        "bedeutung": "Zeigt, dass bereits jemand nach dem Inhalt gesucht hat."
+      }
+    ],
+    "aufloesung": "Die Jugendlichen dachten zuerst, Herr Krause sei ein böser Wächter und Frau Weiss eine Diebin. In Wahrheit ist Krause der ehemalige Gleiswärter und Frau Weiss die Enkelin des ehemaligen Bahnhofsbesitzers. Sie versuchen beide, die alten Original-Besitzurkunden (die in der Kiste unter der silbernen Kette liegen) vor einem Immobilienentwickler zu retten, der den Bahnhof abreißen will. Das metallische Klappern war das Werkzeug, mit dem sie die Kiste vorsichtig öffneten. Die Jugendlichen haben durch ihr Entdecken die Wahrheit ans Licht gebracht und helfen am Ende, die Dokumente sicherzustellen.",
+    "_minutes": 10.0,
+    "_mode": "hoerspiel"
+  },
+  "scenes": [
+    {
+      "chapter": 1,
+      "scene": 1,
+      "title": "Hitze und alte Geschichten",
+      "room": "draußen",
+      "atmo_en": "cicadas buzzing, birds chirping, footsteps on gravel, summer wind",
+      "text": "[MUSIK: Titelmusik | nostalgic, adventurous synth-pop 80s style]\nERZÄHLER: Sommer 1984. Die Hitze flimmert über den staubigen Feldwegen von Birkenbruch. Wo früher Züge pfiffen, regiert heute nur noch die Stille – eine Stille, die bald gebrochen werden wird.\n[ATMO: Zikaden zirpen, schweres Atmen beim Wandern, Knacken von trockenem Unterholz | cicadas chirping, heavy breathing while hiking, crunching dry undergrowth]\nBENNI (keuchend): Leute, ich sag’s euch... Wenn wir so weiterlaufen, verwandeln wir uns in getrocknete Zwiebeln. \nMARCO: Stell dich nicht so an, Benni. Das ist nur ein bisschen Sommerhitze.\nBENNI (grinsend): Ein bisschen? Ich sehe schon Geister! Die fangen an, uns zu verfolgen, weil wir ihnen das Wasser weggenommen haben!\nLISA (genervt): Wenn du noch einmal von Geistern redest, Benni, dann wandern wir direkt um. Das ist unlogisch und nervt.\nTÖPPE (gedanklich versunken): Chillt mal... \n[GERÄUSCH: Tastendrücken und das mechanische Klicken eines Walkmans | button pressing and mechanical click of a walkman]\nTÖPPE: Ich hab hier die neue Mixtape-Kassette. Die rettet uns vor der Langeweile.\nMARCO (leiser, ernst): Habt ihr eigentlich auch diese Geräusche gehört? Letzte Nacht, als ich im Fenster saß... \nLISA (skeptisch): Marco, das war sicher nur ein Fuchs oder der Wind in den alten Weichen.\nMARCO: Nein, Lisa. Es klang fast wie... metallisches Schlagen. Ganz rhythmisch. Als würde jemand am Gleis arbeiten.\n[PAUSE: 1.0]\nBENNI (ängstlich): Metallisches Schlagen? Das klingt nach dem Phantom vom Birkenbruch!\nLISA: Sei still, Benni! Wir sind fast da.\nERZÄHLER: Der Wald öffnet sich und vor ihnen liegt das Ziel ihrer Neugier: der vergessene Bahnhof.",
+      "items": [
+        {
+          "type": "music",
+          "de": "Titelmusik",
+          "en": "nostalgic, adventurous synth-pop 80s style"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Sommer 1984. Die Hitze flimmert über den staubigen Feldwegen von Birkenbruch. Wo früher Züge pfiffen, regiert heute nur noch die Stille – eine Stille, die bald gebrochen werden wird."
+        },
+        {
+          "type": "atmo",
+          "de": "Zikaden zirpen, schweres Atmen beim Wandern, Knacken von trockenem Unterholz",
+          "en": "cicadas chirping, heavy breathing while hiking, crunching dry undergrowth"
+        },
+        {
+          "type": "line",
+          "speaker": "BENNI",
+          "emotion": "keuchend",
+          "text": "Leute, ich sag’s euch... Wenn wir so weiterlaufen, verwandeln wir uns in getrocknete Zwiebeln."
+        },
+        {
+          "type": "line",
+          "speaker": "MARCO",
+          "emotion": "",
+          "text": "Stell dich nicht so an, Benni. Das ist nur ein bisschen Sommerhitze."
+        },
+        {
+          "type": "line",
+          "speaker": "BENNI",
+          "emotion": "grinsend",
+          "text": "Ein bisschen? Ich sehe schon Geister! Die fangen an, uns zu verfolgen, weil wir ihnen das Wasser weggenommen haben!"
+        },
+        {
+          "type": "line",
+          "speaker": "LISA",
+          "emotion": "genervt",
+          "text": "Wenn du noch einmal von Geistern redest, Benni, dann wandern wir direkt um. Das ist unlogisch und nervt."
+        },
+        {
+          "type": "line",
+          "speaker": "TÖPPE",
+          "emotion": "gedanklich versunken",
+          "text": "Chillt mal..."
+        },
+        {
+          "type": "sfx",
+          "de": "Tastendrücken und das mechanische Klicken eines Walkmans",
+          "en": "button pressing and mechanical click of a walkman"
+        },
+        {
+          "type": "line",
+          "speaker": "TÖPPE",
+          "emotion": "",
+          "text": "Ich hab hier die neue Mixtape-Kassette. Die rettet uns vor der Langeweile."
+        },
+        {
+          "type": "line",
+          "speaker": "MARCO",
+          "emotion": "leiser, ernst",
+          "text": "Habt ihr eigentlich auch diese Geräusche gehört? Letzte Nacht, als ich im Fenster saß..."
+        },
+        {
+          "type": "line",
+          "speaker": "LISA",
+          "emotion": "skeptisch",
+          "text": "Marco, das war sicher nur ein Fuchs oder der Wind in den alten Weichen."
+        },
+        {
+          "type": "line",
+          "speaker": "MARCO",
+          "emotion": "",
+          "text": "Nein, Lisa. Es klang fast wie... metallisches Schlagen. Ganz rhythmisch. Als würde jemand am Gleis arbeiten."
+        },
+        {
+          "type": "pause",
+          "de": "1.0",
+          "en": "1.0",
+          "seconds": 1.0
+        },
+        {
+          "type": "line",
+          "speaker": "BENNI",
+          "emotion": "ängstlich",
+          "text": "Metallisches Schlagen? Das klingt nach dem Phantom vom Birkenbruch!"
+        },
+        {
+          "type": "line",
+          "speaker": "LISA",
+          "emotion": "",
+          "text": "Sei still, Benni! Wir sind fast da."
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Der Wald öffnet sich und vor ihnen liegt das Ziel ihrer Neugier: der vergessene Bahnhof."
+        }
+      ],
+      "words": 181,
+      "repetition": 0.0,
+      "unknown_speakers": [],
+      "attempts": 1,
+      "continued": 0,
+      "seconds": 125.1,
+      "summary": "Die vier Freunde Benni, Marco, Lisa und Töppe wandern im Sommer 1984 durch die Hitze von Birkenbruch in Richtung eines verlassenen Bahnhofs. Während die Gruppe mit der Anstrengung kämpft, berichtet Marco von mysteriösen, rhythmischen Metallgeräuschen, die er nachts gehört hat. Am Ende der Szene erreichen sie den vergessenen Bahnhof, wobei die Gruppe noch keine konkreten Beweise für das metallische Schlagen hat."
+    },
+    {
+      "chapter": 1,
+      "scene": 2,
+      "title": "Der Schatten im Schuppen",
+      "room": "bahnhofshalle",
+      "atmo_en": "echoing footsteps in a large hall, hollow metallic clanking, dust motes in silence",
+      "text": "[ATMO: Summen von Insekten, trockenes Gras, ferner Wind in alten Schienen | buzzing insects, dry grass, distant wind over old rails]\nERZÄHLER: Die Hitze flimmert über den verrosteten Gleisen. Das Gebäude der Bahnhofshalle ragt wie ein Skelett aus dem Gebüsch.\n[GERÄUSCH: Knirschende Schritte auf Kies | gravel crunching footsteps]\nTÖPPE (genervt): Mein Walkman zieht sich bei der Hitze bestimmt das Band ein. Ich brauch' Musik, sonst dreh ich durch.\nBENNI (ängstlich): Können wir nicht einfach umkehren? Das hier sieht aus wie der Anfang von einem Horrorfilm.\nMARCO: Keine Sorge, Benni. Schau dir das an. Der Bahnhof ist zwar alt, aber er wirkt... bewohnt.\nLISA (skeptisch): Bewohnt? Marco, hier wohnt seit Jahrzehnten niemand mehr. Das sind nur Schatten.\n[GERÄUSCH: Ein metallisches Klappern aus der Ferne | rhythmic metallic clattering from a distance]\n[PAUSE: 1.0]\nBENNI (flüsternd): Habt ihr das gehört? Das war es! Das Phantom!\nMARCO: Das kommt aus dem Güterschuppen da hinten. Komm, wir müssen näher ran.\nLISA: Vorsichtig sein. Wir wissen nicht, wer oder was dort ist.\n[GERÄUSCH: Staubiges Rascheln und ein Klacken | dust rustling and a click]\nTÖPPE (erstaunt): Hey, guckt mal! Da liegt eine Taschenlampe im Dreck. Sieht fast so aus, als hätte sie jemand hier vergessen.\nMARCO (entschlossen): Dann probieren wir's mal. Lisa, gib mir die Lampe.\n[MUSIK: Spannung | suspenseful tension music]\nERZÄHLER: Der Lichtstrahl der Taschenlampe schneidet durch den Staub der Bahnhofshalle und weist den Weg zum dunklen Schuppen.\n[GERÄUSCH: Lautes, rhythmisches Metallklappern | loud rhythmic metallic clattering]\n[GERÄUSCH: Ein schweres Klopfen auf Metall | heavy hammering on metal]\nBENNI (panisch): Das wird immer lauter! Rennt, bevor uns das Phantom erwischt!\nLISA (beherrscht): Warte doch! Marco, schau mal durch das Schlüsselloch der Schuppentür.\nMARCO (flüsternd): Ich mach’s... aber wer ist da drin?\n[GERÄUSCH: Ein metallisches Scharren | metallic scraping]",
+      "items": [
+        {
+          "type": "atmo",
+          "de": "Summen von Insekten, trockenes Gras, ferner Wind in alten Schienen",
+          "en": "buzzing insects, dry grass, distant wind over old rails"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Die Hitze flimmert über den verrosteten Gleisen. Das Gebäude der Bahnhofshalle ragt wie ein Skelett aus dem Gebüsch."
+        },
+        {
+          "type": "sfx",
+          "de": "Knirschende Schritte auf Kies",
+          "en": "gravel crunching footsteps"
+        },
+        {
+          "type": "line",
+          "speaker": "TÖPPE",
+          "emotion": "genervt",
+          "text": "Mein Walkman zieht sich bei der Hitze bestimmt das Band ein. Ich brauch' Musik, sonst dreh ich durch."
+        },
+        {
+          "type": "line",
+          "speaker": "BENNI",
+          "emotion": "ängstlich",
+          "text": "Können wir nicht einfach umkehren? Das hier sieht aus wie der Anfang von einem Horrorfilm."
+        },
+        {
+          "type": "line",
+          "speaker": "MARCO",
+          "emotion": "",
+          "text": "Keine Sorge, Benni. Schau dir das an. Der Bahnhof ist zwar alt, aber er wirkt... bewohnt."
+        },
+        {
+          "type": "line",
+          "speaker": "LISA",
+          "emotion": "skeptisch",
+          "text": "Bewohnt? Marco, hier wohnt seit Jahrzehnten niemand mehr. Das sind nur Schatten."
+        },
+        {
+          "type": "sfx",
+          "de": "Ein metallisches Klappern aus der Ferne",
+          "en": "rhythmic metallic clattering from a distance"
+        },
+        {
+          "type": "pause",
+          "de": "1.0",
+          "en": "1.0",
+          "seconds": 1.0
+        },
+        {
+          "type": "line",
+          "speaker": "BENNI",
+          "emotion": "flüsternd",
+          "text": "Habt ihr das gehört? Das war es! Das Phantom!"
+        },
+        {
+          "type": "line",
+          "speaker": "MARCO",
+          "emotion": "",
+          "text": "Das kommt aus dem Güterschuppen da hinten. Komm, wir müssen näher ran."
+        },
+        {
+          "type": "line",
+          "speaker": "LISA",
+          "emotion": "",
+          "text": "Vorsichtig sein. Wir wissen nicht, wer oder was dort ist."
+        },
+        {
+          "type": "sfx",
+          "de": "Staubiges Rascheln und ein Klacken",
+          "en": "dust rustling and a click"
+        },
+        {
+          "type": "line",
+          "speaker": "TÖPPE",
+          "emotion": "erstaunt",
+          "text": "Hey, guckt mal! Da liegt eine Taschenlampe im Dreck. Sieht fast so aus, als hätte sie jemand hier vergessen."
+        },
+        {
+          "type": "line",
+          "speaker": "MARCO",
+          "emotion": "entschlossen",
+          "text": "Dann probieren wir's mal. Lisa, gib mir die Lampe."
+        },
+        {
+          "type": "music",
+          "de": "Spannung",
+          "en": "suspenseful tension music"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Der Lichtstrahl der Taschenlampe schneidet durch den Staub der Bahnhofshalle und weist den Weg zum dunklen Schuppen."
+        },
+        {
+          "type": "sfx",
+          "de": "Lautes, rhythmisches Metallklappern",
+          "en": "loud rhythmic metallic clattering"
+        },
+        {
+          "type": "sfx",
+          "de": "Ein schweres Klopfen auf Metall",
+          "en": "heavy hammering on metal"
+        },
+        {
+          "type": "line",
+          "speaker": "BENNI",
+          "emotion": "panisch",
+          "text": "Das wird immer lauter! Rennt, bevor uns das Phantom erwischt!"
+        },
+        {
+          "type": "line",
+          "speaker": "LISA",
+          "emotion": "beherrscht",
+          "text": "Warte doch! Marco, schau mal durch das Schlüsselloch der Schuppentür."
+        },
+        {
+          "type": "line",
+          "speaker": "MARCO",
+          "emotion": "flüsternd",
+          "text": "Ich mach’s... aber wer ist da drin?"
+        },
+        {
+          "type": "sfx",
+          "de": "Ein metallisches Scharren",
+          "en": "metallic scraping"
+        }
+      ],
+      "words": 182,
+      "repetition": 0.0,
+      "unknown_speakers": [],
+      "attempts": 1,
+      "continued": 1,
+      "seconds": 162.6,
+      "summary": "Töppe, Benni, Marco und Lisa erkunden einen verlassenen Bahnhof und entdecken dabei eine vergessene Taschenlampe sowie mysteriöse, rhythmische Metallgeräusche aus einem Güterschuppen. Die Gruppe findet eine neue Spur in Form der Taschenlampe und der unklaren Geräuschquelle, die auf eine bewohnte Präsenz hindeutet. Am Ende stehen die Figuren vor der Schuppentür, wobei Marco versucht, durch das Schlüsselloch ins Innere zu blicken, während die Geräusche lauter werden."
+    },
+    {
+      "chapter": 1,
+      "scene": 3,
+      "title": "Die Begegnung mit Krause",
+      "room": "bahnhofshalle",
+      "atmo_en": "heavy footsteps, aggressive voice reverb, creaking wooden floorboards",
+      "text": "[ATMO: Sommerliche Hitze, Grillenzirpen, ferner Wind in den Gleisen | summer heat, cicadas chirping, distant wind in the tracks]\nERZÄHLER: Der Schweiß steht den Jugendlichen auf der Stirn, während sie vor der massiven Güterschuppentür lauschen.\n[GERÄUSCH: Ein heftiges Poltern und Metallklappern von drinnen | loud clattering and metal banging from inside]\nBENNI (zitternd): Marco, lass das! Das ist kein Phantom, das ist eine Abrissbirne!\nMARCO (konzentriert): Ich seh' was... da bewegt sich ein Schatten...\n[GERÄUSCH: Eine schwere Tür wird mit Wucht aufgestoßen | heavy door being slammed open]\n[MUSIK: Plötzlicher Schreckmoment | sudden jump scare music]\nHERRKRAUSE (brüllend): Was haben wir denn hier? Ein Spionen-Trupp aus der Stadt?\nTÖPPE (keuchend): Ach du meine Güte! \nLISA (überrascht): Herr Krause? Sie sind das?\nHERRKRAUSE (wütend): Schleicht euch! Verschwindet von meinem Gleis, ihr neugierigen Frechdachs! \nBENNI (flüsternd): Er sieht aus, als würde er uns gleich fressen.\nHERRKRAUSE (zornig): Ich hab' euch gehört! Ihr steckt doch sicher mit den Spähern unter einer Decke! Weg hier, sofort!\nMARCO (mutig): Wir wollten doch gar nichts kaputt machen, wir haben nur die Geräusche gehört.\nHERRKRAUSE (drohend): Die Geräusche sind mir egal! Wenn ich euch noch einmal hier am Schuppen sehe, dann rufen wir die Dorfpolizei! Abmarsch!\n[GERÄUSCH: Ein schwerer Holzstock schlägt auf den Boden | heavy wooden cane thumping the ground]\nERZÄHLER: Die Gruppe blickt sich erschrocken an; der alte Gleiswärter steht wie ein Fels vor dem Eingang.\nLISA (flüsternd): Er wirkt extrem nervös, Marco. Als hätte er etwas zu verbergen.\n[MUSIK: Spannungsaufbau | building tension music]\n[GERÄUSCH: Ein metallisches Klicken, als er seine Tasche schließt | metallic click as he closes his bag]\nTÖPPE (flüsternd): Leute, mein Walkman spielt gerade den falschen Song... ich hab total das Zittern.\nMARCO (entschlossen): Wir gehen jetzt, aber wir lassen das nicht auf uns sitzen.\n[GERÄUSCH: Schnelle Schritte auf Kies | fast footsteps on gravel]\nERZÄHLER: Die Freunde flüchten davon, doch die Fragen bleiben schwerer als der Sommerstaub.",
+      "items": [
+        {
+          "type": "atmo",
+          "de": "Sommerliche Hitze, Grillenzirpen, ferner Wind in den Gleisen",
+          "en": "summer heat, cicadas chirping, distant wind in the tracks"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Der Schweiß steht den Jugendlichen auf der Stirn, während sie vor der massiven Güterschuppentür lauschen."
+        },
+        {
+          "type": "sfx",
+          "de": "Ein heftiges Poltern und Metallklappern von drinnen",
+          "en": "loud clattering and metal banging from inside"
+        },
+        {
+          "type": "line",
+          "speaker": "BENNI",
+          "emotion": "zitternd",
+          "text": "Marco, lass das! Das ist kein Phantom, das ist eine Abrissbirne!"
+        },
+        {
+          "type": "line",
+          "speaker": "MARCO",
+          "emotion": "konzentriert",
+          "text": "Ich seh' was... da bewegt sich ein Schatten..."
+        },
+        {
+          "type": "sfx",
+          "de": "Eine schwere Tür wird mit Wucht aufgestoßen",
+          "en": "heavy door being slammed open"
+        },
+        {
+          "type": "music",
+          "de": "Plötzlicher Schreckmoment",
+          "en": "sudden jump scare music"
+        },
+        {
+          "type": "line",
+          "speaker": "HERRKRAUSE",
+          "emotion": "brüllend",
+          "text": "Was haben wir denn hier? Ein Spionen-Trupp aus der Stadt?"
+        },
+        {
+          "type": "line",
+          "speaker": "TÖPPE",
+          "emotion": "keuchend",
+          "text": "Ach du meine Güte!"
+        },
+        {
+          "type": "line",
+          "speaker": "LISA",
+          "emotion": "überrascht",
+          "text": "Herr Krause? Sie sind das?"
+        },
+        {
+          "type": "line",
+          "speaker": "HERRKRAUSE",
+          "emotion": "wütend",
+          "text": "Schleicht euch! Verschwindet von meinem Gleis, ihr neugierigen Frechdachs!"
+        },
+        {
+          "type": "line",
+          "speaker": "BENNI",
+          "emotion": "flüsternd",
+          "text": "Er sieht aus, als würde er uns gleich fressen."
+        },
+        {
+          "type": "line",
+          "speaker": "HERRKRAUSE",
+          "emotion": "zornig",
+          "text": "Ich hab' euch gehört! Ihr steckt doch sicher mit den Spähern unter einer Decke! Weg hier, sofort!"
+        },
+        {
+          "type": "line",
+          "speaker": "MARCO",
+          "emotion": "mutig",
+          "text": "Wir wollten doch gar nichts kaputt machen, wir haben nur die Geräusche gehört."
+        },
+        {
+          "type": "line",
+          "speaker": "HERRKRAUSE",
+          "emotion": "drohend",
+          "text": "Die Geräusche sind mir egal! Wenn ich euch noch einmal hier am Schuppen sehe, dann rufen wir die Dorfpolizei! Abmarsch!"
+        },
+        {
+          "type": "sfx",
+          "de": "Ein schwerer Holzstock schlägt auf den Boden",
+          "en": "heavy wooden cane thumping the ground"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Die Gruppe blickt sich erschrocken an; der alte Gleiswärter steht wie ein Fels vor dem Eingang."
+        },
+        {
+          "type": "line",
+          "speaker": "LISA",
+          "emotion": "flüsternd",
+          "text": "Er wirkt extrem nervös, Marco. Als hätte er etwas zu verbergen."
+        },
+        {
+          "type": "music",
+          "de": "Spannungsaufbau",
+          "en": "building tension music"
+        },
+        {
+          "type": "sfx",
+          "de": "Ein metallisches Klicken, als er seine Tasche schließt",
+          "en": "metallic click as he closes his bag"
+        },
+        {
+          "type": "line",
+          "speaker": "TÖPPE",
+          "emotion": "flüsternd",
+          "text": "Leute, mein Walkman spielt gerade den falschen Song... ich hab total das Zittern."
+        },
+        {
+          "type": "line",
+          "speaker": "MARCO",
+          "emotion": "entschlossen",
+          "text": "Wir gehen jetzt, aber wir lassen das nicht auf uns sitzen."
+        },
+        {
+          "type": "sfx",
+          "de": "Schnelle Schritte auf Kies",
+          "en": "fast footsteps on gravel"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Die Freunde flüchten davon, doch die Fragen bleiben schwerer als der Sommerstaub."
+        }
+      ],
+      "words": 184,
+      "repetition": 0.0,
+      "unknown_speakers": [],
+      "attempts": 1,
+      "continued": 1,
+      "seconds": 176.7,
+      "summary": "Die Jugendlichen Benni, Marco, Lisa und Töppe werden beim Lauschen vor einem Güterschuppen vom wütenden Gleiswärter Herr Krause entdeckt, der sie beschuldigt, Spione zu sein. Die Begegnung liefert die neue Spur, dass Herr Krause extrem nervös wirkt und möglicherweise etwas in seinem Schuppen verheimlicht. Die Gruppe flüchtet schließlich vom Gleis, während Herr Krause allein vor dem Schuppen zurückbleibt."
+    },
+    {
+      "chapter": 1,
+      "scene": 4,
+      "title": "Eine seltsame Entdeckung",
+      "room": "keller",
+      "atmo_en": "dripping water, low hum, muffled breathing, scraping wood",
+      "text": "[ATMO: Wind in den Schienen, das ferne Echo eines Güterschuppens | wind on the tracks, distant echo of a freight shed]\nERZÄHLER: Der Mut hat sie tiefer geführt als jemals zuvor – mitten in das Herz des alten Güterschuppens.\n[GERÄUSCH: Ein schweres Eisentor knarrt und schlägt auf | heavy iron door creaks and slams open]\nBENNI (zitternd): Marco, das ist eine echt schlechte Idee. Wenn Krause uns hier oben findet, gibt’s Ärger mit der ganzen Polizei!\nMARCO (flüsternd): Ruhe jetzt, Benni. Wir müssen wissen, was er da im Schuppen versteckt. \nLISA (belehrend): Er hat uns nicht nur verjagt, er war panisch. Das hat nichts mit Spionen zu tun.\nTÖPPE (nervös): Ich hab mein Tape auf Pause gestellt. Wenn ich jetzt die Musik anmache, hört mich jeder im ganzen Dorf.\n[GERÄUSCH: Schritte auf Holzdielen und Staub | footsteps on wooden floorboards and dust]\nERZÄHLER: Das Licht ihrer Taschenlampen schnitt wie ein Schwert durch die staubige Dunkelheit des Güterschuppens.\nLISA (überrascht): Warte mal... seht euch das an. Hinter dem alten Stapel Holz... da ist eine Falltür.\n[GERÄUSCH: Ein schweres Holzbrett wird zur Seite geschoben | heavy wooden board being slid aside]\nMARCO (aufgeregt): Da geht's nach unten. In den Keller unter dem Schuppen.\nBENNI (ängstlich): Das sieht aus wie eine Falle.\nLISA (konzentriert): Komm schon, wir müssen wissen, was sie da unten verstecken.\n[GERÄUSCH: Knarren von Holztreppen | creaking wooden stairs]\n[ATMO: Tropfendes Wasser in einem feuchten Keller | water dripping in a damp cellar]\nERZÄHLER: Die Treppen führten sie tiefer in die Dunkelheit, dorthin, wo die Geheimnisse des Bahnhofs begraben lagen.\n[GERÄUSCH: Ein metallisches Klappern auf Stein | metallic clinking on stone]\nMARCO (aufgeregt): Was ist das? Eine Kiste?\nBENNI (ängstlich): Die sieht aus, als hätte jemand sie mit Werkzeug bearbeitet.\nLISA (konzentriert): Schau mal, direkt obenauf... liegt das hier?\n[GERÄUSCH: Ein feines Klirren von Metall | a faint metallic clink]\nMARCO: Eine Kette. Silber. Und dieses Siegel an der Schließe... das sieht verdammt alt aus.\nTÖPPE (fasziniert): Das ist kein Modeschmuck, Leute. Das ist ein Schlüssel. Schau dir das Wappen an.\n[MUSIK: Mysterium | mysterious ambient music]\nLISA (nachdenklich): Das Siegel zeigt das Wappen des alten Bahnhofsbesitzers. Es passt genau zum Schloss der Kiste.\n[GERÄUSCH: Ein fernes Grollen, vielleicht ein herannahender Zug | a distant rumble, maybe an approaching train]\nBENNI (panisch): Hört ihr das? Ist das Krause?\nMARCO (entschlossen): Nein, das kommt von den Schienen. Wir müssen die Kette nehmen und die Kiste öffnen!\n[MUSIK: Schneller werdender Rhythmus | fast-paced rhythmic music]",
+      "items": [
+        {
+          "type": "atmo",
+          "de": "Wind in den Schienen, das ferne Echo eines Güterschuppens",
+          "en": "wind on the tracks, distant echo of a freight shed"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Der Mut hat sie tiefer geführt als jemals zuvor – mitten in das Herz des alten Güterschuppens."
+        },
+        {
+          "type": "sfx",
+          "de": "Ein schweres Eisentor knarrt und schlägt auf",
+          "en": "heavy iron door creaks and slams open"
+        },
+        {
+          "type": "line",
+          "speaker": "BENNI",
+          "emotion": "zitternd",
+          "text": "Marco, das ist eine echt schlechte Idee. Wenn Krause uns hier oben findet, gibt’s Ärger mit der ganzen Polizei!"
+        },
+        {
+          "type": "line",
+          "speaker": "MARCO",
+          "emotion": "flüsternd",
+          "text": "Ruhe jetzt, Benni. Wir müssen wissen, was er da im Schuppen versteckt."
+        },
+        {
+          "type": "line",
+          "speaker": "LISA",
+          "emotion": "belehrend",
+          "text": "Er hat uns nicht nur verjagt, er war panisch. Das hat nichts mit Spionen zu tun."
+        },
+        {
+          "type": "line",
+          "speaker": "TÖPPE",
+          "emotion": "nervös",
+          "text": "Ich hab mein Tape auf Pause gestellt. Wenn ich jetzt die Musik anmache, hört mich jeder im ganzen Dorf."
+        },
+        {
+          "type": "sfx",
+          "de": "Schritte auf Holzdielen und Staub",
+          "en": "footsteps on wooden floorboards and dust"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Das Licht ihrer Taschenlampen schnitt wie ein Schwert durch die staubige Dunkelheit des Güterschuppens."
+        },
+        {
+          "type": "line",
+          "speaker": "LISA",
+          "emotion": "überrascht",
+          "text": "Warte mal... seht euch das an. Hinter dem alten Stapel Holz... da ist eine Falltür."
+        },
+        {
+          "type": "sfx",
+          "de": "Ein schweres Holzbrett wird zur Seite geschoben",
+          "en": "heavy wooden board being slid aside"
+        },
+        {
+          "type": "line",
+          "speaker": "MARCO",
+          "emotion": "aufgeregt",
+          "text": "Da geht's nach unten. In den Keller unter dem Schuppen."
+        },
+        {
+          "type": "line",
+          "speaker": "BENNI",
+          "emotion": "ängstlich",
+          "text": "Das sieht aus wie eine Falle."
+        },
+        {
+          "type": "line",
+          "speaker": "LISA",
+          "emotion": "konzentriert",
+          "text": "Komm schon, wir müssen wissen, was sie da unten verstecken."
+        },
+        {
+          "type": "sfx",
+          "de": "Knarren von Holztreppen",
+          "en": "creaking wooden stairs"
+        },
+        {
+          "type": "atmo",
+          "de": "Tropfendes Wasser in einem feuchten Keller",
+          "en": "water dripping in a damp cellar"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Die Treppen führten sie tiefer in die Dunkelheit, dorthin, wo die Geheimnisse des Bahnhofs begraben lagen."
+        },
+        {
+          "type": "sfx",
+          "de": "Ein metallisches Klappern auf Stein",
+          "en": "metallic clinking on stone"
+        },
+        {
+          "type": "line",
+          "speaker": "MARCO",
+          "emotion": "aufgeregt",
+          "text": "Was ist das? Eine Kiste?"
+        },
+        {
+          "type": "line",
+          "speaker": "BENNI",
+          "emotion": "ängstlich",
+          "text": "Die sieht aus, als hätte jemand sie mit Werkzeug bearbeitet."
+        },
+        {
+          "type": "line",
+          "speaker": "LISA",
+          "emotion": "konzentriert",
+          "text": "Schau mal, direkt obenauf... liegt das hier?"
+        },
+        {
+          "type": "sfx",
+          "de": "Ein feines Klirren von Metall",
+          "en": "a faint metallic clink"
+        },
+        {
+          "type": "line",
+          "speaker": "MARCO",
+          "emotion": "",
+          "text": "Eine Kette. Silber. Und dieses Siegel an der Schließe... das sieht verdammt alt aus."
+        },
+        {
+          "type": "line",
+          "speaker": "TÖPPE",
+          "emotion": "fasziniert",
+          "text": "Das ist kein Modeschmuck, Leute. Das ist ein Schlüssel. Schau dir das Wappen an."
+        },
+        {
+          "type": "music",
+          "de": "Mysterium",
+          "en": "mysterious ambient music"
+        },
+        {
+          "type": "line",
+          "speaker": "LISA",
+          "emotion": "nachdenklich",
+          "text": "Das Siegel zeigt das Wappen des alten Bahnhofsbesitzers. Es passt genau zum Schloss der Kiste."
+        },
+        {
+          "type": "sfx",
+          "de": "Ein fernes Grollen, vielleicht ein herannahender Zug",
+          "en": "a distant rumble, maybe an approaching train"
+        },
+        {
+          "type": "line",
+          "speaker": "BENNI",
+          "emotion": "panisch",
+          "text": "Hört ihr das? Ist das Krause?"
+        },
+        {
+          "type": "line",
+          "speaker": "MARCO",
+          "emotion": "entschlossen",
+          "text": "Nein, das kommt von den Schienen. Wir müssen die Kette nehmen und die Kiste öffnen!"
+        },
+        {
+          "type": "music",
+          "de": "Schneller werdender Rhythmus",
+          "en": "fast-paced rhythmic music"
+        }
+      ],
+      "words": 240,
+      "repetition": 0.004,
+      "unknown_speakers": [],
+      "attempts": 1,
+      "continued": 1,
+      "seconds": 169.8,
+      "summary": "Benni, Marco, Lisa und Töppe untersuchen heimlich einen alten Güterschuppen, um herauszufinden, was Krause dort versteckt. Im feuchten Keller unter einer Falltür entdecken sie eine Werkzeug-bearbeitete Kiste sowie eine silberne Kette mit dem Wappen des alten Bahnhofsbesitzers, die als Schlüssel dient. Die Gruppe befindet sich nun im Keller des Schuppens und plant, die Kiste mithilfe der Kette zu öffnen, während im Hintergrund ein herannahender Zug zu hören ist.",
+      "previous_text": "[ATMO: Tropfendes Wasser in einem feuchten Keller, ferner Wind in den Schienen | water dripping in a damp cellar, distant wind on the tracks]\nERZÄHLER: Der Mut hat sie tiefer geführt als jemals zuvor – in das dunkle Herz des Bahnhofs.\n[GERÄUSCH: Ein schweres Eisentor knarrt und schlägt auf | heavy iron door creaks and slams open]\nBENNI (zitternd): Marco, das ist eine echt schlechte Idee. Wenn Krause uns hier oben findet, gibt’s Ärger mit der ganzen Polizei!\nMARCO (flüsternd): Ruhe jetzt, Benni. Wir müssen wissen, was er da im Schuppen versteckt. \nLISA (belehrend): Er hat uns nicht nur verjagt, er war panisch. Das hat nichts mit Spionen zu tun.\nTÖPPE (nervös): Ich hab mein Tape auf Pause gestellt. Wenn ich jetzt die Musik anmache, hört mich jeder im ganzen Dorf.\n[GERÄUSCH: Schritte auf feuchtem Beton | footsteps on damp concrete]\nERZÄHLER: Das Licht ihrer Taschenlampen schnitt wie ein Schwert durch die staubige Dunkelheit des Kellerraums.\nLISA (überrascht): Warte mal... seht euch das an.\n[GERÄUSCH: Ein metallisches Klappern auf Stein | metallic clinking on stone]\nMARCO (aufgeregt): Was ist das? Eine Kiste?\nBENNI (ängstlich): Die sieht aus, als hätte jemand sie mit Gewalt aufgerissen.\nLISA (konzentriert): Schau mal, direkt daneben... liegt das hier?\n[GERÄUSCH: Ein feines Klirren von Metall | a faint metallic clink]\nMARCO: Eine Kette. Silber. Und dieses Siegel darauf... das sieht verdammt alt aus.\nTÖPPE (fasziniert): Das ist kein Modeschmuck, Leute. Das wirkt wie ein Rätsel.\n[MUSIK: Mysterium | mysterious ambient music]\nLISA (nachdenklich): Das Siegel zeigt ein Wappen. Es passt zu dem alten Bahnhofslogo.\n[GERÄUSCH: Ein fernes Grollen, vielleicht ein herannahender Zug | a distant rumble, maybe an approaching train]\nBENNI (panisch): Hört ihr das? Ist das Krause?\nMARCO (entschlossen): Nein, das kommt von den Schienen. Wir müssen die Kette nehmen und verschwinden!\n[MUSIK: Schneller werdender Rhythmus | fast-paced rhythmic music]"
+    },
+    {
+      "chapter": 1,
+      "scene": 5,
+      "title": "Die falsche Fährte",
+      "room": "keller",
+      "atmo_en": "heavy door creaking, flashlight clicking, tense silence",
+      "text": "[ATMO: Feuchtes Tropfen in einem dunklen Keller, entferntes Grollen eines Zuges | damp dripping in a dark cellar, distant rumble of a train]\nERZÄHLER: Der Keller ist erfüllt von der Angst der vier Freunde, während das ferne Grollen des Zuges ihre Nerven strapaziert.\n[GERÄUSCH: Schwere Schritte auf Holzbohlen über ihnen | heavy footsteps on wooden floorboards above]\nBENNI (flüsternd, panisch): Da oben! Das sind Schritte! Krause ist es, ich schwöre es!\nMARCO (gepresst): Ganz ruhig, Benni. Wir halten die Kette fest. Lisa, die Taschenlampe!\nLISA (nervös): Ich hab sie ja... aber wer sollte hier im Keller sein? \nTÖPPE (flüsternd): Vielleicht will er uns mit dem Schuppen-Schlüssel erschlagen.\n[GERÄUSCH: Eine schwere Kellertür knarrt laut und wird aufgestoßen | heavy cellar door creaks loudly and is pushed open]\n[MUSIK: Plötzliche Spannung | sudden tension music]\nERZÄHLER: Ein Lichtstrahl schneidet durch die Dunkelheit, doch es ist nicht der wütende Gleiswärter.\nFRAU WEISS (hechelnd, verzweifelt): Ist da jemand? Hallo? Bitte, sagen Sie mir, dass ich nichts übersehen habe!\n[GERÄUSCH: Lichtkegel einer Taschenlampe streift über Wände | flashlight beam sweeping over walls]\nMARCO (überrascht): Frau Weiss? Was machen Sie hier unten?\nFRAU WEISS (erschrocken): Oh Gott! Kinder? Was... was macht ihr hier unten?\nLISA (skeptisch): Suchen Sie nach etwas Bestimmtem?\nFRAU WEISS (unruhig, hastig): Ich... ich suche nur ein Erbstück. Etwas sehr Wichtiges, das mir nicht gehören darf, wenn es weg ist. Haben Sie etwas gesehen?\nTÖPPE (flüsternd zu Marco): Die sucht doch bestimmt die Beute von Krause!\n[GERÄUSCH: Metallisches Klappern in der Nähe | metallic clattering nearby]\nMARCO (beobachtend): Ein Erbstück? Wir haben gerade eine silberne Kette mit einem Wappen gefunden. \nFRAU WEISS (erbleichend): Eine Kette? Mit einem Siegel? Geben Sie sie mir bitte, sofort!\nBENNI (ängstlich): Marco, die sieht aus, als würde sie uns jetzt fressen wollen!\n[MUSIK: Mysteriöser Übergang | mysterious transition music]",
+      "items": [
+        {
+          "type": "atmo",
+          "de": "Feuchtes Tropfen in einem dunklen Keller, entferntes Grollen eines Zuges",
+          "en": "damp dripping in a dark cellar, distant rumble of a train"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Der Keller ist erfüllt von der Angst der vier Freunde, während das ferne Grollen des Zuges ihre Nerven strapaziert."
+        },
+        {
+          "type": "sfx",
+          "de": "Schwere Schritte auf Holzbohlen über ihnen",
+          "en": "heavy footsteps on wooden floorboards above"
+        },
+        {
+          "type": "line",
+          "speaker": "BENNI",
+          "emotion": "flüsternd, panisch",
+          "text": "Da oben! Das sind Schritte! Krause ist es, ich schwöre es!"
+        },
+        {
+          "type": "line",
+          "speaker": "MARCO",
+          "emotion": "gepresst",
+          "text": "Ganz ruhig, Benni. Wir halten die Kette fest. Lisa, die Taschenlampe!"
+        },
+        {
+          "type": "line",
+          "speaker": "LISA",
+          "emotion": "nervös",
+          "text": "Ich hab sie ja... aber wer sollte hier im Keller sein?"
+        },
+        {
+          "type": "line",
+          "speaker": "TÖPPE",
+          "emotion": "flüsternd",
+          "text": "Vielleicht will er uns mit dem Schuppen-Schlüssel erschlagen."
+        },
+        {
+          "type": "sfx",
+          "de": "Eine schwere Kellertür knarrt laut und wird aufgestoßen",
+          "en": "heavy cellar door creaks loudly and is pushed open"
+        },
+        {
+          "type": "music",
+          "de": "Plötzliche Spannung",
+          "en": "sudden tension music"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Ein Lichtstrahl schneidet durch die Dunkelheit, doch es ist nicht der wütende Gleiswärter."
+        },
+        {
+          "type": "line",
+          "speaker": "FRAUWEISS",
+          "emotion": "hechelnd, verzweifelt",
+          "text": "Ist da jemand? Hallo? Bitte, sagen Sie mir, dass ich nichts übersehen habe!"
+        },
+        {
+          "type": "sfx",
+          "de": "Lichtkegel einer Taschenlampe streift über Wände",
+          "en": "flashlight beam sweeping over walls"
+        },
+        {
+          "type": "line",
+          "speaker": "MARCO",
+          "emotion": "überrascht",
+          "text": "Frau Weiss? Was machen Sie hier unten?"
+        },
+        {
+          "type": "line",
+          "speaker": "FRAUWEISS",
+          "emotion": "erschrocken",
+          "text": "Oh Gott! Kinder? Was... was macht ihr hier unten?"
+        },
+        {
+          "type": "line",
+          "speaker": "LISA",
+          "emotion": "skeptisch",
+          "text": "Suchen Sie nach etwas Bestimmtem?"
+        },
+        {
+          "type": "line",
+          "speaker": "FRAUWEISS",
+          "emotion": "unruhig, hastig",
+          "text": "Ich... ich suche nur ein Erbstück. Etwas sehr Wichtiges, das mir nicht gehören darf, wenn es weg ist. Haben Sie etwas gesehen?"
+        },
+        {
+          "type": "line",
+          "speaker": "TÖPPE",
+          "emotion": "flüsternd zu Marco",
+          "text": "Die sucht doch bestimmt die Beute von Krause!"
+        },
+        {
+          "type": "sfx",
+          "de": "Metallisches Klappern in der Nähe",
+          "en": "metallic clattering nearby"
+        },
+        {
+          "type": "line",
+          "speaker": "MARCO",
+          "emotion": "beobachtend",
+          "text": "Ein Erbstück? Wir haben gerade eine silberne Kette mit einem Wappen gefunden."
+        },
+        {
+          "type": "line",
+          "speaker": "FRAUWEISS",
+          "emotion": "erbleichend",
+          "text": "Eine Kette? Mit einem Siegel? Geben Sie sie mir bitte, sofort!"
+        },
+        {
+          "type": "line",
+          "speaker": "BENNI",
+          "emotion": "ängstlich",
+          "text": "Marco, die sieht aus, als würde sie uns jetzt fressen wollen!"
+        },
+        {
+          "type": "music",
+          "de": "Mysteriöser Übergang",
+          "en": "mysterious transition music"
+        }
+      ],
+      "words": 171,
+      "repetition": 0.0,
+      "unknown_speakers": [],
+      "attempts": 1,
+      "continued": 1,
+      "seconds": 171.6,
+      "summary": "Die vier Freunde Benni, Marco, Lisa und Töppe treffen im dunklen Keller unerwartet auf Frau Weiss, die verzweifelt nach einem wichtigen Erbstück sucht. Die neue Spur ist eine silberne Kette mit einem Wappen, die die Gruppe bereits gefunden hat und die Frau Weiss sofort beansprucht. Am Ende befinden sich alle Personen im Keller, wobei die Gruppe die wertvolle Kette besitzt und die Situation durch das Verhalten von Frau Weiss hochgradig angespannt ist.",
+      "previous_text": "[ATMO: Feuchtes Tropfen in einem dunklen Keller, entferntes Grollen eines Zuges | damp dripping in a dark cellar, distant rumble of a train]\nERZÄHLER: Der Keller ist erfüllt von der Angst der vier Freunde, während das ferne Grollen des Zuges ihre Nerven strapaziert.\n[GERÄUSCH: Schwere Schritte auf Holzbohlen über ihnen | heavy footsteps on wooden floorboards above]\nBENNI (flüsternd, panisch): Da oben! Das sind Schritte! Krause ist es, ich schwöre es!\nMARCO (gepresst): Ganz ruhig, Benni. Wir halten die Kette fest. Lisa, die Taschenlampe!\nLISA (nervös): Ich hab sie ja... aber wer sollte hier im Keller sein? \nTÖPPE (flüsternd): Vielleicht will er uns mit dem Schuppen-Schlüssel erschlagen.\n[GERÄUSCH: Eine schwere Kellertür knarrt laut | heavy cellar door creaks loudly]\n[MUSIK: Plötzliche Spannung | sudden tension music]\nERZÄHLER: Ein Lichtstrahl schneidet durch die Dunkelheit, doch es ist nicht der wütende Gleiswärter.\nFRAU WEISS (hechelnd, verzweifelt): Ist da jemand? Hallo? Bitte, sagen Sie mir, dass ich nichts übersehen habe!\n[GERÄUSCH: Lichtkegel einer Taschenlampe streift über Wände | flashlight beam sweeping over walls]\nMARCO (überrascht): Frau Weiss? Was machen Sie hier im Dunkeln?\nFRAU WEISS (erschrocken): Oh Gott! Kinder? Was... was macht ihr hier unten?\nLISA (skeptisch): Suchen Sie nach etwas Bestimmtem?\nFRAU WEISS (unruhig, hastig): Ich... ich suche nur ein Erbstück. Etwas sehr Wichtiges, das mir nicht gehören darf, wenn es weg ist. Haben Sie etwas gesehen?\nTÖPPE (flüsternd zu Marco): Die sucht doch bestimmt die Beute von Krause!\n[GERÄUSCH: Metallisches Klappern in der Ferne | metallic clattering in the distance]\nMARCO (beobachtend): Ein Erbstück? Wir haben gerade eine silberne Kette mit einem Wappen gefunden. \nFRAU WEISS (erbleichend): Eine Kette? Mit einem Siegel? Geben Sie sie mir bitte, sofort!\nBENNI (ängstlich): Marco, die sieht aus, als würde sie uns jetzt fressen wollen!\n[MUSIK: Mysteriöser Übergang | mysterious transition music]"
+    },
+    {
+      "chapter": 1,
+      "scene": 6,
+      "title": "Das Finale im Schuppen",
+      "room": "bahnhofshalle",
+      "atmo_en": "clattering boxes, dramatic musical swell, police sirens in the distance",
+      "text": "[ATMO: Feuchtes Tropfen in einem engen Keller, hallende Schritte auf Stein | damp dripping in a narrow basement, echoing footsteps on stone]\nERZÄHLER: Die Anspannung im feuchten Keller ist greifbar, doch die Wahrheit bricht schneller hervor als das Blaulicht der Polizei.\nMARCO (verwirrt): Warten Sie! Frau Weiss, warum wollen Sie die Kette? Ist sie gestohlen?\nFRAU WEISS (aufgewühlt): Nein, Gott bewahre! Diese Kette gehört zum Siegel der Urkunden. Ohne dieses Dokument wird der Bahnhof abgerissen!\nHERR KRAUSE (brummelig, aber sanft): Die junge Dame hat recht. Ich bin hier nicht, um zu stehlen, sondern um das Erbe meines Bruders, des alten Besitzers, zu bewahren.\nBENNI (fassungslos): Also sind Sie gar keine Verbrecher?\nLISA: Das macht doch alles Sinn! Das Metallklappern... Sie haben versucht, die alte Kiste mit Werkzeug zu öffnen, um die Dokumente zu sichern.\nTÖPPE (erstaunt): Und ich dachte, wir müssen vor dem bösen Gleiswärter flüchten.\n[GERÄUSCH: Sirene in der Ferne | police siren in the distance]\nFRAU WEISS (panisch): Ach nein! Die Polizei kommt wegen des Lärms! Wir müssen die Kiste verstecken!\nMARCO (entschlossen): Keine Sorge, wir helfen Ihnen. Benni, pack das Tuch über die Urkunden! Töppe, hilf Krause beim Zuklappen!\n[GERÄUSCH: Schweres Zuschlagen eines Holzdeckels | heavy thud of a wooden lid closing]\n[GERÄUSCH: Schnelle, schwere Schritte auf einer Steintreppe nach oben | fast, heavy footsteps climbing stone stairs]\n[ATMO: Hallende Akustik einer großen, leeren Bahnhofshalle | echoing acoustics of a large, empty station hall]\nLISA (flüsternd): Schnell, zurück in den Schatten!\nERZÄHLER: Bevor die ersten Beamten die Halle betreten, sind die Dokumente sicher verstaut. Die Wahrheit über das Schweigen der Gleise ist nun im Licht der Freiheit.\n[MUSIK: Hoffnungsvoller Abspann | hopeful outro music]",
+      "items": [
+        {
+          "type": "atmo",
+          "de": "Feuchtes Tropfen in einem engen Keller, hallende Schritte auf Stein",
+          "en": "damp dripping in a narrow basement, echoing footsteps on stone"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Die Anspannung im feuchten Keller ist greifbar, doch die Wahrheit bricht schneller hervor als das Blaulicht der Polizei."
+        },
+        {
+          "type": "line",
+          "speaker": "MARCO",
+          "emotion": "verwirrt",
+          "text": "Warten Sie! Frau Weiss, warum wollen Sie die Kette? Ist sie gestohlen?"
+        },
+        {
+          "type": "line",
+          "speaker": "FRAUWEISS",
+          "emotion": "aufgewühlt",
+          "text": "Nein, Gott bewahre! Diese Kette gehört zum Siegel der Urkunden. Ohne dieses Dokument wird der Bahnhof abgerissen!"
+        },
+        {
+          "type": "line",
+          "speaker": "HERRKRAUSE",
+          "emotion": "brummelig, aber sanft",
+          "text": "Die junge Dame hat recht. Ich bin hier nicht, um zu stehlen, sondern um das Erbe meines Bruders, des alten Besitzers, zu bewahren."
+        },
+        {
+          "type": "line",
+          "speaker": "BENNI",
+          "emotion": "fassungslos",
+          "text": "Also sind Sie gar keine Verbrecher?"
+        },
+        {
+          "type": "line",
+          "speaker": "LISA",
+          "emotion": "",
+          "text": "Das macht doch alles Sinn! Das Metallklappern... Sie haben versucht, die alte Kiste mit Werkzeug zu öffnen, um die Dokumente zu sichern."
+        },
+        {
+          "type": "line",
+          "speaker": "TÖPPE",
+          "emotion": "erstaunt",
+          "text": "Und ich dachte, wir müssen vor dem bösen Gleiswärter flüchten."
+        },
+        {
+          "type": "sfx",
+          "de": "Sirene in der Ferne",
+          "en": "police siren in the distance"
+        },
+        {
+          "type": "line",
+          "speaker": "FRAUWEISS",
+          "emotion": "panisch",
+          "text": "Ach nein! Die Polizei kommt wegen des Lärms! Wir müssen die Kiste verstecken!"
+        },
+        {
+          "type": "line",
+          "speaker": "MARCO",
+          "emotion": "entschlossen",
+          "text": "Keine Sorge, wir helfen Ihnen. Benni, pack das Tuch über die Urkunden! Töppe, hilf Krause beim Zuklappen!"
+        },
+        {
+          "type": "sfx",
+          "de": "Schweres Zuschlagen eines Holzdeckels",
+          "en": "heavy thud of a wooden lid closing"
+        },
+        {
+          "type": "sfx",
+          "de": "Schnelle, schwere Schritte auf einer Steintreppe nach oben",
+          "en": "fast, heavy footsteps climbing stone stairs"
+        },
+        {
+          "type": "atmo",
+          "de": "Hallende Akustik einer großen, leeren Bahnhofshalle",
+          "en": "echoing acoustics of a large, empty station hall"
+        },
+        {
+          "type": "line",
+          "speaker": "LISA",
+          "emotion": "flüsternd",
+          "text": "Schnell, zurück in den Schatten!"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Bevor die ersten Beamten die Halle betreten, sind die Dokumente sicher verstaut. Die Wahrheit über das Schweigen der Gleise ist nun im Licht der Freiheit."
+        },
+        {
+          "type": "music",
+          "de": "Hoffnungsvoller Abspann",
+          "en": "hopeful outro music"
+        }
+      ],
+      "words": 168,
+      "repetition": 0.0,
+      "unknown_speakers": [],
+      "attempts": 1,
+      "continued": 0,
+      "seconds": 138.8,
+      "summary": "In einem feuchten Keller klären Marco, Lisa und ihre Freunde die Situation mit Frau Weiss und Herrn Krause auf, die keine Diebe sind, sondern versuchen, eine Kiste mit wichtigen Urkunden vor dem Abriss des Bahnhofs zu retten. Die neue Information ist, dass die Kette zum Siegel der Urkunden gehört und die Gruppe eigentlich das Erbe des alten Besitzers sichern wollte. Bevor die herannahende Polizei eintrifft, verstecken die Figuren die Dokumente und flüchten in die Schatten einer großen Bahnhofshalle.",
+      "previous_text": "[ATMO: Hallende Schritte in einer großen, leeren Bahnhofshalle | echoing footsteps in a large, empty station hall]\nERZÄHLER: Die Anspannung im feuchten Keller ist greifbar, doch die Wahrheit bricht schneller hervor als das Blaulicht der Polizei.\nMARCO (verwirrt): Warten Sie! Frau Weiss, warum wollen Sie die Kette? Ist sie gestohlen?\nFRAU WEISS (aufgewühlt): Nein, Gott bewahre! Diese Kette gehört zum Siegel der Urkunden. Ohne dieses Dokument wird der Bahnhof abgerissen!\nHERR KRAUSE (brummelig, aber sanft): Die junge Dame hat recht. Ich bin hier nicht, um zu stehlen, sondern um das Erbe meines Bruders zu bewahren.\nBENNI (fassungslos): Also sind Sie gar keine Verbrecher?\nLISA: Das macht doch alles Sinn! Das Metallklappern... Sie haben versucht, die alte Kiste mit Werkzeug zu öffnen, um die Dokumente zu sichern.\nTÖPPE (erstaunt): Und ich dachte, wir müssen vor dem bösen Gleiswärter flüchten.\n[GERÄUSCH: Sirene in der Ferne | police siren in the distance]\nFRAU WEISS (panisch): Ach nein! Die Polizei kommt wegen des Lärms! Wir müssen die Kiste verstecken!\nMARCO (entschlossen): Keine Sorge, wir helfen Ihnen. Benni, pack das Tuch über die Urkunden! Töppe, hilf Krause beim Zuklappen!\n[GERÄUSCH: Schweres Zuschlagen eines Holzdeckels | heavy thud of a wooden lid closing]\n[GERÄUSCH: Schnelles Herbeieilen von Schritten | fast approaching footsteps]\nLISA (flüsternd): Schnell, zurück in den Schatten!\nERZÄHLER: Bevor die ersten Beamten die Halle betreten, sind die Dokumente sicher verstaut. Die Wahrheit über das Schweigen der Gleise ist nun im Licht der Freiheit.\n[MUSIK: Hoffnungsvoller Abspann | hopeful outro music]"
+    }
+  ],
+  "words": 1126,
+  "review": {
+    "problems": [
+      {
+        "szene": 4,
+        "problem": "Logikfehler bei der Ortsbeschreibung und dem Fundort: In Szene 2 befinden sich die Jugendlichen im Güterschuppen/Bahnhofshalle. In Szene 4 sind sie plötzlich in einem 'feuchten Keller' (Atmo/Erzähler), finden dort aber eine Kiste und eine silberne Kette, die laut Auflösung unter der Kette liegen sollten. Es wird nicht erklärt, wie sie vom Schuppen in den Keller gelangt sind oder warum die Kiste/Kette dort liegt, wenn Krause im Schuppen gearbeitet hat.",
+        "korrektur": "Die Jugendlichen müssen entweder im Schuppen eine versteckte Kellertür finden, oder der Fundort der Kiste muss konsistent zum Schuppen bleiben."
+      },
+      {
+        "szene": 4,
+        "problem": "Widerspruch zur Auflösung bezüglich der Kette: Die Auflösung besagt, die Urkunden liegen 'in der Kiste unter der silbernen Kette'. In Szene 4 finden sie aber zuerst die Kette und dann die Kiste. Zudem wird die Kette als 'Rätsel' und 'Modeschmuck' beschrieben, aber in Szene 6 wird sie plötzlich als Teil des Siegels der Urkunden bezeichnet, was den Zweck der Kette (als bloßes Objekt/Schlüssel) unklar lässt.",
+        "korrektur": "Die Kette sollte als Siegelring oder Schlüssel zum Schloss der Kiste etabliert werden, damit ihr Wert für die Urkunden logisch ist."
+      },
+      {
+        "szene": 5,
+        "problem": "Unlogische Bewegung/Präsenz: In Szene 4 sind die Jugendlichen im Keller. In Szene 5 hören sie Schritte 'über ihnen' und glauben, Krause sei es. Dann taucht Frau Weiss im Keller auf. Es wird nicht erklärt, wie sie in den Keller gekommen ist, ohne dass die Jugendlichen (die dort lauschen) sie bemerken oder wie sie dort mit Krause interagieren kann, wenn dieser laut Szene 4/5 noch 'oben' oder im Schuppen ist.",
+        "korrektur": "Ein klarer Übergang oder eine Begegnung an einer Treppe/einem Eingang ist nötig."
+      },
+      {
+        "szene": 6,
+        "problem": "Widerspruch in der Verwandtschaft: Herr Krause sagt: 'Ich bin hier nicht, um zu stehlen, sondern um das Erbe meines Bruders zu bewahren.' Die Auflösung besagt jedoch, Frau Weiss sei die Enkelin des ehemaligen Bahnhofsbesitzers. Wenn Krause der Bruder des Besitzers wäre, wäre er ihr Onkel, nicht nur ein 'ehemaliger Gleiswärter'. Die Verwandtschaftsgrade zwischen Krause und Weiss sind im Skript unklar/widersprüchlich zur Auflösung.",
+        "korrektur": "Krause muss als Onkel oder Großvater (bzw. Verwandter des Besitzers) eingeführt werden, um die Verbindung zu Frau Weiss logisch zu machen."
+      },
+      {
+        "szene": 6,
+        "problem": "Unlogische Ortswechsel im Finale: Die Szene beginnt in der 'feuchten Keller-Atmosphäre' (Erzähler), aber die Atmo und die Regieanweisung beschreiben plötzlich eine 'große, leere Bahnhofshalle'. Die Jugendlichen sind innerhalb einer Sekunde von einem engen Keller in eine große Halle gesprungen, ohne dass dies als Bewegung markiert wurde.",
+        "korrektur": "Die Szene muss entweder im Keller bleiben oder der Aufstieg aus dem Keller in die Halle muss akustisch/erzählerisch markiert werden."
+      }
+    ],
+    "revised": [
+      4,
+      5,
+      6
+    ],
+    "seconds": 995.4
+  },
+  "estimated_minutes": 9.5,
+  "seconds": 2609.4,
+  "llm": "google_gemma-4-26B-A4B-it-Q3_K_M.gguf",
+  "llm_stats": {
+    "prompt_tokens": 32393,
+    "completion_tokens": 9222,
+    "seconds": 2609.280109643936
+  },
+  "prompt": "Erstelle ein spannendes deutsches Jugendkrimi-Hörspiel, das im Sommer 1984 spielt. Vier Jugendliche geraten in einen mysteriösen Kriminalfall rund um einen verlassenen Bahnhof. Es gibt mehrere Verdächtige, humorvolle Dialoge, überraschende Wendungen und ein spannendes Finale. Die Produktion soll sich an der Atmosphäre klassischer deutscher Jugendkrimi-Hörspiele der 1980er-Jahre orientieren."
+}
