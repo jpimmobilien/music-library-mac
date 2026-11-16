@@ -131,8 +131,8 @@ private struct WelcomeView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
             HStack(spacing: 18) {
-                Image(nsImage: NSApp.applicationIconImage ?? NSImage())
-                    .resizable().frame(width: 76, height: 76)
+                Image(nsImage: BrandImage.icon)
+                    .resizable().interpolation(.high).frame(width: 76, height: 76)
                 VStack(alignment: .leading, spacing: 6) {
                     Text("Was möchtest du erledigen?").font(Typo.title(26)).foregroundStyle(colors.textPrimary)
                     Text("Panora wählt selbst das passende lokale Modell und wechselt bei Bedarf – alles läuft auf deinem \(hardware.chipName.replacingOccurrences(of: "Apple ", with: "")) mit \(Formatting.bytes(hardware.totalMemory)) Unified Memory.")

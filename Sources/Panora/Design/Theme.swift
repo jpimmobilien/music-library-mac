@@ -81,6 +81,16 @@ extension Color {
     }
 }
 
+/// App-Symbol aus dem Bundle (ohne `NSApp.applicationIconImage`, das synchron auf IconServices wartet).
+enum BrandImage {
+    static let icon: NSImage = {
+        if let url = Bundle.main.url(forResource: "PanoraIcon", withExtension: "png"), let image = NSImage(contentsOf: url) {
+            return image
+        }
+        return NSImage(size: NSSize(width: 64, height: 64))
+    }()
+}
+
 enum Typo {
     static func title(_ size: CGFloat = 34) -> Font { .system(size: size, weight: .bold, design: .default) }
     static func section(_ size: CGFloat = 22) -> Font { .system(size: size, weight: .bold) }

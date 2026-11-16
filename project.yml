@@ -42,6 +42,8 @@ targets:
       - path: Sources/Panora
       - path: Resources/AppIcon.icns
         buildPhase: resources
+      - path: Resources/PanoraIcon.png
+        buildPhase: resources
     settings:
       base:
         PRODUCT_NAME: Panora
@@ -74,6 +76,8 @@ targets:
     sources:
       - path: Sources/Panora
       - path: Resources/AppIcon.icns
+        buildPhase: resources
+      - path: Resources/PanoraIcon.png
         buildPhase: resources
     settings:
       base:

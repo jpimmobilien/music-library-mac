@@ -25,7 +25,9 @@ enum SelfTest {
         // Bundle und Ressourcen
         let bundle = Bundle.main
         add("Bundle-ID", bundle.bundleIdentifier == "de.panora.app", bundle.bundleIdentifier ?? "–")
-        add("App-Symbol", NSApp.applicationIconImage != nil, "vorhanden")
+        let iconFile = bundle.url(forResource: "AppIcon", withExtension: "icns")
+        add("App-Symbol", iconFile != nil && bundle.url(forResource: "PanoraIcon", withExtension: "png") != nil,
+            iconFile?.lastPathComponent ?? "fehlt")
         #if PANORA_NO_MLX
         add("MLX-Metal-Shader im Bundle", true, "Vorschau-Build ohne MLX (Intel)")
         #else
