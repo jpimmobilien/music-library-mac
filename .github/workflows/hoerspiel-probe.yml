@@ -223,14 +223,26 @@ jobs:
             mkdir -p story-in && cp story-branch/story.json story-in/
           fi
           python3 -c "import json;s=json.load(open('story-in/story.json'));print(s['concept'].get('titel'), len(s['scenes']), 'Szenen', s['words'], 'Wörter')"
-          { sw_vers; uname -m; sysctl -n machdep.cpu.brand_string; echo "RAM: $(( $(sysctl -n hw.memsize) / 1073741824 )) GB"; df -h "$HOME" | tail -1; } | tee out/rechner.txt
+          if [ "$RUNNER_OS" = macOS ]; then
+            { sw_vers; uname -m; sysctl -n machdep.cpu.brand_string; echo "RAM: $(( $(sysctl -n hw.memsize) / 1073741824 )) GB"; df -h "$HOME" | tail -1; } | tee out/rechner.txt
+          else
+            # Linux: Platz schaffen (vorinstallierte SDKs), MLX/ACE-Step nur auf dem Prozessor
+            sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost || true
+            { uname -a; nproc; free -g; lscpu | grep "Model name"; df -h / | tail -1; } | tee out/rechner.txt
+          fi
       - name: Umgebungen (Hörspiel und KI-Musik)
         run: |
-          command -v ffmpeg >/dev/null || brew install --quiet ffmpeg > out/brew.log 2>&1 || true
+          if [ "$RUNNER_OS" = macOS ]; then
+            command -v ffmpeg >/dev/null || brew install --quiet ffmpeg > out/brew.log 2>&1 || true
+            EXTRA=""
+          else
+            command -v ffmpeg >/dev/null || { sudo apt-get update -q && sudo apt-get install -y -q ffmpeg; } > out/apt.log 2>&1 || true
+            EXTRA="mlx[cpu]"
+          fi
           curl -LsSf https://astral.sh/uv/install.sh | sh > /dev/null 2>&1
           export PATH="$HOME/.local/bin:$PATH"
           uv venv -q --python 3.12 "$RUNNER_TEMP/hs"
-          uv pip install -q --python "$RUNNER_TEMP/hs/bin/python" "$MLX_AUDIO" mlx-whisper soundfile scipy > out/install.log 2>&1 || tail -30 out/install.log
+          uv pip install -q --python "$RUNNER_TEMP/hs/bin/python" "$MLX_AUDIO" $EXTRA mlx-whisper soundfile scipy > out/install.log 2>&1 || tail -30 out/install.log
           git clone -q https://github.com/ace-step/ACE-Step-1.5.git "$RUNNER_TEMP/ace"
           git -C "$RUNNER_TEMP/ace" checkout -q "$ACE_COMMIT"
           cd "$RUNNER_TEMP/ace" && uv sync > "$GITHUB_WORKSPACE/out/uv-sync.log" 2>&1 || tail -40 "$GITHUB_WORKSPACE/out/uv-sync.log"
@@ -241,9 +253,10 @@ jobs:
           KI_ACE_ROOT: ${{ runner.temp }}/ace
           KI_CHECKPOINTS: ${{ runner.temp }}/checkpoints
         run: |
-          /usr/bin/time -l "$RUNNER_TEMP/hs/bin/python" scripts/hoerspiel/probe_produce.py story-in/story.json out > out/produce.log 2>&1
+          if [ "$RUNNER_OS" = macOS ]; then TF="-l"; else TF="-v"; export KI_MLX_DIT=0 KI_LM_BACKEND=pt; df -h / | tail -1; fi
+          /usr/bin/time $TF "$RUNNER_TEMP/hs/bin/python" scripts/hoerspiel/probe_produce.py story-in/story.json out > out/produce.log 2>&1
           STATUS=$?
-          grep -E "\[Probe\]|maximum resident" out/produce.log | cut -c1-500 | head -80
+          grep -E "\[Probe\]|maximum resident|Maximum resident" out/produce.log | cut -c1-500 | head -80
           cp "$RUNNER_TEMP/ki-musik-hoerspiel.log" out/ 2>/dev/null || true
           exit $STATUS
       - uses: actions/upload-artifact@v4
@@ -286,23 +299,31 @@ jobs:
         run: |
           mkdir -p out prod-in
           if [ ! -f prod-in/hoerspiel.mp3 ]; then
-            for b in "ci-hoerspiel-produce-${{ inputs.runner }}" ci-hoerspiel-produce-macos-15 ci-hoerspiel-produce-macos-14 ci-hoerspiel-produce-macos-26 ci-hoerspiel-produce; do
+            for b in "ci-hoerspiel-produce-${{ inputs.runner }}" ci-hoerspiel-produce-macos-15 ci-hoerspiel-produce-macos-14 ci-hoerspiel-produce-macos-26 ci-hoerspiel-produce-ubuntu-latest ci-hoerspiel-produce; do
               rm -rf prod-branch
               git clone -q --depth 1 -b "$b" "https://github.com/${GITHUB_REPOSITORY}.git" prod-branch 2>/dev/null && \
                 cp prod-branch/hoerspiel.mp3 prod-branch/sprecher-wahrheit.json prod-in/ 2>/dev/null && { echo "Produktion aus $b"; break; }
             done || true
           fi
-          { sw_vers; uname -m; sysctl -n machdep.cpu.brand_string; echo "RAM: $(( $(sysctl -n hw.memsize) / 1073741824 )) GB"; } | tee out/rechner.txt
-          command -v ffmpeg >/dev/null || brew install --quiet ffmpeg > out/brew.log 2>&1 || true
+          if [ "$RUNNER_OS" = macOS ]; then
+            { sw_vers; uname -m; sysctl -n machdep.cpu.brand_string; echo "RAM: $(( $(sysctl -n hw.memsize) / 1073741824 )) GB"; } | tee out/rechner.txt
+            command -v ffmpeg >/dev/null || brew install --quiet ffmpeg > out/brew.log 2>&1 || true
+            EXTRA=""
+          else
+            { uname -a; nproc; free -g; lscpu | grep "Model name"; } | tee out/rechner.txt
+            command -v ffmpeg >/dev/null || { sudo apt-get update -q && sudo apt-get install -y -q ffmpeg; } > out/apt.log 2>&1 || true
+            EXTRA="mlx[cpu]"
+          fi
           curl -LsSf https://astral.sh/uv/install.sh | sh > /dev/null 2>&1
           export PATH="$HOME/.local/bin:$PATH"
           uv venv -q --python 3.12 "$RUNNER_TEMP/hs"
-          uv pip install -q --python "$RUNNER_TEMP/hs/bin/python" "$MLX_AUDIO" mlx-whisper soundfile scipy pyarrow huggingface_hub > out/install.log 2>&1 || tail -30 out/install.log
+          uv pip install -q --python "$RUNNER_TEMP/hs/bin/python" "$MLX_AUDIO" $EXTRA mlx-whisper soundfile scipy pyarrow huggingface_hub > out/install.log 2>&1 || tail -30 out/install.log
       - name: Analysieren
         run: |
-          /usr/bin/time -l "$RUNNER_TEMP/hs/bin/python" scripts/hoerspiel/probe_analyze.py out prod-in > out/analyze.log 2>&1
+          if [ "$RUNNER_OS" = macOS ]; then TF="-l"; else TF="-v"; fi
+          /usr/bin/time $TF "$RUNNER_TEMP/hs/bin/python" scripts/hoerspiel/probe_analyze.py out prod-in > out/analyze.log 2>&1
           STATUS=$?
-          grep -E "\[Probe\]|maximum resident" out/analyze.log | cut -c1-600 | head -60
+          grep -E "\[Probe\]|maximum resident|Maximum resident" out/analyze.log | cut -c1-600 | head -60
           exit $STATUS
       - name: Ergebnisse in Zweig sichern
         if: always()
