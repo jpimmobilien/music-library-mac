@@ -1,0 +1,14 @@
+[Probe] Sprachmodell bereit: {"model": "google_gemma-4-26B-A4B-it-Q3_K_M.gguf", "load_seconds": 0.0}
+[Geschichte] Konzept „Der Schatten am Gleis 4“: 7 Figuren, 6 Szenen, je ca. 198 Wörter (402 s)
+[Geschichte] Szene 1/6 „Hitze und Abenteuerlust“: 176 Wörter, Wiederholungen 0.0, 106.1 s
+[Geschichte] Szene 2: 141 von 198 Wörtern – wird fortgesetzt
+[Geschichte] Szene 2/6 „Der Schatten im Schuppen“: 184 Wörter, Wiederholungen 0.0, 154.9 s
+[Geschichte] Szene 3: 142 von 198 Wörtern – wird fortgesetzt
+[Geschichte] Szene 3/6 „Ein verdächtiger Fund“: 177 Wörter, Wiederholungen 0.0, 160.2 s
+[Geschichte] Szene 4: 138 von 198 Wörtern – wird fortgesetzt
+[Geschichte] Neue Nebenfigur vom Modell: FRAU MEYER (Stimme wird allgemein angelegt)
+[Geschichte] Szene 4/6 „Die Begegnung mit Frau Meyer“: 178 Wörter, Wiederholungen 0.0, 158.4 s
+[Geschichte] Szene 5/6 „Die Wendung im Keller“: 169 Wörter, Wiederholungen 0.0, 142.7 s
+[Geschichte] Szene 6: 156 von 198 Wörtern – wird fortgesetzt
+[Geschichte] Szene 6/6 „Das wahre Geheimnis“: 186 Wörter, Wiederholungen 0.0, 171.2 s
+[Probe] Geschichte fertig: {"seconds": 1474.5, "words": 1070, "estimated_minutes": 9.0, "scenes": 6, "figures": 8, "tokens_per_second": 3.9}

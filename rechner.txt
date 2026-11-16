@@ -1,0 +1,9 @@
+Linux ip-10-0-138-225 7.0.0-1014-aws #14~24.04.1-Ubuntu SMP PREEMPT Fri Sep 18 21:24:59 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+4
+               total        used        free      shared  buff/cache   available
+Mem:              15           0          13           0           0          14
+Swap:              2           0           2
+/dev/mapper/cow-root  145G   56G   89G  39% /
+version: 1.0.0-dev (build 1, commit 7804be0)
+built with GNU 13.3.0 for Linux x86_64
+Modell: 

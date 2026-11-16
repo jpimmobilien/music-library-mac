@@ -1,0 +1,1074 @@
+{
+  "concept": {
+    "titel": "Der Schatten am Gleis 4",
+    "untertitel": "Das Rätsel des verlassenen Bahnhofs",
+    "logline": "Im Sommer 1984 entdecken vier Freunde, dass hinter dem rostigen Tor des stillgelegten Bahnhofs ein dunkles Geheimnis aus der Vergangenheit lauert.",
+    "epoche_ort": "Sommer 1984, eine Kleinstadt in Westdeutschland, ländliche Gegend",
+    "ton": "Nostalgisch, spannungsgeladen, abenteuerlich, typischer 80er-Jahre Jugendkrimi",
+    "figuren": [
+      {
+        "id": "ERZÄHLER",
+        "name": "Erzähler",
+        "rolle": "Erzähler",
+        "alter": 45,
+        "geschlecht": "m",
+        "beschreibung": "Ein distanzierter, aber atmosphärischer Beobachter der Ereignisse.",
+        "stimme": "Tief, ruhig, erzählend, leicht mysteriös.",
+        "voice_en": "45, male, low pitch, calm and storytelling, medium tempo, mysterious"
+      },
+      {
+        "id": "BEN",
+        "name": "Ben",
+        "rolle": "Hauptfigur / Anführer",
+        "alter": 14,
+        "geschlecht": "m",
+        "beschreibung": "Mutig, neugierig, trägt immer ein Walkie-Talkie bei sich.",
+        "stimme": "Klar, entschlossen, jugendlich-stark.",
+        "voice_en": "14, male, medium pitch, confident and energetic, fast tempo, leadership quality"
+      },
+      {
+        "id": "SARA",
+        "name": "Sara",
+        "rolle": "Die Logikerin",
+        "alter": 14,
+        "geschlecht": "w",
+        "beschreibung": "Intelligent, skeptisch, liebt Rätsel und Detektivgeschichten.",
+        "stimme": "Hell, sachlich, etwas schneller sprechend.",
+        "voice_en": "14, female, high pitch, intelligent and analytical, fast tempo, sharp"
+      },
+      {
+        "id": "TOBI",
+        "name": "Tobi",
+        "rolle": "Der Tollpatsch",
+        "alter": 13,
+        "geschlecht": "m",
+        "beschreibung": "Etwas schüchtern, hat ständig Hunger, bringt Humor in die Gruppe.",
+        "stimme": "Etwas heiser, unsicher, oft etwas höher.",
+        "voice_en": "13, male, medium-high pitch, nervous and funny, medium tempo, slightly shaky"
+      },
+      {
+        "id": "LENA",
+        "name": "Lena",
+        "rolle": "Die Mutige",
+        "alter": 15,
+        "geschlecht": "w",
+        "beschreibung": "Sportlich, keine Angst vor Schmutz oder Dunkelheit.",
+        "stimme": "Fest, direkt, unerschrocken.",
+        "voice_en": "15, female, medium pitch, brave and direct, medium tempo, strong"
+      },
+      {
+        "id": "HERRKRAUSE",
+        "name": "Herr Krause",
+        "rolle": "Verdächtiger / Bahnwärter",
+        "alter": 60,
+        "geschlecht": "m",
+        "beschreibung": "Ein mürrischer, einsamer Mann, der den Bahnhof bewacht.",
+        "stimme": "Grob, tief, knarzend.",
+        "voice_en": "60, male, very low pitch, gravelly and grumpy, slow tempo, intimidating"
+      },
+      {
+        "id": "FRAUMEYER",
+        "name": "Frau Meyer",
+        "rolle": "Verdächtige / Antiquitätenhändlerin",
+        "alter": 50,
+        "geschlecht": "w",
+        "beschreibung": "Geheimnisvoll, wirkt immer etwas nervös und hastig.",
+        "stimme": "Hauchig, schnell, leicht gehetzt.",
+        "voice_en": "50, female, medium-high pitch, breathless and nervous, fast tempo, suspicious"
+      },
+      {
+        "id": "FRAU MEYER",
+        "name": "Frau Meyer",
+        "rolle": "Nebenfigur",
+        "alter": 40,
+        "geschlecht": "m",
+        "beschreibung": "vom Sprachmodell während des Schreibens ergänzt",
+        "stimme": "",
+        "voice_en": "An adult German man, natural mid-range voice, clear diction",
+        "ergaenzt": true
+      }
+    ],
+    "kapitel": [
+      {
+        "nr": 1,
+        "titel": "Das Flüstern der Schienen",
+        "szenen": [
+          {
+            "nr": 1,
+            "titel": "Hitze und Abenteuerlust",
+            "ort": "Bahnhofsgelände",
+            "raum": "draußen",
+            "figuren": [
+              "ERZÄHLER",
+              "BEN",
+              "SARA",
+              "TOBI",
+              "LENA"
+            ],
+            "inhalt": "An einem heißen Sommertag 1984 treffen sich die vier Freunde am verlassenen Bahnhof. Sie diskutieren über das seltsame Licht, das sie letzte Nacht zwischen den Gleisen gesehen haben.",
+            "atmo_en": "Summer cicadas, distant wind, gravel crunching under feet"
+          },
+          {
+            "nr": 2,
+            "titel": "Der Schatten im Schuppen",
+            "ort": "Bahnhofshalle",
+            "raum": "bahnhofshalle",
+            "figuren": [
+              "ERZÄHLER",
+              "BEN",
+              "SARA",
+              "TOBI",
+              "LENA",
+              "HERR_KRAUSE"
+            ],
+            "inhalt": "Die Gruppe schleicht sich in die alte Bahnhofshalle, um nach dem Licht zu suchen. Plötzlich taucht der mürrische Herr Krause auf und verweist sie drohend vom Gelände.",
+            "atmo_en": "Echoing footsteps, hollow hall ambiance, heavy wooden door creaking"
+          },
+          {
+            "nr": 3,
+            "titel": "Ein verdächtiger Fund",
+            "ort": "Gleisbereich",
+            "raum": "draußen",
+            "figuren": [
+              "ERZÄHLER",
+              "BEN",
+              "SARA",
+              "TOBI",
+              "LENA"
+            ],
+            "inhalt": "Nachdem Krause weg ist, findet Tobi eine alte, metallische Kiste, die halb im Schlamm vergraben ist. Sara bemerkt, dass die Kiste ein seltsames Siegel trägt.",
+            "atmo_en": "Rustling bushes, metal clinking, heavy breathing"
+          },
+          {
+            "nr": 4,
+            "titel": "Die Begegnung mit Frau Meyer",
+            "ort": "Bahnhofshalle",
+            "raum": "bahnhofshalle",
+            "figuren": [
+              "ERZÄHLER",
+              "BEN",
+              "SARA",
+              "TOBI",
+              "LENA",
+              "FRAU_MEYER"
+            ],
+            "inhalt": "Während sie die Kiste untersuchen, wird die Gruppe von Frau Meyer überrascht, die behauptet, nach verlorenen Antiquitäten zu suchen. Ihr Verhalten wirkt extrem nervös und verdächtig.",
+            "atmo_en": "Distant train whistle, footsteps on floorboards, tense silence"
+          },
+          {
+            "nr": 5,
+            "titel": "Die Wendung im Keller",
+            "ort": "Bahnhofskeller",
+            "raum": "keller",
+            "figuren": [
+              "ERZÄHLER",
+              "BEN",
+              "SARA",
+              "TOBI",
+              "LENA",
+              "HERR_KRAUSE"
+            ],
+            "inhalt": "Die Jugendlichen folgen einer Spur in den Keller, wo sie Krause beim Öffnen der Kiste überraschen. Doch statt eines Diebes stellen sie fest, dass er nur alte Briefe und Fotos rettet.",
+            "atmo_en": "Dripping water, low hum, heavy breathing, flashlight clicks"
+          },
+          {
+            "nr": 6,
+            "titel": "Das wahre Geheimnis",
+            "ort": "Bahnhofshalle",
+            "raum": "bahnhofshalle",
+            "figuren": [
+              "ERZÄHLER",
+              "BEN",
+              "SARA",
+              "TOBI",
+              "LENA",
+              "HERR_KRAUSE",
+              "FRAU_MEYER"
+            ],
+            "inhalt": "Es stellt sich heraus, dass Frau Meyer und Krause gemeinsam das Erbe des alten Bahnhofswärters bewahren wollten. Das Licht war nur eine Reflexion ihrer Taschenlampen beim Reinigen der alten Relikte.",
+            "atmo_en": "Soft evening wind, birds chirping, relieved atmosphere"
+          }
+        ]
+      }
+    ],
+    "aufloesung": "Die Jugendlichen lernen, dass nicht alles, was mysteriös erscheint, böse Absichten hat. Sie schließen Frieden mit Krause und Meyer und werden zu den offiziellen 'Hütern der Bahnhofsgeschichten'.",
+    "_minutes": 10.0,
+    "_mode": "hoerspiel"
+  },
+  "scenes": [
+    {
+      "chapter": 1,
+      "scene": 1,
+      "title": "Hitze und Abenteuerlust",
+      "room": "draußen",
+      "atmo_en": "Summer cicadas, distant wind, gravel crunching under feet",
+      "text": "[MUSIK: Titelmusik | nostalgic synth-wave theme with a sense of mystery]\nERZÄHLER: Der Sommer 1984 überzog die Kleinstadt mit einer drückenden Hitze. Staub tanzte in der gleißenden Mittagssonne, während die Welt zwischen den Schienen zu flirren begann.\n[ATMO: Zikaden im hohen Gras, ferner Wind, das Knistern von trockenem Laub | cicadas chirping, distant wind, rustling dry leaves]\nBEN (begeistert): Ich sag’s euch, das war kein Gewitter! Das war kein Blitz, der so blau-weiß geleuchtet hat.\nSARA (skeptisch): Ben, physikalisch gesehen könnte es eine Reflektion gewesen sein. Vielleicht von einer alten Signallaterne?\nTOBI (seufzend): Oder mein Magen spielt mir Streiche. Ich hab so einen Hunger, ich könnte die Schienen fressen.\nLENA (entschlossen): Glaubt ihr ihm etwa nicht? Es war genau zwischen Gleis 3 und 4. Es hat... geflüstert. Fast wie ein Summen.\n[GERÄUSCH: Das Knacken eines Walkie-Talkies | walkie-talkie static crackle]\nBEN (ernst): Genau das hab ich auch gehört. Mitten in der Nacht. Als wäre da jemand, der die Gleise bewacht.\nSARA: Ein mechanischer Defekt an den alten Relais? Das ist logischer als ein Geist auf dem Bahnhofsgelände.\nLENA (lachend): Seit wann bist du so ein Spielverderber, Sara? Guck dir das Tor an. Es sieht aus, als würde es uns herausfordern.\nTOBI (ängstlich): Können wir das Geheimnis nicht lieber aus der Entfernung mit einer Taschenlampe untersuchen? Also, von weitem?\nBEN (mutig): Keine Zeit für Angst, Tobi. Wir müssen wissen, was da unten im Schatten lauert.\n[MUSIK: Spannung | low tension strings building up]",
+      "items": [
+        {
+          "type": "music",
+          "de": "Titelmusik",
+          "en": "nostalgic synth-wave theme with a sense of mystery"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Der Sommer 1984 überzog die Kleinstadt mit einer drückenden Hitze. Staub tanzte in der gleißenden Mittagssonne, während die Welt zwischen den Schienen zu flirren begann."
+        },
+        {
+          "type": "atmo",
+          "de": "Zikaden im hohen Gras, ferner Wind, das Knistern von trockenem Laub",
+          "en": "cicadas chirping, distant wind, rustling dry leaves"
+        },
+        {
+          "type": "line",
+          "speaker": "BEN",
+          "emotion": "begeistert",
+          "text": "Ich sag’s euch, das war kein Gewitter! Das war kein Blitz, der so blau-weiß geleuchtet hat."
+        },
+        {
+          "type": "line",
+          "speaker": "SARA",
+          "emotion": "skeptisch",
+          "text": "Ben, physikalisch gesehen könnte es eine Reflektion gewesen sein. Vielleicht von einer alten Signallaterne?"
+        },
+        {
+          "type": "line",
+          "speaker": "TOBI",
+          "emotion": "seufzend",
+          "text": "Oder mein Magen spielt mir Streiche. Ich hab so einen Hunger, ich könnte die Schienen fressen."
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "entschlossen",
+          "text": "Glaubt ihr ihm etwa nicht? Es war genau zwischen Gleis 3 und 4. Es hat... geflüstert. Fast wie ein Summen."
+        },
+        {
+          "type": "sfx",
+          "de": "Das Knacken eines Walkie-Talkies",
+          "en": "walkie-talkie static crackle"
+        },
+        {
+          "type": "line",
+          "speaker": "BEN",
+          "emotion": "ernst",
+          "text": "Genau das hab ich auch gehört. Mitten in der Nacht. Als wäre da jemand, der die Gleise bewacht."
+        },
+        {
+          "type": "line",
+          "speaker": "SARA",
+          "emotion": "",
+          "text": "Ein mechanischer Defekt an den alten Relais? Das ist logischer als ein Geist auf dem Bahnhofsgelände."
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "lachend",
+          "text": "Seit wann bist du so ein Spielverderber, Sara? Guck dir das Tor an. Es sieht aus, als würde es uns herausfordern."
+        },
+        {
+          "type": "line",
+          "speaker": "TOBI",
+          "emotion": "ängstlich",
+          "text": "Können wir das Geheimnis nicht lieber aus der Entfernung mit einer Taschenlampe untersuchen? Also, von weitem?"
+        },
+        {
+          "type": "line",
+          "speaker": "BEN",
+          "emotion": "mutig",
+          "text": "Keine Zeit für Angst, Tobi. Wir müssen wissen, was da unten im Schatten lauert."
+        },
+        {
+          "type": "music",
+          "de": "Spannung",
+          "en": "low tension strings building up"
+        }
+      ],
+      "words": 176,
+      "repetition": 0.0,
+      "unknown_speakers": [],
+      "attempts": 1,
+      "continued": 0,
+      "seconds": 106.1,
+      "summary": "Ben, Sara, Tobi und Lena diskutieren über ein mysteriöses, blau-weiß leuchtendes Phänomen sowie ein summendes Geräusch, das sie zwischen den Gleisen 3 und 4 wahrgenommen haben. Die Gruppe beschließt trotz unterschiedlicher Skepsis, das Geheimnis am Bahnhofsgelände näher zu untersuchen."
+    },
+    {
+      "chapter": 1,
+      "scene": 2,
+      "title": "Der Schatten im Schuppen",
+      "room": "bahnhofshalle",
+      "atmo_en": "Echoing footsteps, hollow hall ambiance, heavy wooden door creaking",
+      "text": "[ATMO: Knirschendes Kies und ferner Wind in alten Gleisen | gravel crunching and distant wind through tracks]\nERZÄHLER: Die vier Freunde schlichen durch das rostrote Tor, während die Hitze des Sommertages langsam der kühlen Nacht wich.\n[GERÄUSCH: Ein metallisches Klappern von Schienen | metal clanking of rails]\nTOBI (flüsternd): Leute, hört ihr das? Das klingt, als würden die Gleise selbst atmen.\nSARA (leise): Das ist nur der Wind, Tobi. Bleib konzentriert.\nLENA (begeistert): Schaut mal da drüben! In dem alten Güterschuppen... da flackert was!\nBEN (flüsternd): Das muss das blaue Leuchten sein. Kommt näher, aber ganz vorsichtig.\n[GERÄUSCH: Schritte auf altem Holz | footsteps on old wooden planks]\nERZÄHLER: Vorsichtig drängten sie in die Bahnhofshalle, wo der Geruch von Öl und Staub schwer in der Luft hing.\nBEN (aufgeregt): Seht ihr das? Direkt hinter den alten Waggons!\n[GERÄUSCH: Ein hartes Schlagen eines Holzstiels auf den Boden | a loud thud of a wooden staff on the ground]\nHERRKRAUSE (wütend): Was haben Sie hier verloren?!\n[PAUSE: 1.0]\nTOBI (erstaunt): Ach du meine Güte!\nSARA (nervös): Wir... wir wollten nur nachsehen, ob alles in Ordnung ist.\nHERRKRAUSE (drohend): In Ordnung ist hier gar nichts! Verschwindet sofort von meinem Gelände, bevor ich die Polizei rufe!\nLENA (mutig): Wir haben doch nichts getan, Herr Krause. Wir waren nur neugierig.\nHERRKRAUSE (grollend): Neugier ist der Anfang vom Ende, Kindchen. Verschwindet! Jetzt!\n[MUSIK: Plötzliche Spannung | sudden tension strings]\nBEN (entschlossen): Kommt, Leute. Er lässt uns heute nicht mehr an unser Ziel.\n[GERÄUSCH: Schnelle Schritte auf Kies | rapid footsteps on gravel]\nERZÄHLER: Die Gruppe eilte unter dem wütenden Blick des Wärters zurück zum Ausgang.\nTOBI (hechelnd): Mein Herz klopft bis zum Hals. Hat der Typ ein Gewehr?\nSARA (nachdenklich): Nein, aber er wirkt, als würde er etwas verbergen.\n[MUSIK: Mysteriöses Thema | mysterious ambient music]",
+      "items": [
+        {
+          "type": "atmo",
+          "de": "Knirschendes Kies und ferner Wind in alten Gleisen",
+          "en": "gravel crunching and distant wind through tracks"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Die vier Freunde schlichen durch das rostrote Tor, während die Hitze des Sommertages langsam der kühlen Nacht wich."
+        },
+        {
+          "type": "sfx",
+          "de": "Ein metallisches Klappern von Schienen",
+          "en": "metal clanking of rails"
+        },
+        {
+          "type": "line",
+          "speaker": "TOBI",
+          "emotion": "flüsternd",
+          "text": "Leute, hört ihr das? Das klingt, als würden die Gleise selbst atmen."
+        },
+        {
+          "type": "line",
+          "speaker": "SARA",
+          "emotion": "leise",
+          "text": "Das ist nur der Wind, Tobi. Bleib konzentriert."
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "begeistert",
+          "text": "Schaut mal da drüben! In dem alten Güterschuppen... da flackert was!"
+        },
+        {
+          "type": "line",
+          "speaker": "BEN",
+          "emotion": "flüsternd",
+          "text": "Das muss das blaue Leuchten sein. Kommt näher, aber ganz vorsichtig."
+        },
+        {
+          "type": "sfx",
+          "de": "Schritte auf altem Holz",
+          "en": "footsteps on old wooden planks"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Vorsichtig drängten sie in die Bahnhofshalle, wo der Geruch von Öl und Staub schwer in der Luft hing."
+        },
+        {
+          "type": "line",
+          "speaker": "BEN",
+          "emotion": "aufgeregt",
+          "text": "Seht ihr das? Direkt hinter den alten Waggons!"
+        },
+        {
+          "type": "sfx",
+          "de": "Ein hartes Schlagen eines Holzstiels auf den Boden",
+          "en": "a loud thud of a wooden staff on the ground"
+        },
+        {
+          "type": "line",
+          "speaker": "HERRKRAUSE",
+          "emotion": "wütend",
+          "text": "Was haben Sie hier verloren?!"
+        },
+        {
+          "type": "pause",
+          "de": "1.0",
+          "en": "1.0",
+          "seconds": 1.0
+        },
+        {
+          "type": "line",
+          "speaker": "TOBI",
+          "emotion": "erstaunt",
+          "text": "Ach du meine Güte!"
+        },
+        {
+          "type": "line",
+          "speaker": "SARA",
+          "emotion": "nervös",
+          "text": "Wir... wir wollten nur nachsehen, ob alles in Ordnung ist."
+        },
+        {
+          "type": "line",
+          "speaker": "HERRKRAUSE",
+          "emotion": "drohend",
+          "text": "In Ordnung ist hier gar nichts! Verschwindet sofort von meinem Gelände, bevor ich die Polizei rufe!"
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "mutig",
+          "text": "Wir haben doch nichts getan, Herr Krause. Wir waren nur neugierig."
+        },
+        {
+          "type": "line",
+          "speaker": "HERRKRAUSE",
+          "emotion": "grollend",
+          "text": "Neugier ist der Anfang vom Ende, Kindchen. Verschwindet! Jetzt!"
+        },
+        {
+          "type": "music",
+          "de": "Plötzliche Spannung",
+          "en": "sudden tension strings"
+        },
+        {
+          "type": "line",
+          "speaker": "BEN",
+          "emotion": "entschlossen",
+          "text": "Kommt, Leute. Er lässt uns heute nicht mehr an unser Ziel."
+        },
+        {
+          "type": "sfx",
+          "de": "Schnelle Schritte auf Kies",
+          "en": "rapid footsteps on gravel"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Die Gruppe eilte unter dem wütenden Blick des Wärters zurück zum Ausgang."
+        },
+        {
+          "type": "line",
+          "speaker": "TOBI",
+          "emotion": "hechelnd",
+          "text": "Mein Herz klopft bis zum Hals. Hat der Typ ein Gewehr?"
+        },
+        {
+          "type": "line",
+          "speaker": "SARA",
+          "emotion": "nachdenklich",
+          "text": "Nein, aber er wirkt, als würde er etwas verbergen."
+        },
+        {
+          "type": "music",
+          "de": "Mysteriöses Thema",
+          "en": "mysterious ambient music"
+        }
+      ],
+      "words": 184,
+      "repetition": 0.0,
+      "unknown_speakers": [],
+      "attempts": 1,
+      "continued": 1,
+      "seconds": 154.9,
+      "summary": "Die vier Freunde schleichen nachts durch ein altes Bahnhofsgelände, um einem mysteriösen blauen Leuchten in einem Güterschuppen nachzugehen. Dort werden sie abrupt vom wütenden Wärter Herrn Krause konfrontiert, der sie unter Androhung der Polizei vertreibt und dabei den Verdacht erweckt, etwas zu verbergen."
+    },
+    {
+      "chapter": 1,
+      "scene": 3,
+      "title": "Ein verdächtiger Fund",
+      "room": "draußen",
+      "atmo_en": "Rustling bushes, metal clinking, heavy breathing",
+      "text": "[ATMO: Nachtwind, Rascheln von trockenem Gras, ferner Hundebellen | night wind, rustling grass, distant dog barking]\nERZÄHLER: Die vier Freunde kauerten im Schatten eines alten Güterschuppens, während der Atem des Wärters noch in der feuchten Nachtluft zu hängen schien.\n[MUSIK: Spannungsaufbau | building tension music]\nLENA (flüsternd): Wir müssen hier weg, bevor der Alte mit der Streife zurückkommt.\nTOBI (panisch): Ich bin dabei! Mein Magen fühlt sich an wie ein verdrehter Knoten.\n[GERÄUSCH: Ein dumpfes Aufprallgeräusch auf Schlamm | a dull thud in mud]\nTOBI (überrascht): Verdammt! Was ist das denn?\nBEN (wachsam): Tobi, pass doch auf, wo du hintrittst! Hast du dich verletzt?\nTOBI (keuchend): Nein, nein... Ich bin gegen etwas gestoßen. Etwas Hartes.\n[GERÄUSCH: Scharrendes Geräusch von Metall auf Erde | scraping sound of metal on dirt]\nLENA (neugierig): Warte mal, das sieht aus wie eine Kante. Hilf mir mal kurz...\n[PAUSE: 1.5]\nERZÄHLER: Lena und Tobi knieten sich in den weichen Boden und schoben den Schlamm beiseite.\nSARA (nachdenklich): Seht euch das an. Es ist eine metallische Kiste.\nBEN (begeistert): Wahnsinn. Die muss schon ewig hier liegen.\nSARA (konsterniert): Schaut mal genau hin. Dieses Siegel auf dem Deckel... das ist kein normaler Herstellerstempel. Das sieht fast wie ein Wappen aus.\n[GERÄUSCH: Metallisches Klirren | metallic clinking]\nBEN (entschlossen): Wir müssen wissen, was drin ist. Lena, pack an!\n[GERÄUSCH: Ein schweres Scharren und Heben | heavy scraping and lifting sound]\nLENA (angestrengt): Das Ding ist verdammt schwer. Tobi, auf der anderen Seite mit anpacken!\nTOBI (stöhnend): Okay, okay... eins, zwei... und drei!\n[GERÄUSCH: Ein metallisches Poltern | a metallic thud]\nSARA (beobachtend): Das Siegel scheint aus Messing zu sein. Es wirkt fast... unheimlich.\nBEN (flüsternd): Schaut, das Schloss ist völlig verrostet.\n[MUSIK: Mysteriös und drängend | mysterious and urgent music]",
+      "items": [
+        {
+          "type": "atmo",
+          "de": "Nachtwind, Rascheln von trockenem Gras, ferner Hundebellen",
+          "en": "night wind, rustling grass, distant dog barking"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Die vier Freunde kauerten im Schatten eines alten Güterschuppens, während der Atem des Wärters noch in der feuchten Nachtluft zu hängen schien."
+        },
+        {
+          "type": "music",
+          "de": "Spannungsaufbau",
+          "en": "building tension music"
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "flüsternd",
+          "text": "Wir müssen hier weg, bevor der Alte mit der Streife zurückkommt."
+        },
+        {
+          "type": "line",
+          "speaker": "TOBI",
+          "emotion": "panisch",
+          "text": "Ich bin dabei! Mein Magen fühlt sich an wie ein verdrehter Knoten."
+        },
+        {
+          "type": "sfx",
+          "de": "Ein dumpfes Aufprallgeräusch auf Schlamm",
+          "en": "a dull thud in mud"
+        },
+        {
+          "type": "line",
+          "speaker": "TOBI",
+          "emotion": "überrascht",
+          "text": "Verdammt! Was ist das denn?"
+        },
+        {
+          "type": "line",
+          "speaker": "BEN",
+          "emotion": "wachsam",
+          "text": "Tobi, pass doch auf, wo du hintrittst! Hast du dich verletzt?"
+        },
+        {
+          "type": "line",
+          "speaker": "TOBI",
+          "emotion": "keuchend",
+          "text": "Nein, nein... Ich bin gegen etwas gestoßen. Etwas Hartes."
+        },
+        {
+          "type": "sfx",
+          "de": "Scharrendes Geräusch von Metall auf Erde",
+          "en": "scraping sound of metal on dirt"
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "neugierig",
+          "text": "Warte mal, das sieht aus wie eine Kante. Hilf mir mal kurz..."
+        },
+        {
+          "type": "pause",
+          "de": "1.5",
+          "en": "1.5",
+          "seconds": 1.5
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Lena und Tobi knieten sich in den weichen Boden und schoben den Schlamm beiseite."
+        },
+        {
+          "type": "line",
+          "speaker": "SARA",
+          "emotion": "nachdenklich",
+          "text": "Seht euch das an. Es ist eine metallische Kiste."
+        },
+        {
+          "type": "line",
+          "speaker": "BEN",
+          "emotion": "begeistert",
+          "text": "Wahnsinn. Die muss schon ewig hier liegen."
+        },
+        {
+          "type": "line",
+          "speaker": "SARA",
+          "emotion": "konsterniert",
+          "text": "Schaut mal genau hin. Dieses Siegel auf dem Deckel... das ist kein normaler Herstellerstempel. Das sieht fast wie ein Wappen aus."
+        },
+        {
+          "type": "sfx",
+          "de": "Metallisches Klirren",
+          "en": "metallic clinking"
+        },
+        {
+          "type": "line",
+          "speaker": "BEN",
+          "emotion": "entschlossen",
+          "text": "Wir müssen wissen, was drin ist. Lena, pack an!"
+        },
+        {
+          "type": "sfx",
+          "de": "Ein schweres Scharren und Heben",
+          "en": "heavy scraping and lifting sound"
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "angestrengt",
+          "text": "Das Ding ist verdammt schwer. Tobi, auf der anderen Seite mit anpacken!"
+        },
+        {
+          "type": "line",
+          "speaker": "TOBI",
+          "emotion": "stöhnend",
+          "text": "Okay, okay... eins, zwei... und drei!"
+        },
+        {
+          "type": "sfx",
+          "de": "Ein metallisches Poltern",
+          "en": "a metallic thud"
+        },
+        {
+          "type": "line",
+          "speaker": "SARA",
+          "emotion": "beobachtend",
+          "text": "Das Siegel scheint aus Messing zu sein. Es wirkt fast... unheimlich."
+        },
+        {
+          "type": "line",
+          "speaker": "BEN",
+          "emotion": "flüsternd",
+          "text": "Schaut, das Schloss ist völlig verrostet."
+        },
+        {
+          "type": "music",
+          "de": "Mysteriös und drängend",
+          "en": "mysterious and urgent music"
+        }
+      ],
+      "words": 177,
+      "repetition": 0.0,
+      "unknown_speakers": [],
+      "attempts": 1,
+      "continued": 1,
+      "seconds": 160.2,
+      "summary": "Die vier Freunde Lena, Tobi, Ben und Sara verstecken sich nachts bei einem Güterschuppen vor dem Wärter. Dabei stoßen sie im Schlamm auf eine schwere, metallische Kiste, die mit einem ungewöhnlichen Wappen-Siegel versehen ist."
+    },
+    {
+      "chapter": 1,
+      "scene": 4,
+      "title": "Die Begegnung mit Frau Meyer",
+      "room": "bahnhofshalle",
+      "atmo_en": "Distant train whistle, footsteps on floorboards, tense silence",
+      "text": "[ATMO: Summen von Grillen und ferner Wind in den Gleisen | crickets chirping and distant wind through tracks]\nERZÄHLER: Im fahlen Mondlicht hockt die Gruppe über dem Fundstück, während das Metall der Kiste kalt an ihren Fingern klebt.\nBEN (flüsternd): Wenn wir das Schloss mit dem Taschenmesser aufhebeln...\nSARA (beobachtend): Vorsicht, Ben! Wir wissen nicht, was darin ist. \nTOBI (aufgeregt): Vielleicht sind es alte Goldmünzen! Oder Schokolade aus den 50ern!\nLENA (streng): Halt den Mund, Tobi. Wir müssen leise sein.\n[GERÄUSCH: Ein hastiger Schritt auf Kies | rapid footsteps on gravel]\n[MUSIK: Plötzlich schlagend und beunruhigend | sudden, jarring tension music]\nFRAU MEYER (erschrocken): Wer ist da? Wer wagt es, in dieser Nacht hier herumzuschleichen?\n[PAUSE: 1.0]\nBEN (überrascht): Oh! Entschuldigung, wir... wir wollten nur...\nFRAU MEYER (nervös): Sie müssen sofort verschwinden! Das ist mein Grundstück! Ich suche nach... nach verlorenen Antiquitäten!\nSARA (skeptisch): In der Dunkelheit? Und was ist das da im Schlamm?\nFRAU MEYER (hastig): Nichts! Nur alter Schrott! Gehen Sie weg, bevor ich die Polizei rufe! \n[GERÄUSCH: Das Rascheln einer schweren Stofftasche | rustling of a heavy fabric bag]\nLENA (misstrauisch): Warum zittern Ihre Hände so sehr, Frau Meyer?\nFRAU MEYER (gehetzt): Es ist der Wind! Gehen Sie einfach! Verschwinden Sie!\nERZÄHLER: Das Zittern in ihrer Stimme war lauter als das Knirschen des Kieses unter ihren Füßen.\n[MUSIK: Mysteriös und drängend | mysterious and urgent music]\nBEN (flüsternd): Leute, geht langsam zurück. Wir müssen wissen, was sie verheimlicht.\nTOBI (ängstlich): Ich glaube, die Polizei ist keine gute Idee...\nSARA (beobachtend): Schaut mal, sie schaut ständig auf die Kiste.\n[GERÄUSCH: Ein metallisches Klacken | a metallic click]\nFRAU MEYER (panisch): Ich habe gesagt: Verschwindet!\nERZÄHLER: Die Nacht über dem Bahnhof wurde plötzlich viel zu schwer.",
+      "items": [
+        {
+          "type": "atmo",
+          "de": "Summen von Grillen und ferner Wind in den Gleisen",
+          "en": "crickets chirping and distant wind through tracks"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Im fahlen Mondlicht hockt die Gruppe über dem Fundstück, während das Metall der Kiste kalt an ihren Fingern klebt."
+        },
+        {
+          "type": "line",
+          "speaker": "BEN",
+          "emotion": "flüsternd",
+          "text": "Wenn wir das Schloss mit dem Taschenmesser aufhebeln..."
+        },
+        {
+          "type": "line",
+          "speaker": "SARA",
+          "emotion": "beobachtend",
+          "text": "Vorsicht, Ben! Wir wissen nicht, was darin ist."
+        },
+        {
+          "type": "line",
+          "speaker": "TOBI",
+          "emotion": "aufgeregt",
+          "text": "Vielleicht sind es alte Goldmünzen! Oder Schokolade aus den 50ern!"
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "streng",
+          "text": "Halt den Mund, Tobi. Wir müssen leise sein."
+        },
+        {
+          "type": "sfx",
+          "de": "Ein hastiger Schritt auf Kies",
+          "en": "rapid footsteps on gravel"
+        },
+        {
+          "type": "music",
+          "de": "Plötzlich schlagend und beunruhigend",
+          "en": "sudden, jarring tension music"
+        },
+        {
+          "type": "line",
+          "speaker": "FRAU MEYER",
+          "emotion": "erschrocken",
+          "text": "Wer ist da? Wer wagt es, in dieser Nacht hier herumzuschleichen?"
+        },
+        {
+          "type": "pause",
+          "de": "1.0",
+          "en": "1.0",
+          "seconds": 1.0
+        },
+        {
+          "type": "line",
+          "speaker": "BEN",
+          "emotion": "überrascht",
+          "text": "Oh! Entschuldigung, wir... wir wollten nur..."
+        },
+        {
+          "type": "line",
+          "speaker": "FRAU MEYER",
+          "emotion": "nervös",
+          "text": "Sie müssen sofort verschwinden! Das ist mein Grundstück! Ich suche nach... nach verlorenen Antiquitäten!"
+        },
+        {
+          "type": "line",
+          "speaker": "SARA",
+          "emotion": "skeptisch",
+          "text": "In der Dunkelheit? Und was ist das da im Schlamm?"
+        },
+        {
+          "type": "line",
+          "speaker": "FRAU MEYER",
+          "emotion": "hastig",
+          "text": "Nichts! Nur alter Schrott! Gehen Sie weg, bevor ich die Polizei rufe!"
+        },
+        {
+          "type": "sfx",
+          "de": "Das Rascheln einer schweren Stofftasche",
+          "en": "rustling of a heavy fabric bag"
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "misstrauisch",
+          "text": "Warum zittern Ihre Hände so sehr, Frau Meyer?"
+        },
+        {
+          "type": "line",
+          "speaker": "FRAU MEYER",
+          "emotion": "gehetzt",
+          "text": "Es ist der Wind! Gehen Sie einfach! Verschwinden Sie!"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Das Zittern in ihrer Stimme war lauter als das Knirschen des Kieses unter ihren Füßen."
+        },
+        {
+          "type": "music",
+          "de": "Mysteriös und drängend",
+          "en": "mysterious and urgent music"
+        },
+        {
+          "type": "line",
+          "speaker": "BEN",
+          "emotion": "flüsternd",
+          "text": "Leute, geht langsam zurück. Wir müssen wissen, was sie verheimlicht."
+        },
+        {
+          "type": "line",
+          "speaker": "TOBI",
+          "emotion": "ängstlich",
+          "text": "Ich glaube, die Polizei ist keine gute Idee..."
+        },
+        {
+          "type": "line",
+          "speaker": "SARA",
+          "emotion": "beobachtend",
+          "text": "Schaut mal, sie schaut ständig auf die Kiste."
+        },
+        {
+          "type": "sfx",
+          "de": "Ein metallisches Klacken",
+          "en": "a metallic click"
+        },
+        {
+          "type": "line",
+          "speaker": "FRAU MEYER",
+          "emotion": "panisch",
+          "text": "Ich habe gesagt: Verschwindet!"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Die Nacht über dem Bahnhof wurde plötzlich viel zu schwer."
+        }
+      ],
+      "words": 178,
+      "repetition": 0.0,
+      "unknown_speakers": [
+        "FRAU MEYER"
+      ],
+      "attempts": 1,
+      "continued": 1,
+      "seconds": 158.4,
+      "summary": "Ben, Sara, Tobi und Lena versuchen im Mondlicht eine mysteriöse Metallkiste zu öffnen, werden jedoch von der nervösen Frau Meyer auf ihrem Grundstück entdeckt. Die Begegnung liefert die Spur, dass Frau Meyer offenbar etwas verheimlicht, da sie extrem gehetzt reagiert und ihren Blick ständig auf die Kiste richtet."
+    },
+    {
+      "chapter": 1,
+      "scene": 5,
+      "title": "Die Wendung im Keller",
+      "room": "keller",
+      "atmo_en": "Dripping water, low hum, heavy breathing, flashlight clicks",
+      "text": "[ATMO: Tropfen von Wasser auf Stein, ferner Wind in alten Rohren | water dripping on stone, distant wind in old pipes]\nERZÄHLER: Die Neugier ist ein gefährlicher Kompass. Ben, Sara, Tobi und Lena folgen der Spur bis tief unter das alte Bahnhofsgebäude.\n[GERÄUSCH: Schrittgeräusche auf feuchtem Beton | footsteps on damp concrete]\nBEN (flüsternd): Ganz leise. Wenn wir erwischt werden, ist das hier das Ende.\nTOBI (zitternd): Können wir nicht einfach nach Hause gehen und eine Pizza bestellen? Mein Magen spielt verrückt.\nLENA: Ruhe jetzt, Tobi! Schaut mal, da vorne brennt Licht.\nSARA (beobachtend): Das kommt aus dem alten Lagerkeller. Seht ihr das?\n[GERÄUSCH: Ein schweres metallisches Schleifen | a heavy metallic dragging sound]\nBEN (aufgeregt): Da ist jemand. Kommt, wir schleichen uns ran.\n[MUSIK: Spannung | suspenseful strings]\nERZÄHLER: Hinter einer Stapel alter Güterwagen entdecken sie eine Gestalt im fahlen Licht einer einzigen Lampe.\n[GERÄUSCH: Das Klappern von Papier | the rustling of paper]\nHERRKRAUSE (mit brüchiger Stimme): Ich muss sie finden... bevor alles zu Staub zerfällt.\n[GERÄUSCH: Ein Deckel wird hochgehoben | a lid being lifted]\nLENA (ausrufend): Herr Krause!\n[PAUSE: 1.0]\nHERRKRAUSE (erschrocken): Verdammt noch mal! Was macht ihr hier unten? Wollt ihr mich verhaften?\nBEN (konfrontativ): Wir wollten wissen, was Sie mit der Kiste vorhaben. Haben Sie sie gestohlen?\nSARA (nachdenklich): Schaut euch das an. Er hält keine Beute in den Händen.\nHERRKRAUSE (verbittert): Es sind nur Erinnerungen, Kind. Alte Briefe... Fotos von den Gleisen, wie sie früher waren.\nTOBI (verwirrt): Aber... Sie haben uns so gruselig angeschaut.\nHERRKRAUSE (leise): Manchmal bewahrt man Dinge besser auf, wenn man denkt, dass niemand sie sucht.",
+      "items": [
+        {
+          "type": "atmo",
+          "de": "Tropfen von Wasser auf Stein, ferner Wind in alten Rohren",
+          "en": "water dripping on stone, distant wind in old pipes"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Die Neugier ist ein gefährlicher Kompass. Ben, Sara, Tobi und Lena folgen der Spur bis tief unter das alte Bahnhofsgebäude."
+        },
+        {
+          "type": "sfx",
+          "de": "Schrittgeräusche auf feuchtem Beton",
+          "en": "footsteps on damp concrete"
+        },
+        {
+          "type": "line",
+          "speaker": "BEN",
+          "emotion": "flüsternd",
+          "text": "Ganz leise. Wenn wir erwischt werden, ist das hier das Ende."
+        },
+        {
+          "type": "line",
+          "speaker": "TOBI",
+          "emotion": "zitternd",
+          "text": "Können wir nicht einfach nach Hause gehen und eine Pizza bestellen? Mein Magen spielt verrückt."
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "",
+          "text": "Ruhe jetzt, Tobi! Schaut mal, da vorne brennt Licht."
+        },
+        {
+          "type": "line",
+          "speaker": "SARA",
+          "emotion": "beobachtend",
+          "text": "Das kommt aus dem alten Lagerkeller. Seht ihr das?"
+        },
+        {
+          "type": "sfx",
+          "de": "Ein schweres metallisches Schleifen",
+          "en": "a heavy metallic dragging sound"
+        },
+        {
+          "type": "line",
+          "speaker": "BEN",
+          "emotion": "aufgeregt",
+          "text": "Da ist jemand. Kommt, wir schleichen uns ran."
+        },
+        {
+          "type": "music",
+          "de": "Spannung",
+          "en": "suspenseful strings"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Hinter einer Stapel alter Güterwagen entdecken sie eine Gestalt im fahlen Licht einer einzigen Lampe."
+        },
+        {
+          "type": "sfx",
+          "de": "Das Klappern von Papier",
+          "en": "the rustling of paper"
+        },
+        {
+          "type": "line",
+          "speaker": "HERRKRAUSE",
+          "emotion": "mit brüchiger Stimme",
+          "text": "Ich muss sie finden... bevor alles zu Staub zerfällt."
+        },
+        {
+          "type": "sfx",
+          "de": "Ein Deckel wird hochgehoben",
+          "en": "a lid being lifted"
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "ausrufend",
+          "text": "Herr Krause!"
+        },
+        {
+          "type": "pause",
+          "de": "1.0",
+          "en": "1.0",
+          "seconds": 1.0
+        },
+        {
+          "type": "line",
+          "speaker": "HERRKRAUSE",
+          "emotion": "erschrocken",
+          "text": "Verdammt noch mal! Was macht ihr hier unten? Wollt ihr mich verhaften?"
+        },
+        {
+          "type": "line",
+          "speaker": "BEN",
+          "emotion": "konfrontativ",
+          "text": "Wir wollten wissen, was Sie mit der Kiste vorhaben. Haben Sie sie gestohlen?"
+        },
+        {
+          "type": "line",
+          "speaker": "SARA",
+          "emotion": "nachdenklich",
+          "text": "Schaut euch das an. Er hält keine Beute in den Händen."
+        },
+        {
+          "type": "line",
+          "speaker": "HERRKRAUSE",
+          "emotion": "verbittert",
+          "text": "Es sind nur Erinnerungen, Kind. Alte Briefe... Fotos von den Gleisen, wie sie früher waren."
+        },
+        {
+          "type": "line",
+          "speaker": "TOBI",
+          "emotion": "verwirrt",
+          "text": "Aber... Sie haben uns so gruselig angeschaut."
+        },
+        {
+          "type": "line",
+          "speaker": "HERRKRAUSE",
+          "emotion": "leise",
+          "text": "Manchmal bewahrt man Dinge besser auf, wenn man denkt, dass niemand sie sucht."
+        }
+      ],
+      "words": 169,
+      "repetition": 0.0,
+      "unknown_speakers": [],
+      "attempts": 1,
+      "continued": 0,
+      "seconds": 142.7,
+      "summary": "Ben, Sara, Tobi und Lena folgen einer Spur tief unter das alte Bahnhofsgebäude und entdecken dort Herrn Krause in einem Lagerkeller. Anstatt eines Diebes stellt sich heraus, dass er dort heimlich alte Briefe und Fotos aufbewahrt, um die Erinnerungen an die Vergangenheit zu schützen."
+    },
+    {
+      "chapter": 1,
+      "scene": 6,
+      "title": "Das wahre Geheimnis",
+      "room": "bahnhofshalle",
+      "atmo_en": "Soft evening wind, birds chirping, relieved atmosphere",
+      "text": "[ATMO: Hallige Akustik, fern klingelndes Metall, Schritte auf Schotter | hollow acoustics, distant metal clanking, footsteps on gravel]\n\nERZÄHLER: Die Stille im Keller wich einer unerwarteten Bewegung. Eine Gestalt trat aus dem Schatten der alten Gleise.\n\n[GERÄUSCH: Schnelle, hastige Schritte auf Stein | fast, hurried footsteps on stone]\n\nFRAU_MEYER (atemlos): Herr Krause! Haben Sie die Kinder entdeckt? Ich dachte, sie wären längst weg!\n\nBEN (erstaunt): Frau Meyer? Sie kennen den Wärter?\n\nSARA (analytisch): Das erklärt das alles. Die Geheimniskrämerei... es war kein Verbrechen.\n\nFRAU_MEYER (nervös, aber sanft): Es ist kein Verbrechen, mein Kind. Es ist eine Pflicht. Der alte Bahnhofswärter war mein Onkel.\n\nLENA (überrascht): Und Sie bewachen mit ihm diesen Ort?\n\nHERRKRAUSE (seufzend): Wir bewahren nur das Erbe. Die Kiste enthält die Chronik dieser Stadt.\n\nTOBI (ungläubig): Aber das blaue Leuchten? Das Summen? Ich hab fast einen Herzinfarkt bekommen!\n\n[GERÄUSCH: Ein helles Klicken, gefolgt von Lichtstrahlen | a bright click, followed by flashlight beams]\n\nHERRKRAUSE (ruhig): Das war nur unsere Taschenlampe beim Polieren der alten Messing-Relikte. Wir wollten nichts, was nach dem Krieg übrig blieb, verfallen lassen.\n\n[PAUSE: 1.0]\n\nBEN (nachdenklich): Wir dachten, hier lauert etwas Schreckliches.\n\nFRAU_MEYER (lächelnd): Das Einzige, was hier lauert, ist die Nostalgie.\n\nERZÄHLER: Die Angst wich der Neugier, als die vier Freunde begriffen, dass das größte Geheimnis der Stadt eigentlich ihre Geschichte war.\n\n[MUSIK: Nostalgisch, ausklingend | nostalgic, fading out]\n[MUSIK: Abspann | credits music]\n[GERÄUSCH: Ein leises Lachen von Tobi | a soft chuckle from Tobi]\n\nTOBI (grinsend): Also kein Monster und keine Geister? Ich hätte lieber ein echtes Abenteuer gehabt – oder zumindest ein Sandwich.\n\nLENA (lachend): Du und dein Hunger, Tobi! Aber hey, die Kiste ist trotzdem cool.\n\n[MUSIK: Abspann | credits music]",
+      "items": [
+        {
+          "type": "atmo",
+          "de": "Hallige Akustik, fern klingelndes Metall, Schritte auf Schotter",
+          "en": "hollow acoustics, distant metal clanking, footsteps on gravel"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Die Stille im Keller wich einer unerwarteten Bewegung. Eine Gestalt trat aus dem Schatten der alten Gleise."
+        },
+        {
+          "type": "sfx",
+          "de": "Schnelle, hastige Schritte auf Stein",
+          "en": "fast, hurried footsteps on stone"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "FRAU_MEYER (atemlos): Herr Krause! Haben Sie die Kinder entdeckt? Ich dachte, sie wären längst weg!"
+        },
+        {
+          "type": "line",
+          "speaker": "BEN",
+          "emotion": "erstaunt",
+          "text": "Frau Meyer? Sie kennen den Wärter?"
+        },
+        {
+          "type": "line",
+          "speaker": "SARA",
+          "emotion": "analytisch",
+          "text": "Das erklärt das alles. Die Geheimniskrämerei... es war kein Verbrechen."
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "FRAU_MEYER (nervös, aber sanft): Es ist kein Verbrechen, mein Kind. Es ist eine Pflicht. Der alte Bahnhofswärter war mein Onkel."
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "überrascht",
+          "text": "Und Sie bewachen mit ihm diesen Ort?"
+        },
+        {
+          "type": "line",
+          "speaker": "HERRKRAUSE",
+          "emotion": "seufzend",
+          "text": "Wir bewahren nur das Erbe. Die Kiste enthält die Chronik dieser Stadt."
+        },
+        {
+          "type": "line",
+          "speaker": "TOBI",
+          "emotion": "ungläubig",
+          "text": "Aber das blaue Leuchten? Das Summen? Ich hab fast einen Herzinfarkt bekommen!"
+        },
+        {
+          "type": "sfx",
+          "de": "Ein helles Klicken, gefolgt von Lichtstrahlen",
+          "en": "a bright click, followed by flashlight beams"
+        },
+        {
+          "type": "line",
+          "speaker": "HERRKRAUSE",
+          "emotion": "ruhig",
+          "text": "Das war nur unsere Taschenlampe beim Polieren der alten Messing-Relikte. Wir wollten nichts, was nach dem Krieg übrig blieb, verfallen lassen."
+        },
+        {
+          "type": "pause",
+          "de": "1.0",
+          "en": "1.0",
+          "seconds": 1.0
+        },
+        {
+          "type": "line",
+          "speaker": "BEN",
+          "emotion": "nachdenklich",
+          "text": "Wir dachten, hier lauert etwas Schreckliches."
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "FRAU_MEYER (lächelnd): Das Einzige, was hier lauert, ist die Nostalgie."
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Die Angst wich der Neugier, als die vier Freunde begriffen, dass das größte Geheimnis der Stadt eigentlich ihre Geschichte war."
+        },
+        {
+          "type": "music",
+          "de": "Nostalgisch, ausklingend",
+          "en": "nostalgic, fading out"
+        },
+        {
+          "type": "music",
+          "de": "Abspann",
+          "en": "credits music"
+        },
+        {
+          "type": "sfx",
+          "de": "Ein leises Lachen von Tobi",
+          "en": "a soft chuckle from Tobi"
+        },
+        {
+          "type": "line",
+          "speaker": "TOBI",
+          "emotion": "grinsend",
+          "text": "Also kein Monster und keine Geister? Ich hätte lieber ein echtes Abenteuer gehabt – oder zumindest ein Sandwich."
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "lachend",
+          "text": "Du und dein Hunger, Tobi! Aber hey, die Kiste ist trotzdem cool."
+        },
+        {
+          "type": "music",
+          "de": "Abspann",
+          "en": "credits music"
+        }
+      ],
+      "words": 186,
+      "repetition": 0.0,
+      "unknown_speakers": [],
+      "attempts": 1,
+      "continued": 1,
+      "seconds": 171.2,
+      "summary": "Frau Meyer trifft die Gruppe im Keller und stellt sich als Verwandte des verstorbenen Bahnhofswärters heraus. Sie klärt auf, dass das mysteriöse Leuchten und das Summen lediglich durch die Pflege alter Messing-Relikte entstanden sind und die Kiste stattdessen die Chronik der Stadt enthält."
+    }
+  ],
+  "words": 1070,
+  "estimated_minutes": 9.0,
+  "seconds": 1474.5,
+  "llm": "google_gemma-4-26B-A4B-it-Q3_K_M.gguf",
+  "llm_stats": {
+    "prompt_tokens": 19566,
+    "completion_tokens": 5705,
+    "seconds": 1474.4795792102814
+  },
+  "prompt": "Erstelle ein spannendes deutsches Jugendkrimi-Hörspiel, das im Sommer 1984 spielt. Vier Jugendliche geraten in einen mysteriösen Kriminalfall rund um einen verlassenen Bahnhof. Es gibt mehrere Verdächtige, humorvolle Dialoge, überraschende Wendungen und ein spannendes Finale. Die Produktion soll sich an der Atmosphäre klassischer deutscher Jugendkrimi-Hörspiele der 1980er-Jahre orientieren."
+}

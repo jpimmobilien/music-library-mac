@@ -1,0 +1,32 @@
+{
+  "environment": {
+    "python": "3.12.3",
+    "machine": "x86_64",
+    "system": "Linux",
+    "cores": 4,
+    "ram_gb": 15.3
+  },
+  "steps": [
+    {
+      "name": "Sprachmodell bereit",
+      "time": "16:16:11",
+      "model": "google_gemma-4-26B-A4B-it-Q3_K_M.gguf",
+      "load_seconds": 0.0
+    },
+    {
+      "name": "Geschichte fertig",
+      "time": "16:40:46",
+      "seconds": 1474.5,
+      "words": 1070,
+      "estimated_minutes": 9.0,
+      "scenes": 6,
+      "figures": 8,
+      "tokens_per_second": 3.9,
+      "llm_stats": {
+        "prompt_tokens": 19566,
+        "completion_tokens": 5705,
+        "seconds": 1474.4795792102814
+      }
+    }
+  ]
+}
