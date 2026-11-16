@@ -11,7 +11,8 @@ xcodegen generate --spec project.yml
 set +e
 xcodebuild -project Panora.xcodeproj -scheme PanoraPreview -configuration Release -derivedDataPath build/preview \
     -clonedSourcePackagesDirPath build/spm -destination "platform=macOS,arch=$(uname -m)" \
-    -skipPackagePluginValidation -skipMacroValidation CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
+    -skipPackagePluginValidation -skipMacroValidation ARCHS="$(uname -m)" EXCLUDED_ARCHS="" ONLY_ACTIVE_ARCH=YES \
+    CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
     build > logs/xcodebuild-preview.txt 2>&1
 STATUS=$?
 set -e
