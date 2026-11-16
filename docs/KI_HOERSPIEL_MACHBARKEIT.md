@@ -94,7 +94,31 @@ Die Stability AI Community License erlaubt die Nutzung kostenlos für Privatpers
 1 Mio. US-Dollar Jahresumsatz; darüber ist eine Unternehmenslizenz nötig. Eigene Geräusche (Import) sind jederzeit möglich.
 
 
-<!-- MESSUNGEN -->
+## Messungen
+
+### Geschichte (Gemma 4 26B-A4B, GGUF Q3_K_M, llama.cpp auf Linux-Prozessor, 4 Kerne)
+
+| Lauf | Ergebnis |
+|---|---|
+| 1 (ohne Lektorat) | 10-Minuten-Krimi: 6 Szenen, 1070 Wörter (≈ 9 min), 8 Figuren, keine Wiederholungen. Gutes Deutsch, aber Logikfehler: eine Kiste wechselt ohne Erklärung den Ort, widersprüchliche Verwandtschaft, schwache Auflösung |
+| 2 (mit Spurenplan und Lektorat) | 6 Szenen, 1126 Wörter (≈ 9,5 min), 7 Figuren. Lektorat fand 5 echte Fehler (Ort Schuppen/Keller, Kiste/Kette widerspricht der Auflösung, Verwandtschaft, Ortssprung im Finale) und überarbeitete Szene 4–6: Falltür mit Treppe, Kette als Schlüssel, Verwandtschaft stimmig. Rest: ein Ortswort im Schlusssatz, Handlung eher schlicht |
+| Zeit | 43 min auf dem Linux-Prozessor (3,5 Token/s), davon Lektorat 17 min – auf dem M5 Pro mit MLX nicht gemessen |
+
+### Sprachausgabe
+
+| Messung | Ergebnis |
+|---|---|
+| Hörproben, Qwen3-TTS 1.7B (PyTorch, bf16, Linux-Prozessor, 4 Kerne) | 3 Szenen der Geschichte, 43 Zeilen, 6 entworfene Stimmen, 3:34 min gemischt (−16,1 LUFS). **Whisper-Fehlerrate 1 %** (Zeilen und Prüfsätze); einzige Abweichung „Spionen-Trupp“/„Spionentrupp“ und ein ausgelassenes „Psst“. Umlaute, Komposita, Zahlen („am vierzehnten Juli neunzehnhundertvierundachtzig um zweiundzwanzig Uhr fünfzehn“) fehlerfrei erkannt. Echtzeitfaktor 3,3 (Entwerfen) bzw. 4,1 (Klonen) |
+| mlx-audio auf dem Linux-Prozessor (MLX CPU) | unbrauchbar langsam: Echtzeitfaktor 82 (Entwerfen) bzw. 172 (Klonen); Satzlängen plausibel (3,5–8,7 s) |
+| mlx-audio auf Apple Silicon (Code der App) | <!-- MAC-TTS --> |
+
+Hinweis: Die Hörproben nutzen dieselben Gewichte wie die App, aber das PyTorch-Original statt mlx-audio. Klang und
+Aussprache sind übertragbar, Geschwindigkeit und Umsetzungsdetails nicht.
+
+### 10-Minuten-Hörspiel und App-Abnahme
+
+<!-- MAC-PRODUKTION -->
+
 
 ## Referenzanalyse – gemessen auf Apple Silicon (macOS 26.7, virtueller M1, 7 GB)
 
