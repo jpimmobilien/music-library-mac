@@ -1,8 +1,10 @@
 # Panora – Oberfläche ohne MLX auf einem Intel-Runner: Selbsttest und Bildschirmfotos.
-# Manuell gestartet (Apple-Silicon-Runner sind bei GitHub oft knapp). Ergebnisse → „ci-ergebnisse-panora-preview“.
+# Läuft bei Push auf „panora-preview“ (Apple-Silicon-Runner sind bei GitHub oft knapp). Ergebnisse → „ci-ergebnisse-panora-preview“.
 name: Panora Vorschau (Intel)
 
 on:
+  push:
+    branches: [panora-preview]
   workflow_dispatch:
 
 concurrency:
