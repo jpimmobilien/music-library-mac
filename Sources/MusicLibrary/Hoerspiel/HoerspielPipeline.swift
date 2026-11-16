@@ -12,7 +12,7 @@ extension HoerspielModel {
         let d = draft(mode)
         let prompt = d.prompt.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !prompt.isEmpty, !isWorking else { return }
-        var p = HSProduction(mode: mode, prompt: prompt, targetMinutes: max(2, min(180, d.minutes)))
+        var p = HSProduction(mode: mode, prompt: prompt, language: d.language, targetMinutes: max(2, min(180, d.minutes)))
         p.narration = d.narration
         p.retroAmount = mode == .hoerspiel ? d.retro : 0
         p.styleProfileID = d.referenceID
@@ -65,7 +65,8 @@ extension HoerspielModel {
             report("Konzept, Figuren und Szenenplan …", 0.05)
             let style = p.styleProfileID.flatMap { rid in references.first { $0.id == rid } }.map { "\($0.name): \($0.styleHint)" }
             let concept = try await e.concept(prompt: p.prompt, minutes: p.targetMinutes, mode: p.mode,
-                                              characters: draft(p.mode).characters, style: style, progress: reporter(range: 0.05...0.12))
+                                              characters: draft(p.mode).characters, style: style, narration: p.narration,
+                                              language: p.language, progress: reporter(range: 0.05...0.12))
             update(id) { HSJSON.apply(concept: concept, to: &$0) }
             p = production(id) ?? p
         }
@@ -180,7 +181,7 @@ extension HoerspielModel {
                     throw StudioError.other("Die Stimme „\(profile.name)“ kann nicht sprechen (\(profile.kind.label)).")
                 }
                 let cast = HSCast(referenceFile: store.voicesDir.appendingPathComponent(ref).path,
-                                  referenceText: profile.referenceText ?? HSVoiceDesign.referenceText,
+                                  referenceText: profile.referenceText ?? HSVoiceDesign.referenceText(language: p.language),
                                   instruct: profile.designDescription, seed: profile.seed, profileID: profile.id, kind: profile.kind)
                 update(id) { $0.cast[f.id] = cast }
                 continue
@@ -191,7 +192,7 @@ extension HoerspielModel {
             report("Stimme für \(f.name.isEmpty ? f.id : f.name) wird entworfen …", Double(n) / Double(max(1, figures.count)))
             let out = folder(p).appendingPathComponent("stimmen/\(f.id).wav")
             try fm.createDirectory(at: out.deletingLastPathComponent(), withIntermediateDirectories: true)
-            let v = try await e.designVoice(instruct: instruct, seed: seed, out: out)
+            let v = try await e.designVoice(instruct: instruct, seed: seed, out: out, language: p.language)
             update(id) { $0.cast[f.id] = HSCast(referenceFile: "stimmen/\(f.id).wav", referenceText: v.text, instruct: instruct, seed: seed) }
         }
         update(id) { $0.set(.casting, .done) }
@@ -232,7 +233,8 @@ extension HoerspielModel {
             }
             let start = Double(done) / Double(todo.count)
             let span = Double(requests.count) / Double(todo.count)
-            let results = try await e.speak(requests, progress: reporter(prefix: "Szene \(si + 1): ", range: start...(start + span)))
+            let results = try await e.speak(requests, language: cur.language,
+                                            progress: reporter(prefix: "Szene \(si + 1): ", range: start...(start + span)))
             done += requests.count
             update(id) { p in
                 for r in results {

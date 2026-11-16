@@ -137,11 +137,32 @@ class StoryTests(unittest.TestCase):
         self.assertIn("Messingsiegel", p2)
         self.assertNotIn("Messingsiegel", p1)
 
+    def test_language(self):
+        de = S.concept_prompt("Krimi", 10, "hoerspiel", 1, 6)
+        en = S.concept_prompt("Krimi", 10, "hoerspiel", 1, 6, language="en")
+        self.assertNotIn("SPRACHE:", de)
+        self.assertIn("auf Englisch", en)
+        c = {"titel": "T", "_language": "fr", "figuren": [], "kapitel": [{"nr": 1, "szenen": [{"nr": 1}]}]}
+        self.assertIn("auf Französisch", S.scene_prompt(c, c["kapitel"][0], c["kapitel"][0]["szenen"][0], "", "", 200, True, True, 1))
+
     def test_audiobook_prompt(self):
         c = {"titel": "T", "_mode": "hoerbuch", "_style": "spannend", "figuren": [], "kapitel": [{"nr": 1, "szenen": [{"nr": 1}]}]}
         p = S.scene_prompt(c, c["kapitel"][0], c["kapitel"][0]["szenen"][0], "", "", 300, True, True)
         self.assertIn("Format – Hörbuch", p)
         self.assertNotIn("[GERÄUSCH", p)
+
+
+class VoiceTextTests(unittest.TestCase):
+    def test_prepare_text_and_reference(self):
+        # hs_voice ohne mlx importierbar? (mlx wird erst beim Laden eines Modells gebraucht)
+        try:
+            import hs_voice as V
+        except ImportError as e:
+            self.skipTest(f"hs_voice nicht importierbar: {e}")
+        self.assertIn("vierzehnten", V.prepare_text("Am 14. Juli war es heiß.", "de"))
+        self.assertEqual(V.prepare_text("On  July 14,\n1984.", "en"), "On July 14, 1984.")
+        self.assertTrue(V.reference_text("fr").startswith("Je ne sais pas"))
+        self.assertEqual(V.reference_text("xx"), V.REFERENCE_TEXT)
 
 
 class MixTests(unittest.TestCase):

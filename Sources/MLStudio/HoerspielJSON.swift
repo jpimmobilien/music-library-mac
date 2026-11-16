@@ -54,7 +54,7 @@ public enum HSJSON {
         return ["titel": p.title, "untertitel": p.subtitle, "logline": p.logline, "epoche_ort": p.era, "ton": p.tone,
                 "aufloesung": p.resolution, "figuren": p.figures.map(figureJSON), "kapitel": chapters,
                 "spuren": (p.clues ?? []).map { ["spur": $0.clue, "szene": $0.scene, "bedeutung": $0.meaning] },
-                "_mode": p.mode.rawValue, "_style": p.narration, "_minutes": p.targetMinutes]
+                "_mode": p.mode.rawValue, "_style": p.narration, "_minutes": p.targetMinutes, "_language": p.language]
     }
 
     public static func figureJSON(_ f: HSFigure) -> [String: Any] {

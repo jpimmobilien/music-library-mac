@@ -97,7 +97,8 @@ class Engine:
     def concept(self, req, progress):
         progress(0.1, "Konzept wird entwickelt …")
         c = self._writer().concept(req["prompt"], float(req.get("minutes", 10)), req.get("mode", "hoerspiel"),
-                                   req.get("characters") or None, req.get("style") or None, req.get("narration") or None)
+                                   req.get("characters") or None, req.get("style") or None, req.get("narration") or None,
+                                   req.get("language") or "de")
         return {"concept": c, "stats": self.llm.stats}
 
     def scene(self, req, progress):
@@ -158,18 +159,19 @@ class Engine:
             self.design = V.QwenDesign(req.get("repo") or V.QWEN_DESIGN)
         progress(0.5, "Stimme wird entworfen …")
         t0 = time.time()
-        audio, sr = self.design.speak(req.get("text") or V.REFERENCE_TEXT, req["instruct"], req.get("language", "de"),
-                                      req.get("seed"))
+        language = req.get("language", "de")
+        text = req.get("text") or V.reference_text(language)
+        audio, sr = self.design.speak(text, req["instruct"], language, req.get("seed"))
         audio = A.trim_silence(audio, sr)
         A.write_wav(req["out"], audio, sr)
-        return {"path": req["out"], "text": req.get("text") or V.REFERENCE_TEXT, "duration": round(len(audio) / sr, 2),
+        return {"path": req["out"], "text": text, "duration": round(len(audio) / sr, 2),
                 "seconds": round(time.time() - t0, 1)}
 
     def speak(self, req, progress):
         import numpy as np
         import hs_audio as A
         import hs_voice as V
-        from hs_text import chunk_text, normalize_for_speech
+        from hs_text import chunk_text
         if self.clone is None:
             self.design = None
             V.free_memory()
@@ -178,7 +180,7 @@ class Engine:
         lines = req["lines"]
         results = []
         for n, ln in enumerate(lines):
-            text = normalize_for_speech(ln["text"])
+            text = V.prepare_text(ln["text"], req.get("language", "de"))
             if not text:
                 results.append({"key": ln["key"], "skipped": True})
                 continue

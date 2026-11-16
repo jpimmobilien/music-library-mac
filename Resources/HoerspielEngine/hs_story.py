@@ -140,10 +140,23 @@ SYSTEM = (
     "Du schreibst natürliches, lebendiges Deutsch mit korrekter Rechtschreibung."
 )
 
+LANGUAGES = {"de": "Deutsch", "en": "Englisch", "fr": "Französisch", "es": "Spanisch", "it": "Italienisch"}
+
+
+def language_rule(language):
+    """Anweisung zur Ausgabesprache (leer für Deutsch). Kennungen, Tags und JSON-Schlüssel bleiben wie vorgegeben."""
+    if not language or language == "de":
+        return ""
+    name = LANGUAGES.get(language, language)
+    return (f"\nSPRACHE: Schreibe alle Titel, Beschreibungen, Erzähltexte und Dialoge auf {name} (natürlich, wie von "
+            f"Muttersprachlern). Kennungen in GROSSBUCHSTABEN, die Kennung ERZÄHLER, die Tags [ATMO], [GERÄUSCH], "
+            f"[MUSIK], [PAUSE] und die JSON-Schlüssel bleiben genau wie vorgegeben.\n")
+
+
 ROOM_WORDS = "draußen, wald, zimmer, küche, büro, auto, keller, treppenhaus, halle, bahnhofshalle, kirche, telefon"
 
 
-def concept_prompt(prompt, minutes, mode, chapters, scenes_per_chapter, user_characters=None, style=None):
+def concept_prompt(prompt, minutes, mode, chapters, scenes_per_chapter, user_characters=None, style=None, language="de"):
     hint = ""
     if user_characters:
         hint += "\nVorgaben des Nutzers zu Figuren (unbedingt übernehmen):\n" + "\n".join(f"- {c}" for c in user_characters)
@@ -155,7 +168,7 @@ def concept_prompt(prompt, minutes, mode, chapters, scenes_per_chapter, user_cha
 
 Idee des Nutzers:
 {prompt}
-{hint}
+{hint}{language_rule(language)}
 
 Anforderungen:
 - {roles}
@@ -260,6 +273,7 @@ Art zu sprechen. Keine Wiederholungen, keine Zusammenfassung am Ende.
 {ending}
 {PROSE_RULES}
 
+{language_rule(concept.get("_language"))}
 Schreibe nur den Text dieses Abschnitts."""
     intro = "Beginne mit [MUSIK: Titelmusik | ...] und einer kurzen Einleitung des Erzählers.\n" if is_first else ""
     outro = ("Dies ist die letzte Szene: Löse den Fall vollständig auf und ende mit einem kurzen Schlusswort des "
@@ -271,6 +285,7 @@ keine Zusammenfassungen am Ende. Verwende nur die Kennungen aus der Figurenliste
 {intro}{outro}
 {FORMAT_RULES}
 
+{language_rule(concept.get("_language"))}
 Schreibe nur das Drehbuch der Szene."""
 
 
@@ -306,11 +321,11 @@ class StoryWriter:
     def _ask(self, messages, **kw):
         return self.llm.chat(messages, **kw)
 
-    def concept(self, prompt, minutes=10, mode="hoerspiel", user_characters=None, style=None, narration=None):
+    def concept(self, prompt, minutes=10, mode="hoerspiel", user_characters=None, style=None, narration=None, language="de"):
         chapters, per_chapter = plan_size(minutes)
         msgs = [{"role": "system", "content": SYSTEM},
                 {"role": "user", "content": concept_prompt(prompt, minutes, mode, chapters, per_chapter,
-                                                           user_characters, style)}]
+                                                           user_characters, style, language)}]
         last_error = None
         for attempt in range(3):
             raw = self._ask(msgs, max_tokens=4096, temperature=0.7 if attempt == 0 else 0.4)
@@ -319,6 +334,7 @@ class StoryWriter:
                 self._check_concept(c)
                 c["_minutes"] = minutes
                 c["_mode"] = mode
+                c["_language"] = language or "de"
                 if narration:
                     c["_style"] = narration
                 return c
@@ -407,7 +423,8 @@ Szene:
 Formuliere nur diese eine Replik von {speaker} neu{(' – ' + hint) if hint else ''}:
 „{line}“
 
-Sie muss an derselben Stelle in die Szene passen, denselben Inhalt transportieren und natürlich klingen.
+Sie muss an derselben Stelle in die Szene passen, denselben Inhalt transportieren, natürlich klingen und in
+derselben Sprache wie die Szene stehen.
 Antworte nur mit dem neuen Satz, ohne Kennung und ohne Anführungszeichen."""}]
         out = self._ask(msgs, max_tokens=300, temperature=0.8).strip()
         out = re.sub(r"^[A-ZÄÖÜ]{2,}\s*(\([^)]*\))?\s*:\s*", "", out).strip().strip('"„“')
@@ -435,7 +452,7 @@ die etwas wissen, was sie nicht wissen können; falsche Namen, Rollen oder Verwa
 am Ende nicht aufgelöst werden; eine Auflösung, die den Spuren widerspricht oder nicht überzeugt; Anrede (du/Sie),
 die ohne Grund wechselt. Keine Stilkritik, keine Geschmacksfragen. Höchstens 5 Punkte, die wichtigsten zuerst.
 
-Antworte NUR mit JSON: {{"probleme": [{{"szene": 1, "problem": "", "korrektur": ""}}]}}
+Antworte NUR mit JSON (Beschreibungen auf Deutsch): {{"probleme": [{{"szene": 1, "problem": "", "korrektur": ""}}]}}
 Wenn alles schlüssig ist: {{"probleme": []}}"""}]
         try:
             data = extract_json(self._ask(msgs, max_tokens=1500, temperature=0.2))
@@ -469,8 +486,8 @@ Bisherige Fassung der Szene:
 Überarbeite die Szene so, dass diese Probleme behoben sind:
 {fixes}
 
-Alles andere bleibt so nah wie möglich am Original (Ablauf, Länge, Figuren, Geräusche, Ton).
-{rules}
+Alles andere bleibt so nah wie möglich am Original (Ablauf, Länge, Figuren, Geräusche, Ton, Sprache).
+{rules}{language_rule(concept.get("_language"))}
 
 Gib nur das vollständige, überarbeitete Drehbuch der Szene aus."""}]
         text = self._ask(msgs, max_tokens=min(4096, int(target_words * 3.6) + 600), temperature=0.5, repetition_penalty=1.05)
@@ -492,9 +509,9 @@ Gib nur das vollständige, überarbeitete Drehbuch der Szene aus."""}]
                                             "Figuren und wichtige Gegenstände, wer weiß was).\n\n" + scene_text[:6000]}]
         return self._ask(msgs, max_tokens=260, temperature=0.3).strip().replace("\n", " ")
 
-    def write(self, prompt, minutes=10, mode="hoerspiel", user_characters=None, style=None, progress=None):
+    def write(self, prompt, minutes=10, mode="hoerspiel", user_characters=None, style=None, progress=None, language="de"):
         t0 = time.time()
-        concept = self.concept(prompt, minutes, mode, user_characters, style)
+        concept = self.concept(prompt, minutes, mode, user_characters, style, language=language)
         scenes = self.scene_list(concept)
         target_total = int(minutes * WORDS_PER_MINUTE * SPEECH_SHARE)
         per_scene = max(80, target_total // len(scenes))

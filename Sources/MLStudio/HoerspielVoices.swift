@@ -224,6 +224,21 @@ public enum HSVoiceDesign {
     /// Referenzsatz für entworfene Stimmen (wie hs_voice.REFERENCE_TEXT).
     public static let referenceText = "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen."
 
+    /// Sprachen für Geschichten und Stimmen (Kürzel → Name). Deutsch zuerst; alle von Qwen3-TTS unterstützt.
+    public static let languages: [(code: String, name: String)] = [("de", "Deutsch"), ("en", "English"), ("fr", "Français"),
+                                                                   ("es", "Español"), ("it", "Italiano")]
+
+    /// Referenzsatz je Sprache (wie hs_voice.REFERENCE_TEXTS).
+    public static func referenceText(language: String) -> String {
+        switch language {
+        case "en": return "I'm not quite sure what's going on here. But one thing is certain: we should be careful and look very closely."
+        case "fr": return "Je ne sais pas vraiment ce qui se passe ici. Mais une chose est sûre : nous devons être prudents et regarder de très près."
+        case "es": return "No sé muy bien qué está pasando aquí. Pero una cosa es segura: debemos tener cuidado y mirar con mucha atención."
+        case "it": return "Non so bene cosa stia succedendo qui. Ma una cosa è certa: dobbiamo stare attenti e guardare molto da vicino."
+        default: return referenceText
+        }
+    }
+
     /// Beschreibung einer Figur für das Design-Modell (wie hs_voice.design_instruct).
     public static func instruct(for f: HSFigure) -> String {
         var base = f.voiceEN.trimmingCharacters(in: .whitespacesAndNewlines)

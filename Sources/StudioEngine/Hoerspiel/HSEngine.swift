@@ -31,8 +31,10 @@ public final class HSEngine: @unchecked Sendable {
     }
 
     public func concept(prompt: String, minutes: Double, mode: HSMode, characters: [String] = [], style: String? = nil,
-                        progress: Progress? = nil) async throws -> [String: Any] {
-        var payload: [String: Any] = ["prompt": prompt, "minutes": minutes, "mode": mode.rawValue, "characters": characters]
+                        narration: String? = nil, language: String = "de", progress: Progress? = nil) async throws -> [String: Any] {
+        var payload: [String: Any] = ["prompt": prompt, "minutes": minutes, "mode": mode.rawValue, "characters": characters,
+                                      "language": language]
+        if let narration { payload["narration"] = narration }
         if let style { payload["style"] = style }
         let r = try await client.request("concept", payload, progress: progress)
         guard let c = r["concept"] as? [String: Any] else { throw StudioError.other("Das Sprachmodell lieferte kein Konzept.") }
@@ -99,9 +101,9 @@ public final class HSEngine: @unchecked Sendable {
         public let duration: Double
     }
 
-    public func designVoice(instruct: String, text: String? = nil, seed: Int, out: URL,
+    public func designVoice(instruct: String, text: String? = nil, seed: Int, out: URL, language: String = "de",
                             progress: Progress? = nil) async throws -> DesignedVoice {
-        var payload: [String: Any] = ["instruct": instruct, "seed": seed, "out": out.path, "language": "de"]
+        var payload: [String: Any] = ["instruct": instruct, "seed": seed, "out": out.path, "language": language]
         if let text { payload["text"] = text }
         let r = try await client.request("design_voice", payload, progress: progress)
         return DesignedVoice(path: r["path"] as? String ?? out.path, text: r["text"] as? String ?? text ?? "",
@@ -130,10 +132,10 @@ public final class HSEngine: @unchecked Sendable {
         public let duration: Double
     }
 
-    public func speak(_ lines: [LineRequest], progress: Progress? = nil) async throws -> [LineResult] {
+    public func speak(_ lines: [LineRequest], language: String = "de", progress: Progress? = nil) async throws -> [LineResult] {
         let payload: [[String: Any]] = lines.map { ["key": $0.key, "text": $0.text, "ref_audio": $0.refAudio, "ref_text": $0.refText,
                                                      "out": $0.out] }
-        let r = try await client.request("speak", ["lines": payload, "language": "de"], progress: progress)
+        let r = try await client.request("speak", ["lines": payload, "language": language], progress: progress)
         return (r["results"] as? [[String: Any]] ?? []).map {
             LineResult(key: $0["key"] as? String ?? "", path: $0["path"] as? String, spoken: $0["spoken"] as? String,
                        duration: ($0["duration"] as? Double) ?? 0)

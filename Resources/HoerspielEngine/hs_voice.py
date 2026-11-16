@@ -24,6 +24,27 @@ CHATTERBOX = "mlx-community/chatterbox-multilingual-v3"
 REFERENCE_TEXT = ("Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein "
                   "und ganz genau hinschauen.")
 
+# Referenzsatz je Sprache: Die entworfene Stimme spricht ihn einmal, danach wird jede Zeile daraus geklont.
+REFERENCE_TEXTS = {
+    "de": REFERENCE_TEXT,
+    "en": "I'm not quite sure what's going on here. But one thing is certain: we should be careful and look very closely.",
+    "fr": "Je ne sais pas vraiment ce qui se passe ici. Mais une chose est sûre : nous devons être prudents et regarder de très près.",
+    "es": "No sé muy bien qué está pasando aquí. Pero una cosa es segura: debemos tener cuidado y mirar con mucha atención.",
+    "it": "Non so bene cosa stia succedendo qui. Ma una cosa è certa: dobbiamo stare attenti e guardare molto da vicino.",
+}
+
+
+def reference_text(language="de"):
+    return REFERENCE_TEXTS.get(language, REFERENCE_TEXT)
+
+
+def prepare_text(text, language="de"):
+    """Text für die Sprachausgabe: deutsche Zahlen/Abkürzungen ausschreiben; andere Sprachen nur Leerraum glätten."""
+    if language == "de":
+        return normalize_for_speech(text)
+    return " ".join((text or "").split())
+
+
 LANG_QWEN = {"de": "german", "en": "english", "fr": "french", "es": "spanish", "it": "italian", "pt": "portuguese",
              "ru": "russian", "zh": "chinese", "ja": "japanese", "ko": "korean"}
 

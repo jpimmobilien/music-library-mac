@@ -174,6 +174,14 @@ final class HoerspielTests: XCTestCase {
         XCTAssertEqual(p.clues, [HSClue(clue: "Messingsiegel", scene: 2, meaning: "Wappen")])
         XCTAssertEqual((back["spuren"] as? [[String: Any]])?.first?["spur"] as? String, "Messingsiegel")
         XCTAssertEqual(back["aufloesung"] as? String, "Der Onkel")
+        XCTAssertEqual(back["_language"] as? String, "de")
+        var en = HSProduction(mode: .hoerspiel, prompt: "Mystery", language: "en")
+        en.title = "x"
+        XCTAssertEqual(HSJSON.concept(en)["_language"] as? String, "en")
+        XCTAssertTrue(HSVoiceDesign.referenceText(language: "en").hasPrefix("I'm not quite sure"))
+        XCTAssertEqual(HSVoiceDesign.referenceText(language: "de"), HSVoiceDesign.referenceText)
+        XCTAssertEqual(HSVoiceDesign.referenceText(language: "xx"), HSVoiceDesign.referenceText)
+        XCTAssertEqual(HSVoiceDesign.languages.first?.code, "de")
 
         // Lektorat: ungültige Szenen verworfen; Überarbeitung sichert die vorige Fassung mit eigenem Vermerk
         let probs = HSJSON.problems([["szene": 2, "problem": "Kiste verschwindet", "korrektur": "Lena trägt sie"],

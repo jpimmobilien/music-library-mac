@@ -8,7 +8,7 @@ import StudioEngine
 /// Abnahmeprüfung der KI-Hörbücher mit dem echten Ablauf der App (nur mit `--hoerspiel-e2e <ordner>`, Prüfstand):
 /// Einrichtung wie „Jetzt einrichten“, Hörspiel erstellen (Geschichte → Lektorat → Sprecher → Stimmen → Geräusche →
 /// Mischung), Editor-Funktionen (Replik neu formulieren und neu sprechen, Mehrspur ändern und neu abmischen), Export
-/// (MP3 mit Kapiteln, Kapitel einzeln), Hörbuch, Stimmenstudio, Referenzanalyse. Alles in eigenen Ordnern unter
+/// (MP3 mit Kapiteln, Kapitel, Szenen, Einzelspuren), Hörbuch, Stimmenstudio, Referenzanalyse. Alles in eigenen Ordnern unter
 /// dem Ausgabeordner – Bibliothek und Nutzerdaten bleiben unberührt. Ergebnis: `e2e.json` und `e2e.log`.
 ///
 /// Umgebung: `HS_E2E_STORY` (Repo des Geschichtenmodells, Standard Qwen3.5 4B für kleine Prüfrechner),
@@ -153,7 +153,7 @@ enum HoerspielE2E {
         // 5. Export: ganze Produktion als MP3 mit Kapiteln, Kapitel einzeln als M4A
         let exportDir = out.appendingPathComponent("Export", isDirectory: true)
         try? fm.createDirectory(at: exportDir, withIntermediateDirectories: true)
-        for (scope, format) in [(HSExportScope.whole, StudioFormat.mp3), (.chapters, .m4a)] {
+        for (scope, format) in [(HSExportScope.whole, StudioFormat.mp3), (.chapters, .m4a), (.scenes, .mp3), (.stems, .flac)] {
             t = Date()
             do {
                 let files = try await hs.export(p, scope: scope, format: format, bitrate: 192,
@@ -221,6 +221,8 @@ enum HoerspielE2E {
     }
 
     private static func waitUntil(timeout: TimeInterval, _ done: @MainActor () -> Bool) async {
+        // Aufträge, die in einer eigenen Task starten (Einrichtung, Download), erst anlaufen lassen
+        try? await Task.sleep(nanoseconds: 2_000_000_000)
         let end = Date().addingTimeInterval(timeout)
         while !done() && Date() < end {
             try? await Task.sleep(nanoseconds: 1_000_000_000)

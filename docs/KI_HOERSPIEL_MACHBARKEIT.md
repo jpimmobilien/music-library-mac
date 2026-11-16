@@ -141,9 +141,45 @@ Stilrichtung (Epoche, Atmosphäre, Erzähltempo) – der Systemauftrag verbietet
 bestehender Werke.
 
 
-<!-- RISIKEN -->
+## Risiken und Grenzen
 
-<!-- PLAN -->
+- **Apple-Silicon-Prüfrechner:** GitHub teilt die virtuellen M1-Rechner (macOS 14/15/26) am 16.11.2026 wiederholt
+  nicht zu („not acquired … capacity constraints“). Deshalb wurden Sprachausgabe, Produktion und Analyse zusätzlich
+  auf Linux mit MLX auf dem Prozessor gemessen: Qualität (Erkennbarkeit, Stimmähnlichkeit, Lautheit) ist
+  übertragbar, die **Geschwindigkeit nicht** – Zeiten auf dem M5 Pro sind nicht gemessen.
+- **Klang ist ungehört.** Natürlichkeit, Betonung, Gefühl und „klingt nicht nach Vorleser“ lassen sich nur mit
+  Ersatzwerten prüfen (Whisper-Erkennbarkeit, Tonhöhenumfang, Stimmähnlichkeit). Der Hörtest durch den Nutzer ist
+  die eigentliche Abnahme.
+- **Geschichten:** Das Sprachmodell schreibt gutes Deutsch, aber die Handlung des ersten Prüflaufs hatte
+  Logikfehler (eine Kiste wechselt ohne Erklärung den Ort, widersprüchliche Verwandtschaft, schwache Auflösung).
+  Gegenmaßnahmen sind umgesetzt (Spurenplan, Stand der Handlung, Lektorat mit gezielter Überarbeitung); wie weit sie
+  tragen, zeigt der zweite Prüflauf. Bei 60–120 Minuten steigt das Risiko von Widersprüchen – das Lektorat prüft
+  die ganze Geschichte, die vorige Fassung jeder überarbeiteten Szene bleibt erhalten.
+- **Gefühl in der Stimme:** Qwen3-TTS steuert Gefühle über die Stimmbeschreibung; beim Klonen aus dem Referenzsatz
+  bleibt die Stimme gleich, der Ausdruck kommt vor allem aus dem Text. Wie stark Flüstern/Angst/Aufregung hörbar
+  werden, ist eine Hörfrage.
+- **Speicher:** Gemma 4 (15,4 GB) und die Stimmen (je 4,5 GB) werden nacheinander geladen, nie gleichzeitig; mit
+  48 GB bleibt die Bibliothek nutzbar. Der Rechenprozess läuft mit niedriger Priorität und blockiert die Oberfläche nicht.
+- **huggingface_hub 2.x** legt Modelle sonst in einem gemeinsamen Speicher ab – die App schaltet das ab
+  (`HF_HUB_DISABLE_SHARED_BLOBS`), damit Größe und „Entfernen“ stimmen (gefunden und behoben im Katalog-Lauf).
+- **Rechte:** Die Stilnachahmung bekannter Serien ist auf allgemeine Merkmale begrenzt; eine originalnahe
+  Wiedererkennung bestimmter Sprecher ist ohne deren Einwilligung bewusst nicht möglich.
+
+
+## Stand der Umsetzung (Phasen)
+
+| Phase | Inhalt | Stand |
+|---|---|---|
+| 1 Machbarkeit | Architektur, Modellvergleich, deutsche Sprachausgabe, Referenzanalyse, Stimmprofile, ≥4 Rollen, 10-Minuten-Hörspiel | Prüfstand fertig; Ergebnisse siehe „Messungen“ |
+| 2 Hörbuch | Erzähler, Erzählstile, Kapitel, eigene Aussprache, Sprache (DE/EN/FR/ES/IT) | umgesetzt, auf Linux getestet (Logik); App-Abnahme auf Apple Silicon ausstehend |
+| 3 Hörspiel | Mehrere Sprecher, Geräusche, Musik (KI-Musik), Raumklang, Ducking, Retro-Klang, Lektorat | umgesetzt; Produktion im Prüfstand, App-Abnahme ausstehend |
+| 4 Referenzanalyse | Sprecher, Rollen, Tonhöhe, Tempo, Pausen, Aufnahme-Charakter, Musikbrücken, Stilprofile | umgesetzt; Prüfung mit Wahrheitsdaten im Prüfstand |
+| 5 Studio | Mehrspur (Solo/Stumm/Pegel/Verschieben/Schneiden/Blenden, Einzelspuren), Export MP3/M4A/FLAC/WAV mit Kapiteln und Cover, Fortsetzen nach Abbruch | umgesetzt; Kapitelmarken und Datenmodell auf dem Mac getestet (134 Tests) |
+
+Die App-Abnahme (`--hoerspiel-e2e`) klickt denselben Code durch wie ein Nutzer: Einrichtung, Hörspiel, Lektorat,
+Replik neu formulieren und neu sprechen, Mehrspur ändern und neu abmischen, Export (ganz mit Kapiteln, Kapitel,
+Szenen, Einzelspuren), Hörbuch, Stimme entwerfen, Referenzanalyse und Stilprofile.
+
 
 ## Quellen
 

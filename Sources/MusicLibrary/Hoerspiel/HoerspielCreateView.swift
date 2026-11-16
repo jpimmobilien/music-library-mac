@@ -80,6 +80,14 @@ struct HSCreateView: View {
             HStack(spacing: 18) {
                 Toggle("Musik (über KI-Musik)", isOn: d.useMusic).toggleStyle(.checkbox)
                 if mode == .hoerspiel { Toggle("Geräusche und Atmosphäre", isOn: d.useSFX).toggleStyle(.checkbox) }
+                Spacer()
+                Text("Sprache").foregroundColor(colors.textSecondary)
+                Picker("", selection: d.language) {
+                    ForEach(HSVoiceDesign.languages, id: \.code) { l in Text(l.name).tag(l.code) }
+                }
+                .labelsHidden()
+                .frame(width: 130)
+                .help("Sprache der Geschichte und der Stimmen. Deutsch ist am gründlichsten geprüft (Zahlen, Abkürzungen, Aussprache).")
             }
             .font(Typo.inter(13, .medium))
             HStack(spacing: 12) {

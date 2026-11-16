@@ -65,6 +65,35 @@ final class HoerspielModel: ObservableObject {
         var retro: Double = 0.6
         var useMusic = true
         var useSFX = true
+        /// Sprache der Geschichte und der Stimmen (Deutsch zuerst).
+        var language = "de"
+
+        init(prompt: String = "", minutes: Double = 10, characters: [String] = [], referenceID: UUID? = nil, narration: String = "spannend",
+             retro: Double = 0.6, useMusic: Bool = true, useSFX: Bool = true, language: String = "de") {
+            self.prompt = prompt
+            self.minutes = minutes
+            self.characters = characters
+            self.referenceID = referenceID
+            self.narration = narration
+            self.retro = retro
+            self.useMusic = useMusic
+            self.useSFX = useSFX
+            self.language = language
+        }
+
+        // Ältere gespeicherte Entwürfe ohne „language“ weiter lesen
+        init(from decoder: Decoder) throws {
+            let c = try decoder.container(keyedBy: CodingKeys.self)
+            prompt = try c.decodeIfPresent(String.self, forKey: .prompt) ?? ""
+            minutes = try c.decodeIfPresent(Double.self, forKey: .minutes) ?? 10
+            characters = try c.decodeIfPresent([String].self, forKey: .characters) ?? []
+            referenceID = try c.decodeIfPresent(UUID.self, forKey: .referenceID)
+            narration = try c.decodeIfPresent(String.self, forKey: .narration) ?? "spannend"
+            retro = try c.decodeIfPresent(Double.self, forKey: .retro) ?? 0.6
+            useMusic = try c.decodeIfPresent(Bool.self, forKey: .useMusic) ?? true
+            useSFX = try c.decodeIfPresent(Bool.self, forKey: .useSFX) ?? true
+            language = try c.decodeIfPresent(String.self, forKey: .language) ?? "de"
+        }
     }
 
     // MARK: Zustand
