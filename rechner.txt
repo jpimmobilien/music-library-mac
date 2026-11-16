@@ -1,0 +1,7 @@
+Linux ip-10-0-137-225 7.0.0-1014-aws #14~24.04.1-Ubuntu SMP PREEMPT Fri Sep 18 21:24:59 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+4
+               total        used        free      shared  buff/cache   available
+Mem:              15           0          13           0           1          14
+Swap:              2           0           2
+Model name:                              Intel(R) Xeon(R) 6975P-C
+/dev/mapper/cow-root  145G   38G  108G  26% /

@@ -1,0 +1,96 @@
+{
+  "environment": {
+    "python": "3.12.3",
+    "machine": "x86_64",
+    "system": "Linux",
+    "cores": 4,
+    "ram_gb": 15.3,
+    "mlx": "?",
+    "mlx_audio": "?",
+    "mlx_whisper": "0.4.3",
+    "mlx_device": "Device(cpu, 0)"
+  },
+  "steps": [
+    {
+      "name": "Drehbuch geladen",
+      "time": "17:34:09",
+      "title": "Der Schatten am Gleis 4",
+      "scenes": 6,
+      "lines": 90,
+      "figures": [
+        "ERZÄHLER",
+        "BEN",
+        "SARA",
+        "TOBI",
+        "LENA",
+        "HERRKRAUSE",
+        "FRAUMEYER"
+      ],
+      "words": 1062
+    },
+    {
+      "name": "Stimmen entworfen",
+      "time": "18:34:32",
+      "seconds": 3623.2,
+      "peak_mb": 6183.3,
+      "voices": {
+        "ERZÄHLER": {
+          "ref_text": "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+          "instruct": "45, male, low pitch, calm and storytelling, medium tempo, mysterious. Speaks native German with clear, natural pronunciation.",
+          "seconds": 556.8,
+          "duration": 8.14,
+          "kind": "entworfen",
+          "source": "Qwen3-TTS VoiceDesign"
+        },
+        "BEN": {
+          "ref_text": "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+          "instruct": "14, male, medium pitch, confident and energetic, fast tempo, leadership quality. Speaks native German with clear, natural pronunciation.",
+          "seconds": 407.1,
+          "duration": 5.86,
+          "kind": "entworfen",
+          "source": "Qwen3-TTS VoiceDesign"
+        },
+        "SARA": {
+          "ref_text": "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+          "instruct": "14, female, high pitch, intelligent and analytical, fast tempo, sharp. Speaks native German with clear, natural pronunciation.",
+          "seconds": 517.1,
+          "duration": 7.37,
+          "kind": "entworfen",
+          "source": "Qwen3-TTS VoiceDesign"
+        },
+        "TOBI": {
+          "ref_text": "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+          "instruct": "13, male, medium-high pitch, nervous and funny, medium tempo, slightly shaky. Speaks native German with clear, natural pronunciation.",
+          "seconds": 508.0,
+          "duration": 7.33,
+          "kind": "entworfen",
+          "source": "Qwen3-TTS VoiceDesign"
+        },
+        "LENA": {
+          "ref_text": "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+          "instruct": "15, female, medium pitch, brave and direct, medium tempo, strong. Speaks native German with clear, natural pronunciation.",
+          "seconds": 474.3,
+          "duration": 6.88,
+          "kind": "entworfen",
+          "source": "Qwen3-TTS VoiceDesign"
+        },
+        "HERRKRAUSE": {
+          "ref_text": "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+          "instruct": "60, male, very low pitch, gravelly and grumpy, slow tempo, intimidating. Speaks native German with clear, natural pronunciation.",
+          "seconds": 587.9,
+          "duration": 8.71,
+          "kind": "entworfen",
+          "source": "Qwen3-TTS VoiceDesign"
+        },
+        "FRAUMEYER": {
+          "ref_text": "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+          "instruct": "50, female, medium-high pitch, breathless and nervous, fast tempo, suspicious. Speaks native German with clear, natural pronunciation.",
+          "seconds": 538.3,
+          "duration": 7.91,
+          "kind": "entworfen",
+          "source": "Qwen3-TTS VoiceDesign"
+        }
+      }
+    }
+  ]
+}

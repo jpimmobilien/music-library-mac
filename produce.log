@@ -1,0 +1,22 @@
+[Probe] Drehbuch geladen: {"title": "Der Schatten am Gleis 4", "scenes": 6, "lines": 90, "words": 1062}
+Fetching 12 files:   0%|          | 0/12 [00:00<?, ?it/s]Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Fetching 12 files:   8%|▊         | 1/12 [00:00<00:01,  6.16it/s]Fetching 12 files:  33%|███▎      | 4/12 [00:00<00:00, 16.61it/s]Fetching 12 files:  67%|██████▋   | 8/12 [00:00<00:00, 21.93it/s]Fetching 12 files:  92%|█████████▏| 11/12 [00:08<00:01,  1.02s/it]Fetching 12 files:  92%|█████████▏| 11/12 [00:20<00:01,  1.02s/it]Fetching 12 files: 100%|██████████| 12/12 [00:28<00:00,  4.10s/it]Fetching 12 files: 100%|██████████| 12/12 [00:28<00:00,  2.38s/it]
+[transformers] You are using a model of type `qwen3_tts` to instantiate a model of type ``. This may be expected if you are loading a checkpoint that shares a subset of the architecture (e.g., loading a `sam2_video` checkpoint into `Sam2Model`), but is otherwise not supported and can yield errors. Please verify that the checkpoint is compatible with the model you are instantiating.
+  Initialized encoder codebooks
+Loaded speech tokenizer from /home/runner/.cache/huggingface/hub/models--mlx-community--Qwen3-TTS-12Hz-1.7B-VoiceDesign-bf16/snapshots/7d3824abff87e49756bb0f83fb5411de75d160c4/speech_tokenizer
+[Stimmen] Design-Modell geladen (33.6 s)
+[Stimmen] ERZÄHLER: entworfen in 556.8 s – 45, male, low pitch, calm and storytelling, medium tempo, mysterious. Speaks native German with clear, natural pronunciation.
+[Stimmen] BEN: entworfen in 407.1 s – 14, male, medium pitch, confident and energetic, fast tempo, leadership quality. Speaks native German with clear, natural pronunciation.
+[Stimmen] SARA: entworfen in 517.1 s – 14, female, high pitch, intelligent and analytical, fast tempo, sharp. Speaks native German with clear, natural pronunciation.
+[Stimmen] TOBI: entworfen in 508.0 s – 13, male, medium-high pitch, nervous and funny, medium tempo, slightly shaky. Speaks native German with clear, natural pronunciation.
+[Stimmen] LENA: entworfen in 474.3 s – 15, female, medium pitch, brave and direct, medium tempo, strong. Speaks native German with clear, natural pronunciation.
+[Stimmen] HERRKRAUSE: entworfen in 587.9 s – 60, male, very low pitch, gravelly and grumpy, slow tempo, intimidating. Speaks native German with clear, natural pronunciation.
+[Stimmen] FRAUMEYER: entworfen in 538.3 s – 50, female, medium-high pitch, breathless and nervous, fast tempo, suspicious. Speaks native German with clear, natural pronunciation.
+[Probe] Stimmen entworfen: {"seconds": 3623.2, "peak_mb": 6183.3}
+Fetching 12 files:   0%|          | 0/12 [00:00<?, ?it/s]Fetching 12 files:   8%|▊         | 1/12 [00:00<00:01,  8.54it/s]Fetching 12 files:  75%|███████▌  | 9/12 [00:00<00:00, 46.17it/s]Fetching 12 files:  92%|█████████▏| 11/12 [00:10<00:00, 46.17it/s]Fetching 12 files: 100%|██████████| 12/12 [00:19<00:00,  2.09s/it]Fetching 12 files: 100%|██████████| 12/12 [00:19<00:00,  1.59s/it]
+[transformers] You are using a model of type `qwen3_tts` to instantiate a model of type ``. This may be expected if you are loading a checkpoint that shares a subset of the architecture (e.g., loading a `sam2_video` checkpoint into `Sam2Model`), but is otherwise not supported and can yield errors. Please verify that the checkpoint is compatible with the model you are instantiating.
+  Initialized encoder codebooks
+Loaded speech tokenizer from /home/runner/.cache/huggingface/hub/models--mlx-community--Qwen3-TTS-12Hz-1.7B-Base-bf16/snapshots/a6eb4f68e4b056f1215157bb696209bc82a6db48/speech_tokenizer
+[Stimmen] Klon-Modell geladen (20.1 s)
+[Stimmen] Zeile 9 von 90
+[Stimmen] Zeile 18 von 90
