@@ -75,17 +75,6 @@
         "beschreibung": "Geheimnisvoll, wirkt immer etwas nervös und hastig.",
         "stimme": "Hauchig, schnell, leicht gehetzt.",
         "voice_en": "50, female, medium-high pitch, breathless and nervous, fast tempo, suspicious"
-      },
-      {
-        "id": "FRAU MEYER",
-        "name": "Frau Meyer",
-        "rolle": "Nebenfigur",
-        "alter": 40,
-        "geschlecht": "m",
-        "beschreibung": "vom Sprachmodell während des Schreibens ergänzt",
-        "stimme": "",
-        "voice_en": "An adult German man, natural mid-range voice, clear diction",
-        "ergaenzt": true
       }
     ],
     "kapitel": [
@@ -667,7 +656,7 @@
         },
         {
           "type": "line",
-          "speaker": "FRAU MEYER",
+          "speaker": "FRAUMEYER",
           "emotion": "erschrocken",
           "text": "Wer ist da? Wer wagt es, in dieser Nacht hier herumzuschleichen?"
         },
@@ -685,7 +674,7 @@
         },
         {
           "type": "line",
-          "speaker": "FRAU MEYER",
+          "speaker": "FRAUMEYER",
           "emotion": "nervös",
           "text": "Sie müssen sofort verschwinden! Das ist mein Grundstück! Ich suche nach... nach verlorenen Antiquitäten!"
         },
@@ -697,7 +686,7 @@
         },
         {
           "type": "line",
-          "speaker": "FRAU MEYER",
+          "speaker": "FRAUMEYER",
           "emotion": "hastig",
           "text": "Nichts! Nur alter Schrott! Gehen Sie weg, bevor ich die Polizei rufe!"
         },
@@ -714,7 +703,7 @@
         },
         {
           "type": "line",
-          "speaker": "FRAU MEYER",
+          "speaker": "FRAUMEYER",
           "emotion": "gehetzt",
           "text": "Es ist der Wind! Gehen Sie einfach! Verschwinden Sie!"
         },
@@ -754,7 +743,7 @@
         },
         {
           "type": "line",
-          "speaker": "FRAU MEYER",
+          "speaker": "FRAUMEYER",
           "emotion": "panisch",
           "text": "Ich habe gesagt: Verschwindet!"
         },
@@ -767,9 +756,7 @@
       ],
       "words": 178,
       "repetition": 0.0,
-      "unknown_speakers": [
-        "FRAU MEYER"
-      ],
+      "unknown_speakers": [],
       "attempts": 1,
       "continued": 1,
       "seconds": 158.4,
@@ -944,9 +931,9 @@
         },
         {
           "type": "line",
-          "speaker": "ERZÄHLER",
-          "emotion": "",
-          "text": "FRAU_MEYER (atemlos): Herr Krause! Haben Sie die Kinder entdeckt? Ich dachte, sie wären längst weg!"
+          "speaker": "FRAUMEYER",
+          "emotion": "atemlos",
+          "text": "Herr Krause! Haben Sie die Kinder entdeckt? Ich dachte, sie wären längst weg!"
         },
         {
           "type": "line",
@@ -962,9 +949,9 @@
         },
         {
           "type": "line",
-          "speaker": "ERZÄHLER",
-          "emotion": "",
-          "text": "FRAU_MEYER (nervös, aber sanft): Es ist kein Verbrechen, mein Kind. Es ist eine Pflicht. Der alte Bahnhofswärter war mein Onkel."
+          "speaker": "FRAUMEYER",
+          "emotion": "nervös, aber sanft",
+          "text": "Es ist kein Verbrechen, mein Kind. Es ist eine Pflicht. Der alte Bahnhofswärter war mein Onkel."
         },
         {
           "type": "line",
@@ -1009,9 +996,9 @@
         },
         {
           "type": "line",
-          "speaker": "ERZÄHLER",
-          "emotion": "",
-          "text": "FRAU_MEYER (lächelnd): Das Einzige, was hier lauert, ist die Nostalgie."
+          "speaker": "FRAUMEYER",
+          "emotion": "lächelnd",
+          "text": "Das Einzige, was hier lauert, ist die Nostalgie."
         },
         {
           "type": "line",
@@ -1052,7 +1039,7 @@
           "en": "credits music"
         }
       ],
-      "words": 186,
+      "words": 178,
       "repetition": 0.0,
       "unknown_speakers": [],
       "attempts": 1,
@@ -1061,8 +1048,8 @@
       "summary": "Frau Meyer trifft die Gruppe im Keller und stellt sich als Verwandte des verstorbenen Bahnhofswärters heraus. Sie klärt auf, dass das mysteriöse Leuchten und das Summen lediglich durch die Pflege alter Messing-Relikte entstanden sind und die Kiste stattdessen die Chronik der Stadt enthält."
     }
   ],
-  "words": 1070,
-  "estimated_minutes": 9.0,
+  "words": 1062,
+  "estimated_minutes": 8.9,
   "seconds": 1474.5,
   "llm": "google_gemma-4-26B-A4B-it-Q3_K_M.gguf",
   "llm_stats": {
@@ -1070,5 +1057,6 @@
     "completion_tokens": 5705,
     "seconds": 1474.4795792102814
   },
-  "prompt": "Erstelle ein spannendes deutsches Jugendkrimi-Hörspiel, das im Sommer 1984 spielt. Vier Jugendliche geraten in einen mysteriösen Kriminalfall rund um einen verlassenen Bahnhof. Es gibt mehrere Verdächtige, humorvolle Dialoge, überraschende Wendungen und ein spannendes Finale. Die Produktion soll sich an der Atmosphäre klassischer deutscher Jugendkrimi-Hörspiele der 1980er-Jahre orientieren."
+  "prompt": "Erstelle ein spannendes deutsches Jugendkrimi-Hörspiel, das im Sommer 1984 spielt. Vier Jugendliche geraten in einen mysteriösen Kriminalfall rund um einen verlassenen Bahnhof. Es gibt mehrere Verdächtige, humorvolle Dialoge, überraschende Wendungen und ein spannendes Finale. Die Produktion soll sich an der Atmosphäre klassischer deutscher Jugendkrimi-Hörspiele der 1980er-Jahre orientieren.",
+  "_hinweis": "Drehbuchtext unverändert vom Sprachmodell; Zeilen nach Korrektur der Sprecherzuordnung (FRAU_MEYER/FRAU MEYER) neu eingelesen."
 }

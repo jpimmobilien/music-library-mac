@@ -11,7 +11,6 @@ Im Sommer 1984 entdecken vier Freunde, dass hinter dem rostigen Tor des stillgel
 - LENA – Lena: Sportlich, keine Angst vor Schmutz oder Dunkelheit. (Stimme: Fest, direkt, unerschrocken.)
 - HERRKRAUSE – Herr Krause: Ein mürrischer, einsamer Mann, der den Bahnhof bewacht. (Stimme: Grob, tief, knarzend.)
 - FRAUMEYER – Frau Meyer: Geheimnisvoll, wirkt immer etwas nervös und hastig. (Stimme: Hauchig, schnell, leicht gehetzt.)
-- FRAU MEYER – Frau Meyer: vom Sprachmodell während des Schreibens ergänzt (Stimme: )
 
 ## Kapitel 1, Szene 1: Hitze und Abenteuerlust
 
