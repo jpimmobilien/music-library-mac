@@ -37,11 +37,28 @@ def main():
     result["offline_exit"] = off.returncode
     result["offline_path"] = off.stdout.strip()
     result["offline_error"] = off.stderr.strip()[-800:]
+    files = {}
+    snap = result["offline_path"]
+    if os.path.isdir(snap):
+        for root, _, names in os.walk(snap):
+            for n in names:
+                fp = os.path.join(root, n)
+                files[os.path.relpath(fp, snap)] = {"bytes": os.path.getsize(fp) if os.path.exists(fp) else None,
+                                                    "link": os.path.islink(fp)}
+    result["files"] = files
+    store = []
+    for root, _, names in os.walk(home):
+        for n in names:
+            fp = os.path.join(root, n)
+            store.append((os.path.relpath(fp, home), os.path.islink(fp), os.path.getsize(fp) if os.path.exists(fp) else None))
+    result["store"] = sorted(store)
     result["ok"] = p.returncode == 0 and off.returncode == 0 and bool(done) and \
         (not revision or done.get("revision") == revision) and result["offline_path"].endswith(done["revision"])
     with open(os.path.join(out, "offline.json"), "w") as f:
         json.dump(result, f, indent=2, ensure_ascii=False)
-    print("[Offline]", json.dumps({k: result[k] for k in ("repo", "download_exit", "offline_exit", "offline_path", "ok")}))
+    print("[Offline]", json.dumps({k: result[k] for k in ("repo", "download_exit", "offline_exit", "offline_path", "ok", "files")}))
+    for row in result["store"]:
+        print("[Offline] Speicher", row)
     if not result["ok"]:
         print(result["stderr"], result["offline_error"], sep="\n")
     sys.exit(0 if result["ok"] else 1)
