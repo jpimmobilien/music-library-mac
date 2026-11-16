@@ -4,8 +4,8 @@ import Foundation
 // Startkatalog: empfohlene Open-Weight-Modelle für einen Mac mit viel Unified Memory.
 // Der Katalog ist nur ein Startpunkt – über „Entdecken“ lässt sich jedes MLX-Modell von Hugging Face
 // installieren. Größen sind Richtwerte (4 Bit); nach dem Download zählt die echte Größe.
-// Stand der Auswahl: 16.11.2026. Panora prüft beim Download, ob das Repository existiert, und
-// sucht sonst über `searchHint` nach der aktuellen Version.
+// Stand der Auswahl: 16.11.2026 – alle Repositories in der CI auf Hugging Face geprüft (Größen und Lizenzen).
+// Panora prüft beim Download erneut, ob das Repository existiert, und sucht sonst über `searchHint`.
 // =============================================================================================
 
 public struct CatalogEntry: Sendable, Hashable, Identifiable {
@@ -36,44 +36,44 @@ public enum ModelCatalog {
     public static let entries: [CatalogEntry] = [
         // ── Coding
         entry("mlx-community/Qwen3-Coder-Next-4bit", "Qwen3-Coder-Next", family: "Qwen", params: 80, active: 3,
-              size: 44, context: 262_144, caps: [.coding, .reasoning, .toolUse, .longContext, .multilingual],
+              size: 44.8, context: 262_144, caps: [.coding, .reasoning, .toolUse, .longContext, .multilingual],
               skills: Skills(general: 7.6, coding: 9.3, reasoning: 8.0, writing: 7.0), license: .apache2,
               role: "Coding „Maximal“ für große Umbauten",
               summary: "Großes Coding-Modell (MoE, 3B aktiv) – stark bei Architektur und Implementierung über viele Dateien.",
-              hint: "Qwen3-Coder-Next", verified: false),
+              hint: "Qwen3-Coder-Next", verified: true),
         entry("mlx-community/Qwen3.6-35B-A3B-4bit", "Qwen3.6 35B A3B", family: "Qwen", params: 35, active: 3,
-              size: 21, context: 262_144, caps: [.coding, .reasoning, .toolUse, .longContext, .multilingual],
+              size: 20.4, context: 262_144, caps: [.coding, .reasoning, .toolUse, .longContext, .multilingual],
               skills: Skills(general: 8.4, coding: 8.6, reasoning: 8.3, writing: 8.0), license: .apache2,
               role: "Coding-Agent, Standard",
               summary: "Schnelles Allround-Modell mit sehr guter Coding-Leistung (MoE, 3B aktiv).",
-              hint: "Qwen3.6-35B-A3B", verified: false),
+              hint: "Qwen3.6-35B-A3B", verified: true),
         entry("mlx-community/Qwen3-Coder-30B-A3B-Instruct-4bit", "Qwen3-Coder 30B A3B", family: "Qwen", params: 30, active: 3,
               size: 17.2, context: 262_144, caps: [.coding, .toolUse, .longContext, .multilingual],
               skills: Skills(general: 6.8, coding: 8.2, reasoning: 7.0, writing: 6.4), license: .apache2,
               role: "Code schreiben, schnell",
               summary: "Auf Code spezialisiert, schnell durch MoE.",
-              hint: "Qwen3-Coder-30B-A3B-Instruct", verified: false),
+              hint: "Qwen3-Coder-30B-A3B-Instruct", verified: true),
         entry("mlx-community/Devstral-Small-2-24B-Instruct-2512-4bit", "Devstral Small 2", family: "Mistral", params: 24,
-              size: 13.5, context: 262_144, caps: [.coding, .toolUse, .longContext, .multilingual],
+              size: 15.1, context: 262_144, caps: [.coding, .toolUse, .longContext, .multilingual],
               skills: Skills(general: 6.8, coding: 8.4, reasoning: 7.0, writing: 6.5), license: .apache2,
               role: "Agentisches Coding",
               summary: "Mistrals Coding-Modell für Agenten-Arbeit in Projekten.",
-              hint: "Devstral-Small-2", verified: false),
+              hint: "Devstral-Small-2", verified: true),
         // ── Allgemein, Planung, Review
         entry("mlx-community/Qwen3.6-27B-4bit", "Qwen3.6 27B", family: "Qwen", params: 27,
-              size: 16.5, context: 262_144, caps: [.coding, .reasoning, .toolUse, .longContext, .multilingual],
+              size: 16.1, context: 262_144, caps: [.coding, .reasoning, .toolUse, .longContext, .multilingual],
               skills: Skills(general: 8.6, coding: 8.5, reasoning: 8.6, writing: 8.3), license: .apache2,
               role: "Planung, Architektur, Review",
               summary: "Dichtes Modell mit hoher Qualität für Analyse, Architektur und Code-Review.",
               hint: "Qwen3.6-27B", verified: true),
         entry("mlx-community/gemma-4-31b-it-4bit", "Gemma 4 31B", family: "Gemma", params: 31,
-              size: 18.5, context: 262_144, caps: [.reasoning, .coding, .longContext, .multilingual],
+              size: 18.4, context: 262_144, caps: [.reasoning, .coding, .longContext, .multilingual],
               skills: Skills(general: 8.5, coding: 7.8, reasoning: 8.2, writing: 8.8), license: .apache2,
               role: "Texte, Dokumente, Deutsch",
               summary: "Sehr gute deutsche Texte und Zusammenfassungen.",
               hint: "gemma-4-31b-it", verified: true),
         entry("mlx-community/gemma-4-26b-a4b-it-4bit", "Gemma 4 26B A4B", family: "Gemma", params: 26, active: 4,
-              size: 15.5, context: 262_144, caps: [.reasoning, .coding, .longContext, .multilingual],
+              size: 15.3, context: 262_144, caps: [.reasoning, .coding, .longContext, .multilingual],
               skills: Skills(general: 8.2, coding: 7.5, reasoning: 7.8, writing: 8.5), license: .apache2,
               role: "Dokumente und Präsentationen",
               summary: "Schnelles Gemma-MoE für Texte, Gliederungen und Präsentationen.",
@@ -98,8 +98,8 @@ public enum ModelCatalog {
               summary: "Kleines, flinkes Modell für Alltagsfragen.",
               hint: "Qwen3-8B", verified: true),
         entry("mlx-community/gemma-4-e4b-it-4bit", "Gemma 4 E4B", family: "Gemma", params: 8, active: 4,
-              size: 5.2, context: 131_072, caps: [.multilingual, .longContext],
-              skills: Skills(general: 6.2, coding: 5.2, reasoning: 5.6, writing: 6.6), license: .apache2,
+              size: 5.1, context: 131_072, caps: [.multilingual, .longContext],
+              skills: Skills(general: 6.2, coding: 5.2, reasoning: 5.6, writing: 6.6), license: .gemmaTerms,
               role: "Schnelles Hilfsmodell",
               summary: "Sehr schnell, gut für kurze Texte und Titel.",
               hint: "gemma-4-e4b-it", verified: true),
@@ -130,7 +130,7 @@ public enum ModelCatalog {
               summary: "Gute Texte in Deutsch, Französisch und weiteren Sprachen.",
               hint: "Mistral-Nemo-Instruct", verified: true),
         entry("mlx-community/Ministral-3-3B-Instruct-2512-4bit", "Ministral 3 3B", family: "Mistral", params: 3.4,
-              size: 2.6, context: 262_144, caps: [.multilingual, .longContext],
+              size: 2.7, context: 262_144, caps: [.multilingual, .longContext],
               skills: Skills(general: 5.2, coding: 4.6, reasoning: 4.8, writing: 5.6), license: .apache2,
               role: "Winzig und schnell",
               summary: "Sehr kleines Modell für einfache Aufgaben.",

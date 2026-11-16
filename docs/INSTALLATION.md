@@ -7,7 +7,7 @@
      auf **Trotzdem öffnen** klicken und bestätigen.
    - Alternativ im Terminal: `xattr -dr com.apple.quarantine /Applications/Panora.app`
 3. In Panora unter **Speicher** die externe SSD als Ziel für Modelle wählen („Für Modelle verwenden“).
-4. Unter **Entdecken** ein Modell laden – Empfehlung für 64 GB: **Qwen3.6 35B A3B** (ca. 21 GB) für Coding und
+4. Unter **Entdecken** ein Modell laden – Empfehlung für 64 GB: **Qwen3.6 35B A3B** (ca. 20 GB) für Coding und
    Alltag, dazu **Qwen3.6 27B** für Planung und Review und ein kleines Modell wie **Qwen3 8B**.
 5. Danach funktioniert Panora ohne Internet.
 

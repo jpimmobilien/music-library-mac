@@ -1,5 +1,6 @@
 #!/bin/bash
-# Baut Panora.app (Apple Silicon) mit XcodeGen + xcodebuild, signiert ad hoc und prüft das Bundle.
+# Baut Panora.app (Apple Silicon, arm64) mit XcodeGen + xcodebuild, signiert ad hoc und prüft das Bundle.
+# Läuft auch auf Intel-Macs (Cross-Compile für arm64) – starten lässt sich die App dann nur auf Apple Silicon.
 #   VERSION=0.1.0 BUILD_NUMBER=1 scripts/build_app.sh
 # Voraussetzungen: Xcode 26 oder neuer (mit Metal Toolchain), XcodeGen (brew install xcodegen).
 set -euo pipefail
@@ -29,7 +30,7 @@ echo "▸ Kompilieren (Release, arm64)"
 set +e
 xcodebuild -project Panora.xcodeproj -scheme Panora -configuration Release \
     -derivedDataPath build/xcode -clonedSourcePackagesDirPath build/spm \
-    -destination 'platform=macOS,arch=arm64' \
+    -destination 'generic/platform=macOS' \
     -skipPackagePluginValidation -skipMacroValidation \
     ARCHS=arm64 ONLY_ACTIVE_ARCH=NO CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
     build > logs/xcodebuild.txt 2>&1
@@ -51,7 +52,8 @@ APP="build/Panora.app"
 
 echo "▸ Bundle prüfen"
 test -x "$APP/Contents/MacOS/Panora"
-lipo -archs "$APP/Contents/MacOS/Panora"
+echo "  Architektur: $(lipo -archs "$APP/Contents/MacOS/Panora")"
+lipo "$APP/Contents/MacOS/Panora" -verify_arch arm64
 test -f "$APP/Contents/Resources/AppIcon.icns" || { echo "✗ AppIcon.icns fehlt"; exit 1; }
 METALLIB="$(find "$APP" -name '*.metallib' | head -1)"
 if [ -z "$METALLIB" ]; then

@@ -147,7 +147,7 @@ private struct WelcomeView: View {
             if library.models.isEmpty {
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Noch kein lokales Modell installiert").font(Typo.body(16, .semibold)).foregroundStyle(colors.textPrimary)
-                    Text("Empfehlung für den Start: Qwen3.6 35B A3B (ca. 21 GB, sehr gut für Coding und Alltag). Große Modelle speichert Panora bevorzugt auf deiner externen SSD.")
+                    Text("Empfehlung für den Start: Qwen3.6 35B A3B (ca. 20 GB, sehr gut für Coding und Alltag). Große Modelle speichert Panora bevorzugt auf deiner externen SSD.")
                         .font(Typo.body(13)).foregroundStyle(colors.textSecondary)
                     HStack(spacing: 10) {
                         if let starter = ModelCatalog.entries.first(where: { $0.spec.repo.contains("Qwen3.6-35B") }) {
