@@ -14,6 +14,7 @@
 | **Weitere Sprachen** | Englisch, Französisch, Spanisch, Italienisch wählbar; Zahlen/Abkürzungen werden nur im Deutschen ausgeschrieben; nur Deutsch geprüft. |
 | **Stimmumwandlung (Voice Conversion)** | Nicht umgesetzt – Klonen aus einer berechtigten Stimmprobe deckt den erlaubten Fall ab. |
 | **LibriVox-Prüfung** | Öffentliche Hörspiele ließen sich vom Prüfrechner nicht laden (HTTP 403); geprüft mit MLS-Sprechern und eigener Produktion. |
+| **App mitten in der Produktion beenden** | Abbrechen und sofortiges Fortsetzen ist in der App-Abnahme geprüft (fertige Zeilen bleiben). Das Beenden der ganzen App mitten in einer Produktion nur über den gespeicherten Stand im Test: Beim nächsten Start steht der Schritt auf „Offen“, „Fortsetzen“ macht dort weiter. |
 | **Bedienung von Hand** | Alle Funktionen über die App-Abnahme (derselbe Code wie beim Klicken) und Vorschaubilder geprüft, nicht von Hand bedient. |
 
 ## „Hinzufügen“ und „Studio“ (2.4)
