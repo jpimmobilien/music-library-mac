@@ -1,0 +1,42 @@
+{
+  "environment": {
+    "python": "3.12.3",
+    "machine": "x86_64",
+    "system": "Linux",
+    "cores": 4,
+    "ram_gb": 15.6,
+    "mlx": "?",
+    "mlx_audio": "?",
+    "mlx_whisper": "0.4.3",
+    "mlx_device": "Device(cpu, 0)"
+  },
+  "steps": [
+    {
+      "name": "Analysemodelle geladen",
+      "time": "23:09:25",
+      "seconds": 7.2
+    },
+    {
+      "name": "MLS geladen",
+      "time": "23:10:37",
+      "seconds": 72.1,
+      "rows": 1500,
+      "speakers": 15,
+      "info": {
+        "file": "dev-00000-of-00001.parquet",
+        "columns": [
+          "audio",
+          "original_path",
+          "begin_time",
+          "end_time",
+          "transcript",
+          "audio_duration",
+          "speaker_id",
+          "chapter_id",
+          "file",
+          "id"
+        ]
+      }
+    }
+  ]
+}

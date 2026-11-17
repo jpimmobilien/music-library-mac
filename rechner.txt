@@ -1,0 +1,6 @@
+Linux runnervm8axu0 7.0.0-1017-azure #17~24.04.1-Ubuntu SMP PREEMPT Thu Sep 24 18:46:57 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+4
+               total        used        free      shared  buff/cache   available
+Mem:              15           0          14           0           0          14
+Swap:              2           0           2
+Model name:                              AMD EPYC 7763 64-Core Processor
