@@ -224,7 +224,15 @@ Daraus geändert:
   Stimm-Design-Modell versteht; die Klangfarbe wird relativ zu den anderen Stimmen derselben Aufnahme beurteilt
   (vorher hieß jede Stimme der bandbegrenzten Aufnahme „dunkel, warm“).
 - Beim Entwerfen aus einem Stilprofil entstehen drei Kandidaten; die App misst Tonhöhe und Tempo und nimmt den
-  passendsten (allgemeiner Stimmcharakter, keine Nachbildung der Person). Messung der neuen Fassung: siehe Nachtrag.
+  passendsten (allgemeiner Stimmcharakter, keine Nachbildung der Person). Gemessen (macOS 26, zweiter Lauf): mit
+  den neuen Beschreibungen sank der Tonhöhenfehler im Mittel von 6,1 auf 4,0 Halbtöne (Einzelwerte 1,2–6,1); das
+  Stimm-Design-Modell setzt Frauenstimmen weiterhin eher zu hoch an. Deshalb zusätzlich: liegt der beste Kandidat
+  mehr als 2 Halbtöne daneben, wird das Tonlagen-Wort verschoben und zweimal nachgelegt (dritter Lauf: Nachtrag).
+- Neue Beschreibungen in der MLS-Aufnahme: Geschlecht jetzt eindeutig (4 Frauen, 1 Mann), Klangfarbe „ausgewogen“
+  statt durchgehend „dunkel, warm“.
+- Bekannte Stimmenzahl: erste Fassung („maxclust“) verschlechterte die richtige MLS-Trennung (Verwechslung 0 % →
+  12 %) und half bei den KI-Stimmen nicht (29 %). Neue Fassung: erst normal gruppieren, dann nur bei Bedarf Schwelle
+  senken bzw. ähnlichste Gruppen zusammenlegen – bei richtiger Schätzung identisch zum Ergebnis ohne Angabe.
 - Nicht verlässlich: Nachhallschätzung (1,47 s für nahe aufgenommene Hörbuchsprecher ist zu hoch) – wird nur als
   „geschätzt“ angezeigt und nicht für Entscheidungen genutzt.
 - Öffentliche LibriVox-Hörspiele ließen sich vom Prüfrechner nicht laden (archive.org: HTTP 403) – Prüfung C entfiel.
