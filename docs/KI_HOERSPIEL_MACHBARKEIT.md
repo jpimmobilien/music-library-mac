@@ -110,7 +110,24 @@ Die Stability AI Community License erlaubt die Nutzung kostenlos für Privatpers
 |---|---|
 | Hörproben, Qwen3-TTS 1.7B (PyTorch, bf16, Linux-Prozessor, 4 Kerne) | 3 Szenen der Geschichte, 43 Zeilen, 6 entworfene Stimmen, 3:34 min gemischt (−16,1 LUFS). **Whisper-Fehlerrate 1 %** (Zeilen und Prüfsätze); einzige Abweichung „Spionen-Trupp“/„Spionentrupp“ und ein ausgelassenes „Psst“. Umlaute, Komposita, Zahlen („am vierzehnten Juli neunzehnhundertvierundachtzig um zweiundzwanzig Uhr fünfzehn“) fehlerfrei erkannt. Echtzeitfaktor 3,3 (Entwerfen) bzw. 4,1 (Klonen) |
 | mlx-audio auf dem Linux-Prozessor (MLX CPU) | unbrauchbar langsam: Echtzeitfaktor 82 (Entwerfen) bzw. 172 (Klonen); Satzlängen plausibel (3,5–8,7 s) |
-| mlx-audio auf Apple Silicon (Code der App) | <!-- MAC-TTS --> |
+| mlx-audio auf Apple Silicon (Code der App) | siehe unten |
+
+Apple Silicon, macOS 26.7 (virtueller M1, 3 Kerne, 7 GB), mlx-audio 0.6.5 – 4 entworfene Rollen × 8 Prüfsätze:
+
+| Verfahren | Whisper-Fehler | Echtzeitfaktor (virt. M1) | Ähnlichkeit zur Referenz | zwischen Rollen | innerhalb einer Rolle |
+|---|---|---|---|---|---|
+| **Qwen3-TTS: entwerfen → klonen (App)** | **1,3 %** | 8,1 | 0,80 | 0,24 | 0,78 |
+| VoxCPM2 (8 bit, klonen) | 1,7 % | 2,8 | 0,73 | 0,26 | 0,69 |
+| Chatterbox Multilingual v3 | 2,1 % | 3,5 | 0,82 | 0,25 | 0,82 |
+| Piper thorsten-high | 4,3 % | 0,8 | – | – | 0,79 |
+| Qwen3-TTS: jede Zeile neu entwerfen | 2,2 % | 5,7 | 0,45 | 0,39 | **0,36** |
+
+Ergebnis: Das Verfahren der App (einmal entwerfen, dann klonen) ist am besten verständlich und hält die Stimme
+über alle Zeilen konstant; jede Zeile neu zu entwerfen ergibt wechselnde Stimmen (0,36). Ziffern liest Qwen auch
+ohne Ausschreiben richtig (0 % Fehler). Gefühlsangaben verändern die Tonhöhenbewegung messbar kaum (z. B. Qwen
+3,96 gegenüber 3,90 Halbtöne Streuung) – ob Angst, Aufregung und Flüstern hörbar sind, ist eine Hörfrage.
+Speicher: Qwen-Klonen bis 7,7 GB auf dem 7-GB-Rechner (ausgelagert) – auf 48 GB unkritisch. Die Echtzeitfaktoren
+stammen vom virtuellen M1 mit 3 Kernen; auf einem M5 Pro sind sie deutlich kleiner, aber nicht gemessen.
 
 Hinweis: Die Hörproben nutzen dieselben Gewichte wie die App, aber das PyTorch-Original statt mlx-audio. Klang und
 Aussprache sind übertragbar, Geschwindigkeit und Umsetzungsdetails nicht.
