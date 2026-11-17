@@ -1,0 +1,9 @@
+    06 Sonne.m4a                       03.06.2019 12:42  Quelle 2  AAC 192 kbit/s
+    02 Mittag.m4a                      03.02.2019 12:14  Quelle 2  AAC 192 kbit/s
+    04 Nacht.m4a                       03.04.2019 12:28  Quelle 2  AAC 192 kbit/s
+    03 Abend.m4a                       03.03.2019 12:21  Quelle 2  AAC 192 kbit/s
+    05 Regen.m4a                       03.05.2019 12:35  Quelle 2  AAC 192 kbit/s
+    01 Morgen.m4a                      03.01.2019 12:07  Quelle 2  AAC 192 kbit/s
+    Einzeltitel A.wav                  15.03.2020 12:00  Quelle 2  PCM 1411 kbit/s
+    Einzeltitel B.m4a                  20.11.2018 18:30  Quelle 2  AAC 192 kbit/s
+    Neu hinzugefuegt.m4a               04.07.2021 09:00  Quelle 2  AAC 192 kbit/s
