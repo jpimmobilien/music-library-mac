@@ -10,7 +10,7 @@
 | **Klang** | Nicht gehört. Gemessen: Whisper-Fehlerrate 1,3–1,4 %, Stimmen über Zeilen konstant (0,78), keine Verwechslung von Figuren, −16 LUFS. Ob Gefühl (Angst, Flüstern) hörbar ist, ist eine Hörfrage – messbar kaum. |
 | **Musik im Hörspiel** | Über KI-Musik geprüft im Prüfstand (10-Minuten-Hörspiel mit 4 Stücken); in der App-Abnahme war KI-Musik nicht eingerichtet (Musik übersprungen mit Hinweis). |
 | **Originalnahe Stimmen bekannter Sprecher** | Bewusst nicht ohne deren Einwilligung. Stilprofile übernehmen nur allgemeine Merkmale (Tonhöhe, Tempo, Klangfarbe). |
-| **Sprechertrennung bei entworfenen Stimmen** | Echte Sprecher: 5 von 5 erkannt; die eigenen KI-Stimmen liegen enger beieinander (4–5 von 7). Mit bekannter Stimmenzahl genauer. |
+| **Sprechertrennung bei entworfenen Stimmen** | Echte Sprecher: 5 von 5 erkannt, ohne Verwechslung; die eigenen KI-Stimmen liegen enger beieinander (ohne Angabe 4 von 7, Verwechslung 29 %; mit bekannter Stimmenzahl 7 von 7, 22 %). |
 | **Weitere Sprachen** | Englisch, Französisch, Spanisch, Italienisch wählbar; Zahlen/Abkürzungen werden nur im Deutschen ausgeschrieben; nur Deutsch geprüft. |
 | **Stimmumwandlung (Voice Conversion)** | Nicht umgesetzt – Klonen aus einer berechtigten Stimmprobe deckt den erlaubten Fall ab. |
 | **LibriVox-Prüfung** | Öffentliche Hörspiele ließen sich vom Prüfrechner nicht laden (HTTP 403); geprüft mit MLS-Sprechern und eigener Produktion. |

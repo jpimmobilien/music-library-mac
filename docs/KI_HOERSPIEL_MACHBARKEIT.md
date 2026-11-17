@@ -235,7 +235,9 @@ Daraus geändert:
   12 %) und half bei den KI-Stimmen nicht (29 %). Neue Fassung: erst normal gruppieren, dann nur bei Bedarf Schwelle
   senken bzw. ähnlichste Gruppen zusammenlegen – bei richtiger Schätzung identisch zum Ergebnis ohne Angabe
   (gemessen: MLS 5 von 5, Verwechslung 0 %). Bei den eng beieinanderliegenden KI-Stimmen zerfiel die Gruppierung bei
-  sehr kleinen Schwellen in eine einzige Gruppe – behoben (nur noch Schritte, die mehr Gruppen ergeben).
+  sehr kleinen Schwellen in eine einzige Gruppe – behoben (nur noch Schritte, die mehr Gruppen ergeben). Vierter
+  Lauf: KI-Hörspiel mit Angabe „7“ → 7 von 7 Stimmen, Verwechslung 22 % (ohne Angabe 4 von 7, 29 %); MLS
+  unverändert 5 von 5 ohne Verwechslung. Entworfene Stimmen bleiben für die Sprechertrennung schwierig.
 - Nicht verlässlich: Nachhallschätzung (1,47 s für nahe aufgenommene Hörbuchsprecher ist zu hoch) – wird nur als
   „geschätzt“ angezeigt und nicht für Entscheidungen genutzt.
 - Öffentliche LibriVox-Hörspiele ließen sich vom Prüfrechner nicht laden (archive.org: HTTP 403) – Prüfung C entfiel.
