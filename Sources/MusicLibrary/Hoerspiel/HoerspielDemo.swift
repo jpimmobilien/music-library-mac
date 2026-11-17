@@ -64,16 +64,41 @@ enum HoerspielDemo {
         p.logline = "Ein Lehrling entdeckt, dass die Orte auf seinen Karten erst entstehen, wenn er sie zeichnet."
         p.figures = [HSFigure(id: "ERZÄHLER", name: "Erzählerin", role: "Erzähler", voiceEN: "A warm female narrator")]
         p.chapters = [HSChapter(number: 1, title: "Tinte"), HSChapter(number: 2, title: "Die weiße Stelle"), HSChapter(number: 3, title: "Heimkehr")]
-        p.scenes = (1...9).map { HSScene(chapter: ($0 - 1) / 3 + 1, number: ($0 - 1) % 3 + 1, title: "Abschnitt \($0)",
-                                         items: [HSScriptItem(kind: .line, speaker: "ERZÄHLER", text: String(repeating: "Wort ", count: 380))]) }
+        // Vorschau: kurze echte Absätze statt Fülltext (Dauer der Demo kommt aus mix.duration)
+        let demo: [(String, String, [String])] = [
+            ("Die Werkstatt am Hafen", "Lio beginnt seine Lehre bei der Kartenzeichnerin Ilse.",
+             ["Die Werkstatt roch nach Leim, Tinte und kaltem Hafenwind.",
+              "Meisterin Ilse legte Lio eine leere Seite hin und sagte nur: Zeichne, was du siehst."]),
+            ("Die erste Linie", "Lios erste Karte zeigt eine Gasse, die es am Morgen noch nicht gab.",
+             ["Am nächsten Morgen stand Lio vor einer Gasse, die es gestern noch nicht gegeben hatte.",
+              "Die Pflastersteine waren genau so gesetzt wie auf seinem Blatt."]),
+            ("Ilses Schweigen", "Ilse verbietet Lio, weiter ohne Vorlage zu zeichnen.",
+             ["Ilse sah lange auf die Karte. Dann schloss sie sie in die oberste Schublade."]),
+            ("Aufbruch", "Lio steckt die Karte ein und folgt der neuen Gasse.",
+             ["Lio wartete, bis das Licht in Ilses Kammer erlosch, und nahm die Karte an sich."]),
+            ("Die weiße Stelle", "Am Ende der Gasse beginnt ein Gebiet, das auf keiner Karte steht.",
+             ["Hinter der letzten Laterne hörte die Stadt einfach auf – kein Nebel, keine Mauer, nur Weiß."]),
+            ("Der Wächter", "Ein alter Fährmann warnt Lio vor dem, was er zeichnen könnte.",
+             ["Der Fährmann tippte auf Lios Feder. Was du zeichnest, bleibt. Auch das, was du fürchtest."]),
+            ("Der Fehler", "Ein verwischter Strich lässt eine Brücke halb verschwinden.",
+             ["Ein Tropfen fiel aufs Papier, und die Brücke unter Lios Füßen wurde durchsichtig."]),
+            ("Ilses Geheimnis", "Ilse findet Lio und erzählt, warum sie keine eigenen Orte mehr zeichnet.",
+             ["Ich habe auch einmal eine Stadt gezeichnet, sagte Ilse leise. Sie gibt es heute noch."]),
+            ("Heimkehr", "Lio zeichnet den Weg zurück – und lässt eine Seite bewusst frei.",
+             ["Lio zog die letzte Linie bis zur Werkstatttür und ließ den Rand der Karte weiß."]),
+        ]
+        p.scenes = demo.enumerated().map { i, s in
+            HSScene(chapter: i / 3 + 1, number: i % 3 + 1, title: s.0, summary: s.1,
+                    items: s.2.map { HSScriptItem(kind: .line, speaker: "ERZÄHLER", text: $0) })
+        }
         for s in HSStep.allCases where s != .sfx { p.set(s, .done) }
         p.useSFX = false
         p.mix = HSMixInfo(master: "mix/master.wav", stems: [:],
                           chapters: p.chapters.enumerated().map { HSChapterMark(title: "Kapitel \($0.offset + 1): \($0.element.title)", start: Double($0.offset) * 611) },
                           duration: 1834, loudness: -16.0, speechToBackground: 21.4, timeline: "mix/zeitleiste.json")
         p.review = HSReview(problems: [
-            HSReviewProblem(scene: 4, problem: "Die Karte liegt am Ende von Abschnitt 3 noch im Atelier, in Abschnitt 4 trägt Lio sie ohne Erklärung bei sich",
-                            fix: "Lio steckt die Karte vor dem Aufbruch ein"),
+            HSReviewProblem(scene: 4, problem: "Die Karte liegt am Ende von Szene 3 in Ilses Schublade, in Szene 4 trägt Lio sie ohne Erklärung bei sich",
+                            fix: "Lio nimmt die Karte vor dem Aufbruch an sich"),
             HSReviewProblem(scene: 8, problem: "Meisterin Ilse duzt Lio, sonst siezt sie ihn", fix: "einheitlich duzen"),
         ], revised: [4])
         p.scenes[3].replaceItems(p.scenes[3].items, note: "vor dem Lektorat")
@@ -86,7 +111,8 @@ enum HoerspielDemo {
         var t = 24.0
         clips.append(HSClip(id: "m0", track: "Musik", file: "", start: 0, duration: 24, fadeOut: 3, label: "Titelmusik"))
         for (i, s) in p.scenes.enumerated() {
-            let d = Double(s.spokenWords) / 2.3
+            // Demo-Texte sind gekürzt: Dauer aus der Gesamtlänge verteilen, damit Kapitelmarken passen
+            let d = p.mix.map { max(30, ($0.duration - 120) / Double(max(1, p.scenes.count))) } ?? Double(s.spokenWords) / 2.3
             clips.append(HSClip(id: "e\(i)", track: "Erzähler", file: "", start: t, duration: d, label: s.title))
             t += d + 1.2
             if i % 3 == 2 && i < p.scenes.count - 1 {

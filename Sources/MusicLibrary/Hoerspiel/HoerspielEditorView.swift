@@ -151,7 +151,7 @@ struct HSEditorView: View {
         let lines = s.items.filter { $0.kind == .line }
         let voiced = lines.filter { $0.audioFile != nil && $0.audioFingerprint == p.fingerprint(of: $0) }.count
         if s.items.isEmpty { return "noch nicht geschrieben" }
-        return "\(s.spokenWords) Wörter · \(voiced)/\(lines.count) gesprochen" + (s.versions.isEmpty ? "" : " · \(s.versions.count) Fassungen")
+        return "\(s.spokenWords) Wörter · \(voiced)/\(lines.count) gesprochen" + (s.versions.isEmpty ? "" : " · \(s.versions.count) " + (s.versions.count == 1 ? "Fassung" : "Fassungen"))
     }
 }
 
