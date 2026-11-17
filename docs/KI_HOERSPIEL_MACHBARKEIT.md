@@ -227,12 +227,15 @@ Daraus geändert:
   passendsten (allgemeiner Stimmcharakter, keine Nachbildung der Person). Gemessen (macOS 26, zweiter Lauf): mit
   den neuen Beschreibungen sank der Tonhöhenfehler im Mittel von 6,1 auf 4,0 Halbtöne (Einzelwerte 1,2–6,1); das
   Stimm-Design-Modell setzt Frauenstimmen weiterhin eher zu hoch an. Deshalb zusätzlich: liegt der beste Kandidat
-  mehr als 2 Halbtöne daneben, wird das Tonlagen-Wort verschoben und zweimal nachgelegt (dritter Lauf: Nachtrag).
+  mehr als 2 Halbtöne daneben, wird das Tonlagen-Wort verschoben und zweimal nachgelegt. Dritter Lauf: **mittlerer
+  Fehler 1,7 Halbtöne** (Einzelwerte 0,2–2,9; vorher 6,1 bzw. 4,0).
 - Neue Beschreibungen in der MLS-Aufnahme: Geschlecht jetzt eindeutig (4 Frauen, 1 Mann), Klangfarbe „ausgewogen“
   statt durchgehend „dunkel, warm“.
 - Bekannte Stimmenzahl: erste Fassung („maxclust“) verschlechterte die richtige MLS-Trennung (Verwechslung 0 % →
   12 %) und half bei den KI-Stimmen nicht (29 %). Neue Fassung: erst normal gruppieren, dann nur bei Bedarf Schwelle
-  senken bzw. ähnlichste Gruppen zusammenlegen – bei richtiger Schätzung identisch zum Ergebnis ohne Angabe.
+  senken bzw. ähnlichste Gruppen zusammenlegen – bei richtiger Schätzung identisch zum Ergebnis ohne Angabe
+  (gemessen: MLS 5 von 5, Verwechslung 0 %). Bei den eng beieinanderliegenden KI-Stimmen zerfiel die Gruppierung bei
+  sehr kleinen Schwellen in eine einzige Gruppe – behoben (nur noch Schritte, die mehr Gruppen ergeben).
 - Nicht verlässlich: Nachhallschätzung (1,47 s für nahe aufgenommene Hörbuchsprecher ist zu hoch) – wird nur als
   „geschätzt“ angezeigt und nicht für Entscheidungen genutzt.
 - Öffentliche LibriVox-Hörspiele ließen sich vom Prüfrechner nicht laden (archive.org: HTTP 403) – Prüfung C entfiel.

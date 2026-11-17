@@ -160,7 +160,11 @@ def cluster_known(emb, n, threshold=0.7, min_share=0.03):
     for thr in [t for t in (0.65, 0.6, 0.55, 0.5, 0.45, 0.4, 0.35, 0.3) if t < threshold]:
         if len(set(labels)) >= n:
             break
-        labels = cluster(emb, thr, min_share)
+        # nur übernehmen, wenn es mehr Gruppen werden: bei sehr kleinen Schwellen zerfällt alles in Kleinstgruppen,
+        # die dann wieder zu einer einzigen zusammengelegt würden (gemessen: 7 Stimmen → 1 Gruppe)
+        lab = cluster(emb, thr, min(min_share, 0.015))
+        if len(set(lab)) > len(set(labels)):
+            labels = lab
     labels = np.array(labels)
     while len(set(labels)) > n:
         ids = sorted(set(labels))
