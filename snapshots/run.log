@@ -1,0 +1,52 @@
+[Snapshot] ▸ 80-hoerspiel-einrichten hell
+[Snapshot] 80-hoerspiel-einrichten hell: Aufbau+Warten 2816 ms, Hauptthread-Verzögerung Ø 888.5 ms, max 1690.1 ms, Hauptthread belegt 50 %
+[Snapshot] ▸ 80-hoerspiel-einrichten dunkel
+[Snapshot] 80-hoerspiel-einrichten dunkel: Aufbau+Warten 2233 ms, Hauptthread-Verzögerung Ø 12.0 ms, max 61.7 ms, Hauptthread belegt 13 %
+[Snapshot] ▸ 80-hoerspiel-erstellen hell
+[Snapshot] 80-hoerspiel-erstellen hell: Aufbau+Warten 2240 ms, Hauptthread-Verzögerung Ø 71.7 ms, max 143.1 ms, Hauptthread belegt 4 %
+[Snapshot] ▸ 80-hoerspiel-erstellen dunkel
+[Snapshot] 80-hoerspiel-erstellen dunkel: Aufbau+Warten 2308 ms, Hauptthread-Verzögerung Ø 521.3 ms, max 1247.1 ms, Hauptthread belegt 23 %
+[Snapshot] ▸ 80-hoerbuch-erstellen hell
+[Snapshot] 80-hoerbuch-erstellen hell: Aufbau+Warten 2290 ms, Hauptthread-Verzögerung Ø 60.2 ms, max 115.5 ms, Hauptthread belegt 5 %
+[Snapshot] ▸ 80-hoerbuch-erstellen dunkel
+[Snapshot] 80-hoerbuch-erstellen dunkel: Aufbau+Warten 2260 ms, Hauptthread-Verzögerung Ø 92.7 ms, max 146.5 ms, Hauptthread belegt 2 %
+[Snapshot] ▸ 80-hoerspiel-laeuft hell
+[Snapshot] 80-hoerspiel-laeuft hell: Aufbau+Warten 2323 ms, Hauptthread-Verzögerung Ø 36.6 ms, max 147.5 ms, Hauptthread belegt 11 %
+[Snapshot] ▸ 80-hoerspiel-laeuft dunkel
+[Snapshot] 80-hoerspiel-laeuft dunkel: Aufbau+Warten 2208 ms, Hauptthread-Verzögerung Ø 77.9 ms, max 140.0 ms, Hauptthread belegt 5 %
+[Snapshot] ▸ 80-hoerspiel-produktionen hell
+[Snapshot] 80-hoerspiel-produktionen hell: Aufbau+Warten 2233 ms, Hauptthread-Verzögerung Ø 53.8 ms, max 148.2 ms, Hauptthread belegt 7 %
+[Snapshot] ▸ 80-hoerspiel-produktionen dunkel
+[Snapshot] 80-hoerspiel-produktionen dunkel: Aufbau+Warten 2208 ms, Hauptthread-Verzögerung Ø 60.0 ms, max 120.6 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 80-hoerspiel-editor hell
+[Snapshot] 80-hoerspiel-editor hell: Aufbau+Warten 2203 ms, Hauptthread-Verzögerung Ø 317.1 ms, max 1561.8 ms, Hauptthread belegt 21 %
+[Snapshot] ▸ 80-hoerspiel-editor dunkel
+[Snapshot] 80-hoerspiel-editor dunkel: Aufbau+Warten 2209 ms, Hauptthread-Verzögerung Ø 162.4 ms, max 908.8 ms, Hauptthread belegt 22 %
+[Snapshot] ▸ 80-hoerspiel-lektorat hell
+[Snapshot] 80-hoerspiel-lektorat hell: Aufbau+Warten 2244 ms, Hauptthread-Verzögerung Ø 39.1 ms, max 93.8 ms, Hauptthread belegt 20 %
+[Snapshot] ▸ 80-hoerspiel-lektorat dunkel
+[Snapshot] 80-hoerspiel-lektorat dunkel: Aufbau+Warten 2330 ms, Hauptthread-Verzögerung Ø 66.2 ms, max 140.6 ms, Hauptthread belegt 11 %
+[Snapshot] ▸ 80-hoerspiel-mehrspur hell
+[Snapshot] 80-hoerspiel-mehrspur hell: Aufbau+Warten 2218 ms, Hauptthread-Verzögerung Ø 82.2 ms, max 111.9 ms, Hauptthread belegt 9 %
+[Snapshot] ▸ 80-hoerspiel-mehrspur dunkel
+[Snapshot] 80-hoerspiel-mehrspur dunkel: Aufbau+Warten 2386 ms, Hauptthread-Verzögerung Ø 69.1 ms, max 151.2 ms, Hauptthread belegt 1 %
+[Snapshot] ▸ 80-hoerspiel-stimmen hell
+[Snapshot] 80-hoerspiel-stimmen hell: Aufbau+Warten 2325 ms, Hauptthread-Verzögerung Ø 63.2 ms, max 110.4 ms, Hauptthread belegt 7 %
+[Snapshot] ▸ 80-hoerspiel-stimmen dunkel
+[Snapshot] 80-hoerspiel-stimmen dunkel: Aufbau+Warten 2231 ms, Hauptthread-Verzögerung Ø 71.6 ms, max 130.1 ms, Hauptthread belegt 4 %
+[Snapshot] ▸ 80-hoerspiel-referenz hell
+[Snapshot] 80-hoerspiel-referenz hell: Aufbau+Warten 2344 ms, Hauptthread-Verzögerung Ø 76.4 ms, max 147.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 80-hoerspiel-referenz dunkel
+[Snapshot] 80-hoerspiel-referenz dunkel: Aufbau+Warten 2218 ms, Hauptthread-Verzögerung Ø 68.0 ms, max 99.5 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 80-hoerspiel-sounddesign hell
+[Snapshot] 80-hoerspiel-sounddesign hell: Aufbau+Warten 2261 ms, Hauptthread-Verzögerung Ø 72.3 ms, max 141.4 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 80-hoerspiel-sounddesign dunkel
+[Snapshot] 80-hoerspiel-sounddesign dunkel: Aufbau+Warten 2259 ms, Hauptthread-Verzögerung Ø 51.0 ms, max 129.0 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 80-hoerspiel-schmal hell
+[Snapshot] 80-hoerspiel-schmal hell: Aufbau+Warten 2236 ms, Hauptthread-Verzögerung Ø 48.4 ms, max 144.0 ms, Hauptthread belegt 9 %
+[Snapshot] ▸ 80-hoerspiel-schmal dunkel
+[Snapshot] 80-hoerspiel-schmal dunkel: Aufbau+Warten 2265 ms, Hauptthread-Verzögerung Ø 70.5 ms, max 131.6 ms, Hauptthread belegt 3 %
+[Snapshot] ▸ 80-hoerspiel-einstellungen hell
+[Snapshot] 80-hoerspiel-einstellungen hell: Aufbau+Warten 2277 ms, Hauptthread-Verzögerung Ø 70.4 ms, max 137.1 ms, Hauptthread belegt 0 %
+[Snapshot] ▸ 80-hoerspiel-einstellungen dunkel
+[Snapshot] 80-hoerspiel-einstellungen dunkel: Aufbau+Warten 2205 ms, Hauptthread-Verzögerung Ø 49.8 ms, max 146.6 ms, Hauptthread belegt 0 %

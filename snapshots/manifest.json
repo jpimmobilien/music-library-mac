@@ -1,0 +1,243 @@
+{
+  "architecture" : "x86_64",
+  "images" : [
+    {
+      "elapsedMs" : "2816",
+      "file" : "80-hoerspiel-einrichten-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "50",
+      "mainThreadLagMaxMs" : "1690.1",
+      "mainThreadLagMeanMs" : "888.5",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2233",
+      "file" : "80-hoerspiel-einrichten-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "13",
+      "mainThreadLagMaxMs" : "61.7",
+      "mainThreadLagMeanMs" : "12.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2240",
+      "file" : "80-hoerspiel-erstellen-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "4",
+      "mainThreadLagMaxMs" : "143.1",
+      "mainThreadLagMeanMs" : "71.7",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2308",
+      "file" : "80-hoerspiel-erstellen-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "23",
+      "mainThreadLagMaxMs" : "1247.1",
+      "mainThreadLagMeanMs" : "521.3",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2290",
+      "file" : "80-hoerbuch-erstellen-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "5",
+      "mainThreadLagMaxMs" : "115.5",
+      "mainThreadLagMeanMs" : "60.2",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2260",
+      "file" : "80-hoerbuch-erstellen-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "2",
+      "mainThreadLagMaxMs" : "146.5",
+      "mainThreadLagMeanMs" : "92.7",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2323",
+      "file" : "80-hoerspiel-laeuft-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "11",
+      "mainThreadLagMaxMs" : "147.5",
+      "mainThreadLagMeanMs" : "36.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2208",
+      "file" : "80-hoerspiel-laeuft-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "5",
+      "mainThreadLagMaxMs" : "140.0",
+      "mainThreadLagMeanMs" : "77.9",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2233",
+      "file" : "80-hoerspiel-produktionen-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "7",
+      "mainThreadLagMaxMs" : "148.2",
+      "mainThreadLagMeanMs" : "53.8",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2208",
+      "file" : "80-hoerspiel-produktionen-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "120.6",
+      "mainThreadLagMeanMs" : "60.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2203",
+      "file" : "80-hoerspiel-editor-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "21",
+      "mainThreadLagMaxMs" : "1561.8",
+      "mainThreadLagMeanMs" : "317.1",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2209",
+      "file" : "80-hoerspiel-editor-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "22",
+      "mainThreadLagMaxMs" : "908.8",
+      "mainThreadLagMeanMs" : "162.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2244",
+      "file" : "80-hoerspiel-lektorat-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "20",
+      "mainThreadLagMaxMs" : "93.8",
+      "mainThreadLagMeanMs" : "39.1",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2330",
+      "file" : "80-hoerspiel-lektorat-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "11",
+      "mainThreadLagMaxMs" : "140.6",
+      "mainThreadLagMeanMs" : "66.2",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2218",
+      "file" : "80-hoerspiel-mehrspur-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "9",
+      "mainThreadLagMaxMs" : "111.9",
+      "mainThreadLagMeanMs" : "82.2",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2386",
+      "file" : "80-hoerspiel-mehrspur-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "1",
+      "mainThreadLagMaxMs" : "151.2",
+      "mainThreadLagMeanMs" : "69.1",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2325",
+      "file" : "80-hoerspiel-stimmen-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "7",
+      "mainThreadLagMaxMs" : "110.4",
+      "mainThreadLagMeanMs" : "63.2",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2231",
+      "file" : "80-hoerspiel-stimmen-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "4",
+      "mainThreadLagMaxMs" : "130.1",
+      "mainThreadLagMeanMs" : "71.6",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2344",
+      "file" : "80-hoerspiel-referenz-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "147.1",
+      "mainThreadLagMeanMs" : "76.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2218",
+      "file" : "80-hoerspiel-referenz-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "99.5",
+      "mainThreadLagMeanMs" : "68.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2261",
+      "file" : "80-hoerspiel-sounddesign-hell-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "141.4",
+      "mainThreadLagMeanMs" : "72.3",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2259",
+      "file" : "80-hoerspiel-sounddesign-dunkel-1280x820.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "129.0",
+      "mainThreadLagMeanMs" : "51.0",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2236",
+      "file" : "80-hoerspiel-schmal-hell-940x660.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "9",
+      "mainThreadLagMaxMs" : "144.0",
+      "mainThreadLagMeanMs" : "48.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2265",
+      "file" : "80-hoerspiel-schmal-dunkel-940x660.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "3",
+      "mainThreadLagMaxMs" : "131.6",
+      "mainThreadLagMeanMs" : "70.5",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2277",
+      "file" : "80-hoerspiel-einstellungen-hell-860x900.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "137.1",
+      "mainThreadLagMeanMs" : "70.4",
+      "method" : "window-server"
+    },
+    {
+      "elapsedMs" : "2205",
+      "file" : "80-hoerspiel-einstellungen-dunkel-860x900.png",
+      "glass" : "liquid-glass",
+      "mainThreadBusyPercent" : "0",
+      "mainThreadLagMaxMs" : "146.6",
+      "mainThreadLagMeanMs" : "49.8",
+      "method" : "window-server"
+    }
+  ],
+  "interFont" : true,
+  "liquidGlass" : true,
+  "macOS" : "Version 26.6.1 (Build 25G76)",
+  "screen" : "1920x1080 @1.0x, sichtbar 1920x959"
+}
