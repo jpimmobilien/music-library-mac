@@ -141,6 +141,29 @@ Aussprache sind übertragbar, Geschwindigkeit und Umsetzungsdetails nicht.
 
 ### 10-Minuten-Hörspiel und App-Abnahme
 
+**App-Abnahme auf Apple Silicon (macOS 15.8, virtueller M1, 7 GB, gebaute App mit `--hoerspiel-e2e`):**
+
+Erster Lauf (17.11., 00:09): 18 von 22 Prüfungen – gefunden und behoben: Geräuschmodell erst ab mlx-audio 0.6.6,
+„MUSIK:“ ohne Klammern wurde zur Figur, Geräuschfehler brach die Produktion ab, Prüfung der Mehrspur fehlerhaft.
+
+Zweiter Lauf nach den Korrekturen (17.11., 03:06): **23 von 23 Prüfungen bestanden.**
+
+| Schritt | Ergebnis | Zeit |
+|---|---|---|
+| Einrichtung: uv, Python 3.12, Pakete, Geschichtenmodell, zwei Stimmmodelle | bereit | 134 s |
+| Geräusch- und Analysemodelle laden | 4 Modelle | 57 s |
+| Hörspiel (3 min Ziel): Geschichte, Lektorat (5 Hinweise, 3 Szenen überarbeitet), 4 Stimmen, 8 Geräusche/Atmosphären, Mischung | 222 s Hörspiel, −16,0 LUFS, Sprache 21,4 dB über dem Hintergrund, 3 Kapitel | 39 min |
+| Replik neu formulieren / neu sprechen / neu abmischen | Text geändert, Stimme neu, Mischung neu | 20 s / 95 s / 13 s |
+| Mehrspur: Atmo stumm, Sprecher-Clip verschoben, neu abmischen | übernommen | 9 s |
+| Export: MP3 mit Kapitelmarken (geprüft mit ffprobe: 3 Kapitel), Kapitel als M4A, Szenen als MP3, 6 Einzelspuren als FLAC | alle Dateien | je 2–5 s |
+| Hörbuch (2 min Ziel, Erzählstil märchenhaft) | 501 Wörter, 182 s | 24 min |
+| Stimme im Stimmenstudio entwerfen | Referenzsatz | 65 s |
+| Referenzanalyse der eigenen Produktion | 4 Stimmen erkannt (stimmt: Erzähler + 3 Figuren) | 101 s |
+| Stilprofile anlegen | 4 Profile, keines kann sprechen | – |
+
+Die Zeiten stammen vom virtuellen M1 mit 3 Kernen und dem kleinen Geschichtenmodell; auf dem M5 Pro mit Gemma 4
+sind sie nicht gemessen. Musik (KI-Musik) war in diesem Lauf nicht eingerichtet und wurde mit Hinweis übersprungen.
+
 <!-- MAC-PRODUKTION -->
 
 
