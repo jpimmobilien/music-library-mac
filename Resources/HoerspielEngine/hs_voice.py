@@ -213,19 +213,43 @@ def voice_distance(f0, rate, target):
     return d
 
 
+# Tonlagen-Wörter von tief nach hoch (wie hs_analyze.describe_voice sie schreibt)
+PITCH_PHRASES = ["a very deep, low voice", "a deep, low-pitched voice", "a fairly low voice", "a medium-pitched voice",
+                 "a slightly high voice", "a high-pitched voice"]
+
+
 def design_matching(model, text, instruct, language, target, candidates=3, seed_base=1):
     """Mehrere Kandidaten entwerfen und den mit der passendsten Tonhöhe/Tempo nehmen (allgemeine Merkmale, keine
-    Nachbildung einer Person). Gibt (audio, sr, seed, f0, rate, liste) zurück."""
+    Nachbildung einer Person). Liegen alle Kandidaten mehr als 2 Halbtöne daneben, wird das Tonlagen-Wort der
+    Beschreibung in die richtige Richtung verschoben und noch zweimal versucht (gemessen: das Stimm-Design-Modell
+    trifft „medium pitch“ bei Frauen 3–6 Halbtöne zu hoch). Gibt (audio, sr, seed, f0, rate, liste) zurück."""
     best, tried = None, []
-    for k in range(max(1, candidates)):
-        s = seed_base + k * 7919
-        audio, sr = model.speak(text, instruct, language, s)
+
+    def attempt(instr, seed):
+        nonlocal best
+        audio, sr = model.speak(text, instr, language, seed)
         f0, rate = measure_voice(audio, sr, text)
         d = voice_distance(f0, rate, target or {})
-        tried.append({"seed": s, "f0_median_hz": f0, "syllables_per_second": rate, "distance": round(d, 2)})
+        tried.append({"seed": seed, "f0_median_hz": f0, "syllables_per_second": rate, "distance": round(d, 2),
+                      "instruct": instr})
         if best is None or d < best[0]:
-            best = (d, audio, sr, s, f0, rate)
-    _, audio, sr, s, f0, rate = best
+            best = (d, audio, sr, seed, f0, rate, instr)
+
+    for k in range(max(1, candidates)):
+        attempt(instruct, seed_base + k * 7919)
+    want = (target or {}).get("f0_median_hz")
+    phrase = next((p for p in PITCH_PHRASES if p in instruct), None)
+    if want and best[4] and phrase and candidates > 1:
+        err = 12 * math.log2(best[4] / want)
+        if abs(err) > 2:
+            i = PITCH_PHRASES.index(phrase)
+            step = -2 if err > 4 else -1 if err > 0 else 2 if err < -4 else 1
+            j = max(0, min(len(PITCH_PHRASES) - 1, i + step))
+            if j != i:
+                instr2 = instruct.replace(phrase, PITCH_PHRASES[j])
+                for k in range(2):
+                    attempt(instr2, seed_base + (candidates + k) * 7919)
+    _, audio, sr, s, f0, rate, _ = best
     return audio, sr, s, f0, rate, tried
 
 

@@ -133,14 +133,12 @@ def windows(segments, win=1.5, hop=0.75, min_len=0.6):
 
 def cluster(emb, threshold=0.65, min_share=0.03, n_speakers=None):
     """Gruppierung nach Stimmähnlichkeit (Kosinus, average linkage). Kleine Gruppen → nächste große Gruppe.
-    n_speakers: bekannte Anzahl Stimmen (vom Nutzer) – dann genau so viele Gruppen statt einer Schwelle."""
+    n_speakers: bekannte Anzahl Stimmen (vom Nutzer) – siehe cluster_known."""
     if len(emb) < 2:
         return np.zeros(len(emb), dtype=int)
-    Z = linkage(emb, method="average", metric="cosine")
     if n_speakers:
-        labels = fcluster(Z, t=int(n_speakers), criterion="maxclust") - 1
-        remap = {c: k for k, c in enumerate(sorted(set(labels), key=lambda c: -np.sum(labels == c)))}
-        return np.array([remap[l] for l in labels])
+        return cluster_known(emb, int(n_speakers), threshold, min_share)
+    Z = linkage(emb, method="average", metric="cosine")
     labels = fcluster(Z, t=threshold, criterion="distance") - 1
     counts = np.bincount(labels)
     big = [c for c in range(len(counts)) if counts[c] >= max(3, min_share * len(labels))]
@@ -150,6 +148,26 @@ def cluster(emb, threshold=0.65, min_share=0.03, n_speakers=None):
     for i, l in enumerate(labels):
         if l not in cent:
             labels[i] = max(cent, key=lambda c: float(emb[i] @ cent[c]))
+    remap = {c: k for k, c in enumerate(sorted(set(labels), key=lambda c: -np.sum(labels == c)))}
+    return np.array([remap[l] for l in labels])
+
+
+def cluster_known(emb, n, threshold=0.7, min_share=0.03):
+    """Bekannte Stimmenzahl: zuerst wie ohne Angabe gruppieren; sind es zu wenige Gruppen, die Schwelle schrittweise
+    senken; sind es zu viele, die ähnlichsten Gruppen zusammenlegen. Stimmt die geschätzte Zahl schon, ist das
+    Ergebnis dasselbe wie ohne Angabe (gemessen: „maxclust“ verschlechterte eine richtige Trennung, deshalb so)."""
+    labels = cluster(emb, threshold, min_share)
+    for thr in [t for t in (0.65, 0.6, 0.55, 0.5, 0.45, 0.4, 0.35, 0.3) if t < threshold]:
+        if len(set(labels)) >= n:
+            break
+        labels = cluster(emb, thr, min_share)
+    labels = np.array(labels)
+    while len(set(labels)) > n:
+        ids = sorted(set(labels))
+        cent = {c: _unit(emb[labels == c].mean(axis=0)) for c in ids}
+        best = max(((a, b) for i, a in enumerate(ids) for b in ids[i + 1:]), key=lambda ab: float(cent[ab[0]] @ cent[ab[1]]))
+        small, big = sorted(best, key=lambda c: np.sum(labels == c))
+        labels[labels == small] = big
     remap = {c: k for k, c in enumerate(sorted(set(labels), key=lambda c: -np.sum(labels == c)))}
     return np.array([remap[l] for l in labels])
 
