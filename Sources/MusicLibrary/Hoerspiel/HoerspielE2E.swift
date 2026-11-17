@@ -102,7 +102,7 @@ enum HoerspielE2E {
               "\(p.review?.problems.count ?? -1) Hinweise, überarbeitet: \(p.review?.revised ?? [])", since: t)
         check("Alle Zeilen gesprochen", p.linesNeedingVoice.isEmpty, "fehlend: \(p.linesNeedingVoice.count)", since: t)
         check("Geräusche erzeugt", !p.sfxFiles.isEmpty && p.sfxFiles.values.allSatisfy { fm.fileExists(atPath: $0) },
-              "\(p.sfxFiles.count) Geräusche/Atmosphären", since: t)
+              "\(p.sfxFiles.count) Geräusche/Atmosphären\(phaseText(hs))", since: t)
         if let mix = p.mix {
             let master = hs.file(mix.master, in: p)
             check("Mischung", fm.fileExists(atPath: master.path) && mix.duration > 30 && abs((mix.loudness ?? 0) + 16) < 1.5,
@@ -139,13 +139,15 @@ enum HoerspielE2E {
         if var tl = hs.loadTimeline(p) {
             t = Date()
             let oldDate = p.mix?.date
-            tl.setTrack("Atmo") { $0.mute = true }
+            // eine vorhandene Spur stummschalten (Atmo, sonst Musik/Geräusche, sonst die letzte Sprecherspur)
+            let muted = ["Atmo", "Musik", "Geräusche"].first { n in tl.tracks.contains { $0.name == n } } ?? tl.orderedTracks.last?.name ?? ""
+            tl.setTrack(muted) { $0.mute = true }
             if let c = tl.clips.first(where: { $0.track.hasPrefix("Sprecher") }) { tl.move(c.id, to: c.start + 0.5) }
             hs.renderTimeline(p.id, tl)
             await waitUntil(timeout: 1800) { !hs.isWorking }
             p = hs.production(p.id) ?? p
-            check("Mehrspur bearbeitet und neu abgemischt", p.mix?.date != oldDate && hs.loadTimeline(p)?.tracks.first { $0.name == "Atmo" }?.mute == true,
-                  "\(tl.clips.count) Clips, \(tl.tracks.count) Spuren", since: t)
+            check("Mehrspur bearbeitet und neu abgemischt", p.mix?.date != oldDate && hs.loadTimeline(p)?.tracks.first { $0.name == muted }?.mute == true,
+                  "\(tl.clips.count) Clips, Spuren \(tl.tracks.map(\.name).joined(separator: ", ")); stumm: \(muted)\(phaseText(hs))", since: t)
         } else {
             check("Mehrspur: Zeitleiste vorhanden", false, "keine zeitleiste.json", since: Date())
         }
@@ -174,7 +176,7 @@ enum HoerspielE2E {
         await waitUntil(timeout: 3 * 3600) { !hs.isWorking }
         if let b = hs.productions.first(where: { $0.mode == .hoerbuch }) {
             check("Hörbuch erstellt", b.mix != nil && b.linesNeedingVoice.isEmpty,
-                  "\(b.title): \(b.spokenWords) Wörter, \(String(format: "%.0f", b.mix?.duration ?? 0)) s", since: t)
+                  "\(b.title): \(b.spokenWords) Wörter, \(String(format: "%.0f", b.mix?.duration ?? 0)) s\(phaseText(hs))", since: t)
         } else {
             check("Hörbuch erstellt", false, "\(hs.phase)", since: t)
         }
@@ -210,6 +212,14 @@ enum HoerspielE2E {
     }
 
     // MARK: Hilfen
+
+    /// Fehlermeldung bzw. Hinweis des letzten Ablaufs (für das Protokoll).
+    private static func phaseText(_ hs: HoerspielModel) -> String {
+        var parts: [String] = []
+        if case .failed(let m) = hs.phase { parts.append("Fehler: \(m)") }
+        if let n = hs.notice { parts.append("Hinweis: \(n)") }
+        return parts.isEmpty ? "" : " – " + parts.joined(separator: " · ")
+    }
 
     private static func firstLine(_ p: HSProduction, notNarrator: Bool) -> (Int, Int)? {
         for (si, s) in p.scenes.enumerated() {

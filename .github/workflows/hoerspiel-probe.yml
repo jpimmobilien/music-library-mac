@@ -48,7 +48,7 @@ permissions:
 
 env:
   ACE_COMMIT: ca1e85fe9430179831e6bc6be790c332190a3866
-  MLX_AUDIO: "mlx-audio==0.6.5"
+  MLX_AUDIO: "mlx-audio==0.6.6"
 
 jobs:
   catalog:
@@ -382,6 +382,8 @@ jobs:
         run: |
           BR="ci-hoerspiel-app-${{ inputs.runner }}"
           cd out
+          cp e2e/Umgebung/ki-hoerspiel.log e2e/ 2>/dev/null || true
+          cp e2e/Umgebung/*.log e2e/ 2>/dev/null || true
           rm -rf e2e/Umgebung
           find . -name "*.wav" -size +1M -delete || true
           find . -name "*.m4a" -size +20M -delete || true

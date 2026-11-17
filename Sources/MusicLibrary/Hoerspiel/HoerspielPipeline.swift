@@ -295,7 +295,17 @@ extension HoerspielModel {
         for (n, w) in missing.enumerated() {
             try Task.checkCancellation()
             report("Geräusch \(n + 1) von \(missing.count): \(w.2)", Double(n) / Double(missing.count))
-            let path = try await e.sfx(prompt: w.0, seconds: w.1, library: lib)
+            let path: String
+            do {
+                path = try await e.sfx(prompt: w.0, seconds: w.1, library: lib)
+            } catch where !StudioModel.isCancellation(error) {
+                // Geräusche sind Zutat, kein Muss: ohne sie weiter mischen statt die Produktion abzubrechen
+                // (gefunden in der App-Abnahme: Modell ließ sich mit einer zu alten mlx-audio-Fassung nicht laden)
+                addNotice("Geräusche übersprungen: \(StudioModel.message(error)) Die Mischung entsteht ohne die fehlenden Geräusche; "
+                          + "„Geräusche hinzufügen“ versucht es erneut.")
+                update(id) { $0.set(.sfx, .failed) }
+                return
+            }
             update(id) { $0.sfxFiles[w.0] = path }
             if !sfxLibrary.contains(where: { $0.file == path }) {
                 setSFX(sfxLibrary + [HSSFXEntry(name: w.2.isEmpty ? w.0 : w.2, prompt: w.0, file: path, seconds: w.1, origin: "erzeugt",
@@ -331,9 +341,17 @@ extension HoerspielModel {
             let start = Double(n) / Double(missing.count)
             report("Musik „\(piece.kind)“ (\(Int(piece.seconds)) s) – KI-Musik …", start)
             let dir = folder(p).appendingPathComponent("musik/\(piece.kind)", isDirectory: true)
-            let url = try await ki.instrumental(caption: piece.caption, seconds: piece.seconds,
+            let url: URL
+            do {
+                url = try await ki.instrumental(caption: piece.caption, seconds: piece.seconds,
                                                 seed: HSVoiceDesign.seed(production: p.id, figure: piece.kind), into: dir,
                                                 progress: reporter(prefix: "Musik „\(piece.kind)“: ", range: start...(start + 1 / Double(missing.count))))
+            } catch where !StudioModel.isCancellation(error) {
+                addNotice("Musik übersprungen: \(StudioModel.message(error)) Die Mischung entsteht ohne die fehlende Musik; "
+                          + "„Musik erzeugen“ versucht es erneut.")
+                update(id) { $0.set(.music, .failed) }
+                return
+            }
             update(id) { $0.musicFiles[piece.kind] = url.path }
         }
         update(id) {

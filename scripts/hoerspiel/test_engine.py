@@ -51,6 +51,16 @@ Ein Satz ohne Sprecher.
         self.assertEqual(items[0]["text"], "Herr Krause!")
 
 
+class CueWithoutBracketsTests(unittest.TestCase):
+    def test_music_line_is_cue(self):
+        items = T.parse_script("MUSIK: Taktlos, mechanisch | rhythmic crescendo\nGERÄUSCH: Tür | door\nPAUSE: 2\nLENA: Hallo?",
+                               ["ERZÄHLER", "LENA"])
+        self.assertEqual([i["type"] for i in items], ["music", "sfx", "pause", "line"])
+        self.assertEqual(items[0]["en"], "rhythmic crescendo")
+        self.assertEqual(items[2]["seconds"], 2.0)
+        self.assertEqual(items[3]["speaker"], "LENA")
+
+
 class AudioTests(unittest.TestCase):
     def test_loudness_reference(self):
         sr = 48000

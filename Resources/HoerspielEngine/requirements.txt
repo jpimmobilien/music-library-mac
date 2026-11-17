@@ -2,7 +2,7 @@
 # Feste Stände wie im Prüflauf „Hoerspiel-Probe“ vom 16.11.2026 aufgelöst (pakete.txt im Zweig
 # ci-hoerspiel-tts-ubuntu-latest). Auf dem Mac abzunehmen mit dem Teil „app“ (App-Abnahme).
 mlx==0.32.4
-mlx-audio==0.6.5
+mlx-audio==0.6.6  # Stable Audio 3 (Geräusche) erst ab 0.6.6; Qwen3-TTS unverändert gegenüber 0.6.5
 mlx-lm==0.32.2
 mlx-whisper==0.4.3
 transformers==5.23.0

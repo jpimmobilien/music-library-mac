@@ -214,6 +214,20 @@ def parse_script(text, known_speakers=None, aliases=None):
         if m:
             raw_name = m.group(1).strip().strip("*")
             key = speaker_key(raw_name)
+            cue = CUE_TYPES.get(key) or CUE_TYPES.get(raw_name.strip().upper())
+            if cue and cue != "scene" and key not in known:
+                # „MUSIK: Spannung | tension“ ohne eckige Klammern (kleine Modelle) – ein Hinweis, keine Figur
+                # (gefunden in der App-Abnahme am 17.11.2026: eine Figur „MUSIK“ sprach die Musikbeschreibung)
+                body = ((m.group(2) + ": ") if m.group(2) else "") + m.group(3)
+                de, _, en = body.partition("|")
+                item = {"type": cue, "de": de.strip(), "en": en.strip() or de.strip()}
+                if cue == "pause":
+                    try:
+                        item["seconds"] = max(0.3, min(6.0, float(re.findall(r"[\d.]+", body)[0])))
+                    except (IndexError, ValueError):
+                        item["seconds"] = 1.5
+                items.append(item)
+                continue
             is_role = key in known or raw_name.replace("_", " ").replace("-", " ").isupper() or known_speakers is None
             if is_role and key:
                 speaker = known.get(key, key)
