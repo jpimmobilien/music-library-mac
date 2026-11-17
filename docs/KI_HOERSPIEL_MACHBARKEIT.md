@@ -161,6 +161,11 @@ Zweiter Lauf nach den Korrekturen (17.11., 03:06): **23 von 23 Prüfungen bestan
 | Referenzanalyse der eigenen Produktion | 4 Stimmen erkannt (stimmt: Erzähler + 3 Figuren) | 101 s |
 | Stilprofile anlegen | 4 Profile, keines kann sprechen | – |
 
+Wiederholung auf macOS 26.7 (17.11., 04:30): ebenfalls **23 von 23** – Hörspiel 3:21 min mit 9 Geräuschen,
+−16,1 LUFS, Sprache 21,6 dB über dem Hintergrund; Hörbuch 781 Wörter (4:47 min). Neuer Befund: Das kleine Modell
+schrieb eine ganze Szene mit dem Platzhalter „KENNUNG:“ aus der Formatbeschreibung statt mit Figuren – behoben
+(Formatbeschreibung ohne Platzhalter, solche Zeilen gelten als ungültig und die Szene wird neu geschrieben).
+
 Die Zeiten stammen vom virtuellen M1 mit 3 Kernen und dem kleinen Geschichtenmodell; auf dem M5 Pro mit Gemma 4
 sind sie nicht gemessen. Musik (KI-Musik) war in diesem Lauf nicht eingerichtet und wurde mit Hinweis übersprungen.
 

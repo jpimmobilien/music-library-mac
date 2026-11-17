@@ -61,6 +61,31 @@ class CueWithoutBracketsTests(unittest.TestCase):
         self.assertEqual(items[3]["speaker"], "LENA")
 
 
+class PlaceholderSpeakerTests(unittest.TestCase):
+    def test_kennung_is_not_a_figure(self):
+        items = T.parse_script("KENNUNG (flüsternd): Siehst du das Licht?\nLENA: Ja.", ["ERZÄHLER", "LENA"])
+        self.assertEqual(items[0]["speaker"], "ERZÄHLER")
+        self.assertTrue(items[0]["placeholder"])
+        self.assertEqual(items[1]["speaker"], "LENA")
+
+    def test_scene_with_placeholders_is_retried(self):
+        class M:
+            name = "m"
+            def __init__(self):
+                self.n = 0
+                self.stats = {"prompt_tokens": 0, "completion_tokens": 0, "seconds": 0}
+            def chat(self, messages, **kw):
+                self.n += 1
+                if self.n == 1:
+                    return "KENNUNG: Hallo?\nKENNUNG (leise): Wer ist da?"
+                return "\n".join(f"LENA: Satz Nummer {i} mit genug Inhalt {i * 3}." for i in range(30))
+        c = {"titel": "T", "figuren": [{"id": "ERZÄHLER"}, {"id": "LENA", "name": "Lena"}],
+             "kapitel": [{"nr": 1, "szenen": [{"nr": 1, "titel": "A"}]}]}
+        sc = S.StoryWriter(M(), log=lambda *a: None).write_scene(c, 0, [], "", 100)
+        self.assertEqual(sc["attempts"], 2)
+        self.assertFalse(any(i.get("placeholder") for i in sc["items"]))
+
+
 class AudioTests(unittest.TestCase):
     def test_loudness_reference(self):
         sr = 48000

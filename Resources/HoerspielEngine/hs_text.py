@@ -169,6 +169,10 @@ def normalize_for_speech(text):
 
 # MARK: Drehbuch
 
+# Platzhalter aus der Formatbeschreibung, die kleine Modelle wörtlich übernehmen („KENNUNG: …“) – keine Figur
+# (gefunden in der App-Abnahme am 17.11.2026 mit Qwen3.5 4B: eine Figur „KENNUNG“ sprach eine ganze Szene)
+PLACEHOLDER_SPEAKERS = {"KENNUNG", "FIGUR", "ROLLE", "NAME", "SPRECHER", "SPRECHERIN", "PERSON", "CHARACTER", "SPEAKER"}
+
 CUE_TYPES = {"GERÄUSCH": "sfx", "GERAEUSCH": "sfx", "SFX": "sfx", "ATMO": "atmo", "ATMOSPHÄRE": "atmo",
              "MUSIK": "music", "MUSIC": "music", "PAUSE": "pause", "SZENE": "scene"}
 _CUE = re.compile(r"^\s*\[\s*([A-ZÄÖÜa-zäöü]+)\s*:?\s*([^\]]*)\]\s*$")
@@ -230,6 +234,10 @@ def parse_script(text, known_speakers=None, aliases=None):
                 continue
             is_role = key in known or raw_name.replace("_", " ").replace("-", " ").isupper() or known_speakers is None
             if is_role and key:
+                if key in PLACEHOLDER_SPEAKERS and key not in known:
+                    items.append({"type": "line", "speaker": "ERZÄHLER", "emotion": (m.group(2) or "").strip(),
+                                  "text": m.group(3).strip().strip('"„“'), "placeholder": True})
+                    continue
                 speaker = known.get(key, key)
                 items.append({"type": "line", "speaker": speaker, "emotion": (m.group(2) or "").strip(),
                               "text": m.group(3).strip().strip('"„“')})

@@ -194,10 +194,11 @@ Antworte NUR mit JSON in genau dieser Form:
  "aufloesung": ""}}"""
 
 
-FORMAT_RULES = """Format – jede Zeile genau eine der folgenden Formen, sonst nichts:
+FORMAT_RULES = """Format – jede Zeile genau eine der folgenden Formen, sonst nichts. Vor dem Doppelpunkt steht immer die
+Kennung einer Figur aus der Figurenliste (in GROSSBUCHSTABEN), nie ein Platzhalter:
 ERZÄHLER: kurzer erzählender Text (Gegenwart oder Präteritum, bildhaft, knapp)
-KENNUNG: gesprochener Dialog der Figur
-KENNUNG (Gefühl): Dialog mit Regieanweisung zum Tonfall, z. B. (flüsternd), (aufgeregt), (ängstlich), (wütend)
+JONAS: gesprochener Dialog der Figur mit der Kennung JONAS
+MIRA (flüsternd): Dialog mit Regieanweisung zum Tonfall, z. B. (flüsternd), (aufgeregt), (ängstlich), (wütend)
 [ATMO: deutsche Beschreibung | english sound description]   – Hintergrundgeräusch der Szene, einmal am Anfang
 [GERÄUSCH: deutsche Beschreibung | english sound effect]      – einzelnes Geräusch an der passenden Stelle
 [MUSIK: Spannung | english music description]                 – nur für Übergänge oder Höhepunkte
@@ -380,6 +381,16 @@ class StoryWriter:
                              temperature=0.85 if attempt == 0 else 0.75, repetition_penalty=1.08)
             items = parse_script(text, ids, aliases)
             rep = repetition_ratio(" ".join(i["text"] for i in items if i["type"] == "line"))
+            placeholders = sum(1 for i in items if i.get("placeholder"))
+            if placeholders and attempt < 2:
+                self.log(f"[Geschichte] Szene {index + 1}: {placeholders} Zeilen ohne echte Figur („KENNUNG“) – neuer Versuch")
+                msgs = msgs[:2] + [{"role": "assistant", "content": text[:6000]},
+                                   {"role": "user", "content": "Vor dem Doppelpunkt muss die Kennung einer Figur aus der "
+                                    f"Figurenliste stehen ({', '.join(ids)}), nicht das Wort KENNUNG. Schreibe die Szene "
+                                    "vollständig neu im richtigen Format."}]
+                if best is None:
+                    best = (text, items, rep, attempt + 1, 0)
+                continue
             if rep >= 0.2:
                 self.log(f"[Geschichte] Szene {index + 1}: Wiederholungen ({rep}) – neuer Versuch")
                 if best is None:
