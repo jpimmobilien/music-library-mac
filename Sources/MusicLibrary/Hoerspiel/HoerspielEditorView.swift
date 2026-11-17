@@ -169,15 +169,15 @@ private struct HSSceneEditor: View {
             let s = p.scenes[index]
             VStack(alignment: .leading, spacing: 12) {
                 HStack(spacing: 10) {
-                    TextField("Titel", text: binding(\.title)).textFieldStyle(.plain).font(Typo.inter(17, .semibold))
-                    Picker("", selection: binding(\.room)) {
+                    TextField("Titel", text: binding(\.title, s)).textFieldStyle(.plain).font(Typo.inter(17, .semibold))
+                    Picker("", selection: binding(\.room, s)) {
                         ForEach(HSRoom.all, id: \.id) { r in Text(r.name).tag(r.id) }
                     }
                     .labelsHidden().frame(width: 170).help("Raumklang der Szene")
                 }
                 VStack(alignment: .leading, spacing: 4) {
                     HSFormat.label("Handlung dieser Szene", colors)
-                    TextEditor(text: binding(\.outline))
+                    TextEditor(text: binding(\.outline, s))
                         .font(Typo.inter(13, .regular)).scrollContentBackground(.hidden)
                         .frame(minHeight: 50, maxHeight: 90).padding(6)
                         .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(colors.fieldFill))
@@ -247,9 +247,22 @@ private struct HSSceneEditor: View {
         }
     }
 
-    private func binding<T>(_ kp: WritableKeyPath<HSScene, T>) -> Binding<T> {
-        Binding(get: { hs.production(productionID)!.scenes[index][keyPath: kp] },
-                set: { v in hs.update(productionID) { $0.scenes[index][keyPath: kp] = v; $0.markChanged(scene: $0.scenes[index].id) } })
+    /// Bindung an ein Feld der Szene. Sicher, wenn die Produktion inzwischen weg ist (Papierkorb, neue Daten) oder
+    /// weniger Szenen hat: dann gilt der Wert beim Aufbau, und Änderungen werden verworfen (vorher: Absturz durch „!“,
+    /// gefunden beim Erzeugen der Vorschaubilder).
+    private func binding<T>(_ kp: WritableKeyPath<HSScene, T>, _ scene: HSScene) -> Binding<T> {
+        let fallback = scene[keyPath: kp]
+        let id = productionID, i = index
+        return Binding(get: {
+            guard let p = hs.production(id), p.scenes.indices.contains(i) else { return fallback }
+            return p.scenes[i][keyPath: kp]
+        }, set: { v in
+            hs.update(id) { pr in
+                guard pr.scenes.indices.contains(i) else { return }
+                pr.scenes[i][keyPath: kp] = v
+                pr.markChanged(scene: pr.scenes[i].id)
+            }
+        })
     }
 }
 
