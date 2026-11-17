@@ -164,6 +164,20 @@ Zweiter Lauf nach den Korrekturen (17.11., 03:06): **23 von 23 Prüfungen bestan
 Die Zeiten stammen vom virtuellen M1 mit 3 Kernen und dem kleinen Geschichtenmodell; auf dem M5 Pro mit Gemma 4
 sind sie nicht gemessen. Musik (KI-Musik) war in diesem Lauf nicht eingerichtet und wurde mit Hinweis übersprungen.
 
+**10-Minuten-Hörspiel im Prüfstand (macOS 26.7, virtueller M1, mlx-audio 0.6.5):** Drehbuch aus dem ersten
+Gemma-Lauf (6 Szenen, 90 Repliken, 1062 Wörter), 7 Stimmen, Musik über die vorhandene KI-Musik (ACE-Step 1.5, 4
+Stücke: Titel, Spannung, Übergang, Abspann).
+
+| Messung | Ergebnis |
+|---|---|
+| Länge | 8:23 min (503 s), 6 Kapitelmarken |
+| Lautheit / Spitze | −16,0 LUFS / −1,0 dBFS |
+| Sprache über Musik/Hintergrund | 17,9 dB |
+| Whisper-Fehlerrate | 1,3 % je Replik, 1,4 % über die fertige Mischung |
+| Stimmen verwechselt | 0 von 90 Repliken näher an einer anderen Figur; Ähnlichkeit zur eigenen Referenz 0,74–0,85 (eine Replik von Lena 0,41) |
+| Geräusche | in diesem Lauf noch ausgefallen (mlx-audio 0.6.5, siehe App-Abnahme – mit 0.6.6 behoben) |
+| Rechenzeit (virtueller M1) | Stimmen 7 min entwerfen + 62 min sprechen (Echtzeitfaktor 10), Musik: Modell laden 51 min, je Stück 6–8 min, Mischen 2 min, gesamt 2:32 h |
+
 <!-- MAC-PRODUKTION -->
 
 
