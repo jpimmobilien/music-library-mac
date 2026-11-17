@@ -122,6 +122,13 @@ Apple Silicon, macOS 26.7 (virtueller M1, 3 Kerne, 7 GB), mlx-audio 0.6.5 – 4 
 | Piper thorsten-high | 4,3 % | 0,8 | – | – | 0,79 |
 | Qwen3-TTS: jede Zeile neu entwerfen | 2,2 % | 5,7 | 0,45 | 0,39 | **0,36** |
 
+Wiederholung auf macOS 15.8 (ebenfalls virtueller M1): gleiche Werte (Qwen-Klonen 1,3 %, Konstanz 0,78; Piper hier
+1,9 %) – die Ergebnisse sind reproduzierbar (feste Startwerte).
+
+Kleines Sprachmodell auf dem Mac (Qwen3.5 4B, MLX, virtueller M1): 13 Token/s, 3-Szenen-Geschichte mit Lektorat in
+10 min. Das Lektorat fand 5 Widersprüche; eine Überarbeitung mit Wiederholungen (0,26) wurde automatisch verworfen,
+die alte Fassung blieb – die Sicherung greift.
+
 Ergebnis: Das Verfahren der App (einmal entwerfen, dann klonen) ist am besten verständlich und hält die Stimme
 über alle Zeilen konstant; jede Zeile neu zu entwerfen ergibt wechselnde Stimmen (0,36). Ziffern liest Qwen auch
 ohne Ausschreiben richtig (0 % Fehler). Gefühlsangaben verändern die Tonhöhenbewegung messbar kaum (z. B. Qwen
