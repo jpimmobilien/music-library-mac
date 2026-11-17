@@ -1,0 +1,61 @@
+{
+  "environment": {
+    "python": "3.12.10",
+    "machine": "arm64",
+    "system": "Darwin",
+    "macos": "26.7.2",
+    "ram_gb": 7.0,
+    "cpu": "Apple M1 (Virtual)",
+    "cores": 3,
+    "mlx": "?",
+    "mlx_audio": "?",
+    "mlx_lm": "0.32.2",
+    "mlx_whisper": "0.4.3",
+    "mlx_device": "Device(gpu, 0)"
+  },
+  "steps": [
+    {
+      "name": "Sprachmodell bereit",
+      "time": "00:36:19",
+      "model": "mlx-community/Qwen3.5-4B-MLX-4bit",
+      "load_seconds": 49.5
+    },
+    {
+      "name": "Geschichte fertig",
+      "time": "00:44:52",
+      "seconds": 513.1,
+      "words": 490,
+      "estimated_minutes": 4.1,
+      "scenes": 3,
+      "figures": 6,
+      "tokens_per_second": 14.7,
+      "llm_stats": {
+        "prompt_tokens": 14243,
+        "completion_tokens": 7549,
+        "seconds": 512.6925716400146
+      },
+      "review": {
+        "problems": [],
+        "revised": [],
+        "seconds": 92.5
+      },
+      "clues": [
+        {
+          "spur": "Das leuchtende Kreuz am Schalter ist falsch positioniert und reicht nicht für eine normale Zugverbindung.",
+          "szene": 2,
+          "bedeutung": "Es zeigt, dass die Gruppe in eine falsche Verbindung eingestiegen ist und die Lokomotive nicht an den richtigen Ort führt."
+        },
+        {
+          "spur": "Die Alarmmeldung war ein mechanischer Fehler, keine elektronische Warnung.",
+          "szene": 2,
+          "bedeutung": "Es deutet darauf hin, dass die Gruppe in einer physischen Falle steht, nicht in einer digitalen."
+        },
+        {
+          "spur": "Frau Reinhardt trug keine Uniform, sondern ein altes Anzug.",
+          "szene": 3,
+          "bedeutung": "Es zeigt, dass sie keine Angestellte ist, sondern die tatsächliche Besitzerin des Gebäudes."
+        }
+      ]
+    }
+  ]
+}

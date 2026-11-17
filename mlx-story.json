@@ -1,0 +1,630 @@
+{
+  "concept": {
+    "titel": "Der letzte Zug der Nacht",
+    "untertitel": "Mysterien am Bahnhof Westkreuz",
+    "logline": "Vier Bewunderer alter Technik verirren sich in einem verlassenen Bahnhof im Sommer 1984, wo ein mysteriöser Signalstrom sie in eine Fallstricke verwickelt, die nur mit mutiger Detektivarbeit geklärt werden kann.",
+    "epoche_ort": "Sommer 1984, Berlin (West), ein verlassener ehemaliger Personenbahnhof im Westen des Bezirks",
+    "ton": "Atmosphäre der deutschen Jugendkrimi der 80er: melancholische Melancholie, nostalgisch, leicht ironischer Humor, starker Fokus auf atmosphärische Geräuschkulissen (Zuggeräusche, Echo), klare, schnürstarke Dialoge mit abrupten Schwenken.",
+    "figuren": [
+      {
+        "id": "ERZÄHLER",
+        "name": "Hans-Martin",
+        "rolle": "Erzähler",
+        "alter": 45,
+        "geschlecht": "m",
+        "beschreibung": "Ein ruhiger, bissiger Erzähler in den 50ern, der mit einer leichten Nasenstimme und einem leicht gewellten Rhythmus die Geschichte erzählt. Er wirkt wie ein alter Freund, der die Zuhörer an die Hand nimmt.",
+        "stimme": "Nasenhaft, mittelhohe Tonlage, ruhiges Tempo, warme, leicht summierte Klangfarbe.",
+        "voice_en": "Age: 45, Gender: Male, Pitch: Medium-Low, Timbre: Nasal/Warm, Tempo: Moderate, Effect: Intimate, storytelling companion."
+      },
+      {
+        "id": "LENA",
+        "name": "Lena Vogel",
+        "rolle": "Mitinzeressent",
+        "alter": 16,
+        "geschlecht": "w",
+        "beschreibung": "Die ruhigste der Gruppe, eine 'Technikerin mit Herz'. Sie beobachtet alles aus der Ferne und merkt sofort, dass etwas nicht stimmt. Cool und überlegen.",
+        "stimme": "Weiche, leichte Nasenstimme, moderate Tonlage, ruhiges Tempo, klare, aber nicht laut klingende Stimme.",
+        "voice_en": "Age: 16, Gender: Female, Pitch: Medium-High, Timbre: Soft/Nasal hint, Tempo: Slow, Effect: Observant, calm."
+      },
+      {
+        "id": "TOMAS",
+        "name": "Tomas Kuhn",
+        "rolle": "Mitinzeressent",
+        "alter": 15,
+        "geschlecht": "m",
+        "beschreibung": "Der technisch begabte Kopf. Er liebt es, Dinge zu reparieren und hat eine eigene Werkstatt im Keller. Seine Stimme ist energisch und mit etwas technischem Gejammer versehen.",
+        "stimme": "Mittelhohe Tonlage, leise, manchmal mit technischem Gejammer, energisches Tempo, klare, aber leicht unaufgedrungene Stimme.",
+        "voice_en": "Age: 15, Gender: Male, Pitch: Medium, Timbre: Clear, Tempo: Fast/Enthusiastic, Effect: Tech-savvy but slightly reserved."
+      },
+      {
+        "id": "JARA",
+        "name": "Jara Schmidt",
+        "rolle": "Mitinzeressent",
+        "alter": 14,
+        "geschlecht": "w",
+        "beschreibung": "Die extrovertierte, lustige Zicke. Sie lacht zu viel und merkt am wenigsten etwas, bis es zu spät ist. Eine schrillere Stimme mit mehr Höhe als die anderen.",
+        "stimme": "Höhere Tonlage, leise, energisches Tempo, schrillere, aber jugendliche Klangfarbe.",
+        "voice_en": "Age: 14, Gender: Female, Pitch: High, Timbre: Bright/Youthful, Tempo: Fast, Effect: Energetic, slightly naive."
+      },
+      {
+        "id": "DIEALTERE",
+        "name": "Frau Reinhardt",
+        "rolle": "Dinzeressent",
+        "alter": 72,
+        "geschlecht": "w",
+        "beschreibung": "Die wahre Inhaber des Bahnhofs, eine sitzende Witwe, die seit Jahrzehnten hier wohnt. Ihre Stimme ist tief, fast flüstern, mit viel Respekt und unausgesprochenem Schrecken.",
+        "stimme": "Tiefe, fast flüstern, ruhiges Tempo, tiefe, gedämpfte Klangfarbe.",
+        "voice_en": "Age: 72, Gender: Female, Pitch: Low, Timbre: Deep/Dampened, Tempo: Slow, Effect: Authoritative but fearful."
+      },
+      {
+        "id": "MUSIK",
+        "name": "Musik",
+        "rolle": "Nebenfigur",
+        "alter": 40,
+        "geschlecht": "m",
+        "beschreibung": "vom Sprachmodell während des Schreibens ergänzt",
+        "stimme": "",
+        "voice_en": "An adult German man, natural mid-range voice, clear diction",
+        "ergaenzt": true
+      }
+    ],
+    "kapitel": [
+      {
+        "nr": 1,
+        "titel": "Der Bahnhof der verlorenen Zeit",
+        "szenen": [
+          {
+            "nr": 1,
+            "titel": "Die Verwirrung im Bahnhof",
+            "ort": "Bahnhofshalle (Bahnhof Westkreuz, 1984)",
+            "raum": "halle",
+            "figuren": [
+              "ERZÄHLER",
+              "LENA",
+              "TOMAS",
+              "JARA"
+            ],
+            "inhalt": "Vier Jugendliche verirren sich in einem verlassenen Bahnhof und fallen in eine zitternde, dunkle Atmosphäre, als sie auf ein leuchtendes Signal und eine alte Lokomotive treffen. Jara beginnt, das Licht zu fangen, während Tomas versucht, die mechanischen Geräusche zu interpretieren.",
+            "atmo_en": "Faint echo of distant train whistle, flickering fluorescent lights buzzing, heavy wind howling through metal grates."
+          },
+          {
+            "nr": 2,
+            "titel": "Der falsche Schalter",
+            "ort": "Bahnhofshalle (Bahnhof Westkreuz, 1984)",
+            "raum": "halle",
+            "figuren": [
+              "ERZÄHLER",
+              "LENA",
+              "TOMAS",
+              "JARA"
+            ],
+            "inhalt": "Die Gruppe erreicht einen Schalter, der anstelle von üblichen Kennzeichnungen ein leuchtendes Kreuz zeigt. Jara tippt fälschlicherweise auf das Kreuz, was eine laute Alarmmeldung in der Halle auslöst. Lena merkt sofort, dass das Kreuz nicht an den richtigen Schalter gehört.",
+            "atmo_en": "Sharp metallic clang of alarm bell, buzzing fluorescent lights flickering erratically, wind howling through metal grates."
+          },
+          {
+            "nr": 3,
+            "titel": "Die alte Inhaber",
+            "ort": "Bahnhofshalle (Bahnhof Westkreuz, 1984)",
+            "raum": "halle",
+            "figuren": [
+              "ERZÄHLER",
+              "LENA",
+              "TOMAS",
+              "JARA",
+              "DIE_ALTERE"
+            ],
+            "inhalt": "Frau Reinhardt erscheint vor ihnen, die Gruppe in Angst und Überraschung. Sie erklärt, dass das Kreuz ein falscher Schalter ist, der zur Lokomotive führt, und fragt die Jugendlichen, ob sie den Schalter wieder auf das normale Kreuz setzen wollen.",
+            "atmo_en": "Heavy footsteps on concrete, distant train whistle fading, wind howling through metal grates."
+          }
+        ]
+      }
+    ],
+    "spuren": [
+      {
+        "spur": "Das leuchtende Kreuz am Schalter ist falsch positioniert und reicht nicht für eine normale Zugverbindung.",
+        "szene": 2,
+        "bedeutung": "Es zeigt, dass die Gruppe in eine falsche Verbindung eingestiegen ist und die Lokomotive nicht an den richtigen Ort führt."
+      },
+      {
+        "spur": "Die Alarmmeldung war ein mechanischer Fehler, keine elektronische Warnung.",
+        "szene": 2,
+        "bedeutung": "Es deutet darauf hin, dass die Gruppe in einer physischen Falle steht, nicht in einer digitalen."
+      },
+      {
+        "spur": "Frau Reinhardt trug keine Uniform, sondern ein altes Anzug.",
+        "szene": 3,
+        "bedeutung": "Es zeigt, dass sie keine Angestellte ist, sondern die tatsächliche Besitzerin des Gebäudes."
+      }
+    ],
+    "aufloesung": "Die Gruppe wurde nicht von einem Mörder bedroht, sondern durch einen physikalischen Fehler in der Schalteranlage. Das leuchtende Kreuz war ein falscher Schalter, der die Lokomotive in eine tote Gleisstelle lenkte, wo sie stehen bleiben würde. Jara hat das falsche Kreuz betätigt, was den Alarm ausgelöst hat. Frau Reinhardt hat die Gruppe beruhigt und erklärt, dass sie einfach den falschen Schalter korrigiert haben müssen. Die Jugendlichen haben den Schalter wieder auf das normale Kreuz gesetzt, die Lokomotive ist abgefahren und die Gruppe kann sich wieder nach Hause begeben.",
+    "_minutes": 3.0,
+    "_mode": "hoerspiel",
+    "_language": "de"
+  },
+  "scenes": [
+    {
+      "chapter": 1,
+      "scene": 1,
+      "title": "Die Verwirrung im Bahnhof",
+      "room": "halle",
+      "atmo_en": "Faint echo of distant train whistle, flickering fluorescent lights buzzing, heavy wind howling through metal grates.",
+      "text": "[MUSIK: Eine melancholige Akkordeon-Melodie lässt nach | dim, slow acoustic guitar with reverb]\n[ATMO: Hitze treibt die Dächer aus dem Boden | hot summer breeze carrying dust and distant cicadas]\nERZÄHLER: Vier Jugendliche waren durch ein falsches Gleissignal in diesen verlassenen Bezirk geraten.\n\n[GERÄUSCH: Stechender Ton einer wehenden Flagge | high-pitched mechanical whirring]\n\nERZÄHLER: Licht prallte auf den rostigen Gleisnamen an der Wand.\n\nJARA (laut): Nicht mehr! Da ist die Lampe!\n\nTOMAS (konzentriert): Es jammert hier. Die Kupferröhren ... ja, sie schütteln sich im Wind.\n\n[GERÄUSCH: Ein metallenes Klack | metallic clank]\n\nJARA (explodierend): Na ja, es könnte doch ein Geist sein!\n\nTOMAS: Nein, ich sehe keine Ahnung in diesem Bett. Es ist nur ein Schaltkasten.\n\n[GERÄUSCH: Plötzlicher, scharfer Ton einer Feuerwehrsirene | sharp alarm siren]\n\nLENA (flüsternd): Jara ... du hast die Lichter angezogen.\n\nJARA (verwirrt): Was? Wie kann ich das nicht besser sehen?\n\nTOMAS: Ruck! Da hinten am Schalterfeld. Die Lampe hat blitzartig aufleuchten.\n\n[GERÄUSCH: Ein gequältes Rattern | frantic mechanical grinding]\n\nLENA (schnell): Wir müssen jetzt weg, bevor die Bahn kommt!\n\n[PAUSE: 1.5]\nLena (ruhig, aber bestimmt): Siehst du das? Der Wassertank ist leer.\n\nJara (verängstigt): Oh Gott... der Schalter knistert da!\n\nTomas (dringend): Jara, nein! Betätig nicht das rote Kreuz!\n\n[GERÄUSCH: Ein scharfes Piepen einer Alarmanlage | beeping electronic alarm]\n\nLENA (hart): Jetzt wird die Lokomotive angefahren!",
+      "items": [
+        {
+          "type": "music",
+          "de": "Eine melancholige Akkordeon-Melodie lässt nach",
+          "en": "dim, slow acoustic guitar with reverb"
+        },
+        {
+          "type": "atmo",
+          "de": "Hitze treibt die Dächer aus dem Boden",
+          "en": "hot summer breeze carrying dust and distant cicadas"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Vier Jugendliche waren durch ein falsches Gleissignal in diesen verlassenen Bezirk geraten."
+        },
+        {
+          "type": "sfx",
+          "de": "Stechender Ton einer wehenden Flagge",
+          "en": "high-pitched mechanical whirring"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Licht prallte auf den rostigen Gleisnamen an der Wand."
+        },
+        {
+          "type": "line",
+          "speaker": "JARA",
+          "emotion": "laut",
+          "text": "Nicht mehr! Da ist die Lampe!"
+        },
+        {
+          "type": "line",
+          "speaker": "TOMAS",
+          "emotion": "konzentriert",
+          "text": "Es jammert hier. Die Kupferröhren ... ja, sie schütteln sich im Wind."
+        },
+        {
+          "type": "sfx",
+          "de": "Ein metallenes Klack",
+          "en": "metallic clank"
+        },
+        {
+          "type": "line",
+          "speaker": "JARA",
+          "emotion": "explodierend",
+          "text": "Na ja, es könnte doch ein Geist sein!"
+        },
+        {
+          "type": "line",
+          "speaker": "TOMAS",
+          "emotion": "",
+          "text": "Nein, ich sehe keine Ahnung in diesem Bett. Es ist nur ein Schaltkasten."
+        },
+        {
+          "type": "sfx",
+          "de": "Plötzlicher, scharfer Ton einer Feuerwehrsirene",
+          "en": "sharp alarm siren"
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "flüsternd",
+          "text": "Jara ... du hast die Lichter angezogen."
+        },
+        {
+          "type": "line",
+          "speaker": "JARA",
+          "emotion": "verwirrt",
+          "text": "Was? Wie kann ich das nicht besser sehen?"
+        },
+        {
+          "type": "line",
+          "speaker": "TOMAS",
+          "emotion": "",
+          "text": "Ruck! Da hinten am Schalterfeld. Die Lampe hat blitzartig aufleuchten."
+        },
+        {
+          "type": "sfx",
+          "de": "Ein gequältes Rattern",
+          "en": "frantic mechanical grinding"
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "schnell",
+          "text": "Wir müssen jetzt weg, bevor die Bahn kommt!"
+        },
+        {
+          "type": "pause",
+          "de": "1.5",
+          "en": "1.5",
+          "seconds": 1.5
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "ruhig, aber bestimmt",
+          "text": "Siehst du das? Der Wassertank ist leer."
+        },
+        {
+          "type": "line",
+          "speaker": "JARA",
+          "emotion": "verängstigt",
+          "text": "Oh Gott... der Schalter knistert da!"
+        },
+        {
+          "type": "line",
+          "speaker": "TOMAS",
+          "emotion": "dringend",
+          "text": "Jara, nein! Betätig nicht das rote Kreuz!"
+        },
+        {
+          "type": "sfx",
+          "de": "Ein scharfes Piepen einer Alarmanlage",
+          "en": "beeping electronic alarm"
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "hart",
+          "text": "Jetzt wird die Lokomotive angefahren!"
+        }
+      ],
+      "words": 118,
+      "repetition": 0.0,
+      "unknown_speakers": [],
+      "attempts": 1,
+      "continued": 1,
+      "seconds": 43.4,
+      "summary": "Vier Jugendliche, darunter Jara, Tomas und Lena, befinden sich in einer verlassenen, heißen Bahnstation, die sie durch ein falsches Signal verirrt haben. Während Jara versehentlich eine Lampe am Schalterfeld anzieht, die auf eine gequälte mechanische Reaktion der Umgebung reagiert, warnt Lena vor dem leeren Wassertank und dem knisternden Schalter. Tomas versucht Jara, das rote Kreuz am Schalterfeld nicht zu betätigen, da eine scharfe Alarmmeldeung darauf hindeutet, dass die Lokomotive nun angefahren wird. Am Ende der Szene stehen die Figuren in Panik, als die Gefahr einer bevorstehenden Zugfahrt unmittelbar droht."
+    },
+    {
+      "chapter": 1,
+      "scene": 2,
+      "title": "Der falsche Schalter",
+      "room": "halle",
+      "atmo_en": "Sharp metallic clang of alarm bell, buzzing fluorescent lights flickering erratically, wind howling through metal grates.",
+      "text": "[ATMO: Hitze bricht durch die Dächer | heat cracking through the roofs, distant crows]\n[GERÄUSCH: Das Wellenläufen der Schienen | the humming of railway tracks]\nMUSIK: Ein rissiges, halbtotes Klappern | crackling half-dead noise\n\nERZÄHLER: Das Licht am Schalterfeld blinkte matt, als würde es keuchen.\n\nTOMAS (dringend): Jara, die Hand weg! Das Feld ist falsch!\n\nJARA (lächelnd): Was? Ich habe doch nur die rote Lampe angeglüht!\n\nLENA (ruhig): Seht euch an, Tomas. Das Kreuz ist leer. Es zeigt keinen Gleisplan, sondern nur Dunkelheit.\n\n[GERÄUSCH: Ein scharfes Piepen | a sharp electronic beep]\nTOMAS (wütend): Warum piepst das Ding? Das war kein Signal!\n\nJARA (ängstlich): Oh Gott... der Schalter knistert da jetzt!\n\nLENA (hart): Jetzt wird die Lokomotive angefahren, wenn sie das Licht anmachen!\n\nERZÄHLER: Jara tippte unbewusst auf das leuchtende Kreuz.\n\n[GERÄUSCH: Ein knurrendes Metall | a screeching metal screech]\nJARA (verängstigt): Was war das?! Eine Warnung?\n\nLENA (bestimmt): Nein. Ein Fehler. Das Kreuz führt die Lokomotive nicht zur richtigen Spur.\n\nTOMAS (schnell): Wir müssen den Alarm stoppen, bevor die Räder sich drehen!\n\nERZÄHLER: Jara hatte den falschen Schalter bereits verfasst.",
+      "items": [
+        {
+          "type": "atmo",
+          "de": "Hitze bricht durch die Dächer",
+          "en": "heat cracking through the roofs, distant crows"
+        },
+        {
+          "type": "sfx",
+          "de": "Das Wellenläufen der Schienen",
+          "en": "the humming of railway tracks"
+        },
+        {
+          "type": "line",
+          "speaker": "MUSIK",
+          "emotion": "",
+          "text": "Ein rissiges, halbtotes Klappern | crackling half-dead noise"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Das Licht am Schalterfeld blinkte matt, als würde es keuchen."
+        },
+        {
+          "type": "line",
+          "speaker": "TOMAS",
+          "emotion": "dringend",
+          "text": "Jara, die Hand weg! Das Feld ist falsch!"
+        },
+        {
+          "type": "line",
+          "speaker": "JARA",
+          "emotion": "lächelnd",
+          "text": "Was? Ich habe doch nur die rote Lampe angeglüht!"
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "ruhig",
+          "text": "Seht euch an, Tomas. Das Kreuz ist leer. Es zeigt keinen Gleisplan, sondern nur Dunkelheit."
+        },
+        {
+          "type": "sfx",
+          "de": "Ein scharfes Piepen",
+          "en": "a sharp electronic beep"
+        },
+        {
+          "type": "line",
+          "speaker": "TOMAS",
+          "emotion": "wütend",
+          "text": "Warum piepst das Ding? Das war kein Signal!"
+        },
+        {
+          "type": "line",
+          "speaker": "JARA",
+          "emotion": "ängstlich",
+          "text": "Oh Gott... der Schalter knistert da jetzt!"
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "hart",
+          "text": "Jetzt wird die Lokomotive angefahren, wenn sie das Licht anmachen!"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Jara tippte unbewusst auf das leuchtende Kreuz."
+        },
+        {
+          "type": "sfx",
+          "de": "Ein knurrendes Metall",
+          "en": "a screeching metal screech"
+        },
+        {
+          "type": "line",
+          "speaker": "JARA",
+          "emotion": "verängstigt",
+          "text": "Was war das?! Eine Warnung?"
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "bestimmt",
+          "text": "Nein. Ein Fehler. Das Kreuz führt die Lokomotive nicht zur richtigen Spur."
+        },
+        {
+          "type": "line",
+          "speaker": "TOMAS",
+          "emotion": "schnell",
+          "text": "Wir müssen den Alarm stoppen, bevor die Räder sich drehen!"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Jara hatte den falschen Schalter bereits verfasst."
+        }
+      ],
+      "words": 116,
+      "repetition": 0.0,
+      "unknown_speakers": [
+        "MUSIK"
+      ],
+      "attempts": 1,
+      "continued": 0,
+      "seconds": 33.8,
+      "summary": "Tomas und Jara erkennen in der Lichtschalteranlage einen fatalen Fehler, da das Kreuz keine Gleisplan-Anzeige, sondern nur Dunkelheit zeigt. Lena warnt, dass die Lokomotive sofort angefahren wird, sobald Jara das Licht am falschen Schalter anmacht, und sie versucht, den Alarm zu stoppen. Am Ende der Szene hat Jara jedoch bereits den falschen Schalter aktiviert, was zu einem metallischen Knarren führt und die Gefahr der Lokomotivfahrt unvermeidbar macht."
+    },
+    {
+      "chapter": 1,
+      "scene": 3,
+      "title": "Die alte Inhaber",
+      "room": "halle",
+      "atmo_en": "Heavy footsteps on concrete, distant train whistle fading, wind howling through metal grates.",
+      "text": "[ATMO: Staubtanz im Lichtkegel | dust dancing in a beam of light, distant echo of steam]\n[MUSIK: Sparsame Akkorde, die langsam in einen tiefen Bass übergehen]\nERZÄHLER: Und dann trat sie in den Staub ihrer eigenen Halle.\n\nDIE_ALTERE (tief, fast flüsternd): Ich habe lange darauf gewartet.\n\nJARA (ängstlich, schrill): Wer seid ihr denn?! Eine Wache aus der Fremde?\n\nDIE_ALTERE (ruhig, fest): Nichts von dem, was ihr denkt. Ich bin eigenverantwortlich in diesem Ort verwurzelt. Mein Anzug war eh alt – warum sollte ich Uniform tragen?\n\nLENA (bestimmt, ruhig): Diese Gestik zeigt nichts anderes. Sie sind kein Angestellter, sondern die Besitzerin dieses Gebäudes seit Jahrzehnten.\n\nDIE_ALTERE (lächelnd, fromm): Genau. Und sie wissen etwas von der Schalterfalle.\n\nTOMAS (schnell, technisch): Der falsche Schalter? Jara hat ja das rote Kreuz betätigt –\n\nDIE_ALTERE (sanft, erdend): Das war ein Fehler der Jugend. Wir müssen es korrigieren.\n\nJARA (erregt, auch fürchtend): Aber die Lokomotive ist bereits in Bewegung! Der Alarm war ja laut!\n\nDIE_ALTERE (dringend): Nicht heute, mein Kind. Betätigt das normale Kreuz hinter mir.\n\nTOMAS (stammelnd): Das Licht... es zeigt keinen Weg zur Spur, sondern nur Dunkelheit!\n\nDIE_ALTERE (entschieden): Dann geht es. Das Kreuz wird den Zug zurückführen, wo er stehen bleiben muss.\n\nJARA (zögernd): Ich... ich schreibe nicht.\n\nDIE_ALTERE (leise, fast so): Es ist ihre Aufgabe, Jens. Nicht der Schalter.\n\n[GERÄUSCH: Ein metal click, der wie ein Glockengeläut klingt]\nTOMAS (schnell): Ja! Das richtige Kreuz.\n\nJARA (schüchtern, aber entschlossen): Okay. Ich mache es.\n\n[GERÄUSCH: Klares Klack, das den Alarm stilllegt]\nLENA (leicht erleichtert): Der Schalter ist richtig gestellt.\n\nDIE_ALTERE (seufzend, zufrieden): Gut. Jetzt kann der Zug weiterfahren – oder hier stehen bleiben.\n\nTOMAS (enthusiastisch): Der Fehler ist behoben! Die Physik funktioniert wieder!\n\nDIE_ALTERE (leise): Nur ein kleiner Fehlerschluss. Kein tödliches Verbrechen hier.\n\nJARA (leicht erleichtert, aber immer noch aufgeregt): Aber die Lokomotive steht ja noch da!\n\nDIE_ALTERE (freundlich): Sie wird nicht wegfahren. Sie wird hier ruhen, bis der Morgen kommt.\n\n[PAUSE: 2.0]\nLENA (denkend, ruhig): Ein Schalter ohne Bedeutung für die Sicherheit?\n\nDIE_ALTERE (weisend): Sicherheit ist hier etwas anderes. Sie ist Ruhe in der Stille des Verlassenen.\n\n[GERÄUSCH: Fernes Rauschen von Zügen, das sich langsam entfernt]\nERZÄHLER: Ein Rätsel gelöst, aber keine Mörder getötet. Nur ein junger Irrtum, der durch senioren Rat korrigiert wurde.\n\n[PAUSE: 1.5]\n[MUSIK: Ein akkord, der langsam ausklingt in sanfte",
+      "items": [
+        {
+          "type": "atmo",
+          "de": "Staubtanz im Lichtkegel",
+          "en": "dust dancing in a beam of light, distant echo of steam"
+        },
+        {
+          "type": "music",
+          "de": "Sparsame Akkorde, die langsam in einen tiefen Bass übergehen",
+          "en": "Sparsame Akkorde, die langsam in einen tiefen Bass übergehen"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Und dann trat sie in den Staub ihrer eigenen Halle."
+        },
+        {
+          "type": "line",
+          "speaker": "DIEALTERE",
+          "emotion": "tief, fast flüsternd",
+          "text": "Ich habe lange darauf gewartet."
+        },
+        {
+          "type": "line",
+          "speaker": "JARA",
+          "emotion": "ängstlich, schrill",
+          "text": "Wer seid ihr denn?! Eine Wache aus der Fremde?"
+        },
+        {
+          "type": "line",
+          "speaker": "DIEALTERE",
+          "emotion": "ruhig, fest",
+          "text": "Nichts von dem, was ihr denkt. Ich bin eigenverantwortlich in diesem Ort verwurzelt. Mein Anzug war eh alt – warum sollte ich Uniform tragen?"
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "bestimmt, ruhig",
+          "text": "Diese Gestik zeigt nichts anderes. Sie sind kein Angestellter, sondern die Besitzerin dieses Gebäudes seit Jahrzehnten."
+        },
+        {
+          "type": "line",
+          "speaker": "DIEALTERE",
+          "emotion": "lächelnd, fromm",
+          "text": "Genau. Und sie wissen etwas von der Schalterfalle."
+        },
+        {
+          "type": "line",
+          "speaker": "TOMAS",
+          "emotion": "schnell, technisch",
+          "text": "Der falsche Schalter? Jara hat ja das rote Kreuz betätigt –"
+        },
+        {
+          "type": "line",
+          "speaker": "DIEALTERE",
+          "emotion": "sanft, erdend",
+          "text": "Das war ein Fehler der Jugend. Wir müssen es korrigieren."
+        },
+        {
+          "type": "line",
+          "speaker": "JARA",
+          "emotion": "erregt, auch fürchtend",
+          "text": "Aber die Lokomotive ist bereits in Bewegung! Der Alarm war ja laut!"
+        },
+        {
+          "type": "line",
+          "speaker": "DIEALTERE",
+          "emotion": "dringend",
+          "text": "Nicht heute, mein Kind. Betätigt das normale Kreuz hinter mir."
+        },
+        {
+          "type": "line",
+          "speaker": "TOMAS",
+          "emotion": "stammelnd",
+          "text": "Das Licht... es zeigt keinen Weg zur Spur, sondern nur Dunkelheit!"
+        },
+        {
+          "type": "line",
+          "speaker": "DIEALTERE",
+          "emotion": "entschieden",
+          "text": "Dann geht es. Das Kreuz wird den Zug zurückführen, wo er stehen bleiben muss."
+        },
+        {
+          "type": "line",
+          "speaker": "JARA",
+          "emotion": "zögernd",
+          "text": "Ich... ich schreibe nicht."
+        },
+        {
+          "type": "line",
+          "speaker": "DIEALTERE",
+          "emotion": "leise, fast so",
+          "text": "Es ist ihre Aufgabe, Jens. Nicht der Schalter."
+        },
+        {
+          "type": "sfx",
+          "de": "Ein metal click, der wie ein Glockengeläut klingt",
+          "en": "Ein metal click, der wie ein Glockengeläut klingt"
+        },
+        {
+          "type": "line",
+          "speaker": "TOMAS",
+          "emotion": "schnell",
+          "text": "Ja! Das richtige Kreuz."
+        },
+        {
+          "type": "line",
+          "speaker": "JARA",
+          "emotion": "schüchtern, aber entschlossen",
+          "text": "Okay. Ich mache es."
+        },
+        {
+          "type": "sfx",
+          "de": "Klares Klack, das den Alarm stilllegt",
+          "en": "Klares Klack, das den Alarm stilllegt"
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "leicht erleichtert",
+          "text": "Der Schalter ist richtig gestellt."
+        },
+        {
+          "type": "line",
+          "speaker": "DIEALTERE",
+          "emotion": "seufzend, zufrieden",
+          "text": "Gut. Jetzt kann der Zug weiterfahren – oder hier stehen bleiben."
+        },
+        {
+          "type": "line",
+          "speaker": "TOMAS",
+          "emotion": "enthusiastisch",
+          "text": "Der Fehler ist behoben! Die Physik funktioniert wieder!"
+        },
+        {
+          "type": "line",
+          "speaker": "DIEALTERE",
+          "emotion": "leise",
+          "text": "Nur ein kleiner Fehlerschluss. Kein tödliches Verbrechen hier."
+        },
+        {
+          "type": "line",
+          "speaker": "JARA",
+          "emotion": "leicht erleichtert, aber immer noch aufgeregt",
+          "text": "Aber die Lokomotive steht ja noch da!"
+        },
+        {
+          "type": "line",
+          "speaker": "DIEALTERE",
+          "emotion": "freundlich",
+          "text": "Sie wird nicht wegfahren. Sie wird hier ruhen, bis der Morgen kommt."
+        },
+        {
+          "type": "pause",
+          "de": "2.0",
+          "en": "2.0",
+          "seconds": 2.0
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "denkend, ruhig",
+          "text": "Ein Schalter ohne Bedeutung für die Sicherheit?"
+        },
+        {
+          "type": "line",
+          "speaker": "DIEALTERE",
+          "emotion": "weisend",
+          "text": "Sicherheit ist hier etwas anderes. Sie ist Ruhe in der Stille des Verlassenen."
+        },
+        {
+          "type": "sfx",
+          "de": "Fernes Rauschen von Zügen, das sich langsam entfernt",
+          "en": "Fernes Rauschen von Zügen, das sich langsam entfernt"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Ein Rätsel gelöst, aber keine Mörder getötet. Nur ein junger Irrtum, der durch senioren Rat korrigiert wurde."
+        },
+        {
+          "type": "pause",
+          "de": "1.5",
+          "en": "1.5",
+          "seconds": 1.5
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "[MUSIK: Ein akkord, der langsam ausklingt in sanfte"
+        }
+      ],
+      "words": 256,
+      "repetition": 0.0,
+      "unknown_speakers": [],
+      "attempts": 1,
+      "continued": 0,
+      "seconds": 53.4,
+      "summary": "Jara, Lena und Tomas finden die Besitzerin des Gebäudes, die als „Wache aus der Fremde\" identifiziert wird und erklärt, dass sie seit Jahrzehnten dort verwurzelt ist. Sie weist Jara an, das falsche rote Kreuz zu ignorieren und stattdessen das normale Kreuz hinter ihr zu betätigen, um den Alarm zu stören, während sie die Lokomotive anweist, nicht zu fahren, sondern hier zu ruhen. Am Ende ist der Schalter korrekt gestellt, der Alarm stillgelegt und die Lokomotive am Ort ihrer Störung verblieben, wobei nur Jara weiß, dass ihre Aufgabe es war, das richtige Kreuz zu drücken."
+    }
+  ],
+  "words": 490,
+  "review": {
+    "problems": [],
+    "revised": [],
+    "seconds": 92.5
+  },
+  "estimated_minutes": 4.1,
+  "seconds": 513.0,
+  "llm": "mlx-community/Qwen3.5-4B-MLX-4bit",
+  "llm_stats": {
+    "prompt_tokens": 14243,
+    "completion_tokens": 7549,
+    "seconds": 512.6925716400146
+  },
+  "prompt": "Erstelle ein spannendes deutsches Jugendkrimi-Hörspiel, das im Sommer 1984 spielt. Vier Jugendliche geraten in einen mysteriösen Kriminalfall rund um einen verlassenen Bahnhof. Es gibt mehrere Verdächtige, humorvolle Dialoge, überraschende Wendungen und ein spannendes Finale. Die Produktion soll sich an der Atmosphäre klassischer deutscher Jugendkrimi-Hörspiele der 1980er-Jahre orientieren."
+}
