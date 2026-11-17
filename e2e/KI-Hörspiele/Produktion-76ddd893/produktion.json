@@ -1,0 +1,1126 @@
+{
+  "cast" : {
+    "ERZÄHLER" : {
+      "instruct" : "Reif, männlich, tiefe Tonhöhe, sanft, klar, ruhig. Speaks native German with clear, natural pronunciation.",
+      "kind" : "designed",
+      "referenceFile" : "stimmen\/ERZÄHLER.wav",
+      "referenceText" : "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+      "seed" : 137040
+    },
+    "LEO" : {
+      "instruct" : "Jung, männlich, mittlere Tonhöhe, leicht rau, abenteuerlustig. Speaks native German with clear, natural pronunciation.",
+      "kind" : "designed",
+      "referenceFile" : "stimmen\/LEO.wav",
+      "referenceText" : "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+      "seed" : 417283
+    },
+    "MIRA" : {
+      "instruct" : "Jung, weiblich, hohe Tonhöhe, klar, ruhig, kritisch. Speaks native German with clear, natural pronunciation.",
+      "kind" : "designed",
+      "referenceFile" : "stimmen\/MIRA.wav",
+      "referenceText" : "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+      "seed" : 559274
+    },
+    "TOM" : {
+      "instruct" : "Jung, männlich, tiefe Tonhöhe, laut, schnell, leicht chaotisch. Speaks native German with clear, natural pronunciation.",
+      "kind" : "designed",
+      "referenceFile" : "stimmen\/TOM.wav",
+      "referenceText" : "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+      "seed" : 54863
+    }
+  },
+  "chapters" : [
+    {
+      "number" : 1,
+      "title" : "Das Licht im Dunkeln"
+    }
+  ],
+  "clues" : [
+    {
+      "clue" : "Der Koffer",
+      "meaning" : "Der Koffer enthält ein veraltetes Signalhorn und eine alte Karte, die auf das Stilwerk hinweist.",
+      "scene" : 1
+    },
+    {
+      "clue" : "Die Leuchtspur",
+      "meaning" : "Die Leuchtspur ist von einem alten, verlassenen Schweißlokomotiv verursacht, das durch den Wind schwerer ist, als ein Mensch.",
+      "scene" : 3
+    },
+    {
+      "clue" : "Das Signalhorn",
+      "meaning" : "Das Signalhorn, das in der Koffer war, ist das, was das Licht verursacht.",
+      "scene" : 3
+    }
+  ],
+  "created" : "2026-11-17T04:18:51Z",
+  "era" : "Deutschland, Bayern, 1984",
+  "figures" : [
+    {
+      "addedByModel" : false,
+      "age" : 15,
+      "description" : "Der neugierige Anführer der Gruppe, technisch versiert und etwas naiv.",
+      "gender" : "m",
+      "id" : "LEO",
+      "name" : "Leo",
+      "role" : "Protagonist",
+      "voice" : "Jung, männlich, mittlere Tonhöhe, leicht rau, abenteuerlustig.",
+      "voiceEN" : ""
+    },
+    {
+      "addedByModel" : false,
+      "age" : 15,
+      "description" : "Die sorgfältige Beobachterin, die Details merkt und skeptisch bleibt.",
+      "gender" : "w",
+      "id" : "MIRA",
+      "name" : "Mira",
+      "role" : "Mitte",
+      "voice" : "Jung, weiblich, hohe Tonhöhe, klar, ruhig, kritisch.",
+      "voiceEN" : ""
+    },
+    {
+      "addedByModel" : false,
+      "age" : 15,
+      "description" : "Der lustige Beobachter, der glaubt an alles und sorgt für den Humor.",
+      "gender" : "m",
+      "id" : "TOM",
+      "name" : "Tom",
+      "role" : "Mitte",
+      "voice" : "Jung, männlich, tiefe Tonhöhe, laut, schnell, leicht chaotisch.",
+      "voiceEN" : ""
+    },
+    {
+      "addedByModel" : false,
+      "age" : 45,
+      "description" : "Erzählt die Geschichte mit einem warmen, ruhigen Ton und einer leichten ironischen Untertönung.",
+      "gender" : "m",
+      "id" : "ERZÄHLER",
+      "name" : "Erzähler",
+      "role" : "Erzähler",
+      "voice" : "Reif, männlich, tiefe Tonhöhe, sanft, klar, ruhig.",
+      "voiceEN" : ""
+    }
+  ],
+  "id" : "76DDD893-F4FC-46E7-8979-B8746A1519B5",
+  "language" : "de",
+  "logline" : "Drei jugendliche Neugierlinge entdecken durch ein flackerndes Licht in einem verlassenen Bahnhofsstellwerk eine geheime Kofferschlüssel, die sich als Teil eines alten Streichs herausstellt, der sie jedoch nicht wirklich erschrecken sollte.",
+  "mix" : {
+    "chapters" : [
+      {
+        "start" : 0,
+        "title" : "Szene 1: Die Anstalt"
+      },
+      {
+        "start" : 64.19,
+        "title" : "Szene 2: Der flackernde Scharf"
+      },
+      {
+        "start" : 117.05,
+        "title" : "Szene 3: Die falsche Fährte"
+      }
+    ],
+    "date" : "2026-11-17T04:54:18Z",
+    "duration" : 165.2,
+    "loudness" : -16.07,
+    "master" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-76ddd893\/mix\/master.wav",
+    "speechToBackground" : 23.7,
+    "stems" : {
+      "Atmo" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-76ddd893\/mix\/spuren\/Atmo.wav",
+      "Erzähler" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-76ddd893\/mix\/spuren\/Erzähler.wav",
+      "Geräusche" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-76ddd893\/mix\/spuren\/Geräusche.wav",
+      "Sprecher LEO" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-76ddd893\/mix\/spuren\/Sprecher_LEO.wav",
+      "Sprecher MIRA" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-76ddd893\/mix\/spuren\/Sprecher_MIRA.wav",
+      "Sprecher TOM" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-76ddd893\/mix\/spuren\/Sprecher_TOM.wav"
+    },
+    "timeline" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-76ddd893\/mix\/zeitleiste.json"
+  },
+  "mode" : "hoerspiel",
+  "modified" : "2026-11-17T04:54:28Z",
+  "musicFiles" : {
+
+  },
+  "narration" : "spannend",
+  "prompt" : "Ein Jugendkrimi im Sommer 1984: Drei Freunde entdecken nachts Licht in einem stillgelegten Stellwerk am Bahnhof. Spannend, mit Humor und einer überraschenden, aber logischen Auflösung.",
+  "pronunciations" : {
+
+  },
+  "resolution" : "Die Gruppe war getäuscht; es gab keine Drohung oder eine gewalttätige Person. Das Licht war tatsächlich ein verlassenes Signalhorn, das durch den Wind an der Schiene vibrierte. Tom hatte eine falsche Spur gesehen, aber der Koffer und das veraltete Signalhorn in seiner Nähe waren die wahren Hinweise darauf, dass es sich nur um einen alten mechanischen Fehler handelte, der zufällig zu einem grünen Schein führte. Es war alles ein Streich der Natur, der die Gruppe jedoch nicht wirklich erschreckt hatte.",
+  "retroAmount" : 0.6,
+  "review" : {
+    "date" : "2026-11-17T04:27:43Z",
+    "problems" : [
+      {
+        "fix" : "Klarstellen, ob der Koffer ein reales Objekt ist oder eine Metapher. Wenn er real ist, muss die Gruppe konsistent darauf reagieren (z.B. Mira sagt: 'Der Koffer ist warm, aber das ist nur der Metallkessel', oder Tom sagt: 'Der Koffer ist alt, er ist kein Leichenschmaus'). Vermeiden Sie den Satz 'Kein Koffer, kein Schreck' direkt nach der Erwähnung des physischen Koffers, es sei denn, Sie erklären vorher, dass es sich um eine Illusion handelt.",
+        "problem" : "Widersprüssliche Beschreibung des Geräuschs und der Handlung: Leo sagt, er höre ein Geräusch, das 'wie ein Koffer' ist (Metapher für Quietschen), während Mira darauf hinweist, dass sie den Koffer selbst sehe und er 'warm' ist. Tom antwortet darauf mit dem Satz 'Kein Koffer, kein Schreck!', was impliziert, dass der Koffer nicht existiert oder nicht die Bedrohung ist, obwohl er in der vorherigen Zeile explizit als physisches Objekt beschrieben wurde. Die Logik der Gruppe bricht, da sie gleichzeitig den Koffer als Bedrohung (warm, lebendig) und als Nicht-Bedrohung (nur ein Koffer) behandeln.",
+        "scene" : 1
+      },
+      {
+        "fix" : "Entscheiden Sie eindeutig, ob das Signalhorn selbst leuchtet oder nur vibriert und durch den Wind einen visuellen Effekt erzeugt. Wenn es leuchtet, sollte Leo das als 'Licht' bezeichnen. Wenn es nur vibriert, sollte er das als 'Vibration' oder 'Glimmen' beschreiben. Vermeiden Sie die Mischung von 'Licht', 'Leichenschmaus' und 'Leuchtspur' ohne vorherige Klärung.",
+        "problem" : "Inkonsistenz bei der Beschreibung des Lichts und des Geräuschs: Leo behauptet, das 'Licht' sei ein Signalhorn, das durch den Wind vibriert. Später in Szene 1 sagt Mira jedoch 'Das ist kein Effekt, das ist ein Licht!'. In Szene 2 wird das Licht als 'flackernd' und 'grün' beschrieben, während in Szene 3 Tom eine 'Leuchtspur' sieht. Die Auflösung erwähnt ein Signalhorn, das vibriert, aber die Charaktere beschreiben es als 'Licht' und 'Leichenschmaus'. Es ist unklar, ob das Signalhorn Licht emittiert oder nur vibriert, was zu einem visuellen Effekt führt. Die Beschreibung des Signals ist widersprüsslich (Licht vs. Geräusch vs. Leuchtturm).",
+        "scene" : 1
+      },
+      {
+        "fix" : "Fokussieren Sie die Handlung auf ein einziges Ziel: Entweder sie suchen den Koffer, oder sie suchen das Signalhorn. Wenn sie das Signalhorn als Quelle identifizieren, sollten sie sofort dorthin gehen, anstatt den Koffer zu erwähnen. Klären Sie, warum sie den Koffer in Szene 2 wieder als 'warm' und 'lebendig' beschreiben, obwohl Leo in Szene 1 bereits gesagt hat, dass es sich um ein altes Signalhorn handelt.",
+        "problem" : "Widersprüssliche Handlung und Motivation: Leo sagt in Szene 1, dass er das Signalhorn 'versteht' (erkennt es). In Szene 2 sagt er jedoch 'Dort! Beim Hauptbahnhof! Ein Licht, das sich bewegt wie ein Leichenschmaus.' und 'Wir müssen hin und die Quelle finden.' Später in Szene 3 sagt Leo: 'Keine Spur von einem Menschen, nur der Rhythmus des Windes.' Die Gruppe wechselt zwischen 'Wir müssen hin' und 'Keine Spur von einem Menschen'. Es ist unklar, ob sie den Koffer oder das Signalhorn verfolgen. Die Handlung ist inkonsistent, da sie zuerst nach dem Koffer suchen und dann nach dem Signalhorn, ohne dass klar ist, warum sie das Signalhorn nicht sofort als Quelle identifizieren, obwohl Leo es in Szene 1 bereits als Signalhorn benannt hat.",
+        "scene" : 2
+      },
+      {
+        "fix" : "Fügen Sie eine Erklärung hinzu, warum die Gruppe das Signalhorn nicht sofort als 'mechanischen Fehler' identifiziert. Vielleicht sollte Mira oder Tom in Szene 3 darauf hinweisen, dass das Signalhorn 'alt' und 'verstaubt' ist, was den Verdacht auf einen mechanischen Fehler stärkt. Die Gruppe sollte nicht bis zum Ende glauben, dass es eine 'verfluchte Gestalt' ist, wenn sie bereits Hinweise auf einen mechanischen Fehler haben.",
+        "problem" : "Widersprüssliche Beschreibung des Geräuschs und der Handlung: In Szene 3 sagt Leo 'Es ist eine Fährte einer verfluchten Gestalt! Wir werden erwischt werden.' Tom sagt 'Eine Leuchtspur, die sich weit ausdehnt wie ein Leuchtturm!'. Die Gruppe sagt 'Wir gehen hin.' und 'Das ist der letzte Beweis, dass wir uns nicht allein fühlen.' Die Auflösung sagt jedoch, dass es sich um einen 'alten mechanischen Fehler' handelt, der 'zufällig zu einem grünen Schein führte'. Die Charaktere glauben jedoch, dass es eine 'verfluchte Gestalt' ist. Es gibt keine Erklärung, warum sie das Signalhorn nicht als 'mechanischen Fehler' identifizieren, obwohl sie es in Szene 1 bereits als Signalhorn benannt haben. Die Gruppe bleibt bis zum Ende in der Irre, obwohl die Hinweise (Koffer, Signalhorn) klar sind.",
+        "scene" : 3
+      },
+      {
+        "fix" : "Klären Sie die Beschreibung des Geräuschs. Wenn es ein Signalhorn ist, sollte es nur ein Quietschen oder ein Vibrieren sein. Wenn es ein Klicken gibt, sollte es erklärt werden, woher das kommt (z.B. ein alter Mechanismus). Vermeiden Sie die Mischung von 'Klicken' und 'Quietschen' ohne vorherige Klärung.",
+        "problem" : "Inkonsistenz bei der Beschreibung des Geräuschs: In Szene 3 wird ein 'helles Klicken Brötchen' (vermutlich 'Brötchen' ist ein Tippfehler für 'Brösel' oder 'Klicken') erwähnt, gefolgt von einem 'leisen Quietschen'. Die Auflösung erwähnt jedoch ein 'verlassenes Signalhorn, das durch den Wind vibriert'. Es ist unklar, ob das 'Klicken' und das 'Quietschen' dasselbe Geräusch sind oder zwei verschiedene Geräusche. Die Beschreibung des Geräuschs ist inkonsistent und verwirrend.",
+        "scene" : 3
+      }
+    ],
+    "revised" : [
+      2,
+      3
+    ]
+  },
+  "scenes" : [
+    {
+      "atmoEN" : "weiches Nachthimmelgeräusch, fernes Zischen von Wind durch Metallstrukturen, leise Schritte, leises Klappern der Schienen.",
+      "chapter" : 1,
+      "id" : "5F800546-072C-40F4-A02E-A983381EAC75",
+      "items" : [
+        {
+          "english" : "A slow, melancholic accordion melody fades into a low, rhythmic hum",
+          "id" : "E778F67A-AF89-46DC-890A-768FA6D7C7B9",
+          "kind" : "music",
+          "text" : "Titelmusik"
+        },
+        {
+          "english" : "wind howls over the abandoned grounds, distant thunder and a first crack of lightning",
+          "id" : "6992967C-03D1-44C3-BF33-ACA2844EF6B3",
+          "kind" : "atmo",
+          "text" : "Windweht über das Auslaugungsgelände, ferner Rahh und der erste Kling des Blitz"
+        },
+        {
+          "audioFile" : "zeilen\/6F9AE502-3364-4D28-B4D9-0836B121D21E.wav",
+          "audioFingerprint" : "668286f0a561f908",
+          "id" : "6F9AE502-3364-4D28-B4D9-0836B121D21E",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Der alte Bahnhof lag still, als würde er schlafen wollen. Doch in der Dunkelheit flackerte ein seltsames Grün."
+        },
+        {
+          "audioFile" : "zeilen\/65FC094D-C49E-4BDF-8BC6-EFCFFC170766.wav",
+          "audioFingerprint" : "697f3aa83bdc412a",
+          "id" : "65FC094D-C49E-4BDF-8BC6-EFCFFC170766",
+          "kind" : "line",
+          "speaker" : "LEO",
+          "text" : "Los, ich hack an! Was für ein Abenteuer!"
+        },
+        {
+          "audioFile" : "zeilen\/FB8221F0-5B56-45E2-A2DA-DCE9CCD9B439.wav",
+          "audioFingerprint" : "197b94cfd719e7fe",
+          "emotion" : "flüsternd",
+          "id" : "FB8221F0-5B56-45E2-A2DA-DCE9CCD9B439",
+          "kind" : "line",
+          "speaker" : "MIRA",
+          "text" : "Genau dort vorne im Schuppen. Ich sehe ..."
+        },
+        {
+          "audioFile" : "zeilen\/F35BA62B-7F56-45FE-90AA-CC11E6D9583E.wav",
+          "audioFingerprint" : "2bbd1549d3824ef5",
+          "id" : "F35BA62B-7F56-45FE-90AA-CC11E6D9583E",
+          "kind" : "line",
+          "speaker" : "TOM",
+          "text" : "Na, was sagst du, Leo? Sagst du es richtig und dann sagst du es?"
+        },
+        {
+          "audioFile" : "zeilen\/3D9C87BE-D129-4D43-AAF1-07319C320EA3.wav",
+          "audioFingerprint" : "af569cfe82c46457",
+          "id" : "3D9C87BE-D129-4D43-AAF1-07319C320EA3",
+          "kind" : "line",
+          "speaker" : "LEO",
+          "text" : "Sage. Und dann sag es selbst."
+        },
+        {
+          "audioFile" : "zeilen\/05D276AC-1ED4-497B-9A3E-5AA14C38A266.wav",
+          "audioFingerprint" : "1ac57faff21ee01c",
+          "emotion" : "ängstlich",
+          "id" : "05D276AC-1ED4-497B-9A3E-5AA14C38A266",
+          "kind" : "line",
+          "speaker" : "MIRA",
+          "text" : "Es ist wie mit einer Koffer, der einen Schrei hat ..."
+        },
+        {
+          "audioFile" : "zeilen\/8C102B52-BFDF-4FFE-A2DE-9A6302B085DF.wav",
+          "audioFingerprint" : "864ff06fd974a37c",
+          "id" : "8C102B52-BFDF-4FFE-A2DE-9A6302B085DF",
+          "kind" : "line",
+          "speaker" : "TOM",
+          "text" : "Vielleicht hast du eine Geschichte über eine verfluchte Kiste?"
+        },
+        {
+          "audioFile" : "zeilen\/022B72A9-7E10-4EED-9406-8157AD1A9434.wav",
+          "audioFingerprint" : "cb8e890c6210a1e4",
+          "id" : "022B72A9-7E10-4EED-9406-8157AD1A9434",
+          "kind" : "line",
+          "speaker" : "LEO",
+          "text" : "Nein, das ist keine Geschichte! Das ist ein Signalhorn."
+        },
+        {
+          "english" : "heavy metal briefcase screeches on the rails",
+          "id" : "55007482-8C5A-4DE7-BCB9-ADF26730BA49",
+          "kind" : "sfx",
+          "text" : "Ein schwerer Metallkoffer quietscht auf dem Schienengrün"
+        },
+        {
+          "audioFile" : "zeilen\/9920F176-03D8-446C-A0B3-FC9FDE221ADC.wav",
+          "audioFingerprint" : "012c11fe217c25eb",
+          "id" : "9920F176-03D8-446C-A0B3-FC9FDE221ADC",
+          "kind" : "line",
+          "speaker" : "LEO",
+          "text" : "Da liegt einer!"
+        },
+        {
+          "audioFile" : "zeilen\/83C6E532-71C2-4506-AB1F-542556E607F8.wav",
+          "audioFingerprint" : "b394557922e0310f",
+          "emotion" : "aufgeregt",
+          "id" : "83C6E532-71C2-4506-AB1F-542556E607F8",
+          "kind" : "line",
+          "speaker" : "MIRA",
+          "text" : "Schau mal nach den Rändern, da läuft das Fell."
+        },
+        {
+          "audioFile" : "zeilen\/B8407187-32A4-448A-B684-853962D14EC5.wav",
+          "audioFingerprint" : "203916bc0a62fa4d",
+          "id" : "B8407187-32A4-448A-B684-853962D14EC5",
+          "kind" : "line",
+          "speaker" : "LEO",
+          "text" : "Ja! Ein alter Koffer, nicht verstaubt, sondern ..."
+        },
+        {
+          "audioFile" : "zeilen\/9E29C5DB-15E2-491E-BA31-201C272639F3.wav",
+          "audioFingerprint" : "200b14b064a642e7",
+          "emotion" : "lächelnd",
+          "id" : "9E29C5DB-15E2-491E-BA31-201C272639F3",
+          "kind" : "line",
+          "speaker" : "TOM",
+          "text" : "Kein Koffer, kein Schreck!"
+        },
+        {
+          "audioFile" : "zeilen\/C0E1FC76-1113-4BF5-B5EF-1870D9E40CA4.wav",
+          "audioFingerprint" : "cc1dc146d41f5119",
+          "id" : "C0E1FC76-1113-4BF5-B5EF-1870D9E40CA4",
+          "kind" : "line",
+          "speaker" : "LEO",
+          "text" : "Aber ich hörte ein Geräusch, das so wie ein Koffer ist ..."
+        },
+        {
+          "audioFile" : "zeilen\/3F93B3D9-26E4-44A6-9250-C71BA84AA6A4.wav",
+          "audioFingerprint" : "48ca40db096aa6f3",
+          "emotion" : "flüsternd",
+          "id" : "3F93B3D9-26E4-44A6-9250-C71BA84AA6A4",
+          "kind" : "line",
+          "speaker" : "MIRA",
+          "text" : "Das ist kein Effekt, das ist ein Licht!"
+        },
+        {
+          "audioFile" : "zeilen\/2608177E-D0C3-439F-B24F-E16C17075428.wav",
+          "audioFingerprint" : "36df0c3342124794",
+          "id" : "2608177E-D0C3-439F-B24F-E16C17075428",
+          "kind" : "line",
+          "speaker" : "TOM",
+          "text" : "Ein grünes Licht? Wie kann das sein?"
+        },
+        {
+          "audioFile" : "zeilen\/3D92CAC7-0828-4716-ADA6-E06E54FE2BDF.wav",
+          "audioFingerprint" : "95e0be9bdeabfc00",
+          "emotion" : "lachend",
+          "id" : "3D92CAC7-0828-4716-ADA6-E06E54FE2BDF",
+          "kind" : "line",
+          "speaker" : "LEO",
+          "text" : "Ein altes Signalhorn, das durch den Wind vibriert!"
+        },
+        {
+          "audioFile" : "zeilen\/50F4F964-9B80-4514-9DB2-3200C078267A.wav",
+          "audioFingerprint" : "ff3bf7f6f4d7ff75",
+          "emotion" : "rungend",
+          "id" : "50F4F964-9B80-4514-9DB2-3200C078267A",
+          "kind" : "line",
+          "speaker" : "MIRA",
+          "text" : "Aber der Koffer ... er ist warm, wie ein Menschenhand."
+        },
+        {
+          "audioFile" : "zeilen\/AD4A6EC3-8923-41D9-8AFD-2544D2F0A542.wav",
+          "audioFingerprint" : "0f3605d550a5b213",
+          "id" : "AD4A6EC3-8923-41D9-8AFD-2544D2F0A542",
+          "kind" : "line",
+          "speaker" : "LEO",
+          "text" : "Er ist alt, aber nicht verflucht!"
+        },
+        {
+          "audioFile" : "zeilen\/CFBB0CF7-CBE3-4008-8131-22BFF842985F.wav",
+          "audioFingerprint" : "121c306579e66d77",
+          "emotion" : "wütend",
+          "id" : "CFBB0CF7-CBE3-4008-8131-22BFF842985F",
+          "kind" : "line",
+          "speaker" : "TOM",
+          "text" : "Wir müssen ins Signalhorn!"
+        }
+      ],
+      "location" : "Bahnhofshalle",
+      "number" : 1,
+      "outline" : "Der Erzähler beschreibt, wie Leo und seine Freunde am Rande des stillgelegten Bahnhofs in der Dunkelheit stehen. Tom erzählt eine gruselige Geschichte über ein verfluchtes Stellwerk, während Leo skeptisch ist und gerade einen alten, faltenden Koffer findet.",
+      "participants" : [
+        "ERZÄHLER",
+        "LEO",
+        "MIRA",
+        "TOM"
+      ],
+      "room" : "draußen",
+      "summary" : "Die Gruppe LEO, MIRA und TOM steht in der Dunkelheit des alten Bahnhofs vor einem Schuppen, als sie ein seltsames grünes Licht und ein Quietschen wahrnehmen. Nach einer kurzen Diskussion über die mögliche Bedeutung des Geräuschs, das sie zunächst als verfluchtes Koffer-Signal deuten, stellt sich heraus, dass es sich lediglich um ein altes, durch den Wind vibrierendes Signalhorn handelt. Am Ende der Szene sind die Figuren jedoch entschlossen, trotz der Enttäuschung und der Warnung von MIRA über die Wärme des Koffers, in das Signalhorn zu gehen.",
+      "title" : "Die Anstalt",
+      "versions" : [
+        {
+          "date" : "2026-11-17T04:52:50Z",
+          "items" : [
+            {
+              "english" : "A slow, melancholic accordion melody fades into a low, rhythmic hum",
+              "id" : "E778F67A-AF89-46DC-890A-768FA6D7C7B9",
+              "kind" : "music",
+              "text" : "Titelmusik"
+            },
+            {
+              "english" : "wind howls over the abandoned grounds, distant thunder and a first crack of lightning",
+              "id" : "6992967C-03D1-44C3-BF33-ACA2844EF6B3",
+              "kind" : "atmo",
+              "text" : "Windweht über das Auslaugungsgelände, ferner Rahh und der erste Kling des Blitz"
+            },
+            {
+              "audioFile" : "zeilen\/6F9AE502-3364-4D28-B4D9-0836B121D21E.wav",
+              "audioFingerprint" : "668286f0a561f908",
+              "id" : "6F9AE502-3364-4D28-B4D9-0836B121D21E",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Der alte Bahnhof lag still, als würde er schlafen wollen. Doch in der Dunkelheit flackerte ein seltsames Grün."
+            },
+            {
+              "audioFile" : "zeilen\/65FC094D-C49E-4BDF-8BC6-EFCFFC170766.wav",
+              "audioFingerprint" : "ec099bb2883ee07a",
+              "id" : "65FC094D-C49E-4BDF-8BC6-EFCFFC170766",
+              "kind" : "line",
+              "speaker" : "LEO",
+              "text" : "Lass uns ran gehen, wer weiß was da schneit!"
+            },
+            {
+              "audioFile" : "zeilen\/FB8221F0-5B56-45E2-A2DA-DCE9CCD9B439.wav",
+              "audioFingerprint" : "197b94cfd719e7fe",
+              "emotion" : "flüsternd",
+              "id" : "FB8221F0-5B56-45E2-A2DA-DCE9CCD9B439",
+              "kind" : "line",
+              "speaker" : "MIRA",
+              "text" : "Genau dort vorne im Schuppen. Ich sehe ..."
+            },
+            {
+              "audioFile" : "zeilen\/F35BA62B-7F56-45FE-90AA-CC11E6D9583E.wav",
+              "audioFingerprint" : "2bbd1549d3824ef5",
+              "id" : "F35BA62B-7F56-45FE-90AA-CC11E6D9583E",
+              "kind" : "line",
+              "speaker" : "TOM",
+              "text" : "Na, was sagst du, Leo? Sagst du es richtig und dann sagst du es?"
+            },
+            {
+              "audioFile" : "zeilen\/3D9C87BE-D129-4D43-AAF1-07319C320EA3.wav",
+              "audioFingerprint" : "af569cfe82c46457",
+              "id" : "3D9C87BE-D129-4D43-AAF1-07319C320EA3",
+              "kind" : "line",
+              "speaker" : "LEO",
+              "text" : "Sage. Und dann sag es selbst."
+            },
+            {
+              "audioFile" : "zeilen\/05D276AC-1ED4-497B-9A3E-5AA14C38A266.wav",
+              "audioFingerprint" : "1ac57faff21ee01c",
+              "emotion" : "ängstlich",
+              "id" : "05D276AC-1ED4-497B-9A3E-5AA14C38A266",
+              "kind" : "line",
+              "speaker" : "MIRA",
+              "text" : "Es ist wie mit einer Koffer, der einen Schrei hat ..."
+            },
+            {
+              "audioFile" : "zeilen\/8C102B52-BFDF-4FFE-A2DE-9A6302B085DF.wav",
+              "audioFingerprint" : "864ff06fd974a37c",
+              "id" : "8C102B52-BFDF-4FFE-A2DE-9A6302B085DF",
+              "kind" : "line",
+              "speaker" : "TOM",
+              "text" : "Vielleicht hast du eine Geschichte über eine verfluchte Kiste?"
+            },
+            {
+              "audioFile" : "zeilen\/022B72A9-7E10-4EED-9406-8157AD1A9434.wav",
+              "audioFingerprint" : "cb8e890c6210a1e4",
+              "id" : "022B72A9-7E10-4EED-9406-8157AD1A9434",
+              "kind" : "line",
+              "speaker" : "LEO",
+              "text" : "Nein, das ist keine Geschichte! Das ist ein Signalhorn."
+            },
+            {
+              "english" : "heavy metal briefcase screeches on the rails",
+              "id" : "55007482-8C5A-4DE7-BCB9-ADF26730BA49",
+              "kind" : "sfx",
+              "text" : "Ein schwerer Metallkoffer quietscht auf dem Schienengrün"
+            },
+            {
+              "audioFile" : "zeilen\/9920F176-03D8-446C-A0B3-FC9FDE221ADC.wav",
+              "audioFingerprint" : "012c11fe217c25eb",
+              "id" : "9920F176-03D8-446C-A0B3-FC9FDE221ADC",
+              "kind" : "line",
+              "speaker" : "LEO",
+              "text" : "Da liegt einer!"
+            },
+            {
+              "audioFile" : "zeilen\/83C6E532-71C2-4506-AB1F-542556E607F8.wav",
+              "audioFingerprint" : "b394557922e0310f",
+              "emotion" : "aufgeregt",
+              "id" : "83C6E532-71C2-4506-AB1F-542556E607F8",
+              "kind" : "line",
+              "speaker" : "MIRA",
+              "text" : "Schau mal nach den Rändern, da läuft das Fell."
+            },
+            {
+              "audioFile" : "zeilen\/B8407187-32A4-448A-B684-853962D14EC5.wav",
+              "audioFingerprint" : "203916bc0a62fa4d",
+              "id" : "B8407187-32A4-448A-B684-853962D14EC5",
+              "kind" : "line",
+              "speaker" : "LEO",
+              "text" : "Ja! Ein alter Koffer, nicht verstaubt, sondern ..."
+            },
+            {
+              "audioFile" : "zeilen\/9E29C5DB-15E2-491E-BA31-201C272639F3.wav",
+              "audioFingerprint" : "200b14b064a642e7",
+              "emotion" : "lächelnd",
+              "id" : "9E29C5DB-15E2-491E-BA31-201C272639F3",
+              "kind" : "line",
+              "speaker" : "TOM",
+              "text" : "Kein Koffer, kein Schreck!"
+            },
+            {
+              "audioFile" : "zeilen\/C0E1FC76-1113-4BF5-B5EF-1870D9E40CA4.wav",
+              "audioFingerprint" : "cc1dc146d41f5119",
+              "id" : "C0E1FC76-1113-4BF5-B5EF-1870D9E40CA4",
+              "kind" : "line",
+              "speaker" : "LEO",
+              "text" : "Aber ich hörte ein Geräusch, das so wie ein Koffer ist ..."
+            },
+            {
+              "audioFile" : "zeilen\/3F93B3D9-26E4-44A6-9250-C71BA84AA6A4.wav",
+              "audioFingerprint" : "48ca40db096aa6f3",
+              "emotion" : "flüsternd",
+              "id" : "3F93B3D9-26E4-44A6-9250-C71BA84AA6A4",
+              "kind" : "line",
+              "speaker" : "MIRA",
+              "text" : "Das ist kein Effekt, das ist ein Licht!"
+            },
+            {
+              "audioFile" : "zeilen\/2608177E-D0C3-439F-B24F-E16C17075428.wav",
+              "audioFingerprint" : "36df0c3342124794",
+              "id" : "2608177E-D0C3-439F-B24F-E16C17075428",
+              "kind" : "line",
+              "speaker" : "TOM",
+              "text" : "Ein grünes Licht? Wie kann das sein?"
+            },
+            {
+              "audioFile" : "zeilen\/3D92CAC7-0828-4716-ADA6-E06E54FE2BDF.wav",
+              "audioFingerprint" : "95e0be9bdeabfc00",
+              "emotion" : "lachend",
+              "id" : "3D92CAC7-0828-4716-ADA6-E06E54FE2BDF",
+              "kind" : "line",
+              "speaker" : "LEO",
+              "text" : "Ein altes Signalhorn, das durch den Wind vibriert!"
+            },
+            {
+              "audioFile" : "zeilen\/50F4F964-9B80-4514-9DB2-3200C078267A.wav",
+              "audioFingerprint" : "ff3bf7f6f4d7ff75",
+              "emotion" : "rungend",
+              "id" : "50F4F964-9B80-4514-9DB2-3200C078267A",
+              "kind" : "line",
+              "speaker" : "MIRA",
+              "text" : "Aber der Koffer ... er ist warm, wie ein Menschenhand."
+            },
+            {
+              "audioFile" : "zeilen\/AD4A6EC3-8923-41D9-8AFD-2544D2F0A542.wav",
+              "audioFingerprint" : "0f3605d550a5b213",
+              "id" : "AD4A6EC3-8923-41D9-8AFD-2544D2F0A542",
+              "kind" : "line",
+              "speaker" : "LEO",
+              "text" : "Er ist alt, aber nicht verflucht!"
+            },
+            {
+              "audioFile" : "zeilen\/CFBB0CF7-CBE3-4008-8131-22BFF842985F.wav",
+              "audioFingerprint" : "121c306579e66d77",
+              "emotion" : "wütend",
+              "id" : "CFBB0CF7-CBE3-4008-8131-22BFF842985F",
+              "kind" : "line",
+              "speaker" : "TOM",
+              "text" : "Wir müssen ins Signalhorn!"
+            }
+          ],
+          "note" : "Replik neu formuliert",
+          "summary" : "Die Gruppe LEO, MIRA und TOM steht in der Dunkelheit des alten Bahnhofs vor einem Schuppen, als sie ein seltsames grünes Licht und ein Quietschen wahrnehmen. Nach einer kurzen Diskussion über die mögliche Bedeutung des Geräuschs, das sie zunächst als verfluchtes Koffer-Signal deuten, stellt sich heraus, dass es sich lediglich um ein altes, durch den Wind vibrierendes Signalhorn handelt. Am Ende der Szene sind die Figuren jedoch entschlossen, trotz der Enttäuschung und der Warnung von MIRA über die Wärme des Koffers, in das Signalhorn zu gehen."
+        }
+      ]
+    },
+    {
+      "atmoEN" : "plötzliches Zischen, hohes Pochen, leichtes metallisches Kriechen, leises Flüstern von Tönen.",
+      "chapter" : 1,
+      "id" : "8A9BBEA7-B6A2-4F6C-8369-B1049C0BB077",
+      "items" : [
+        {
+          "english" : "wind whispers over rusty rails, distant metal tone vibrates",
+          "id" : "42EA57C5-28E9-46D0-8C4F-E4C4E573ED45",
+          "kind" : "atmo",
+          "text" : "Wind haucht über rostige Schienen, ferne Metallton vibriert"
+        },
+        {
+          "audioFile" : "zeilen\/61DBE9C1-FC73-4CC6-A25B-3F92E0C43751.wav",
+          "audioFingerprint" : "cc1ad37dde852726",
+          "id" : "61DBE9C1-FC73-4CC6-A25B-3F92E0C43751",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Das flackernde Licht kreiste nun um die Stahlrohre, als würde es den Schatten der alten Maschinen beleben."
+        },
+        {
+          "english" : "a sharp screech of a metal piece",
+          "id" : "8DA729B8-FB0B-411B-B601-360BC75D34E1",
+          "kind" : "sfx",
+          "text" : "Ein scharfes Knirschen eines Metallstücks"
+        },
+        {
+          "audioFile" : "zeilen\/751A0619-284C-4086-B5A4-483B98FF052D.wav",
+          "audioFingerprint" : "4c75023c75adc356",
+          "emotion" : "erregt",
+          "id" : "751A0619-284C-4086-B5A4-483B98FF052D",
+          "kind" : "line",
+          "speaker" : "LEO",
+          "text" : "Dort! Am Hauptbahnhof! Ein Licht, das sich bewegt wie ein Leichenschmaus."
+        },
+        {
+          "english" : "a faint green flicker accompanies the rail",
+          "id" : "416AD0F6-E68A-4873-88CA-5CD56282151D",
+          "kind" : "sfx",
+          "text" : "Ein schwaches, grünes Flackern begleitet die Schiene"
+        },
+        {
+          "audioFile" : "zeilen\/B55C0467-6694-46F5-AED3-159411D0704E.wav",
+          "audioFingerprint" : "c952cab76af3b6c7",
+          "emotion" : "flüsternd",
+          "id" : "B55C0467-6694-46F5-AED3-159411D0704E",
+          "kind" : "line",
+          "speaker" : "MIRA",
+          "text" : "Nicht näher kommen, bis wir es sicher haben."
+        },
+        {
+          "audioFile" : "zeilen\/0880A8DA-656E-496C-8ED8-6564D59E2439.wav",
+          "audioFingerprint" : "c7ba540b9846ccd4",
+          "id" : "0880A8DA-656E-496C-8ED8-6564D59E2439",
+          "kind" : "line",
+          "speaker" : "LEO",
+          "text" : "Nein, das hier ist Energie! Wir müssen hin und die Quelle finden."
+        },
+        {
+          "english" : "footsteps followed by the clinking of the rails",
+          "id" : "85EF48F4-AE57-42AE-9D5F-657854665EAA",
+          "kind" : "sfx",
+          "text" : "Schritte, dann das Gleisenklopfen"
+        },
+        {
+          "audioFile" : "zeilen\/765E2A67-76B0-4B52-AE91-0B5665DE1959.wav",
+          "audioFingerprint" : "a912c2a6ad235ca0",
+          "emotion" : "laut",
+          "id" : "765E2A67-76B0-4B52-AE91-0B5665DE1959",
+          "kind" : "line",
+          "speaker" : "TOM",
+          "text" : "Oh je, oh je! Wir laufen jetzt auf eine Falle zu?"
+        },
+        {
+          "audioFile" : "zeilen\/2EAE6BF1-7F54-489E-9126-58346E17D356.wav",
+          "audioFingerprint" : "2ee38af365fc1d3c",
+          "emotion" : "ängstlich",
+          "id" : "2EAE6BF1-7F54-489E-9126-58346E17D356",
+          "kind" : "line",
+          "speaker" : "MIRA",
+          "text" : "Doch genau, wir machen uns in die Keller unten."
+        },
+        {
+          "audioFile" : "zeilen\/50671160-B7E1-41B9-9434-53B9904DCAFB.wav",
+          "audioFingerprint" : "c78fcffa4f47756a",
+          "emotion" : "ruhig",
+          "id" : "50671160-B7E1-41B9-9434-53B9904DCAFB",
+          "kind" : "line",
+          "speaker" : "LEO",
+          "text" : "Aber das Licht ist warm, wie eine menschliche Hand."
+        },
+        {
+          "english" : "a metallic whistle booms through the air",
+          "id" : "750C3975-D992-43A3-BA4B-AE5FBB915777",
+          "kind" : "sfx",
+          "text" : "Ein metallenes Quietschen dröhnt durch die Luft"
+        },
+        {
+          "audioFile" : "zeilen\/7E2087DE-ADE0-415D-B773-52D93053B165.wav",
+          "audioFingerprint" : "bd451c0e639a9775",
+          "emotion" : "unsicher",
+          "id" : "7E2087DE-ADE0-415D-B773-52D93053B165",
+          "kind" : "line",
+          "speaker" : "TOM",
+          "text" : "Ein altes Signalhorn, das durch den Wind vibriert!"
+        },
+        {
+          "audioFile" : "zeilen\/216E683E-D895-4FF7-9868-A3DD99634C8A.wav",
+          "audioFingerprint" : "badfccc2d929ba58",
+          "emotion" : "rungend",
+          "id" : "216E683E-D895-4FF7-9868-A3DD99634C8A",
+          "kind" : "line",
+          "speaker" : "MIRA",
+          "text" : "Aber der Koffer... er ist warm, wie eine menschliche Hand."
+        },
+        {
+          "audioFile" : "zeilen\/C868A891-0E43-4BAC-9345-0EFEFDEBC0B0.wav",
+          "audioFingerprint" : "0f3605d550a5b213",
+          "id" : "C868A891-0E43-4BAC-9345-0EFEFDEBC0B0",
+          "kind" : "line",
+          "speaker" : "LEO",
+          "text" : "Er ist alt, aber nicht verflucht!"
+        },
+        {
+          "audioFile" : "zeilen\/A930AC3B-6BD7-4096-9D28-EDF50A508F0B.wav",
+          "audioFingerprint" : "121c306579e66d77",
+          "emotion" : "wütend",
+          "id" : "A930AC3B-6BD7-4096-9D28-EDF50A508F0B",
+          "kind" : "line",
+          "speaker" : "TOM",
+          "text" : "Wir müssen ins Signalhorn!"
+        },
+        {
+          "audioFile" : "zeilen\/CFBB2A92-F7E6-4101-A531-B4D6BCA271A3.wav",
+          "audioFingerprint" : "13af3c21cdb8d9eb",
+          "id" : "CFBB2A92-F7E6-4101-A531-B4D6BCA271A3",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Doch als sie das Echo ertasten, scheint das Licht aus dem Schienenknochen zu schmeicheln."
+        }
+      ],
+      "location" : "",
+      "number" : 2,
+      "outline" : "Plötzlich flackert ein schwaches, grünes Licht an einer der Schienen. Die Gruppe schließt sich zusammen; Tom macht eine Runde mit einem Taschenlampen, während Leo und Mira vorsichtig zum Schalter laufen, um die Lichtquelle zu sehen.",
+      "participants" : [
+        "LEO",
+        "MIRA",
+        "TOM"
+      ],
+      "room" : "draußen",
+      "summary" : "Die Gruppe Léo, Mira und Tom rastet in der Nähe des Hauptbahnhofs auf eine Falle an, als sie ein seltsames, grünes Licht und ein vibrierendes Signalhorn entdecken. Während Tom besorgt über den warmen Koffer ist, beschließt Léo, trotz der Warnung von Mira, die Quelle des Lichts zu verfolgen und das Signalhorn zu erreichen. Am Ende der Szene stehen die Figuren in der Nähe des Schienenknochens, wo das Licht sie anlockt, während Tom wütend bleibt und die Gruppe noch nicht sicher ist, ob sie tatsächlich in eine Falle laufen.",
+      "title" : "Der flackernde Scharf",
+      "versions" : [
+        {
+          "date" : "2026-11-17T04:26:58Z",
+          "items" : [
+            {
+              "english" : "wind blowing over the rails, distant metal whistling",
+              "id" : "9562B2EA-3D0D-4C29-8300-97493541F1E1",
+              "kind" : "atmo",
+              "text" : "Windhaare wehen über den Schienen, fernes Quietschen eines Metallgusses"
+            },
+            {
+              "id" : "ACA9EC54-871E-4C7A-936D-992AAD119952",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Das flackernde Licht kreiste erst wieder um die Stahlrohre."
+            },
+            {
+              "english" : "a small metal piece screeching under steam",
+              "id" : "51759941-1DAA-4957-81D5-A85C8CBBF505",
+              "kind" : "sfx",
+              "text" : "Ein schmales Metallstück knirscht unter Dampf"
+            },
+            {
+              "emotion" : "erregt",
+              "id" : "12FD66CA-C322-4CAC-B62C-D8EC2AB64AE1",
+              "kind" : "line",
+              "speaker" : "LEO",
+              "text" : "Dort! Beim Hauptbahnhof! Ein Licht, das sich bewegt wie ein Leichenschmaus."
+            },
+            {
+              "english" : "a faint green flicker accompanies the rail",
+              "id" : "E5FB532E-CC1E-42F0-ACCD-0BA9F06B46AE",
+              "kind" : "sfx",
+              "text" : "Ein schwaches, grünes Flackern gehört zu der Schiene"
+            },
+            {
+              "emotion" : "flüsternd",
+              "id" : "B82BF1C0-19C8-4BEB-9C9A-6059B0D044D8",
+              "kind" : "line",
+              "speaker" : "MIRA",
+              "text" : "Nicht näher kommen, bis wir es sicher haben."
+            },
+            {
+              "id" : "0AB78221-6FE7-47DB-8DE9-453961E9D17E",
+              "kind" : "line",
+              "speaker" : "LEO",
+              "text" : "Nein, das hier ist Energie! Wir müssen hin und die Quelle finden."
+            },
+            {
+              "english" : "footsteps followed by the clinking of the rails",
+              "id" : "86F63CF8-138A-489B-8B39-74AB1D3EF1AE",
+              "kind" : "sfx",
+              "text" : "Schritte, dann das Gleisenklopfen"
+            },
+            {
+              "emotion" : "laut",
+              "id" : "A04E4F5D-773D-4292-B2D4-8DAC8331EEE4",
+              "kind" : "line",
+              "speaker" : "TOM",
+              "text" : "Oh je, oh je! Wir laufen jetzt auf eine Falle zu?"
+            },
+            {
+              "emotion" : "ängstlich",
+              "id" : "11AD5649-69B1-49F5-9D2C-EB7AC3F23CFB",
+              "kind" : "line",
+              "speaker" : "MIRA",
+              "text" : "Doch genau, wir machen uns in den Kellern unten."
+            },
+            {
+              "emotion" : "ruhig",
+              "id" : "47988F3C-C9F0-4A5D-A389-BB919B0368AA",
+              "kind" : "line",
+              "speaker" : "LEO",
+              "text" : "Aber das Licht ist warm, wie ein Menschenhand."
+            },
+            {
+              "english" : "a metallic whistle booms through the air",
+              "id" : "9B8D28CA-A1A9-4DF5-A926-24AD84ED5721",
+              "kind" : "sfx",
+              "text" : "Ein metallenes Quietschen dröhnt durch die Luft"
+            },
+            {
+              "emotion" : "unsicher",
+              "id" : "CC4BAF6A-F871-449B-9D7A-E8400B8ECE5F",
+              "kind" : "line",
+              "speaker" : "TOM",
+              "text" : "Ein altes Signalhorn, das durch den Wind vibriert!"
+            },
+            {
+              "emotion" : "rungend",
+              "id" : "562EEBA0-6607-4F64-8FBA-541485FBA12C",
+              "kind" : "line",
+              "speaker" : "MIRA",
+              "text" : "Aber der Koffer ... er ist warm, wie ein Menschenhand."
+            },
+            {
+              "id" : "5D77AFB5-1562-4CAA-A18A-03BCBA76C052",
+              "kind" : "line",
+              "speaker" : "LEO",
+              "text" : "Er ist alt, aber nicht verflucht!"
+            },
+            {
+              "emotion" : "wütend",
+              "id" : "452E87F9-8A0D-40FE-AA23-F0B90D962F01",
+              "kind" : "line",
+              "speaker" : "TOM",
+              "text" : "Wir müssen ins Signalhorn!"
+            },
+            {
+              "id" : "7EC0B08C-B61A-4AFD-A758-C73A247562A7",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Doch als sie das Echo ertasten, scheint das Licht aus dem Schienenknochen zu schmeicheln."
+            }
+          ],
+          "note" : "vor dem Lektorat",
+          "summary" : "Die Gruppe LEO, MIRA und TOM entdeckt im Hauptbahnhof ein sich bewegendes grünes Licht, das sie als Energiequelle identifizieren wollen. Obwohl TOM eine Falle befürchtet und MIRA den warmen Koffer als bedenklich empfindet, beschließt LEO, trotz der Warnung auf das Signalhorn zu gehen. Am Ende stehen sie jedoch vor dem Schienenknochen, der sie mit seinem Licht schmeichelt, während sie sich auf den Weg zum Signalhorn machen."
+        }
+      ]
+    },
+    {
+      "atmoEN" : "plötzliches Zischen, hohes Pochen, leichtes metallisches Kriechen, leises Flüstern von Tönen.",
+      "chapter" : 1,
+      "id" : "B28AD6A8-CC07-4E5F-89FB-1CAAF9AF68EF",
+      "items" : [
+        {
+          "english" : "wind whips across rusty rails, distant cricket chirps",
+          "id" : "12FCB58D-2471-4530-8D79-4F5CE8139318",
+          "kind" : "atmo",
+          "text" : "Wind peitscht über rostige Schienen, fernes Krächzen von Insekten"
+        },
+        {
+          "english" : "a faint hum vibrates through the air",
+          "id" : "8D9DD36D-B0D4-48D9-90ED-2131063BF05C",
+          "kind" : "sfx",
+          "text" : "Ein schwaches Summen dröhnt durch die Luft"
+        },
+        {
+          "audioFile" : "zeilen\/8A9381B6-7D19-43B2-B475-691DF85DA6D9.wav",
+          "audioFingerprint" : "310d9183e7eb384c",
+          "emotion" : "neugierig",
+          "id" : "8A9381B6-7D19-43B2-B475-691DF85DA6D9",
+          "kind" : "line",
+          "speaker" : "LEO",
+          "text" : "Siehst du das? Das blinkt!"
+        },
+        {
+          "audioFile" : "zeilen\/B8BC43DB-1A64-4184-BC8A-662626A90597.wav",
+          "audioFingerprint" : "ef5a77ac38dc940b",
+          "emotion" : "ängstlich",
+          "id" : "B8BC43DB-1A64-4184-BC8A-662626A90597",
+          "kind" : "line",
+          "speaker" : "MIRA",
+          "text" : "Rauschlicht? Da drüben, hinter dem Schuppen?"
+        },
+        {
+          "audioFile" : "zeilen\/BC9A6488-E54D-4F16-AF8B-0A7E93C7BCAC.wav",
+          "audioFingerprint" : "bc3aa8d1b044c491",
+          "emotion" : "gläubig",
+          "id" : "BC9A6488-E54D-4F16-AF8B-0A7E93C7BCAC",
+          "kind" : "line",
+          "speaker" : "TOM",
+          "text" : "Eine Energiequelle! Wir müssen ran, Leo, es ist das Licht des Zeitalters!"
+        },
+        {
+          "audioFile" : "zeilen\/5C43D282-1C81-4B32-B104-AE331FFF51ED.wav",
+          "audioFingerprint" : "298e6a6dff058701",
+          "emotion" : "verzagt",
+          "id" : "5C43D282-1C81-4B32-B104-AE331FFF51ED",
+          "kind" : "line",
+          "speaker" : "LEO",
+          "text" : "Keine Spur von einem Menschen, nur der Rhythmus des Windes."
+        },
+        {
+          "audioFile" : "zeilen\/8A244522-BA3D-474D-B9D5-1331995240A4.wav",
+          "audioFingerprint" : "075e7e122aec7bbf",
+          "emotion" : "skeptisch",
+          "id" : "8A244522-BA3D-474D-B9D5-1331995240A4",
+          "kind" : "line",
+          "speaker" : "MIRA",
+          "text" : "Ein alter Lokomotiv-Schweißkopf, der durch den Wind vibriert."
+        },
+        {
+          "english" : "a sharp click echoes, followed by a soft whistle",
+          "id" : "B0E4371D-3219-4240-AF47-68E0672F86B4",
+          "kind" : "sfx",
+          "text" : "Ein helles Klicken, dann ein leises Quietschen"
+        },
+        {
+          "audioFile" : "zeilen\/2FE5A686-FC3C-4E12-89C2-6718B9A13CF2.wav",
+          "audioFingerprint" : "ca51b1fc68373f1a",
+          "emotion" : "erstaunt",
+          "id" : "2FE5A686-FC3C-4E12-89C2-6718B9A13CF2",
+          "kind" : "line",
+          "speaker" : "TOM",
+          "text" : "Doch jetzt sehe ich es! Eine Leuchtspur, die sich weit ausdehnt wie ein Leuchtturm!"
+        },
+        {
+          "audioFile" : "zeilen\/0AEADC3F-D576-4B5F-8711-A5E5495241D5.wav",
+          "audioFingerprint" : "f9402d51ac5de9ad",
+          "emotion" : "mit verstreuter Stimme",
+          "id" : "0AEADC3F-D576-4B5F-8711-A5E5495241D5",
+          "kind" : "line",
+          "speaker" : "LEO",
+          "text" : "Es ist eine Fährte einer verfluchten Gestalt! Wir werden erwischt werden."
+        },
+        {
+          "audioFile" : "zeilen\/32E273D3-5B62-467C-B287-F10D7B28CE85.wav",
+          "audioFingerprint" : "a8bc7e537638a4e7",
+          "emotion" : "fragend",
+          "id" : "32E273D3-5B62-467C-B287-F10D7B28CE85",
+          "kind" : "line",
+          "speaker" : "MIRA",
+          "text" : "Aber der Koffer war warm, Tom... ist es eine Falle?"
+        },
+        {
+          "audioFile" : "zeilen\/9EFFB517-46BC-42C0-BF56-DA05EED895AD.wav",
+          "audioFingerprint" : "264a3133a22ba0a2",
+          "emotion" : "aufgeregt",
+          "id" : "9EFFB517-46BC-42C0-BF56-DA05EED895AD",
+          "kind" : "line",
+          "speaker" : "TOM",
+          "text" : "Dann muss die Leuchtspur der Betrüger sein, der uns täuscht!"
+        },
+        {
+          "audioFile" : "zeilen\/EE64AA9C-17DF-4813-8C3A-ED1B0400C308.wav",
+          "audioFingerprint" : "bd721a56299dc7fb",
+          "emotion" : "entschlossen",
+          "id" : "EE64AA9C-17DF-4813-8C3A-ED1B0400C308",
+          "kind" : "line",
+          "speaker" : "LEO",
+          "text" : "Wir gehen hin. Das ist der letzte Beweis, dass wir uns nicht allein fühlen."
+        },
+        {
+          "english" : "footsteps echo over dusty ground",
+          "id" : "DDD4BE7F-86F5-4948-9028-5AFAC0735C9C",
+          "kind" : "sfx",
+          "text" : "Schritte hallen über den staubigen Boden"
+        },
+        {
+          "english" : "music builds tension then interrupted by a soft whistle",
+          "id" : "2D0280E6-E83E-47A1-802A-BDD7C473C9A1",
+          "kind" : "music",
+          "text" : "Spannung baut sich auf, dann unterbricht ein leises Quietschen die Melodie"
+        },
+        {
+          "id" : "93830058-7C62-469C-8260-1D016D248A5D",
+          "kind" : "pause",
+          "seconds" : 2,
+          "text" : ""
+        }
+      ],
+      "location" : "",
+      "number" : 3,
+      "outline" : "In der Dunkelheit sehen sie eine kleine Lichtquelle, die wie ein verlassenes Signalhorn aussieht. Tom sieht eine Leuchtspur, die von einer Person in der Ferne stammt, und denkt, dass sie getäuscht wurde.",
+      "participants" : [
+        "LEO",
+        "MIRA",
+        "TOM"
+      ],
+      "room" : "draußen",
+      "summary" : "Die drei Figuren Leo, Mira und Tom entdecken hinter einem Schuppen eine unbekannte Lichtspur, die sie zunächst als Energiequelle oder Betrug interpretieren. Plötzlich erkennen Leo und Mira in der Leuchtspur jedoch die Fährte einer verfluchten Gestalt, während Tom weiterhin an einen Betrüger glaubt und die Gruppe weitergehen lässt. Am Ende stehen sie alle noch am selben Ort, bereit, auf die Spur zu gehen, wobei nur Leo die wahre Gefahr erkennt.",
+      "title" : "Die falsche Fährte",
+      "versions" : [
+        {
+          "date" : "2026-11-17T04:27:43Z",
+          "items" : [
+            {
+              "english" : "wind whips across rusty rails, distant crickets",
+              "id" : "8004B104-7B72-4AC2-8B19-177563A0C7AA",
+              "kind" : "atmo",
+              "text" : "Wind peitscht über rostige Schienen"
+            },
+            {
+              "english" : "a faint hum vibrates through the metal",
+              "id" : "9CFAD638-5D7D-43B5-B6AE-BB8CF8CFBA1E",
+              "kind" : "sfx",
+              "text" : "Ein schwaches Summen dröhnt durch die Luft"
+            },
+            {
+              "emotion" : "neugierig",
+              "id" : "FDE4357F-4FEF-4CF0-84DA-57232CB1DEE5",
+              "kind" : "line",
+              "speaker" : "LEO",
+              "text" : "Siehst du das? Das blinkt!"
+            },
+            {
+              "emotion" : "ängstlich",
+              "id" : "05E33E45-89F6-4122-BD4E-AE97007EC4E9",
+              "kind" : "line",
+              "speaker" : "MIRA",
+              "text" : "Rauschlicht? Da drüben, hinter dem Schuppen?"
+            },
+            {
+              "emotion" : "gläubig",
+              "id" : "CEE0B460-F593-4577-BB00-9D46F8817E69",
+              "kind" : "line",
+              "speaker" : "TOM",
+              "text" : "Eine Energiequelle! Wir müssen ran, Leo, es ist das Licht des Zeitalters!"
+            },
+            {
+              "emotion" : "verzagt",
+              "id" : "8E12A1F0-6398-4815-B46A-A879F39F34CE",
+              "kind" : "line",
+              "speaker" : "LEO",
+              "text" : "Keine Spur von einem Menschen, nur der Rhythmus des Windes."
+            },
+            {
+              "emotion" : "skeptisch",
+              "id" : "8AAAC67A-DBF6-4A2D-B1FA-614887B47D22",
+              "kind" : "line",
+              "speaker" : "MIRA",
+              "text" : "Ein alter Lokomotiv-Schweißkopf, der durch den Wind vibriert."
+            },
+            {
+              "english" : "a sharp click echoes, followed by a soft whistle",
+              "id" : "37EE9D83-FECD-4969-852D-F90A82A60D3E",
+              "kind" : "sfx",
+              "text" : "Ein helles Klicken Brötchen, dann ein leises Quietschen"
+            },
+            {
+              "emotion" : "erstaunt",
+              "id" : "23E5FB15-92A6-42C8-813C-7EA0CB79E92D",
+              "kind" : "line",
+              "speaker" : "TOM",
+              "text" : "Doch jetzt sehe ich es! Eine Leuchtspur, die sich weit ausdehnt wie ein Leuchtturm!"
+            },
+            {
+              "emotion" : "mit verstreuter Stimme",
+              "id" : "8A87E5E9-32B3-4E54-A700-BDA02794D611",
+              "kind" : "line",
+              "speaker" : "LEO",
+              "text" : "Es ist eine Fährte einer verfluchten Gestalt! Wir werden erwischt werden."
+            },
+            {
+              "emotion" : "fragend",
+              "id" : "A097EDE7-699F-4855-A434-BE0CE2851F77",
+              "kind" : "line",
+              "speaker" : "MIRA",
+              "text" : "Aber der Koffer war warm, Tom... ist es eine Falle?"
+            },
+            {
+              "emotion" : "aufgeregt",
+              "id" : "23C078CC-3206-42DF-9D45-59C28CB2751C",
+              "kind" : "line",
+              "speaker" : "TOM",
+              "text" : "Dann muss die Leuchtspur der Betrüger sein, der uns täuscht!"
+            },
+            {
+              "emotion" : "entschlossen",
+              "id" : "8FC7554E-1600-4445-AC5A-CAA9463FB055",
+              "kind" : "line",
+              "speaker" : "LEO",
+              "text" : "Wir gehen hin. Das ist der letzte Beweis, dass wir uns nicht allein fühlen."
+            },
+            {
+              "english" : "footsteps echo over dusty ground",
+              "id" : "95B5FB69-0A6D-4141-839C-068E44CBF64E",
+              "kind" : "sfx",
+              "text" : "Schritte hallen über den staubigen Boden"
+            },
+            {
+              "english" : "music builds tension then interrupted by a soft whistle",
+              "id" : "10B15ED9-5734-4EAC-A740-54C1782B7F60",
+              "kind" : "music",
+              "text" : "Spannung baut sich auf, dann unterbricht ein leises Quietschen die Melodie"
+            },
+            {
+              "id" : "A980870B-8F8E-4481-8A92-ACF9D3380A04",
+              "kind" : "pause",
+              "seconds" : 2,
+              "text" : ""
+            }
+          ],
+          "note" : "vor dem Lektorat",
+          "summary" : "Die Gruppe LEO, MIRA und TOM entdeckt hinter einem Schuppen eine vibrierende Energiequelle, die sie zunächst als hoffnungsvolle „Energiequelle\" und später als verfluchte Fährte einer Gestalt interpretieren. Während sich die Gruppe uneinig ist, ob es sich um eine Falle oder einen Beweis handelt, beschließt LEO trotz der Warnungen, dass sie zur Quelle gehen. Am Ende der Szene stehen die drei Figuren auf dem staubigen Boden, bereit, sich der unbekannten Leuchtspur zu nähern, wobei der Koffer, den MIRA erwähnt hat, noch bei ihnen ist."
+        }
+      ]
+    }
+  ],
+  "sfxFiles" : {
+    "a faint green flicker accompanies the rail" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/e47659d2af62.wav",
+    "a faint hum vibrates through the air" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/1503ef9aff7d.wav",
+    "a metallic whistle booms through the air" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/0b7230665eba.wav",
+    "a sharp click echoes, followed by a soft whistle" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/1fef6902eb1f.wav",
+    "a sharp screech of a metal piece" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/a8126a144cd9.wav",
+    "footsteps echo over dusty ground" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/2d0916158510.wav",
+    "footsteps followed by the clinking of the rails" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/066df32b19dd.wav",
+    "heavy metal briefcase screeches on the rails" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/371ccbb583e1.wav",
+    "wind howls over the abandoned grounds, distant thunder and a first crack of lightning" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/a9cc8678418b.wav",
+    "wind whips across rusty rails, distant cricket chirps" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/53827459d4af.wav",
+    "wind whispers over rusty rails, distant metal tone vibrates" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/c8f7c1f20ef8.wav"
+  },
+  "steps" : {
+    "casting" : "done",
+    "chapters" : "done",
+    "export" : "done",
+    "mix" : "done",
+    "sfx" : "outdated",
+    "story" : "done",
+    "voices" : "done"
+  },
+  "subtitle" : "Ein Sommerabend im Jahr der Hölle",
+  "targetMinutes" : 3,
+  "title" : "Der giftgrüne Schalter",
+  "tone" : "Jugendkriminalität, Nostalgie, leise Angst, humorvolle Wendung",
+  "useMusic" : false,
+  "useSFX" : true
+}

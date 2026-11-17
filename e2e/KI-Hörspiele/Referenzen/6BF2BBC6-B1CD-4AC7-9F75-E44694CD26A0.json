@@ -1,0 +1,40 @@
+{
+  "analyzed" : "2026-11-17T05:21:16Z",
+  "id" : "6BF2BBC6-B1CD-4AC7-9F75-E44694CD26A0",
+  "name" : "Eigene Produktion",
+  "retroSuggested" : 1,
+  "sources" : [
+    "master.wav"
+  ],
+  "speakers" : [
+    {
+      "descriptionDE" : "männlich (geschätzt), Tonlage eher tief (~103 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "f0" : 102.6,
+      "id" : "S1",
+      "role" : "Hauptfigur (geschätzt)",
+      "share" : 0.515,
+      "syllablesPerSecond" : 3.95,
+      "voiceEN" : "An adult man with a fairly low voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German."
+    },
+    {
+      "descriptionDE" : "weiblich (geschätzt), Tonlage mittel (~205 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "f0" : 205.1,
+      "id" : "S2",
+      "role" : "Hauptfigur (geschätzt)",
+      "share" : 0.241,
+      "syllablesPerSecond" : 4.13,
+      "voiceEN" : "An adult woman with a medium-pitched voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German."
+    },
+    {
+      "descriptionDE" : "weiblich (geschätzt), Tonlage eher hoch (~216 Hz), ausgewogen, mittleres Tempo, lebendig",
+      "f0" : 216.2,
+      "id" : "S3",
+      "role" : "Hauptfigur (geschätzt)",
+      "share" : 0.244,
+      "syllablesPerSecond" : 4.17,
+      "voiceEN" : "An adult woman with a slightly high voice, balanced timbre, moderate pace delivery, lively. Speaks native German."
+    }
+  ],
+  "styleHint" : "schnelle Wortwechsel, kurze Musikbrücken zwischen den Szenen",
+  "summary" : "Dauer 2.8 min, Sprachanteil 77 %, 3 Stimmen erkannt (geschätzt).\n- S1 – Hauptfigur (geschätzt): 52 % Redeanteil, männlich (geschätzt), Tonlage eher tief (~103 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S2 – Hauptfigur (geschätzt): 24 % Redeanteil, weiblich (geschätzt), Tonlage mittel (~205 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S3 – Hauptfigur (geschätzt): 24 % Redeanteil, weiblich (geschätzt), Tonlage eher hoch (~216 Hz), ausgewogen, mittleres Tempo, lebendig\nDialog: 15.3 Sprecherwechsel\/min, Pause zwischen Repliken ~0.36 s, Repliken ~3.0 s.\nAufnahme: -16.07 LUFS, Bandbreite bis ~6.8 kHz (begrenzt wie Band\/Kassette), Grundrauschen -58.7 dBFS\nOhne Sprache: 17.1 s Musik\/Geräusche, 2 Musikbrücken (~3.7 s)."
+}

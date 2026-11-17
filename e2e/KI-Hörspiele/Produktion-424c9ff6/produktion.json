@@ -1,0 +1,350 @@
+{
+  "cast" : {
+    "ERZÄHLER" : {
+      "instruct" : "A warm, expressive audiobook narrator in their forties, rich and clear voice, reading in a gentle and fairy-tale like style. Speaks native German with clear, natural pronunciation.",
+      "kind" : "designed",
+      "referenceFile" : "stimmen\/ERZÄHLER.wav",
+      "referenceText" : "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+      "seed" : 481736
+    }
+  },
+  "chapters" : [
+    {
+      "number" : 1,
+      "title" : "Der fehlende Schlag"
+    }
+  ],
+  "clues" : [
+    {
+      "clue" : "Der fehlende Stundenschlag",
+      "meaning" : "Der fehlende Schlag zeigt an, dass etwas die Zeit raubt; er wird als der erste Hinweis auf den Vampir interpretiert.",
+      "scene" : 1
+    },
+    {
+      "clue" : "Der verluste Schlüssel",
+      "meaning" : "Die Suche nach dem verlorenen Schlüssel führt Katja in den Keller, wo sie auf den Vampir trifft und ihre Zeitmanipulation nutzt.",
+      "scene" : 2
+    },
+    {
+      "clue" : "Der Seher und sein Mantel",
+      "meaning" : "Der Seher führt Katja zum Schlüssel an der Wand; sein Metallknarren ist ein Hinweis auf die Mechanik des Rätsels.",
+      "scene" : 3
+    }
+  ],
+  "created" : "2026-11-17T04:54:28Z",
+  "era" : "Dunkle Ritterzeit mit Elementen der Steampunk-Ästhetik",
+  "figures" : [
+    {
+      "addedByModel" : false,
+      "age" : 50,
+      "description" : "Ein ruhiger Mann mittleren Alters mit grauem Haar und hohlen Gesichtszügen, der Geschichten mit einer fast meditativen Stimme erzählt.",
+      "gender" : "m",
+      "id" : "ERZÄHLER",
+      "name" : "Der Chronisten",
+      "role" : "Erzähler",
+      "voice" : "tiefer, ruhiger, nachdenklich, leise",
+      "voiceEN" : ""
+    },
+    {
+      "addedByModel" : false,
+      "age" : 24,
+      "description" : "Eine fleißige, aber unauffällige Uhrmacherin mit gebleichten Händen und bunten Fingernägel, die die Zeit magisch manipulieren kann.",
+      "gender" : "f",
+      "id" : "KATJA",
+      "name" : "Katja Stein",
+      "role" : "Heldin",
+      "voice" : "fröhlich, klar, leicht zitternd bei Nervosität",
+      "voiceEN" : ""
+    },
+    {
+      "addedByModel" : false,
+      "description" : "Ein schattenhafter Mann in dunkler Robe, der die Zeit stiehlt, um seine eigene Ewigkeit zu verlängern.",
+      "gender" : "m",
+      "id" : "VAMPIR",
+      "name" : "Der Zeitkrieger",
+      "role" : "Antagonist",
+      "voice" : "dumpf, hallend, fast unausgesprochen",
+      "voiceEN" : ""
+    },
+    {
+      "addedByModel" : false,
+      "description" : "Ein kleiner Kerl in einem langen Mantel, der aus dem Schatten der Uhren tanzt und Rätsel hält.",
+      "gender" : "m",
+      "id" : "SEHERSCHATTEN",
+      "name" : "Der Seher",
+      "role" : "Seher",
+      "voice" : "klirrend, metallic, eigenwillig",
+      "voiceEN" : ""
+    }
+  ],
+  "id" : "424C9FF6-8674-4E5B-84D5-FF697E99106F",
+  "language" : "de",
+  "logline" : "Als ihre Anstalten schief laufen, muss eine junge Uhrmacherin einen verfluchten Schlüssel finden, um die Zeit zu retten, bevor der Stundenschlag das Weltall stilllegt.",
+  "mix" : {
+    "chapters" : [
+      {
+        "start" : 0,
+        "title" : "Szene 1: Die leere Minute"
+      },
+      {
+        "start" : 49.56,
+        "title" : "Szene 2: Der verlorene Schlüssel"
+      },
+      {
+        "start" : 117.86,
+        "title" : "Szene 3: Der Schlüssel der Zeit"
+      }
+    ],
+    "date" : "2026-11-17T05:19:22Z",
+    "duration" : 155,
+    "loudness" : -16.02,
+    "master" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-424c9ff6\/mix\/master.wav",
+    "speechToBackground" : 213.1,
+    "stems" : {
+      "Erzähler" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-424c9ff6\/mix\/spuren\/Erzähler.wav"
+    },
+    "timeline" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-424c9ff6\/mix\/zeitleiste.json"
+  },
+  "mode" : "hoerbuch",
+  "modified" : "2026-11-17T05:19:22Z",
+  "musicFiles" : {
+
+  },
+  "narration" : "märchenhaft",
+  "prompt" : "Ein kurzes Märchen über eine Uhrmacherin, deren Uhren die Zeit anhalten können.",
+  "pronunciations" : {
+
+  },
+  "resolution" : "Der Vampir versucht, die Zeit zu stehlen, um ewig zu leben. Katja nutzt ihre Fähigkeit, die Zeit zu verlangsamen, um den Vampir zu entdecken. Der Seher zeigt ihr den Schlüssel an der Wand des Kellers, der eigentlich ein Teil des Uhrwerks ist. Katja schließt den Schlüssel, was die Zeit wiederherstellt und den Vampir zurückschreitet, da seine Ewigkeit auf der gestohlenen Zeit basiert. Der Vampir wird in seine eigene Zeitfalle zurückgeworfen und zurückschreitet.",
+  "retroAmount" : 0,
+  "review" : {
+    "date" : "2026-11-17T05:01:19Z",
+    "problems" : [
+
+    ],
+    "revised" : [
+
+    ]
+  },
+  "scenes" : [
+    {
+      "atmoEN" : "ticking clocks slowing down, silence, faint metallic clinking",
+      "chapter" : 1,
+      "id" : "F8ABFC99-6165-4B63-83B1-2B97D08DC7F8",
+      "items" : [
+        {
+          "audioFile" : "zeilen\/867480F0-D7AA-4B1C-9AAE-EC3B56693C9D.wav",
+          "audioFingerprint" : "176531f31bf80f9e",
+          "id" : "867480F0-D7AA-4B1C-9AAE-EC3B56693C9D",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Die Stube roch von poliertem Holz und altem Öl. Katjas Meisterwerk, die ‚Ewigkeit', stand auf dem Arbeitstisch wie ein edles Metalltier. Ihre Sekundencheilchen schossen spritzig, doch der große Zeiger tat nichts. Er klebte fest in der Mitte des Kreises."
+        },
+        {
+          "audioFile" : "zeilen\/E060A8F9-0BC4-47DE-9EA7-7970CAFAF472.wav",
+          "audioFingerprint" : "9008d2259179373d",
+          "id" : "E060A8F9-0BC4-47DE-9EA7-7970CAFAF472",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Schon wieder,\" flüsterte Katja, ihre gebleichten Hände ruhig am Werkzeug. „Der Hammer ist bereits isoliert."
+        },
+        {
+          "audioFile" : "zeilen\/35F73D16-1920-4956-AD03-7C517AD9C3DA.wav",
+          "audioFingerprint" : "1c0a6fd8bfb39379",
+          "id" : "35F73D16-1920-4956-AD03-7C517AD9C3DA",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Der Stundenschlag, der oft wie ein leises Raunen durch das Zimmer ging, war today weg. Nichts tat sich auf; die Wände scheinen in einer leeren Minute zu schweben, als ob die Zeit selbst sich gegen den Formalismus wehrt hätte."
+        },
+        {
+          "audioFile" : "zeilen\/489FAD62-E05C-4CFC-A0AC-F1A149A438FD.wav",
+          "audioFingerprint" : "d1c9ad441d047a15",
+          "id" : "489FAD62-E05C-4CFC-A0AC-F1A149A438FD",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Dann ist es nie gewesen,\" sagte Katja, ihr Blick fest auf das stillose Uhrwerk gerichtet. „Es war nie da."
+        },
+        {
+          "id" : "E60184FB-B53E-4C7F-A117-D8D7A3C14601",
+          "kind" : "pause",
+          "seconds" : 2,
+          "text" : ""
+        },
+        {
+          "audioFile" : "zeilen\/782697DC-CCD9-45CB-872D-DFE24089E3E4.wav",
+          "audioFingerprint" : "0d2242c9deb04d4e",
+          "id" : "782697DC-CCD9-45CB-872D-DFE24089E3E4",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Doch bald, als sich das Fachwerk schloss, nachhallte ein kleiner, getakter Klackenschlag."
+        }
+      ],
+      "location" : "uhrenmacherstube",
+      "number" : 1,
+      "outline" : "Der Erzähler beschreibt, wie Katjas Meisterwerk, die 'Ewigkeit', heute keine Zeiger bewegt. Plötzlich ertönt kein Stundenschlag, obwohl alle Teile perfekt sind.",
+      "participants" : [
+        "ERZÄHLER",
+        "KATJA"
+      ],
+      "room" : "zimmer",
+      "summary" : "Katja, die Uhrmacherin, hat festgestellt, dass ihr Meisterwerk „Ewigkeit\" nicht durch einen defekten Hammer, sondern weil es nie existiert hat, stillsteht. Als sie dies annimmt, ertönt plötzlich ein kleiner Klackenschlag, der darauf hindeutet, dass das Uhrwerk doch wohl doch funktioniert. Am Ende der Szene steht Katja konfrontiert mit der leeren Uhr, die sie als nie da erklärt hat, während ein neuer, unklarer Geräuschreiz auf eine mögliche Funktionsfähigkeit oder ein neues Ereignis hindeutet.",
+      "title" : "Die leere Minute",
+      "versions" : [
+
+      ]
+    },
+    {
+      "atmoEN" : "dampfer, dripping water, distant footsteps, heavy breathing",
+      "chapter" : 1,
+      "id" : "552F1D83-46B4-4BD9-9347-0BBDB8150025",
+      "items" : [
+        {
+          "audioFile" : "zeilen\/0FFB4B2A-963A-47B0-9BF2-524EDC01FBE5.wav",
+          "audioFingerprint" : "84edaa232da76ca2",
+          "id" : "0FFB4B2A-963A-47B0-9BF2-524EDC01FBE5",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Der Keller urte wie eine Kasse, in der jedes Gemauschel sich verlor. Katjas Knödel brach durch die Dunkelheit, als sie nach dem Schlüssel suchte, den der Uhrwerkschrank verschluckt hatte."
+        },
+        {
+          "audioFile" : "zeilen\/846A4C98-7DCF-44FD-BAAA-605C58430BA3.wav",
+          "audioFingerprint" : "4a45a7f1f34de002",
+          "id" : "846A4C98-7DCF-44FD-BAAA-605C58430BA3",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "So nah, doch unsichtbar,\" murmelte sie. Ein Schatten ritzelte sich vor ihr auf und schlug zu. Der Vampir nannte ihre Zeit ein fahrendes Ziel, das er nie erlangen konnte."
+        },
+        {
+          "audioFile" : "zeilen\/3C76CF90-53AB-46AD-90D4-16245FDAC416.wav",
+          "audioFingerprint" : "f9ca554ba06f7007",
+          "id" : "3C76CF90-53AB-46AD-90D4-16245FDAC416",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Verlängere nicht das Spiel,\" knisterte der dunkle Herr, seine Lippen in einem Grinsen gefaltet."
+        },
+        {
+          "id" : "24F46F05-4DA6-42D4-B535-4C14148B79B3",
+          "kind" : "pause",
+          "seconds" : 1.5,
+          "text" : ""
+        },
+        {
+          "audioFile" : "zeilen\/F73C0DA6-3EB4-4C25-A5C4-C835B76148CB.wav",
+          "audioFingerprint" : "e0831d1e04af994b",
+          "id" : "F73C0DA6-3EB4-4C25-A5C4-C835B76148CB",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Katja schloss die Augen und faßte die lässige Luft an. Sie spürte, wie sich der Raum in einen langsamen Tagend verwandelte; Der Vampir wurde steif, seine Bewegung verlangsamt, als wäre er in einem leeren Wasserbezirk gefangen."
+        },
+        {
+          "audioFile" : "zeilen\/A52307E8-9508-4EB3-949B-CB9133DE7A45.wav",
+          "audioFingerprint" : "9c93f00c453ac0a1",
+          "id" : "A52307E8-9508-4EB3-949B-CB9133DE7A45",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Sie sah ihn stehen, den Vampir, der jetzt wie ein toter Mann vor ihr stand. Mit einer Bewegung ihres Körpers, so klein wie eine Nadel, berührte sie die Zeit wieder. Die Bewegung des Vampirs spürte sich, er war knapp, als hätte die Welt auf eine Sekunde stehen bleiben müssen."
+        },
+        {
+          "audioFile" : "zeilen\/BDD46552-1048-4C67-BC4A-A3F2E7DB0711.wav",
+          "audioFingerprint" : "04255a41a2b908fe",
+          "id" : "BDD46552-1048-4C67-BC4A-A3F2E7DB0711",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "In diesem Moment sah sie den Schlüssel, der an der Wand glänzte, wie ein Knopf im Uhrwerk, der nie geschnitten werden konnte. Der Vampir fuhr zurück in seine Zeitfalle, als wäre er aus einer anderen Dimension in diese geworfen worden."
+        }
+      ],
+      "location" : "Keller der Uhrmacher",
+      "number" : 2,
+      "outline" : "Katja sucht im Keller nach dem verlorenen Zeit-Schlüssel. Der Vampir greift sie an, aber Katja nutzt ihre Macht, um die Zeit zu verlangsamen und einen Fluchtweg zu finden.",
+      "participants" : [
+        "ERZÄHLER",
+        "KATJA",
+        "VAMPIR"
+      ],
+      "room" : "keller",
+      "summary" : "Katja sucht im dunklen Keller nach dem verschluckten Schlüssel, während sie vom Vampir bedroht wird, der ihre Zeit als fahrendes Ziel bezeichnet. Durch eine gezielte Berührung der Zeit verlangsamt sie den Vampir, bis er wie ein toter Mann vor ihr steht, und in diesem Moment erkennt sie den Schlüssel an der Wand. Der Vampir wird durch diese Handlung sofort in seine Zeitfalle zurückgeworfen, während Katja den Schlüssel wiederfindet und die Bedrohung beseitigt.",
+      "title" : "Der verlorene Schlüssel",
+      "versions" : [
+
+      ]
+    },
+    {
+      "atmoEN" : "echoing footsteps, wind in the stones, sudden silence followed by loud ticking",
+      "chapter" : 1,
+      "id" : "B694CC00-6D31-4AD2-8DD5-60481E995D5E",
+      "items" : [
+        {
+          "audioFile" : "zeilen\/FCFFFB8B-A6A0-4ADD-B5F7-98F47AC5459A.wav",
+          "audioFingerprint" : "3fbdd1f7d212d0b7",
+          "id" : "FCFFFB8B-A6A0-4ADD-B5F7-98F47AC5459A",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Aus dem Dunkeln trat er, der Seher. Sein Mantel knisterte wie ein verpassbares Uhrgewicht, feine Metallschläge hallten im Stillen über die unebene Wand."
+        },
+        {
+          "audioFile" : "zeilen\/CE4CE6B7-35D1-4E92-8B5E-8D4345A0EFE6.wav",
+          "audioFingerprint" : "b71653eb3dbd3660",
+          "id" : "CE4CE6B7-35D1-4E92-8B5E-8D4345A0EFE6",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Schau, Katja,\" flüsterte er und wies mit schimmernden Fingern auf das helle Metall an der Wand, das wie ein Auge in der Nabe blinkte. „Dort ruht dein Teil."
+        },
+        {
+          "audioFile" : "zeilen\/915B3167-F25C-40B7-BE1B-1B8131848AFE.wav",
+          "audioFingerprint" : "098d9f1e7bd5ebc9",
+          "id" : "915B3167-F25C-40B7-BE1B-1B8131848AFE",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Der Vampir griff nach dem glänzenden Schlüssel, seine Fingerspitzen zuckten wie Nadeln in der Zeit."
+        },
+        {
+          "audioFile" : "zeilen\/52438BE4-0E27-4B08-ACF1-69D9D20F91E8.wav",
+          "audioFingerprint" : "2252be2740c8495c",
+          "id" : "52438BE4-0E27-4B08-ACF1-69D9D20F91E8",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Doch Katja hob ihren Armblick, legte seine Hand auf die Zeit und fügte den Schlüssel in seiner Halle an."
+        },
+        {
+          "audioFile" : "zeilen\/32FCAC3C-29CC-4A79-B2DE-74375028D8B0.wav",
+          "audioFingerprint" : "423f352c1ed43615",
+          "id" : "32FCAC3C-29CC-4A79-B2DE-74375028D8B0",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Ein Chor von Tönen, so tief und alt wie die Welt, erfüllte den Keller und trieb den Vampir in seinen Schatten zurück."
+        }
+      ],
+      "location" : "Keller der Uhrmacher (tiefer Untergrund)",
+      "number" : 3,
+      "outline" : "Der Seher erscheint und zeigt Katja den Schlüssel an der Wand. Der Vampir versucht, ihn zu stehlen, aber Katja schließt den Schlüssel und ruft den Stundenschlag zurück.",
+      "participants" : [
+        "ERZÄHLER",
+        "KATJA",
+        "SEHERSCHATTEN",
+        "VAMPIR"
+      ],
+      "room" : "keller",
+      "summary" : "Der Seher führt Katja zu einem leuchtenden Metallstück an der Wand, das als ihr „Teil\" identifiziert wird. Katja greift den Vampir von hinten an, legt ihre Hand auf die Zeit und überreicht ihm den Schlüssel, wodurch sie ihn in seine Halle zurückdrängt. Als Folge dieser Handlung wird der Vampir von einem uralten Chor an Tönen in seinen Schatten getrieben, während Katja den Schlüssel nun in ihrer Halle besitzt.",
+      "title" : "Der Schlüssel der Zeit",
+      "versions" : [
+
+      ]
+    }
+  ],
+  "sfxFiles" : {
+
+  },
+  "steps" : {
+    "casting" : "done",
+    "chapters" : "done",
+    "mix" : "done",
+    "story" : "done",
+    "voices" : "done"
+  },
+  "subtitle" : "Wie die Uhrmacherin die Zeit hielt",
+  "targetMinutes" : 2,
+  "title" : "Die stille Glocke",
+  "tone" : "Mystisch, atmosphärisch, ruhig bis spannungsgeladen",
+  "useMusic" : false,
+  "useSFX" : false
+}

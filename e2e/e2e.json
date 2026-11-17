@@ -1,0 +1,152 @@
+[
+  {
+    "detail" : "ready idle",
+    "name" : "Einrichtung (Umgebung, Geschichte, Stimmen)",
+    "ok" : true,
+    "seconds" : 136.4
+  },
+  {
+    "detail" : "idle",
+    "name" : "Modell geladen: Stable Audio 3 small (Geräusche)",
+    "ok" : true,
+    "seconds" : 36.7
+  },
+  {
+    "detail" : "idle",
+    "name" : "Modell geladen: Whisper large-v3-turbo",
+    "ok" : true,
+    "seconds" : 12.8
+  },
+  {
+    "detail" : "idle",
+    "name" : "Modell geladen: Silero VAD",
+    "ok" : true,
+    "seconds" : 2
+  },
+  {
+    "detail" : "idle",
+    "name" : "Modell geladen: SpeechBrain ECAPA",
+    "ok" : true,
+    "seconds" : 3.1
+  },
+  {
+    "detail" : "Notiz: –",
+    "name" : "Hörspiel erstellt",
+    "ok" : true,
+    "seconds" : 2021.1
+  },
+  {
+    "detail" : "Der giftgrüne Schalter: 3 Szenen, 382 Wörter, 4 Figuren",
+    "name" : "Geschichte geschrieben",
+    "ok" : true,
+    "seconds" : 2021.2
+  },
+  {
+    "detail" : "5 Hinweise, überarbeitet: [2, 3]",
+    "name" : "Lektorat ausgeführt",
+    "ok" : true,
+    "seconds" : 2021.2
+  },
+  {
+    "detail" : "fehlend: 0",
+    "name" : "Alle Zeilen gesprochen",
+    "ok" : true,
+    "seconds" : 2021.2
+  },
+  {
+    "detail" : "11 Geräusche\/Atmosphären",
+    "name" : "Geräusche erzeugt",
+    "ok" : true,
+    "seconds" : 2021.2
+  },
+  {
+    "detail" : "165.0 s, -16.1 LUFS, Sprache\/Hintergrund 18.8 dB, 3 Kapitel",
+    "name" : "Mischung",
+    "ok" : true,
+    "seconds" : 2021.2
+  },
+  {
+    "detail" : "„Lass uns ran gehen, wer weiß was da schneit!“ → „Los, ich hack an! Was für ein Abenteuer!“",
+    "name" : "Replik neu formuliert",
+    "ok" : true,
+    "seconds" : 18.4
+  },
+  {
+    "detail" : "zeilen\/65FC094D-C49E-4BDF-8BC6-EFCFFC170766.wav",
+    "name" : "Replik neu gesprochen",
+    "ok" : true,
+    "seconds" : 56.2
+  },
+  {
+    "detail" : "165.2 s",
+    "name" : "Neu abgemischt nach Änderung",
+    "ok" : true,
+    "seconds" : 17.3
+  },
+  {
+    "detail" : "52 Clips, Spuren Erzähler, Sprecher LEO, Sprecher MIRA, Sprecher TOM, Geräusche, Atmo; stumm: Atmo",
+    "name" : "Mehrspur bearbeitet und neu abgemischt",
+    "ok" : true,
+    "seconds" : 13.7
+  },
+  {
+    "detail" : "Der giftgrüne Schalter.mp3",
+    "name" : "Export whole als mp3",
+    "ok" : true,
+    "seconds" : 3.5
+  },
+  {
+    "detail" : "Der giftgrüne Schalter – 01 Kapitel 1- Das Licht im Dunkeln.m4a",
+    "name" : "Export chapters als m4a",
+    "ok" : true,
+    "seconds" : 1.9
+  },
+  {
+    "detail" : "Der giftgrüne Schalter – 01 Szene 1- Die Anstalt.mp3, Der giftgrüne Schalter – 02 Szene 2- Der flackernde Scharf.mp3, Der giftgrüne Schalter – 03 Szene 3- Die falsche Fährte.mp3",
+    "name" : "Export scenes als mp3",
+    "ok" : true,
+    "seconds" : 3.3
+  },
+  {
+    "detail" : "Der giftgrüne Schalter – Spur Atmo.flac, Der giftgrüne Schalter – Spur Erzähler.flac, Der giftgrüne Schalter – Spur Geräusche.flac, Der giftgrüne Schalter – Spur Sprecher LEO.flac, Der giftgrüne Schalter – Spur Sprecher MIRA.flac, Der giftgrüne Schalter – Spur Sprecher TOM.flac",
+    "name" : "Export stems als flac",
+    "ok" : true,
+    "seconds" : 1.3
+  },
+  {
+    "detail" : "5 Zeilen gesprochen, 11 offen, Stimmen: Offen",
+    "name" : "Abbrechen während „Stimmen erzeugen“",
+    "ok" : true,
+    "seconds" : 0.1
+  },
+  {
+    "detail" : "Die stille Glocke: 428 Wörter, 155 s",
+    "name" : "Hörbuch erstellt",
+    "ok" : true,
+    "seconds" : 1495.5
+  },
+  {
+    "detail" : "5 von 5 Zeilen von vor dem Abbruch unverändert übernommen, 11 danach gesprochen",
+    "name" : "Fortgesetzt nach Abbruch",
+    "ok" : true,
+    "seconds" : 1495.6
+  },
+  {
+    "detail" : "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+    "name" : "Stimme entworfen",
+    "ok" : true,
+    "seconds" : 47.6
+  },
+  {
+    "detail" : "Dauer 2.8 min, Sprachanteil 77 %, 3 Stimmen erkannt (geschätzt).\n- S1 – Hauptfigur (geschätzt): 52 % Redeanteil, männlich (geschätzt), Tonlage eher tief (~103 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S2 – Hauptfigur (geschätzt): 24 % Redeanteil, weiblich (geschätzt), Tonlage mittel (~205 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S3 – Hauptfigur (geschätzt): 24 % Redeanteil, weiblich (geschätzt), Tonlage eher hoch (~216 Hz), ausgewogen, mittleres Tempo, lebendig\nDialog: 15.3 Sprecherwechsel\/min, Pause zwischen Repliken ~0.36 s, Repliken ~3.0 s.\nAuf",
+    "name" : "Referenz analysiert",
+    "ok" : true,
+    "seconds" : 65
+  },
+  {
+    "detail" : "3 Profile",
+    "name" : "Stilprofile angelegt (können nicht sprechen)",
+    "ok" : true,
+    "seconds" : 67.3
+  }
+]

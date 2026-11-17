@@ -1,0 +1,32 @@
+[Hörspiel-E2E +0 s] Geschichtenmodell: mlx-community/Qwen3.5-4B-MLX-4bit, Länge 3.0 min, Skripte: /Users/runner/work/music-library-mac/music-library-mac/build/Music Library.app/Contents/Resources/HoerspielEngine
+[Hörspiel-E2E +136 s] OK   Einrichtung (Umgebung, Geschichte, Stimmen) (136 s): ready idle
+[Hörspiel-E2E +173 s] OK   Modell geladen: Stable Audio 3 small (Geräusche) (36 s): idle
+[Hörspiel-E2E +185 s] OK   Modell geladen: Whisper large-v3-turbo (12 s): idle
+[Hörspiel-E2E +187 s] OK   Modell geladen: Silero VAD (2 s): idle
+[Hörspiel-E2E +191 s] OK   Modell geladen: SpeechBrain ECAPA (3 s): idle
+[Hörspiel-E2E +2212 s] OK   Hörspiel erstellt (2021 s): Notiz: –
+[Hörspiel-E2E +2212 s] OK   Geschichte geschrieben (2021 s): Der giftgrüne Schalter: 3 Szenen, 382 Wörter, 4 Figuren
+[Hörspiel-E2E +2212 s] OK   Lektorat ausgeführt (2021 s): 5 Hinweise, überarbeitet: [2, 3]
+[Hörspiel-E2E +2212 s] OK   Alle Zeilen gesprochen (2021 s): fehlend: 0
+[Hörspiel-E2E +2212 s] OK   Geräusche erzeugt (2021 s): 11 Geräusche/Atmosphären
+[Hörspiel-E2E +2212 s] OK   Mischung (2021 s): 165.0 s, -16.1 LUFS, Sprache/Hintergrund 18.8 dB, 3 Kapitel
+[Hörspiel-E2E +2230 s] OK   Replik neu formuliert (18 s): „Lass uns ran gehen, wer weiß was da schneit!“ → „Los, ich hack an! Was für ein Abenteuer!“
+[Hörspiel-E2E +2286 s] OK   Replik neu gesprochen (56 s): zeilen/65FC094D-C49E-4BDF-8BC6-EFCFFC170766.wav
+[Hörspiel-E2E +2304 s] OK   Neu abgemischt nach Änderung (17 s): 165.2 s
+[Hörspiel-E2E +2318 s] OK   Mehrspur bearbeitet und neu abgemischt (13 s): 52 Clips, Spuren Erzähler, Sprecher LEO, Sprecher MIRA, Sprecher TOM, Geräusche, Atmo; stumm: Atmo
+[Hörspiel-E2E +2321 s] OK   Export whole als mp3 (3 s): Der giftgrüne Schalter.mp3
+[Hörspiel-E2E +2323 s] OK   Export chapters als m4a (1 s): Der giftgrüne Schalter – 01 Kapitel 1- Das Licht im Dunkeln.m4a
+[Hörspiel-E2E +2326 s] OK   Export scenes als mp3 (3 s): Der giftgrüne Schalter – 01 Szene 1- Die Anstalt.mp3, Der giftgrüne Schalter – 02 Szene 2- Der flackernde Scharf.mp3, Der giftgrüne Schalter – 03 Szene 3- Die falsche Fährte.mp3
+[Hörspiel-E2E +2328 s] OK   Export stems als flac (1 s): Der giftgrüne Schalter – Spur Atmo.flac, Der giftgrüne Schalter – Spur Erzähler.flac, Der giftgrüne Schalter – Spur Geräusche.flac, Der giftgrüne Schalter – Spur Sprecher LEO.flac, Der giftgrüne Schalter – Spur Sprecher MIRA.flac, Der giftgrüne Schalter – Spur Sprecher TOM.flac
+[Hörspiel-E2E +3121 s] OK   Abbrechen während „Stimmen erzeugen“ (0 s): 5 Zeilen gesprochen, 11 offen, Stimmen: Offen
+[Hörspiel-E2E +3823 s] OK   Hörbuch erstellt (1495 s): Die stille Glocke: 428 Wörter, 155 s
+[Hörspiel-E2E +3823 s] OK   Fortgesetzt nach Abbruch (1495 s): 5 von 5 Zeilen von vor dem Abbruch unverändert übernommen, 11 danach gesprochen
+[Hörspiel-E2E +3871 s] OK   Stimme entworfen (47 s): Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.
+[Hörspiel-E2E +3936 s] OK   Referenz analysiert (65 s): Dauer 2.8 min, Sprachanteil 77 %, 3 Stimmen erkannt (geschätzt).
+- S1 – Hauptfigur (geschätzt): 52 % Redeanteil, männlich (geschätzt), Tonlage eher tief (~103 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark
+- S2 – Hauptfigur (geschätzt): 24 % Redeanteil, weiblich (geschätzt), Tonlage mittel (~205 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark
+- S3 – Hauptfigur (geschätzt): 24 % Redeanteil, weiblich (geschätzt), Tonlage eher hoch (~216 Hz), ausgewogen, mittleres Tempo, lebendig
+Dialog: 15.3 Sprecherwechsel/min, Pause zwischen Repliken ~0.36 s, Repliken ~3.0 s.
+Auf
+[Hörspiel-E2E +3938 s] OK   Stilprofile angelegt (können nicht sprechen) (67 s): 3 Profile
+[Hörspiel-E2E +3938 s] Fertig: 25 von 25 Prüfungen bestanden

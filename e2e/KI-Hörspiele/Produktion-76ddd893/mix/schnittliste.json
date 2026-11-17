@@ -1,0 +1,440 @@
+{
+  "chapters": [
+    {
+      "start": 0,
+      "title": "Szene 1: Die Anstalt"
+    },
+    {
+      "start": 64.19,
+      "title": "Szene 2: Der flackernde Scharf"
+    },
+    {
+      "start": 117.05,
+      "title": "Szene 3: Die falsche Fährte"
+    }
+  ],
+  "clips": [
+    {
+      "id": "c0001",
+      "track": "Erzähler",
+      "start": 0.0,
+      "duration": 7.448,
+      "label": "ERZÄHLER: Der alte Bahnhof lag still, als würde er schlafen wollen. Do",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0022",
+      "track": "Erzähler",
+      "start": 64.187,
+      "duration": 5.831,
+      "label": "ERZÄHLER: Das flackernde Licht kreiste nun um die Stahlrohre, als würd",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0037",
+      "track": "Erzähler",
+      "start": 111.007,
+      "duration": 5.143,
+      "label": "ERZÄHLER: Doch als sie das Echo ertasten, scheint das Licht aus dem Sc",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0002",
+      "track": "Sprecher LEO",
+      "start": 8.5,
+      "duration": 2.908,
+      "label": "LEO: Los, ich hack an! Was für ein Abenteuer!",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0005",
+      "track": "Sprecher LEO",
+      "start": 19.333,
+      "duration": 2.455,
+      "label": "LEO: Sage. Und dann sag es selbst.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0008",
+      "track": "Sprecher LEO",
+      "start": 28.624,
+      "duration": 3.55,
+      "label": "LEO: Nein, das ist keine Geschichte! Das ist ein Signalhorn.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0010",
+      "track": "Sprecher LEO",
+      "start": 33.874,
+      "duration": 1.028,
+      "label": "LEO: Da liegt einer!",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0012",
+      "track": "Sprecher LEO",
+      "start": 37.755,
+      "duration": 3.731,
+      "label": "LEO: Ja! Ein alter Koffer, nicht verstaubt, sondern ...",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0014",
+      "track": "Sprecher LEO",
+      "start": 43.439,
+      "duration": 2.862,
+      "label": "LEO: Aber ich hörte ein Geräusch, das so wie ein Koffer ist ...",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0017",
+      "track": "Sprecher LEO",
+      "start": 52.344,
+      "duration": 2.966,
+      "label": "LEO: Ein altes Signalhorn, das durch den Wind vibriert!",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0019",
+      "track": "Sprecher LEO",
+      "start": 59.235,
+      "duration": 2.219,
+      "label": "LEO: Er ist alt, aber nicht verflucht!",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0024",
+      "track": "Sprecher LEO",
+      "start": 71.718,
+      "duration": 5.523,
+      "label": "LEO: Dort! Am Hauptbahnhof! Ein Licht, das sich bewegt wie ein Le",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0027",
+      "track": "Sprecher LEO",
+      "start": 81.297,
+      "duration": 4.3,
+      "label": "LEO: Nein, das hier ist Energie! Wir müssen hin und die Quelle fi",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0031",
+      "track": "Sprecher LEO",
+      "start": 93.772,
+      "duration": 3.023,
+      "label": "LEO: Aber das Licht ist warm, wie eine menschliche Hand.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0035",
+      "track": "Sprecher LEO",
+      "start": 106.173,
+      "duration": 2.223,
+      "label": "LEO: Er ist alt, aber nicht verflucht!",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0040",
+      "track": "Sprecher LEO",
+      "start": 118.75,
+      "duration": 2.23,
+      "label": "LEO: Siehst du das? Das blinkt!",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0043",
+      "track": "Sprecher LEO",
+      "start": 130.186,
+      "duration": 3.459,
+      "label": "LEO: Keine Spur von einem Menschen, nur der Rhythmus des Windes.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0047",
+      "track": "Sprecher LEO",
+      "start": 144.693,
+      "duration": 4.249,
+      "label": "LEO: Es ist eine Fährte einer verfluchten Gestalt! Wir werden erw",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0050",
+      "track": "Sprecher LEO",
+      "start": 155.956,
+      "duration": 4.089,
+      "label": "LEO: Wir gehen hin. Das ist der letzte Beweis, dass wir uns nicht",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0003",
+      "track": "Sprecher MIRA",
+      "start": 11.286,
+      "duration": 2.592,
+      "label": "MIRA: Genau dort vorne im Schuppen. Ich sehe ...",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0006",
+      "track": "Sprecher MIRA",
+      "start": 22.168,
+      "duration": 2.67,
+      "label": "MIRA: Es ist wie mit einer Koffer, der einen Schrei hat ...",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0011",
+      "track": "Sprecher MIRA",
+      "start": 35.283,
+      "duration": 2.092,
+      "label": "MIRA: Schau mal nach den Rändern, da läuft das Fell.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0015",
+      "track": "Sprecher MIRA",
+      "start": 46.681,
+      "duration": 2.756,
+      "label": "MIRA: Das ist kein Effekt, das ist ein Licht!",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0018",
+      "track": "Sprecher MIRA",
+      "start": 55.69,
+      "duration": 3.165,
+      "label": "MIRA: Aber der Koffer ... er ist warm, wie ein Menschenhand.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0026",
+      "track": "Sprecher MIRA",
+      "start": 78.941,
+      "duration": 1.976,
+      "label": "MIRA: Nicht näher kommen, bis wir es sicher haben.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0030",
+      "track": "Sprecher MIRA",
+      "start": 90.71,
+      "duration": 2.682,
+      "label": "MIRA: Doch genau, wir machen uns in die Keller unten.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0034",
+      "track": "Sprecher MIRA",
+      "start": 101.617,
+      "duration": 4.177,
+      "label": "MIRA: Aber der Koffer... er ist warm, wie eine menschliche Hand.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0041",
+      "track": "Sprecher MIRA",
+      "start": 121.359,
+      "duration": 2.994,
+      "label": "MIRA: Rauschlicht? Da drüben, hinter dem Schuppen?",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0044",
+      "track": "Sprecher MIRA",
+      "start": 134.025,
+      "duration": 3.53,
+      "label": "MIRA: Ein alter Lokomotiv-Schweißkopf, der durch den Wind vibriert",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0048",
+      "track": "Sprecher MIRA",
+      "start": 149.322,
+      "duration": 3.238,
+      "label": "MIRA: Aber der Koffer war warm, Tom... ist es eine Falle?",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0004",
+      "track": "Sprecher TOM",
+      "start": 14.258,
+      "duration": 4.695,
+      "label": "TOM: Na, was sagst du, Leo? Sagst du es richtig und dann sagst du",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0007",
+      "track": "Sprecher TOM",
+      "start": 25.218,
+      "duration": 3.026,
+      "label": "TOM: Vielleicht hast du eine Geschichte über eine verfluchte Kist",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0013",
+      "track": "Sprecher TOM",
+      "start": 41.866,
+      "duration": 1.192,
+      "label": "TOM: Kein Koffer, kein Schreck!",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0016",
+      "track": "Sprecher TOM",
+      "start": 49.817,
+      "duration": 2.147,
+      "label": "TOM: Ein grünes Licht? Wie kann das sein?",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0020",
+      "track": "Sprecher TOM",
+      "start": 61.834,
+      "duration": 1.452,
+      "label": "TOM: Wir müssen ins Signalhorn!",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0029",
+      "track": "Sprecher TOM",
+      "start": 87.297,
+      "duration": 3.033,
+      "label": "TOM: Oh je, oh je! Wir laufen jetzt auf eine Falle zu?",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0033",
+      "track": "Sprecher TOM",
+      "start": 98.495,
+      "duration": 2.742,
+      "label": "TOM: Ein altes Signalhorn, das durch den Wind vibriert!",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0036",
+      "track": "Sprecher TOM",
+      "start": 108.776,
+      "duration": 1.68,
+      "label": "TOM: Wir müssen ins Signalhorn!",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0042",
+      "track": "Sprecher TOM",
+      "start": 124.734,
+      "duration": 5.072,
+      "label": "TOM: Eine Energiequelle! Wir müssen ran, Leo, es ist das Licht de",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0046",
+      "track": "Sprecher TOM",
+      "start": 139.255,
+      "duration": 5.059,
+      "label": "TOM: Doch jetzt sehe ich es! Eine Leuchtspur, die sich weit ausde",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0049",
+      "track": "Sprecher TOM",
+      "start": 152.94,
+      "duration": 2.636,
+      "label": "TOM: Dann muss die Leuchtspur der Betrüger sein, der uns täuscht!",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0009",
+      "track": "Geräusche",
+      "start": 32.275,
+      "duration": 2.782,
+      "label": "Ein schwerer Metallkoffer quietscht auf dem Schienengrün",
+      "gain_db": -6.0
+    },
+    {
+      "id": "c0023",
+      "track": "Geräusche",
+      "start": 70.118,
+      "duration": 3.422,
+      "label": "Ein scharfes Knirschen eines Metallstücks",
+      "gain_db": -6.0
+    },
+    {
+      "id": "c0025",
+      "track": "Geräusche",
+      "start": 77.341,
+      "duration": 3.553,
+      "label": "Ein schwaches, grünes Flackern begleitet die Schiene",
+      "gain_db": -6.0
+    },
+    {
+      "id": "c0028",
+      "track": "Geräusche",
+      "start": 85.697,
+      "duration": 3.984,
+      "label": "Schritte, dann das Gleisenklopfen",
+      "gain_db": -6.0
+    },
+    {
+      "id": "c0032",
+      "track": "Geräusche",
+      "start": 96.895,
+      "duration": 3.408,
+      "label": "Ein metallenes Quietschen dröhnt durch die Luft",
+      "gain_db": -6.0
+    },
+    {
+      "id": "c0039",
+      "track": "Geräusche",
+      "start": 117.15,
+      "duration": 3.713,
+      "label": "Ein schwaches Summen dröhnt durch die Luft",
+      "gain_db": -6.0
+    },
+    {
+      "id": "c0045",
+      "track": "Geräusche",
+      "start": 137.655,
+      "duration": 2.57,
+      "label": "Ein helles Klicken, dann ein leises Quietschen",
+      "gain_db": -6.0
+    },
+    {
+      "id": "c0051",
+      "track": "Geräusche",
+      "start": 160.145,
+      "duration": 2.687,
+      "label": "Schritte hallen über den staubigen Boden",
+      "gain_db": -6.0
+    },
+    {
+      "id": "c0021",
+      "track": "Atmo",
+      "start": 0.0,
+      "duration": 64.287,
+      "label": "Atmo: wind howls over the abandoned grounds, distant thu",
+      "gain_db": -17.0
+    },
+    {
+      "id": "c0038",
+      "track": "Atmo",
+      "start": 64.187,
+      "duration": 52.963,
+      "label": "Atmo: wind whispers over rusty rails, distant metal tone",
+      "gain_db": -17.0
+    },
+    {
+      "id": "c0052",
+      "track": "Atmo",
+      "start": 117.05,
+      "duration": 47.695,
+      "label": "Atmo: wind whips across rusty rails, distant cricket chi",
+      "gain_db": -17.0
+    }
+  ],
+  "metrics": {
+    "speech_to_background_db": 23.7,
+    "duration_s": 165.2,
+    "loudness_lufs": -16.07,
+    "peak_dbfs": -1.0
+  }
+}

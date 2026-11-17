@@ -1,0 +1,152 @@
+{
+  "chapters": [
+    {
+      "title": "Szene 1: Die leere Minute",
+      "start": 0.0
+    },
+    {
+      "title": "Szene 2: Der verlorene Schlüssel",
+      "start": 49.56
+    },
+    {
+      "title": "Szene 3: Der Schlüssel der Zeit",
+      "start": 117.86
+    }
+  ],
+  "clips": [
+    {
+      "id": "c0001",
+      "track": "Erzähler",
+      "start": 0.0,
+      "duration": 15.974,
+      "label": "ERZÄHLER: Die Stube roch von poliertem Holz und altem Öl. Katjas Meist",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0002",
+      "track": "Erzähler",
+      "start": 16.194,
+      "duration": 6.555,
+      "label": "ERZÄHLER: Schon wieder,\" flüsterte Katja, ihre gebleichten Hände ruhig",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0003",
+      "track": "Erzähler",
+      "start": 22.97,
+      "duration": 12.431,
+      "label": "ERZÄHLER: Der Stundenschlag, der oft wie ein leises Raunen durch das Z",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0004",
+      "track": "Erzähler",
+      "start": 35.621,
+      "duration": 6.285,
+      "label": "ERZÄHLER: Dann ist es nie gewesen,\" sagte Katja, ihr Blick fest auf da",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0005",
+      "track": "Erzähler",
+      "start": 43.906,
+      "duration": 4.755,
+      "label": "ERZÄHLER: Doch bald, als sich das Fachwerk schloss, nachhallte ein kle",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0006",
+      "track": "Erzähler",
+      "start": 49.561,
+      "duration": 9.238,
+      "label": "ERZÄHLER: Der Keller urte wie eine Kasse, in der jedes Gemauschel sich",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0007",
+      "track": "Erzähler",
+      "start": 59.019,
+      "duration": 10.262,
+      "label": "ERZÄHLER: So nah, doch unsichtbar,\" murmelte sie. Ein Schatten ritzelt",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0008",
+      "track": "Erzähler",
+      "start": 69.501,
+      "duration": 5.125,
+      "label": "ERZÄHLER: Verlängere nicht das Spiel,\" knisterte der dunkle Herr, sein",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0009",
+      "track": "Erzähler",
+      "start": 76.127,
+      "duration": 12.779,
+      "label": "ERZÄHLER: Katja schloss die Augen und faßte die lässige Luft an. Sie s",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0010",
+      "track": "Erzähler",
+      "start": 89.126,
+      "duration": 15.149,
+      "label": "ERZÄHLER: Sie sah ihn stehen, den Vampir, der jetzt wie ein toter Mann",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0011",
+      "track": "Erzähler",
+      "start": 104.494,
+      "duration": 12.469,
+      "label": "ERZÄHLER: In diesem Moment sah sie den Schlüssel, der an der Wand glän",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0012",
+      "track": "Erzähler",
+      "start": 117.863,
+      "duration": 9.41,
+      "label": "ERZÄHLER: Aus dem Dunkeln trat er, der Seher. Sein Mantel knisterte wi",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0013",
+      "track": "Erzähler",
+      "start": 127.493,
+      "duration": 9.295,
+      "label": "ERZÄHLER: Schau, Katja,\" flüsterte er und wies mit schimmernden Finger",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0014",
+      "track": "Erzähler",
+      "start": 137.009,
+      "duration": 5.137,
+      "label": "ERZÄHLER: Der Vampir griff nach dem glänzenden Schlüssel, seine Finger",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0015",
+      "track": "Erzähler",
+      "start": 142.366,
+      "duration": 5.0,
+      "label": "ERZÄHLER: Doch Katja hob ihren Armblick, legte seine Hand auf die Zeit",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0016",
+      "track": "Erzähler",
+      "start": 147.586,
+      "duration": 6.931,
+      "label": "ERZÄHLER: Ein Chor von Tönen, so tief und alt wie die Welt, erfüllte d",
+      "gain_db": 0.0
+    }
+  ],
+  "metrics": {
+    "speech_to_background_db": 213.1,
+    "duration_s": 155.0,
+    "loudness_lufs": -16.02,
+    "peak_dbfs": -1.0
+  }
+}

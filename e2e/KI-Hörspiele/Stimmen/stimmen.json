@@ -1,0 +1,94 @@
+[
+  {
+    "created" : "2026-11-17T05:19:23Z",
+    "id" : "622F620F-F1D6-41E6-AF1B-343124F77FB7",
+    "kind" : "designed",
+    "name" : "Prüfstimme",
+    "referenceFile" : "622F620F-F1D6-41E6-AF1B-343124F77FB7-649173.wav",
+    "referenceText" : "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+    "seed" : 649173,
+    "settings" : {
+      "accent" : "",
+      "age" : "senior",
+      "articulation" : "natural",
+      "gender" : "female",
+      "mood" : "mysterious",
+      "notes" : "",
+      "pitch" : 0,
+      "tempo" : 0,
+      "timbre" : "warm"
+    }
+  },
+  {
+    "created" : "2026-11-17T05:21:16Z",
+    "customDescriptionEN" : "An adult man with a fairly low voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+    "id" : "D0FD3742-FFBA-4078-91B0-CE7306A1A39F",
+    "kind" : "styleOnly",
+    "name" : "Eigene Produktion – S1 Hauptfigur",
+    "seed" : 366085,
+    "settings" : {
+      "accent" : "",
+      "age" : "adult",
+      "articulation" : "natural",
+      "gender" : "male",
+      "mood" : "calm",
+      "notes" : "männlich (geschätzt), Tonlage eher tief (~103 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "pitch" : 0,
+      "tempo" : 0,
+      "timbre" : "neutral"
+    },
+    "sourceReference" : "Eigene Produktion",
+    "target" : {
+      "f0" : 102.6,
+      "syllablesPerSecond" : 3.95
+    }
+  },
+  {
+    "created" : "2026-11-17T05:21:16Z",
+    "customDescriptionEN" : "An adult woman with a medium-pitched voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+    "id" : "FD5F77A1-B549-4132-A1C4-93358299C43D",
+    "kind" : "styleOnly",
+    "name" : "Eigene Produktion – S2 Hauptfigur",
+    "seed" : 148086,
+    "settings" : {
+      "accent" : "",
+      "age" : "adult",
+      "articulation" : "natural",
+      "gender" : "male",
+      "mood" : "calm",
+      "notes" : "weiblich (geschätzt), Tonlage mittel (~205 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "pitch" : 0,
+      "tempo" : 0,
+      "timbre" : "neutral"
+    },
+    "sourceReference" : "Eigene Produktion",
+    "target" : {
+      "f0" : 205.1,
+      "syllablesPerSecond" : 4.13
+    }
+  },
+  {
+    "created" : "2026-11-17T05:21:16Z",
+    "customDescriptionEN" : "An adult woman with a slightly high voice, balanced timbre, moderate pace delivery, lively. Speaks native German.",
+    "id" : "F67777E5-9B7A-4B67-8B26-20B9E26F891F",
+    "kind" : "styleOnly",
+    "name" : "Eigene Produktion – S3 Hauptfigur",
+    "seed" : 983510,
+    "settings" : {
+      "accent" : "",
+      "age" : "adult",
+      "articulation" : "natural",
+      "gender" : "male",
+      "mood" : "calm",
+      "notes" : "weiblich (geschätzt), Tonlage eher hoch (~216 Hz), ausgewogen, mittleres Tempo, lebendig",
+      "pitch" : 0,
+      "tempo" : 0,
+      "timbre" : "neutral"
+    },
+    "sourceReference" : "Eigene Produktion",
+    "target" : {
+      "f0" : 216.2,
+      "syllablesPerSecond" : 4.17
+    }
+  }
+]

@@ -1,0 +1,373 @@
+{
+  "file": "/Users/runner/work/music-library-mac/music-library-mac/out/e2e/KI-Hörspiele/Produktion-76ddd893/mix/master.wav",
+  "duration_s": 165.2,
+  "speakers": [
+    {
+      "talk_seconds": 68.9,
+      "turns": 20,
+      "mean_turn_seconds": 3.44,
+      "f0_median_hz": 102.6,
+      "f0_range_semitones": 14.2,
+      "f0_std_semitones": 5.3,
+      "syllables_per_second": 3.95,
+      "words": 183,
+      "brightness_hz": 622,
+      "loudness_variation_db": 8.6,
+      "description_de": "männlich (geschätzt), Tonlage eher tief (~103 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "voice_en": "An adult man with a fairly low voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+      "sample_lines": [
+        "Der alte Bahnhof lag still, als würde er schlafen wollen.",
+        "in der Dunkelheit flackerte ein seltsames Grün.",
+        "Los, ich heck an. Was für ein Abenteuer. Genau"
+      ],
+      "id": "S1",
+      "share": 0.515,
+      "role_guess": "Hauptfigur (geschätzt)"
+    },
+    {
+      "talk_seconds": 32.2,
+      "turns": 11,
+      "mean_turn_seconds": 2.93,
+      "f0_median_hz": 205.1,
+      "f0_range_semitones": 16.4,
+      "f0_std_semitones": 5.65,
+      "syllables_per_second": 4.13,
+      "words": 94,
+      "brightness_hz": 635,
+      "loudness_variation_db": 10.2,
+      "description_de": "weiblich (geschätzt), Tonlage mittel (~205 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "voice_en": "An adult woman with a medium-pitched voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+      "sample_lines": [
+        "Genau dort vorne im Schuppen. Ich sehe...",
+        "Es ist wie mit einer Koffer, der einen Schrei hat.",
+        "Schau mal nach den Rändern. Da läuft das Fell."
+      ],
+      "id": "S2",
+      "share": 0.241,
+      "role_guess": "Hauptfigur (geschätzt)"
+    },
+    {
+      "talk_seconds": 32.6,
+      "turns": 11,
+      "mean_turn_seconds": 2.96,
+      "f0_median_hz": 216.2,
+      "f0_range_semitones": 8.8,
+      "f0_std_semitones": 3.23,
+      "syllables_per_second": 4.17,
+      "words": 93,
+      "brightness_hz": 555,
+      "loudness_variation_db": 8.6,
+      "description_de": "weiblich (geschätzt), Tonlage eher hoch (~216 Hz), ausgewogen, mittleres Tempo, lebendig",
+      "voice_en": "An adult woman with a slightly high voice, balanced timbre, moderate pace delivery, lively. Speaks native German.",
+      "sample_lines": [
+        "Na, was sagst du, Leo? Sagst du es richtig und dann sagst du es?",
+        "Vielleicht hast du eine Geschichte über eine verfluchte Kiste?",
+        "Kein Koffer, kein Schreck."
+      ],
+      "id": "S3",
+      "share": 0.244,
+      "role_guess": "Hauptfigur (geschätzt)"
+    }
+  ],
+  "dialog": {
+    "speech_share": 0.771,
+    "turns": 42,
+    "turns_per_minute": 15.3,
+    "median_gap_between_speakers_s": 0.36,
+    "median_turn_seconds": 3.0,
+    "words_per_minute_overall": 176.6
+  },
+  "recording": {
+    "sample_rate": 48000,
+    "channels": 2,
+    "loudness_lufs": -16.07,
+    "peak_dbfs": -1.0,
+    "bandwidth_hz": 6750,
+    "brightness_hz": 699,
+    "noise_floor_dbfs": -58.7,
+    "noise_flatness": 0.883,
+    "hum_db_over_floor": {
+      "50": -0.6,
+      "60": -0.6
+    },
+    "stereo_correlation": 0.949,
+    "reverb_rt60_estimate_s": null,
+    "reverb_measurements": 0
+  },
+  "non_speech": {
+    "segments": [
+      {
+        "start": 32.62,
+        "end": 33.88,
+        "level_dbfs": -22.4,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 70.09,
+        "end": 71.83,
+        "level_dbfs": -20.9,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 77.29,
+        "end": 78.94,
+        "level_dbfs": -41.2,
+        "kind_guess": "Geräusch/Atmo (geschätzt)"
+      },
+      {
+        "start": 85.64,
+        "end": 87.29,
+        "level_dbfs": -39.9,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 96.84,
+        "end": 98.55,
+        "level_dbfs": -26.6,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 116.2,
+        "end": 118.78,
+        "level_dbfs": -22.3,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 137.61,
+        "end": 139.26,
+        "level_dbfs": -29.9,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 160.33,
+        "end": 165.24,
+        "level_dbfs": -40.0,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      }
+    ],
+    "content_seconds": 17.1,
+    "music_bridges": 2,
+    "music_bridge_mean_seconds": 3.7
+  },
+  "transcript_excerpt": "Der alte Bahnhof lag still, als würde er schlafen wollen. Doch in der Dunkelheit flackerte ein seltsames Grün. Los, ich heck an. Was für ein Abenteuer. Genau dort vorne im Schuppen. Ich sehe... Na, was sagst du, Leo? Sagst du es richtig und dann sagst du es? Sage. Und dann sag es selbst. Es ist wie mit einer Koffer, der einen Schrei hat. Vielleicht hast du eine Geschichte über eine verfluchte Kiste? Nein, das ist keine Geschichte. Das ist ein Signalhorn. Da liegt einer. Schau mal nach den Rändern. Da läuft das Fell. Ja, ein alter Koffer. Nicht verstaubt, sondern... Kein Koffer, kein Schreck. Aber ich hörte ein Geräusch, das so wie ein Koffer ist. Das ist kein Effekt. Das ist ein Licht. Ein grünes Licht? Wie kann das sein? Ein altes Signalhorn, das durch den Wind vibriert. Aber der Koffer, er ist warm wie ein Menschenhand. Er ist alt, aber nicht verflucht. Wir müssen ins Signalhorn. Das flackernde Licht kreiste nun um die Stahlrohre, als würde es den Schatten der alten Maschinen beleben. Dort, am Hauptbahnhof. Ein Licht, das sich bewegt wie ein Leichenschmaus. Nicht näher kommen, bis wir es sicher haben. Nein, das hier ist Energie. Wir müssen hin und die Quelle finden. Oje, oje. Wir laufen jetzt auf eine Falle zu? Doch genau. Wir machen uns in die Keller unten. Aber das Licht ist warm, wie eine menschliche Hand. Ein altes Signalhorn, das durch den Wind vibriert. Aber der Koffer, er ist warm, wie eine menschliche Hand. Er ist alt, aber nicht verflucht. Wir müssen ins Signalhorn",
+  "threshold": 0.7,
+  "speakers_given": null,
+  "seconds": {
+    "diarization": 7.7,
+    "transcription": 46.2,
+    "total": 63.4
+  },
+  "turns": [
+    {
+      "start": 0.0,
+      "end": 3.64,
+      "speaker": "S1"
+    },
+    {
+      "start": 4.28,
+      "end": 7.28,
+      "speaker": "S1"
+    },
+    {
+      "start": 8.5,
+      "end": 11.36,
+      "speaker": "S1"
+    },
+    {
+      "start": 11.36,
+      "end": 13.93,
+      "speaker": "S2"
+    },
+    {
+      "start": 14.33,
+      "end": 19.02,
+      "speaker": "S3"
+    },
+    {
+      "start": 19.32,
+      "end": 21.86,
+      "speaker": "S1"
+    },
+    {
+      "start": 22.17,
+      "end": 24.9,
+      "speaker": "S2"
+    },
+    {
+      "start": 25.5,
+      "end": 28.3,
+      "speaker": "S3"
+    },
+    {
+      "start": 28.6,
+      "end": 32.4,
+      "speaker": "S1"
+    },
+    {
+      "start": 33.88,
+      "end": 34.92,
+      "speaker": "S1"
+    },
+    {
+      "start": 35.35,
+      "end": 37.42,
+      "speaker": "S2"
+    },
+    {
+      "start": 37.75,
+      "end": 41.5,
+      "speaker": "S1"
+    },
+    {
+      "start": 41.91,
+      "end": 43.14,
+      "speaker": "S3"
+    },
+    {
+      "start": 43.45,
+      "end": 46.31,
+      "speaker": "S1"
+    },
+    {
+      "start": 46.68,
+      "end": 49.48,
+      "speaker": "S2"
+    },
+    {
+      "start": 49.82,
+      "end": 52.07,
+      "speaker": "S3"
+    },
+    {
+      "start": 52.34,
+      "end": 55.34,
+      "speaker": "S1"
+    },
+    {
+      "start": 55.7,
+      "end": 58.92,
+      "speaker": "S2"
+    },
+    {
+      "start": 59.22,
+      "end": 61.51,
+      "speaker": "S1"
+    },
+    {
+      "start": 61.82,
+      "end": 63.3,
+      "speaker": "S3"
+    },
+    {
+      "start": 64.18,
+      "end": 69.95,
+      "speaker": "S1"
+    },
+    {
+      "start": 71.83,
+      "end": 77.29,
+      "speaker": "S1"
+    },
+    {
+      "start": 78.94,
+      "end": 80.97,
+      "speaker": "S2"
+    },
+    {
+      "start": 81.3,
+      "end": 85.64,
+      "speaker": "S1"
+    },
+    {
+      "start": 87.29,
+      "end": 90.29,
+      "speaker": "S3"
+    },
+    {
+      "start": 90.71,
+      "end": 93.45,
+      "speaker": "S2"
+    },
+    {
+      "start": 93.78,
+      "end": 96.78,
+      "speaker": "S1"
+    },
+    {
+      "start": 98.55,
+      "end": 101.29,
+      "speaker": "S3"
+    },
+    {
+      "start": 101.66,
+      "end": 105.83,
+      "speaker": "S2"
+    },
+    {
+      "start": 106.17,
+      "end": 108.42,
+      "speaker": "S1"
+    },
+    {
+      "start": 108.95,
+      "end": 110.45,
+      "speaker": "S3"
+    },
+    {
+      "start": 111.32,
+      "end": 116.2,
+      "speaker": "S1"
+    },
+    {
+      "start": 118.78,
+      "end": 121.0,
+      "speaker": "S1"
+    },
+    {
+      "start": 121.37,
+      "end": 124.37,
+      "speaker": "S2"
+    },
+    {
+      "start": 124.76,
+      "end": 129.83,
+      "speaker": "S3"
+    },
+    {
+      "start": 130.2,
+      "end": 133.7,
+      "speaker": "S1"
+    },
+    {
+      "start": 134.04,
+      "end": 137.61,
+      "speaker": "S2"
+    },
+    {
+      "start": 139.26,
+      "end": 144.36,
+      "speaker": "S3"
+    },
+    {
+      "start": 144.7,
+      "end": 149.0,
+      "speaker": "S1"
+    },
+    {
+      "start": 149.34,
+      "end": 152.62,
+      "speaker": "S2"
+    },
+    {
+      "start": 152.95,
+      "end": 155.66,
+      "speaker": "S3"
+    },
+    {
+      "start": 155.96,
+      "end": 160.33,
+      "speaker": "S1"
+    }
+  ],
+  "summary_de": "Dauer 2.8 min, Sprachanteil 77 %, 3 Stimmen erkannt (geschätzt).\n- S1 – Hauptfigur (geschätzt): 52 % Redeanteil, männlich (geschätzt), Tonlage eher tief (~103 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S2 – Hauptfigur (geschätzt): 24 % Redeanteil, weiblich (geschätzt), Tonlage mittel (~205 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S3 – Hauptfigur (geschätzt): 24 % Redeanteil, weiblich (geschätzt), Tonlage eher hoch (~216 Hz), ausgewogen, mittleres Tempo, lebendig\nDialog: 15.3 Sprecherwechsel/min, Pause zwischen Repliken ~0.36 s, Repliken ~3.0 s.\nAufnahme: -16.07 LUFS, Bandbreite bis ~6.8 kHz (begrenzt wie Band/Kassette), Grundrauschen -58.7 dBFS\nOhne Sprache: 17.1 s Musik/Geräusche, 2 Musikbrücken (~3.7 s)."
+}

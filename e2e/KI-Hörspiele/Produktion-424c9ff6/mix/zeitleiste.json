@@ -1,0 +1,219 @@
+{
+ "sample_rate": 48000,
+ "tracks": [
+  {
+   "name": "Erzähler",
+   "gain_db": 0.0,
+   "mute": false,
+   "solo": false
+  }
+ ],
+ "clips": [
+  {
+   "id": "c0001",
+   "track": "Erzähler",
+   "start": 0.0,
+   "offset": 0.0,
+   "duration": 15.9745,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Die Stube roch von poliertem Holz und altem Öl. Katjas Meist",
+   "file": "clips/c0001.wav"
+  },
+  {
+   "id": "c0002",
+   "track": "Erzähler",
+   "start": 16.1945,
+   "offset": 0.0,
+   "duration": 6.5553,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Schon wieder,\" flüsterte Katja, ihre gebleichten Hände ruhig",
+   "file": "clips/c0002.wav"
+  },
+  {
+   "id": "c0003",
+   "track": "Erzähler",
+   "start": 22.9697,
+   "offset": 0.0,
+   "duration": 12.4315,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Der Stundenschlag, der oft wie ein leises Raunen durch das Z",
+   "file": "clips/c0003.wav"
+  },
+  {
+   "id": "c0004",
+   "track": "Erzähler",
+   "start": 35.6212,
+   "offset": 0.0,
+   "duration": 6.2847,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Dann ist es nie gewesen,\" sagte Katja, ihr Blick fest auf da",
+   "file": "clips/c0004.wav"
+  },
+  {
+   "id": "c0005",
+   "track": "Erzähler",
+   "start": 43.9059,
+   "offset": 0.0,
+   "duration": 4.7553,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Doch bald, als sich das Fachwerk schloss, nachhallte ein kle",
+   "file": "clips/c0005.wav"
+  },
+  {
+   "id": "c0006",
+   "track": "Erzähler",
+   "start": 49.5612,
+   "offset": 0.0,
+   "duration": 9.238,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Der Keller urte wie eine Kasse, in der jedes Gemauschel sich",
+   "file": "clips/c0006.wav"
+  },
+  {
+   "id": "c0007",
+   "track": "Erzähler",
+   "start": 59.0192,
+   "offset": 0.0,
+   "duration": 10.2622,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: So nah, doch unsichtbar,\" murmelte sie. Ein Schatten ritzelt",
+   "file": "clips/c0007.wav"
+  },
+  {
+   "id": "c0008",
+   "track": "Erzähler",
+   "start": 69.5015,
+   "offset": 0.0,
+   "duration": 5.125,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Verlängere nicht das Spiel,\" knisterte der dunkle Herr, sein",
+   "file": "clips/c0008.wav"
+  },
+  {
+   "id": "c0009",
+   "track": "Erzähler",
+   "start": 76.1265,
+   "offset": 0.0,
+   "duration": 12.779,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Katja schloss die Augen und faßte die lässige Luft an. Sie s",
+   "file": "clips/c0009.wav"
+  },
+  {
+   "id": "c0010",
+   "track": "Erzähler",
+   "start": 89.1255,
+   "offset": 0.0,
+   "duration": 15.1488,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Sie sah ihn stehen, den Vampir, der jetzt wie ein toter Mann",
+   "file": "clips/c0010.wav"
+  },
+  {
+   "id": "c0011",
+   "track": "Erzähler",
+   "start": 104.4943,
+   "offset": 0.0,
+   "duration": 12.4688,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: In diesem Moment sah sie den Schlüssel, der an der Wand glän",
+   "file": "clips/c0011.wav"
+  },
+  {
+   "id": "c0012",
+   "track": "Erzähler",
+   "start": 117.8631,
+   "offset": 0.0,
+   "duration": 9.4103,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Aus dem Dunkeln trat er, der Seher. Sein Mantel knisterte wi",
+   "file": "clips/c0012.wav"
+  },
+  {
+   "id": "c0013",
+   "track": "Erzähler",
+   "start": 127.4935,
+   "offset": 0.0,
+   "duration": 9.2953,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Schau, Katja,\" flüsterte er und wies mit schimmernden Finger",
+   "file": "clips/c0013.wav"
+  },
+  {
+   "id": "c0014",
+   "track": "Erzähler",
+   "start": 137.0088,
+   "offset": 0.0,
+   "duration": 5.1374,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Der Vampir griff nach dem glänzenden Schlüssel, seine Finger",
+   "file": "clips/c0014.wav"
+  },
+  {
+   "id": "c0015",
+   "track": "Erzähler",
+   "start": 142.3662,
+   "offset": 0.0,
+   "duration": 5.0002,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Doch Katja hob ihren Armblick, legte seine Hand auf die Zeit",
+   "file": "clips/c0015.wav"
+  },
+  {
+   "id": "c0016",
+   "track": "Erzähler",
+   "start": 147.5864,
+   "offset": 0.0,
+   "duration": 6.9306,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Ein Chor von Tönen, so tief und alt wie die Welt, erfüllte d",
+   "file": "clips/c0016.wav"
+  }
+ ],
+ "chapters": [
+  {
+   "title": "Szene 1: Die leere Minute",
+   "start": 0.0
+  },
+  {
+   "title": "Szene 2: Der verlorene Schlüssel",
+   "start": 49.56
+  },
+  {
+   "title": "Szene 3: Der Schlüssel der Zeit",
+   "start": 117.86
+  }
+ ]
+}
