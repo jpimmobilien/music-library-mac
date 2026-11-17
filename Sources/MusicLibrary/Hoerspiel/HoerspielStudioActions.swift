@@ -140,7 +140,7 @@ extension HoerspielModel {
 
     // MARK: Referenzanalyse
 
-    func analyzeReference(files: [URL], name: String) {
+    func analyzeReference(files: [URL], name: String, speakers: Int? = nil) {
         guard !files.isEmpty else { return }
         let title = name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? files[0].deletingPathExtension().lastPathComponent : name
         run("Referenz analysieren") { m, e in
@@ -152,7 +152,7 @@ extension HoerspielModel {
                 try FileManager.default.createDirectory(at: m.store.referencesDir, withIntermediateDirectories: true)
                 let out = m.store.analysisFile(for: ref0).deletingLastPathComponent()
                     .appendingPathComponent("\(ref0.id.uuidString)-\(i).analyse.json")
-                let r = try await e.analyze(file: f, name: title, out: out,
+                let r = try await e.analyze(file: f, name: title, out: out, speakers: speakers,
                                             progress: m.reporter(prefix: "\(f.lastPathComponent): ", range: (Double(i) * span)...(Double(i + 1) * span)))
                 let ref = HSReference.from(profile: r.profile, name: title, sources: [f.lastPathComponent])
                 if var mm = merged {

@@ -234,7 +234,8 @@ class Engine:
         models = self._analysis(progress)
         progress(0.15, "Sprecher, Text und Klang werden analysiert …")
         r = H.analyze(req["path"], models, log=lambda *a: print(*a, file=sys.stderr),
-                      threshold=float(req.get("threshold", H.DEFAULT_THRESHOLD)), language=req.get("language", "de"))
+                      threshold=float(req.get("threshold", H.DEFAULT_THRESHOLD)), language=req.get("language", "de"),
+                      n_speakers=int(req["speakers"]) if req.get("speakers") else None)
         if req.get("out"):
             with open(req["out"], "w") as f:
                 json.dump(r, f, ensure_ascii=False, indent=2, default=str)

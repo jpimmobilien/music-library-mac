@@ -216,6 +216,8 @@ struct HSReferenceView: View {
     @Environment(\.musicColors) private var colors
     @State private var name = ""
     @State private var files: [URL] = []
+    /// Bekannte Anzahl Stimmen (0 = automatisch schätzen).
+    @State private var speakers = 0
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -226,8 +228,14 @@ struct HSReferenceView: View {
                 HStack(spacing: 10) {
                     TextField("Name der Referenz (z. B. „Kassetten-Krimi 1985“)", text: $name).textFieldStyle(.roundedBorder).frame(maxWidth: 360)
                     PillButton(title: files.isEmpty ? "Aufnahmen wählen …" : "\(files.count) Datei(en)", icon: Icons.audioFile, style: .tonal) { pick() }
+                    Stepper(value: $speakers, in: 0...20) {
+                        Text(speakers == 0 ? "Stimmen: automatisch" : "Stimmen: \(speakers)")
+                            .font(Typo.inter(12.5, .medium)).monospacedDigit()
+                    }
+                    .fixedSize()
+                    .help("Wenn du weißt, wie viele verschiedene Stimmen in der Aufnahme sprechen, hier eintragen – das macht die Sprechertrennung zuverlässiger.")
                     PillButton(title: "Analysieren", icon: Icons.equalizer, style: .filled) {
-                        hs.analyzeReference(files: files, name: name)
+                        hs.analyzeReference(files: files, name: name, speakers: speakers > 0 ? speakers : nil)
                         files = []
                     }
                     .disabled(files.isEmpty || hs.isWorking || hs.setup != .ready || !analysisReady)

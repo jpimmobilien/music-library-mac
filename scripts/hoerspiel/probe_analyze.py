@@ -178,7 +178,7 @@ if rows:
         path, truth, cast = build_composite(rows)
         r = H.analyze(path, models, log=log, truth=truth)
         results["A_mls"] = r
-        report.step("A: MLS-Testhörspiel", cast=cast, evaluation=r["evaluation"], sweep=r["threshold_sweep"],
+        report.step("A: MLS-Testhörspiel", cast=cast, evaluation=r["evaluation"], known_count=r.get("known_count_evaluation"), sweep=r["threshold_sweep"],
                     seconds=r["seconds"], summary=r["summary_de"])
     except Exception as e:  # noqa: BLE001
         report.step("A Fehler", error=repr(e), trace=traceback.format_exc()[-2500:])
@@ -188,7 +188,7 @@ if PROD and os.path.exists(os.path.join(PROD, "hoerspiel.mp3")):
         truth = json.load(open(os.path.join(PROD, "sprecher-wahrheit.json")))
         r = H.analyze(os.path.join(PROD, "hoerspiel.mp3"), models, log=log, truth=truth)
         results["B_produktion"] = r
-        report.step("B: eigene Produktion", evaluation=r["evaluation"], sweep=r["threshold_sweep"],
+        report.step("B: eigene Produktion", evaluation=r["evaluation"], known_count=r.get("known_count_evaluation"), sweep=r["threshold_sweep"],
                     seconds=r["seconds"], summary=r["summary_de"])
     except Exception as e:  # noqa: BLE001
         report.step("B Fehler", error=repr(e), trace=traceback.format_exc()[-2500:])

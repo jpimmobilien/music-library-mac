@@ -131,11 +131,16 @@ def windows(segments, win=1.5, hop=0.75, min_len=0.6):
     return out
 
 
-def cluster(emb, threshold=0.65, min_share=0.03):
-    """Gruppierung nach Stimmähnlichkeit (Kosinus, average linkage). Kleine Gruppen → nächste große Gruppe."""
+def cluster(emb, threshold=0.65, min_share=0.03, n_speakers=None):
+    """Gruppierung nach Stimmähnlichkeit (Kosinus, average linkage). Kleine Gruppen → nächste große Gruppe.
+    n_speakers: bekannte Anzahl Stimmen (vom Nutzer) – dann genau so viele Gruppen statt einer Schwelle."""
     if len(emb) < 2:
         return np.zeros(len(emb), dtype=int)
     Z = linkage(emb, method="average", metric="cosine")
+    if n_speakers:
+        labels = fcluster(Z, t=int(n_speakers), criterion="maxclust") - 1
+        remap = {c: k for k, c in enumerate(sorted(set(labels), key=lambda c: -np.sum(labels == c)))}
+        return np.array([remap[l] for l in labels])
     labels = fcluster(Z, t=threshold, criterion="distance") - 1
     counts = np.bincount(labels)
     big = [c for c in range(len(counts)) if counts[c] >= max(3, min_share * len(labels))]
@@ -169,13 +174,13 @@ def turns_from(wins, labels, gap=0.6):
     return turns
 
 
-def diarize(models, x16, threshold=0.65, segments=None):
+def diarize(models, x16, threshold=0.65, segments=None, n_speakers=None):
     segments = segments if segments is not None else models.speech(x16)
     wins = windows(segments)
     if not wins:
         return segments, [], np.zeros((0, 192)), np.array([])
     emb = np.stack([models.embed(x16[int(s * SR16): int(e * SR16)]) for s, e in wins])
-    labels = cluster(emb, threshold)
+    labels = cluster(emb, threshold, n_speakers=n_speakers)
     return segments, wins, emb, labels
 
 
@@ -397,7 +402,7 @@ def non_speech_content(x, sr, segments, noise_floor_db):
 DEFAULT_THRESHOLD = 0.7  # gemessen am 16.11.2026 (Apple Silicon): 0.65 → 6 statt 5 Sprecher, 0.7 → 5, Verwechslung 0 %
 
 
-def analyze(path, models, log=print, threshold=DEFAULT_THRESHOLD, language="de", truth=None):
+def analyze(path, models, log=print, threshold=DEFAULT_THRESHOLD, language="de", truth=None, n_speakers=None):
     """Vollständige Referenzanalyse einer Datei. truth: optionale Sprecher-Wahrheit [{start,end,speaker}]."""
     t0 = time.time()
     x, sr = A.load_audio(path)
@@ -405,7 +410,7 @@ def analyze(path, models, log=print, threshold=DEFAULT_THRESHOLD, language="de",
     x16 = A.resample(mono, sr, SR16)
     dur = len(x16) / SR16
     log(f"[Analyse] {path}: {dur / 60:.1f} min")
-    segments, wins, emb, labels = diarize(models, x16, threshold)
+    segments, wins, emb, labels = diarize(models, x16, threshold, n_speakers=n_speakers)
     turns = turns_from(wins, labels)
     t1 = time.time()
     text, words = models.transcribe(x16.astype(np.float32), language) if models.whisper else ("", [])
@@ -432,6 +437,7 @@ def analyze(path, models, log=print, threshold=DEFAULT_THRESHOLD, language="de",
     content = non_speech_content(x, sr, segments, rec["noise_floor_dbfs"])
     result = {"file": path, "duration_s": round(dur, 1), "speakers": speakers, "dialog": dialog, "recording": rec,
               "non_speech": content, "transcript_excerpt": text[:1500], "threshold": threshold,
+              "speakers_given": n_speakers,
               "seconds": {"diarization": round(t1 - t0, 1), "transcription": round(t2 - t1, 1),
                           "total": round(time.time() - t0, 1)},
               "turns": [{"start": round(t["start"], 2), "end": round(t["end"], 2), "speaker": f"S{t['speaker'] + 1}"} for t in turns]}
@@ -443,6 +449,8 @@ def analyze(path, models, log=print, threshold=DEFAULT_THRESHOLD, language="de",
             lab = cluster(emb, thr)
             sweep[str(thr)] = evaluate_diarization(turns_from(wins, lab), truth)
         result["threshold_sweep"] = sweep
+        n_true = len({t["speaker"] for t in truth})
+        result["known_count_evaluation"] = evaluate_diarization(turns_from(wins, cluster(emb, n_speakers=n_true)), truth)
     result["summary_de"] = summary_de(result)
     return result
 

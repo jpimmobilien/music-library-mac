@@ -194,6 +194,12 @@ LibriSpeech), Erzähler plus vier Rollen, mit Pausen, Raumhall und Bandbreite wi
 | Einwilligungsprüfung (ECAPA) | 14 Sprecher, 210 gleiche und 182 verschiedene Paare: gleiche Sprecher Median 0,836 (5 %-Quantil 0,665), verschiedene Median 0,146, höchstens 0,545 → **Schwelle 0,6** (vorher 0,5: ein fremder Sprecher hätte sie übertroffen) |
 | Stimmprofil → neue Stimme (erste Fassung) | Tonhöhe der entworfenen Stimmen 3,6–8,8 Halbtöne zu hoch: „female or teenage voice, medium pitch“ wurde zu 250–314 Hz statt ~200 Hz |
 
+Zweite Prüfaufnahme: das eigene 10-Minuten-Hörspiel (8,4 min, 7 entworfene Stimmen, mit Wahrheit aus der
+Zeitleiste). Entworfene Stimmen liegen im Stimmraum enger beieinander als echte Sprecher: bei 0,65–0,7 nur 4 von 7
+Stimmen (Verwechslung 29 %), bei 0,5–0,6 5 von 7 (18 %). Eine feste Schwelle passt also nicht für jede Aufnahme –
+für echte Hörspielaufnahmen (wie MLS) ist 0,7 richtig. Neu: Wer die Anzahl der Stimmen kennt, trägt sie in
+„Referenz analysieren“ ein; dann bildet die Analyse genau so viele Gruppen.
+
 Daraus geändert:
 - Beschreibungen nennen das Geschlecht eindeutig („adult man/woman“) und die Tonlage in Worten, die das
   Stimm-Design-Modell versteht; die Klangfarbe wird relativ zu den anderen Stimmen derselben Aufnahme beurteilt

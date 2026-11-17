@@ -165,8 +165,12 @@ public final class HSEngine: @unchecked Sendable {
         return path
     }
 
-    public func analyze(file: URL, name: String, out: URL, progress: Progress? = nil) async throws -> (result: [String: Any], profile: [String: Any]) {
-        let r = try await client.request("analyze", ["path": file.path, "name": name, "out": out.path], progress: progress)
+    /// Referenz analysieren. `speakers`: bekannte Anzahl Stimmen (optional) – sonst schätzt die Analyse sie.
+    public func analyze(file: URL, name: String, out: URL, speakers: Int? = nil,
+                        progress: Progress? = nil) async throws -> (result: [String: Any], profile: [String: Any]) {
+        var payload: [String: Any] = ["path": file.path, "name": name, "out": out.path]
+        if let speakers, speakers > 0 { payload["speakers"] = speakers }
+        let r = try await client.request("analyze", payload, progress: progress)
         return (r["result"] as? [String: Any] ?? [:], r["profile"] as? [String: Any] ?? [:])
     }
 
