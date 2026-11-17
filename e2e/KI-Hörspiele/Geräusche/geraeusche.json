@@ -1,0 +1,62 @@
+[
+  {
+    "created" : "2026-11-17T04:47:44Z",
+    "file" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/f41516ec974c.wav",
+    "id" : "606867FB-3C2C-4E8F-B007-78DEAF3A0864",
+    "license" : "Erzeugt mit Stable Audio 3 small (Stability AI Community License)",
+    "name" : "Leise Glockenläufe über den Kopf",
+    "origin" : "erzeugt",
+    "prompt" : "distant church bells, high pitch",
+    "seconds" : 20
+  },
+  {
+    "created" : "2026-11-17T04:47:47Z",
+    "file" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/5d84e79442b9.wav",
+    "id" : "BAEBEA4E-D462-4AD8-A713-6B31C06BFFCF",
+    "license" : "Erzeugt mit Stable Audio 3 small (Stability AI Community License)",
+    "name" : "Ein metallenes Quietschen",
+    "origin" : "erzeugt",
+    "prompt" : "sharp metal screech",
+    "seconds" : 4
+  },
+  {
+    "created" : "2026-11-17T04:47:50Z",
+    "file" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/06caa0c74667.wav",
+    "id" : "4C8ACA60-5B86-4D4C-849A-3DDE9F5B4266",
+    "license" : "Erzeugt mit Stable Audio 3 small (Stability AI Community License)",
+    "name" : "Schwüle Sommerluft und fernes Ticken einer alten Uhr",
+    "origin" : "erzeugt",
+    "prompt" : "sweltering summer air and distant ticking of an old clock",
+    "seconds" : 20
+  },
+  {
+    "created" : "2026-11-17T04:47:52Z",
+    "file" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/2cd2f9543cea.wav",
+    "id" : "A0FD0475-E3E5-402C-8548-3BBA8E3B00F5",
+    "license" : "Erzeugt mit Stable Audio 3 small (Stability AI Community License)",
+    "name" : "Schweres Metall greift, das schwere Metall greift ein",
+    "origin" : "erzeugt",
+    "prompt" : "heavy metal grates, the heavy metal grates in",
+    "seconds" : 4
+  },
+  {
+    "created" : "2026-11-17T04:47:55Z",
+    "file" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/b9f2344591f2.wav",
+    "id" : "BF1D8F8C-9FA4-412D-B815-3BC9B5BD68B5",
+    "license" : "Erzeugt mit Stable Audio 3 small (Stability AI Community License)",
+    "name" : "Staub treibt sich durch das Lichtstrahlenfeld des Raumes",
+    "origin" : "erzeugt",
+    "prompt" : "dust swirls through the beams of light in the room",
+    "seconds" : 20
+  },
+  {
+    "created" : "2026-11-17T04:47:58Z",
+    "file" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/2a7667a245cf.wav",
+    "id" : "5B133ACB-A0AD-4196-BDE8-C9E81C02E73E",
+    "license" : "Erzeugt mit Stable Audio 3 small (Stability AI Community License)",
+    "name" : "Ein Gedröhne ertönt wie ein uralter Motor, der nach einem Leben stirbt",
+    "origin" : "erzeugt",
+    "prompt" : "a groaning sound echoes like an old motor dying",
+    "seconds" : 4
+  }
+]

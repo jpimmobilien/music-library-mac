@@ -1,0 +1,8 @@
+ProductName:		macOS
+ProductVersion:		26.7.2
+BuildVersion:		25G332
+arm64
+Apple M1 (Virtual)
+RAM: 7 GB
+/dev/disk2s5   320Gi   203Gi    96Gi    68%    1.9M  1.0G    0%   /System/Volumes/Data
+Xcode 26.6

@@ -1,0 +1,232 @@
+{
+  "chapters": [
+    {
+      "title": "Szene 1: Die letzte Einstellung",
+      "start": 0.0
+    },
+    {
+      "title": "Szene 2: Der erste Gang",
+      "start": 54.63
+    },
+    {
+      "title": "Szene 3: Die Suche nach dem Mechanismus",
+      "start": 100.23
+    }
+  ],
+  "clips": [
+    {
+      "id": "c0001",
+      "track": "Erzähler",
+      "start": 0.0,
+      "duration": 17.06,
+      "label": "ERZÄHLER: Der Keller schlug wie das Gewölk eines toten Waldes, doch El",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0002",
+      "track": "Erzähler",
+      "start": 17.28,
+      "duration": 7.848,
+      "label": "ERZÄHLER: Als hätte sie den Atem ersticken wollen, riss Elara ihre Aug",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0003",
+      "track": "Erzähler",
+      "start": 25.348,
+      "duration": 2.8,
+      "label": "ERZÄHLER: Die Zeiger stehen still, flüsterte sie.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0004",
+      "track": "Erzähler",
+      "start": 29.648,
+      "duration": 15.856,
+      "label": "ERZÄHLER: Doch in den Nieten hörte sie nur die harte, kalte Leere, als",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0005",
+      "track": "Erzähler",
+      "start": 45.724,
+      "duration": 8.004,
+      "label": "ERZÄHLER: Die Stille war kein freundliches Schweigen, sondern eine Mur",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0006",
+      "track": "Erzähler",
+      "start": 54.628,
+      "duration": 14.252,
+      "label": "ERZÄHLER: Die Straße taumelte unter Elaras Füßen, als ob der Boden ver",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0007",
+      "track": "Erzähler",
+      "start": 69.1,
+      "duration": 11.667,
+      "label": "ERZÄHLER: Ist das alles?“, chotzte er laut, als wollte er den Schatten",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0008",
+      "track": "Erzähler",
+      "start": 80.987,
+      "duration": 9.089,
+      "label": "ERZÄHLER: Seine Hände schlugen zur Portion, doch die Luft blieb wie to",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0009",
+      "track": "Erzähler",
+      "start": 90.296,
+      "duration": 6.806,
+      "label": "ERZÄHLER: Elara bog ein, und in der Nische blieb Lotar – wie eine Uhr ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0010",
+      "track": "Erzähler",
+      "start": 97.322,
+      "duration": 2.011,
+      "label": "ERZÄHLER: [PAUSE: 1.5]",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0011",
+      "track": "Erzähler",
+      "start": 100.233,
+      "duration": 25.688,
+      "label": "ERZÄHLER: In Elaras Atelier lag die Luft schwer, wie Harz über einer v",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0012",
+      "track": "Erzähler",
+      "start": 126.141,
+      "duration": 10.596,
+      "label": "ERZÄHLER: Elara trat näher zum Tisch, auf dem ein schwebender Schimmer",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0014",
+      "track": "Erzähler",
+      "start": 153.592,
+      "duration": 8.602,
+      "label": "ERZÄHLER: Lotar lachte, doch sein Lachen kratzte sich gegen den Mundwi",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0017",
+      "track": "Erzähler",
+      "start": 187.844,
+      "duration": 28.207,
+      "label": "ERZÄHLER: Der Mechanismus war ein Versteck. Lotar hatte absichtlich de",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0018",
+      "track": "Erzähler",
+      "start": 216.27,
+      "duration": 6.724,
+      "label": "ERZÄHLER: Elara öffnete langsam die Augen und blickte auf den Tisch, w",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0020",
+      "track": "Erzähler",
+      "start": 228.874,
+      "duration": 4.703,
+      "label": "ERZÄHLER: Lotar schüttelte den Kopf, als wäre er in einer Trübsal gefa",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0023",
+      "track": "Erzähler",
+      "start": 241.148,
+      "duration": 10.328,
+      "label": "ERZÄHLER: Elara griff nach den Schrauben des verstellten Mechanismus. ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0025",
+      "track": "Erzähler",
+      "start": 254.237,
+      "duration": 18.565,
+      "label": "ERZÄHLER: Als Elara den Mechanismus zurückstellte, brach das Erstarren",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0026",
+      "track": "Erzähler",
+      "start": 274.301,
+      "duration": 9.834,
+      "label": "ERZÄHLER: In Elaras Atelier lag die Luft leicht, wie Wasser in einem F",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0013",
+      "track": "Sprecher ELARA",
+      "start": 137.287,
+      "duration": 15.754,
+      "label": "ELARA: Guckt euch das Zitat an, Lotar“, sagte sie und ließ den Ton ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0016",
+      "track": "Sprecher ELARA",
+      "start": 175.357,
+      "duration": 11.937,
+      "label": "ELARA: Dann bist du es selbst, der den Dieb ist\", schwieg Elara und",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0019",
+      "track": "Sprecher ELARA",
+      "start": 223.545,
+      "duration": 4.779,
+      "label": "ELARA: Du hast die Zeit gestohlen, um das Geheimnis zu bewahren. Ab",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0022",
+      "track": "Sprecher ELARA",
+      "start": 236.128,
+      "duration": 4.471,
+      "label": "ELARA: Dann ist es zu spät. Die Stille ist kein Schutz, sie ist ein",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0024",
+      "track": "Sprecher ELARA",
+      "start": 252.026,
+      "duration": 1.661,
+      "label": "ELARA: Die Welt erlangt ihre Zeit wieder.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0015",
+      "track": "Sprecher LOTHAR",
+      "start": 162.743,
+      "duration": 12.233,
+      "label": "LOTHAR: Ein Dieb? Ich? Ich schreibe nicht Gesetze, Elara!\", flüstert",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0021",
+      "track": "Sprecher LOTHAR",
+      "start": 234.127,
+      "duration": 1.621,
+      "label": "LOTHAR: Ich wollte nur, dass es ruhig bleibt.",
+      "gain_db": 0.0
+    }
+  ],
+  "metrics": {
+    "speech_to_background_db": 214.9,
+    "duration_s": 284.6,
+    "loudness_lufs": -16.0,
+    "peak_dbfs": -1.0
+  }
+}

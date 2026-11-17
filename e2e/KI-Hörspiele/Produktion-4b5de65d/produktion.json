@@ -1,0 +1,1237 @@
+{
+  "cast" : {
+    "ERZÄHLER" : {
+      "instruct" : "Age: 42, Gender: Male, Pitch: Low (B3-A3), Timbre: Warm and slightly rough, Tempo: Moderate, Effect: Cozy and authoritative. Speaks native German with clear, natural pronunciation.",
+      "kind" : "designed",
+      "referenceFile" : "stimmen\/ERZÄHLER.wav",
+      "referenceText" : "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+      "seed" : 838083
+    },
+    "JIMMY" : {
+      "instruct" : "Age: 17, Gender: Male, Pitch: Mid-high (E4-D5), Timbre: Bright and slightly flatter, Tempo: Rapid, Effect: Skeptical yet curious. Speaks native German with clear, natural pronunciation.",
+      "kind" : "designed",
+      "referenceFile" : "stimmen\/JIMMY.wav",
+      "referenceText" : "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+      "seed" : 455602
+    },
+    "LENA" : {
+      "instruct" : "Age: 16, Gender: Female, Pitch: Mid (A4-D5), Timbre: Bright and clear, Tempo: Slightly faster, Effect: Energetic and youthful. Speaks native German with clear, natural pronunciation.",
+      "kind" : "designed",
+      "referenceFile" : "stimmen\/LENA.wav",
+      "referenceText" : "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+      "seed" : 528322
+    },
+    "MORITZ" : {
+      "instruct" : "Age: 16, Gender: Male, Pitch: Low (A3-E4), Timbre: Quiet and distant, Tempo: Slow, Effect: Mysterious and observant. Speaks native German with clear, natural pronunciation.",
+      "kind" : "designed",
+      "referenceFile" : "stimmen\/MORITZ.wav",
+      "referenceText" : "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+      "seed" : 533355
+    }
+  },
+  "chapters" : [
+    {
+      "number" : 1,
+      "title" : "Der Funke im Schiene"
+    }
+  ],
+  "clues" : [
+    {
+      "clue" : "Das leere Glas mit orangefarbenem Inhalt",
+      "meaning" : "Zeigt, dass das Licht von einer Leinwand ausgeht und nicht von einem Verbrennungsmotor; es deutet auf eine menschliche Hand am Glas hin, aber nicht auf einen Einbrecher.",
+      "scene" : 2
+    },
+    {
+      "clue" : "Die falsch verlegte Stoffmanschette",
+      "meaning" : "Zeigt, dass jemand versucht hat, die Leinwand zu beschädigen oder zu entfernen, was auf eine absichtliche Handlung hindeutet, aber nicht auf einen Einbrecher.",
+      "scene" : 3
+    },
+    {
+      "clue" : "Die erwähnte Leinwand",
+      "meaning" : "Die Leinwand ist ein Hinweis darauf, dass das Licht von einem Projektionslicht ausgeht und nicht von einer Explosion oder einem Brand.",
+      "scene" : 3
+    }
+  ],
+  "created" : "2026-11-17T04:14:15Z",
+  "era" : "Deutschland, 1984, Sommer",
+  "figures" : [
+    {
+      "addedByModel" : false,
+      "age" : 42,
+      "description" : "Der Erzähler ist ein älterer, ruhiger Mann mit einer warmen, vermittelnden Stimme. Er wirkt wie ein alter Freund, der die Geschichte sicher zurücklegt, ohne sie selbst zu erleben. Seine Stimme ist stabil, etwas rau durch Erfahrung, aber immer verständlich.",
+      "gender" : "m",
+      "id" : "ERZÄHLER",
+      "name" : "DORFTECHNIK",
+      "role" : "Erzähler",
+      "voice" : "tiefer, warm, rhythmisch, mit leichter Nachhallung für den atmosphärischen Effekt.",
+      "voiceEN" : "Age: 42, Gender: Male, Pitch: Low (B3-A3), Timbre: Warm and slightly rough, Tempo: Moderate, Effect: Cozy and authoritative."
+    },
+    {
+      "addedByModel" : false,
+      "age" : 16,
+      "description" : "Die Radfahrerin Lena ist neugierig und etwas naiv, aber nicht dumm. Sie hat ein sandraues Haar und eine Stimme, die wie ein helles Glockenspiel klingt – klar, aber mit einem Hauch von Unruhe.",
+      "gender" : "w",
+      "id" : "LENA",
+      "name" : "Lena Müller",
+      "role" : "Hauptfigur",
+      "voice" : "mittelhoch, leicht schwebend, mit einer gewissen Energie und Helkeit.",
+      "voiceEN" : "Age: 16, Gender: Female, Pitch: Mid (A4-D5), Timbre: Bright and clear, Tempo: Slightly faster, Effect: Energetic and youthful."
+    },
+    {
+      "addedByModel" : false,
+      "age" : 17,
+      "description" : "Jimmy ist der Logiker im Trio. Er ist skeptisch und versucht, alles zu erklären, auch wenn er selbst verwirrt ist. Seine Stimme ist etwas flatternd, oft mit einer fast kindlichen Neugier, die seinen Alter in 17 übersteigt.",
+      "gender" : "m",
+      "id" : "JIMMY",
+      "name" : "Jimmy Weber",
+      "role" : "Hauptfigur",
+      "voice" : "heller Mitterton, etwas flatternd, mit einem Hauch von jugendlicher Unbedingtheit.",
+      "voiceEN" : "Age: 17, Gender: Male, Pitch: Mid-high (E4-D5), Timbre: Bright and slightly flatter, Tempo: Rapid, Effect: Skeptical yet curious."
+    },
+    {
+      "addedByModel" : false,
+      "age" : 16,
+      "description" : "Moritz ist der Beobachter. Er ist ruhig, fast scheu, und fragt die entscheidenden Fragen, die die anderen übersehen. Seine Stimme ist tief, aber ohne Macht; sie klingt wie ein flüsternder Gedanke.",
+      "gender" : "m",
+      "id" : "MORITZ",
+      "name" : "Moritz Schneider",
+      "role" : "Hauptfigur",
+      "voice" : "tief, ruhig, mit einer gewissen Distanz, die ihn zum Beobachter macht.",
+      "voiceEN" : "Age: 16, Gender: Male, Pitch: Low (A3-E4), Timbre: Quiet and distant, Tempo: Slow, Effect: Mysterious and observant."
+    },
+    {
+      "addedByModel" : false,
+      "age" : 0,
+      "description" : "Eine metaphorische Figur, die das Licht im Stellwerk darstellt. Sie ist nicht lebendig, sondern ein Phänomen, das von den Figuren personifiziert wird, bis zur Auflösung.",
+      "gender" : "n",
+      "id" : "DIESTROMWOLKE",
+      "name" : "Die Stromwolke",
+      "role" : "Unbekannte Figur\/Gegenstand",
+      "voice" : "keine eigene Stimme, sondern eine Kombination aus Windgeräusch und elektrischen Kratzgeräuschen, die von den Figuren beschreiben werden.",
+      "voiceEN" : "Age: N\/A, Gender: N\/A, Pitch: N\/A, Timbre: Mix of wind and static, Tempo: Irregular, Effect: Unsettling and mysterious."
+    }
+  ],
+  "id" : "4B5DE65D-DE77-4A18-86AC-2B9587AFA87C",
+  "language" : "de",
+  "logline" : "Drei teenagerfreunde entdecken nachts ein unheimliches Licht in einem verlassenen Bahnhofsstellwerk, doch ihre Recherchen führen sie zu einer absurden Erklärung, die alles überflüssig macht.",
+  "mix" : {
+    "chapters" : [
+      {
+        "start" : 0,
+        "title" : "Szene 1: Der Anblick"
+      },
+      {
+        "start" : 69.18,
+        "title" : "Szene 2: Das Licht"
+      },
+      {
+        "start" : 118.73,
+        "title" : "Szene 3: Die Fährte"
+      }
+    ],
+    "date" : "2026-11-17T04:50:52Z",
+    "duration" : 201.1,
+    "loudness" : -16.02,
+    "master" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-4b5de65d\/mix\/master.wav",
+    "speechToBackground" : 26.9,
+    "stems" : {
+      "Atmo" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-4b5de65d\/mix\/spuren\/Atmo.wav",
+      "Erzähler" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-4b5de65d\/mix\/spuren\/Erzähler.wav",
+      "Geräusche" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-4b5de65d\/mix\/spuren\/Geräusche.wav",
+      "Sprecher JIMMY" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-4b5de65d\/mix\/spuren\/Sprecher_JIMMY.wav",
+      "Sprecher LENA" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-4b5de65d\/mix\/spuren\/Sprecher_LENA.wav",
+      "Sprecher MORITZ" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-4b5de65d\/mix\/spuren\/Sprecher_MORITZ.wav"
+    },
+    "timeline" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-4b5de65d\/mix\/zeitleiste.json"
+  },
+  "mode" : "hoerspiel",
+  "modified" : "2026-11-17T04:51:07Z",
+  "musicFiles" : {
+
+  },
+  "narration" : "spannend",
+  "prompt" : "Ein Jugendkrimi im Sommer 1984: Drei Freunde entdecken nachts Licht in einem stillgelegten Stellwerk am Bahnhof. Spannend, mit Humor und einer überraschenden, aber logischen Auflösung.",
+  "pronunciations" : {
+
+  },
+  "resolution" : "Die Freunde sind enttäuscht, als sie erkennen, dass das Licht von einer alten Leinwand im Stellwerk ausgeht, die von einem Projektionslicht beleuchtet wird. Die zerbrochenen Gläser und die falsch verlegte Stoffmanschette sind der Versuch einer Leinwandkunst, die durch einen Einbrecher beschädigt wurde. Der Einbrecher ist nicht eine Bedrohung, sondern ein alter Mann, der versucht, die Leinwand zu reparieren. Die Freunde sind froh, dass es nichts Schlimmes passiert ist, und gehen in ihr Haus. Die Geschichte endet mit einer leichten Ironie über die Angst vor dem 'Jahres der Verfolfter'.",
+  "retroAmount" : 0.6,
+  "review" : {
+    "date" : "2026-11-17T04:22:49Z",
+    "problems" : [
+      {
+        "fix" : "Die Beschreibung der Figur 'ERZÄHLER' im Profil muss auf 'Frau' geändert werden, oder im Drehbuch bei der Beschreibung des Erzählers 'männlich' zu verwenden.",
+        "problem" : "Widerspruch in der Beschreibung der Erzählerin: Im Profil wird der Erzähler als 'älterer, ruhiger Mann' beschrieben, im Drehbuch wird er jedoch mit 'mummig' (weiblich) bezeichnet.",
+        "scene" : 1
+      },
+      {
+        "fix" : "Die Geräuschkulisse muss zu einer sinnvollen Beschreibung des metallischen Klangs (z.B. 'Schweres Metall greift, das schwere Metall greift ein') geändert werden.",
+        "problem" : "Logikfehler bei der Beschreibung des Geräuschs: Der Text enthält die wiederholte, grammatikalisch unvollständige Phrase 'Schweres Metall greift, ist schweres Metall, das Metall greift ein', die keine sinnvolle Handlung beschreibt.",
+        "scene" : 2
+      },
+      {
+        "fix" : "Die Argumentation von Moritz muss konsistent mit der Schlussfolgerung der anderen Figuren sein. Entweder Moritz erkennt den Einbrecher als solchen an, oder die Schlussfolgerung, dass es ein alter Mann ist, muss logisch aus den Spuren abgeleitet werden (z.B. durch die Art der Beschädigung).",
+        "problem" : "Widerspruch in der Handlung: Moritz sagt 'Ein Einbrecher? Er hätte doch den ganzen Raum durchsucht, bevor er das Glas berührte', während Lena und Jimmy behaupten, der Einbrecher habe versucht, den Projektor zu verschlüssen\/verstecken. Die Logik der 'Fährte' (Manschette) wird als Beweis für den Einbrecher verwendet, während Moritz gleichzeitig argumentiert, dass ein Einbrecher nicht so handelte.",
+        "scene" : 3
+      },
+      {
+        "fix" : "Jimmy muss entweder skeptischer bleiben (z.B. durch Fragen an Moritz) oder seine Skepsis im Profil ändern.",
+        "problem" : "Widerspruch in der Charakterisierung von Jimmy: Im Profil wird Jimmy als 'skeptisch' beschrieben, im Drehbuch jedoch als jemand, der die Wahrheit sofort erkennt ('Ich sehe es selbst. Das ist kein Motor, sondern ein Projektor') und die Lösung der Rätsel sofort findet.",
+        "scene" : 3
+      },
+      {
+        "fix" : "Der Bezug auf das 'Jahr der Verfolfter' muss früher im Text eingeführt werden, oder die Schlussfolgerung von Moritz muss logisch aus den vorherigen Dialogen abgeleitet werden.",
+        "problem" : "Logikfehler bei der Schlussfolgerung: Moritz sagt 'Das ist doch nur ein Versetzer, der versucht, die Angst vor dem Jahr zu domestizieren'. Der Begriff 'Versetzer' ist hier unklar und passt nicht zum Kontext (vielleicht meinte er 'Versucher' oder 'Verschwender'), und die Verbindung zwischen einem reparierenden Einbrecher und der Angst vor dem Jahr ist ohne vorherige Erwähnung des 'Jahres der Verfolfter' (1984) im Kontext der Figuren eine plötzliche, unlogische Sprungstelle.",
+        "scene" : 3
+      }
+    ],
+    "revised" : [
+      1,
+      2,
+      3
+    ]
+  },
+  "scenes" : [
+    {
+      "atmoEN" : "Distant train whistle, heavy cicadas buzzing, wind rustling through metal rails.",
+      "chapter" : 1,
+      "id" : "B56D7949-56E3-4361-916F-FC711281E38E",
+      "items" : [
+        {
+          "english" : "nostalgic 80s synthesizer pulse fading into ambient heat",
+          "id" : "9D0455D2-3F80-4057-A664-7BB12072327F",
+          "kind" : "music",
+          "text" : "Titelmusik"
+        },
+        {
+          "audioFile" : "zeilen\/1836A305-3168-4EB1-84B8-80A754B01159.wav",
+          "audioFingerprint" : "da35b9a4d09cc56f",
+          "id" : "1836A305-3168-4EB1-84B8-80A754B01159",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Das Jahr siebzundachtzig. Ein Sommer, der wie Schmelztiegel auf den Steinpfeiler bußelt. Die Luft schwebt schwer über dem Kiesverlag."
+        },
+        {
+          "audioFile" : "zeilen\/750D0719-65DA-4917-8E4F-36302010D8B3.wav",
+          "audioFingerprint" : "0ea70fec5ff7fdcf",
+          "id" : "750D0719-65DA-4917-8E4F-36302010D8B3",
+          "kind" : "line",
+          "speaker" : "LENA",
+          "text" : "Nein, wir sind schon bei der Stadtgrenze, und dabei merken wir es nicht einmal."
+        },
+        {
+          "audioFile" : "zeilen\/CB860EF6-B141-4C73-9E72-0F83B07794D0.wav",
+          "audioFingerprint" : "599a1ffd764e6715",
+          "id" : "CB860EF6-B141-4C73-9E72-0F83B07794D0",
+          "kind" : "line",
+          "speaker" : "JIMMY",
+          "text" : "Vielleicht haben wir uns einfach verirrt. Vielleicht ist es der alte Bahnhof, den wir beim Abitur besuchten."
+        },
+        {
+          "audioFile" : "zeilen\/1D9D6A2D-6FFF-46A3-A2FB-9BE57D77E17B.wav",
+          "audioFingerprint" : "fcab7a8a0a1019c5",
+          "id" : "1D9D6A2D-6FFF-46A3-A2FB-9BE57D77E17B",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Moritz wird schrecklich, als er dem Licht ausmacht."
+        },
+        {
+          "audioFile" : "zeilen\/6C655742-D2F6-4128-B881-33844E3CBD61.wav",
+          "audioFingerprint" : "4d0f41bc390d5405",
+          "emotion" : "flüsternd",
+          "id" : "6C655742-D2F6-4128-B881-33844E3CBD61",
+          "kind" : "line",
+          "speaker" : "MORITZ",
+          "text" : "Es gibt keine anderen Bahnhöfe hier. Aber es ist nicht richtig, wenn das Licht da wird."
+        },
+        {
+          "audioFile" : "zeilen\/9EDFACC8-C2BE-476A-AD12-B6025AB3DD47.wav",
+          "audioFingerprint" : "a6cff5498863990c",
+          "id" : "9EDFACC8-C2BE-476A-AD12-B6025AB3DD47",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Die Hitze scheint der Elektrizität zu flattern, und sie ist nicht hier."
+        },
+        {
+          "english" : "distant church bells, high pitch",
+          "id" : "4F882C1A-A5B1-4C9E-ABF6-1F955815856D",
+          "kind" : "atmo",
+          "text" : "Leise Glockenläufe über den Kopf"
+        },
+        {
+          "audioFile" : "zeilen\/F3515CEC-87B7-4894-97FF-6D58983DDA26.wav",
+          "audioFingerprint" : "6bb729669f6677b8",
+          "emotion" : "flüsternd",
+          "id" : "F3515CEC-87B7-4894-97FF-6D58983DDA26",
+          "kind" : "line",
+          "speaker" : "MORITZ",
+          "text" : "Siehst du das?"
+        },
+        {
+          "audioFile" : "zeilen\/DBB3F352-02B5-4E21-BD54-1C36D5F07AFF.wav",
+          "audioFingerprint" : "794fca8669e9f0be",
+          "id" : "DBB3F352-02B5-4E21-BD54-1C36D5F07AFF",
+          "kind" : "line",
+          "speaker" : "JIMMY",
+          "text" : "Ja, ein Funke in der Stahlschiene. Aber es ist zu weit weg."
+        },
+        {
+          "audioFile" : "zeilen\/20BE6E9C-DA15-4AD5-BD06-6D36D5D99083.wav",
+          "audioFingerprint" : "7d1821c47ce7b6d1",
+          "id" : "20BE6E9C-DA15-4AD5-BD06-6D36D5D99083",
+          "kind" : "line",
+          "speaker" : "MORITZ",
+          "text" : "Es ist nicht weit, Moritz. Es ist sehr nah."
+        },
+        {
+          "english" : "sharp metal screech",
+          "id" : "AFACE74D-A72E-478B-9CE0-2B7CE3BFDD21",
+          "kind" : "sfx",
+          "text" : "Ein metallenes Quietschen"
+        },
+        {
+          "audioFile" : "zeilen\/F9A8EA78-16B1-4288-88FC-9CE1CFA3E16E.wav",
+          "audioFingerprint" : "afd256735dce662f",
+          "id" : "F9A8EA78-16B1-4288-88FC-9CE1CFA3E16E",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Der alte Bahnhof liegt still, wie ein Geist, der nicht zu Mühe macht."
+        },
+        {
+          "audioFile" : "zeilen\/A0CA956D-158D-4006-B155-71E7FB94030A.wav",
+          "audioFingerprint" : "e364ff66733516e7",
+          "id" : "A0CA956D-158D-4006-B155-71E7FB94030A",
+          "kind" : "line",
+          "speaker" : "JIMMY",
+          "text" : "Ja, ich habe die Richter gesehen, als sie ihn schepperten. Aber das Licht ist noch da."
+        },
+        {
+          "audioFile" : "zeilen\/303C6351-A892-4452-B8B1-C7A5BAF05B61.wav",
+          "audioFingerprint" : "b2f4faed5e26e5d3",
+          "emotion" : "flüsternd",
+          "id" : "303C6351-A892-4452-B8B1-C7A5BAF05B61",
+          "kind" : "line",
+          "speaker" : "MORITZ",
+          "text" : "Wir müssen es nicht ignorieren."
+        },
+        {
+          "audioFile" : "zeilen\/C5174750-DB6A-495F-97AF-A4928282778A.wav",
+          "audioFingerprint" : "dbacb3d788cee6a1",
+          "id" : "C5174750-DB6A-495F-97AF-A4928282778A",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Der Funke im Schiene leuchtet wie eine Feuersbrunst."
+        },
+        {
+          "english" : "rising dissonant tones",
+          "id" : "0D41A2FB-7A38-4559-B629-9CBB5212CCA3",
+          "kind" : "music",
+          "text" : "Spannung"
+        },
+        {
+          "audioFile" : "zeilen\/8440B56D-3201-44C6-98BD-8A58DE8C2DCC.wav",
+          "audioFingerprint" : "bf5994427f08a65c",
+          "emotion" : "flüsternd",
+          "id" : "8440B56D-3201-44C6-98BD-8A58DE8C2DCC",
+          "kind" : "line",
+          "speaker" : "MORITZ",
+          "text" : "Was ist das?"
+        },
+        {
+          "audioFile" : "zeilen\/2984EBF9-7D35-408C-9A72-F9FF9A8008BB.wav",
+          "audioFingerprint" : "a98a9f843e934c13",
+          "id" : "2984EBF9-7D35-408C-9A72-F9FF9A8008BB",
+          "kind" : "line",
+          "speaker" : "LENA",
+          "text" : "Es ist keine Feuersbrunst. Es ist ein Funke."
+        },
+        {
+          "audioFile" : "zeilen\/F38B357E-4C81-4BAE-8B08-14FB617FBCF1.wav",
+          "audioFingerprint" : "dbacb3d788cee6a1",
+          "id" : "F38B357E-4C81-4BAE-8B08-14FB617FBCF1",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Der Funke im Schiene leuchtet wie eine Feuersbrunst."
+        },
+        {
+          "id" : "4F396F42-9D7A-4971-BB72-97F4F0B7251B",
+          "kind" : "pause",
+          "seconds" : 1.5,
+          "text" : ""
+        }
+      ],
+      "location" : "Bahnhofshalle",
+      "number" : 1,
+      "outline" : "Der Erzähler führt den Hörer in das Jahr 1984 ein, beschreibt die Hitze der Sommerabende und die Neugier der teenagerfreunde, die sich auf dem Weg nach Hause in einem verlassenen Bahnhofsstellwerk verirren.",
+      "participants" : [
+        "ERZÄHLER"
+      ],
+      "room" : "draußen",
+      "summary" : "Die Gruppe aus Lena, Jimmy und Moritz verirrt sich in der hitzigen Sommerhitze am Rand des Kiesverlags auf dem Weg zum alten, verlassenen Bahnhof. Moritz entdeckt einen auffälligen Funken in einer Stahlschiene, der zunächst wie eine Feuersbrunst wirkt, doch Lena korrigiert ihn daraufhin als elektrischen Funken. Am Ende der Szene stehen die drei Figuren am Ort des Geschehens, wobei Moritz den Funken beobachtet und die Gruppe sich bewusst wird, dass das Licht in diesem Ort nicht normal ist.",
+      "title" : "Der Anblick",
+      "versions" : [
+        {
+          "date" : "2026-11-17T04:21:25Z",
+          "items" : [
+            {
+              "english" : "nostalgic 80s synthesizer pulse fading into ambient heat",
+              "id" : "098195DA-3CD4-47DF-BF14-002B7772346E",
+              "kind" : "music",
+              "text" : "Titelmusik"
+            },
+            {
+              "id" : "1302A59E-C309-43C8-BE4A-784412375D34",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Das Jahr siebzundachtzig. Ein Sommer, der wie Schmelztiegel auf den Steinpfeiler bußelt. Die Luft schwebt schwer über dem Kiesverlag."
+            },
+            {
+              "id" : "FA87EC8E-A0C3-439A-9666-707C6BAEF63C",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Lena zieht ihr T-Shirt eng an, während Jimmy auf der Rücksitzbank schluchzt."
+            },
+            {
+              "id" : "4286CCC2-8F77-4F84-89E0-1196B729F6A9",
+              "kind" : "line",
+              "speaker" : "LENA",
+              "text" : "Nein, wir sind schon bei der Stadtgrenze. Ja, wir merken es nicht."
+            },
+            {
+              "id" : "012D5890-F473-4946-89B3-A1262EB89D91",
+              "kind" : "line",
+              "speaker" : "JIMMY",
+              "text" : "Vielleicht haben wir uns einfach verirrt. Vielleicht ist es der alte Bahnhof, den wir beim Abitur besuchten."
+            },
+            {
+              "id" : "2C9A535E-ED1F-480A-B161-92E0E16A4616",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Moritz wird mummig, als er dem Licht ausmacht."
+            },
+            {
+              "emotion" : "flüsternd",
+              "id" : "42316A3A-3DD4-4811-89AC-2667CC904590",
+              "kind" : "line",
+              "speaker" : "MORITZ",
+              "text" : "Es gibt keine anderen Bahnhöfe hier. Aber es ist nicht richtig, wenn das Licht da wird."
+            },
+            {
+              "id" : "ED540AC1-9BFF-43D1-94D0-AD4E2F5193DB",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Die Hitze scheint der Elektrischität zu flattern, und sie ist nicht hier."
+            },
+            {
+              "english" : "distant church bells, high pitch",
+              "id" : "160C01CD-DD7B-460E-9C84-432F0ED2D6D9",
+              "kind" : "atmo",
+              "text" : "Leise Glockenläufe über den Kopf"
+            },
+            {
+              "emotion" : "flüsternd",
+              "id" : "9D99A07E-5B18-48B1-BC81-8DE3EE6BD37F",
+              "kind" : "line",
+              "speaker" : "MORITZ",
+              "text" : "Siehst du das?"
+            },
+            {
+              "id" : "D769D2F9-DDEC-4A5B-A70F-EB4CF23E610E",
+              "kind" : "line",
+              "speaker" : "JIMMY",
+              "text" : "Ja, ein Funke in der Stahlschiene. Aber es ist zu weit weg."
+            },
+            {
+              "id" : "4E54E5EF-A51C-4315-B365-BB9644C5B349",
+              "kind" : "line",
+              "speaker" : "MORITZ",
+              "text" : "Es ist nicht weit, Moritz. Es ist sehr nah."
+            },
+            {
+              "english" : "sharp metal screech",
+              "id" : "DB1EA077-53C8-4745-BD14-40A305453B08",
+              "kind" : "sfx",
+              "text" : "Ein metallenes Quietschen"
+            },
+            {
+              "id" : "7971DC22-F76C-4EBF-ABFF-F1F65E19D96B",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Der alte Bahnhof liegt still, wie ein Geist, der nicht zu Mühe macht."
+            },
+            {
+              "id" : "EE9D6170-E4AB-430E-8962-E26775BBFE90",
+              "kind" : "line",
+              "speaker" : "JIMMY",
+              "text" : "Ja, ich habe die Richter gesehen, als sie ihn schepperten. Aber das Licht ist noch da."
+            },
+            {
+              "emotion" : "flüsternd",
+              "id" : "BCFFCACD-64D8-4B2A-A431-317C50B24FB3",
+              "kind" : "line",
+              "speaker" : "MORITZ",
+              "text" : "Wir müssen es nicht ignorieren."
+            },
+            {
+              "id" : "3D4B0E92-8B79-46C2-8D12-FF1AFE495A4E",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Der Funke im Schiene leuchtet wie eine Feuersbrunst."
+            },
+            {
+              "english" : "rising dissonant tones",
+              "id" : "3441AFBC-9FD3-44BA-A133-D3CE61417B2A",
+              "kind" : "music",
+              "text" : "Spannung"
+            },
+            {
+              "emotion" : "flüsternd",
+              "id" : "AD74620C-7202-4E41-AE02-4F1AF2407AF7",
+              "kind" : "line",
+              "speaker" : "MORITZ",
+              "text" : "Was ist das?"
+            },
+            {
+              "id" : "11CEC026-AF8E-4064-AD0D-1ACC9E678E45",
+              "kind" : "line",
+              "speaker" : "LENA",
+              "text" : "Es ist keine Feuersbrunst. Es ist ein Funke."
+            },
+            {
+              "id" : "0671A379-68D6-4216-9CE9-02417C094730",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Der Funke im Schiene leuchtet wie eine Feuersbrunst."
+            },
+            {
+              "id" : "E284DA4A-B51E-474E-AE3C-B07839769278",
+              "kind" : "pause",
+              "seconds" : 1.5,
+              "text" : ""
+            }
+          ],
+          "note" : "vor dem Lektorat",
+          "summary" : "Die Gruppe aus Lena, Jimmy und Moritz verirrt sich in der heißen Sommerhitze des Jahres 1988 an einer unbekannten Stelle, die Moritz als den alten Bahnhof vom Abitur identifiziert. Während sie über das Licht und einen Funken in der Stahlschiene diskutieren, klärt Moritz auf, dass es keine anderen Bahnhöfe in der Gegend gibt und das Licht nicht natürlich ist. Am Ende der Szene steht die Gruppe vor dem alten Bahnhof, der Funke im Schiene bleibt sichtbar, und Moritz weiß, dass das Licht eine unnatürliche Gefahr darstellt."
+        },
+        {
+          "date" : "2026-11-17T04:48:59Z",
+          "items" : [
+            {
+              "english" : "nostalgic 80s synthesizer pulse fading into ambient heat",
+              "id" : "9D0455D2-3F80-4057-A664-7BB12072327F",
+              "kind" : "music",
+              "text" : "Titelmusik"
+            },
+            {
+              "audioFile" : "zeilen\/1836A305-3168-4EB1-84B8-80A754B01159.wav",
+              "audioFingerprint" : "da35b9a4d09cc56f",
+              "id" : "1836A305-3168-4EB1-84B8-80A754B01159",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Das Jahr siebzundachtzig. Ein Sommer, der wie Schmelztiegel auf den Steinpfeiler bußelt. Die Luft schwebt schwer über dem Kiesverlag."
+            },
+            {
+              "audioFile" : "zeilen\/750D0719-65DA-4917-8E4F-36302010D8B3.wav",
+              "audioFingerprint" : "121dc8edf6ce35a4",
+              "id" : "750D0719-65DA-4917-8E4F-36302010D8B3",
+              "kind" : "line",
+              "speaker" : "LENA",
+              "text" : "Nein, wir sind schon bei der Stadtgrenze. Ja, wir merken es nicht."
+            },
+            {
+              "audioFile" : "zeilen\/CB860EF6-B141-4C73-9E72-0F83B07794D0.wav",
+              "audioFingerprint" : "599a1ffd764e6715",
+              "id" : "CB860EF6-B141-4C73-9E72-0F83B07794D0",
+              "kind" : "line",
+              "speaker" : "JIMMY",
+              "text" : "Vielleicht haben wir uns einfach verirrt. Vielleicht ist es der alte Bahnhof, den wir beim Abitur besuchten."
+            },
+            {
+              "audioFile" : "zeilen\/1D9D6A2D-6FFF-46A3-A2FB-9BE57D77E17B.wav",
+              "audioFingerprint" : "fcab7a8a0a1019c5",
+              "id" : "1D9D6A2D-6FFF-46A3-A2FB-9BE57D77E17B",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Moritz wird schrecklich, als er dem Licht ausmacht."
+            },
+            {
+              "audioFile" : "zeilen\/6C655742-D2F6-4128-B881-33844E3CBD61.wav",
+              "audioFingerprint" : "4d0f41bc390d5405",
+              "emotion" : "flüsternd",
+              "id" : "6C655742-D2F6-4128-B881-33844E3CBD61",
+              "kind" : "line",
+              "speaker" : "MORITZ",
+              "text" : "Es gibt keine anderen Bahnhöfe hier. Aber es ist nicht richtig, wenn das Licht da wird."
+            },
+            {
+              "audioFile" : "zeilen\/9EDFACC8-C2BE-476A-AD12-B6025AB3DD47.wav",
+              "audioFingerprint" : "a6cff5498863990c",
+              "id" : "9EDFACC8-C2BE-476A-AD12-B6025AB3DD47",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Die Hitze scheint der Elektrizität zu flattern, und sie ist nicht hier."
+            },
+            {
+              "english" : "distant church bells, high pitch",
+              "id" : "4F882C1A-A5B1-4C9E-ABF6-1F955815856D",
+              "kind" : "atmo",
+              "text" : "Leise Glockenläufe über den Kopf"
+            },
+            {
+              "audioFile" : "zeilen\/F3515CEC-87B7-4894-97FF-6D58983DDA26.wav",
+              "audioFingerprint" : "6bb729669f6677b8",
+              "emotion" : "flüsternd",
+              "id" : "F3515CEC-87B7-4894-97FF-6D58983DDA26",
+              "kind" : "line",
+              "speaker" : "MORITZ",
+              "text" : "Siehst du das?"
+            },
+            {
+              "audioFile" : "zeilen\/DBB3F352-02B5-4E21-BD54-1C36D5F07AFF.wav",
+              "audioFingerprint" : "794fca8669e9f0be",
+              "id" : "DBB3F352-02B5-4E21-BD54-1C36D5F07AFF",
+              "kind" : "line",
+              "speaker" : "JIMMY",
+              "text" : "Ja, ein Funke in der Stahlschiene. Aber es ist zu weit weg."
+            },
+            {
+              "audioFile" : "zeilen\/20BE6E9C-DA15-4AD5-BD06-6D36D5D99083.wav",
+              "audioFingerprint" : "7d1821c47ce7b6d1",
+              "id" : "20BE6E9C-DA15-4AD5-BD06-6D36D5D99083",
+              "kind" : "line",
+              "speaker" : "MORITZ",
+              "text" : "Es ist nicht weit, Moritz. Es ist sehr nah."
+            },
+            {
+              "english" : "sharp metal screech",
+              "id" : "AFACE74D-A72E-478B-9CE0-2B7CE3BFDD21",
+              "kind" : "sfx",
+              "text" : "Ein metallenes Quietschen"
+            },
+            {
+              "audioFile" : "zeilen\/F9A8EA78-16B1-4288-88FC-9CE1CFA3E16E.wav",
+              "audioFingerprint" : "afd256735dce662f",
+              "id" : "F9A8EA78-16B1-4288-88FC-9CE1CFA3E16E",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Der alte Bahnhof liegt still, wie ein Geist, der nicht zu Mühe macht."
+            },
+            {
+              "audioFile" : "zeilen\/A0CA956D-158D-4006-B155-71E7FB94030A.wav",
+              "audioFingerprint" : "e364ff66733516e7",
+              "id" : "A0CA956D-158D-4006-B155-71E7FB94030A",
+              "kind" : "line",
+              "speaker" : "JIMMY",
+              "text" : "Ja, ich habe die Richter gesehen, als sie ihn schepperten. Aber das Licht ist noch da."
+            },
+            {
+              "audioFile" : "zeilen\/303C6351-A892-4452-B8B1-C7A5BAF05B61.wav",
+              "audioFingerprint" : "b2f4faed5e26e5d3",
+              "emotion" : "flüsternd",
+              "id" : "303C6351-A892-4452-B8B1-C7A5BAF05B61",
+              "kind" : "line",
+              "speaker" : "MORITZ",
+              "text" : "Wir müssen es nicht ignorieren."
+            },
+            {
+              "audioFile" : "zeilen\/C5174750-DB6A-495F-97AF-A4928282778A.wav",
+              "audioFingerprint" : "dbacb3d788cee6a1",
+              "id" : "C5174750-DB6A-495F-97AF-A4928282778A",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Der Funke im Schiene leuchtet wie eine Feuersbrunst."
+            },
+            {
+              "english" : "rising dissonant tones",
+              "id" : "0D41A2FB-7A38-4559-B629-9CBB5212CCA3",
+              "kind" : "music",
+              "text" : "Spannung"
+            },
+            {
+              "audioFile" : "zeilen\/8440B56D-3201-44C6-98BD-8A58DE8C2DCC.wav",
+              "audioFingerprint" : "bf5994427f08a65c",
+              "emotion" : "flüsternd",
+              "id" : "8440B56D-3201-44C6-98BD-8A58DE8C2DCC",
+              "kind" : "line",
+              "speaker" : "MORITZ",
+              "text" : "Was ist das?"
+            },
+            {
+              "audioFile" : "zeilen\/2984EBF9-7D35-408C-9A72-F9FF9A8008BB.wav",
+              "audioFingerprint" : "a98a9f843e934c13",
+              "id" : "2984EBF9-7D35-408C-9A72-F9FF9A8008BB",
+              "kind" : "line",
+              "speaker" : "LENA",
+              "text" : "Es ist keine Feuersbrunst. Es ist ein Funke."
+            },
+            {
+              "audioFile" : "zeilen\/F38B357E-4C81-4BAE-8B08-14FB617FBCF1.wav",
+              "audioFingerprint" : "dbacb3d788cee6a1",
+              "id" : "F38B357E-4C81-4BAE-8B08-14FB617FBCF1",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Der Funke im Schiene leuchtet wie eine Feuersbrunst."
+            },
+            {
+              "id" : "4F396F42-9D7A-4971-BB72-97F4F0B7251B",
+              "kind" : "pause",
+              "seconds" : 1.5,
+              "text" : ""
+            }
+          ],
+          "note" : "Replik neu formuliert",
+          "summary" : "Die Gruppe aus Lena, Jimmy und Moritz verirrt sich in der hitzigen Sommerhitze am Rand des Kiesverlags auf dem Weg zum alten, verlassenen Bahnhof. Moritz entdeckt einen auffälligen Funken in einer Stahlschiene, der zunächst wie eine Feuersbrunst wirkt, doch Lena korrigiert ihn daraufhin als elektrischen Funken. Am Ende der Szene stehen die drei Figuren am Ort des Geschehens, wobei Moritz den Funken beobachtet und die Gruppe sich bewusst wird, dass das Licht in diesem Ort nicht normal ist."
+        }
+      ]
+    },
+    {
+      "atmoEN" : "Echoing footsteps, faint hum of electricity, distant train whistle.",
+      "chapter" : 1,
+      "id" : "19799160-69E3-45D7-8D63-B7EDCB89CBDC",
+      "items" : [
+        {
+          "english" : "sweltering summer air and distant ticking of an old clock",
+          "id" : "8C2274F8-E287-4937-A0B7-FE0231EDD360",
+          "kind" : "atmo",
+          "text" : "Schwüle Sommerluft und fernes Ticken einer alten Uhr"
+        },
+        {
+          "audioFile" : "zeilen\/03F061EF-EB3B-4EE0-96A9-7F9FC157A353.wav",
+          "audioFingerprint" : "0d6f3b68e72882b4",
+          "id" : "03F061EF-EB3B-4EE0-96A9-7F9FC157A353",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Der Funke im Schiene war zugefallen. Ein dunkler Raum voller Staub und Schatten ragte über dem Gleis empor."
+        },
+        {
+          "audioFile" : "zeilen\/2AF2F29B-24CB-40C8-853D-9BC9CEF262A0.wav",
+          "audioFingerprint" : "4d0ad3f5259601e4",
+          "id" : "2AF2F29B-24CB-40C8-853D-9BC9CEF262A0",
+          "kind" : "line",
+          "speaker" : "JIMMY",
+          "text" : "Da hinter der Leinwand steht es wie in schwefrigem Rauch. Was für Licht ist das?"
+        },
+        {
+          "audioFile" : "zeilen\/35287BC8-5547-480F-A994-3343654988FC.wav",
+          "audioFingerprint" : "5e115c19abda43df",
+          "id" : "35287BC8-5547-480F-A994-3343654988FC",
+          "kind" : "line",
+          "speaker" : "LENA",
+          "text" : "Es ist warm, wie bei einer Glühlampe. Aber hier? Kein Motor läuft."
+        },
+        {
+          "audioFile" : "zeilen\/C5B2D533-ACC5-4943-BE42-D14C2BD6F17A.wav",
+          "audioFingerprint" : "d2d690ccf9d5ebf3",
+          "emotion" : "flüsternd",
+          "id" : "C5B2D533-ACC5-4943-BE42-D14C2BD6F17A",
+          "kind" : "line",
+          "speaker" : "MORITZ",
+          "text" : "Leise gehen wir hin. Keine Schritte, die es wecken."
+        },
+        {
+          "english" : "heavy metal grates, the heavy metal grates in",
+          "id" : "55A1E22A-A927-4868-98B7-394C5F59C9CA",
+          "kind" : "sfx",
+          "text" : "Schweres Metall greift, das schwere Metall greift ein"
+        },
+        {
+          "audioFile" : "zeilen\/185A8FEB-7DCE-4E36-84B3-0D4D39CD7E7A.wav",
+          "audioFingerprint" : "be5caa84ab77360e",
+          "emotion" : "aufgeregt",
+          "id" : "185A8FEB-7DCE-4E36-84B3-0D4D39CD7E7A",
+          "kind" : "line",
+          "speaker" : "LENA",
+          "text" : "Jimmy, da vorne! Ein Glas mit orangem Glanz."
+        },
+        {
+          "audioFile" : "zeilen\/F8F3EFD2-BB9F-4D14-852F-14543A5CBE10.wav",
+          "audioFingerprint" : "54472f2ec24bb1da",
+          "id" : "F8F3EFD2-BB9F-4D14-852F-14543A5CBE10",
+          "kind" : "line",
+          "speaker" : "JIMMY",
+          "text" : "Kein Funke dort, siehst du selbst? Es ist ein Leuchtkörper."
+        },
+        {
+          "audioFile" : "zeilen\/6D360718-9789-474E-8670-1B79B8AC6FA4.wav",
+          "audioFingerprint" : "72cbb72bb4ba36ce",
+          "emotion" : "flüsternd",
+          "id" : "6D360718-9789-474E-8670-1B79B8AC6FA4",
+          "kind" : "line",
+          "speaker" : "MORITZ",
+          "text" : "Vorsicht, nicht berühren. Das Glas ist in der Leinwand."
+        },
+        {
+          "audioFile" : "zeilen\/070857A1-F400-4B33-AC5C-54A56818B977.wav",
+          "audioFingerprint" : "49b0dd54aa34fc97",
+          "id" : "070857A1-F400-4B33-AC5C-54A56818B977",
+          "kind" : "line",
+          "speaker" : "JIMMY",
+          "text" : "Ich sehe es selbst. Das ist kein Motor, sondern ein Projektor."
+        },
+        {
+          "audioFile" : "zeilen\/861AA7B6-400F-475A-958F-E4C201BC1BCE.wav",
+          "audioFingerprint" : "4dad2eb50fcb4bee",
+          "id" : "861AA7B6-400F-475A-958F-E4C201BC1BCE",
+          "kind" : "line",
+          "speaker" : "LENA",
+          "text" : "Ein alter Filmgenerator? Wie könnte das hier sein?"
+        },
+        {
+          "audioFile" : "zeilen\/56B819E4-34C5-41A7-925D-0DFC51AE18A1.wav",
+          "audioFingerprint" : "e04a6d0fefb7fd96",
+          "id" : "56B819E4-34C5-41A7-925D-0DFC51AE18A1",
+          "kind" : "line",
+          "speaker" : "MORITZ",
+          "text" : "Eine Leinwand, die repariert wird. Der Einbrecher hat den Glas."
+        },
+        {
+          "english" : "the light flickers slightly as if an image",
+          "id" : "D155F3D3-582B-4DFE-9E17-4C3AE6133306",
+          "kind" : "atmo",
+          "text" : "Das Licht flackert leicht, wie ein Bild"
+        },
+        {
+          "audioFile" : "zeilen\/D4B9AB90-8128-4BCF-98C8-FBA54B1D1BCB.wav",
+          "audioFingerprint" : "c89ee9ebeb23bc2c",
+          "id" : "D4B9AB90-8128-4BCF-98C8-FBA54B1D1BCB",
+          "kind" : "line",
+          "speaker" : "JIMMY",
+          "text" : "Also kein Wunderwerk, nur alter Papier."
+        }
+      ],
+      "location" : "",
+      "number" : 2,
+      "outline" : "Die drei Freunde entdecken ein leuchtendes, orangefarbenes Licht in einem abgedunkelten Raum im Stellwerk. Sie sind verwirrt und neugierig, wobei Jimmy sofort versucht, eine logische Erklärung zu finden.",
+      "participants" : [
+        "LENA",
+        "JIMMY",
+        "MORITZ"
+      ],
+      "room" : "keller",
+      "summary" : "Jimmy, Lena und Moritz erkunden einen staubigen Raum hinter einer Leinwand auf dem Gleis, als sie ein leuchtendes Glas entdecken. Moritz warnt vor Berührung und deutet darauf hin, dass der Einbrecher das Glas gestohlen hat, während Jimmy feststellt, dass es sich um einen alten Filmprojektor handelt und nicht um ein Motorwerk. Am Ende wissen die Figuren, dass das Licht von einem Projektor stammt, der in der Leinwand verborgen war, und Moritz behält die Warnung vor dem Berühren des Glases.",
+      "title" : "Das Licht",
+      "versions" : [
+        {
+          "date" : "2026-11-17T04:21:58Z",
+          "items" : [
+            {
+              "english" : "sweltering summer air and distant ticking of an old clock",
+              "id" : "E79D1D4A-1027-4B26-A675-C394DAE4AB38",
+              "kind" : "atmo",
+              "text" : "Schwüle Sommerluft und fernes Ticken einer alte Uhr"
+            },
+            {
+              "id" : "C66135B4-AEA1-4433-B0B0-20A36984155A",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Der Funke im Schiene war zugefallen. Ein dunkler Raum voller Staub und Schatten ragte über dem Gleis empor."
+            },
+            {
+              "id" : "D49CDDA2-3779-432E-9172-8C70EDBA7DD8",
+              "kind" : "line",
+              "speaker" : "JIMMY",
+              "text" : "Da hinter der Leinwand steht es wie in schwefrigem Rauch. Was für Licht ist das?"
+            },
+            {
+              "id" : "58DA91A3-5882-4181-9415-39F431DDDC5E",
+              "kind" : "line",
+              "speaker" : "LENA",
+              "text" : "Es ist warm, wie bei einer Glühlampe. Aber hier? Kein Motor läuft."
+            },
+            {
+              "emotion" : "flüsternd",
+              "id" : "3B49CD84-AEEA-4BA3-9688-65634A10DF9B",
+              "kind" : "line",
+              "speaker" : "MORITZ",
+              "text" : "Leise gehen wir hin. Keine Schritte, die es wecken."
+            },
+            {
+              "english" : "Schweres Metall greift, ist schweres Metall, das Metall greift ein",
+              "id" : "1D307AC7-BA51-45B0-A9EE-26C717EA0FE5",
+              "kind" : "sfx",
+              "text" : "Schweres Metall greift, ist schweres Metall, das Metall greift ein"
+            },
+            {
+              "emotion" : "aufgeregt",
+              "id" : "16C5286A-60BA-43FF-AB83-A3B670B7DF96",
+              "kind" : "line",
+              "speaker" : "LENA",
+              "text" : "Jimmy, da vorne! Ein Glas mit orangem Glanz."
+            },
+            {
+              "id" : "70DD32DD-70DB-4593-9719-F70865495683",
+              "kind" : "line",
+              "speaker" : "JIMMY",
+              "text" : "Kein Funke dort, siehst du selbst? Es ist ein Leuchtkörper."
+            },
+            {
+              "emotion" : "flüsternd",
+              "id" : "481807A9-0327-4617-8791-7C2FE82D1C85",
+              "kind" : "line",
+              "speaker" : "MORITZ",
+              "text" : "Vorsicht, nicht berühren. Das Glas ist in der Leinwand."
+            },
+            {
+              "id" : "E4526248-20EC-4179-B366-0DF938963126",
+              "kind" : "pause",
+              "seconds" : 2,
+              "text" : ""
+            },
+            {
+              "id" : "3162E5A4-4936-4C11-BCE2-2E2773999040",
+              "kind" : "line",
+              "speaker" : "JIMMY",
+              "text" : "Ich sehe es selbst. Das ist kein Motor, sondern ein Projektor."
+            },
+            {
+              "id" : "5DB28CA5-71D4-4B17-B260-6EA28B15BA74",
+              "kind" : "line",
+              "speaker" : "LENA",
+              "text" : "Ein alter Filmgenerator? Wie könnte das hier sein?"
+            },
+            {
+              "id" : "A5743122-E98E-4B79-A0BA-FA2673FCE8A2",
+              "kind" : "line",
+              "speaker" : "MORITZ",
+              "text" : "Eine Leinwand, die repariert wird. Der Einbrecher hat den Glas."
+            },
+            {
+              "english" : "the light flickers slightly as if an image",
+              "id" : "2106BF38-B459-4012-B7DA-AFBF4C4AB6EC",
+              "kind" : "atmo",
+              "text" : "Das Licht flackert leicht, wie ein Bild"
+            },
+            {
+              "id" : "094B966B-30BA-4AE2-9707-02B8BC74CCA7",
+              "kind" : "line",
+              "speaker" : "JIMMY",
+              "text" : "Also kein Wunderwerk, nur alter Papier."
+            }
+          ],
+          "note" : "vor dem Lektorat",
+          "summary" : "Jimmy, Lena und Moritz erkunden einen staubigen Raum hinter einer Leinwand auf dem Gleis, als sie ein leuchtendes Glasobjekt entdecken. Moritz warnt davor, das Objekt zu berühren, während Jimmy feststellt, dass es sich nicht um einen Motor, sondern um einen alten Filmprojektor handelt. Am Ende wissen die Figuren, dass der Einbrecher den Projektor gestohlen hat, um ihn zu reparieren, und das Objekt ist nun in der Leinwand versteckt."
+        }
+      ]
+    },
+    {
+      "atmoEN" : "Wind blowing through open doors, distant train whistle.",
+      "chapter" : 1,
+      "id" : "8962D93C-C212-4ABA-A618-2910775D67C1",
+      "items" : [
+        {
+          "english" : "dust swirls through the beams of light in the room",
+          "id" : "9DA48BFE-5E14-4F1D-AF4F-509909E690CF",
+          "kind" : "atmo",
+          "text" : "Staub treibt sich durch das Lichtstrahlenfeld des Raumes"
+        },
+        {
+          "audioFile" : "zeilen\/18075EDF-525C-47DF-9867-C2F8C488CFB6.wav",
+          "audioFingerprint" : "551ef4f46cac5f14",
+          "id" : "18075EDF-525C-47DF-9867-C2F8C488CFB6",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Der Staub lag wie Silberblüten auf dem Boden. Nichts bewegte sich hier außer ihren eigenen Schritten, bis der laute Knall die Stille brach."
+        },
+        {
+          "audioFile" : "zeilen\/598FFD57-C5EA-4EB6-ACFC-569666C09BE3.wav",
+          "audioFingerprint" : "a026bd4025994eb7",
+          "id" : "598FFD57-C5EA-4EB6-ACFC-569666C09BE3",
+          "kind" : "line",
+          "speaker" : "JIMMY",
+          "text" : "Was war das? Ein Glas ist zerbrochen."
+        },
+        {
+          "audioFile" : "zeilen\/3237AE08-060B-4197-AF7B-3993B4CF6EF7.wav",
+          "audioFingerprint" : "c09cf2be21531e23",
+          "id" : "3237AE08-060B-4197-AF7B-3993B4CF6EF7",
+          "kind" : "line",
+          "speaker" : "LENA",
+          "text" : "Siehst du diesen Scherenschnitt? Das ist ein Holz, das man über die Leinwand geklebt hat."
+        },
+        {
+          "audioFile" : "zeilen\/F7D64457-0918-4273-97F4-EC99932C6B9A.wav",
+          "audioFingerprint" : "21c0fc5026ec4d12",
+          "id" : "F7D64457-0918-4273-97F4-EC99932C6B9A",
+          "kind" : "line",
+          "speaker" : "MORITZ",
+          "text" : "Ein Einbrecher? Er hätte doch den ganzen Raum durchsucht, bevor er das Glas berührte."
+        },
+        {
+          "audioFile" : "zeilen\/2E2EBBBC-560B-401C-9EB6-8A3860B88F55.wav",
+          "audioFingerprint" : "ff7a53f869a7392e",
+          "id" : "2E2EBBBC-560B-401C-9EB6-8A3860B88F55",
+          "kind" : "line",
+          "speaker" : "LENA",
+          "text" : "Nein, der Einbrecher wollte es kaputt machen. Er hat versucht, den Projektor zu verschlüsseln oder zu verstecken."
+        },
+        {
+          "audioFile" : "zeilen\/A3554D7E-E0B8-4913-ADA2-D32153384F25.wav",
+          "audioFingerprint" : "e85d848cc2129538",
+          "id" : "A3554D7E-E0B8-4913-ADA2-D32153384F25",
+          "kind" : "line",
+          "speaker" : "JIMMY",
+          "text" : "Genau! Die Manschette ist die erste Fährte, auf der das Zimmer liegt."
+        },
+        {
+          "audioFile" : "zeilen\/0BDF6882-6971-4544-83B3-104502AF3921.wav",
+          "audioFingerprint" : "3a565853e6b0afa8",
+          "id" : "0BDF6882-6971-4544-83B3-104502AF3921",
+          "kind" : "line",
+          "speaker" : "MORITZ",
+          "text" : "Aber warum? Ein Einbrecher, der versucht, eine Leinwand zu reparieren, ist kein Terror. Das ist doch nur ein Versucher, der versucht, die Angst vor dem Jahr zu domestizieren."
+        },
+        {
+          "audioFile" : "zeilen\/7C658001-0A3C-40DA-8F00-B08984DBCCFE.wav",
+          "audioFingerprint" : "64949fa62d8b7fb0",
+          "id" : "7C658001-0A3C-40DA-8F00-B08984DBCCFE",
+          "kind" : "line",
+          "speaker" : "LENA",
+          "text" : "Ich sehe es selbst. Das Glas ist zerbrochen, aber das Licht bleibt da."
+        },
+        {
+          "audioFile" : "zeilen\/E724C679-1AB0-475A-B7E9-0A84A7BD8619.wav",
+          "audioFingerprint" : "b3590292aef00398",
+          "id" : "E724C679-1AB0-475A-B7E9-0A84A7BD8619",
+          "kind" : "line",
+          "speaker" : "JIMMY",
+          "text" : "Ein Einbrecher, der versucht, die Leinwand zu reparieren."
+        },
+        {
+          "english" : "a groaning sound echoes like an old motor dying",
+          "id" : "5E8887E3-90A4-43D8-8FA7-DF241929F206",
+          "kind" : "sfx",
+          "text" : "Ein Gedröhne ertönt wie ein uralter Motor, der nach einem Leben stirbt"
+        },
+        {
+          "audioFile" : "zeilen\/393DF4C0-37D1-4070-AA72-80699C1F6FE8.wav",
+          "audioFingerprint" : "103583fd07dbbe5f",
+          "id" : "393DF4C0-37D1-4070-AA72-80699C1F6FE8",
+          "kind" : "line",
+          "speaker" : "MORITZ",
+          "text" : "Das ist kein Einbrecher. Das ist ein alter Mann, der versucht, die Geschichte zu retten."
+        },
+        {
+          "id" : "5EC32337-6213-4D8A-9587-F9D6FB10D6D5",
+          "kind" : "pause",
+          "seconds" : 1.5,
+          "text" : ""
+        },
+        {
+          "audioFile" : "zeilen\/5070A3A2-7DF1-4FD5-856B-6AC7019C0037.wav",
+          "audioFingerprint" : "b4167aadbd687f11",
+          "id" : "5070A3A2-7DF1-4FD5-856B-6AC7019C0037",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Die Leinwand hielt das Licht noch für eine Sekunde, bevor die Dunkelheit zurückkehrte."
+        },
+        {
+          "english" : "fading out into a lighter tone over the music",
+          "id" : "972B0A6A-13D2-4CD0-A744-76D0A2C242DB",
+          "kind" : "music",
+          "text" : "Abspann – lichter Ton, der langsam über die Musik verblasst"
+        },
+        {
+          "audioFile" : "zeilen\/B7EA4AA1-E4D8-43B6-91E3-350E56FC5D57.wav",
+          "audioFingerprint" : "b19ae546a9087ad6",
+          "id" : "B7EA4AA1-E4D8-43B6-91E3-350E56FC5D57",
+          "kind" : "line",
+          "speaker" : "LENA",
+          "text" : "Es war doch nur eine Lichtshow, kein Wunderwerk."
+        },
+        {
+          "audioFile" : "zeilen\/5C796827-B9D9-409B-AECD-F25A2D690BDB.wav",
+          "audioFingerprint" : "e2769e3d6afcd8f7",
+          "id" : "5C796827-B9D9-409B-AECD-F25A2D690BDB",
+          "kind" : "line",
+          "speaker" : "MORITZ",
+          "text" : "Ja, und das Jahr 1984 war ein Jahr der Angst, nicht des Terrors."
+        },
+        {
+          "audioFile" : "zeilen\/F17730DA-928A-4C79-B6BE-896C83FD4273.wav",
+          "audioFingerprint" : "02db00635c816895",
+          "id" : "F17730DA-928A-4C79-B6BE-896C83FD4273",
+          "kind" : "line",
+          "speaker" : "JIMMY",
+          "text" : "Also wir können gehen? Der Einbrecher ist tot? Nein, er ist einfach still."
+        },
+        {
+          "audioFile" : "zeilen\/8F115C0D-0281-4C51-B210-ECE3C5E187CB.wav",
+          "audioFingerprint" : "b2588b70fe98ec48",
+          "id" : "8F115C0D-0281-4C51-B210-ECE3C5E187CB",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Die Freunde legten sich auf die Wiese und schliefen in einer leichten Träumerei."
+        },
+        {
+          "english" : "fading out into a gentle chord over the music",
+          "id" : "7E9D00D9-19E8-4C58-9F37-1EE8B13F9D74",
+          "kind" : "music",
+          "text" : "Abspann – sanfte Akkord, der langsam über die Musik verblasst"
+        }
+      ],
+      "location" : "",
+      "number" : 3,
+      "outline" : "Sie finden ein zerbrochenes Glas und eine falsch verlegte Stoffmanschette, die auf eine Leinwand hinweisen. Jimmy ist überzeugt, dass es sich um einen Einbrecher handelt, während Moritz skeptisch bleibt.",
+      "participants" : [
+        "LENA",
+        "JIMMY",
+        "MORITZ"
+      ],
+      "room" : "hall",
+      "summary" : "Jimmy, Lena und Moritz entdecken in einem staubigen Raum ein zerbrochenes Glas, das als erste Spur eines Einbrechers dient, der jedoch laut Lena und Moritz nicht zur Tat steht, sondern versucht, eine Leinwand zu reparieren. Moritz deutet an, dass der „Einbrecher\" eigentlich ein alter Mann ist, der die Angst vor dem Jahr 1984 und die Geschichte retten will, während Lena die Zerbrechlichkeit des Lichts gegen die Dunkelheit betont. Am Ende der Szene schlafen die drei Freunde auf einer Wiese in einer leichten Träumerei, wobei Moritz feststellt, dass der „Einbrecher\" nicht tot ist, sondern einfach still geworden ist.",
+      "title" : "Die Fährte",
+      "versions" : [
+        {
+          "date" : "2026-11-17T04:22:49Z",
+          "items" : [
+            {
+              "english" : "dust swirls through the beams of light in the room",
+              "id" : "39E386A2-89BA-42EF-A736-754614BC1CDA",
+              "kind" : "atmo",
+              "text" : "Staub treibt sich durch das Lichtstrahlenfeld des Raumes"
+            },
+            {
+              "id" : "E9263717-A6AA-4603-BE19-CD4148E7EC3E",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Der Staub lag wie Silberblüten auf dem Boden. Nichts bewegte sich hier außer ihren eigenen Schritten."
+            },
+            {
+              "id" : "EB26A443-8740-4FBA-AF1C-F8563A8AD1E3",
+              "kind" : "line",
+              "speaker" : "JIMMY",
+              "text" : "Siehst du diesen Scherenschnitt? Das ist ein Holz, das man über die Leinwand geklebt hat."
+            },
+            {
+              "id" : "7C6321AD-5D21-448A-B73D-093ABE45445D",
+              "kind" : "line",
+              "speaker" : "LENA",
+              "text" : "Ich sehe es selbst. Die Manschette sitzt hier falsch verlegt, als hätte man sie mit dem Messer geschnitten."
+            },
+            {
+              "id" : "86B92BC9-978C-4F23-91C7-5D5C7BC2EBDB",
+              "kind" : "line",
+              "speaker" : "MORITZ",
+              "text" : "Ein Einbrecher? Er hätte doch den ganzen Raum durchsucht, bevor er das Glas berührte."
+            },
+            {
+              "id" : "1B30E9A2-8D60-4226-95DE-1F4747506947",
+              "kind" : "line",
+              "speaker" : "LENA",
+              "text" : "Nein, der Einbrecher wollte es kaputt machen. Er hat versucht, den Projektor zu verschlüsseln oder zu verstecken."
+            },
+            {
+              "id" : "0F8F2323-7DBC-4D86-8916-6247C47AA821",
+              "kind" : "line",
+              "speaker" : "JIMMY",
+              "text" : "Genau! Die Manschette ist die erste Fährte, auf der das Zimmer liegt."
+            },
+            {
+              "id" : "A3644298-1A79-4887-9DE9-B5C7E2B24859",
+              "kind" : "line",
+              "speaker" : "MORITZ",
+              "text" : "Aber warum? Ein alter Mann修ت eine Leinwand, das ist kein Terror. Das ist doch nur ein Versetzer, der versucht, die Angst vor dem Jahr zu domestizieren."
+            },
+            {
+              "id" : "9EDC8C4D-9300-4708-A9A7-0829110A9D7E",
+              "kind" : "line",
+              "speaker" : "LENA",
+              "text" : "Ich sehe es selbst. Das Glas ist zerbrochen, aber das Licht bleibt da."
+            },
+            {
+              "id" : "6F8CDA26-9436-4CBB-BB20-A7B32321B5AF",
+              "kind" : "line",
+              "speaker" : "JIMMY",
+              "text" : "Ein Einbrecher, der versucht, die Leinwand zu reparieren."
+            },
+            {
+              "english" : "a groaning sound echoes like an old motor dying",
+              "id" : "47128A78-50A6-4733-966E-45E8DBB53C08",
+              "kind" : "sfx",
+              "text" : "Ein Gedröhne ertönt wie ein uralter Motor, der nach einem Leben stirbt"
+            },
+            {
+              "id" : "56E31C12-E1CB-43BF-9001-6F5A7751DD2B",
+              "kind" : "line",
+              "speaker" : "MORITZ",
+              "text" : "Das ist kein Einbrecher. Das ist ein alter Mann, der versucht, die Geschichte zu retten."
+            },
+            {
+              "id" : "D4AF58B1-A979-416D-9EF3-E736F2F6F8CB",
+              "kind" : "pause",
+              "seconds" : 1.5,
+              "text" : ""
+            },
+            {
+              "id" : "C59B8390-4B48-42F1-BC79-8396FFB2CE68",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Die Leinwand hielt das Licht noch für eine Sekunde, bevor die Dunkelheit zurückkehrte."
+            },
+            {
+              "english" : "fading out into a lighter tone over the music",
+              "id" : "0DDA7F04-60FB-4114-8DA3-DBCAE0240BF6",
+              "kind" : "music",
+              "text" : "Abspann – lichter Ton, der langsam über die Musik verblasst"
+            },
+            {
+              "id" : "88059FE4-76C9-4890-84C8-1D8EFB332916",
+              "kind" : "line",
+              "speaker" : "LENA",
+              "text" : "Es war doch nur eine Lichtshow, kein Wunderwerk."
+            },
+            {
+              "id" : "56DABF51-877D-41AB-9FFD-2D851509407F",
+              "kind" : "line",
+              "speaker" : "MORITZ",
+              "text" : "Ja, und das Jahr 1984 war ein Jahr der Angst, nicht des Terrors."
+            },
+            {
+              "id" : "A0947A91-1653-4915-B73A-DFEC24A27980",
+              "kind" : "line",
+              "speaker" : "JIMMY",
+              "text" : "Also wir können gehen? Der Einbrecher ist tot? Nein, er ist einfach still."
+            },
+            {
+              "id" : "26EB582D-24FE-4DB7-9854-61DED136225D",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Die Freunde legten sich auf die Wiese und schliefen in einer leichten Träumerei."
+            },
+            {
+              "english" : "fading out into a gentle chord over the music",
+              "id" : "6FE60DDE-5E19-43A8-A747-E4F4F1396A63",
+              "kind" : "music",
+              "text" : "Abspann – sanfte Akkord, der langsam über die Musik verblasst"
+            }
+          ],
+          "note" : "vor dem Lektorat",
+          "summary" : "Die drei Freunde Jimmy, Lena und Moritz entdecken in einem staubigen Raum durch den beschädigten Projektor und die falsche Manschette auf der Leinwand, dass ein „Einbrecher\" nicht versucht hat, das Glas zu zerstören, sondern es absichtlich kaputt gemacht hat, um die Leinwand zu reparieren. Moritz korrigiert dabei die Interpretation seiner Freunde und stellt fest, dass es sich um einen alten Mann handelt, der mit dem Projektieren des Jahres 1984 versucht hat, die Angst vor der Zukunft zu domestizieren und die Geschichte zu retten. Am Ende der Szene schlafen die drei Freunde auf einer Wiese in einer leichten Träumerei, wobei Moritz die Hoffnung beharrt, dass der alte Mann nicht tot ist, sondern einfach nur still geworden ist."
+        }
+      ]
+    }
+  ],
+  "sfxFiles" : {
+    "a groaning sound echoes like an old motor dying" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/2a7667a245cf.wav",
+    "distant church bells, high pitch" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/f41516ec974c.wav",
+    "dust swirls through the beams of light in the room" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/b9f2344591f2.wav",
+    "heavy metal grates, the heavy metal grates in" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/2cd2f9543cea.wav",
+    "sharp metal screech" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/5d84e79442b9.wav",
+    "sweltering summer air and distant ticking of an old clock" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Geräusche\/erzeugt\/06caa0c74667.wav"
+  },
+  "steps" : {
+    "casting" : "done",
+    "chapters" : "done",
+    "export" : "done",
+    "mix" : "done",
+    "sfx" : "outdated",
+    "story" : "done",
+    "voices" : "done"
+  },
+  "subtitle" : "Ein Sommerabend im Jahr 1984, als die Dunkelheit nicht mehr alles verschluckt",
+  "targetMinutes" : 3,
+  "title" : "Der Funke im Schiene",
+  "tone" : "Jugendkrimi mit Nostalgie, leichter Ironie über die Angst vor dem 'Jahres der Verfolfter' (1984), atmosphärisch mit akustischem Fokus",
+  "useMusic" : false,
+  "useSFX" : true
+}

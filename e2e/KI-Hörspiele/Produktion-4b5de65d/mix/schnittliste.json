@@ -1,0 +1,408 @@
+{
+  "chapters": [
+    {
+      "title": "Szene 1: Der Anblick",
+      "start": 0
+    },
+    {
+      "title": "Szene 2: Das Licht",
+      "start": 69.18
+    },
+    {
+      "title": "Szene 3: Die Fährte",
+      "start": 118.73
+    }
+  ],
+  "clips": [
+    {
+      "id": "c0001",
+      "track": "Erzähler",
+      "start": 0.0,
+      "duration": 8.072,
+      "label": "ERZÄHLER: Das Jahr siebzundachtzig. Ein Sommer, der wie Schmelztiegel ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0004",
+      "track": "Erzähler",
+      "start": 19.067,
+      "duration": 2.87,
+      "label": "ERZÄHLER: Moritz wird schrecklich, als er dem Licht ausmacht.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0006",
+      "track": "Erzähler",
+      "start": 28.162,
+      "duration": 4.096,
+      "label": "ERZÄHLER: Die Hitze scheint der Elektrizität zu flattern, und sie ist ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0011",
+      "track": "Erzähler",
+      "start": 43.329,
+      "duration": 4.544,
+      "label": "ERZÄHLER: Der alte Bahnhof liegt still, wie ein Geist, der nicht zu Mü",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0014",
+      "track": "Erzähler",
+      "start": 55.401,
+      "duration": 3.266,
+      "label": "ERZÄHLER: Der Funke im Schiene leuchtet wie eine Feuersbrunst.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0017",
+      "track": "Erzähler",
+      "start": 63.115,
+      "duration": 3.664,
+      "label": "ERZÄHLER: Der Funke im Schiene leuchtet wie eine Feuersbrunst.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0019",
+      "track": "Erzähler",
+      "start": 69.178,
+      "duration": 6.484,
+      "label": "ERZÄHLER: Der Funke im Schiene war zugefallen. Ein dunkler Raum voller",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0032",
+      "track": "Erzähler",
+      "start": 118.728,
+      "duration": 8.183,
+      "label": "ERZÄHLER: Der Staub lag wie Silberblüten auf dem Boden. Nichts bewegte",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0043",
+      "track": "Erzähler",
+      "start": 176.155,
+      "duration": 5.072,
+      "label": "ERZÄHLER: Die Leinwand hielt das Licht noch für eine Sekunde, bevor di",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0047",
+      "track": "Erzähler",
+      "start": 195.376,
+      "duration": 4.258,
+      "label": "ERZÄHLER: Die Freunde legten sich auf die Wiese und schliefen in einer",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0002",
+      "track": "Sprecher LENA",
+      "start": 9.12,
+      "duration": 4.47,
+      "label": "LENA: Nein, wir sind schon bei der Stadtgrenze, und dabei merken w",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0016",
+      "track": "Sprecher LENA",
+      "start": 59.765,
+      "duration": 2.8,
+      "label": "LENA: Es ist keine Feuersbrunst. Es ist ein Funke.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0021",
+      "track": "Sprecher LENA",
+      "start": 81.129,
+      "duration": 4.821,
+      "label": "LENA: Es ist warm, wie bei einer Glühlampe. Aber hier? Kein Motor ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0024",
+      "track": "Sprecher LENA",
+      "start": 91.266,
+      "duration": 3.563,
+      "label": "LENA: Jimmy, da vorne! Ein Glas mit orangem Glanz.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0028",
+      "track": "Sprecher LENA",
+      "start": 107.547,
+      "duration": 3.459,
+      "label": "LENA: Ein alter Filmgenerator? Wie könnte das hier sein?",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0034",
+      "track": "Sprecher LENA",
+      "start": 130.197,
+      "duration": 4.466,
+      "label": "LENA: Siehst du diesen Scherenschnitt? Das ist ein Holz, das man ü",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0036",
+      "track": "Sprecher LENA",
+      "start": 139.985,
+      "duration": 6.04,
+      "label": "LENA: Nein, der Einbrecher wollte es kaputt machen. Er hat versuch",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0039",
+      "track": "Sprecher LENA",
+      "start": 160.834,
+      "duration": 3.98,
+      "label": "LENA: Ich sehe es selbst. Das Glas ist zerbrochen, aber das Licht ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0044",
+      "track": "Sprecher LENA",
+      "start": 181.227,
+      "duration": 3.158,
+      "label": "LENA: Es war doch nur eine Lichtshow, kein Wunderwerk.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0003",
+      "track": "Sprecher JIMMY",
+      "start": 13.472,
+      "duration": 5.045,
+      "label": "JIMMY: Vielleicht haben wir uns einfach verirrt. Vielleicht ist es ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0008",
+      "track": "Sprecher JIMMY",
+      "start": 33.778,
+      "duration": 3.946,
+      "label": "JIMMY: Ja, ein Funke in der Stahlschiene. Aber es ist zu weit weg.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0012",
+      "track": "Sprecher JIMMY",
+      "start": 48.423,
+      "duration": 4.108,
+      "label": "JIMMY: Ja, ich habe die Richter gesehen, als sie ihn schepperten. A",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0020",
+      "track": "Sprecher JIMMY",
+      "start": 76.212,
+      "duration": 4.537,
+      "label": "JIMMY: Da hinter der Leinwand steht es wie in schwefrigem Rauch. Wa",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0025",
+      "track": "Sprecher JIMMY",
+      "start": 95.209,
+      "duration": 3.639,
+      "label": "JIMMY: Kein Funke dort, siehst du selbst? Es ist ein Leuchtkörper.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0027",
+      "track": "Sprecher JIMMY",
+      "start": 102.884,
+      "duration": 4.283,
+      "label": "JIMMY: Ich sehe es selbst. Das ist kein Motor, sondern ein Projekto",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0030",
+      "track": "Sprecher JIMMY",
+      "start": 115.62,
+      "duration": 2.208,
+      "label": "JIMMY: Also kein Wunderwerk, nur alter Papier.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0033",
+      "track": "Sprecher JIMMY",
+      "start": 127.461,
+      "duration": 2.356,
+      "label": "JIMMY: Was war das? Ein Glas ist zerbrochen.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0037",
+      "track": "Sprecher JIMMY",
+      "start": 146.405,
+      "duration": 3.876,
+      "label": "JIMMY: Genau! Die Manschette ist die erste Fährte, auf der das Zimm",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0040",
+      "track": "Sprecher JIMMY",
+      "start": 165.194,
+      "duration": 3.039,
+      "label": "JIMMY: Ein Einbrecher, der versucht, die Leinwand zu reparieren.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0046",
+      "track": "Sprecher JIMMY",
+      "start": 190.348,
+      "duration": 4.478,
+      "label": "JIMMY: Also wir können gehen? Der Einbrecher ist tot? Nein, er ist ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0005",
+      "track": "Sprecher MORITZ",
+      "start": 22.487,
+      "duration": 5.125,
+      "label": "MORITZ: Es gibt keine anderen Bahnhöfe hier. Aber es ist nicht richt",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0007",
+      "track": "Sprecher MORITZ",
+      "start": 32.807,
+      "duration": 0.591,
+      "label": "MORITZ: Siehst du das?",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0009",
+      "track": "Sprecher MORITZ",
+      "start": 38.104,
+      "duration": 3.525,
+      "label": "MORITZ: Es ist nicht weit, Moritz. Es ist sehr nah.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0013",
+      "track": "Sprecher MORITZ",
+      "start": 52.911,
+      "duration": 1.94,
+      "label": "MORITZ: Wir müssen es nicht ignorieren.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0015",
+      "track": "Sprecher MORITZ",
+      "start": 58.667,
+      "duration": 0.717,
+      "label": "MORITZ: Was ist das?",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0022",
+      "track": "Sprecher MORITZ",
+      "start": 86.33,
+      "duration": 3.236,
+      "label": "MORITZ: Leise gehen wir hin. Keine Schritte, die es wecken.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0026",
+      "track": "Sprecher MORITZ",
+      "start": 99.228,
+      "duration": 3.276,
+      "label": "MORITZ: Vorsicht, nicht berühren. Das Glas ist in der Leinwand.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0029",
+      "track": "Sprecher MORITZ",
+      "start": 111.386,
+      "duration": 3.854,
+      "label": "MORITZ: Eine Leinwand, die repariert wird. Der Einbrecher hat den Gl",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0035",
+      "track": "Sprecher MORITZ",
+      "start": 135.043,
+      "duration": 4.561,
+      "label": "MORITZ: Ein Einbrecher? Er hätte doch den ganzen Raum durchsucht, be",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0038",
+      "track": "Sprecher MORITZ",
+      "start": 150.661,
+      "duration": 9.794,
+      "label": "MORITZ: Aber warum? Ein Einbrecher, der versucht, eine Leinwand zu r",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0042",
+      "track": "Sprecher MORITZ",
+      "start": 169.934,
+      "duration": 4.721,
+      "label": "MORITZ: Das ist kein Einbrecher. Das ist ein alter Mann, der versuch",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0045",
+      "track": "Sprecher MORITZ",
+      "start": 184.765,
+      "duration": 5.202,
+      "label": "MORITZ: Ja, und das Jahr 1984 war ein Jahr der Angst, nicht des Terr",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0010",
+      "track": "Geräusche",
+      "start": 41.729,
+      "duration": 3.01,
+      "label": "Ein metallenes Quietschen",
+      "gain_db": -6.0
+    },
+    {
+      "id": "c0023",
+      "track": "Geräusche",
+      "start": 89.666,
+      "duration": 3.351,
+      "label": "Schweres Metall greift, das schwere Metall greift ein",
+      "gain_db": -6.0
+    },
+    {
+      "id": "c0041",
+      "track": "Geräusche",
+      "start": 168.333,
+      "duration": 3.502,
+      "label": "Ein Gedröhne ertönt wie ein uralter Motor, der nach einem Leben stirbt",
+      "gain_db": -6.0
+    },
+    {
+      "id": "c0018",
+      "track": "Atmo",
+      "start": 0.0,
+      "duration": 69.278,
+      "label": "Atmo: distant church bells, high pitch",
+      "gain_db": -17.0
+    },
+    {
+      "id": "c0031",
+      "track": "Atmo",
+      "start": 69.178,
+      "duration": 49.65,
+      "label": "Atmo: sweltering summer air and distant ticking of an ol",
+      "gain_db": -17.0
+    },
+    {
+      "id": "c0048",
+      "track": "Atmo",
+      "start": 118.728,
+      "duration": 81.906,
+      "label": "Atmo: dust swirls through the beams of light in the room",
+      "gain_db": -17.0
+    }
+  ],
+  "metrics": {
+    "speech_to_background_db": 26.9,
+    "duration_s": 201.1,
+    "loudness_lufs": -16.02,
+    "peak_dbfs": -1.0
+  }
+}

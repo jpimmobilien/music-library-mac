@@ -1,0 +1,292 @@
+{
+  "file": "/Users/runner/work/music-library-mac/music-library-mac/out/e2e/KI-Hörspiele/Produktion-4b5de65d/mix/master.wav",
+  "duration_s": 201.1,
+  "speakers": [
+    {
+      "talk_seconds": 136.3,
+      "turns": 25,
+      "mean_turn_seconds": 5.45,
+      "f0_median_hz": 109.6,
+      "f0_range_semitones": 16.4,
+      "f0_std_semitones": 5.35,
+      "syllables_per_second": 4.24,
+      "words": 386,
+      "brightness_hz": 577,
+      "loudness_variation_db": 9.1,
+      "description_de": "männlich (geschätzt), Tonlage eher tief (~110 Hz), dunkel, warm, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "voice_en": "An adult man with a fairly low voice, dark, warm timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+      "sample_lines": [
+        "Ein Sommer, der wie Schmelztiegel auf den Steinpfeiler bußelt. Die Luft schwebt schwer über dem Kies Verlag.",
+        "Vielleicht haben wir uns einfach verirrt. Vielleicht ist es der alte Bahnhof, den wir beim Abitur besuchten. Moritz wird schrecklich, als er dem Licht ausmacht. Es gibt keine anderen Bahnhöfe hier, aber es ist nicht richtig, wenn das Licht da wird.",
+        "Hitze scheint der Elektrizität zu flattern und sie ist nicht hier."
+      ],
+      "id": "S1",
+      "share": 0.808,
+      "role_guess": "Erzähler (geschätzt)"
+    },
+    {
+      "talk_seconds": 32.3,
+      "turns": 10,
+      "mean_turn_seconds": 3.23,
+      "f0_median_hz": 333.3,
+      "f0_range_semitones": 13.9,
+      "f0_std_semitones": 4.2,
+      "syllables_per_second": 4.48,
+      "words": 96,
+      "brightness_hz": 806,
+      "loudness_variation_db": 9.9,
+      "description_de": "kindlich oder sehr hoch (geschätzt), Tonlage eher hoch (~333 Hz), hell, klar, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "voice_en": "A child with a slightly high voice, bright, clear timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+      "sample_lines": [
+        "sind schon bei der Stadtgrenze und dabei merken wir es nicht einmal.",
+        "ist keine Feuersbrunst. Es ist ein Funke.",
+        "Es ist warm, wie bei einer Glühlampe. Aber hier? Kein Motor läuft."
+      ],
+      "id": "S2",
+      "share": 0.192,
+      "role_guess": "Hauptfigur (geschätzt)"
+    }
+  ],
+  "dialog": {
+    "speech_share": 0.786,
+    "turns": 35,
+    "turns_per_minute": 10.4,
+    "median_gap_between_speakers_s": 0.45,
+    "median_turn_seconds": 3.75,
+    "words_per_minute_overall": 189.5
+  },
+  "recording": {
+    "sample_rate": 48000,
+    "channels": 2,
+    "loudness_lufs": -16.02,
+    "peak_dbfs": -1.0,
+    "bandwidth_hz": 6293,
+    "brightness_hz": 690,
+    "noise_floor_dbfs": -58.2,
+    "noise_flatness": 0.886,
+    "hum_db_over_floor": {
+      "50": -1.6,
+      "60": -1.0
+    },
+    "stereo_correlation": 0.948,
+    "reverb_rt60_estimate_s": null,
+    "reverb_measurements": 2
+  },
+  "non_speech": {
+    "segments": [
+      {
+        "start": 8.1,
+        "end": 9.34,
+        "level_dbfs": -21.8,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 41.67,
+        "end": 43.58,
+        "level_dbfs": -19.5,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 89.58,
+        "end": 91.32,
+        "level_dbfs": -40.0,
+        "kind_guess": "Geräusch/Atmo (geschätzt)"
+      },
+      {
+        "start": 168.26,
+        "end": 169.98,
+        "level_dbfs": -22.4,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      }
+    ],
+    "content_seconds": 6.6,
+    "music_bridges": 0,
+    "music_bridge_mean_seconds": null
+  },
+  "transcript_excerpt": "Das Jahr 1780. Ein Sommer, der wie Schmelztiegel auf den Steinpfeiler bußelt. Die Luft schwebt schwer über dem Kies Verlag. Nein, wir sind schon bei der Stadtgrenze und dabei merken wir es nicht einmal. Vielleicht haben wir uns einfach verirrt. Vielleicht ist es der alte Bahnhof, den wir beim Abitur besuchten. Moritz wird schrecklich, als er dem Licht ausmacht. Es gibt keine anderen Bahnhöfe hier, aber es ist nicht richtig, wenn das Licht da wird. Die Hitze scheint der Elektrizität zu flattern und sie ist nicht hier. Siehst du das? Ja, ein Funke in der Stahlschiene. Aber es ist zu weit weg. Es ist nicht weit, Moritz. Es ist sehr nah. Der alte Bahnhof liegt still. Wie ein Geist, der nicht zu Mühe macht. Ja, ich habe die Richter gesehen, als sie ihn schepperten. Aber das Licht ist noch da. Wir müssen es nicht ignorieren. Der Funke im Schiene leuchtet wie eine Feuersbrunst. Was ist das? Es ist keine Feuersbrunst. Es ist ein Funke. Der Funke im Schiene leuchtet wie eine Feuersbrunst. Der Funke im Schiene war zugefallen. Ein dunkler Raum voller Staub und Schatten ragte über dem Gleis empor. Dahinter der Leinwand steht es wie in schwefrigem Rauch. Was für Licht ist das? Es ist warm, wie bei einer Glühlampe. Aber hier? Kein Motor läuft. Leise gehen wir hin. Keine Schritte, die es wecken. Jimmy, da vorne! Ein Glas mit orangen Glanz. Kein Funke dort? Siehst du selbst? Es ist ein Leuchtkörper. Vorsicht, nicht berühren. Das Glas ist in der Leinwand. Ich sehe es selbst. Das ist kein Moto",
+  "threshold": 0.7,
+  "speakers_given": null,
+  "seconds": {
+    "diarization": 10.1,
+    "transcription": 62.2,
+    "total": 106.3
+  },
+  "turns": [
+    {
+      "start": 0.02,
+      "end": 1.52,
+      "speaker": "S1"
+    },
+    {
+      "start": 2.23,
+      "end": 8.1,
+      "speaker": "S1"
+    },
+    {
+      "start": 10.1,
+      "end": 13.48,
+      "speaker": "S2"
+    },
+    {
+      "start": 13.48,
+      "end": 27.66,
+      "speaker": "S1"
+    },
+    {
+      "start": 28.38,
+      "end": 32.13,
+      "speaker": "S1"
+    },
+    {
+      "start": 32.79,
+      "end": 33.48,
+      "speaker": "S1"
+    },
+    {
+      "start": 34.49,
+      "end": 37.77,
+      "speaker": "S1"
+    },
+    {
+      "start": 38.52,
+      "end": 41.67,
+      "speaker": "S1"
+    },
+    {
+      "start": 43.58,
+      "end": 50.66,
+      "speaker": "S1"
+    },
+    {
+      "start": 51.29,
+      "end": 54.42,
+      "speaker": "S1"
+    },
+    {
+      "start": 55.61,
+      "end": 59.36,
+      "speaker": "S1"
+    },
+    {
+      "start": 59.9,
+      "end": 62.6,
+      "speaker": "S2"
+    },
+    {
+      "start": 63.38,
+      "end": 66.82,
+      "speaker": "S1"
+    },
+    {
+      "start": 69.24,
+      "end": 75.49,
+      "speaker": "S1"
+    },
+    {
+      "start": 76.22,
+      "end": 80.81,
+      "speaker": "S1"
+    },
+    {
+      "start": 81.14,
+      "end": 85.99,
+      "speaker": "S2"
+    },
+    {
+      "start": 86.36,
+      "end": 87.53,
+      "speaker": "S1"
+    },
+    {
+      "start": 88.18,
+      "end": 89.58,
+      "speaker": "S1"
+    },
+    {
+      "start": 92.02,
+      "end": 94.77,
+      "speaker": "S2"
+    },
+    {
+      "start": 95.22,
+      "end": 102.57,
+      "speaker": "S1"
+    },
+    {
+      "start": 103.19,
+      "end": 107.21,
+      "speaker": "S1"
+    },
+    {
+      "start": 107.58,
+      "end": 109.08,
+      "speaker": "S2"
+    },
+    {
+      "start": 110.01,
+      "end": 111.05,
+      "speaker": "S2"
+    },
+    {
+      "start": 111.42,
+      "end": 117.89,
+      "speaker": "S1"
+    },
+    {
+      "start": 118.94,
+      "end": 129.9,
+      "speaker": "S1"
+    },
+    {
+      "start": 130.26,
+      "end": 134.73,
+      "speaker": "S2"
+    },
+    {
+      "start": 135.1,
+      "end": 139.57,
+      "speaker": "S1"
+    },
+    {
+      "start": 140.73,
+      "end": 146.03,
+      "speaker": "S2"
+    },
+    {
+      "start": 147.7,
+      "end": 160.19,
+      "speaker": "S1"
+    },
+    {
+      "start": 161.08,
+      "end": 164.61,
+      "speaker": "S2"
+    },
+    {
+      "start": 165.43,
+      "end": 168.26,
+      "speaker": "S1"
+    },
+    {
+      "start": 169.98,
+      "end": 174.61,
+      "speaker": "S1"
+    },
+    {
+      "start": 176.41,
+      "end": 181.38,
+      "speaker": "S1"
+    },
+    {
+      "start": 181.62,
+      "end": 184.46,
+      "speaker": "S2"
+    },
+    {
+      "start": 184.76,
+      "end": 199.66,
+      "speaker": "S1"
+    }
+  ],
+  "summary_de": "Dauer 3.4 min, Sprachanteil 79 %, 2 Stimmen erkannt (geschätzt).\n- S1 – Erzähler (geschätzt): 81 % Redeanteil, männlich (geschätzt), Tonlage eher tief (~110 Hz), dunkel, warm, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S2 – Hauptfigur (geschätzt): 19 % Redeanteil, kindlich oder sehr hoch (geschätzt), Tonlage eher hoch (~333 Hz), hell, klar, mittleres Tempo, sehr lebhaft, ausdrucksstark\nDialog: 10.4 Sprecherwechsel/min, Pause zwischen Repliken ~0.45 s, Repliken ~3.75 s.\nAufnahme: -16.02 LUFS, Bandbreite bis ~6.3 kHz (begrenzt wie Band/Kassette), Grundrauschen -58.2 dBFS\nOhne Sprache: 6.6 s Musik/Geräusche, 0 Musikbrücken."
+}

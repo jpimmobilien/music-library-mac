@@ -1,0 +1,70 @@
+[
+  {
+    "created" : "2026-11-17T05:27:45Z",
+    "id" : "5C19AEEE-F17F-4508-ACAA-EBEF916750D7",
+    "kind" : "designed",
+    "name" : "Prüfstimme",
+    "referenceFile" : "5C19AEEE-F17F-4508-ACAA-EBEF916750D7-343044.wav",
+    "referenceText" : "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+    "seed" : 343044,
+    "settings" : {
+      "accent" : "",
+      "age" : "senior",
+      "articulation" : "natural",
+      "gender" : "female",
+      "mood" : "mysterious",
+      "notes" : "",
+      "pitch" : 0,
+      "tempo" : 0,
+      "timbre" : "warm"
+    }
+  },
+  {
+    "created" : "2026-11-17T05:30:42Z",
+    "customDescriptionEN" : "An adult man with a fairly low voice, dark, warm timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+    "id" : "47E9B45C-A296-47AE-9787-87173C52E0F5",
+    "kind" : "styleOnly",
+    "name" : "Eigene Produktion – S1 Erzähler",
+    "seed" : 188365,
+    "settings" : {
+      "accent" : "",
+      "age" : "adult",
+      "articulation" : "natural",
+      "gender" : "male",
+      "mood" : "calm",
+      "notes" : "männlich (geschätzt), Tonlage eher tief (~110 Hz), dunkel, warm, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "pitch" : 0,
+      "tempo" : 0,
+      "timbre" : "neutral"
+    },
+    "sourceReference" : "Eigene Produktion",
+    "target" : {
+      "f0" : 109.6,
+      "syllablesPerSecond" : 4.24
+    }
+  },
+  {
+    "created" : "2026-11-17T05:30:42Z",
+    "customDescriptionEN" : "A child with a slightly high voice, bright, clear timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+    "id" : "EDA11E2E-1E0D-4BDA-B415-61F60AAC81C5",
+    "kind" : "styleOnly",
+    "name" : "Eigene Produktion – S2 Hauptfigur",
+    "seed" : 177626,
+    "settings" : {
+      "accent" : "",
+      "age" : "adult",
+      "articulation" : "natural",
+      "gender" : "male",
+      "mood" : "calm",
+      "notes" : "kindlich oder sehr hoch (geschätzt), Tonlage eher hoch (~333 Hz), hell, klar, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "pitch" : 0,
+      "tempo" : 0,
+      "timbre" : "neutral"
+    },
+    "sourceReference" : "Eigene Produktion",
+    "target" : {
+      "f0" : 333.3,
+      "syllablesPerSecond" : 4.48
+    }
+  }
+]

@@ -1,0 +1,351 @@
+{
+ "sample_rate": 48000,
+ "tracks": [
+  {
+   "name": "Erzähler",
+   "gain_db": 0.0,
+   "mute": false,
+   "solo": false
+  },
+  {
+   "name": "Sprecher ELARA",
+   "gain_db": 0.0,
+   "mute": false,
+   "solo": false
+  },
+  {
+   "name": "Sprecher LOTHAR",
+   "gain_db": 0.0,
+   "mute": false,
+   "solo": false
+  }
+ ],
+ "clips": [
+  {
+   "id": "c0001",
+   "track": "Erzähler",
+   "start": 0.0,
+   "offset": 0.0,
+   "duration": 17.0603,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Der Keller schlug wie das Gewölk eines toten Waldes, doch El",
+   "file": "clips/c0001.wav"
+  },
+  {
+   "id": "c0002",
+   "track": "Erzähler",
+   "start": 17.2803,
+   "offset": 0.0,
+   "duration": 7.8475,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Als hätte sie den Atem ersticken wollen, riss Elara ihre Aug",
+   "file": "clips/c0002.wav"
+  },
+  {
+   "id": "c0003",
+   "track": "Erzähler",
+   "start": 25.3478,
+   "offset": 0.0,
+   "duration": 2.8004,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Die Zeiger stehen still, flüsterte sie.",
+   "file": "clips/c0003.wav"
+  },
+  {
+   "id": "c0004",
+   "track": "Erzähler",
+   "start": 29.6482,
+   "offset": 0.0,
+   "duration": 15.8556,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Doch in den Nieten hörte sie nur die harte, kalte Leere, als",
+   "file": "clips/c0004.wav"
+  },
+  {
+   "id": "c0005",
+   "track": "Erzähler",
+   "start": 45.7238,
+   "offset": 0.0,
+   "duration": 8.0038,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Die Stille war kein freundliches Schweigen, sondern eine Mur",
+   "file": "clips/c0005.wav"
+  },
+  {
+   "id": "c0006",
+   "track": "Erzähler",
+   "start": 54.6276,
+   "offset": 0.0,
+   "duration": 14.2525,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Die Straße taumelte unter Elaras Füßen, als ob der Boden ver",
+   "file": "clips/c0006.wav"
+  },
+  {
+   "id": "c0007",
+   "track": "Erzähler",
+   "start": 69.1001,
+   "offset": 0.0,
+   "duration": 11.6665,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Ist das alles?“, chotzte er laut, als wollte er den Schatten",
+   "file": "clips/c0007.wav"
+  },
+  {
+   "id": "c0008",
+   "track": "Erzähler",
+   "start": 80.9867,
+   "offset": 0.0,
+   "duration": 9.089,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Seine Hände schlugen zur Portion, doch die Luft blieb wie to",
+   "file": "clips/c0008.wav"
+  },
+  {
+   "id": "c0009",
+   "track": "Erzähler",
+   "start": 90.2957,
+   "offset": 0.0,
+   "duration": 6.8059,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Elara bog ein, und in der Nische blieb Lotar – wie eine Uhr ",
+   "file": "clips/c0009.wav"
+  },
+  {
+   "id": "c0010",
+   "track": "Erzähler",
+   "start": 97.3216,
+   "offset": 0.0,
+   "duration": 2.0115,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: [PAUSE: 1.5]",
+   "file": "clips/c0010.wav"
+  },
+  {
+   "id": "c0011",
+   "track": "Erzähler",
+   "start": 100.233,
+   "offset": 0.0,
+   "duration": 25.6881,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: In Elaras Atelier lag die Luft schwer, wie Harz über einer v",
+   "file": "clips/c0011.wav"
+  },
+  {
+   "id": "c0012",
+   "track": "Erzähler",
+   "start": 126.1412,
+   "offset": 0.0,
+   "duration": 10.596,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Elara trat näher zum Tisch, auf dem ein schwebender Schimmer",
+   "file": "clips/c0012.wav"
+  },
+  {
+   "id": "c0014",
+   "track": "Erzähler",
+   "start": 153.5915,
+   "offset": 0.0,
+   "duration": 8.6017,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Lotar lachte, doch sein Lachen kratzte sich gegen den Mundwi",
+   "file": "clips/c0014.wav"
+  },
+  {
+   "id": "c0017",
+   "track": "Erzähler",
+   "start": 187.8436,
+   "offset": 0.0,
+   "duration": 28.2067,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Der Mechanismus war ein Versteck. Lotar hatte absichtlich de",
+   "file": "clips/c0017.wav"
+  },
+  {
+   "id": "c0018",
+   "track": "Erzähler",
+   "start": 216.2703,
+   "offset": 0.0,
+   "duration": 6.7242,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Elara öffnete langsam die Augen und blickte auf den Tisch, w",
+   "file": "clips/c0018.wav"
+  },
+  {
+   "id": "c0020",
+   "track": "Erzähler",
+   "start": 228.8739,
+   "offset": 0.0,
+   "duration": 4.7029,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Lotar schüttelte den Kopf, als wäre er in einer Trübsal gefa",
+   "file": "clips/c0020.wav"
+  },
+  {
+   "id": "c0023",
+   "track": "Erzähler",
+   "start": 241.1483,
+   "offset": 0.0,
+   "duration": 10.3275,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Elara griff nach den Schrauben des verstellten Mechanismus. ",
+   "file": "clips/c0023.wav"
+  },
+  {
+   "id": "c0025",
+   "track": "Erzähler",
+   "start": 254.2365,
+   "offset": 0.0,
+   "duration": 18.5646,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: Als Elara den Mechanismus zurückstellte, brach das Erstarren",
+   "file": "clips/c0025.wav"
+  },
+  {
+   "id": "c0026",
+   "track": "Erzähler",
+   "start": 274.3012,
+   "offset": 0.0,
+   "duration": 9.8343,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ERZÄHLER: In Elaras Atelier lag die Luft leicht, wie Wasser in einem F",
+   "file": "clips/c0026.wav"
+  },
+  {
+   "id": "c0013",
+   "track": "Sprecher ELARA",
+   "start": 137.2872,
+   "offset": 0.0,
+   "duration": 15.7544,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ELARA: Guckt euch das Zitat an, Lotar“, sagte sie und ließ den Ton ",
+   "file": "clips/c0013.wav"
+  },
+  {
+   "id": "c0016",
+   "track": "Sprecher ELARA",
+   "start": 175.3568,
+   "offset": 0.0,
+   "duration": 11.9368,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ELARA: Dann bist du es selbst, der den Dieb ist\", schwieg Elara und",
+   "file": "clips/c0016.wav"
+  },
+  {
+   "id": "c0019",
+   "track": "Sprecher ELARA",
+   "start": 223.5445,
+   "offset": 0.0,
+   "duration": 4.7794,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ELARA: Du hast die Zeit gestohlen, um das Geheimnis zu bewahren. Ab",
+   "file": "clips/c0019.wav"
+  },
+  {
+   "id": "c0022",
+   "track": "Sprecher ELARA",
+   "start": 236.1275,
+   "offset": 0.0,
+   "duration": 4.4708,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ELARA: Dann ist es zu spät. Die Stille ist kein Schutz, sie ist ein",
+   "file": "clips/c0022.wav"
+  },
+  {
+   "id": "c0024",
+   "track": "Sprecher ELARA",
+   "start": 252.0259,
+   "offset": 0.0,
+   "duration": 1.6607,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "ELARA: Die Welt erlangt ihre Zeit wieder.",
+   "file": "clips/c0024.wav"
+  },
+  {
+   "id": "c0015",
+   "track": "Sprecher LOTHAR",
+   "start": 162.7433,
+   "offset": 0.0,
+   "duration": 12.2335,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "LOTHAR: Ein Dieb? Ich? Ich schreibe nicht Gesetze, Elara!\", flüstert",
+   "file": "clips/c0015.wav"
+  },
+  {
+   "id": "c0021",
+   "track": "Sprecher LOTHAR",
+   "start": 234.1268,
+   "offset": 0.0,
+   "duration": 1.6207,
+   "gain_db": 0.0,
+   "fade_in": 0.0,
+   "fade_out": 0.0,
+   "label": "LOTHAR: Ich wollte nur, dass es ruhig bleibt.",
+   "file": "clips/c0021.wav"
+  }
+ ],
+ "chapters": [
+  {
+   "title": "Szene 1: Die letzte Einstellung",
+   "start": 0.0
+  },
+  {
+   "title": "Szene 2: Der erste Gang",
+   "start": 54.63
+  },
+  {
+   "title": "Szene 3: Die Suche nach dem Mechanismus",
+   "start": 100.23
+  }
+ ]
+}

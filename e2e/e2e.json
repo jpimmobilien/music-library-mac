@@ -1,0 +1,152 @@
+[
+  {
+    "detail" : "ready idle",
+    "name" : "Einrichtung (Umgebung, Geschichte, Stimmen)",
+    "ok" : true,
+    "seconds" : 180.6
+  },
+  {
+    "detail" : "idle",
+    "name" : "Modell geladen: Stable Audio 3 small (Geräusche)",
+    "ok" : true,
+    "seconds" : 53
+  },
+  {
+    "detail" : "idle",
+    "name" : "Modell geladen: Whisper large-v3-turbo",
+    "ok" : true,
+    "seconds" : 12.8
+  },
+  {
+    "detail" : "idle",
+    "name" : "Modell geladen: Silero VAD",
+    "ok" : true,
+    "seconds" : 2.1
+  },
+  {
+    "detail" : "idle",
+    "name" : "Modell geladen: SpeechBrain ECAPA",
+    "ok" : true,
+    "seconds" : 3
+  },
+  {
+    "detail" : "Notiz: –",
+    "name" : "Hörspiel erstellt",
+    "ok" : true,
+    "seconds" : 2066
+  },
+  {
+    "detail" : "Der Funke im Schiene: 3 Szenen, 497 Wörter, 5 Figuren",
+    "name" : "Geschichte geschrieben",
+    "ok" : true,
+    "seconds" : 2066
+  },
+  {
+    "detail" : "5 Hinweise, überarbeitet: [1, 2, 3]",
+    "name" : "Lektorat ausgeführt",
+    "ok" : true,
+    "seconds" : 2066
+  },
+  {
+    "detail" : "fehlend: 0",
+    "name" : "Alle Zeilen gesprochen",
+    "ok" : true,
+    "seconds" : 2066
+  },
+  {
+    "detail" : "6 Geräusche\/Atmosphären",
+    "name" : "Geräusche erzeugt",
+    "ok" : true,
+    "seconds" : 2066
+  },
+  {
+    "detail" : "201.3 s, -16.0 LUFS, Sprache\/Hintergrund 26.7 dB, 3 Kapitel",
+    "name" : "Mischung",
+    "ok" : true,
+    "seconds" : 2066
+  },
+  {
+    "detail" : "„Nein, wir sind schon bei der Stadtgrenze. Ja, wir merken es nicht.“ → „Nein, wir sind schon bei der Stadtgrenze, und dabei merken wir es nicht einmal.“",
+    "name" : "Replik neu formuliert",
+    "ok" : true,
+    "seconds" : 17.5
+  },
+  {
+    "detail" : "zeilen\/750D0719-65DA-4917-8E4F-36302010D8B3.wav",
+    "name" : "Replik neu gesprochen",
+    "ok" : true,
+    "seconds" : 98.4
+  },
+  {
+    "detail" : "201.1 s",
+    "name" : "Neu abgemischt nach Änderung",
+    "ok" : true,
+    "seconds" : 9.7
+  },
+  {
+    "detail" : "48 Clips, Spuren Erzähler, Sprecher LENA, Sprecher JIMMY, Sprecher MORITZ, Geräusche, Atmo; stumm: Atmo",
+    "name" : "Mehrspur bearbeitet und neu abgemischt",
+    "ok" : true,
+    "seconds" : 5.5
+  },
+  {
+    "detail" : "Der Funke im Schiene.mp3",
+    "name" : "Export whole als mp3",
+    "ok" : true,
+    "seconds" : 5
+  },
+  {
+    "detail" : "Der Funke im Schiene – 01 Kapitel 1- Der Funke im Schiene.m4a",
+    "name" : "Export chapters als m4a",
+    "ok" : true,
+    "seconds" : 3
+  },
+  {
+    "detail" : "Der Funke im Schiene – 01 Szene 1- Der Anblick.mp3, Der Funke im Schiene – 02 Szene 2- Das Licht.mp3, Der Funke im Schiene – 03 Szene 3- Die Fährte.mp3",
+    "name" : "Export scenes als mp3",
+    "ok" : true,
+    "seconds" : 4.3
+  },
+  {
+    "detail" : "Der Funke im Schiene – Spur Atmo.flac, Der Funke im Schiene – Spur Erzähler.flac, Der Funke im Schiene – Spur Geräusche.flac, Der Funke im Schiene – Spur Sprecher JIMMY.flac, Der Funke im Schiene – Spur Sprecher LENA.flac, Der Funke im Schiene – Spur Sprecher MORITZ.flac",
+    "name" : "Export stems als flac",
+    "ok" : true,
+    "seconds" : 1.9
+  },
+  {
+    "detail" : "5 Zeilen gesprochen, 21 offen, Stimmen: Offen",
+    "name" : "Abbrechen während „Stimmen erzeugen“",
+    "ok" : true,
+    "seconds" : 0.2
+  },
+  {
+    "detail" : "Die Stille der Vierzehner-Minute: 729 Wörter, 285 s",
+    "name" : "Hörbuch erstellt",
+    "ok" : true,
+    "seconds" : 2198.5
+  },
+  {
+    "detail" : "5 von 5 Zeilen von vor dem Abbruch unverändert übernommen, 21 danach gesprochen",
+    "name" : "Fortgesetzt nach Abbruch",
+    "ok" : true,
+    "seconds" : 2198.5
+  },
+  {
+    "detail" : "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+    "name" : "Stimme entworfen",
+    "ok" : true,
+    "seconds" : 68.4
+  },
+  {
+    "detail" : "Dauer 3.4 min, Sprachanteil 79 %, 2 Stimmen erkannt (geschätzt).\n- S1 – Erzähler (geschätzt): 81 % Redeanteil, männlich (geschätzt), Tonlage eher tief (~110 Hz), dunkel, warm, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S2 – Hauptfigur (geschätzt): 19 % Redeanteil, kindlich oder sehr hoch (geschätzt), Tonlage eher hoch (~333 Hz), hell, klar, mittleres Tempo, sehr lebhaft, ausdrucksstark\nDialog: 10.4 Sprecherwechsel\/min, Pause zwischen Repliken ~0.45 s, Repliken ~3.75 s.\nAufnahme: -16.02 LUFS, Bandbreite bis ~6.3 kHz (begrenzt wie Band\/Kassette), Grundrauschen -58.2 dBFS\nOhne Sprache: 6.6 s",
+    "name" : "Referenz analysiert",
+    "ok" : true,
+    "seconds" : 108.9
+  },
+  {
+    "detail" : "2 Profile",
+    "name" : "Stilprofile angelegt (können nicht sprechen)",
+    "ok" : true,
+    "seconds" : 111
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "analyzed" : "2026-11-17T05:30:42Z",
+  "id" : "CB57A86A-57DF-4D56-9A22-D85AE2E967D2",
+  "name" : "Eigene Produktion",
+  "retroSuggested" : 1,
+  "sources" : [
+    "master.wav"
+  ],
+  "speakers" : [
+    {
+      "descriptionDE" : "männlich (geschätzt), Tonlage eher tief (~110 Hz), dunkel, warm, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "f0" : 109.6,
+      "id" : "S1",
+      "role" : "Erzähler (geschätzt)",
+      "share" : 0.808,
+      "syllablesPerSecond" : 4.24,
+      "voiceEN" : "An adult man with a fairly low voice, dark, warm timbre, moderate pace delivery, very lively and expressive. Speaks native German."
+    },
+    {
+      "descriptionDE" : "kindlich oder sehr hoch (geschätzt), Tonlage eher hoch (~333 Hz), hell, klar, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "f0" : 333.3,
+      "id" : "S2",
+      "role" : "Hauptfigur (geschätzt)",
+      "share" : 0.192,
+      "syllablesPerSecond" : 4.48,
+      "voiceEN" : "A child with a slightly high voice, bright, clear timbre, moderate pace delivery, very lively and expressive. Speaks native German."
+    }
+  ],
+  "styleHint" : "ausgewogenes Dialogtempo, Erzähler mit etwa 81 % Anteil",
+  "summary" : "Dauer 3.4 min, Sprachanteil 79 %, 2 Stimmen erkannt (geschätzt).\n- S1 – Erzähler (geschätzt): 81 % Redeanteil, männlich (geschätzt), Tonlage eher tief (~110 Hz), dunkel, warm, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S2 – Hauptfigur (geschätzt): 19 % Redeanteil, kindlich oder sehr hoch (geschätzt), Tonlage eher hoch (~333 Hz), hell, klar, mittleres Tempo, sehr lebhaft, ausdrucksstark\nDialog: 10.4 Sprecherwechsel\/min, Pause zwischen Repliken ~0.45 s, Repliken ~3.75 s.\nAufnahme: -16.02 LUFS, Bandbreite bis ~6.3 kHz (begrenzt wie Band\/Kassette), Grundrauschen -58.2 dBFS\nOhne Sprache: 6.6 s Musik\/Geräusche, 0 Musikbrücken."
+}

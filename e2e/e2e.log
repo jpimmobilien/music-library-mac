@@ -1,0 +1,32 @@
+[Hörspiel-E2E +0 s] Geschichtenmodell: mlx-community/Qwen3.5-4B-MLX-4bit, Länge 3.0 min, Skripte: /Users/runner/work/music-library-mac/music-library-mac/build/Music Library.app/Contents/Resources/HoerspielEngine
+[Hörspiel-E2E +180 s] OK   Einrichtung (Umgebung, Geschichte, Stimmen) (180 s): ready idle
+[Hörspiel-E2E +233 s] OK   Modell geladen: Stable Audio 3 small (Geräusche) (53 s): idle
+[Hörspiel-E2E +246 s] OK   Modell geladen: Whisper large-v3-turbo (12 s): idle
+[Hörspiel-E2E +248 s] OK   Modell geladen: Silero VAD (2 s): idle
+[Hörspiel-E2E +251 s] OK   Modell geladen: SpeechBrain ECAPA (3 s): idle
+[Hörspiel-E2E +2317 s] OK   Hörspiel erstellt (2066 s): Notiz: –
+[Hörspiel-E2E +2317 s] OK   Geschichte geschrieben (2066 s): Der Funke im Schiene: 3 Szenen, 497 Wörter, 5 Figuren
+[Hörspiel-E2E +2317 s] OK   Lektorat ausgeführt (2066 s): 5 Hinweise, überarbeitet: [1, 2, 3]
+[Hörspiel-E2E +2317 s] OK   Alle Zeilen gesprochen (2066 s): fehlend: 0
+[Hörspiel-E2E +2317 s] OK   Geräusche erzeugt (2066 s): 6 Geräusche/Atmosphären
+[Hörspiel-E2E +2317 s] OK   Mischung (2066 s): 201.3 s, -16.0 LUFS, Sprache/Hintergrund 26.7 dB, 3 Kapitel
+[Hörspiel-E2E +2335 s] OK   Replik neu formuliert (17 s): „Nein, wir sind schon bei der Stadtgrenze. Ja, wir merken es nicht.“ → „Nein, wir sind schon bei der Stadtgrenze, und dabei merken wir es nicht einmal.“
+[Hörspiel-E2E +2433 s] OK   Replik neu gesprochen (98 s): zeilen/750D0719-65DA-4917-8E4F-36302010D8B3.wav
+[Hörspiel-E2E +2443 s] OK   Neu abgemischt nach Änderung (9 s): 201.1 s
+[Hörspiel-E2E +2448 s] OK   Mehrspur bearbeitet und neu abgemischt (5 s): 48 Clips, Spuren Erzähler, Sprecher LENA, Sprecher JIMMY, Sprecher MORITZ, Geräusche, Atmo; stumm: Atmo
+[Hörspiel-E2E +2453 s] OK   Export whole als mp3 (5 s): Der Funke im Schiene.mp3
+[Hörspiel-E2E +2456 s] OK   Export chapters als m4a (3 s): Der Funke im Schiene – 01 Kapitel 1- Der Funke im Schiene.m4a
+[Hörspiel-E2E +2461 s] OK   Export scenes als mp3 (4 s): Der Funke im Schiene – 01 Szene 1- Der Anblick.mp3, Der Funke im Schiene – 02 Szene 2- Das Licht.mp3, Der Funke im Schiene – 03 Szene 3- Die Fährte.mp3
+[Hörspiel-E2E +2462 s] OK   Export stems als flac (1 s): Der Funke im Schiene – Spur Atmo.flac, Der Funke im Schiene – Spur Erzähler.flac, Der Funke im Schiene – Spur Geräusche.flac, Der Funke im Schiene – Spur Sprecher JIMMY.flac, Der Funke im Schiene – Spur Sprecher LENA.flac, Der Funke im Schiene – Spur Sprecher MORITZ.flac
+[Hörspiel-E2E +3301 s] OK   Abbrechen während „Stimmen erzeugen“ (0 s): 5 Zeilen gesprochen, 21 offen, Stimmen: Offen
+[Hörspiel-E2E +4661 s] OK   Hörbuch erstellt (2198 s): Die Stille der Vierzehner-Minute: 729 Wörter, 285 s
+[Hörspiel-E2E +4661 s] OK   Fortgesetzt nach Abbruch (2198 s): 5 von 5 Zeilen von vor dem Abbruch unverändert übernommen, 21 danach gesprochen
+[Hörspiel-E2E +4729 s] OK   Stimme entworfen (68 s): Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.
+[Hörspiel-E2E +4838 s] OK   Referenz analysiert (108 s): Dauer 3.4 min, Sprachanteil 79 %, 2 Stimmen erkannt (geschätzt).
+- S1 – Erzähler (geschätzt): 81 % Redeanteil, männlich (geschätzt), Tonlage eher tief (~110 Hz), dunkel, warm, mittleres Tempo, sehr lebhaft, ausdrucksstark
+- S2 – Hauptfigur (geschätzt): 19 % Redeanteil, kindlich oder sehr hoch (geschätzt), Tonlage eher hoch (~333 Hz), hell, klar, mittleres Tempo, sehr lebhaft, ausdrucksstark
+Dialog: 10.4 Sprecherwechsel/min, Pause zwischen Repliken ~0.45 s, Repliken ~3.75 s.
+Aufnahme: -16.02 LUFS, Bandbreite bis ~6.3 kHz (begrenzt wie Band/Kassette), Grundrauschen -58.2 dBFS
+Ohne Sprache: 6.6 s
+[Hörspiel-E2E +4840 s] OK   Stilprofile angelegt (können nicht sprechen) (111 s): 2 Profile
+[Hörspiel-E2E +4840 s] Fertig: 25 von 25 Prüfungen bestanden

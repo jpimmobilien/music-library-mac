@@ -1,0 +1,576 @@
+{
+  "cast" : {
+    "ELARA" : {
+      "instruct" : "70, f, high-medium pitch, dry brittle texture, staccato ending, precise. Speaks native German with clear, natural pronunciation.",
+      "kind" : "designed",
+      "referenceFile" : "stimmen\/ELARA.wav",
+      "referenceText" : "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+      "seed" : 349783
+    },
+    "ERZÄHLER" : {
+      "instruct" : "50, m, medium-low pitch, warm woody texture, slow, soothing, reading in a gentle and fairy-tale like style. Speaks native German with clear, natural pronunciation.",
+      "kind" : "designed",
+      "referenceFile" : "stimmen\/ERZÄHLER.wav",
+      "referenceText" : "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+      "seed" : 783169
+    },
+    "LOTHAR" : {
+      "instruct" : "35, m, high pitch, jittery texture, erratic tempo, self-overlapping. Speaks native German with clear, natural pronunciation.",
+      "kind" : "designed",
+      "referenceFile" : "stimmen\/LOTHAR.wav",
+      "referenceText" : "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+      "seed" : 215068
+    }
+  },
+  "chapters" : [
+    {
+      "number" : 1,
+      "title" : "Der Tag der stillen Sekunden"
+    }
+  ],
+  "clues" : [
+    {
+      "clue" : "Das verstaubte Zitat",
+      "meaning" : "Es offenbart, dass die Zeit nicht einfach verloren ist, sondern absichtlich gestohlen wurde, um einen geheimen Plan zu ermöglichen.",
+      "scene" : 3
+    },
+    {
+      "clue" : "Die veränderte Ausdrucksstimmung von Lotar",
+      "meaning" : "Sein frustriertes Verhalten und die Inkompetenz seines Versuchs, seine Gedanken zu finden, deuten darauf hin, dass er bewusst etwas unterschätzt hat.",
+      "scene" : 2
+    },
+    {
+      "clue" : "Elaras wachen Blick",
+      "meaning" : "Sie erkennt sofort, dass die Stille nicht natürlich ist, sondern durch jemanden verursacht wird.",
+      "scene" : 1
+    }
+  ],
+  "created" : "2026-11-17T04:51:07Z",
+  "era" : "Romantik, eine fiktive Stadt namens Chronos am Ufer eines stillen Sees",
+  "figures" : [
+    {
+      "addedByModel" : false,
+      "age" : 50,
+      "description" : "Ein sanfter, geduldiger Erzähler mit einer Stimme, die wie geschliffenes Holz klingt. Er spricht vor und setzt den Ton für die Geschichte.",
+      "gender" : "m",
+      "id" : "ERZÄHLER",
+      "name" : "Erzähler",
+      "role" : "Erzähler",
+      "voice" : "tiefer, ruhiger, leicht nasal, ruhiges Tempo",
+      "voiceEN" : "50, m, medium-low pitch, warm woody texture, slow, soothing"
+    },
+    {
+      "addedByModel" : false,
+      "age" : 72,
+      "description" : "Eine hantelnde, weise Frau mit schmalen Händen und riesigen Ohren. Sie sieht aus wie eine alte Bibliothekarin, die gerade erst aufgewacht ist.",
+      "gender" : "w",
+      "id" : "ELARA",
+      "name" : "Elara",
+      "role" : "Hauptfigur, Uhrmacherin",
+      "voice" : "helle, aber gedrungen, wie das Klicken einer Zahnräder, klipp im Satzende",
+      "voiceEN" : "70, f, high-medium pitch, dry brittle texture, staccato ending, precise"
+    },
+    {
+      "addedByModel" : false,
+      "age" : 35,
+      "description" : "Ein nervöser Schriftsteller mit wildem Haar, der versucht, gegen die plötzliche Stille im Dorf anzukämpfen.",
+      "gender" : "m",
+      "id" : "LOTHAR",
+      "name" : "Lotar",
+      "role" : "Vorbeld, Gestrandeter",
+      "voice" : "unruhig, flatternd, mit zu viel Nachdrückung, als würde er sich selbst überschreiben",
+      "voiceEN" : "35, m, high pitch, jittery texture, erratic tempo, self-overlapping"
+    }
+  ],
+  "id" : "DEB26DB0-4D5F-474E-AC18-AF951301A496",
+  "language" : "de",
+  "logline" : "Als die alte Uhrmacherin Elara merkt, dass ihre Mechanik eine ganze Stadt stilllegt, gerät sie in die Fährten eines mysteriösen Diebes, der glaubt, die Stille schütze sein Versteck.",
+  "mix" : {
+    "chapters" : [
+      {
+        "start" : 0,
+        "title" : "Szene 1: Die letzte Einstellung"
+      },
+      {
+        "start" : 54.63,
+        "title" : "Szene 2: Der erste Gang"
+      },
+      {
+        "start" : 100.23,
+        "title" : "Szene 3: Die Suche nach dem Mechanismus"
+      }
+    ],
+    "date" : "2026-11-17T05:27:45Z",
+    "duration" : 284.6,
+    "loudness" : -16,
+    "master" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-deb26db0\/mix\/master.wav",
+    "speechToBackground" : 214.9,
+    "stems" : {
+      "Erzähler" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-deb26db0\/mix\/spuren\/Erzähler.wav",
+      "Sprecher ELARA" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-deb26db0\/mix\/spuren\/Sprecher_ELARA.wav",
+      "Sprecher LOTHAR" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-deb26db0\/mix\/spuren\/Sprecher_LOTHAR.wav"
+    },
+    "timeline" : "\/Users\/runner\/work\/music-library-mac\/music-library-mac\/out\/e2e\/KI-Hörspiele\/Produktion-deb26db0\/mix\/zeitleiste.json"
+  },
+  "mode" : "hoerbuch",
+  "modified" : "2026-11-17T05:27:45Z",
+  "musicFiles" : {
+
+  },
+  "narration" : "märchenhaft",
+  "prompt" : "Ein kurzes Märchen über eine Uhrmacherin, deren Uhren die Zeit anhalten können.",
+  "pronunciations" : {
+
+  },
+  "resolution" : "Die Stille ist das Ergebnis eines verstellten Mechanismus, den Lotar absichtlich installiert hat, um sein Versteck zu schützen. Elara erkennt jedoch, dass Lotar die Wahrheit über den Dieb nicht ahnt, da er selbst der Täter ist. Durch das Zitat in der Werkstatt merkt sie, dass Lotar die Zeit absichtlich gestohlen hat, um ein Geheimnis zu bewahren. Am Ende stellt Elara den Mechanismus zurück, und die Welt erlangt ihre Zeit wieder.",
+  "retroAmount" : 0,
+  "review" : {
+    "date" : "2026-11-17T04:57:10Z",
+    "problems" : [
+      {
+        "fix" : "Klarstellen, ob Elara tatsächlich Zeit hört oder ob sie die Stille als 'tote Taktung' wahrnimmt, ohne dass sie gleichzeitig einen eigenen Puls hört. Die Beschreibung muss konsistent mit der späteren Enthüllung sein, dass Lotar die Zeit gestohlen hat.",
+        "problem" : "Widersprüchliche Beschreibung der Stille und des Tons: Der Erzähler beschreibt die Stille als 'Murkheit', während er gleichzeitig behauptet, dass Elara 'nur ihre eigene pulsierende Zeit' in den Nieten (Wänden) hört. Dies widerspricht der späteren Auflösung, wonach die Stille durch einen verstellten Mechanismus verursacht wird, den Lotar installiert hat. Wenn Elara Zeit hört, ist die Stille nicht absolut, was den Grund für das 'Erstarren der Luft' und die 'tote Taktung' unklar lässt.",
+        "scene" : 1
+      },
+      {
+        "fix" : "Die Beschreibung von Lotars Handlungen und der Umgebung muss konsistent sein. Wenn die Stille durch einen Mechanismus verursacht wird, sollte Lotars Reaktion darauf (Verwirrung, Versuch, die Stille zu überwinden) logisch folgen. Die Aussage 'Strom durchs Dorf senden' muss entweder als Metapher für die Zeit oder als konkrete Handlung im Kontext der Uhrmacherwerkstatt erklärt werden.",
+        "problem" : "Logikfehler bei der Beschreibung von Lotars Verhalten und der Umgebung: Der Erzähler sagt, Lotar 'halte sich gegen den Wind an' und 'plätschere die Sprache', während die Luft wie tote Federn liegt. Dies ist widersprüchlich, da Lotar laut spricht ('chotzte er laut'), aber die Umgebung als still und totenhaft beschrieben wird. Zudem ist die Aussage 'Ich sollte den Strom durchs Dorf senden' unklar und scheint eine metaphorische oder technische Handlung zu sein, die im Kontext einer Uhrmacherin und eines Schriftstellers nicht logisch erklärt wird.",
+        "scene" : 2
+      },
+      {
+        "fix" : "Entscheiden, ob Elara als Erzähler oder als Charakter in der Szene auftreten soll. Wenn sie als Charakter auftritt, sollte der Erzähler die Handlung beschreiben, nicht direkt als Elara sprechen. Die Beschreibung muss konsistent mit der Charakterliste sein.",
+        "problem" : "Falsche oder unklare Rolle von Elara als Erzähler: In Szene 3 wird Elara als Erzähler dargestellt, obwohl sie in der Charakterliste als Hauptfigur und Uhrmacherin definiert ist. Der Erzähler sollte die Geschichte erzählen, nicht direkt als Charakter in der Szene auftreten, es sei denn, es ist eine direkte Rede. Die Beschreibung 'Elara sagte und deutete auf den schwebenden Schimmer' ist unklar, da Elara als Hauptfigur definiert ist, aber der Erzähler in Szene 1 und 2 spricht.",
+        "scene" : 3
+      },
+      {
+        "fix" : "Die Auflösung muss klarer sein, wie Lotar die Zeit gestohlen hat und warum Elara das merkt. Die Beschreibung des Mechanismus und seiner Funktion sollte konsistent mit der vorherigen Handlung sein.",
+        "problem" : "Unklare Auflösung des Rätsels: Elara sagt, Lotar sei 'der Dieb', aber der Mechanismus ist ein 'Ersetzungsmechanismus'. Es wird nicht klar erklärt, wie Lotar die Zeit gestohlen hat und warum Elara das merkt. Die Auflösung ist zu vage und lässt die Logik der Handlung unklar.",
+        "scene" : 3
+      },
+      {
+        "fix" : "Klarstellen, ob Elara tatsächlich Zeit hört oder ob sie die Stille als 'tote Taktung' wahrnimmt, ohne dass sie gleichzeitig einen eigenen Puls hört. Die Beschreibung muss konsistent mit der späteren Enthüllung sein, dass Lotar die Zeit gestohlen hat.",
+        "problem" : "Widersprüchliche Beschreibung der Stille und des Tons: Der Erzähler beschreibt die Stille als 'Murkheit', während er gleichzeitig behauptet, dass Elara 'nur ihre eigene pulsierende Zeit' in den Nieten (Wänden) hört. Dies widerspricht der späteren Auflösung, wonach die Stille durch einen verstellten Mechanismus verursacht wird, den Lotar installiert hat. Wenn Elara Zeit hört, ist die Stille nicht absolut, was den Grund für das 'Erstarren der Luft' und die 'tote Taktung' unklar lässt.",
+        "scene" : 3
+      }
+    ],
+    "revised" : [
+      1,
+      2,
+      3
+    ]
+  },
+  "scenes" : [
+    {
+      "atmoEN" : "creaking wood, distant clock ticking, sudden silence",
+      "chapter" : 1,
+      "id" : "DC3E07DE-BEC7-4069-9037-0A168D712FD3",
+      "items" : [
+        {
+          "audioFile" : "zeilen\/00614CDB-035B-40C8-B23E-1CAEF295BBA4.wav",
+          "audioFingerprint" : "3daa5fc6bedb0f82",
+          "id" : "00614CDB-035B-40C8-B23E-1CAEF295BBA4",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Der Keller schlug wie das Gewölk eines toten Waldes, doch Elaras Werkzeuge sangen noch. Mit schmalen Händen griff sie nach der vierten Feder, während die Uhr ihre letzte Taktung vollzog. Plötzlich erstarrte die Luft; keine Sekunde verging, doch der Takt hörbar."
+        },
+        {
+          "audioFile" : "zeilen\/872FFC8E-F1DB-427C-85B1-866179563642.wav",
+          "audioFingerprint" : "f5223659716872e3",
+          "id" : "872FFC8E-F1DB-427C-85B1-866179563642",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Als hätte sie den Atem ersticken wollen, riss Elara ihre Augen auf. Die Schleiern an der Wand zitterten nicht; sie waren tot."
+        },
+        {
+          "audioFile" : "zeilen\/510392A2-4A3E-4F77-B6F8-9321E0E0C64D.wav",
+          "audioFingerprint" : "3636077b24b57aef",
+          "id" : "510392A2-4A3E-4F77-B6F8-9321E0E0C64D",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Die Zeiger stehen still, flüsterte sie."
+        },
+        {
+          "id" : "FBAB4F9F-1FBE-4AE8-9A15-81B95926A3E9",
+          "kind" : "pause",
+          "seconds" : 1.5,
+          "text" : ""
+        },
+        {
+          "audioFile" : "zeilen\/70391B5F-71B1-4953-BAB4-FB0380E60827.wav",
+          "audioFingerprint" : "0dfc0c0c73ca1619",
+          "id" : "70391B5F-71B1-4953-BAB4-FB0380E60827",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Doch in den Nieten hörte sie nur die harte, kalte Leere, als wäre jede Sekunde in einer Schublade verschlossen. Es gab keinen eigenen Puls, keine pulsierende Zeit, die gegen die Wand prallte – nur das dumpfe Erstarren einer Welt, die sich selbst abgerissen hat."
+        },
+        {
+          "audioFile" : "zeilen\/B2AB5A5F-F6DE-46A7-9026-6E5896FEBA1A.wav",
+          "audioFingerprint" : "b5b63bde2e5fbd8d",
+          "id" : "B2AB5A5F-F6DE-46A7-9026-6E5896FEBA1A",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Die Stille war kein freundliches Schweigen, sondern eine Murkheit. Ein sauberes, kaltes Eis, das keine Resonanz mehr zuließ."
+        }
+      ],
+      "location" : "keller",
+      "number" : 1,
+      "outline" : "Elara sitzt in ihrem dunklen Kellerwerkstatt, wo sie die letzte Uhr des Tages justiert. Plötzlich bricht eine unerwartete Stille ein, als ob die Welt ausgeblendet worden wäre.",
+      "participants" : [
+        "ERZÄHLER",
+        "ELARA"
+      ],
+      "room" : "keller",
+      "summary" : "Erla hat in der letzten Sekunde vor dem Ende ihrer Arbeit die vierte Feder ergriffen, als die Uhr genau auf den letzten Takt stand. Plötzlich erstarrte die Zeit vollständig; die Zeiger der Uhr bewegten sich nicht mehr, und Elara spürt in der leeren Stille keine Zeit mehr, als ob die Welt sich selbst abgerissen hätte. Am Ende steht Elara allein in der stillen, kalten Leere des Kellers, während die Zeiger der Uhr unbeweglich stehen und keine Sekunde mehr vergeht.",
+      "title" : "Die letzte Einstellung",
+      "versions" : [
+        {
+          "date" : "2026-11-17T04:55:40Z",
+          "items" : [
+            {
+              "id" : "8262D32D-D344-4BD4-B276-D1CE1EEC3C82",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Der Keller schlug wie das臎der eines toten Waldes, doch Elaras Werkzeuge sangen noch. Mit schmalen Händen griff sie nach der vierten Feder, während die Uhr ihre letzte Taktung vollzog. Plötzlich erstarrte die Luft; keine Sekunde verging, doch der Takt hörbar."
+            },
+            {
+              "id" : "F05F3E07-FFA1-4F8C-B273-1FC74A9D335E",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Als hätte sie den Atem ersticken wollen, riss Elara ihre Augen auf. Die Schleiern an der Wand zitterten nicht; sie waren tot."
+            },
+            {
+              "id" : "FA50C958-58A9-4199-A322-08BD194E8CDF",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Die Zeiger stehen still“, flüsterte sie."
+            },
+            {
+              "id" : "B324500E-E72D-497D-BEC7-C7FD3BBC62DC",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Doch in den Nieten hörte sie nur ihre eigene pulsierende Zeit."
+            },
+            {
+              "id" : "8B15EFB4-D8A9-4D20-B463-C50C8A6512D4",
+              "kind" : "pause",
+              "seconds" : 1.5,
+              "text" : ""
+            },
+            {
+              "id" : "0B99761C-64B1-4718-8300-27AB73553BF5",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Die Stille war kein freundliches Schweigen, sondern eine Murkheit."
+            }
+          ],
+          "note" : "vor dem Lektorat",
+          "summary" : "Elara, die in ihrem kellerartigen Atelier am Ende der Zeit steht, entdeckt durch das Zittern der Wandverkleidung, dass die Schleiern an der Wand tot sind und ihre Augen auf den stillstehenden Uhrzeigern ruhen. Sie erkennt, dass die Stille nicht als friedliches Schweigen, sondern als eine bedrohliche Murkheit wirkt, während sie in der Nische nur ihre eigene pulsierende Zeit hört. Am Ende der Szene ist Elara allein in der tödlichen Stille, die sie als letzte Taktung ihrer Werkzeuge und den toten Schleiern wahrnimmt."
+        }
+      ]
+    },
+    {
+      "atmoEN" : "wind in leaves, distant dog barking, muffled footsteps",
+      "chapter" : 1,
+      "id" : "0F075541-BF60-4961-B1F9-557F9BD37525",
+      "items" : [
+        {
+          "audioFile" : "zeilen\/1D781855-2283-4F1E-86C4-7C7689C87AFA.wav",
+          "audioFingerprint" : "20699ea5287c0017",
+          "id" : "1D781855-2283-4F1E-86C4-7C7689C87AFA",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Die Straße taumelte unter Elaras Füßen, als ob der Boden vergessene Taktungen nicht hatte. Lotar hielt sich gegen den Wind an, doch seine Worte schlugen auf das stumme Glas ein und zuckten, als hätte sie ihren Faden verloren."
+        },
+        {
+          "audioFile" : "zeilen\/2F978347-6667-4E8E-8EF3-97ABFAE5F3DC.wav",
+          "audioFingerprint" : "5280aa500b305b3a",
+          "id" : "2F978347-6667-4E8E-8EF3-97ABFAE5F3DC",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Ist das alles?“, chotzte er laut, als wollte er den Schatten berühren. „Wo war der Rhythmus, wenn mein Geist noch schwankte? Ich sollte den Strom durchs Dorf senden – doch er fließt nicht mehr."
+        },
+        {
+          "audioFile" : "zeilen\/2B1A4D33-6966-4A40-8E2A-D9B39F75C366.wav",
+          "audioFingerprint" : "0a9b227c8c4f416b",
+          "id" : "2B1A4D33-6966-4A40-8E2A-D9B39F75C366",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Seine Hände schlugen zur Portion, doch die Luft blieb wie tote Federn liegen. Ein verstreutes Zeilchen, als hätte er es den Weg gewagt, um sich selbst zu tären."
+        },
+        {
+          "audioFile" : "zeilen\/91275717-2C88-401D-8034-9FD9B7E719E7.wav",
+          "audioFingerprint" : "b4622b8849938c05",
+          "id" : "91275717-2C88-401D-8034-9FD9B7E719E7",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Elara bog ein, und in der Nische blieb Lotar – wie eine Uhr mit einem verrückten Zeiger, der im Dunkeln stehen bleibt."
+        },
+        {
+          "audioFile" : "zeilen\/777AC79C-7FF9-40C1-B170-F488D167B534.wav",
+          "audioFingerprint" : "aec072a7f4019e49",
+          "id" : "777AC79C-7FF9-40C1-B170-F488D167B534",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "[PAUSE: 1.5]"
+        }
+      ],
+      "location" : "straße",
+      "number" : 2,
+      "outline" : "Elara läuft durch die friedliche Straße, während Lotar frustriert versucht, sein Wort zu finden, während seine Gedanken an einer unerklärlichen Stille feststecken.",
+      "participants" : [
+        "ERZÄHLER",
+        "ELARA",
+        "LOTHAR"
+      ],
+      "room" : "draußen",
+      "summary" : "Lotar steht allein in der Straße und versucht vergeblich, Elara zu erreichen, da er das Gefühl hat, dass die Energie für den Dorfstrom nicht mehr fließt. Er hinterlässt ein verstreutes Zeilchen, das als Spur für sich selbst dient, während Elara bereits in die Nische bogen. Am Ende der Szene ist Elara verschwunden, Lotar bleibt an Ort und Stelle, und beide wissen nichts über den tatsächlichen Zustand der Stromleitung.",
+      "title" : "Der erste Gang",
+      "versions" : [
+        {
+          "date" : "2026-11-17T04:56:04Z",
+          "items" : [
+            {
+              "id" : "E93C81CF-60EE-4F09-9A96-E2BF6F4D3830",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Die Straße taumelte unter Elaras Füßen, als ob der Boden vergessene Taktungen nicht hatte. Lotar hielt sich gegen den Wind an und plätscherte die Sprache, doch seine Gedanken zuckten, als hätte sie ihren Faden verloren."
+            },
+            {
+              "id" : "28134CBF-3F30-49DC-8BFE-2E4A7CF80640",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Ist das alles?“, chotzte er laut, als wollte er den Schatten berühren. „Wo war der Rhythmus, wenn mein Geist noch schwankte? Ich sollte den Strom durchs Dorf senden."
+            },
+            {
+              "id" : "01944001-C2B1-494F-957B-B1B6E1DC44D9",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Seine Hände schlugen zur Portion, doch die Luft blieb wie tote Federn liegen. Ein verstreutes Zeilchen, als hätte er es den Weg gewagt, um sich selbst zu tären."
+            },
+            {
+              "id" : "EC3AADCF-08F4-49FA-837F-100FF4F7312A",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Elara bog ein, und in der Nische blieb Lotar – wie eine Uhr mit einem verrückten Zeiger, der im Dunkeln stehen bleibt."
+            }
+          ],
+          "note" : "vor dem Lektorat",
+          "summary" : "Lotar und Elara geraten in einer verwirrten, windgepeitschten Gegend in eine Situation der Verwirrung, als Lotar verzweifelt nach dem verlorenen Rhythmus seines Geistes und dem fehlenden Strom sucht. Er erkennt, dass er versehentlich ein Zeilchen zurückgelassen hat, um sich selbst zu tären, während er sich wie eine Uhr mit stillstehendem Zeiger in der Dunkelheit der Nische befindet. Am Ende stehen beide Figuren getrennt voneinander: Elara ist bereits abgewandt, während Lotar allein zurückbleibt und den verstreuten Zeilchen sowie seine eigene Verwirrung gegenübersteht."
+        }
+      ]
+    },
+    {
+      "atmoEN" : "clinking tools, soft breathing, whispering paper",
+      "chapter" : 1,
+      "id" : "F1024BEB-5319-4EF6-AEEA-A86B4355C99E",
+      "items" : [
+        {
+          "audioFile" : "zeilen\/F8AE8FEB-A54A-47AE-909B-44C46EC5F02A.wav",
+          "audioFingerprint" : "7160064348cbd429",
+          "id" : "F8AE8FEB-A54A-47AE-909B-44C46EC5F02A",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "In Elaras Atelier lag die Luft schwer, wie Harz über einer verschlossenen Flasche. Worte hingen in der Schwebe, unbeschritten von einem stummen Wind, der sich nicht zu bewegen wagte. Die Wände peitschten die Stille an, als hätte eine Gegend vom Ton der Welt sich in den Augen abgetan. Es war nicht nur eine Pause, sondern ein Erstarren der Luft; eine tote Taktung, bei der selbst das Herzschlagende der Uhr stillstand."
+        },
+        {
+          "audioFile" : "zeilen\/3193F736-18C7-4D36-8E42-A451B8905882.wav",
+          "audioFingerprint" : "2eb2e73c96ab8cac",
+          "id" : "3193F736-18C7-4D36-8E42-A451B8905882",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Elara trat näher zum Tisch, auf dem ein schwebender Schimmer über den Werkzeuge schwebte. Sie deutete mit der Hand auf den leichten Glanz, der sich wie ein Nebel über dem Messwerk legte."
+        },
+        {
+          "audioFile" : "zeilen\/117B75CD-C017-45DE-A37C-1B43CE8EE548.wav",
+          "audioFingerprint" : "645de40a47b06955",
+          "id" : "117B75CD-C017-45DE-A37C-1B43CE8EE548",
+          "kind" : "line",
+          "speaker" : "ELARA",
+          "text" : "Guckt euch das Zitat an, Lotar“, sagte sie und ließ den Ton ruhig, fast bedächtig erklingen. „Es ist kein Zeichen der Vernachlässigung, sondern ein Gebot des Ersetzungsmechanismus. Niemand stiehlt die Zeit, wenn er sie nicht zur Wahrung eines Geheimnisses zurückbringen will."
+        },
+        {
+          "audioFile" : "zeilen\/CB172617-29E3-4816-BFB5-E832022B968C.wav",
+          "audioFingerprint" : "ededeb5400a3cb68",
+          "id" : "CB172617-29E3-4816-BFB5-E832022B968C",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Lotar lachte, doch sein Lachen kratzte sich gegen den Mundwinkel. Es war ein Lachen, das sich selbst vor der Wahrheit zum Schweigen zwang."
+        },
+        {
+          "audioFile" : "zeilen\/C16F30B5-3BB1-43DC-BDB2-62DCA3174450.wav",
+          "audioFingerprint" : "0010f22386c2cc5b",
+          "id" : "C16F30B5-3BB1-43DC-BDB2-62DCA3174450",
+          "kind" : "line",
+          "speaker" : "LOTHAR",
+          "text" : "Ein Dieb? Ich? Ich schreibe nicht Gesetze, Elara!\", flüsterte er und wandte den verletzten Blick auf die Wanduhren, die im Raum tanzten. „Ich habe nichts getan. Ich habe nur versucht, die Zeit zu beschützen."
+        },
+        {
+          "audioFile" : "zeilen\/FF44FB2B-7B03-4075-A4DB-6DDD98C8A8E9.wav",
+          "audioFingerprint" : "b60635c9b4e648c3",
+          "id" : "FF44FB2B-7B03-4075-A4DB-6DDD98C8A8E9",
+          "kind" : "line",
+          "speaker" : "ELARA",
+          "text" : "Dann bist du es selbst, der den Dieb ist\", schwieg Elara und schloss die Augen. Sie sah, wie die Nieten der großen Wanduhr nicht mehr nagen, sondern fest in einer Position einfroren, als wären sie durch Zement gegossen."
+        },
+        {
+          "audioFile" : "zeilen\/B644235D-0E61-4883-A3CA-7C243C552F87.wav",
+          "audioFingerprint" : "e617861e933fe2d7",
+          "id" : "B644235D-0E61-4883-A3CA-7C243C552F87",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Der Mechanismus war ein Versteck. Lotar hatte absichtlich den Ersetzungsmechanismus aktiviert und die Zeit umgeleitet, um sein Versteck zu schützen. Er hatte die Zeit gestohlen, nicht als Dieb, sondern als Wächter eines Geheimnisses, das er nicht preisgeben wollte. Doch Elara merkte es am Zitat: Die Zeit war nicht verschwunden, sie war nur an einem anderen Ort gelagert, gefangen im Mechanismus, den Lotar selbst installiert hatte."
+        },
+        {
+          "audioFile" : "zeilen\/F1E06B74-D028-4F4A-8ACC-95F9E8CAE407.wav",
+          "audioFingerprint" : "71c95be81d15a3f7",
+          "id" : "F1E06B74-D028-4F4A-8ACC-95F9E8CAE407",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Elara öffnete langsam die Augen und blickte auf den Tisch, wo das Messwerk nun wie ein toter Vogel lag."
+        },
+        {
+          "audioFile" : "zeilen\/A8AE9807-F24B-42B7-9E53-8B92B6627DE8.wav",
+          "audioFingerprint" : "028f4e362f2e6a17",
+          "id" : "A8AE9807-F24B-42B7-9E53-8B92B6627DE8",
+          "kind" : "line",
+          "speaker" : "ELARA",
+          "text" : "Du hast die Zeit gestohlen, um das Geheimnis zu bewahren. Aber du bist auch der Dieb."
+        },
+        {
+          "audioFile" : "zeilen\/134F3EFC-6F63-46F4-A494-8BC91AFF6E99.wav",
+          "audioFingerprint" : "546329f80f6e7bb1",
+          "id" : "134F3EFC-6F63-46F4-A494-8BC91AFF6E99",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Lotar schüttelte den Kopf, als wäre er in einer Trübsal gefangen."
+        },
+        {
+          "audioFile" : "zeilen\/689B7D06-213F-4844-90D6-53B636CF49FB.wav",
+          "audioFingerprint" : "a16f2aa6a0c75a8b",
+          "id" : "689B7D06-213F-4844-90D6-53B636CF49FB",
+          "kind" : "line",
+          "speaker" : "LOTHAR",
+          "text" : "Ich wollte nur, dass es ruhig bleibt."
+        },
+        {
+          "audioFile" : "zeilen\/964ED2D5-9244-4B86-BF51-98EEE76039C5.wav",
+          "audioFingerprint" : "f191a40e133a6529",
+          "id" : "964ED2D5-9244-4B86-BF51-98EEE76039C5",
+          "kind" : "line",
+          "speaker" : "ELARA",
+          "text" : "Dann ist es zu spät. Die Stille ist kein Schutz, sie ist eine Falle."
+        },
+        {
+          "audioFile" : "zeilen\/B538BC18-46D0-4771-9C6D-374CCD14C559.wav",
+          "audioFingerprint" : "1fc711bd124796d2",
+          "id" : "B538BC18-46D0-4771-9C6D-374CCD14C559",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Elara griff nach den Schrauben des verstellten Mechanismus. Mit einer sanften, aber festen Bewegung löste sie die Nieten, die seit Stunden in der falschen Position geblieben waren."
+        },
+        {
+          "audioFile" : "zeilen\/ADFCE25B-6881-459C-A770-2C85429AFF0F.wav",
+          "audioFingerprint" : "6c341dfd475aa257",
+          "id" : "ADFCE25B-6881-459C-A770-2C85429AFF0F",
+          "kind" : "line",
+          "speaker" : "ELARA",
+          "text" : "Die Welt erlangt ihre Zeit wieder."
+        },
+        {
+          "audioFile" : "zeilen\/6957C94E-82F6-42A0-8F1D-F13DC2A15B75.wav",
+          "audioFingerprint" : "5363c0a9bc937416",
+          "id" : "6957C94E-82F6-42A0-8F1D-F13DC2A15B75",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "Als Elara den Mechanismus zurückstellte, brach das Erstarren der Luft zusammen. Die Wände peitschten die Stille nicht mehr an, sondern hallten den ersten, ungestörten Ton zurück. Die Zeit fließte wieder, nicht mehr als ein Geheimnis, das bewahrt werden musste, sondern als ein Strom, der sich nicht mehr halten ließ."
+        },
+        {
+          "id" : "FE00C589-548A-422B-80F0-ADEB5BC3B331",
+          "kind" : "pause",
+          "seconds" : 1.5,
+          "text" : ""
+        },
+        {
+          "audioFile" : "zeilen\/015C42B4-72F8-43DA-ACC5-514A4E4262FB.wav",
+          "audioFingerprint" : "545320801d500053",
+          "id" : "015C42B4-72F8-43DA-ACC5-514A4E4262FB",
+          "kind" : "line",
+          "speaker" : "ERZÄHLER",
+          "text" : "In Elaras Atelier lag die Luft leicht, wie Wasser in einem Fluss. Worte bewegten sich nun selbstständig, unbeschwert von einem stummen Wind."
+        }
+      ],
+      "location" : "werkstatt",
+      "number" : 3,
+      "outline" : "Elara und Lotar entdecken in Elaras Werkstatt ein verstaubtes Zitat, das als Hinweis auf den Diebstahl der Zeit dient. Elara merkt, dass Lotar die Wahrheit über den Dieb nicht ahnt.",
+      "participants" : [
+        "ERZÄHLER",
+        "ELARA",
+        "LOTHAR"
+      ],
+      "room" : "zimmer",
+      "summary" : "Elara und Lotar stehen in Elaras Atelier, als Lotar versucht, sich zu rechtfertigen, weil er die Zeit nicht gestohlen, sondern als Wächter eines Geheimnisses geschützt habe. Elara erkennt jedoch, dass Lotar den „Ersetzungsmechanismus\" aktiviert hat, um das Versteck zu sichern, und stellt fest, dass die Zeit zwar im Mechanismus gefangen ist, aber nicht wirklich verschwunden ist. Am Ende löst Elara die Nieten des Mechanismus, wodurch die Zeit wieder freigegeben wird und die Stille im Atelier bricht.",
+      "title" : "Die Suche nach dem Mechanismus",
+      "versions" : [
+        {
+          "date" : "2026-11-17T04:57:10Z",
+          "items" : [
+            {
+              "id" : "AB723D08-20D9-4C45-BBBE-A8E798A38871",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "In Elaras Atelier lag die Luft schwer, wie Harz über einer verschlossenen Flasche. Worte hingen in der Schwebe, unbeschritten von einem stummen Wind."
+            },
+            {
+              "id" : "5707FADB-9D85-4B4D-AD9A-FFFFDB59ECFC",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Guckt euch das Zitat an, Lotar“, sagte Elara und deutete auf den schwebenden Schimmer über dem Tisch. „Es ist kein Zeichen der Vernachlässigung, sondern ein Gebot des Ersetzungsmechanismus. Niemand stiehlt die Zeit, wenn er sie nicht zur Wahrung eines Geheimnisses zurückbringen will."
+            },
+            {
+              "id" : "E4E3E7C9-9609-45EA-B3C5-131456A6F5D0",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Lotar lachend, doch sein Lachen kratzte sich gegen den Mundwinkel. „Ein Dieb? Ich? Ich schreibe nicht Gesetze, Elara!\", flüsterte er und wandte den verletzten Blick."
+            },
+            {
+              "id" : "4185BC8A-6F84-4061-BBE0-5089BD306805",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Dann bist du es selbst, der den Dieb ist\", schwieg Elara und schloss die Augen."
+            },
+            {
+              "id" : "9B8FACC9-E2D6-4E48-910F-ECBE3D768EEC",
+              "kind" : "pause",
+              "seconds" : 1.5,
+              "text" : ""
+            },
+            {
+              "id" : "BCD23219-CDF9-4488-9F3D-B04C36250AB8",
+              "kind" : "line",
+              "speaker" : "ERZÄHLER",
+              "text" : "Die Wände peitschten die Stille, als hätte eine Gegend vom Ton der Welt sich in den Augen abgetan."
+            }
+          ],
+          "note" : "vor dem Lektorat",
+          "summary" : "Elara fordert Lotar auf, ein mysteriöses Zitat im Atelier zu betrachten, das besagt, dass niemand Zeit stiehlt, um ein Geheimnis zu bewahren. Lotar versucht sich als nicht schuldig zu rechtfertigen, worauf Elara ihn direkt als den Dieb der Zeit identifiziert. Am Ende steht Lotar verletzter und schuldig vor Elara, während das Zitat als Beweis für ihre Behauptung dient."
+        }
+      ]
+    }
+  ],
+  "sfxFiles" : {
+
+  },
+  "steps" : {
+    "casting" : "done",
+    "chapters" : "done",
+    "mix" : "done",
+    "story" : "done",
+    "voices" : "done"
+  },
+  "subtitle" : "Ein kleines Märchen über die Uhrmacherin Elara und das gestohlene Zeitgefühl",
+  "targetMinutes" : 2,
+  "title" : "Die Stille der Vierzehner-Minute",
+  "tone" : "Atmosphärisch, magisch-realistisch, ruhig mit untergründischer Spannung",
+  "useMusic" : false,
+  "useSFX" : false
+}
