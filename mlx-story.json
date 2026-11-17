@@ -1,0 +1,580 @@
+{
+  "concept": {
+    "titel": "Die Stille am Bahnhof",
+    "untertitel": "Ein Sommerverbrecher-Verbrechen in Rothenburg",
+    "logline": "Vier Teenager in einer 80er-Jahre-Versteckung bei einem verlassenen Bahnhof lösen ein Rätsel um einen verschwundenen Koffer, wobei jede Spur auf den anderen deutet – bis es zu spät ist.",
+    "epoche_ort": "Dorf Rothenburg, Sommer 1984, verlassener Hauptbahnhof",
+    "ton": "Atmosphäre klassischer deutscher Jugendkrimi der 80er (Tone: melancholisch, neugierig, leicht ironischer Humor, spontane Dialoge, typische 80er-Soundeffekte wie Zigarettenrauch, Vogelgezwitscher, fernes Zischen von Zügen), Erzähltempo: moderat, mit abrupten Wendungen und einem überraschenden Twist.",
+    "figuren": [
+      {
+        "id": "ERZÄHLER",
+        "name": "Stefan Winkler",
+        "rolle": "Erzähler",
+        "alter": 45,
+        "geschlecht": "m",
+        "beschreibung": "Stefan ist ein erfahrener, charmanteter Erzähler mit einer leichten Ironie. Er erzählt die Geschichte aus der Perspektive eines Beobachters, der nur mitspielt, aber alles spürt. Seine Stimme ist warm, ruhig und leicht narzig.",
+        "stimme": "tiefe, barsaure, mit leichten Sprechpausen und einem charakteristischen 'Hörspiel-Stimmchen' (leichtes Echo-Effekt im Kopf),",
+        "voice_en": {
+          "Alter": 45,
+          "Geschlecht": "männlich",
+          "Tonhöhe": "mittel-tief",
+          "Klangfarbe": "warm, leicht narzig, mit leichten Sprechpausen",
+          "Tempo": "moderat, rhythmisch",
+          "Wirkung": "Erzeugt eine vertraute, fast familiäre Atmosphäre, wie ein Erzähler am Kaminfeuer."
+        }
+      },
+      {
+        "id": "LENA",
+        "name": "Lena Müller",
+        "rolle": "Protagonistin",
+        "alter": 16,
+        "geschlecht": "w",
+        "beschreibung": "Lena ist neugierig, etwas chaotisch, aber mit einem feinen Gespür für Details. Sie ist die Führungskraft des Gruppen, auch wenn sie sich nicht so fühlt. Ihre Stimme ist klar, leicht akzentuiert, mit einem Hauch von Kindheit und junger Energie.",
+        "stimme": "helle, leicht akzentuiert, mit einem fröhlichen, aber manchmal chaotischen Unterton",
+        "voice_en": {
+          "Alter": 16,
+          "Geschlecht": "weiblich",
+          "Tonhöhe": "mittel-hoch",
+          "Klangfarbe": "klar, leicht akzentuiert, fröhlich-chaotisch",
+          "Tempo": "schnell, lebendig",
+          "Wirkung": "Die Hauptrolle, die den Zuschauer in die neugierige Welt der Jugendlichen einführt."
+        }
+      },
+      {
+        "id": "TOM",
+        "name": "Tom Schmidt",
+        "rolle": "Der Beobachter",
+        "alter": 17,
+        "geschlecht": "m",
+        "beschreibung": "Tom ist der ruhigste und analytischste der Gruppe. Er beobachtet alles, versucht, Dinge zu klassifizieren und Muster zu erkennen. Seine Stimme ist fließend, fast monotone, aber mit einem inneren monologischen Flair.",
+        "stimme": "ruhig, fließend, mit einem leicht monologen Unterton, fast wie ein Gedankengang",
+        "voice_en": {
+          "Alter": 17,
+          "Geschlecht": "männlich",
+          "Tonhöhe": "mittel-tief",
+          "Klangfarbe": "ruhig, analytisch, monologisch",
+          "Tempo": "langsamer, präzise",
+          "Wirkung": "Verleiht der Gruppe eine intellektuelle Tiefe und eine gewisse Spannung durch seine Beobachtungen."
+        }
+      },
+      {
+        "id": "JULIA",
+        "name": "Julia Weber",
+        "rolle": "Die Naive",
+        "alter": 15,
+        "geschlecht": "w",
+        "beschreibung": "Julia ist ehrlich, etwas naiv, aber mit einem starken Herz. Sie traut den Dingen oft zu viel und ist die first line von Vertrauen. Ihre Stimme ist weich, mit einem Hauch von Unsicherheit, aber mit einer inneren Stärke.",
+        "stimme": "weich, leicht unsicher, aber mit einem inneren Flair von Ehrlichkeit",
+        "voice_en": {
+          "Alter": 15,
+          "Geschlecht": "weiblich",
+          "Tonhöhe": "mittel-hoch",
+          "Klangfarbe": "weich, unsicher, ehrlich",
+          "Tempo": "moderat, mit kleinen Pausen zur Reflexion",
+          "Wirkung": "Gibt der Gruppe einen menschlichen Anker und eine gewisse Naivität, die zur Spannung beiträgt."
+        }
+      },
+      {
+        "id": "MAX",
+        "name": "Max Fischer",
+        "rolle": "Der Störfaktor",
+        "alter": 16,
+        "geschlecht": "m",
+        "beschreibung": "Max ist der charmante Störfaktor, der immer etwas zu sagen hat, aber oft nicht das Richtige. Er ist humorvoll, aber manchmal unbedeutend. Seine Stimme ist energisch, leicht übertrieben, mit einem Hauch von Unsicherheit.",
+        "stimme": "energetisch, leicht übertrieben, mit einem Hauch von Unsicherheit und Humor",
+        "voice_en": {
+          "Alter": 16,
+          "Geschlecht": "männlich",
+          "Tonhöhe": "mittel-hoch",
+          "Klangfarbe": "energetisch, humorvoll, unsicher",
+          "Tempo": "schnell, lebendig, mit Pausen zur Reflexion",
+          "Wirkung": "Gibt der Gruppe einen humorvollen Unterton und eine gewisse Unsicherheit, die zur Spannung beiträgt."
+        }
+      }
+    ],
+    "kapitel": [
+      {
+        "nr": 1,
+        "titel": "Der Koffer im Verlassenen",
+        "szenen": [
+          {
+            "nr": 1,
+            "titel": "Die Ankunft am Bahnhof",
+            "ort": "Bahnhofshalle",
+            "raum": "bahnhofs_halle",
+            "figuren": [
+              "ERZÄHLER",
+              "LENA",
+              "TOM",
+              "JULIA",
+              "MAX"
+            ],
+            "inhalt": "Die fünf Jugendlichen treffen sich im verlassenen Bahnhof, um eine Versteckung zu finden. Sie entdecken einen alten Koffer, der seltsam aussieht, und beschließen, ihn zu untersuchen. Tom bemerkt sofort einen Unterschied an der Farbe des Koffers.",
+            "atmo_en": "Distant train whistle, echoing footsteps, faint echo of a distant train passing"
+          },
+          {
+            "nr": 2,
+            "titel": "Die Suche nach dem Inhalt",
+            "ort": "Wohnzimmer im Bahnhof",
+            "raum": "zimmer",
+            "figuren": [
+              "LENA",
+              "TOM",
+              "JULIA",
+              "MAX"
+            ],
+            "inhalt": "Die Jugendlichen versuchen, den Koffer zu öffnen. Tom findet einen kleinen Zettel mit einer Adresse, die sie nicht kennen. Lena merkt, dass der Koffer leicht warm ist.",
+            "atmo_en": "Faint rustling of paper, distant train whistle, faint echo of a distant train passing"
+          },
+          {
+            "nr": 3,
+            "titel": "Die Entdeckung",
+            "ort": "Wohnzimmer im Bahnhof",
+            "raum": "zimmer",
+            "figuren": [
+              "LENA",
+              "TOM",
+              "JULIA",
+              "MAX"
+            ],
+            "inhalt": "Sie öffnen den Koffer und finden darin Geld, aber auch ein Foto von einer Person, die sie kennen. Tom stellt fest, dass der Koffer von einem anderen Koffer abgetrennt wurde, was auf eine Täuschung hindeutet.",
+            "atmo_en": "Distant train whistle, faint rustling of paper, faint echo of a distant train passing"
+          }
+        ]
+      }
+    ],
+    "spuren": [
+      {
+        "spur": "Der Koffer ist leicht warm",
+        "szene": 2,
+        "bedeutung": "Der Koffer ist nicht leer, sondern enthält etwas, das Wärme erzeugt, was auf eine verbotene Substanz oder ein elektrisches Gerät hindeutet."
+      },
+      {
+        "spur": "Der Zettel mit der Adresse",
+        "szene": 2,
+        "bedeutung": "Der Zettel ist ein Hinweis auf eine weitere Person, die mit dem Koffer in Verbindung steht, was auf einen Verbrechenverbrecher hindeutet."
+      },
+      {
+        "spur": "Der Unterschied an der Farbe des Koffers",
+        "szene": 1,
+        "bedeutung": "Der Koffer ist nicht der einzige Koffer am Bahnhof, sondern ein Teil einer Serie, was auf eine gezielte Täuschung hindeutet."
+      },
+      {
+        "spur": "Der Koffer wurde von einem anderen Koffer abgetrennt",
+        "szene": 3,
+        "bedeutung": "Der Koffer wurde nicht selbst entworfen, sondern von einer anderen Person, was auf eine Täuschung hindeutet."
+      }
+    ],
+    "aufloesung": "Der Koffer enthält kein Geld, sondern ein verbotenes Medikament, das von einem lokalen Arzt verschrieben wurde, der jedoch zu einem Verbrechen verurteilt wurde. Die Jugendlichen haben den Koffer gefunden, als sie ihn von einem anderen Koffer abtrennten, der die Wärme verursachte. Der Arzt war ein Verbrecher, der den Koffer versteckt hatte, um sein Verbrechen zu verschleiern. Die Jugendlichen haben den Koffer gefunden, als sie ihn von einem anderen Koffer abtrennten, der die Wärme verursachte. Der Arzt war ein Verbrecher, der den Koffer versteckt hatte, um sein Verbrechen zu verschleiern.",
+    "_minutes": 3.0,
+    "_mode": "hoerspiel",
+    "_language": "de"
+  },
+  "scenes": [
+    {
+      "chapter": 1,
+      "scene": 1,
+      "title": "Die Ankunft am Bahnhof",
+      "room": "bahnhofs_halle",
+      "atmo_en": "Distant train whistle, echoing footsteps, faint echo of a distant train passing",
+      "text": "[MUSIK: Titelmusik | melancholic 80s synthwave with distant train whistle]\n[GERÄUSCH: Regenwasser tropft aus einem Däch | raindrops hitting the roof]\n\nERZÄHLER: Das Dorf Rothenburg schlug seine Mittagshitze auf den verlassenen Hauptbahnhof. Die Fäule roch nach Moos und vergessener Zeit.\nLENA (klar, leicht akzentuiert): Hier! Der Schrank dort hinten sieht eingeengt aus.\nTOM (fließend, fast monoton): Genau. Die Farbe ist seltsam uniform. Keine Abnutzung an den Kanten.\nJULIA (weich, unsicher): Ist das nicht der einzige? Wir müssen ihn nicht berühren.\nMAX (energisch, leicht übertrieben): Na, lass es da! Wer ist der erste auf der Liste?\nERZÄHLER: Ein alter Eichenkoffer lag neben einem anderen, doch dieser war kalte Grau.\n[PAUSE: 1.5]\nLENA (aufgeregt): Schau dich an! Der ist nicht einfach grau. Er hat einen Schimmer.\nTOM (innerer monolog): Ein getönter Lack. Das ist kein Zufall, das ist ein Muster.\nJULIA (ängstlich): Aber warum? Ist er nicht der gleiche wie der andere?\nMAX (lächelnd, unbedeutend): Vielleicht ist er nur neu gestrichen. Aber er schimmert doch anders.\nERZÄHLER: Tom fixierte den Unterschied zwischen dem kalten Grau und diesem schimmernden Grau.\n[GERÄUSCH: Das Licht blitzt kurz über den Koffer | flash of light]\nLENA (flüsternd): Er ist Teil einer Serie. Das bedeutet, er war nicht da.",
+      "items": [
+        {
+          "type": "music",
+          "de": "Titelmusik",
+          "en": "melancholic 80s synthwave with distant train whistle"
+        },
+        {
+          "type": "sfx",
+          "de": "Regenwasser tropft aus einem Däch",
+          "en": "raindrops hitting the roof"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Das Dorf Rothenburg schlug seine Mittagshitze auf den verlassenen Hauptbahnhof. Die Fäule roch nach Moos und vergessener Zeit."
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "klar, leicht akzentuiert",
+          "text": "Hier! Der Schrank dort hinten sieht eingeengt aus."
+        },
+        {
+          "type": "line",
+          "speaker": "TOM",
+          "emotion": "fließend, fast monoton",
+          "text": "Genau. Die Farbe ist seltsam uniform. Keine Abnutzung an den Kanten."
+        },
+        {
+          "type": "line",
+          "speaker": "JULIA",
+          "emotion": "weich, unsicher",
+          "text": "Ist das nicht der einzige? Wir müssen ihn nicht berühren."
+        },
+        {
+          "type": "line",
+          "speaker": "MAX",
+          "emotion": "energisch, leicht übertrieben",
+          "text": "Na, lass es da! Wer ist der erste auf der Liste?"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Ein alter Eichenkoffer lag neben einem anderen, doch dieser war kalte Grau."
+        },
+        {
+          "type": "pause",
+          "de": "1.5",
+          "en": "1.5",
+          "seconds": 1.5
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "aufgeregt",
+          "text": "Schau dich an! Der ist nicht einfach grau. Er hat einen Schimmer."
+        },
+        {
+          "type": "line",
+          "speaker": "TOM",
+          "emotion": "innerer monolog",
+          "text": "Ein getönter Lack. Das ist kein Zufall, das ist ein Muster."
+        },
+        {
+          "type": "line",
+          "speaker": "JULIA",
+          "emotion": "ängstlich",
+          "text": "Aber warum? Ist er nicht der gleiche wie der andere?"
+        },
+        {
+          "type": "line",
+          "speaker": "MAX",
+          "emotion": "lächelnd, unbedeutend",
+          "text": "Vielleicht ist er nur neu gestrichen. Aber er schimmert doch anders."
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Tom fixierte den Unterschied zwischen dem kalten Grau und diesem schimmernden Grau."
+        },
+        {
+          "type": "sfx",
+          "de": "Das Licht blitzt kurz über den Koffer",
+          "en": "flash of light"
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "flüsternd",
+          "text": "Er ist Teil einer Serie. Das bedeutet, er war nicht da."
+        }
+      ],
+      "words": 137,
+      "repetition": 0.0,
+      "unknown_speakers": [],
+      "attempts": 2,
+      "continued": 0,
+      "seconds": 86.1,
+      "summary": "Die vier Figuren untersuchen in einem verlassenen Bahnhof zwei Koffer, wobei Tom und Lena den auffälligen Schimmer am zweiten, kalten Grauen Koffer als bewusste Unterscheidung zu dessen Partner identifizieren. Diese neue Beobachtung führt Lena zur Schlussfolgerung, dass der schimmernde Koffer Teil einer Serie ist und daher nicht an seiner ursprünglichen Stelle gewesen sein kann. Am Ende der Szene stehen die Figuren vor dem schimmernden Koffer, während Lena die entscheidende Spur zieht, die die Vergangenheit des Objekts aufklärt."
+    },
+    {
+      "chapter": 1,
+      "scene": 2,
+      "title": "Die Suche nach dem Inhalt",
+      "room": "zimmer",
+      "atmo_en": "Faint rustling of paper, distant train whistle, faint echo of a distant train passing",
+      "text": "[ATMO: Aluminiumhallen konzentrieren die Hitze | alloy hall reflecting heat, distant cooling system hum]\n[GERÄUSCH: Metall kratzt langsam über Metall | metal scraping slowly against metal]\n\nERZÄHLER: Die Luft im Bahnhof war nicht nur heiß, sie pulsierte.\n\nJULIA (ängstlich): Schwerin! Wir würden ihn nicht öffnen wollen.\n\nMAX (energetisch): Nur eine Sache. Ein kleiner Zettel, den wir schon gefunden haben.\n\nTOM (ruhig): Keine chemische Reaktion von Kupferlacken? Dann ist es keine Zündung. Es ist eine Anomalie der inneren Wärme, die sich nicht abbaut.\n\nLena (aufgeregt): Er ist warm. Nicht nur die Luft, sondern der Holz selbst pulsiert fast handwarm.\n\nJULIA: Ich habe den Zettel nie gesehen! Woher weißt du das?\n\nTOM (flüsternd): Die Adresse ist Rothenburg.\n\nLena: Rothenburg? Der Koffer ist warm, wie ein lebender Mensch.\n\nTOM (scharf): Aber die Adresse ist falsch. Die Koordinaten führen nicht zu diesem Bahnhof.\n\nJULIA (aufregend): Doch es ist warm, wie beim Menschen. Es ist kein Lebewesen, sondern etwas, das Wärme speichert.\n\nMAX (verwundert): Vielleicht ist es ein Messer? Ein alter Schlüssel, der still liegt?\n\nERZÄHLER: Der Zettel rieb sich gegen das Holz. Die Hitze stieg plötzlich auf.\n\nLena (brechend): Es ist nicht leer! Es ist ein Lebewesen, das wir gerade öffnen.\n\nTOM (monologhaft): Das System reagiert schnell, wie erwartet. Die Wärme kommt von einer Quelle, die wir noch nicht verstanden haben.\n\nJULIA: Vielleicht haben wir das Wort „jemand\", der uns zuhört? Oder jemand, der uns beobachtet?\n\nMAX (lächelnd): Eine Geschichte, die wir nicht wollen, dass sie wahr ist.\n\n[PAUSE: 2.0]\n\nERZÄHLER: Der Zettel rieb sich gegen das Holz. Lena fühlte, wie ihr Handrücken brennt. Tom merkte, dass die Adresse falsch ist. Julia spürte, wie der Koffer warm war wie ein Mensch. Max dachte an ein Messer.\n\n[GERÄUSCH: Ein tiefes Grollen, wie ein Herzschlag | deep rumble like a heartbeat]",
+      "items": [
+        {
+          "type": "atmo",
+          "de": "Aluminiumhallen konzentrieren die Hitze",
+          "en": "alloy hall reflecting heat, distant cooling system hum"
+        },
+        {
+          "type": "sfx",
+          "de": "Metall kratzt langsam über Metall",
+          "en": "metal scraping slowly against metal"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Die Luft im Bahnhof war nicht nur heiß, sie pulsierte."
+        },
+        {
+          "type": "line",
+          "speaker": "JULIA",
+          "emotion": "ängstlich",
+          "text": "Schwerin! Wir würden ihn nicht öffnen wollen."
+        },
+        {
+          "type": "line",
+          "speaker": "MAX",
+          "emotion": "energetisch",
+          "text": "Nur eine Sache. Ein kleiner Zettel, den wir schon gefunden haben."
+        },
+        {
+          "type": "line",
+          "speaker": "TOM",
+          "emotion": "ruhig",
+          "text": "Keine chemische Reaktion von Kupferlacken? Dann ist es keine Zündung. Es ist eine Anomalie der inneren Wärme, die sich nicht abbaut."
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "aufgeregt",
+          "text": "Er ist warm. Nicht nur die Luft, sondern der Holz selbst pulsiert fast handwarm."
+        },
+        {
+          "type": "line",
+          "speaker": "JULIA",
+          "emotion": "",
+          "text": "Ich habe den Zettel nie gesehen! Woher weißt du das?"
+        },
+        {
+          "type": "line",
+          "speaker": "TOM",
+          "emotion": "flüsternd",
+          "text": "Die Adresse ist Rothenburg."
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "",
+          "text": "Rothenburg? Der Koffer ist warm, wie ein lebender Mensch."
+        },
+        {
+          "type": "line",
+          "speaker": "TOM",
+          "emotion": "scharf",
+          "text": "Aber die Adresse ist falsch. Die Koordinaten führen nicht zu diesem Bahnhof."
+        },
+        {
+          "type": "line",
+          "speaker": "JULIA",
+          "emotion": "aufregend",
+          "text": "Doch es ist warm, wie beim Menschen. Es ist kein Lebewesen, sondern etwas, das Wärme speichert."
+        },
+        {
+          "type": "line",
+          "speaker": "MAX",
+          "emotion": "verwundert",
+          "text": "Vielleicht ist es ein Messer? Ein alter Schlüssel, der still liegt?"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Der Zettel rieb sich gegen das Holz. Die Hitze stieg plötzlich auf."
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "brechend",
+          "text": "Es ist nicht leer! Es ist ein Lebewesen, das wir gerade öffnen."
+        },
+        {
+          "type": "line",
+          "speaker": "TOM",
+          "emotion": "monologhaft",
+          "text": "Das System reagiert schnell, wie erwartet. Die Wärme kommt von einer Quelle, die wir noch nicht verstanden haben."
+        },
+        {
+          "type": "line",
+          "speaker": "JULIA",
+          "emotion": "",
+          "text": "Vielleicht haben wir das Wort „jemand\", der uns zuhört? Oder jemand, der uns beobachtet?"
+        },
+        {
+          "type": "line",
+          "speaker": "MAX",
+          "emotion": "lächelnd",
+          "text": "Eine Geschichte, die wir nicht wollen, dass sie wahr ist."
+        },
+        {
+          "type": "pause",
+          "de": "2.0",
+          "en": "2.0",
+          "seconds": 2.0
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Der Zettel rieb sich gegen das Holz. Lena fühlte, wie ihr Handrücken brennt. Tom merkte, dass die Adresse falsch ist. Julia spürte, wie der Koffer warm war wie ein Mensch. Max dachte an ein Messer."
+        },
+        {
+          "type": "sfx",
+          "de": "Ein tiefes Grollen, wie ein Herzschlag",
+          "en": "deep rumble like a heartbeat"
+        }
+      ],
+      "words": 226,
+      "repetition": 0.018,
+      "unknown_speakers": [],
+      "attempts": 1,
+      "continued": 1,
+      "seconds": 46.2,
+      "summary": "Julia, Max, Tom und Lena befinden sich in einem heißen Bahnhof, als sie einen warmen Koffer entdecken, der sich wie ein lebendes Wesen anfühlt. Während Tom feststellt, dass die auf dem Zettel genannte Adresse „Rothenburg\" falsch ist, eskaliert die Spannung, als der Koffer plötzlich eine intensive Hitze ausstrahlt und sich gegen das Holz reibt. Am Ende der Szene steht die Gruppe vor einem mysteriösen, pulsierenden Objekt, das als Lebewesen interpretiert wird, während Max skeptisch bleibt und Julia die Möglichkeit einer Beobachtung durch einen „Jemand\" in Betracht zieht.",
+      "previous_text": "[ATMO: Aluminiumhallen konzentrieren die Hitze | alloy hall reflecting heat, distant cooling system hum]\n[GERÄUSCH: Metall kratzt langsam über Metall | metal scraping slowly against metal]\n\nLena (aufgeregt): Er ist warm. Nicht nur die Luft, sondern der Holz selbst pulsiert.\n\nTOM (ruhig): Keine chemische Reaktion von Kupferlacken? Dann nur Verbrennung von innerer Wärme.\n\nJULIA (ängstlich): Schwerin! Wir würden ihn nicht öffnen wollen.\n\nMAX (energetisch): Nur eine Sache, ein kleiner Zettel, der wir schon gefunden haben!\n\nTOM (flüsternd): Eine Adresse in Rothenburg.\n\nJULIA: Ich habe es nie gesehen! Woher?\n\n[GERÄUSCH: Der Deckel wird langsam verschoben, Hitze spürbar steigt]\n\nLena (brechend): Es ist nicht leer! Es ist ein Lebewesen, das wir gerade öffnen.\n\nTOM (monologhaft): Das System reagiert schnell, wie erwartet.\n\nJULIA: Vielleicht haben wir das Wort „jemand\", der uns zuhört?\n\nMAX (lächelnd): Eine Geschichte, die wir nicht wollen, dass sie wahr ist.\n\n[PAUSE: 2.0]\nERZÄHLER: Der Zettel rieb sich gegen das Holz.\nLena (fühlend): Es brennt im Handrücken.\nTom (scharf): Die Adresse ist falsch.\nJulia (aufregend): Doch es ist warm, wie beim Menschen.\nMax (verwundert): Vielleicht ist es ein Messer?\n\n[PAUSE: 1.0]"
+    },
+    {
+      "chapter": 1,
+      "scene": 3,
+      "title": "Die Entdeckung",
+      "room": "zimmer",
+      "atmo_en": "Distant train whistle, faint rustling of paper, faint echo of a distant train passing",
+      "text": "[ATMO: Die Hitze faucht durch die offenen Schlitze des Bahnsteigs | heat blows through the open slits of the platform, distant rumble of summer traffic]\n\nERZÄHLER: Die vier standen schwebend vor dem geöffneten Schrank. Das sterile Licht des Bahnhofs fiel auf den Chaos aus Papiergeld und einer einzigen, zerknitterten Photographie.\n\nLENA (aufgeregt): Ein Foto von unserem Lehrer? Weil es ihm nach einer Kasse geht, sieht man die Affenriemen.\n\nJULIA (ängstlich): Nein! Das ist unser Herr Doktor Weber! Er war ein guter Mann, der uns alle versorgt hat.\n\nMAX (leicht überflüssig): Also? Ist das unser Koffer? Oder ist es nur ein Teil davon?\n\n[GERÄUSCH: Ein metallenes Rascheln, als etwas hart greift nach dem anderen Koffer | loud metallic scraping as something hard grabs the other case]\n\nTOM (scharf): Achtet auf das Schnürband. Es ist nicht durchbohrt, sondern geknickt.\n\nERZÄHLER: Ein scharfer Knall fühlte sich an wie ein Schuss durch die Luft. Der Koffer war nicht selbst entworfen, sondern von einem anderen Koffer getrennt worden – eine Täuschung, die niemand erwartet hatte.\n\nJULIA (erschrocken): Aber wo ist der Rest? Warum war das warm, wenn es leer ist?\n\nLENA (entschieden): Weicht nicht zurück! Die Hitze war kein Zufall, sondern die Antwort auf das Kreuz.\n\nTOM (ruhig): Und die Antwort führt uns zurück zur Quelle des Verbrechens, nicht zur Versicherung.\n\n[PAUSE: 1.0]\n\nERZÄHLER: Der Scharrstoff ist weg, und der Koffer liegt da, wie er es sein sollte – leer, aber voll von Wahrheiten, die sie nicht verstehen konnten.\n\n[MUSIK: Spannung | suspenseful string sting with a sudden drop to silence]\n\n[PAUSE: 2.0]\n\n[MUSIK: Abspann | quiet fade-out with the distant sound of a train whistle echoing away]",
+      "items": [
+        {
+          "type": "atmo",
+          "de": "Die Hitze faucht durch die offenen Schlitze des Bahnsteigs",
+          "en": "heat blows through the open slits of the platform, distant rumble of summer traffic"
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Die vier standen schwebend vor dem geöffneten Schrank. Das sterile Licht des Bahnhofs fiel auf den Chaos aus Papiergeld und einer einzigen, zerknitterten Photographie."
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "aufgeregt",
+          "text": "Ein Foto von unserem Lehrer? Weil es ihm nach einer Kasse geht, sieht man die Affenriemen."
+        },
+        {
+          "type": "line",
+          "speaker": "JULIA",
+          "emotion": "ängstlich",
+          "text": "Nein! Das ist unser Herr Doktor Weber! Er war ein guter Mann, der uns alle versorgt hat."
+        },
+        {
+          "type": "line",
+          "speaker": "MAX",
+          "emotion": "leicht überflüssig",
+          "text": "Also? Ist das unser Koffer? Oder ist es nur ein Teil davon?"
+        },
+        {
+          "type": "sfx",
+          "de": "Ein metallenes Rascheln, als etwas hart greift nach dem anderen Koffer",
+          "en": "loud metallic scraping as something hard grabs the other case"
+        },
+        {
+          "type": "line",
+          "speaker": "TOM",
+          "emotion": "scharf",
+          "text": "Achtet auf das Schnürband. Es ist nicht durchbohrt, sondern geknickt."
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Ein scharfer Knall fühlte sich an wie ein Schuss durch die Luft. Der Koffer war nicht selbst entworfen, sondern von einem anderen Koffer getrennt worden – eine Täuschung, die niemand erwartet hatte."
+        },
+        {
+          "type": "line",
+          "speaker": "JULIA",
+          "emotion": "erschrocken",
+          "text": "Aber wo ist der Rest? Warum war das warm, wenn es leer ist?"
+        },
+        {
+          "type": "line",
+          "speaker": "LENA",
+          "emotion": "entschieden",
+          "text": "Weicht nicht zurück! Die Hitze war kein Zufall, sondern die Antwort auf das Kreuz."
+        },
+        {
+          "type": "line",
+          "speaker": "TOM",
+          "emotion": "ruhig",
+          "text": "Und die Antwort führt uns zurück zur Quelle des Verbrechens, nicht zur Versicherung."
+        },
+        {
+          "type": "pause",
+          "de": "1.0",
+          "en": "1.0",
+          "seconds": 1.0
+        },
+        {
+          "type": "line",
+          "speaker": "ERZÄHLER",
+          "emotion": "",
+          "text": "Der Scharrstoff ist weg, und der Koffer liegt da, wie er es sein sollte – leer, aber voll von Wahrheiten, die sie nicht verstehen konnten."
+        },
+        {
+          "type": "music",
+          "de": "Spannung",
+          "en": "suspenseful string sting with a sudden drop to silence"
+        },
+        {
+          "type": "pause",
+          "de": "2.0",
+          "en": "2.0",
+          "seconds": 2.0
+        },
+        {
+          "type": "music",
+          "de": "Abspann",
+          "en": "quiet fade-out with the distant sound of a train whistle echoing away"
+        }
+      ],
+      "words": 176,
+      "repetition": 0.0,
+      "unknown_speakers": [],
+      "attempts": 1,
+      "continued": 0,
+      "seconds": 38.7,
+      "summary": "Die vier Figuren (Lena, Julia, Max und Tom) stehen vor einem geöffneten Schrank, in dem sich Chaos aus Geld und eine Photographie von Herrn Doktor Weber sowie ein scheinbar leerer Koffer befinden. Lena erkennt in der Photographie Affenriemen als Hinweis auf einen Lehrer, während Julia die Identität des abgebildeten Mannes bestätigt; Tom weist darauf hin, dass das Schnürband des Koffers nicht durchbohrt, sondern geknickt ist, was auf eine Täuschung hindeutet. Am Ende der Szene liegt der Koffer zwar leer, enthält aber laut Tom die Wahrheit über das Verbrechen, und Lena bestimmt, dass die Hitze ein Hinweis auf den Täter ist, der sie zurück zur Quelle des Verbrechens führt.",
+      "previous_text": "[ATMO: Der Rauch einer fast ausgegangenen Zigarette reckt sich schwül vor den glänzenden Metallkoffer | tobacco smoke coils in the stagnant air, distant rumble of summer heat]\n\nERZÄHLER: Die vier standen schwebend vor dem geöffneten Schrank. Das sterile Licht des Bahnhofs fiel auf die Chaos aus Papiergeld und einer einzigen, zerknitterten Photographie.\n\nLena (aufgeregt): Ein Foto von unserem Lehrer? Weil es ihm nach einer Kasse geht, sieht man die Affenriemen.\n\nJulia (ängstlich): Nein! Das ist unser Herr Doktor Weber! Er war ein guter Mann, der uns alle versorgt hat.\n\nMax (leicht überflüssig): Also? Ist das unser Koffer? Oder ist es nur ein Teil davon?\n\n[GERÄUSCH: Ein metallenes Rascheln, als etwas hart greift nach dem anderen Koffer | loud metallic scraping as something hard grabs the other case]\n\nTom (scharf): Achtet auf das Schnürband. Es ist nicht durchbohrt, sondern geknickt.\n\nERZÄHLER: Ein scharfer Knall fühlte sich an wie ein Schuss durch die Luft. Der Koffer war nicht selbst entworfen, sondern von einem anderen Koffer getrennt worden – eine Täuschung, die niemand erwartet hatte.\n\nJulia (erschrocken): Aber wo ist der Rest? Warum war das warm, wenn es leer ist?\n\nLena (entschieden): Weicht nicht zurück! Die Hitze war kein Zufall, sondern die Antwort auf das Kreuz.\n\nTom (ruhig): Und die Antwort führt uns zurück zur Quelle des Verbrechens, nicht zur Versicherung.\n\n[PAUSE: 1.0]\n\nERZÄHLER: Der Scharrstoff ist weg, und der Koffer liegt da, wie er es sein sollte – leer, aber voll von Wahrheiten, die sie nicht verstehen konnten.\n\n[MUSIK: Spannung | suspenseful string sting with a sudden drop to silence]\n\n[PAUSE: 2.0]\n\n[MUSIK: Abspann | quiet fade-out with the distant sound of a train whistle echoing away]"
+    }
+  ],
+  "words": 539,
+  "review": {
+    "problems": [
+      {
+        "szene": 1,
+        "problem": "Widerspruch zwischen Erzähler und Lena bezüglich der Anzahl und Beschaffenheit der Koffer.",
+        "korrektur": "In Szene 1 sagt der Erzähler: 'Ein alter Eichenkoffer lag neben einem anderen, doch dieser war kalte Grau.' (impliziert zwei Koffer). Lena sagt dann: 'Der ist nicht einfach grau... Er hat einen Schimmer.' und später 'Er ist Teil einer Serie. Das bedeutet, er war nicht da.' (impliziert, dass sie nur einen Koffer betrachtet, der sich von dem anderen unterscheidet). Die Logik ist verwirrt: Der Erzähler beschreibt zwei Koffer (Eichen + Grau), Lena identifiziert aber nur einen 'schimmernden' Koffer und behauptet, der andere sei nicht da. Es ist unklar, ob Lena den zweiten Koffer (den kalten Grau) ignoriert oder ob sie meint, der schimmernde Koffer sei der einzige relevante. Zudem wird in Szene 3 erwähnt, dass sie den Koffer von einem 'anderen Koffer' abtrennten, was in Szene 1 noch nicht thematisiert wurde."
+      },
+      {
+        "szene": 2,
+        "problem": "Logikfehler bei der Analyse von Tom und Julia bezüglich des Inhalts.",
+        "korrektur": "Tom behauptet: 'Keine chemische Reaktion von Kupferlacken? Dann nur Verbrennung von innerer Wärme.' Das ist physikalisch unsinnig in diesem Kontext. Wenn ein Koffer warm ist, ohne dass eine chemische Reaktion stattfindet, kann es nicht 'Verbrennung von innerer Wärme' sein. Zudem sagt Julia: 'Schwerin! Wir würden ihn nicht öffnen wollen.' (vermutlich 'Schwierig!'). Tom analysiert dann die Adresse als falsch, während Julia sagt: 'Doch es ist warm, wie beim Menschen.' Das widerspricht der vorherigen Aussage, dass es kein Lebewesen ist (Lena sagt 'Es ist ein Lebewesen'). Die Schlussfolgerung, dass die Adresse falsch ist, während der Koffer warm ist wie ein Mensch, ist widersprüchlich."
+      },
+      {
+        "szene": 3,
+        "problem": "Widerspruch zwischen der vorherigen Analyse und der eigentlichen Entdeckung.",
+        "korrektur": "In Szene 2 sagt Tom: 'Die Adresse ist falsch.' und Julia fragt: 'Aber wo ist der Rest? Warum war das warm, wenn es leer ist?'. In Szene 3 wird dann gesagt: 'Der Koffer war nicht selbst entworfen, sondern von einem anderen Koffer getrennt worden – eine Täuschung'. Das bedeutet, der Koffer war leer. Aber zuvor sagte Lena: 'Es ist nicht leer! Es ist ein Lebewesen, das wir gerade öffnen.' und Julia sagt: 'Das ist unser Herr Doktor Weber! Er war ein guter Mann'. Wenn der Koffer leer ist (nur Geld und Foto), dann war es kein Lebewesen. Die Aussage, dass der Koffer leer ist, widerspricht direkt der Aussage, dass sie ein Lebewesen öffneten. Zudem wird die Natur des 'verbotenen Medikaments' (aus der geplanten Auflösung) nie erwähnt, obwohl es zentral sein sollte."
+      },
+      {
+        "szene": 3,
+        "problem": "Unklare Identität des Doktors Weber.",
+        "korrektur": "Julia sagt: 'Das ist unser Herr Doktor Weber! Er war ein guter Mann, der uns alle versorgt hat.' In der geplanten Auflösung steht jedoch: 'Der Arzt war ein Verbrecher, der den Koffer versteckt hatte'. Es wird nicht erklärt, warum Julia ihn als 'guten Mann' bezeichnet, der sie versorgt hat, wenn er doch ein Verbrecher war. Es fehlt eine Erklärung für diesen Widerspruch in der Wahrnehmung."
+      },
+      {
+        "szene": 3,
+        "problem": "Widerspruch zur geplanten Auflösung bezüglich des Inhalts.",
+        "korrektur": "Die geplante Auflösung besagt, dass der Koffer ein verbotenes Medikament enthält. In Szene 3 wird jedoch beschrieben: 'Das sterile Licht des Bahnhofs fiel auf die Chaos aus Papiergeld und einer einzigen, zerknitterten Photographie.' Es wird nicht erwähnt, dass der Koffer Medikamente enthält, sondern nur Geld und ein Foto. Die Auflösung wird im Text nicht vorbereitet oder bestätigt."
+      }
+    ],
+    "revised": [
+      2,
+      3
+    ],
+    "seconds": 249.9
+  },
+  "estimated_minutes": 4.5,
+  "seconds": 620.7,
+  "llm": "mlx-community/Qwen3.5-4B-MLX-4bit",
+  "llm_stats": {
+    "prompt_tokens": 17844,
+    "completion_tokens": 8084,
+    "seconds": 620.3785152435303
+  },
+  "prompt": "Erstelle ein spannendes deutsches Jugendkrimi-Hörspiel, das im Sommer 1984 spielt. Vier Jugendliche geraten in einen mysteriösen Kriminalfall rund um einen verlassenen Bahnhof. Es gibt mehrere Verdächtige, humorvolle Dialoge, überraschende Wendungen und ein spannendes Finale. Die Produktion soll sich an der Atmosphäre klassischer deutscher Jugendkrimi-Hörspiele der 1980er-Jahre orientieren."
+}

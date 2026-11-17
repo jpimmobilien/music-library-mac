@@ -1,0 +1,47 @@
+Fetching 12 files:   0%|          | 0/12 [00:00<?, ?it/s]Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Fetching 12 files:   8%|▊         | 1/12 [00:00<00:02,  4.75it/s]Fetching 12 files:  50%|█████     | 6/12 [00:00<00:00, 22.63it/s]Fetching 12 files:  83%|████████▎ | 10/12 [00:00<00:00, 28.20it/s]Fetching 12 files:  92%|█████████▏| 11/12 [00:20<00:00, 28.20it/s]Fetching 12 files: 100%|██████████| 12/12 [00:27<00:00,  3.64s/it]Fetching 12 files: 100%|██████████| 12/12 [00:27<00:00,  2.32s/it]
+[transformers] You are using a model of type `qwen3_tts` to instantiate a model of type ``. This may be expected if you are loading a checkpoint that shares a subset of the architecture (e.g., loading a `sam2_video` checkpoint into `Sam2Model`), but is otherwise not supported and can yield errors. Please verify that the checkpoint is compatible with the model you are instantiating.
+  Initialized encoder codebooks
+Loaded speech tokenizer from /Users/runner/.cache/huggingface/hub/models--mlx-community--Qwen3-TTS-12Hz-1.7B-VoiceDesign-bf16/snapshots/7d3824abff87e49756bb0f83fb5411de75d160c4/speech_tokenizer
+[Probe] Qwen VoiceDesign geladen: {"seconds": 46.8, "repo": "mlx-community/Qwen3-TTS-12Hz-1.7B-VoiceDesign-bf16"}
+[Probe] Qwen VoiceDesign fertig: {"peak_mb": 6817.3}
+Fetching 12 files:   0%|          | 0/12 [00:00<?, ?it/s]Fetching 12 files:   8%|▊         | 1/12 [00:00<00:03,  3.54it/s]Fetching 12 files:  50%|█████     | 6/12 [00:00<00:00, 10.73it/s]Fetching 12 files:  92%|█████████▏| 11/12 [00:00<00:00, 17.74it/s]Fetching 12 files:  92%|█████████▏| 11/12 [00:11<00:00, 17.74it/s]Fetching 12 files: 100%|██████████| 12/12 [00:27<00:00,  3.74s/it]Fetching 12 files: 100%|██████████| 12/12 [00:27<00:00,  2.31s/it]
+[transformers] You are using a model of type `qwen3_tts` to instantiate a model of type ``. This may be expected if you are loading a checkpoint that shares a subset of the architecture (e.g., loading a `sam2_video` checkpoint into `Sam2Model`), but is otherwise not supported and can yield errors. Please verify that the checkpoint is compatible with the model you are instantiating.
+  Initialized encoder codebooks
+Loaded speech tokenizer from /Users/runner/.cache/huggingface/hub/models--mlx-community--Qwen3-TTS-12Hz-1.7B-Base-bf16/snapshots/a6eb4f68e4b056f1215157bb696209bc82a6db48/speech_tokenizer
+[Probe] Qwen Base geladen: {"seconds": 44.1, "repo": "mlx-community/Qwen3-TTS-12Hz-1.7B-Base-bf16"}
+[Probe] Qwen Base fertig: {"peak_mb": 7637.6}
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files:  20%|██        | 1/5 [00:00<00:01,  3.88it/s]Fetching 5 files: 100%|██████████| 5/5 [01:15<00:00, 16.12s/it]Fetching 5 files: 100%|██████████| 5/5 [01:15<00:00, 15.17s/it]
+[transformers] You are using a model of type `voxcpm2` to instantiate a model of type ``. This may be expected if you are loading a checkpoint that shares a subset of the architecture (e.g., loading a `sam2_video` checkpoint into `Sam2Model`), but is otherwise not supported and can yield errors. Please verify that the checkpoint is compatible with the model you are instantiating.
+[Probe] VoxCPM2 geladen: {"seconds": 86.1, "repo": "mlx-community/VoxCPM2-8bit"}
+[Probe] VoxCPM2 fertig: {"peak_mb": 5128.4}
+Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]Fetching 4 files:  25%|██▌       | 1/4 [00:00<00:00,  4.50it/s]Fetching 4 files: 100%|██████████| 4/4 [00:29<00:00,  7.86s/it]Fetching 4 files: 100%|██████████| 4/4 [00:29<00:00,  7.29s/it]
+pkuseg not available - Chinese segmentation will be skipped
+Loaded multilingual tokenizer (NFKD,fullcase preprocessing)
+Loading S3Tokenizer from mlx-community/S3TokenizerV2...
+Fetching 2 files:   0%|          | 0/2 [00:00<?, ?it/s]Fetching 2 files:  50%|█████     | 1/2 [00:00<00:00,  7.32it/s]Fetching 2 files: 100%|██████████| 2/2 [00:05<00:00,  3.06s/it]Fetching 2 files: 100%|██████████| 2/2 [00:05<00:00,  2.62s/it]
+Loaded S3Tokenizer weights
+Warning: conds.safetensors not found - ref_audio will be required
+[Probe] Chatterbox geladen: {"seconds": 46.9, "repo": "mlx-community/chatterbox-multilingual-v3"}
+[Probe] Chatterbox fertig: {"peak_mb": 4351.9}
+[Probe] Piper geladen: {"seconds": 0.6}
+[Probe] Prüfwerkzeuge geladen: {}
+Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]Fetching 4 files:  25%|██▌       | 1/4 [00:00<00:00,  6.79it/s]Fetching 4 files: 100%|██████████| 4/4 [00:12<00:00,  3.34s/it]Fetching 4 files: 100%|██████████| 4/4 [00:12<00:00,  3.10s/it]
+[Probe] Auswertung fertig: {}
+[Probe] TTS fertig
+     4413.31 real       711.18 user      1274.39 sys
+          3649290240  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             2701209  page reclaims
+               30268  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+               15321  messages sent
+             1454143  messages received
+                   0  signals received
+              812719  voluntary context switches
+             4677274  involuntary context switches
+          8374548352  peak memory footprint
