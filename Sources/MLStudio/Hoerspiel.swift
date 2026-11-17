@@ -280,6 +280,15 @@ public struct HSProduction: Codable, Identifiable, Sendable {
     public func state(_ step: HSStep) -> HSStepState { steps[step.rawValue] ?? .pending }
     public mutating func set(_ step: HSStep, _ state: HSStepState) { steps[step.rawValue] = state; modified = Date() }
 
+    /// Nach Abbruch, Fehler oder Neustart läuft kein Schritt mehr: „Läuft“ wird zu `state` („Offen“ bzw. „Fehler“).
+    /// „Fortsetzen“ macht dort weiter – fertige Schritte und schon gesprochene Zeilen bleiben erhalten.
+    @discardableResult
+    public mutating func settleInterrupted(as state: HSStepState = .pending) -> Bool {
+        let running = steps.filter { $0.value == .running }.map(\.key)
+        for k in running { steps[k] = state }
+        return !running.isEmpty
+    }
+
     public var spokenWords: Int { scenes.reduce(0) { $0 + $1.spokenWords } }
     /// Geschätzte Länge aus dem Text (Sprechtempo + Anteil Musik/Geräusche).
     public var estimatedMinutes: Double { Double(spokenWords) / (HSPlan.wordsPerMinute * HSPlan.speechShare) }

@@ -128,6 +128,8 @@ final class HoerspielModel: ObservableObject {
     /// Letzte Meldung eines Schritts, der übersprungen wurde (z. B. Musik ohne eingerichtete KI-Musik).
     @Published private(set) var notice: String?
     private var job: Task<Void, Never>?
+    /// Kennung des laufenden Ablaufs – ein abgebrochener, schon ersetzter Ablauf darf den neuen nicht beenden.
+    private var jobToken = UUID()
     private var idleTimer: Timer?
 
     @Published var unloadMinutes: Int {
@@ -325,6 +327,8 @@ final class HoerspielModel: ObservableObject {
         // (sonst zeigte der Editor „Keine Produktion“ bzw. stürzte über eine verschwundene Produktion ab)
         guard !demo else { return }
         productions = store.loadProductions()
+        // App während einer Produktion beendet: gespeichertes „Läuft“ ist überholt
+        if !isWorking { settleRunningSteps(.pending) }
         voices = store.loadVoices()
         references = store.loadReferences()
         sfxLibrary = store.loadSFX()
@@ -406,6 +410,15 @@ final class HoerspielModel: ObservableObject {
         engine?.shutdown()
         job = nil
         if isWorking { phase = .idle }
+        // Kein Schritt läuft mehr: „Läuft“ → „Offen“; „Fortsetzen“ macht dort weiter (fertige Zeilen bleiben)
+        settleRunningSteps(.pending)
+    }
+
+    /// Schritte, die nach Abbruch, Fehler oder Neustart der App noch als „Läuft“ gespeichert sind, richtigstellen.
+    func settleRunningSteps(_ state: HSStepState) {
+        for p in productions where p.steps.values.contains(.running) {
+            update(p.id) { $0.settleInterrupted(as: state) }
+        }
     }
 
     /// Einen Ablauf starten (immer nur einer zur Zeit). Fehler landen in `phase`.
@@ -418,14 +431,25 @@ final class HoerspielModel: ObservableObject {
         }
         notice = nil
         phase = .working(title: title, detail: "Rechenprozess startet …", progress: nil, started: Date())
+        let token = UUID()
+        jobToken = token
         job = Task { [weak self] in
             guard let self else { return }
+            let outcome: HSStepState
             do {
                 try await body(self, e)
-                self.phase = .idle
+                outcome = .pending
             } catch {
-                self.phase = StudioModel.isCancellation(error) || Task.isCancelled ? .idle : .failed(StudioModel.message(error))
+                // Abgebrochen und schon durch einen neuen Ablauf ersetzt: nichts mehr anfassen – sonst gälte der neue
+                // Ablauf als beendet und der Leerlauf-Zeitgeber beendete ihm den Rechenprozess.
+                guard self.jobToken == token else { return }
+                let cancelled = StudioModel.isCancellation(error) || Task.isCancelled
+                self.phase = cancelled ? .idle : .failed(StudioModel.message(error))
+                outcome = cancelled ? .pending : .failed
             }
+            guard self.jobToken == token else { return }
+            if case .working = self.phase { self.phase = .idle }
+            self.settleRunningSteps(outcome)
             self.job = nil
             self.scheduleIdleShutdown()
         }

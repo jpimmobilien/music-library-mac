@@ -75,10 +75,25 @@ public final class KIEngineClient: @unchecked Sendable {
         return process?.isRunning == true
     }
 
+    /// Prozess wird gerade beendet (abgebrochen oder schon beendet, aber noch nicht abgemeldet).
+    private var isShuttingDown: Bool {
+        lock.lock(); defer { lock.unlock() }
+        guard let p = process else { return false }
+        return cancelling || !p.isRunning
+    }
+
     // MARK: Starten und Beenden
 
     /// Startet den Prozess, falls er nicht läuft, und wartet auf „ready“.
     public func start() async throws {
+        // Ein eben beendeter Prozess (Abbrechen → sofort Fortsetzen) kann noch kurz laufen oder seine Abmeldung steht
+        // aus: abwarten, sonst gingen neue Anfragen an den sterbenden Prozess und endeten als „Abgebrochen“.
+        var waited = 0
+        while isShuttingDown, waited < 80 {
+            try await Task.sleep(nanoseconds: 100_000_000)
+            waited += 1
+        }
+        if isShuttingDown { throw ClientError.crashed("Der vorige KI-Prozess beendet sich noch – bitte gleich noch einmal versuchen.") }
         if isRunning { return }
         let p = Process()
         // -I: isoliert (keine Benutzer-Pfade, kein Arbeitsverzeichnis im Suchpfad), -u: ungepuffert

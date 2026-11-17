@@ -21,6 +21,26 @@ final class HoerspielTests: XCTestCase {
         XCTAssertEqual(HSPlan.targetWords(minutes: 10), 1190)
     }
 
+    func testInterruptedStepsAreSettled() throws {
+        var p = HSProduction(mode: .hoerbuch, title: "Abbruch", prompt: "x", targetMinutes: 5)
+        p.set(.story, .done)
+        p.set(.casting, .done)
+        p.set(.voices, .running)
+        XCTAssertTrue(p.settleInterrupted())
+        XCTAssertEqual(p.state(.voices), .pending, "nach Abbruch: Offen, Fortsetzen macht dort weiter")
+        XCTAssertEqual(p.state(.story), .done, "fertige Schritte bleiben fertig")
+        XCTAssertFalse(p.settleInterrupted(), "nichts mehr zu tun")
+        p.set(.mix, .running)
+        p.settleInterrupted(as: .failed)
+        XCTAssertEqual(p.state(.mix), .failed)
+        // gespeichertes „Läuft“ (App während der Produktion beendet) übersteht das Laden und wird dann richtiggestellt
+        p.set(.sfx, .running)
+        var loaded = try JSONDecoder().decode(HSProduction.self, from: JSONEncoder().encode(p))
+        XCTAssertEqual(loaded.state(.sfx), .running)
+        loaded.settleInterrupted()
+        XCTAssertEqual(loaded.state(.sfx), .pending)
+    }
+
     func testSceneVersionsKeepOldText() {
         var scene = HSScene(chapter: 1, number: 1, title: "Bahnhof",
                             items: [HSScriptItem(kind: .line, speaker: "LENA", text: "Hörst du das?")])

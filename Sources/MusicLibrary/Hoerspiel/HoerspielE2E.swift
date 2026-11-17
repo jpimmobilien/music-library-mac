@@ -8,7 +8,7 @@ import StudioEngine
 /// Abnahmeprüfung der KI-Hörbücher mit dem echten Ablauf der App (nur mit `--hoerspiel-e2e <ordner>`, Prüfstand):
 /// Einrichtung wie „Jetzt einrichten“, Hörspiel erstellen (Geschichte → Lektorat → Sprecher → Stimmen → Geräusche →
 /// Mischung), Editor-Funktionen (Replik neu formulieren und neu sprechen, Mehrspur ändern und neu abmischen), Export
-/// (MP3 mit Kapiteln, Kapitel, Szenen, Einzelspuren), Hörbuch, Stimmenstudio, Referenzanalyse. Alles in eigenen Ordnern unter
+/// (MP3 mit Kapiteln, Kapitel, Szenen, Einzelspuren), Hörbuch mit Abbrechen und Fortsetzen, Stimmenstudio, Referenzanalyse. Alles in eigenen Ordnern unter
 /// dem Ausgabeordner – Bibliothek und Nutzerdaten bleiben unberührt. Ergebnis: `e2e.json` und `e2e.log`.
 ///
 /// Umgebung: `HS_E2E_STORY` (Repo des Geschichtenmodells, Standard Qwen3.5 4B für kleine Prüfrechner),
@@ -168,15 +168,41 @@ enum HoerspielE2E {
             }
         }
 
-        // 6. Hörbuch (Erzähler, ohne Geräusche und Musik)
+        // 6. Hörbuch (Erzähler, ohne Geräusche und Musik) – mitten in „Stimmen erzeugen“ abbrechen wie mit dem Knopf und
+        //    sofort fortsetzen wie mit „Fortsetzen“ in „Meine Produktionen“
         t = Date()
         hs.drafts[.hoerbuch] = HoerspielModel.Draft(prompt: "Ein kurzes Märchen über eine Uhrmacherin, deren Uhren die Zeit anhalten können.",
                                                     minutes: 2, narration: "märchenhaft", useMusic: false, useSFX: false)
         hs.create(.hoerbuch)
+        await waitUntil(timeout: 3 * 3600) {
+            guard hs.isWorking else { return true }
+            guard let b = hs.productions.first(where: { $0.mode == .hoerbuch }) else { return false }
+            return b.state(.voices) == .running && !spokenLines(hs, b).isEmpty
+        }
+        var beforeAbort: [UUID: Date]? = nil
+        if hs.isWorking, let b = hs.productions.first(where: { $0.mode == .hoerbuch }) {
+            let ta = Date()
+            hs.cancel()
+            let after = hs.production(b.id) ?? b
+            beforeAbort = spokenLines(hs, after)
+            check("Abbrechen während „Stimmen erzeugen“", !hs.isWorking && !after.steps.values.contains(.running) && !after.linesNeedingVoice.isEmpty,
+                  "\(beforeAbort?.count ?? 0) Zeilen gesprochen, \(after.linesNeedingVoice.count) offen, Stimmen: \(HSFormat.state(after.state(.voices)))", since: ta)
+            hs.produce(b.id)
+        }
         await waitUntil(timeout: 3 * 3600) { !hs.isWorking }
         if let b = hs.productions.first(where: { $0.mode == .hoerbuch }) {
             check("Hörbuch erstellt", b.mix != nil && b.linesNeedingVoice.isEmpty,
                   "\(b.title): \(b.spokenWords) Wörter, \(String(format: "%.0f", b.mix?.duration ?? 0)) s\(phaseText(hs))", since: t)
+            if let before = beforeAbort {
+                // vor dem Abbruch gesprochene Zeilen dürfen nicht neu gesprochen werden (gleiche Datei, gleicher Zeitstempel)
+                let now = spokenLines(hs, b)
+                let kept = before.filter { now[$0.key] == $0.value }.count
+                check("Fortgesetzt nach Abbruch", b.mix != nil && b.linesNeedingVoice.isEmpty && kept == before.count && now.count > before.count,
+                      "\(kept) von \(before.count) Zeilen von vor dem Abbruch unverändert übernommen, \(now.count - before.count) danach gesprochen\(phaseText(hs))",
+                      since: t)
+            } else {
+                check("Fortgesetzt nach Abbruch", false, "Die Stimmen waren fertig, bevor abgebrochen werden konnte – nicht prüfbar", since: t)
+            }
         } else {
             check("Hörbuch erstellt", false, "\(hs.phase)", since: t)
         }
@@ -228,6 +254,20 @@ enum HoerspielE2E {
             }
         }
         return nil
+    }
+
+    /// Gesprochene Zeilen (Text unverändert seit dem Sprechen) mit Zeitstempel ihrer Datei.
+    private static func spokenLines(_ hs: HoerspielModel, _ p: HSProduction) -> [UUID: Date] {
+        var r: [UUID: Date] = [:]
+        for s in p.scenes {
+            for it in s.items where it.kind == .line {
+                guard let f = it.audioFile, it.audioFingerprint == p.fingerprint(of: it),
+                      let d = (try? FileManager.default.attributesOfItem(atPath: hs.file(f, in: p).path))?[.modificationDate] as? Date
+                else { continue }
+                r[it.id] = d
+            }
+        }
+        return r
     }
 
     private static func waitUntil(timeout: TimeInterval, _ done: @MainActor () -> Bool) async {

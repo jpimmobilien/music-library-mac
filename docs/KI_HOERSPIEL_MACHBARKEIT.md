@@ -72,7 +72,7 @@ Gemma 4 wurde gewählt, weil es unter den offenen Modellen dieser Größe das be
 (Q3_K_M) mit llama.cpp auf einem Linux-Rechner, weil dort genug Arbeitsspeicher frei ist – die 3-bit-Fassung ist
 etwas schwächer als die 4-bit-Fassung der App.
 
-### Stimmen (Sprachausgabe, mlx-audio 0.6.5)
+### Stimmen (Sprachausgabe, mlx-audio 0.6.6 – Qwen3-TTS-Teil unverändert gegenüber 0.6.5)
 
 | Modell | Größe | Lizenz | Deutsch | Ergebnis |
 |---|---|---|---|---|
@@ -315,11 +315,11 @@ bestehender Werke.
 
 | Phase | Inhalt | Stand |
 |---|---|---|
-| 1 Machbarkeit | Architektur, Modellvergleich, deutsche Sprachausgabe, Referenzanalyse, Stimmprofile, ≥4 Rollen, 10-Minuten-Hörspiel | Prüfstand fertig; Ergebnisse siehe „Messungen“ |
-| 2 Hörbuch | Erzähler, Erzählstile, Kapitel, eigene Aussprache, Sprache (DE/EN/FR/ES/IT) | umgesetzt, auf Linux getestet (Logik); App-Abnahme auf Apple Silicon ausstehend |
-| 3 Hörspiel | Mehrere Sprecher, Geräusche, Musik (KI-Musik), Raumklang, Ducking, Retro-Klang, Lektorat | umgesetzt; Produktion im Prüfstand, App-Abnahme ausstehend |
-| 4 Referenzanalyse | Sprecher, Rollen, Tonhöhe, Tempo, Pausen, Aufnahme-Charakter, Musikbrücken, Stilprofile | umgesetzt; Prüfung mit Wahrheitsdaten im Prüfstand |
-| 5 Studio | Mehrspur (Solo/Stumm/Pegel/Verschieben/Schneiden/Blenden, Einzelspuren), Export MP3/M4A/FLAC/WAV mit Kapiteln und Cover, Fortsetzen nach Abbruch | umgesetzt; Kapitelmarken und Datenmodell auf dem Mac getestet (134 Tests) |
+| 1 Machbarkeit | Architektur, Modellvergleich, deutsche Sprachausgabe, Referenzanalyse, Stimmprofile, ≥4 Rollen, 10-Minuten-Hörspiel | ✅ fertig; Ergebnisse siehe „Messungen“ |
+| 2 Hörbuch | Erzähler, Erzählstile, Kapitel, eigene Aussprache, Sprache (DE/EN/FR/ES/IT) | ✅ umgesetzt; App-Abnahme auf Apple Silicon (macOS 15.8 und 26.7): deutsches Hörbuch erzeugt. Andere Sprachen nur in der Logik getestet, nicht gehört |
+| 3 Hörspiel | Mehrere Sprecher, Geräusche, Musik (KI-Musik), Raumklang, Ducking, Retro-Klang, Lektorat | ✅ umgesetzt; App-Abnahme: Hörspiel mit Lektorat, 8–9 KI-Geräuschen, −16 LUFS, 3 Kapitelmarken. Musik über KI-Musik im 10-Minuten-Lauf des Prüfstands, nicht in der App-Abnahme |
+| 4 Referenzanalyse | Sprecher, Rollen, Tonhöhe, Tempo, Pausen, Aufnahme-Charakter, Musikbrücken, Stilprofile | ✅ umgesetzt; echte Sprecher 5/5 ohne Verwechslung, Einwilligungsschwelle kalibriert; in der App-Abnahme Analyse und Stilprofile |
+| 5 Studio | Mehrspur (Solo/Stumm/Pegel/Verschieben/Schneiden/Blenden, Einzelspuren), Export MP3/M4A/FLAC/WAV mit Kapiteln und Cover, Fortsetzen nach Abbruch | ✅ umgesetzt; App-Abnahme: Mehrspur geändert und neu abgemischt, Export ganz/Kapitel/Szenen/Einzelspuren. Fortsetzen nach Abbruch nur in Tests, nicht mit echtem Abbruch auf dem Mac |
 
 Die App-Abnahme (`--hoerspiel-e2e`) klickt denselben Code durch wie ein Nutzer: Einrichtung, Hörspiel, Lektorat,
 Replik neu formulieren und neu sprechen, Mehrspur ändern und neu abmischen, Export (ganz mit Kapiteln, Kapitel,
