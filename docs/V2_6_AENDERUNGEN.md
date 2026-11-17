@@ -58,7 +58,8 @@ ohne Cloud, Konto oder Kosten. Grundlage, Messungen und Lizenzen: [KI_HOERSPIEL_
 
 ## Geprüft
 
-App-Abnahme mit der gebauten App auf Apple Silicon (macOS 15.8 und 26.7, virtuelle M1): je **23 von 23**
+App-Abnahme mit der gebauten App auf Apple Silicon (macOS 15.8 und 26.7, virtuelle M1): je **25 von 25**
 Prüfungen – Einrichtung, Hörspiel mit Lektorat, Stimmen, Geräuschen und Kapiteln, Replik neu formulieren und neu
-sprechen, Mehrspur, alle Exporte, Hörbuch, Stimmenstudio, Referenzanalyse. Details und Grenzen:
+sprechen, Mehrspur, alle Exporte, Hörbuch mit Abbrechen mitten in „Stimmen erzeugen“ und Fortsetzen (fertige Zeilen
+bleiben unverändert), Stimmenstudio, Referenzanalyse. Details und Grenzen:
 [KI_HOERSPIEL_MACHBARKEIT.md](KI_HOERSPIEL_MACHBARKEIT.md) und [NICHT_UMGESETZT.md](NICHT_UMGESETZT.md).

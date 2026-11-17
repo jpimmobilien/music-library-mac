@@ -10,7 +10,7 @@ automatische Spracherkennung (Whisper). Der eigentliche Hörtest steht aus und i
 **Machbar – und in der App umgesetzt.** Auf Apple Silicon erzeugt die gebaute App ohne Netz und ohne Cloud ein
 vollständiges Hörspiel: Geschichte mit Lektorat, entworfene Stimmen, KI-Geräusche, Mischung mit Kapitelmarken und
 Export; dazu Hörbuch, Stimmenstudio, Referenzanalyse und Mehrspur-Editor. Abnahme auf macOS 15.8 und 26.7: je
-23 von 23 Prüfungen.
+25 von 25 Prüfungen, auch Abbrechen mitten in der Produktion und Fortsetzen.
 
 - **Sprache:** Qwen3-TTS (einmal entwerfen, dann jede Zeile klonen) – Whisper-Fehlerrate 1,3 %, Stimme über alle
   Zeilen konstant, keine Verwechslung von Figuren; Umlaute, Komposita und Zahlen korrekt. Bester der vier Kandidaten.
@@ -181,6 +181,20 @@ Wiederholung auf macOS 26.7 (17.11., 04:30): ebenfalls **23 von 23** – Hörspi
 schrieb eine ganze Szene mit dem Platzhalter „KENNUNG:“ aus der Formatbeschreibung statt mit Figuren – behoben
 (Formatbeschreibung ohne Platzhalter, solche Zeilen gelten als ungültig und die Szene wird neu geschrieben).
 
+Dritter Lauf mit Abbrechen und Fortsetzen (17.11., Commit `06e309a`, beide Rechner): **25 von 25** auf macOS 15.8
+und auf macOS 26.7. Neu geprüft: Das Hörbuch wird mitten in „Stimmen erzeugen“ abgebrochen wie mit dem Knopf
+„Abbrechen“ – macOS 15: 5 Zeilen fertig, 11 offen; macOS 26: 5 fertig, 21 offen; der Schritt steht danach auf
+„Offen“ statt „Läuft“ – und sofort fortgesetzt wie mit „Fortsetzen“: Alle 5 vorher gesprochenen Zeilen blieben
+unverändert (gleiche Datei, gleicher Zeitstempel), nur die offenen wurden gesprochen, das Hörbuch wurde fertig
+(428 Wörter / 2:35 min bzw. 729 Wörter / 4:45 min). Beim Einbau dieser Prüfung im Code gefunden und vorher behoben:
+Ein sofortiges Fortsetzen konnte an den sich gerade beendenden Rechenprozess geraten und lautlos als „Abgebrochen“
+enden; ein abgebrochener Ablauf konnte den neuen als beendet melden und ihm nach der Leerlaufzeit den Rechenprozess
+nehmen; nach Abbruch, Fehler oder Neustart der App blieb ein Schritt auf „Läuft“ stehen. Hörspiel in diesem Lauf:
+2:45 min mit 11 Geräuschen (−16,1 LUFS) bzw. 3:21 min mit 6 Geräuschen (−16,0 LUFS). Die Referenzanalyse der eigenen
+Produktion fand 3 bzw. 2 statt 4 Stimmen – KI-Stimmen sind schwer zu trennen (siehe Referenzanalyse). Das kleine
+Geschichtenmodell (Qwen3.5 4B) macht weiter sprachliche Fehler (Titel „Der Funke im Schiene“); deshalb wählt die App
+ab 32 GB Gemma 4.
+
 Die Zeiten stammen vom virtuellen M1 mit 3 Kernen und dem kleinen Geschichtenmodell; auf dem M5 Pro mit Gemma 4
 sind sie nicht gemessen. Musik (KI-Musik) war in diesem Lauf nicht eingerichtet und wurde mit Hinweis übersprungen.
 
@@ -319,7 +333,7 @@ bestehender Werke.
 | 2 Hörbuch | Erzähler, Erzählstile, Kapitel, eigene Aussprache, Sprache (DE/EN/FR/ES/IT) | ✅ umgesetzt; App-Abnahme auf Apple Silicon (macOS 15.8 und 26.7): deutsches Hörbuch erzeugt. Andere Sprachen nur in der Logik getestet, nicht gehört |
 | 3 Hörspiel | Mehrere Sprecher, Geräusche, Musik (KI-Musik), Raumklang, Ducking, Retro-Klang, Lektorat | ✅ umgesetzt; App-Abnahme: Hörspiel mit Lektorat, 8–9 KI-Geräuschen, −16 LUFS, 3 Kapitelmarken. Musik über KI-Musik im 10-Minuten-Lauf des Prüfstands, nicht in der App-Abnahme |
 | 4 Referenzanalyse | Sprecher, Rollen, Tonhöhe, Tempo, Pausen, Aufnahme-Charakter, Musikbrücken, Stilprofile | ✅ umgesetzt; echte Sprecher 5/5 ohne Verwechslung, Einwilligungsschwelle kalibriert; in der App-Abnahme Analyse und Stilprofile |
-| 5 Studio | Mehrspur (Solo/Stumm/Pegel/Verschieben/Schneiden/Blenden, Einzelspuren), Export MP3/M4A/FLAC/WAV mit Kapiteln und Cover, Fortsetzen nach Abbruch | ✅ umgesetzt; App-Abnahme: Mehrspur geändert und neu abgemischt, Export ganz/Kapitel/Szenen/Einzelspuren. Fortsetzen nach Abbruch nur in Tests, nicht mit echtem Abbruch auf dem Mac |
+| 5 Studio | Mehrspur (Solo/Stumm/Pegel/Verschieben/Schneiden/Blenden, Einzelspuren), Export MP3/M4A/FLAC/WAV mit Kapiteln und Cover, Fortsetzen nach Abbruch | ✅ umgesetzt; App-Abnahme: Mehrspur geändert und neu abgemischt, Export ganz/Kapitel/Szenen/Einzelspuren; Abbrechen mitten in „Stimmen erzeugen“ und Fortsetzen ohne erneutes Sprechen fertiger Zeilen. Nicht geprüft: Beenden der App mitten in der Produktion (nur im Test der Daten) |
 
 Die App-Abnahme (`--hoerspiel-e2e`) klickt denselben Code durch wie ein Nutzer: Einrichtung, Hörspiel, Lektorat,
 Replik neu formulieren und neu sprechen, Mehrspur ändern und neu abmischen, Export (ganz mit Kapiteln, Kapitel,
