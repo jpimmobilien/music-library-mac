@@ -1,0 +1,1133 @@
+{
+  "environment": {
+    "python": "3.12.10",
+    "machine": "arm64",
+    "system": "Darwin",
+    "macos": "26.7.2",
+    "ram_gb": 7.0,
+    "cpu": "Apple M1 (Virtual)",
+    "cores": 3,
+    "mlx": "?",
+    "mlx_audio": "?",
+    "mlx_whisper": "0.4.3",
+    "mlx_device": "Device(gpu, 0)"
+  },
+  "steps": [
+    {
+      "name": "Drehbuch geladen",
+      "time": "23:35:16",
+      "title": "Der Schatten am Gleis 4",
+      "scenes": 6,
+      "lines": 90,
+      "figures": [
+        "ERZÄHLER",
+        "BEN",
+        "SARA",
+        "TOBI",
+        "LENA",
+        "HERRKRAUSE",
+        "FRAUMEYER"
+      ],
+      "words": 1062
+    },
+    {
+      "name": "Stimmen entworfen",
+      "time": "23:42:29",
+      "seconds": 432.5,
+      "peak_mb": 6846.1,
+      "voices": {
+        "ERZÄHLER": {
+          "ref_text": "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+          "instruct": "45, male, low pitch, calm and storytelling, medium tempo, mysterious. Speaks native German with clear, natural pronunciation.",
+          "seconds": 78.4,
+          "duration": 7.9,
+          "kind": "entworfen",
+          "source": "Qwen3-TTS VoiceDesign"
+        },
+        "BEN": {
+          "ref_text": "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+          "instruct": "14, male, medium pitch, confident and energetic, fast tempo, leadership quality. Speaks native German with clear, natural pronunciation.",
+          "seconds": 47.7,
+          "duration": 6.7,
+          "kind": "entworfen",
+          "source": "Qwen3-TTS VoiceDesign"
+        },
+        "SARA": {
+          "ref_text": "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+          "instruct": "14, female, high pitch, intelligent and analytical, fast tempo, sharp. Speaks native German with clear, natural pronunciation.",
+          "seconds": 42.7,
+          "duration": 7.64,
+          "kind": "entworfen",
+          "source": "Qwen3-TTS VoiceDesign"
+        },
+        "TOBI": {
+          "ref_text": "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+          "instruct": "13, male, medium-high pitch, nervous and funny, medium tempo, slightly shaky. Speaks native German with clear, natural pronunciation.",
+          "seconds": 41.2,
+          "duration": 7.75,
+          "kind": "entworfen",
+          "source": "Qwen3-TTS VoiceDesign"
+        },
+        "LENA": {
+          "ref_text": "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+          "instruct": "15, female, medium pitch, brave and direct, medium tempo, strong. Speaks native German with clear, natural pronunciation.",
+          "seconds": 54.6,
+          "duration": 6.83,
+          "kind": "entworfen",
+          "source": "Qwen3-TTS VoiceDesign"
+        },
+        "HERRKRAUSE": {
+          "ref_text": "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+          "instruct": "60, male, very low pitch, gravelly and grumpy, slow tempo, intimidating. Speaks native German with clear, natural pronunciation.",
+          "seconds": 53.0,
+          "duration": 7.16,
+          "kind": "entworfen",
+          "source": "Qwen3-TTS VoiceDesign"
+        },
+        "FRAUMEYER": {
+          "ref_text": "Ich weiß nicht genau, was hier los ist. Aber eins ist sicher: Wir sollten vorsichtig sein und ganz genau hinschauen.",
+          "instruct": "50, female, medium-high pitch, breathless and nervous, fast tempo, suspicious. Speaks native German with clear, natural pronunciation.",
+          "seconds": 32.3,
+          "duration": 6.75,
+          "kind": "entworfen",
+          "source": "Qwen3-TTS VoiceDesign"
+        }
+      }
+    },
+    {
+      "name": "Zeilen gesprochen",
+      "time": "00:44:25",
+      "seconds": 3716.6,
+      "lines": 90,
+      "speech_seconds": 367.0,
+      "rtf": 10.13,
+      "peak_mb": 7732.3
+    },
+    {
+      "name": "Geräusche Fehler",
+      "time": "00:45:02",
+      "error": "ValueError('Model type stable_audio_3 not supported for music.')",
+      "trace": "Traceback (most recent call last):\n  File \"/Users/runner/work/_temp/hs/lib/python3.12/site-packages/mlx_audio/utils.py\", line 311, in get_model_class\n    arch = importlib.import_module(module_path)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/importlib/__init__.py\", line 90, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1324, in _find_and_load_unlocked\nModuleNotFoundError: No module named 'mlx_audio.music.models.stable_audio_3'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/Users/runner/work/music-library-mac/music-library-mac/scripts/hoerspiel/probe_produce.py\", line 72, in <module>\n    gen = P.SFXGenerator(os.path.join(OUT, \"geraeusche-bibliothek\"), log=log)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/runner/work/music-library-mac/music-library-mac/Resources/HoerspielEngine/hs_produce.py\", line 46, in __init__\n    self.model = load(self.repo)\n                 ^^^^^^^^^^^^^^^\n  File \"/Users/runner/work/_temp/hs/lib/python3.12/site-packages/mlx_audio/music/utils.py\", line 37, in load\n    return load_model(model_path, lazy=lazy, strict=strict, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/runner/work/_temp/hs/lib/python3.12/site-packages/mlx_audio/music/utils.py\", line 20, in load_model\n    return base_load_model(\n           ^^^^^^^^^^^^^^^^\n  File \"/Users/runner/work/_temp/hs/lib/python3.12/site-packages/mlx_audio/utils.py\", line 386, in base_load_model\n    model_class, model_type = get_model_class(\n                              ^^^^^^^^^^^^^^^^\n  File \"/Users/runner/work/_temp/hs/lib/python3.12/site-packages/mlx_audio/utils.py\", line 323, in get_model_class\n    raise ValueError(msg)\nValueError: Model type stable_audio_3 not supported for music.\n"
+    },
+    {
+      "name": "Musikplan",
+      "time": "00:45:02",
+      "cues": 12,
+      "pieces": {
+        "titel": 24,
+        "spannung": 20,
+        "uebergang": 12,
+        "abspann": 22
+      },
+      "captions": {
+        "titel": "memorable main title theme, driving synth bass, catchy lead melody, nostalgic synth-wave theme with a sense of mystery, instrumental, 1980s German radio drama score, analog synthesizer, warm tape sound, no vocals",
+        "spannung": "tense suspense underscore, pulsing low synth, mysterious, low tension strings building up, instrumental, 1980s German radio drama score, analog synthesizer, warm tape sound, no vocals",
+        "uebergang": "short scene transition sting, synth arpeggio, mysterious ambient music, instrumental, 1980s German radio drama score, analog synthesizer, warm tape sound, no vocals",
+        "abspann": "closing theme, reprise of the main title, upbeat, credits music, instrumental, 1980s German radio drama score, analog synthesizer, warm tape sound, no vocals"
+      }
+    },
+    {
+      "name": "Musikmodell geladen",
+      "time": "01:36:22",
+      "seconds": 3079.8
+    },
+    {
+      "name": "Musik titel",
+      "time": "01:44:05",
+      "seconds": 462.0,
+      "duration": 24
+    },
+    {
+      "name": "Musik spannung",
+      "time": "01:51:27",
+      "seconds": 442.6,
+      "duration": 20
+    },
+    {
+      "name": "Musik uebergang",
+      "time": "01:57:51",
+      "seconds": 383.6,
+      "duration": 12
+    },
+    {
+      "name": "Musik abspann",
+      "time": "02:05:45",
+      "seconds": 474.6,
+      "duration": 22
+    },
+    {
+      "name": "Gemischt und exportiert",
+      "time": "02:07:31",
+      "seconds": 100.9,
+      "chapters": 6,
+      "metrics": {
+        "speech_to_background_db": 17.9,
+        "duration_s": 503.4,
+        "loudness_lufs": -16.0,
+        "peak_dbfs": -1.0
+      },
+      "mp3": "hoerspiel.mp3",
+      "total_seconds": 9134.8
+    },
+    {
+      "name": "Prüfung",
+      "time": "02:11:51",
+      "speakers": {
+        "ERZÄHLER": {
+          "lines": 13,
+          "wer_mean": 0.004,
+          "sim_own_ref_mean": 0.845,
+          "sim_own_ref_min": 0.801,
+          "closer_to_other_voice": 0
+        },
+        "BEN": {
+          "lines": 18,
+          "wer_mean": 0.022,
+          "sim_own_ref_mean": 0.769,
+          "sim_own_ref_min": 0.686,
+          "closer_to_other_voice": 0
+        },
+        "SARA": {
+          "lines": 14,
+          "wer_mean": 0.012,
+          "sim_own_ref_mean": 0.84,
+          "sim_own_ref_min": 0.795,
+          "closer_to_other_voice": 0
+        },
+        "TOBI": {
+          "lines": 15,
+          "wer_mean": 0.01,
+          "sim_own_ref_mean": 0.74,
+          "sim_own_ref_min": 0.552,
+          "closer_to_other_voice": 0
+        },
+        "LENA": {
+          "lines": 13,
+          "wer_mean": 0.013,
+          "sim_own_ref_mean": 0.765,
+          "sim_own_ref_min": 0.413,
+          "closer_to_other_voice": 0
+        },
+        "HERRKRAUSE": {
+          "lines": 9,
+          "wer_mean": 0.029,
+          "sim_own_ref_mean": 0.834,
+          "sim_own_ref_min": 0.753,
+          "closer_to_other_voice": 0
+        },
+        "FRAUMEYER": {
+          "lines": 8,
+          "wer_mean": 0.0,
+          "sim_own_ref_mean": 0.835,
+          "sim_own_ref_min": 0.702,
+          "closer_to_other_voice": 0
+        }
+      },
+      "wer_lines_mean": 0.013,
+      "wer_master": 0.014,
+      "master_transcript_excerpt": "Der Sommer 1984 überzog die Kleinstadt mit einer drückenden Hitze. Staub tanzte in der gleißenden Mittagssonne, während die Welt zwischen den Schienen zu flirren begann. Ich sag's euch, das war kein Gewitter. Das war kein Blitz, der so blau-weiß geleuchtet hat. Ben, physikalisch gesehen könnte es eine Reflexion gewesen sein. Vielleicht von einer alten Signallaterne? Oder mein Magen spielt mir Streiche. Ich hab so einen Hunger, ich könnte die Schienen fressen. Glaubt ihr ihm etwa nicht? Es war genau zwischen Gleis 3 und 4. Es hat geflüstert. Fast wie ein Summen. Genau das hab ich auch gehört. Mitten in der Nacht. Als wäre da jemand, der die Gleise bewacht. Ein mechanischer Defekt an den alten Relais? Das ist logischer als ein Geist auf dem Bahnhofsgelände. Seit wann bist du so ein Spielverderber, Sarah? Guck dir das Tor an. Es sieht aus, als würde es uns herausfordern. Können wir das Geheimnis nicht lieber aus der Entfernung mit einer Taschenlampe untersuchen? Also von Weitem? Keine Zeit für Angst, Tobi. Wir müssen wissen, was da unten im Schatten lauert. Die vier Freunde schlichen durch das rostrote Tor, während die Hitze des Sommertages langsam der kühlen Nacht wich. Leute, hört ihr das? Das klingt, als würden die Gleise selbst atmen. Das ist nur der Wind, Tobi. Bleib konzentriert. Schaut mal da drüben, in dem alten Güterschuppen. Da flackert was. Das muss das blaue Leuchten sein. Kommt näher, aber ganz vorsichtig. Vorsichtig drängten sie in die Bahnhofshalle, wo der Geruch "
+    }
+  ],
+  "lines": [
+    {
+      "key": "s01_001",
+      "speaker": "ERZÄHLER",
+      "wer": 0.0,
+      "hyp": "Der Sommer 1984 überzog die Kleinstadt mit einer drückenden Hitze. Staub tanzte in der gleißenden Mittagssonne, während die Welt zwischen den Schienen zu flirren begann.",
+      "text": "Der Sommer 1984 überzog die Kleinstadt mit einer drückenden Hitze. Staub tanzte in der gleißenden Mittagssonne, während die Welt zwischen den Schienen zu flirren begann.",
+      "duration": 11.87,
+      "sim_own_ref": 0.865,
+      "sim_best_other": 0.539
+    },
+    {
+      "key": "s01_003",
+      "speaker": "BEN",
+      "wer": 0.0,
+      "hyp": "Ich sag's euch, das war kein Gewitter. Das war kein Blitz, der so blau-weiß geleuchtet hat.",
+      "text": "Ich sag’s euch, das war kein Gewitter! Das war kein Blitz, der so blau-weiß geleuchtet hat.",
+      "duration": 5.48,
+      "sim_own_ref": 0.784,
+      "sim_best_other": 0.488
+    },
+    {
+      "key": "s01_004",
+      "speaker": "SARA",
+      "wer": 0.071,
+      "hyp": "Ben, physikalisch gesehen könnte es eine Reflexion gewesen sein. Vielleicht von einer alten Signallaterne?",
+      "text": "Ben, physikalisch gesehen könnte es eine Reflektion gewesen sein. Vielleicht von einer alten Signallaterne?",
+      "duration": 6.92,
+      "sim_own_ref": 0.837,
+      "sim_best_other": 0.819
+    },
+    {
+      "key": "s01_005",
+      "speaker": "TOBI",
+      "wer": 0.062,
+      "hyp": "Oder mein Magen spielt mir Streiche. Ich habe so einen Hunger, ich könnte die Schienen fressen.",
+      "text": "Oder mein Magen spielt mir Streiche. Ich hab so einen Hunger, ich könnte die Schienen fressen.",
+      "duration": 4.6,
+      "sim_own_ref": 0.817,
+      "sim_best_other": 0.457
+    },
+    {
+      "key": "s01_006",
+      "speaker": "LENA",
+      "wer": 0.0,
+      "hyp": "Glaubt ihr ihm etwa nicht? Es war genau zwischen Gleis 3 und 4. Es hat geflüstert. Fast wie ein Summen.",
+      "text": "Glaubt ihr ihm etwa nicht? Es war genau zwischen Gleis 3 und 4. Es hat... geflüstert. Fast wie ein Summen.",
+      "duration": 6.92,
+      "sim_own_ref": 0.867,
+      "sim_best_other": 0.78
+    },
+    {
+      "key": "s01_008",
+      "speaker": "BEN",
+      "wer": 0.056,
+      "hyp": "Genau das habe ich auch gehört. Mitten in der Nacht. Als wäre da jemand, der die Gleise bewacht.",
+      "text": "Genau das hab ich auch gehört. Mitten in der Nacht. Als wäre da jemand, der die Gleise bewacht.",
+      "duration": 5.11,
+      "sim_own_ref": 0.819,
+      "sim_best_other": 0.449
+    },
+    {
+      "key": "s01_009",
+      "speaker": "SARA",
+      "wer": 0.0,
+      "hyp": "Ein mechanischer Defekt an den alten Relais? Das ist logischer als ein Geist auf dem Bahnhofsgelände.",
+      "text": "Ein mechanischer Defekt an den alten Relais? Das ist logischer als ein Geist auf dem Bahnhofsgelände.",
+      "duration": 5.37,
+      "sim_own_ref": 0.888,
+      "sim_best_other": 0.758
+    },
+    {
+      "key": "s01_010",
+      "speaker": "LENA",
+      "wer": 0.048,
+      "hyp": "Seit wann bist du so ein Spielverderber, Sarah? Guck dir das Tor an. Es sieht aus, als würde es uns herausfordern.",
+      "text": "Seit wann bist du so ein Spielverderber, Sara? Guck dir das Tor an. Es sieht aus, als würde es uns herausfordern.",
+      "duration": 6.24,
+      "sim_own_ref": 0.881,
+      "sim_best_other": 0.745
+    },
+    {
+      "key": "s01_011",
+      "speaker": "TOBI",
+      "wer": 0.0,
+      "hyp": "Können wir das Geheimnis nicht lieber aus der Entfernung mit einer Taschenlampe untersuchen? Also von weitem?",
+      "text": "Können wir das Geheimnis nicht lieber aus der Entfernung mit einer Taschenlampe untersuchen? Also, von weitem?",
+      "duration": 5.7,
+      "sim_own_ref": 0.813,
+      "sim_best_other": 0.399
+    },
+    {
+      "key": "s01_012",
+      "speaker": "BEN",
+      "wer": 0.0,
+      "hyp": "Keine Zeit für Angst, Tobi. Wir müssen wissen, was da unten im Schatten lauert.",
+      "text": "Keine Zeit für Angst, Tobi. Wir müssen wissen, was da unten im Schatten lauert.",
+      "duration": 4.07,
+      "sim_own_ref": 0.809,
+      "sim_best_other": 0.496
+    },
+    {
+      "key": "s02_001",
+      "speaker": "ERZÄHLER",
+      "wer": 0.0,
+      "hyp": "Die vier Freunde schlichen durch das rostrote Tor, während die Hitze des Sommertages langsam der kühlen Nacht wich.",
+      "text": "Die vier Freunde schlichen durch das rostrote Tor, während die Hitze des Sommertages langsam der kühlen Nacht wich.",
+      "duration": 6.46,
+      "sim_own_ref": 0.832,
+      "sim_best_other": 0.567
+    },
+    {
+      "key": "s02_003",
+      "speaker": "TOBI",
+      "wer": 0.0,
+      "hyp": "Leute, hört ihr das? Das klingt, als würden die Gleise selbst atmen.",
+      "text": "Leute, hört ihr das? Das klingt, als würden die Gleise selbst atmen.",
+      "duration": 4.12,
+      "sim_own_ref": 0.772,
+      "sim_best_other": 0.389
+    },
+    {
+      "key": "s02_004",
+      "speaker": "SARA",
+      "wer": 0.0,
+      "hyp": "Das ist nur der Wind, Tobi. Bleib konzentriert.",
+      "text": "Das ist nur der Wind, Tobi. Bleib konzentriert.",
+      "duration": 2.69,
+      "sim_own_ref": 0.85,
+      "sim_best_other": 0.744
+    },
+    {
+      "key": "s02_005",
+      "speaker": "LENA",
+      "wer": 0.0,
+      "hyp": "Schaut mal da drüben, in dem alten Güterschuppen. Da flackert was.",
+      "text": "Schaut mal da drüben! In dem alten Güterschuppen... da flackert was!",
+      "duration": 4.5,
+      "sim_own_ref": 0.781,
+      "sim_best_other": 0.642
+    },
+    {
+      "key": "s02_006",
+      "speaker": "BEN",
+      "wer": 0.0,
+      "hyp": "Das muss das blaue Leuchten sein. Kommt näher, aber ganz vorsichtig.",
+      "text": "Das muss das blaue Leuchten sein. Kommt näher, aber ganz vorsichtig.",
+      "duration": 3.88,
+      "sim_own_ref": 0.817,
+      "sim_best_other": 0.406
+    },
+    {
+      "key": "s02_008",
+      "speaker": "ERZÄHLER",
+      "wer": 0.0,
+      "hyp": "Vorsichtig drängten sie in die Bahnhofshalle, wo der Geruch von Öl und Staub schwer in der Luft hing.",
+      "text": "Vorsichtig drängten sie in die Bahnhofshalle, wo der Geruch von Öl und Staub schwer in der Luft hing.",
+      "duration": 5.68,
+      "sim_own_ref": 0.842,
+      "sim_best_other": 0.521
+    },
+    {
+      "key": "s02_009",
+      "speaker": "BEN",
+      "wer": 0.0,
+      "hyp": "Seht ihr das? Direkt hinter den alten Waggons.",
+      "text": "Seht ihr das? Direkt hinter den alten Waggons!",
+      "duration": 2.94,
+      "sim_own_ref": 0.783,
+      "sim_best_other": 0.445
+    },
+    {
+      "key": "s02_011",
+      "speaker": "HERRKRAUSE",
+      "wer": 0.0,
+      "hyp": "Was haben sie hier verloren?",
+      "text": "Was haben Sie hier verloren?!",
+      "duration": 1.32,
+      "sim_own_ref": 0.753,
+      "sim_best_other": 0.489
+    },
+    {
+      "key": "s02_013",
+      "speaker": "TOBI",
+      "wer": 0.0,
+      "hyp": "Ach du meine Güte!",
+      "text": "Ach du meine Güte!",
+      "duration": 1.21,
+      "sim_own_ref": 0.552,
+      "sim_best_other": 0.314
+    },
+    {
+      "key": "s02_014",
+      "speaker": "SARA",
+      "wer": 0.1,
+      "hyp": "Wir wollten nur nachsehen, ob alles in Ordnung ist.",
+      "text": "Wir... wir wollten nur nachsehen, ob alles in Ordnung ist.",
+      "duration": 3.6,
+      "sim_own_ref": 0.842,
+      "sim_best_other": 0.746
+    },
+    {
+      "key": "s02_015",
+      "speaker": "HERRKRAUSE",
+      "wer": 0.0,
+      "hyp": "In Ordnung ist hier gar nichts. Verschwindet sofort von meinem Gelände, bevor ich die Polizei rufe.",
+      "text": "In Ordnung ist hier gar nichts! Verschwindet sofort von meinem Gelände, bevor ich die Polizei rufe!",
+      "duration": 5.54,
+      "sim_own_ref": 0.857,
+      "sim_best_other": 0.487
+    },
+    {
+      "key": "s02_016",
+      "speaker": "LENA",
+      "wer": 0.0,
+      "hyp": "Wir haben doch nichts getan, Herr Krause. Wir waren nur neugierig.",
+      "text": "Wir haben doch nichts getan, Herr Krause. Wir waren nur neugierig.",
+      "duration": 3.37,
+      "sim_own_ref": 0.77,
+      "sim_best_other": 0.694
+    },
+    {
+      "key": "s02_017",
+      "speaker": "HERRKRAUSE",
+      "wer": 0.0,
+      "hyp": "Neugier ist der Anfang vom Ende, Kindchen. Verschwindet. Jetzt.",
+      "text": "Neugier ist der Anfang vom Ende, Kindchen. Verschwindet! Jetzt!",
+      "duration": 4.28,
+      "sim_own_ref": 0.862,
+      "sim_best_other": 0.517
+    },
+    {
+      "key": "s02_019",
+      "speaker": "BEN",
+      "wer": 0.0,
+      "hyp": "Kommt Leute, er lässt uns heute nicht mehr an unser Ziel.",
+      "text": "Kommt, Leute. Er lässt uns heute nicht mehr an unser Ziel.",
+      "duration": 2.67,
+      "sim_own_ref": 0.832,
+      "sim_best_other": 0.527
+    },
+    {
+      "key": "s02_021",
+      "speaker": "ERZÄHLER",
+      "wer": 0.0,
+      "hyp": "Die Gruppe eilte unter dem wütenden Blick des Wärters zurück zum Ausgang.",
+      "text": "Die Gruppe eilte unter dem wütenden Blick des Wärters zurück zum Ausgang.",
+      "duration": 3.95,
+      "sim_own_ref": 0.801,
+      "sim_best_other": 0.491
+    },
+    {
+      "key": "s02_022",
+      "speaker": "TOBI",
+      "wer": 0.0,
+      "hyp": "Mein Herz klopft bis zum Hals. Hat der Typ ein Gewehr?",
+      "text": "Mein Herz klopft bis zum Hals. Hat der Typ ein Gewehr?",
+      "duration": 3.63,
+      "sim_own_ref": 0.716,
+      "sim_best_other": 0.381
+    },
+    {
+      "key": "s02_023",
+      "speaker": "SARA",
+      "wer": 0.0,
+      "hyp": "Nein, aber er wirkt, als würde er etwas verbergen.",
+      "text": "Nein, aber er wirkt, als würde er etwas verbergen.",
+      "duration": 2.9,
+      "sim_own_ref": 0.8,
+      "sim_best_other": 0.672
+    },
+    {
+      "key": "s03_001",
+      "speaker": "ERZÄHLER",
+      "wer": 0.0,
+      "hyp": "Die vier Freunde kauerten im Schatten eines alten Güterschuppens, während der Atem des Wärters noch in der feuchten Nachtluft zu hängen schien.",
+      "text": "Die vier Freunde kauerten im Schatten eines alten Güterschuppens, während der Atem des Wärters noch in der feuchten Nachtluft zu hängen schien.",
+      "duration": 7.16,
+      "sim_own_ref": 0.853,
+      "sim_best_other": 0.512
+    },
+    {
+      "key": "s03_003",
+      "speaker": "LENA",
+      "wer": 0.0,
+      "hyp": "Wir müssen hier weg, bevor der Alte mit der Streife zurückkommt.",
+      "text": "Wir müssen hier weg, bevor der Alte mit der Streife zurückkommt.",
+      "duration": 2.81,
+      "sim_own_ref": 0.798,
+      "sim_best_other": 0.637
+    },
+    {
+      "key": "s03_004",
+      "speaker": "TOBI",
+      "wer": 0.0,
+      "hyp": "Ich bin dabei. Mein Magen fühlt sich an wie ein verdrehter Knoten.",
+      "text": "Ich bin dabei! Mein Magen fühlt sich an wie ein verdrehter Knoten.",
+      "duration": 3.94,
+      "sim_own_ref": 0.722,
+      "sim_best_other": 0.397
+    },
+    {
+      "key": "s03_006",
+      "speaker": "TOBI",
+      "wer": 0.0,
+      "hyp": "Verdammt! Was ist das denn?",
+      "text": "Verdammt! Was ist das denn?",
+      "duration": 2.08,
+      "sim_own_ref": 0.639,
+      "sim_best_other": 0.369
+    },
+    {
+      "key": "s03_007",
+      "speaker": "BEN",
+      "wer": 0.0,
+      "hyp": "Tobi, pass doch auf, wo du hintrittst. Hast du dich verletzt?",
+      "text": "Tobi, pass doch auf, wo du hintrittst! Hast du dich verletzt?",
+      "duration": 3.31,
+      "sim_own_ref": 0.688,
+      "sim_best_other": 0.46
+    },
+    {
+      "key": "s03_008",
+      "speaker": "TOBI",
+      "wer": 0.0,
+      "hyp": "Nein, nein. Ich bin gegen etwas gestoßen. Etwas Hartes.",
+      "text": "Nein, nein... Ich bin gegen etwas gestoßen. Etwas Hartes.",
+      "duration": 4.09,
+      "sim_own_ref": 0.718,
+      "sim_best_other": 0.49
+    },
+    {
+      "key": "s03_010",
+      "speaker": "LENA",
+      "wer": 0.0,
+      "hyp": "Warte mal, das sieht aus wie eine Kante. Hilf mir mal kurz.",
+      "text": "Warte mal, das sieht aus wie eine Kante. Hilf mir mal kurz...",
+      "duration": 3.11,
+      "sim_own_ref": 0.878,
+      "sim_best_other": 0.72
+    },
+    {
+      "key": "s03_012",
+      "speaker": "ERZÄHLER",
+      "wer": 0.0,
+      "hyp": "Lena und Tobi knieten sich in den weichen Boden und schoben den Schlamm beiseite.",
+      "text": "Lena und Tobi knieten sich in den weichen Boden und schoben den Schlamm beiseite.",
+      "duration": 4.75,
+      "sim_own_ref": 0.87,
+      "sim_best_other": 0.558
+    },
+    {
+      "key": "s03_013",
+      "speaker": "SARA",
+      "wer": 0.0,
+      "hyp": "Seht euch das an. Es ist eine metallische Kiste.",
+      "text": "Seht euch das an. Es ist eine metallische Kiste.",
+      "duration": 2.99,
+      "sim_own_ref": 0.845,
+      "sim_best_other": 0.802
+    },
+    {
+      "key": "s03_014",
+      "speaker": "BEN",
+      "wer": 0.0,
+      "hyp": "Wahnsinn! Die muss schon ewig hier liegen!",
+      "text": "Wahnsinn. Die muss schon ewig hier liegen.",
+      "duration": 2.72,
+      "sim_own_ref": 0.76,
+      "sim_best_other": 0.55
+    },
+    {
+      "key": "s03_015",
+      "speaker": "SARA",
+      "wer": 0.0,
+      "hyp": "Schaut mal genau hin. Dieses Siegel auf dem Deckel. Das ist kein normaler Herstellerstempel. Das sieht fast wie ein Wappen aus.",
+      "text": "Schaut mal genau hin. Dieses Siegel auf dem Deckel... das ist kein normaler Herstellerstempel. Das sieht fast wie ein Wappen aus.",
+      "duration": 7.61,
+      "sim_own_ref": 0.878,
+      "sim_best_other": 0.77
+    },
+    {
+      "key": "s03_017",
+      "speaker": "BEN",
+      "wer": 0.0,
+      "hyp": "Wir müssen wissen, was drin ist. Lena, pack an!",
+      "text": "Wir müssen wissen, was drin ist. Lena, pack an!",
+      "duration": 2.86,
+      "sim_own_ref": 0.778,
+      "sim_best_other": 0.472
+    },
+    {
+      "key": "s03_019",
+      "speaker": "LENA",
+      "wer": 0.0,
+      "hyp": "Das Ding ist verdammt schwer. Tobi, auf der anderen Seite mit anpacken.",
+      "text": "Das Ding ist verdammt schwer. Tobi, auf der anderen Seite mit anpacken!",
+      "duration": 4.04,
+      "sim_own_ref": 0.826,
+      "sim_best_other": 0.694
+    },
+    {
+      "key": "s03_020",
+      "speaker": "TOBI",
+      "wer": 0.0,
+      "hyp": "Okay, okay. Eins, zwei und drei.",
+      "text": "Okay, okay... eins, zwei... und drei!",
+      "duration": 2.69,
+      "sim_own_ref": 0.661,
+      "sim_best_other": 0.446
+    },
+    {
+      "key": "s03_022",
+      "speaker": "SARA",
+      "wer": 0.0,
+      "hyp": "Das Siegel scheint aus Messing zu sein. Es wirkt fast unheimlich.",
+      "text": "Das Siegel scheint aus Messing zu sein. Es wirkt fast... unheimlich.",
+      "duration": 4.68,
+      "sim_own_ref": 0.847,
+      "sim_best_other": 0.761
+    },
+    {
+      "key": "s03_023",
+      "speaker": "BEN",
+      "wer": 0.0,
+      "hyp": "Schaut, das Schloss ist völlig verrostet.",
+      "text": "Schaut, das Schloss ist völlig verrostet.",
+      "duration": 2.52,
+      "sim_own_ref": 0.699,
+      "sim_best_other": 0.435
+    },
+    {
+      "key": "s04_001",
+      "speaker": "ERZÄHLER",
+      "wer": 0.0,
+      "hyp": "Im fahlen Mondlicht hockt die Gruppe über dem Fundstück, während das Metall der Kiste kalt an ihren Fingern klebt.",
+      "text": "Im fahlen Mondlicht hockt die Gruppe über dem Fundstück, während das Metall der Kiste kalt an ihren Fingern klebt.",
+      "duration": 6.1,
+      "sim_own_ref": 0.834,
+      "sim_best_other": 0.522
+    },
+    {
+      "key": "s04_002",
+      "speaker": "BEN",
+      "wer": 0.0,
+      "hyp": "Wenn wir das Schloss mit dem Taschenmesser aufhebeln,",
+      "text": "Wenn wir das Schloss mit dem Taschenmesser aufhebeln...",
+      "duration": 2.34,
+      "sim_own_ref": 0.782,
+      "sim_best_other": 0.492
+    },
+    {
+      "key": "s04_003",
+      "speaker": "SARA",
+      "wer": 0.0,
+      "hyp": "Vorsicht, Ben! Wir wissen nicht, was darin ist.",
+      "text": "Vorsicht, Ben! Wir wissen nicht, was darin ist.",
+      "duration": 3.1,
+      "sim_own_ref": 0.849,
+      "sim_best_other": 0.728
+    },
+    {
+      "key": "s04_004",
+      "speaker": "TOBI",
+      "wer": 0.0,
+      "hyp": "Vielleicht sind es alte Goldmünzen. Oder Schokolade aus den 50ern.",
+      "text": "Vielleicht sind es alte Goldmünzen! Oder Schokolade aus den 50ern!",
+      "duration": 4.06,
+      "sim_own_ref": 0.753,
+      "sim_best_other": 0.402
+    },
+    {
+      "key": "s04_005",
+      "speaker": "LENA",
+      "wer": 0.0,
+      "hyp": "Halt den Mund, Tobi. Wir müssen leise sein.",
+      "text": "Halt den Mund, Tobi. Wir müssen leise sein.",
+      "duration": 2.29,
+      "sim_own_ref": 0.796,
+      "sim_best_other": 0.694
+    },
+    {
+      "key": "s04_008",
+      "speaker": "FRAUMEYER",
+      "wer": 0.0,
+      "hyp": "Wer ist da? Wer wagt es, in dieser Nacht hier herumzuschleichen?",
+      "text": "Wer ist da? Wer wagt es, in dieser Nacht hier herumzuschleichen?",
+      "duration": 3.76,
+      "sim_own_ref": 0.876,
+      "sim_best_other": 0.773
+    },
+    {
+      "key": "s04_010",
+      "speaker": "BEN",
+      "wer": 0.167,
+      "hyp": "Oh, Entschuldigung, wir wollten nur...",
+      "text": "Oh! Entschuldigung, wir... wir wollten nur...",
+      "duration": 2.71,
+      "sim_own_ref": 0.686,
+      "sim_best_other": 0.463
+    },
+    {
+      "key": "s04_011",
+      "speaker": "FRAUMEYER",
+      "wer": 0.0,
+      "hyp": "Sie müssen sofort verschwinden. Das ist mein Grundstück. Ich suche nach... nach verlorenen Antiquitäten.",
+      "text": "Sie müssen sofort verschwinden! Das ist mein Grundstück! Ich suche nach... nach verlorenen Antiquitäten!",
+      "duration": 5.51,
+      "sim_own_ref": 0.901,
+      "sim_best_other": 0.785
+    },
+    {
+      "key": "s04_012",
+      "speaker": "SARA",
+      "wer": 0.0,
+      "hyp": "In der Dunkelheit? Und was ist das da im Schlamm?",
+      "text": "In der Dunkelheit? Und was ist das da im Schlamm?",
+      "duration": 3.07,
+      "sim_own_ref": 0.834,
+      "sim_best_other": 0.698
+    },
+    {
+      "key": "s04_013",
+      "speaker": "FRAUMEYER",
+      "wer": 0.0,
+      "hyp": "Nichts, nur alter Schrott. Gehen Sie weg, bevor ich die Polizei rufe.",
+      "text": "Nichts! Nur alter Schrott! Gehen Sie weg, bevor ich die Polizei rufe!",
+      "duration": 4.04,
+      "sim_own_ref": 0.827,
+      "sim_best_other": 0.77
+    },
+    {
+      "key": "s04_015",
+      "speaker": "LENA",
+      "wer": 0.125,
+      "hyp": "Warum zittern Ihre Hände so sehr, Frau Meier?",
+      "text": "Warum zittern Ihre Hände so sehr, Frau Meyer?",
+      "duration": 2.81,
+      "sim_own_ref": 0.773,
+      "sim_best_other": 0.618
+    },
+    {
+      "key": "s04_016",
+      "speaker": "FRAUMEYER",
+      "wer": 0.0,
+      "hyp": "Es ist der Wind. Gehen Sie einfach. Verschwinden Sie.",
+      "text": "Es ist der Wind! Gehen Sie einfach! Verschwinden Sie!",
+      "duration": 3.25,
+      "sim_own_ref": 0.87,
+      "sim_best_other": 0.741
+    },
+    {
+      "key": "s04_017",
+      "speaker": "ERZÄHLER",
+      "wer": 0.0,
+      "hyp": "Das Zittern in ihrer Stimme war lauter als das Knirschen des Kieses unter ihren Füßen.",
+      "text": "Das Zittern in ihrer Stimme war lauter als das Knirschen des Kieses unter ihren Füßen.",
+      "duration": 4.84,
+      "sim_own_ref": 0.845,
+      "sim_best_other": 0.559
+    },
+    {
+      "key": "s04_019",
+      "speaker": "BEN",
+      "wer": 0.0,
+      "hyp": "Leute, geht langsam zurück. Wir müssen wissen, was sie verheimlicht.",
+      "text": "Leute, geht langsam zurück. Wir müssen wissen, was sie verheimlicht.",
+      "duration": 3.4,
+      "sim_own_ref": 0.814,
+      "sim_best_other": 0.546
+    },
+    {
+      "key": "s04_020",
+      "speaker": "TOBI",
+      "wer": 0.0,
+      "hyp": "Ich glaube, die Polizei ist keine gute Idee.",
+      "text": "Ich glaube, die Polizei ist keine gute Idee...",
+      "duration": 2.55,
+      "sim_own_ref": 0.711,
+      "sim_best_other": 0.45
+    },
+    {
+      "key": "s04_021",
+      "speaker": "SARA",
+      "wer": 0.0,
+      "hyp": "Schaut mal, sie schaut ständig auf die Kiste.",
+      "text": "Schaut mal, sie schaut ständig auf die Kiste.",
+      "duration": 2.54,
+      "sim_own_ref": 0.795,
+      "sim_best_other": 0.753
+    },
+    {
+      "key": "s04_023",
+      "speaker": "FRAUMEYER",
+      "wer": 0.0,
+      "hyp": "Ich habe gesagt, verschwindet.",
+      "text": "Ich habe gesagt: Verschwindet!",
+      "duration": 2.09,
+      "sim_own_ref": 0.702,
+      "sim_best_other": 0.653
+    },
+    {
+      "key": "s04_024",
+      "speaker": "ERZÄHLER",
+      "wer": 0.0,
+      "hyp": "Die Nacht über dem Bahnhof wurde plötzlich viel zu schwer.",
+      "text": "Die Nacht über dem Bahnhof wurde plötzlich viel zu schwer.",
+      "duration": 2.81,
+      "sim_own_ref": 0.831,
+      "sim_best_other": 0.49
+    },
+    {
+      "key": "s05_001",
+      "speaker": "ERZÄHLER",
+      "wer": 0.05,
+      "hyp": "Die Neugier ist ein gefährlicher Kompass. Ben, Sarah, Tobi und Lena folgen der Spur bis tief unter das alte Bahnhofsgebäude.",
+      "text": "Die Neugier ist ein gefährlicher Kompass. Ben, Sara, Tobi und Lena folgen der Spur bis tief unter das alte Bahnhofsgebäude.",
+      "duration": 7.89,
+      "sim_own_ref": 0.875,
+      "sim_best_other": 0.553
+    },
+    {
+      "key": "s05_003",
+      "speaker": "BEN",
+      "wer": 0.0,
+      "hyp": "Ganz leise. Wenn wir erwischt werden, ist das hier das Ende.",
+      "text": "Ganz leise. Wenn wir erwischt werden, ist das hier das Ende.",
+      "duration": 3.53,
+      "sim_own_ref": 0.777,
+      "sim_best_other": 0.534
+    },
+    {
+      "key": "s05_004",
+      "speaker": "TOBI",
+      "wer": 0.0,
+      "hyp": "Können wir nicht einfach nach Hause gehen und eine Pizza bestellen? Mein Magen spielt verrückt.",
+      "text": "Können wir nicht einfach nach Hause gehen und eine Pizza bestellen? Mein Magen spielt verrückt.",
+      "duration": 4.38,
+      "sim_own_ref": 0.742,
+      "sim_best_other": 0.331
+    },
+    {
+      "key": "s05_005",
+      "speaker": "LENA",
+      "wer": 0.0,
+      "hyp": "Ruhe jetzt, Tobi. Schaut mal, da vorne brennt Licht.",
+      "text": "Ruhe jetzt, Tobi! Schaut mal, da vorne brennt Licht.",
+      "duration": 3.42,
+      "sim_own_ref": 0.606,
+      "sim_best_other": 0.462
+    },
+    {
+      "key": "s05_006",
+      "speaker": "SARA",
+      "wer": 0.0,
+      "hyp": "Das kommt aus dem alten Lagerkeller. Seht ihr das?",
+      "text": "Das kommt aus dem alten Lagerkeller. Seht ihr das?",
+      "duration": 2.96,
+      "sim_own_ref": 0.797,
+      "sim_best_other": 0.777
+    },
+    {
+      "key": "s05_008",
+      "speaker": "BEN",
+      "wer": 0.0,
+      "hyp": "Da ist jemand. Kommt, wir schleichen uns ran.",
+      "text": "Da ist jemand. Kommt, wir schleichen uns ran.",
+      "duration": 2.48,
+      "sim_own_ref": 0.78,
+      "sim_best_other": 0.429
+    },
+    {
+      "key": "s05_010",
+      "speaker": "ERZÄHLER",
+      "wer": 0.0,
+      "hyp": "Hinter einer Stapel alter Güterwagen entdecken Sie eine Gestalt im fahlen Licht einer einzigen Lampe.",
+      "text": "Hinter einer Stapel alter Güterwagen entdecken sie eine Gestalt im fahlen Licht einer einzigen Lampe.",
+      "duration": 5.96,
+      "sim_own_ref": 0.865,
+      "sim_best_other": 0.517
+    },
+    {
+      "key": "s05_012",
+      "speaker": "HERRKRAUSE",
+      "wer": 0.0,
+      "hyp": "Ich muss sie finden, bevor alles zu Staub zerfällt.",
+      "text": "Ich muss sie finden... bevor alles zu Staub zerfällt.",
+      "duration": 3.08,
+      "sim_own_ref": 0.854,
+      "sim_best_other": 0.508
+    },
+    {
+      "key": "s05_014",
+      "speaker": "LENA",
+      "wer": 0.0,
+      "hyp": "Herr Krause!",
+      "text": "Herr Krause!",
+      "duration": 0.83,
+      "sim_own_ref": 0.413,
+      "sim_best_other": 0.383
+    },
+    {
+      "key": "s05_016",
+      "speaker": "HERRKRAUSE",
+      "wer": 0.167,
+      "hyp": "Verdammt nochmal! Was macht ihr hier unten? Wollt ihr mich verhaften?",
+      "text": "Verdammt noch mal! Was macht ihr hier unten? Wollt ihr mich verhaften?",
+      "duration": 4.04,
+      "sim_own_ref": 0.753,
+      "sim_best_other": 0.48
+    },
+    {
+      "key": "s05_017",
+      "speaker": "BEN",
+      "wer": 0.0,
+      "hyp": "Wir wollten wissen, was Sie mit der Kiste vorhaben. Haben Sie sie gestohlen?",
+      "text": "Wir wollten wissen, was Sie mit der Kiste vorhaben. Haben Sie sie gestohlen?",
+      "duration": 3.29,
+      "sim_own_ref": 0.753,
+      "sim_best_other": 0.452
+    },
+    {
+      "key": "s05_018",
+      "speaker": "SARA",
+      "wer": 0.0,
+      "hyp": "Schaut euch das an. Er hält keine Beute in den Händen.",
+      "text": "Schaut euch das an. Er hält keine Beute in den Händen.",
+      "duration": 3.38,
+      "sim_own_ref": 0.842,
+      "sim_best_other": 0.74
+    },
+    {
+      "key": "s05_019",
+      "speaker": "HERRKRAUSE",
+      "wer": 0.0,
+      "hyp": "Es sind nur Erinnerungen, Kind, alte Briefe, Fotos von den Gleisen, wie sie früher waren.",
+      "text": "Es sind nur Erinnerungen, Kind. Alte Briefe... Fotos von den Gleisen, wie sie früher waren.",
+      "duration": 5.78,
+      "sim_own_ref": 0.867,
+      "sim_best_other": 0.502
+    },
+    {
+      "key": "s05_020",
+      "speaker": "TOBI",
+      "wer": 0.0,
+      "hyp": "Aber sie haben uns so gruselig angeschaut.",
+      "text": "Aber... Sie haben uns so gruselig angeschaut.",
+      "duration": 3.17,
+      "sim_own_ref": 0.8,
+      "sim_best_other": 0.387
+    },
+    {
+      "key": "s05_021",
+      "speaker": "HERRKRAUSE",
+      "wer": 0.0,
+      "hyp": "Manchmal bewahrt man Dinge besser auf, wenn man denkt, dass niemand sie sucht.",
+      "text": "Manchmal bewahrt man Dinge besser auf, wenn man denkt, dass niemand sie sucht.",
+      "duration": 4.47,
+      "sim_own_ref": 0.839,
+      "sim_best_other": 0.501
+    },
+    {
+      "key": "s06_001",
+      "speaker": "ERZÄHLER",
+      "wer": 0.0,
+      "hyp": "Die Stille im Keller wich einer unerwarteten Bewegung. Eine Gestalt trat aus dem Schatten der alten Gleise.",
+      "text": "Die Stille im Keller wich einer unerwarteten Bewegung. Eine Gestalt trat aus dem Schatten der alten Gleise.",
+      "duration": 6.25,
+      "sim_own_ref": 0.864,
+      "sim_best_other": 0.55
+    },
+    {
+      "key": "s06_003",
+      "speaker": "FRAUMEYER",
+      "wer": 0.0,
+      "hyp": "Herr Krause, haben Sie die Kinder entdeckt? Ich dachte, sie wären längst weg.",
+      "text": "Herr Krause! Haben Sie die Kinder entdeckt? Ich dachte, sie wären längst weg!",
+      "duration": 3.95,
+      "sim_own_ref": 0.793,
+      "sim_best_other": 0.786
+    },
+    {
+      "key": "s06_004",
+      "speaker": "BEN",
+      "wer": 0.167,
+      "hyp": "Frau Meier, Sie kennen den Wärter?",
+      "text": "Frau Meyer? Sie kennen den Wärter?",
+      "duration": 2.06,
+      "sim_own_ref": 0.77,
+      "sim_best_other": 0.461
+    },
+    {
+      "key": "s06_005",
+      "speaker": "SARA",
+      "wer": 0.0,
+      "hyp": "Das erklärt das alles. Die Geheimniskrämerei. Es war kein Verbrechen.",
+      "text": "Das erklärt das alles. Die Geheimniskrämerei... es war kein Verbrechen.",
+      "duration": 4.6,
+      "sim_own_ref": 0.858,
+      "sim_best_other": 0.779
+    },
+    {
+      "key": "s06_006",
+      "speaker": "FRAUMEYER",
+      "wer": 0.0,
+      "hyp": "Es ist kein Verbrechen, mein Kind. Es ist eine Pflicht. Der alte Bahnhofswärter war mein Onkel.",
+      "text": "Es ist kein Verbrechen, mein Kind. Es ist eine Pflicht. Der alte Bahnhofswärter war mein Onkel.",
+      "duration": 5.9,
+      "sim_own_ref": 0.883,
+      "sim_best_other": 0.79
+    },
+    {
+      "key": "s06_007",
+      "speaker": "LENA",
+      "wer": 0.0,
+      "hyp": "Und sie bewachen mit ihm diesen Ort?",
+      "text": "Und Sie bewachen mit ihm diesen Ort?",
+      "duration": 1.4,
+      "sim_own_ref": 0.772,
+      "sim_best_other": 0.624
+    },
+    {
+      "key": "s06_008",
+      "speaker": "HERRKRAUSE",
+      "wer": 0.0,
+      "hyp": "Wir bewahren nur das Erbe. Die Kiste enthält die Chronik dieser Stadt.",
+      "text": "Wir bewahren nur das Erbe. Die Kiste enthält die Chronik dieser Stadt.",
+      "duration": 3.98,
+      "sim_own_ref": 0.831,
+      "sim_best_other": 0.472
+    },
+    {
+      "key": "s06_009",
+      "speaker": "TOBI",
+      "wer": 0.083,
+      "hyp": "Aber das blaue Leuchten, das Summen, ich habe fast einen Herzinfarkt bekommen.",
+      "text": "Aber das blaue Leuchten? Das Summen? Ich hab fast einen Herzinfarkt bekommen!",
+      "duration": 4.36,
+      "sim_own_ref": 0.825,
+      "sim_best_other": 0.481
+    },
+    {
+      "key": "s06_011",
+      "speaker": "HERRKRAUSE",
+      "wer": 0.091,
+      "hyp": "Das war nur unsere Taschenlampe beim Polieren der alten Messingrelikte. Wir wollten nichts, was nach dem Krieg übrig blieb, verfallen lassen.",
+      "text": "Das war nur unsere Taschenlampe beim Polieren der alten Messing-Relikte. Wir wollten nichts, was nach dem Krieg übrig blieb, verfallen lassen.",
+      "duration": 7.25,
+      "sim_own_ref": 0.893,
+      "sim_best_other": 0.482
+    },
+    {
+      "key": "s06_013",
+      "speaker": "BEN",
+      "wer": 0.0,
+      "hyp": "Wir dachten, hier lauert etwas Schreckliches.",
+      "text": "Wir dachten, hier lauert etwas Schreckliches.",
+      "duration": 1.99,
+      "sim_own_ref": 0.713,
+      "sim_best_other": 0.376
+    },
+    {
+      "key": "s06_014",
+      "speaker": "FRAUMEYER",
+      "wer": 0.0,
+      "hyp": "Das einzige, was hier lauert, ist die Nostalgie.",
+      "text": "Das Einzige, was hier lauert, ist die Nostalgie.",
+      "duration": 2.27,
+      "sim_own_ref": 0.825,
+      "sim_best_other": 0.733
+    },
+    {
+      "key": "s06_015",
+      "speaker": "ERZÄHLER",
+      "wer": 0.0,
+      "hyp": "Die Angst wich der Neugier, als die vier Freunde begriffen, dass das größte Geheimnis der Stadt eigentlich ihre Geschichte war.",
+      "text": "Die Angst wich der Neugier, als die vier Freunde begriffen, dass das größte Geheimnis der Stadt eigentlich ihre Geschichte war.",
+      "duration": 6.59,
+      "sim_own_ref": 0.812,
+      "sim_best_other": 0.546
+    },
+    {
+      "key": "s06_019",
+      "speaker": "TOBI",
+      "wer": 0.0,
+      "hyp": "Also kein Monster und keine Geister? Ich hätte lieber ein echtes Abenteuer gehabt. Oder zumindest ein Sandwich.",
+      "text": "Also kein Monster und keine Geister? Ich hätte lieber ein echtes Abenteuer gehabt – oder zumindest ein Sandwich.",
+      "duration": 6.28,
+      "sim_own_ref": 0.86,
+      "sim_best_other": 0.433
+    },
+    {
+      "key": "s06_020",
+      "speaker": "LENA",
+      "wer": 0.0,
+      "hyp": "Du und dein Hunger, Tobi. Aber hey, die Kiste ist trotzdem cool.",
+      "text": "Du und dein Hunger, Tobi! Aber hey, die Kiste ist trotzdem cool.",
+      "duration": 3.81,
+      "sim_own_ref": 0.779,
+      "sim_best_other": 0.576
+    }
+  ]
+}

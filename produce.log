@@ -1,0 +1,166 @@
+[Probe] Drehbuch geladen: {"title": "Der Schatten am Gleis 4", "scenes": 6, "lines": 90, "words": 1062}
+Fetching 12 files:   0%|          | 0/12 [00:00<?, ?it/s]Fetching 12 files:   8%|▊         | 1/12 [00:00<00:02,  4.08it/s]Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Fetching 12 files:  17%|█▋        | 2/12 [00:00<00:01,  5.94it/s]Fetching 12 files:  25%|██▌       | 3/12 [00:00<00:01,  6.84it/s]Fetching 12 files:  42%|████▏     | 5/12 [00:00<00:00,  9.85it/s]Fetching 12 files:  75%|███████▌  | 9/12 [00:00<00:00, 18.21it/s]Fetching 12 files:  92%|█████████▏| 11/12 [00:20<00:00, 18.21it/s]Fetching 12 files: 100%|██████████| 12/12 [00:36<00:00,  4.74s/it]Fetching 12 files: 100%|██████████| 12/12 [00:36<00:00,  3.02s/it]
+[transformers] You are using a model of type `qwen3_tts` to instantiate a model of type ``. This may be expected if you are loading a checkpoint that shares a subset of the architecture (e.g., loading a `sam2_video` checkpoint into `Sam2Model`), but is otherwise not supported and can yield errors. Please verify that the checkpoint is compatible with the model you are instantiating.
+  Initialized encoder codebooks
+Loaded speech tokenizer from /Users/runner/.cache/huggingface/hub/models--mlx-community--Qwen3-TTS-12Hz-1.7B-VoiceDesign-bf16/snapshots/7d3824abff87e49756bb0f83fb5411de75d160c4/speech_tokenizer
+[Stimmen] Design-Modell geladen (77.3 s)
+[Stimmen] ERZÄHLER: entworfen in 78.4 s – 45, male, low pitch, calm and storytelling, medium tempo, mysterious. Speaks native German with clear, natural pronunciation.
+[Stimmen] BEN: entworfen in 47.7 s – 14, male, medium pitch, confident and energetic, fast tempo, leadership quality. Speaks native German with clear, natural pronunciation.
+[Stimmen] SARA: entworfen in 42.7 s – 14, female, high pitch, intelligent and analytical, fast tempo, sharp. Speaks native German with clear, natural pronunciation.
+[Stimmen] TOBI: entworfen in 41.2 s – 13, male, medium-high pitch, nervous and funny, medium tempo, slightly shaky. Speaks native German with clear, natural pronunciation.
+[Stimmen] LENA: entworfen in 54.6 s – 15, female, medium pitch, brave and direct, medium tempo, strong. Speaks native German with clear, natural pronunciation.
+[Stimmen] HERRKRAUSE: entworfen in 53.0 s – 60, male, very low pitch, gravelly and grumpy, slow tempo, intimidating. Speaks native German with clear, natural pronunciation.
+[Stimmen] FRAUMEYER: entworfen in 32.3 s – 50, female, medium-high pitch, breathless and nervous, fast tempo, suspicious. Speaks native German with clear, natural pronunciation.
+[Probe] Stimmen entworfen: {"seconds": 432.5, "peak_mb": 6846.1}
+Fetching 12 files:   0%|          | 0/12 [00:00<?, ?it/s]Fetching 12 files:   8%|▊         | 1/12 [00:00<00:02,  4.10it/s]Fetching 12 files:  25%|██▌       | 3/12 [00:00<00:00,  9.69it/s]Fetching 12 files:  42%|████▏     | 5/12 [00:00<00:00, 11.87it/s]Fetching 12 files:  67%|██████▋   | 8/12 [00:00<00:00, 16.82it/s]Fetching 12 files:  92%|█████████▏| 11/12 [00:00<00:00, 10.98it/s]Fetching 12 files:  92%|█████████▏| 11/12 [00:13<00:00, 10.98it/s]Fetching 12 files: 100%|██████████| 12/12 [00:44<00:00,  7.40s/it]Fetching 12 files: 100%|██████████| 12/12 [00:44<00:00,  3.69s/it]
+[transformers] You are using a model of type `qwen3_tts` to instantiate a model of type ``. This may be expected if you are loading a checkpoint that shares a subset of the architecture (e.g., loading a `sam2_video` checkpoint into `Sam2Model`), but is otherwise not supported and can yield errors. Please verify that the checkpoint is compatible with the model you are instantiating.
+  Initialized encoder codebooks
+Loaded speech tokenizer from /Users/runner/.cache/huggingface/hub/models--mlx-community--Qwen3-TTS-12Hz-1.7B-Base-bf16/snapshots/a6eb4f68e4b056f1215157bb696209bc82a6db48/speech_tokenizer
+[Stimmen] Klon-Modell geladen (80.2 s)
+[Stimmen] Zeile 9 von 90
+[Stimmen] Zeile 18 von 90
+[Stimmen] Zeile 27 von 90
+[Stimmen] Zeile 36 von 90
+[Stimmen] Zeile 45 von 90
+[Stimmen] Zeile 54 von 90
+[Stimmen] Zeile 63 von 90
+[Stimmen] Zeile 72 von 90
+[Stimmen] Zeile 81 von 90
+[Stimmen] Zeile 90 von 90
+[Probe] Zeilen gesprochen: {"seconds": 3716.6, "lines": 90, "speech_seconds": 367.0, "rtf": 10.13, "peak_mb": 7732.3}
+Fetching 11 files:   0%|          | 0/11 [00:00<?, ?it/s]Fetching 11 files:   9%|▉         | 1/11 [00:00<00:02,  4.07it/s]Fetching 11 files:  18%|█▊        | 2/11 [00:00<00:01,  5.21it/s]Fetching 11 files:  36%|███▋      | 4/11 [00:00<00:00,  9.22it/s]Fetching 11 files:  55%|█████▍    | 6/11 [00:00<00:00,  9.72it/s]Fetching 11 files:  73%|███████▎  | 8/11 [00:02<00:00,  3.04it/s]Fetching 11 files:  82%|████████▏ | 9/11 [00:03<00:01,  1.71it/s]Fetching 11 files:  91%|█████████ | 10/11 [00:23<00:05,  5.17s/it]Fetching 11 files: 100%|██████████| 11/11 [00:36<00:00,  7.27s/it]Fetching 11 files: 100%|██████████| 11/11 [00:36<00:00,  3.31s/it]
+ERROR:root:Model type stable_audio_3 not supported for music.
+[Probe] Geräusche Fehler: {"error": "ValueError('Model type stable_audio_3 not supported for music.')", "trace": "Traceback (most recent call last):\n  File \"/Users/runner/work/_temp/hs/lib/python3.12/site-packages/mlx_audio/utils.py\", line 311, in get_model_class\n    arch = importlib.import_module(module_path)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/importlib/__init__.py\", line 90, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1324, in _find_and_load_unlocked\nModuleNotFoundError: No module named 'mlx_audio.music.models.stable_audio_3'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/Users/runner/work/music-library-mac/music-library-mac/scripts/hoerspiel/probe_produce.py\", line 72, in <module>\n    gen = P.SFXGenerator(os.path.join(OUT, \"geraeusche-bibliothek\"), log=log)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/runner/work/music-library-mac/music-library-mac/Resources/HoerspielEngine/hs_produce.py\", line 46, in __init__\n    self.model = load(self.repo)\n                 ^^^^^^^^^^^^^^^\n  File \"/Users/runner/work/_temp/hs/lib/python3.12/site-packages/mlx_audio/music/utils.py\", line 37, in load\n    return load_model(model_path, lazy=lazy, strict=strict, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/runner/work/_temp/hs/lib/python3.12/site-packages/mlx_audio/music/utils.py\", line 20, in load_model\n    return base_load_model(\n           ^^^^^^^^^^^^^^^^\n  File \"/Users/runner/work/_temp/hs/lib/python3.12/site-packages/mlx_audio/utils.py\", line 386, in base_load_model\n    model_class, model_type = get_model_class(\n                              ^^^^^^^^^^^^^^^^\n  File \"/Users/runner/work/_temp/hs/lib/python3.12/site-packages/mlx_audio/utils.py\", line 323, in get_model_class\n    raise ValueError(msg)\nValueError: Model type stable_audio_3 not supported for music.\n"}
+[Probe] Musikplan: {"cues": 12}
+[Probe] Musikmodell geladen: {"seconds": 3079.8}
+[Probe] Musik titel: {"seconds": 462.0, "duration": 24}
+[Probe] Musik spannung: {"seconds": 442.6, "duration": 20}
+[Probe] Musik uebergang: {"seconds": 383.6, "duration": 12}
+[Probe] Musik abspann: {"seconds": 474.6, "duration": 22}
+Python(48034) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(48254) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(48277) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(48423) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(48436) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(48454) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(48599) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(48612) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(48625) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+[Probe] Gemischt und exportiert: {"seconds": 100.9, "chapters": 6, "mp3": "hoerspiel.mp3", "total_seconds": 9134.8}
+Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]Fetching 4 files:  25%|██▌       | 1/4 [00:00<00:00,  6.08it/s]Fetching 4 files:  75%|███████▌  | 3/4 [00:00<00:00,  9.09it/s]Fetching 4 files: 100%|██████████| 4/4 [00:12<00:00,  4.16s/it]Fetching 4 files: 100%|██████████| 4/4 [00:12<00:00,  3.05s/it]
+[Probe] Prüfung: {"wer_lines_mean": 0.013, "wer_master": 0.014, "master_transcript_excerpt": "Der Sommer 1984 überzog die Kleinstadt mit einer drückenden Hitze. Staub tanzte in der gleißenden Mittagssonne, während die Welt zwischen den Schienen zu flirren begann. Ich sag's euch, das war kein Gewitter. Das war kein Blitz, der so blau-weiß geleuchtet hat. Ben, physikalisch gesehen könnte es eine Reflexion gewesen sein. Vielleicht von einer alten Signallaterne? Oder mein Magen spielt mir Streiche. Ich hab so einen Hunger, ich könnte die Schienen fressen. Glaubt ihr ihm etwa nicht? Es war genau zwischen Gleis 3 und 4. Es hat geflüstert. Fast wie ein Summen. Genau das hab ich auch gehört. Mitten in der Nacht. Als wäre da jemand, der die Gleise bewacht. Ein mechanischer Defekt an den alten Relais? Das ist logischer als ein Geist auf dem Bahnhofsgelände. Seit wann bist du so ein Spielverderber, Sarah? Guck dir das Tor an. Es sieht aus, als würde es uns herausfordern. Können wir das Geheimnis nicht lieber aus der Entfernung mit einer Taschenlampe untersuchen? Also von Weitem? Keine Zeit für Angst, Tobi. Wir müssen wissen, was da unten im Schatten lauert. Die vier Freunde schlichen durch das rostrote Tor, während die Hitze des Sommertages langsam der kühlen Nacht wich. Leute, hört ihr das? Das klingt, als würden die Gleise selbst atmen. Das ist nur der Wind, Tobi. Bleib konzentriert. Schaut mal da drüben, in dem alten Güterschuppen. Da flackert was. Das muss das blaue Leuchten sein. Kommt näher, aber ganz vorsichtig. Vorsichtig drängten sie in die Bahnhofshalle, wo der Geruch "}
+Python(52521) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52523) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52524) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52528) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52529) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52531) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52533) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52536) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52537) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52540) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52541) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52543) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52545) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52546) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52551) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52553) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52556) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52557) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52558) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52580) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52616) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52652) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52675) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52681) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52704) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52705) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52706) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52707) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52708) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52709) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52710) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52711) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52712) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52713) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52714) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52715) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52716) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52717) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52718) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52725) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52726) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52728) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52730) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52732) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52733) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52734) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52735) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52737) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52739) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52740) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52741) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52742) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52743) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52747) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52748) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52749) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52750) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52751) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52752) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52753) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52754) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52755) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52756) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52757) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52758) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52759) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52760) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52761) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52762) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52763) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52764) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52765) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52766) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52770) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52771) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52772) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52773) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52774) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52775) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52776) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52777) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52778) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52779) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52780) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52781) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52782) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52783) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52784) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52785) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52786) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52787) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52791) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52792) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52793) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52794) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52795) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(52796) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+[Probe] Produktion fertig
+     9414.66 real       851.06 user      2331.63 sys
+          5283020800  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+            44386048  page reclaims
+              728023  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+               17723  messages sent
+             6500494  messages received
+                   0  signals received
+             4926522  voluntary context switches
+             6282567  involuntary context switches
+          8485764032  peak memory footprint

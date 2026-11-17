@@ -1,0 +1,868 @@
+{
+  "chapters": [
+    {
+      "title": "Szene 1: Hitze und Abenteuerlust",
+      "start": 0.0
+    },
+    {
+      "title": "Szene 2: Der Schatten im Schuppen",
+      "start": 75.16
+    },
+    {
+      "title": "Szene 3: Ein verdächtiger Fund",
+      "start": 152.37
+    },
+    {
+      "title": "Szene 4: Die Begegnung mit Frau Meyer",
+      "start": 227.5
+    },
+    {
+      "title": "Szene 5: Die Wendung im Keller",
+      "start": 314.5
+    },
+    {
+      "title": "Szene 6: Das wahre Geheimnis",
+      "start": 386.36
+    }
+  ],
+  "clips": [
+    {
+      "id": "c0001",
+      "track": "Musik",
+      "start": 0.0,
+      "duration": 24.0,
+      "label": "Titel",
+      "gain_db": -3.0
+    },
+    {
+      "id": "c0012",
+      "track": "Musik",
+      "start": 73.861,
+      "duration": 20.0,
+      "label": "Spannung",
+      "gain_db": -12.0
+    },
+    {
+      "id": "c0026",
+      "track": "Musik",
+      "start": 130.442,
+      "duration": 20.0,
+      "label": "Spannung",
+      "gain_db": -12.0
+    },
+    {
+      "id": "c0031",
+      "track": "Musik",
+      "start": 145.667,
+      "duration": 12.0,
+      "label": "Übergang",
+      "gain_db": -4.0
+    },
+    {
+      "id": "c0033",
+      "track": "Musik",
+      "start": 159.527,
+      "duration": 20.0,
+      "label": "Spannung",
+      "gain_db": -12.0
+    },
+    {
+      "id": "c0049",
+      "track": "Musik",
+      "start": 220.798,
+      "duration": 12.0,
+      "label": "Übergang",
+      "gain_db": -4.0
+    },
+    {
+      "id": "c0055",
+      "track": "Musik",
+      "start": 247.277,
+      "duration": 12.0,
+      "label": "Übergang",
+      "gain_db": -4.0
+    },
+    {
+      "id": "c0064",
+      "track": "Musik",
+      "start": 286.719,
+      "duration": 12.0,
+      "label": "Übergang",
+      "gain_db": -4.0
+    },
+    {
+      "id": "c0070",
+      "track": "Musik",
+      "start": 308.001,
+      "duration": 12.0,
+      "label": "Übergang",
+      "gain_db": -5.0
+    },
+    {
+      "id": "c0077",
+      "track": "Musik",
+      "start": 341.225,
+      "duration": 20.0,
+      "label": "Spannung",
+      "gain_db": -12.0
+    },
+    {
+      "id": "c0087",
+      "track": "Musik",
+      "start": 379.858,
+      "duration": 12.0,
+      "label": "Übergang",
+      "gain_db": -5.0
+    },
+    {
+      "id": "c0100",
+      "track": "Musik",
+      "start": 442.301,
+      "duration": 12.0,
+      "label": "Übergang",
+      "gain_db": -4.0
+    },
+    {
+      "id": "c0101",
+      "track": "Musik",
+      "start": 448.401,
+      "duration": 22.0,
+      "label": "Abspann",
+      "gain_db": -3.0
+    },
+    {
+      "id": "c0104",
+      "track": "Musik",
+      "start": 480.873,
+      "duration": 22.0,
+      "label": "Abspann",
+      "gain_db": -3.0
+    },
+    {
+      "id": "c0002",
+      "track": "Erzähler",
+      "start": 8.0,
+      "duration": 11.868,
+      "label": "ERZÄHLER: Der Sommer 1984 überzog die Kleinstadt mit einer drückenden ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0013",
+      "track": "Erzähler",
+      "start": 75.161,
+      "duration": 6.465,
+      "label": "ERZÄHLER: Die vier Freunde schlichen durch das rostrote Tor, während d",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0018",
+      "track": "Erzähler",
+      "start": 99.053,
+      "duration": 5.679,
+      "label": "ERZÄHLER: Vorsichtig drängten sie in die Bahnhofshalle, wo der Geruch ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0028",
+      "track": "Erzähler",
+      "start": 134.061,
+      "duration": 3.948,
+      "label": "ERZÄHLER: Die Gruppe eilte unter dem wütenden Blick des Wärters zurück",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0032",
+      "track": "Erzähler",
+      "start": 152.367,
+      "duration": 7.16,
+      "label": "ERZÄHLER: Die vier Freunde kauerten im Schatten eines alten Güterschup",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0040",
+      "track": "Erzähler",
+      "start": 182.526,
+      "duration": 4.75,
+      "label": "ERZÄHLER: Lena und Tobi knieten sich in den weichen Boden und schoben ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0050",
+      "track": "Erzähler",
+      "start": 227.498,
+      "duration": 6.103,
+      "label": "ERZÄHLER: Im fahlen Mondlicht hockt die Gruppe über dem Fundstück, wäh",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0063",
+      "track": "Erzähler",
+      "start": 281.681,
+      "duration": 4.838,
+      "label": "ERZÄHLER: Das Zittern in ihrer Stimme war lauter als das Knirschen des",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0069",
+      "track": "Erzähler",
+      "start": 304.787,
+      "duration": 2.814,
+      "label": "ERZÄHLER: Die Nacht über dem Bahnhof wurde plötzlich viel zu schwer.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0071",
+      "track": "Erzähler",
+      "start": 314.501,
+      "duration": 7.888,
+      "label": "ERZÄHLER: Die Neugier ist ein gefährlicher Kompass. Ben, Sara, Tobi un",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0078",
+      "track": "Erzähler",
+      "start": 341.625,
+      "duration": 5.962,
+      "label": "ERZÄHLER: Hinter einer Stapel alter Güterwagen entdecken sie eine Gest",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0088",
+      "track": "Erzähler",
+      "start": 386.358,
+      "duration": 6.251,
+      "label": "ERZÄHLER: Die Stille im Keller wich einer unerwarteten Bewegung. Eine ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0099",
+      "track": "Erzähler",
+      "start": 435.509,
+      "duration": 6.592,
+      "label": "ERZÄHLER: Die Angst wich der Neugier, als die vier Freunde begriffen, ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0003",
+      "track": "Sprecher BEN",
+      "start": 20.418,
+      "duration": 5.48,
+      "label": "BEN: Ich sag’s euch, das war kein Gewitter! Das war kein Blitz, d",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0007",
+      "track": "Sprecher BEN",
+      "start": 45.854,
+      "duration": 5.106,
+      "label": "BEN: Genau das hab ich auch gehört. Mitten in der Nacht. Als wäre",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0011",
+      "track": "Sprecher BEN",
+      "start": 69.79,
+      "duration": 4.072,
+      "label": "BEN: Keine Zeit für Angst, Tobi. Wir müssen wissen, was da unten ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0017",
+      "track": "Sprecher BEN",
+      "start": 94.622,
+      "duration": 3.881,
+      "label": "BEN: Das muss das blaue Leuchten sein. Kommt näher, aber ganz vor",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0019",
+      "track": "Sprecher BEN",
+      "start": 105.282,
+      "duration": 2.938,
+      "label": "BEN: Seht ihr das? Direkt hinter den alten Waggons!",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0027",
+      "track": "Sprecher BEN",
+      "start": 130.842,
+      "duration": 2.669,
+      "label": "BEN: Kommt, Leute. Er lässt uns heute nicht mehr an unser Ziel.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0037",
+      "track": "Sprecher BEN",
+      "start": 169.749,
+      "duration": 3.31,
+      "label": "BEN: Tobi, pass doch auf, wo du hintrittst! Hast du dich verletzt",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0042",
+      "track": "Sprecher BEN",
+      "start": 191.198,
+      "duration": 2.715,
+      "label": "BEN: Wahnsinn. Die muss schon ewig hier liegen.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0044",
+      "track": "Sprecher BEN",
+      "start": 202.281,
+      "duration": 2.859,
+      "label": "BEN: Wir müssen wissen, was drin ist. Lena, pack an!",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0048",
+      "track": "Sprecher BEN",
+      "start": 218.075,
+      "duration": 2.523,
+      "label": "BEN: Schaut, das Schloss ist völlig verrostet.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0051",
+      "track": "Sprecher BEN",
+      "start": 234.151,
+      "duration": 2.337,
+      "label": "BEN: Wenn wir das Schloss mit dem Taschenmesser aufhebeln...",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0057",
+      "track": "Sprecher BEN",
+      "start": 257.833,
+      "duration": 2.714,
+      "label": "BEN: Oh! Entschuldigung, wir... wir wollten nur...",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0065",
+      "track": "Sprecher BEN",
+      "start": 292.519,
+      "duration": 3.397,
+      "label": "BEN: Leute, geht langsam zurück. Wir müssen wissen, was sie verhe",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0072",
+      "track": "Sprecher BEN",
+      "start": 322.939,
+      "duration": 3.529,
+      "label": "BEN: Ganz leise. Wenn wir erwischt werden, ist das hier das Ende.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0076",
+      "track": "Sprecher BEN",
+      "start": 338.746,
+      "duration": 2.479,
+      "label": "BEN: Da ist jemand. Kommt, wir schleichen uns ran.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0082",
+      "track": "Sprecher BEN",
+      "start": 357.845,
+      "duration": 3.293,
+      "label": "BEN: Wir wollten wissen, was Sie mit der Kiste vorhaben. Haben Si",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0090",
+      "track": "Sprecher BEN",
+      "start": 397.484,
+      "duration": 2.059,
+      "label": "BEN: Frau Meyer? Sie kennen den Wärter?",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0097",
+      "track": "Sprecher BEN",
+      "start": 430.318,
+      "duration": 1.989,
+      "label": "BEN: Wir dachten, hier lauert etwas Schreckliches.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0004",
+      "track": "Sprecher SARA",
+      "start": 26.278,
+      "duration": 6.92,
+      "label": "SARA: Ben, physikalisch gesehen könnte es eine Reflektion gewesen ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0008",
+      "track": "Sprecher SARA",
+      "start": 51.34,
+      "duration": 5.367,
+      "label": "SARA: Ein mechanischer Defekt an den alten Relais? Das ist logisch",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0015",
+      "track": "Sprecher SARA",
+      "start": 86.673,
+      "duration": 2.692,
+      "label": "SARA: Das ist nur der Wind, Tobi. Bleib konzentriert.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0022",
+      "track": "Sprecher SARA",
+      "start": 112.504,
+      "duration": 3.602,
+      "label": "SARA: Wir... wir wollten nur nachsehen, ob alles in Ordnung ist.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0030",
+      "track": "Sprecher SARA",
+      "start": 142.569,
+      "duration": 2.899,
+      "label": "SARA: Nein, aber er wirkt, als würde er etwas verbergen.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0041",
+      "track": "Sprecher SARA",
+      "start": 187.827,
+      "duration": 2.992,
+      "label": "SARA: Seht euch das an. Es ist eine metallische Kiste.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0043",
+      "track": "Sprecher SARA",
+      "start": 194.294,
+      "duration": 7.607,
+      "label": "SARA: Schaut mal genau hin. Dieses Siegel auf dem Deckel... das is",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0047",
+      "track": "Sprecher SARA",
+      "start": 213.011,
+      "duration": 4.684,
+      "label": "SARA: Das Siegel scheint aus Messing zu sein. Es wirkt fast... unh",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0052",
+      "track": "Sprecher SARA",
+      "start": 236.867,
+      "duration": 3.098,
+      "label": "SARA: Vorsicht, Ben! Wir wissen nicht, was darin ist.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0059",
+      "track": "Sprecher SARA",
+      "start": 266.821,
+      "duration": 3.068,
+      "label": "SARA: In der Dunkelheit? Und was ist das da im Schlamm?",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0067",
+      "track": "Sprecher SARA",
+      "start": 299.23,
+      "duration": 2.539,
+      "label": "SARA: Schaut mal, sie schaut ständig auf die Kiste.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0075",
+      "track": "Sprecher SARA",
+      "start": 335.405,
+      "duration": 2.961,
+      "label": "SARA: Das kommt aus dem alten Lagerkeller. Seht ihr das?",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0083",
+      "track": "Sprecher SARA",
+      "start": 361.518,
+      "duration": 3.382,
+      "label": "SARA: Schaut euch das an. Er hält keine Beute in den Händen.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0091",
+      "track": "Sprecher SARA",
+      "start": 399.923,
+      "duration": 4.602,
+      "label": "SARA: Das erklärt das alles. Die Geheimniskrämerei... es war kein ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0005",
+      "track": "Sprecher TOBI",
+      "start": 33.578,
+      "duration": 4.597,
+      "label": "TOBI: Oder mein Magen spielt mir Streiche. Ich hab so einen Hunger",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0010",
+      "track": "Sprecher TOBI",
+      "start": 63.708,
+      "duration": 5.702,
+      "label": "TOBI: Können wir das Geheimnis nicht lieber aus der Entfernung mit",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0014",
+      "track": "Sprecher TOBI",
+      "start": 82.176,
+      "duration": 4.117,
+      "label": "TOBI: Leute, hört ihr das? Das klingt, als würden die Gleise selbs",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0021",
+      "track": "Sprecher TOBI",
+      "start": 110.917,
+      "duration": 1.206,
+      "label": "TOBI: Ach du meine Güte!",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0029",
+      "track": "Sprecher TOBI",
+      "start": 138.559,
+      "duration": 3.629,
+      "label": "TOBI: Mein Herz klopft bis zum Hals. Hat der Typ ein Gewehr?",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0035",
+      "track": "Sprecher TOBI",
+      "start": 163.121,
+      "duration": 3.944,
+      "label": "TOBI: Ich bin dabei! Mein Magen fühlt sich an wie ein verdrehter K",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0036",
+      "track": "Sprecher TOBI",
+      "start": 167.285,
+      "duration": 2.085,
+      "label": "TOBI: Verdammt! Was ist das denn?",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0038",
+      "track": "Sprecher TOBI",
+      "start": 173.439,
+      "duration": 4.094,
+      "label": "TOBI: Nein, nein... Ich bin gegen etwas gestoßen. Etwas Hartes.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0046",
+      "track": "Sprecher TOBI",
+      "start": 209.944,
+      "duration": 2.687,
+      "label": "TOBI: Okay, okay... eins, zwei... und drei!",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0053",
+      "track": "Sprecher TOBI",
+      "start": 240.345,
+      "duration": 4.06,
+      "label": "TOBI: Vielleicht sind es alte Goldmünzen! Oder Schokolade aus den ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0066",
+      "track": "Sprecher TOBI",
+      "start": 296.296,
+      "duration": 2.554,
+      "label": "TOBI: Ich glaube, die Polizei ist keine gute Idee...",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0073",
+      "track": "Sprecher TOBI",
+      "start": 326.848,
+      "duration": 4.376,
+      "label": "TOBI: Können wir nicht einfach nach Hause gehen und eine Pizza bes",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0085",
+      "track": "Sprecher TOBI",
+      "start": 371.439,
+      "duration": 3.166,
+      "label": "TOBI: Aber... Sie haben uns so gruselig angeschaut.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0095",
+      "track": "Sprecher TOBI",
+      "start": 417.328,
+      "duration": 4.362,
+      "label": "TOBI: Aber das blaue Leuchten? Das Summen? Ich hab fast einen Herz",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0102",
+      "track": "Sprecher TOBI",
+      "start": 470.101,
+      "duration": 6.278,
+      "label": "TOBI: Also kein Monster und keine Geister? Ich hätte lieber ein ec",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0006",
+      "track": "Sprecher LENA",
+      "start": 38.555,
+      "duration": 6.92,
+      "label": "LENA: Glaubt ihr ihm etwa nicht? Es war genau zwischen Gleis 3 und",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0009",
+      "track": "Sprecher LENA",
+      "start": 57.088,
+      "duration": 6.24,
+      "label": "LENA: Seit wann bist du so ein Spielverderber, Sara? Guck dir das ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0016",
+      "track": "Sprecher LENA",
+      "start": 89.746,
+      "duration": 4.497,
+      "label": "LENA: Schaut mal da drüben! In dem alten Güterschuppen... da flack",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0024",
+      "track": "Sprecher LENA",
+      "start": 122.408,
+      "duration": 3.37,
+      "label": "LENA: Wir haben doch nichts getan, Herr Krause. Wir waren nur neug",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0034",
+      "track": "Sprecher LENA",
+      "start": 159.927,
+      "duration": 2.813,
+      "label": "LENA: Wir müssen hier weg, bevor der Alte mit der Streife zurückko",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0039",
+      "track": "Sprecher LENA",
+      "start": 177.913,
+      "duration": 3.114,
+      "label": "LENA: Warte mal, das sieht aus wie eine Kante. Hilf mir mal kurz..",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0045",
+      "track": "Sprecher LENA",
+      "start": 205.52,
+      "duration": 4.044,
+      "label": "LENA: Das Ding ist verdammt schwer. Tobi, auf der anderen Seite mi",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0054",
+      "track": "Sprecher LENA",
+      "start": 244.785,
+      "duration": 2.292,
+      "label": "LENA: Halt den Mund, Tobi. Wir müssen leise sein.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0061",
+      "track": "Sprecher LENA",
+      "start": 274.692,
+      "duration": 2.809,
+      "label": "LENA: Warum zittern Ihre Hände so sehr, Frau Meyer?",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0074",
+      "track": "Sprecher LENA",
+      "start": 331.603,
+      "duration": 3.422,
+      "label": "LENA: Ruhe jetzt, Tobi! Schaut mal, da vorne brennt Licht.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0080",
+      "track": "Sprecher LENA",
+      "start": 351.599,
+      "duration": 0.827,
+      "label": "LENA: Herr Krause!",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0093",
+      "track": "Sprecher LENA",
+      "start": 411.182,
+      "duration": 1.404,
+      "label": "LENA: Und Sie bewachen mit ihm diesen Ort?",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0103",
+      "track": "Sprecher LENA",
+      "start": 476.759,
+      "duration": 3.814,
+      "label": "LENA: Du und dein Hunger, Tobi! Aber hey, die Kiste ist trotzdem c",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0020",
+      "track": "Sprecher HERRKRAUSE",
+      "start": 108.6,
+      "duration": 1.317,
+      "label": "HERRKRAUSE: Was haben Sie hier verloren?!",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0023",
+      "track": "Sprecher HERRKRAUSE",
+      "start": 116.486,
+      "duration": 5.542,
+      "label": "HERRKRAUSE: In Ordnung ist hier gar nichts! Verschwindet sofort von mein",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0025",
+      "track": "Sprecher HERRKRAUSE",
+      "start": 126.158,
+      "duration": 4.284,
+      "label": "HERRKRAUSE: Neugier ist der Anfang vom Ende, Kindchen. Verschwindet! Jet",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0079",
+      "track": "Sprecher HERRKRAUSE",
+      "start": 348.137,
+      "duration": 3.082,
+      "label": "HERRKRAUSE: Ich muss sie finden... bevor alles zu Staub zerfällt.",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0081",
+      "track": "Sprecher HERRKRAUSE",
+      "start": 353.426,
+      "duration": 4.038,
+      "label": "HERRKRAUSE: Verdammt noch mal! Was macht ihr hier unten? Wollt ihr mich ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0084",
+      "track": "Sprecher HERRKRAUSE",
+      "start": 365.28,
+      "duration": 5.779,
+      "label": "HERRKRAUSE: Es sind nur Erinnerungen, Kind. Alte Briefe... Fotos von den",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0086",
+      "track": "Sprecher HERRKRAUSE",
+      "start": 374.985,
+      "duration": 4.473,
+      "label": "HERRKRAUSE: Manchmal bewahrt man Dinge besser auf, wenn man denkt, dass ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0094",
+      "track": "Sprecher HERRKRAUSE",
+      "start": 412.966,
+      "duration": 3.982,
+      "label": "HERRKRAUSE: Wir bewahren nur das Erbe. Die Kiste enthält die Chronik die",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0096",
+      "track": "Sprecher HERRKRAUSE",
+      "start": 422.07,
+      "duration": 7.248,
+      "label": "HERRKRAUSE: Das war nur unsere Taschenlampe beim Polieren der alten Mess",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0056",
+      "track": "Sprecher FRAUMEYER",
+      "start": 253.077,
+      "duration": 3.756,
+      "label": "FRAUMEYER: Wer ist da? Wer wagt es, in dieser Nacht hier herumzuschleic",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0058",
+      "track": "Sprecher FRAUMEYER",
+      "start": 260.927,
+      "duration": 5.514,
+      "label": "FRAUMEYER: Sie müssen sofort verschwinden! Das ist mein Grundstück! Ich",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0060",
+      "track": "Sprecher FRAUMEYER",
+      "start": 270.268,
+      "duration": 4.044,
+      "label": "FRAUMEYER: Nichts! Nur alter Schrott! Gehen Sie weg, bevor ich die Poli",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0062",
+      "track": "Sprecher FRAUMEYER",
+      "start": 277.881,
+      "duration": 3.25,
+      "label": "FRAUMEYER: Es ist der Wind! Gehen Sie einfach! Verschwinden Sie!",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0068",
+      "track": "Sprecher FRAUMEYER",
+      "start": 302.149,
+      "duration": 2.088,
+      "label": "FRAUMEYER: Ich habe gesagt: Verschwindet!",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0089",
+      "track": "Sprecher FRAUMEYER",
+      "start": 393.159,
+      "duration": 3.945,
+      "label": "FRAUMEYER: Herr Krause! Haben Sie die Kinder entdeckt? Ich dachte, sie ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0092",
+      "track": "Sprecher FRAUMEYER",
+      "start": 404.906,
+      "duration": 5.896,
+      "label": "FRAUMEYER: Es ist kein Verbrechen, mein Kind. Es ist eine Pflicht. Der ",
+      "gain_db": 0.0
+    },
+    {
+      "id": "c0098",
+      "track": "Sprecher FRAUMEYER",
+      "start": 432.687,
+      "duration": 2.271,
+      "label": "FRAUMEYER: Das Einzige, was hier lauert, ist die Nostalgie.",
+      "gain_db": 0.0
+    }
+  ],
+  "metrics": {
+    "speech_to_background_db": 17.9,
+    "duration_s": 503.4,
+    "loudness_lufs": -16.0,
+    "peak_dbfs": -1.0
+  }
+}

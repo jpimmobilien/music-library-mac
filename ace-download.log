@@ -1,0 +1,16 @@
+[32m2026-11-16 23:33:28.386[0m | [1mINFO    [0m | [36macestep.model_downloader[0m:[36m_smart_download[0m:[36m249[0m - [1m[Model Download] Auto-detected: HuggingFace Hub[0m
+[32m2026-11-16 23:33:28.386[0m | [1mINFO    [0m | [36macestep.model_downloader[0m:[36m_smart_download[0m:[36m252[0m - [1m[Model Download] Using HuggingFace Hub...[0m
+[32m2026-11-16 23:33:28.936[0m | [1mINFO    [0m | [36macestep.model_downloader[0m:[36m_download_from_huggingface_internal[0m:[36m180[0m - [1m[Model Download] Downloading from HuggingFace: ACE-Step/Ace-Step1.5 -> /Users/runner/work/_temp/checkpoints[0m
+Checkpoints directory: /Users/runner/work/_temp/checkpoints
+Downloading main model (includes vae, text encoder, DiT, and LM 1.7B)...
+Downloading main model from ACE-Step/Ace-Step1.5...
+Destination: /Users/runner/work/_temp/checkpoints
+This may take a while depending on your internet connection...
+Fetching 28 files:   0%|          | 0/28 [00:00<?, ?it/s]Fetching 28 files:   4%|▎         | 1/28 [00:00<00:13,  2.08it/s]Fetching 28 files:  18%|█▊        | 5/28 [00:00<00:02,  7.85it/s]Fetching 28 files:  21%|██▏       | 6/28 [01:32<07:50, 21.39s/it]Fetching 28 files:  82%|████████▏ | 23/28 [01:37<00:17,  3.46s/it]Fetching 28 files: 100%|██████████| 28/28 [01:37<00:00,  3.47s/it]
+[32m2026-11-16 23:35:06.326[0m | [34m[1mDEBUG   [0m | [36macestep.model_downloader[0m:[36m_sync_model_code_files[0m:[36m131[0m - [34m[1m[Model Sync] Synced modeling_acestep_v15_turbo.py -> /Users/runner/work/_temp/checkpoints/acestep-v15-turbo/modeling_acestep_v15_turbo.py[0m
+[32m2026-11-16 23:35:06.331[0m | [34m[1mDEBUG   [0m | [36macestep.model_downloader[0m:[36m_sync_model_code_files[0m:[36m131[0m - [34m[1m[Model Sync] Synced configuration_acestep_v15.py -> /Users/runner/work/_temp/checkpoints/acestep-v15-turbo/configuration_acestep_v15.py[0m
+[32m2026-11-16 23:35:06.332[0m | [1mINFO    [0m | [36macestep.model_downloader[0m:[36mdownload_main_model[0m:[36m489[0m - [1m[Model Download] Synced code files for acestep-v15-turbo: ['modeling_acestep_v15_turbo.py', 'configuration_acestep_v15.py'][0m
+Successfully downloaded from HuggingFace: ACE-Step/Ace-Step1.5
+
+Download complete!
+Models are available at: /Users/runner/work/_temp/checkpoints
