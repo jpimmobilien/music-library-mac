@@ -1,4 +1,20 @@
-# Einschränkungen und offene Punkte (Version 2.5)
+# Einschränkungen und offene Punkte (Version 2.6)
+
+## KI-Hörbücher & Hörspiele (2.6)
+
+| Punkt | Stand |
+|---|---|
+| **Nur Apple Silicon** | Wie KI-Musik: auf Intel-Macs nur ein Hinweis. |
+| **Geschwindigkeit auf dem M5 Pro** | Nicht gemessen. Geprüft auf virtuellen M1 (3 Kerne, 7 GB): Stimmen Echtzeitfaktor ~10, 10-Minuten-Hörspiel mit Musik 2½ h. Auf einem M5 Pro deutlich schneller, aber ungeprüft. |
+| **Gemma 4 in der App** | Auf den Prüfrechnern (7 GB) lief das kleine Modell (Qwen3.5 4B); Gemma 4 26B-A4B wurde als GGUF auf Linux geprüft (gutes Deutsch, Lektorat findet und behebt Logikfehler), in der App auf 48 GB nicht. |
+| **Klang** | Nicht gehört. Gemessen: Whisper-Fehlerrate 1,3–1,4 %, Stimmen über Zeilen konstant (0,78), keine Verwechslung von Figuren, −16 LUFS. Ob Gefühl (Angst, Flüstern) hörbar ist, ist eine Hörfrage – messbar kaum. |
+| **Musik im Hörspiel** | Über KI-Musik geprüft im Prüfstand (10-Minuten-Hörspiel mit 4 Stücken); in der App-Abnahme war KI-Musik nicht eingerichtet (Musik übersprungen mit Hinweis). |
+| **Originalnahe Stimmen bekannter Sprecher** | Bewusst nicht ohne deren Einwilligung. Stilprofile übernehmen nur allgemeine Merkmale (Tonhöhe, Tempo, Klangfarbe). |
+| **Sprechertrennung bei entworfenen Stimmen** | Echte Sprecher: 5 von 5 erkannt; die eigenen KI-Stimmen liegen enger beieinander (4–5 von 7). Mit bekannter Stimmenzahl genauer. |
+| **Weitere Sprachen** | Englisch, Französisch, Spanisch, Italienisch wählbar; Zahlen/Abkürzungen werden nur im Deutschen ausgeschrieben; nur Deutsch geprüft. |
+| **Stimmumwandlung (Voice Conversion)** | Nicht umgesetzt – Klonen aus einer berechtigten Stimmprobe deckt den erlaubten Fall ab. |
+| **LibriVox-Prüfung** | Öffentliche Hörspiele ließen sich vom Prüfrechner nicht laden (HTTP 403); geprüft mit MLS-Sprechern und eigener Produktion. |
+| **Bedienung von Hand** | Alle Funktionen über die App-Abnahme (derselbe Code wie beim Klicken) und Vorschaubilder geprüft, nicht von Hand bedient. |
 
 ## „Hinzufügen“ und „Studio“ (2.4)
 

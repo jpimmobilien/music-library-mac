@@ -27,6 +27,11 @@ Rückgängig). Spotify liefert nur Titel und Cover (DRM). Siehe [docs/V2_2_AENDE
 Auto-Tune, Equalizer und Beschneiden – dauerhaft, mit Sicherung und Rückgängig. Siehe
 [docs/V2_3_AENDERUNGEN.md](docs/V2_3_AENDERUNGEN.md).
 
+**Version 2.6** bringt **„KI-Hörbücher“** (⌘0): Hörbücher und Hörspiele aus einer Idee – Geschichte mit Lektorat,
+entworfene Stimmen, Geräusche, Musik aus der KI-Musik, Mehrspur-Editor und Export mit Kapitelmarken, lokal auf Macs
+mit Apple-Chip. Siehe [docs/V2_6_AENDERUNGEN.md](docs/V2_6_AENDERUNGEN.md) und
+[docs/KI_HOERSPIEL_MACHBARKEIT.md](docs/KI_HOERSPIEL_MACHBARKEIT.md). Auf Intel-Macs nicht verfügbar.
+
 **Version 2.5** bringt **„KI-Musik“** (⌘8): Musik aus einer Beschreibung erzeugen – lokal auf Macs mit Apple-Chip
 (ACE-Step 1.5), ohne Cloud, Konto oder Kosten, mit eigener Ablage „Meine KI-Kreationen“. Siehe
 [docs/V2_5_AENDERUNGEN.md](docs/V2_5_AENDERUNGEN.md). Auf Intel-Macs nicht verfügbar.
@@ -56,6 +61,8 @@ ACE-Step 1.5) gibt es einen Machbarkeitsbericht: [docs/KI_MUSIK_MACHBARKEIT.md](
 ## Inhalt
 
 - [docs/INSTALLATION.md](docs/INSTALLATION.md) – Installation, Update, erster Start, Signieren/Beglaubigen
+- [docs/V2_6_AENDERUNGEN.md](docs/V2_6_AENDERUNGEN.md) – KI-Hörbücher & Hörspiele (Version 2.6)
+- [docs/KI_HOERSPIEL_MACHBARKEIT.md](docs/KI_HOERSPIEL_MACHBARKEIT.md) – KI-Hörbücher: technische Analyse, Messungen, Lizenzen
 - [docs/V2_5_AENDERUNGEN.md](docs/V2_5_AENDERUNGEN.md) – KI-Musik (Version 2.5)
 - [docs/V2_4_AENDERUNGEN.md](docs/V2_4_AENDERUNGEN.md) – „Hinzufügen“ und „Studio“ (Version 2.4)
 - [docs/KI_MUSIK_MACHBARKEIT.md](docs/KI_MUSIK_MACHBARKEIT.md) – KI-Musik: technische Analyse und Machbarkeit

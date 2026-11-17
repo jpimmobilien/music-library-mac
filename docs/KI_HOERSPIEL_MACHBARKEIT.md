@@ -5,7 +5,22 @@ Recherche zum Stand der offenen Modelle (Quellen unten) und die Prüfläufe „H
 **Ich kann Audio nicht hören.** Alle Aussagen zu Klang, Natürlichkeit und Aussprache stützen sich auf Messwerte und
 automatische Spracherkennung (Whisper). Der eigentliche Hörtest steht aus und ist Sache des Nutzers.
 
-<!-- ERGEBNIS -->
+## Ergebnis in Kürze
+
+**Machbar – und in der App umgesetzt.** Auf Apple Silicon erzeugt die gebaute App ohne Netz und ohne Cloud ein
+vollständiges Hörspiel: Geschichte mit Lektorat, entworfene Stimmen, KI-Geräusche, Mischung mit Kapitelmarken und
+Export; dazu Hörbuch, Stimmenstudio, Referenzanalyse und Mehrspur-Editor. Abnahme auf macOS 15.8 und 26.7: je
+23 von 23 Prüfungen.
+
+- **Sprache:** Qwen3-TTS (einmal entwerfen, dann jede Zeile klonen) – Whisper-Fehlerrate 1,3 %, Stimme über alle
+  Zeilen konstant, keine Verwechslung von Figuren; Umlaute, Komposita und Zahlen korrekt. Bester der vier Kandidaten.
+- **Geschichte:** Gemma 4 26B-A4B schreibt gutes Deutsch; die Handlung hatte ohne Hilfe Logikfehler. Spurenplan,
+  Stand der Handlung und Lektorat finden und beheben sie (Prüflauf: 5 Fehler gefunden, 3 Szenen gezielt überarbeitet).
+- **Referenzanalyse:** echte Sprecher 5 von 5 getrennt, ohne Verwechslung; Stimmprofile übernehmen nur allgemeine
+  Merkmale. Einwilligungsprüfung an 14 Sprechern kalibriert.
+- **Grenzen:** Klang ist ungehört (Hörtest durch dich), Geschwindigkeit auf dem M5 Pro nicht gemessen (nur virtuelle
+  M1 mit 3 Kernen), Gemma 4 in der App nicht auf 48 GB geprüft (Prüfrechner: 7 GB, kleines Modell).
+
 
 ## Vorhandene Architektur und Einbindung
 
@@ -183,7 +198,6 @@ Stücke: Titel, Spannung, Übergang, Abspann).
 | Geräusche | in diesem Lauf noch ausgefallen (mlx-audio 0.6.5, siehe App-Abnahme – mit 0.6.6 behoben) |
 | Rechenzeit (virtueller M1) | Stimmen 7 min entwerfen + 62 min sprechen (Echtzeitfaktor 10), Musik: Modell laden 51 min, je Stück 6–8 min, Mischen 2 min, gesamt 2:32 h |
 
-<!-- MAC-PRODUKTION -->
 
 
 ## Referenzanalyse – gemessen auf Apple Silicon (macOS 26.7, virtueller M1, 7 GB)
