@@ -1,0 +1,79 @@
+{
+  "name": "A_mls",
+  "kind": "Stilprofil (beschreibend)",
+  "speakers": [
+    {
+      "id": "S1",
+      "role_guess": "Erzähler (geschätzt)",
+      "share": 0.36,
+      "description_de": "weiblich (geschätzt), Tonlage mittel (~200 Hz), ausgewogen, langsam, sehr lebhaft, ausdrucksstark",
+      "voice_en": "An adult woman with a medium-pitched voice, balanced timbre, slow delivery, very lively and expressive. Speaks native German.",
+      "f0_median_hz": 200.0,
+      "f0_std_semitones": 4.63,
+      "syllables_per_second": 2.7,
+      "brightness_hz": 605
+    },
+    {
+      "id": "S2",
+      "role_guess": "Hauptfigur (geschätzt)",
+      "share": 0.199,
+      "description_de": "weiblich (geschätzt), Tonlage mittel (~205 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "voice_en": "An adult woman with a medium-pitched voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+      "f0_median_hz": 205.1,
+      "f0_std_semitones": 5.41,
+      "syllables_per_second": 4.56,
+      "brightness_hz": 687
+    },
+    {
+      "id": "S3",
+      "role_guess": "Hauptfigur (geschätzt)",
+      "share": 0.158,
+      "description_de": "männlich (geschätzt), Tonlage hoch (~144 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "voice_en": "An adult man with a high-pitched voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+      "f0_median_hz": 144.1,
+      "f0_std_semitones": 4.85,
+      "syllables_per_second": 4.99,
+      "brightness_hz": 579
+    },
+    {
+      "id": "S4",
+      "role_guess": "Hauptfigur (geschätzt)",
+      "share": 0.148,
+      "description_de": "weiblich (geschätzt), Tonlage eher hoch (~219 Hz), ausgewogen, mittleres Tempo, lebendig",
+      "voice_en": "An adult woman with a slightly high voice, balanced timbre, moderate pace delivery, lively. Speaks native German.",
+      "f0_median_hz": 219.2,
+      "f0_std_semitones": 3.72,
+      "syllables_per_second": 4.15,
+      "brightness_hz": 623
+    },
+    {
+      "id": "S5",
+      "role_guess": "Hauptfigur (geschätzt)",
+      "share": 0.136,
+      "description_de": "weiblich (geschätzt), Tonlage eher tief (~188 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "voice_en": "An adult woman with a fairly low voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+      "f0_median_hz": 188.2,
+      "f0_std_semitones": 5.19,
+      "syllables_per_second": 4.11,
+      "brightness_hz": 706
+    }
+  ],
+  "dialog": {
+    "speech_share": 0.715,
+    "turns": 51,
+    "turns_per_minute": 11.3,
+    "median_gap_between_speakers_s": 1.14,
+    "median_turn_seconds": 4.14,
+    "words_per_minute_overall": 162.5
+  },
+  "recording": {
+    "bandwidth_hz": 4805,
+    "noise_floor_dbfs": -63.1,
+    "reverb_rt60_estimate_s": 1.47,
+    "loudness_lufs": -18.01,
+    "stereo_correlation": 0.987
+  },
+  "music_bridges": 3,
+  "music_bridge_mean_seconds": 6.2,
+  "summary_de": "Dauer 4.5 min, Sprachanteil 72 %, 5 Stimmen erkannt (geschätzt).\n- S1 – Erzähler (geschätzt): 36 % Redeanteil, weiblich (geschätzt), Tonlage mittel (~200 Hz), ausgewogen, langsam, sehr lebhaft, ausdrucksstark\n- S2 – Hauptfigur (geschätzt): 20 % Redeanteil, weiblich (geschätzt), Tonlage mittel (~205 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S3 – Hauptfigur (geschätzt): 16 % Redeanteil, männlich (geschätzt), Tonlage hoch (~144 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S4 – Hauptfigur (geschätzt): 15 % Redeanteil, weiblich (geschätzt), Tonlage eher hoch (~219 Hz), ausgewogen, mittleres Tempo, lebendig\n- S5 – Hauptfigur (geschätzt): 14 % Redeanteil, weiblich (geschätzt), Tonlage eher tief (~188 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark\nDialog: 11.3 Sprecherwechsel/min, Pause zwischen Repliken ~1.14 s, Repliken ~4.14 s.\nAufnahme: -18.01 LUFS, Bandbreite bis ~4.8 kHz (begrenzt wie Band/Kassette), Grundrauschen -63.1 dBFS, Nachhall ~1.47 s (geschätzt), Mono\nOhne Sprache: 24.4 s Musik/Geräusche, 3 Musikbrücken (~6.2 s)."
+}

@@ -1,0 +1,68 @@
+{
+  "name": "B_produktion",
+  "kind": "Stilprofil (beschreibend)",
+  "speakers": [
+    {
+      "id": "S1",
+      "role_guess": "Erzähler (geschätzt)",
+      "share": 0.332,
+      "description_de": "männlich (geschätzt), Tonlage tief (~91 Hz), dunkel, warm, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "voice_en": "An adult man with a deep, low-pitched voice, dark, warm timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+      "f0_median_hz": 90.9,
+      "f0_std_semitones": 5.01,
+      "syllables_per_second": 4.5,
+      "brightness_hz": 461
+    },
+    {
+      "id": "S2",
+      "role_guess": "Hauptfigur (geschätzt)",
+      "share": 0.356,
+      "description_de": "kindlich oder sehr hoch (geschätzt), Tonlage mittel (~281 Hz), hell, klar, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "voice_en": "A child with a medium-pitched voice, bright, clear timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+      "f0_median_hz": 280.7,
+      "f0_std_semitones": 6.05,
+      "syllables_per_second": 4.35,
+      "brightness_hz": 840
+    },
+    {
+      "id": "S3",
+      "role_guess": "Hauptfigur (geschätzt)",
+      "share": 0.16,
+      "description_de": "weiblich (geschätzt), Tonlage mittel (~200 Hz), hell, klar, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "voice_en": "An adult woman with a medium-pitched voice, bright, clear timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+      "f0_median_hz": 200.0,
+      "f0_std_semitones": 7.03,
+      "syllables_per_second": 4.37,
+      "brightness_hz": 916
+    },
+    {
+      "id": "S4",
+      "role_guess": "Hauptfigur (geschätzt)",
+      "share": 0.152,
+      "description_de": "weiblich (geschätzt), Tonlage mittel (~210 Hz), dunkel, warm, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "voice_en": "An adult woman with a medium-pitched voice, dark, warm timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+      "f0_median_hz": 210.5,
+      "f0_std_semitones": 6.02,
+      "syllables_per_second": 4.54,
+      "brightness_hz": 540
+    }
+  ],
+  "dialog": {
+    "speech_share": 0.688,
+    "turns": 91,
+    "turns_per_minute": 10.8,
+    "median_gap_between_speakers_s": 0.45,
+    "median_turn_seconds": 3.59,
+    "words_per_minute_overall": 184.3
+  },
+  "recording": {
+    "bandwidth_hz": 5062,
+    "noise_floor_dbfs": -58.8,
+    "reverb_rt60_estimate_s": 1.98,
+    "loudness_lufs": -16.27,
+    "stereo_correlation": 0.873
+  },
+  "music_bridges": 10,
+  "music_bridge_mean_seconds": 9.4,
+  "summary_de": "Dauer 8.4 min, Sprachanteil 69 %, 4 Stimmen erkannt (geschätzt).\n- S1 – Erzähler (geschätzt): 33 % Redeanteil, männlich (geschätzt), Tonlage tief (~91 Hz), dunkel, warm, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S2 – Hauptfigur (geschätzt): 36 % Redeanteil, kindlich oder sehr hoch (geschätzt), Tonlage mittel (~281 Hz), hell, klar, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S3 – Hauptfigur (geschätzt): 16 % Redeanteil, weiblich (geschätzt), Tonlage mittel (~200 Hz), hell, klar, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S4 – Hauptfigur (geschätzt): 15 % Redeanteil, weiblich (geschätzt), Tonlage mittel (~210 Hz), dunkel, warm, mittleres Tempo, sehr lebhaft, ausdrucksstark\nDialog: 10.8 Sprecherwechsel/min, Pause zwischen Repliken ~0.45 s, Repliken ~3.59 s.\nAufnahme: -16.27 LUFS, Bandbreite bis ~5.1 kHz (begrenzt wie Band/Kassette), Grundrauschen -58.8 dBFS, Nachhall ~1.98 s (geschätzt)\nOhne Sprache: 99.6 s Musik/Geräusche, 10 Musikbrücken (~9.4 s)."
+}

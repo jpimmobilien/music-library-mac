@@ -1,0 +1,750 @@
+{
+  "file": "/Users/runner/work/music-library-mac/music-library-mac/prod-in/hoerspiel.mp3",
+  "duration_s": 503.4,
+  "speakers": [
+    {
+      "talk_seconds": 119.7,
+      "turns": 22,
+      "mean_turn_seconds": 5.44,
+      "f0_median_hz": 90.9,
+      "f0_range_semitones": 15.9,
+      "f0_std_semitones": 5.01,
+      "syllables_per_second": 4.5,
+      "words": 324,
+      "brightness_hz": 461,
+      "loudness_variation_db": 8.1,
+      "description_de": "männlich (geschätzt), Tonlage tief (~91 Hz), dunkel, warm, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "voice_en": "An adult man with a deep, low-pitched voice, dark, warm timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+      "sample_lines": [
+        "Sommer 1984 überzog die Kleinstadt mit einer drückenden Hitze. Staub tanzte in der gleißenden Mittagssonne, während die Welt zwischen den Schienen zu flirren begann.",
+        "vier Freunde schlichen durch das rostrote Tor, während die Hitze des Sommertages langsam der kühlen Nacht wich.",
+        "Vorsichtig drängten sie in die Bahnhofshalle, wo der Geruch von Öl und Staub schwer in der Luft hing."
+      ],
+      "id": "S1",
+      "share": 0.332,
+      "role_guess": "Erzähler (geschätzt)"
+    },
+    {
+      "talk_seconds": 128.4,
+      "turns": 33,
+      "mean_turn_seconds": 3.89,
+      "f0_median_hz": 280.7,
+      "f0_range_semitones": 17.9,
+      "f0_std_semitones": 6.05,
+      "syllables_per_second": 4.35,
+      "words": 365,
+      "brightness_hz": 840,
+      "loudness_variation_db": 8.7,
+      "description_de": "kindlich oder sehr hoch (geschätzt), Tonlage mittel (~281 Hz), hell, klar, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "voice_en": "A child with a medium-pitched voice, bright, clear timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+      "sample_lines": [
+        "physikalisch gesehen könnte es eine Reflexion gewesen sein. Vielleicht von einer alten Signallaterne?",
+        "Glaubt ihr ihm etwa nicht? Es war genau zwischen Gleis 3 und 4.",
+        "geflüstert. Fast wie ein Summen."
+      ],
+      "id": "S2",
+      "share": 0.356,
+      "role_guess": "Hauptfigur (geschätzt)"
+    },
+    {
+      "talk_seconds": 57.7,
+      "turns": 19,
+      "mean_turn_seconds": 3.04,
+      "f0_median_hz": 200.0,
+      "f0_range_semitones": 24.2,
+      "f0_std_semitones": 7.03,
+      "syllables_per_second": 4.37,
+      "words": 175,
+      "brightness_hz": 916,
+      "loudness_variation_db": 8.6,
+      "description_de": "weiblich (geschätzt), Tonlage mittel (~200 Hz), hell, klar, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "voice_en": "An adult woman with a medium-pitched voice, bright, clear timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+      "sample_lines": [
+        "Ich sag's euch, das war kein Gewitter.",
+        "war kein Blitz, der so blau -weiß geleuchtet hat.",
+        "Genau das hab ich auch gehört. Mitten in der Nacht. Als wäre da jemand, der die Gleise bewacht."
+      ],
+      "id": "S3",
+      "share": 0.16,
+      "role_guess": "Hauptfigur (geschätzt)"
+    },
+    {
+      "talk_seconds": 54.8,
+      "turns": 17,
+      "mean_turn_seconds": 3.22,
+      "f0_median_hz": 210.5,
+      "f0_range_semitones": 19.8,
+      "f0_std_semitones": 6.02,
+      "syllables_per_second": 4.54,
+      "words": 154,
+      "brightness_hz": 540,
+      "loudness_variation_db": 8.5,
+      "description_de": "weiblich (geschätzt), Tonlage mittel (~210 Hz), dunkel, warm, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "voice_en": "An adult woman with a medium-pitched voice, dark, warm timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+      "sample_lines": [
+        "Oder mein Magen spielt mir Streiche.",
+        "Ich hab so einen Hunger, ich könnte die Schienen fressen.",
+        "Können wir das Geheimnis nicht lieber aus der Entfernung mit einer Taschenlampe untersuchen?"
+      ],
+      "id": "S4",
+      "share": 0.152,
+      "role_guess": "Hauptfigur (geschätzt)"
+    }
+  ],
+  "dialog": {
+    "speech_share": 0.688,
+    "turns": 91,
+    "turns_per_minute": 10.8,
+    "median_gap_between_speakers_s": 0.45,
+    "median_turn_seconds": 3.59,
+    "words_per_minute_overall": 184.3
+  },
+  "recording": {
+    "sample_rate": 48000,
+    "channels": 2,
+    "loudness_lufs": -16.27,
+    "peak_dbfs": -1.1,
+    "bandwidth_hz": 5062,
+    "brightness_hz": 591,
+    "noise_floor_dbfs": -58.8,
+    "noise_flatness": 0.203,
+    "hum_db_over_floor": {
+      "50": -1.6,
+      "60": -1.3
+    },
+    "stereo_correlation": 0.873,
+    "reverb_rt60_estimate_s": 1.98,
+    "reverb_measurements": 5
+  },
+  "non_speech": {
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 2.97,
+        "level_dbfs": -17.4,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 3.78,
+        "end": 8.02,
+        "level_dbfs": -16.8,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 73.93,
+        "end": 75.16,
+        "level_dbfs": -40.8,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 146.44,
+        "end": 152.6,
+        "level_dbfs": -17.2,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 181.1,
+        "end": 182.58,
+        "level_dbfs": -35.7,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 221.45,
+        "end": 227.64,
+        "level_dbfs": -17.2,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 248.23,
+        "end": 254.55,
+        "level_dbfs": -18.0,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 287.18,
+        "end": 292.63,
+        "level_dbfs": -17.6,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 308.36,
+        "end": 314.68,
+        "level_dbfs": -17.9,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 380.52,
+        "end": 386.42,
+        "level_dbfs": -17.8,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 392.62,
+        "end": 393.66,
+        "level_dbfs": -22.3,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 394.15,
+        "end": 395.8,
+        "level_dbfs": -20.9,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 442.73,
+        "end": 470.58,
+        "level_dbfs": -18.2,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 480.62,
+        "end": 503.37,
+        "level_dbfs": -19.3,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      }
+    ],
+    "content_seconds": 99.6,
+    "music_bridges": 10,
+    "music_bridge_mean_seconds": 9.4
+  },
+  "transcript_excerpt": "Der Sommer 1984 überzog die Kleinstadt mit einer drückenden Hitze. Staub tanzte in der gleißenden Mittagssonne, während die Welt zwischen den Schienen zu flirren begann. Ich sag's euch, das war kein Gewitter. Das war kein Blitz, der so blau-weiß geleuchtet hat. Ben, physikalisch gesehen könnte es eine Reflexion gewesen sein. Vielleicht von einer alten Signallaterne? Oder mein Magen spielt mir Streiche. Ich hab so einen Hunger, ich könnte die Schienen fressen. Glaubt ihr ihm etwa nicht? Es war genau zwischen Gleis 3 und 4. Es hat geflüstert. Fast wie ein Summen. Genau das hab ich auch gehört. Mitten in der Nacht. Als wäre da jemand, der die Gleise bewacht. Ein mechanischer Defekt an den alten Relais? Das ist logischer als ein Geist auf dem Bahnhofsgelände. Seit wann bist du so ein Spielverderber, Sarah? Guck dir das Tor an. Es sieht aus, als würde es uns herausfordern. Können wir das Geheimnis nicht lieber aus der Entfernung mit einer Taschenlampe untersuchen? Also von Weitem? Keine Zeit für Angst, Tobi. Wir müssen wissen, was da unten im Schatten lauert. Die vier Freunde schlichen durch das rostrote Tor, während die Hitze des Sommertages langsam der kühlen Nacht wich. Leute, hört ihr das? Das klingt, als würden die Gleise selbst atmen. Das ist nur der Wind, Tobi. Bleib konzentriert. Schaut mal da drüben, in dem alten Güterschuppen. Da flackert was. Das muss das blaue Leuchten sein. Kommt näher, aber ganz vorsichtig. Vorsichtig drängten sie in die Bahnhofshalle, wo der Geruch ",
+  "threshold": 0.7,
+  "speakers_given": null,
+  "seconds": {
+    "diarization": 31.9,
+    "transcription": 115.4,
+    "total": 186.5
+  },
+  "turns": [
+    {
+      "start": 2.97,
+      "end": 3.78,
+      "speaker": "S2"
+    },
+    {
+      "start": 8.02,
+      "end": 20.01,
+      "speaker": "S1"
+    },
+    {
+      "start": 20.22,
+      "end": 22.47,
+      "speaker": "S3"
+    },
+    {
+      "start": 23.32,
+      "end": 25.99,
+      "speaker": "S3"
+    },
+    {
+      "start": 26.97,
+      "end": 33.25,
+      "speaker": "S2"
+    },
+    {
+      "start": 33.59,
+      "end": 35.09,
+      "speaker": "S4"
+    },
+    {
+      "start": 35.86,
+      "end": 38.11,
+      "speaker": "S4"
+    },
+    {
+      "start": 38.55,
+      "end": 42.38,
+      "speaker": "S2"
+    },
+    {
+      "start": 43.48,
+      "end": 45.54,
+      "speaker": "S2"
+    },
+    {
+      "start": 45.85,
+      "end": 51.02,
+      "speaker": "S3"
+    },
+    {
+      "start": 51.38,
+      "end": 56.74,
+      "speaker": "S2"
+    },
+    {
+      "start": 57.46,
+      "end": 63.37,
+      "speaker": "S2"
+    },
+    {
+      "start": 63.74,
+      "end": 67.43,
+      "speaker": "S4"
+    },
+    {
+      "start": 68.66,
+      "end": 69.45,
+      "speaker": "S4"
+    },
+    {
+      "start": 69.82,
+      "end": 73.67,
+      "speaker": "S3"
+    },
+    {
+      "start": 75.16,
+      "end": 81.7,
+      "speaker": "S1"
+    },
+    {
+      "start": 81.91,
+      "end": 86.38,
+      "speaker": "S4"
+    },
+    {
+      "start": 86.68,
+      "end": 92.72,
+      "speaker": "S2"
+    },
+    {
+      "start": 93.4,
+      "end": 94.28,
+      "speaker": "S2"
+    },
+    {
+      "start": 94.62,
+      "end": 98.57,
+      "speaker": "S3"
+    },
+    {
+      "start": 99.38,
+      "end": 104.63,
+      "speaker": "S1"
+    },
+    {
+      "start": 105.3,
+      "end": 108.3,
+      "speaker": "S3"
+    },
+    {
+      "start": 108.63,
+      "end": 109.96,
+      "speaker": "S1"
+    },
+    {
+      "start": 110.97,
+      "end": 112.2,
+      "speaker": "S4"
+    },
+    {
+      "start": 112.5,
+      "end": 116.2,
+      "speaker": "S2"
+    },
+    {
+      "start": 116.5,
+      "end": 122.09,
+      "speaker": "S1"
+    },
+    {
+      "start": 122.42,
+      "end": 123.92,
+      "speaker": "S2"
+    },
+    {
+      "start": 124.54,
+      "end": 125.86,
+      "speaker": "S2"
+    },
+    {
+      "start": 126.17,
+      "end": 130.39,
+      "speaker": "S1"
+    },
+    {
+      "start": 130.87,
+      "end": 133.61,
+      "speaker": "S3"
+    },
+    {
+      "start": 134.07,
+      "end": 137.82,
+      "speaker": "S1"
+    },
+    {
+      "start": 138.52,
+      "end": 142.31,
+      "speaker": "S4"
+    },
+    {
+      "start": 143.38,
+      "end": 146.38,
+      "speaker": "S2"
+    },
+    {
+      "start": 152.6,
+      "end": 159.35,
+      "speaker": "S1"
+    },
+    {
+      "start": 159.99,
+      "end": 162.62,
+      "speaker": "S2"
+    },
+    {
+      "start": 162.62,
+      "end": 169.51,
+      "speaker": "S4"
+    },
+    {
+      "start": 169.78,
+      "end": 173.16,
+      "speaker": "S3"
+    },
+    {
+      "start": 173.5,
+      "end": 177.58,
+      "speaker": "S4"
+    },
+    {
+      "start": 178.1,
+      "end": 181.1,
+      "speaker": "S2"
+    },
+    {
+      "start": 182.58,
+      "end": 187.08,
+      "speaker": "S1"
+    },
+    {
+      "start": 187.9,
+      "end": 190.68,
+      "speaker": "S2"
+    },
+    {
+      "start": 191.22,
+      "end": 193.93,
+      "speaker": "S3"
+    },
+    {
+      "start": 194.3,
+      "end": 201.99,
+      "speaker": "S2"
+    },
+    {
+      "start": 202.3,
+      "end": 205.19,
+      "speaker": "S3"
+    },
+    {
+      "start": 205.69,
+      "end": 209.63,
+      "speaker": "S2"
+    },
+    {
+      "start": 209.94,
+      "end": 212.71,
+      "speaker": "S4"
+    },
+    {
+      "start": 213.02,
+      "end": 217.77,
+      "speaker": "S2"
+    },
+    {
+      "start": 218.3,
+      "end": 221.3,
+      "speaker": "S3"
+    },
+    {
+      "start": 227.64,
+      "end": 233.64,
+      "speaker": "S1"
+    },
+    {
+      "start": 234.17,
+      "end": 236.42,
+      "speaker": "S3"
+    },
+    {
+      "start": 236.98,
+      "end": 239.76,
+      "speaker": "S2"
+    },
+    {
+      "start": 240.38,
+      "end": 244.28,
+      "speaker": "S4"
+    },
+    {
+      "start": 244.86,
+      "end": 248.23,
+      "speaker": "S2"
+    },
+    {
+      "start": 254.55,
+      "end": 256.8,
+      "speaker": "S2"
+    },
+    {
+      "start": 257.85,
+      "end": 260.62,
+      "speaker": "S3"
+    },
+    {
+      "start": 260.98,
+      "end": 274.38,
+      "speaker": "S2"
+    },
+    {
+      "start": 275.29,
+      "end": 281.19,
+      "speaker": "S2"
+    },
+    {
+      "start": 281.69,
+      "end": 286.94,
+      "speaker": "S1"
+    },
+    {
+      "start": 292.63,
+      "end": 296.04,
+      "speaker": "S3"
+    },
+    {
+      "start": 296.66,
+      "end": 298.91,
+      "speaker": "S4"
+    },
+    {
+      "start": 299.29,
+      "end": 301.54,
+      "speaker": "S2"
+    },
+    {
+      "start": 302.17,
+      "end": 304.33,
+      "speaker": "S2"
+    },
+    {
+      "start": 304.79,
+      "end": 307.62,
+      "speaker": "S1"
+    },
+    {
+      "start": 314.68,
+      "end": 322.43,
+      "speaker": "S1"
+    },
+    {
+      "start": 322.94,
+      "end": 326.53,
+      "speaker": "S3"
+    },
+    {
+      "start": 326.87,
+      "end": 331.3,
+      "speaker": "S4"
+    },
+    {
+      "start": 331.67,
+      "end": 338.44,
+      "speaker": "S2"
+    },
+    {
+      "start": 338.74,
+      "end": 341.29,
+      "speaker": "S3"
+    },
+    {
+      "start": 341.66,
+      "end": 351.12,
+      "speaker": "S1"
+    },
+    {
+      "start": 351.61,
+      "end": 352.62,
+      "speaker": "S2"
+    },
+    {
+      "start": 353.5,
+      "end": 357.25,
+      "speaker": "S1"
+    },
+    {
+      "start": 357.85,
+      "end": 361.22,
+      "speaker": "S3"
+    },
+    {
+      "start": 361.53,
+      "end": 364.97,
+      "speaker": "S2"
+    },
+    {
+      "start": 365.27,
+      "end": 366.63,
+      "speaker": "S1"
+    },
+    {
+      "start": 367.8,
+      "end": 371.14,
+      "speaker": "S1"
+    },
+    {
+      "start": 371.48,
+      "end": 374.7,
+      "speaker": "S4"
+    },
+    {
+      "start": 375.29,
+      "end": 380.52,
+      "speaker": "S1"
+    },
+    {
+      "start": 386.42,
+      "end": 392.62,
+      "speaker": "S1"
+    },
+    {
+      "start": 395.8,
+      "end": 397.16,
+      "speaker": "S2"
+    },
+    {
+      "start": 397.5,
+      "end": 399.62,
+      "speaker": "S3"
+    },
+    {
+      "start": 399.93,
+      "end": 404.62,
+      "speaker": "S2"
+    },
+    {
+      "start": 405.24,
+      "end": 412.65,
+      "speaker": "S2"
+    },
+    {
+      "start": 412.95,
+      "end": 417.03,
+      "speaker": "S1"
+    },
+    {
+      "start": 417.37,
+      "end": 421.74,
+      "speaker": "S4"
+    },
+    {
+      "start": 422.07,
+      "end": 429.35,
+      "speaker": "S1"
+    },
+    {
+      "start": 430.33,
+      "end": 432.39,
+      "speaker": "S3"
+    },
+    {
+      "start": 432.7,
+      "end": 434.95,
+      "speaker": "S2"
+    },
+    {
+      "start": 435.51,
+      "end": 442.73,
+      "speaker": "S1"
+    },
+    {
+      "start": 470.58,
+      "end": 472.08,
+      "speaker": "S4"
+    },
+    {
+      "start": 472.76,
+      "end": 476.42,
+      "speaker": "S4"
+    },
+    {
+      "start": 476.76,
+      "end": 480.62,
+      "speaker": "S2"
+    }
+  ],
+  "evaluation": {
+    "speakers_true": 7,
+    "speakers_found": 4,
+    "der": 0.38,
+    "missed": 0.056,
+    "false_alarm": 0.037,
+    "confusion": 0.287
+  },
+  "threshold_sweep": {
+    "0.5": {
+      "speakers_true": 7,
+      "speakers_found": 5,
+      "der": 0.275,
+      "missed": 0.056,
+      "false_alarm": 0.035,
+      "confusion": 0.184
+    },
+    "0.55": {
+      "speakers_true": 7,
+      "speakers_found": 5,
+      "der": 0.275,
+      "missed": 0.056,
+      "false_alarm": 0.035,
+      "confusion": 0.184
+    },
+    "0.6": {
+      "speakers_true": 7,
+      "speakers_found": 5,
+      "der": 0.275,
+      "missed": 0.056,
+      "false_alarm": 0.035,
+      "confusion": 0.184
+    },
+    "0.65": {
+      "speakers_true": 7,
+      "speakers_found": 4,
+      "der": 0.38,
+      "missed": 0.056,
+      "false_alarm": 0.037,
+      "confusion": 0.287
+    },
+    "0.7": {
+      "speakers_true": 7,
+      "speakers_found": 4,
+      "der": 0.38,
+      "missed": 0.056,
+      "false_alarm": 0.037,
+      "confusion": 0.287
+    },
+    "0.75": {
+      "speakers_true": 7,
+      "speakers_found": 3,
+      "der": 0.539,
+      "missed": 0.055,
+      "false_alarm": 0.045,
+      "confusion": 0.44
+    },
+    "0.8": {
+      "speakers_true": 7,
+      "speakers_found": 2,
+      "der": 0.689,
+      "missed": 0.053,
+      "false_alarm": 0.051,
+      "confusion": 0.585
+    }
+  },
+  "known_count_evaluation": {
+    "speakers_true": 7,
+    "speakers_found": 7,
+    "der": 0.315,
+    "missed": 0.057,
+    "false_alarm": 0.035,
+    "confusion": 0.223
+  },
+  "summary_de": "Dauer 8.4 min, Sprachanteil 69 %, 4 Stimmen erkannt (geschätzt).\n- S1 – Erzähler (geschätzt): 33 % Redeanteil, männlich (geschätzt), Tonlage tief (~91 Hz), dunkel, warm, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S2 – Hauptfigur (geschätzt): 36 % Redeanteil, kindlich oder sehr hoch (geschätzt), Tonlage mittel (~281 Hz), hell, klar, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S3 – Hauptfigur (geschätzt): 16 % Redeanteil, weiblich (geschätzt), Tonlage mittel (~200 Hz), hell, klar, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S4 – Hauptfigur (geschätzt): 15 % Redeanteil, weiblich (geschätzt), Tonlage mittel (~210 Hz), dunkel, warm, mittleres Tempo, sehr lebhaft, ausdrucksstark\nDialog: 10.8 Sprecherwechsel/min, Pause zwischen Repliken ~0.45 s, Repliken ~3.59 s.\nAufnahme: -16.27 LUFS, Bandbreite bis ~5.1 kHz (begrenzt wie Band/Kassette), Grundrauschen -58.8 dBFS, Nachhall ~1.98 s (geschätzt)\nOhne Sprache: 99.6 s Musik/Geräusche, 10 Musikbrücken (~9.4 s)."
+}

@@ -1,0 +1,530 @@
+{
+  "file": "/Users/runner/work/music-library-mac/music-library-mac/out/analyse/mls-testhoerspiel.wav",
+  "duration_s": 270.7,
+  "speakers": [
+    {
+      "talk_seconds": 71.0,
+      "turns": 17,
+      "mean_turn_seconds": 4.18,
+      "f0_median_hz": 200.0,
+      "f0_range_semitones": 10.6,
+      "f0_std_semitones": 4.63,
+      "syllables_per_second": 2.7,
+      "words": 137,
+      "brightness_hz": 605,
+      "loudness_variation_db": 10.0,
+      "description_de": "weiblich (geschätzt), Tonlage mittel (~200 Hz), ausgewogen, langsam, sehr lebhaft, ausdrucksstark",
+      "voice_en": "An adult woman with a medium-pitched voice, balanced timbre, slow delivery, very lively and expressive. Speaks native German.",
+      "sample_lines": [
+        "wirklich sieht den krieg nur einer der irgendwie",
+        "zeit für ihn hat",
+        "er daheim bei seinem weibe ruht"
+      ],
+      "id": "S1",
+      "share": 0.36,
+      "role_guess": "Erzähler (geschätzt)"
+    },
+    {
+      "talk_seconds": 39.2,
+      "turns": 8,
+      "mean_turn_seconds": 4.9,
+      "f0_median_hz": 205.1,
+      "f0_range_semitones": 20.1,
+      "f0_std_semitones": 5.41,
+      "syllables_per_second": 4.56,
+      "words": 100,
+      "brightness_hz": 687,
+      "loudness_variation_db": 8.3,
+      "description_de": "weiblich (geschätzt), Tonlage mittel (~205 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "voice_en": "An adult woman with a medium-pitched voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+      "sample_lines": [
+        "lernete mich vor das wohlreden mit der leimstange laufen doch war dieser mangel damals bei mir nicht so heftig",
+        "Konnte ich auch die Tränen nicht enthalten, bat also dem äußerlichen Ansehen nach mit höchster Andacht",
+        "Welcher aber solche herauslässt, wird vor einem gehalten,"
+      ],
+      "id": "S2",
+      "share": 0.199,
+      "role_guess": "Hauptfigur (geschätzt)"
+    },
+    {
+      "talk_seconds": 31.2,
+      "turns": 7,
+      "mean_turn_seconds": 4.46,
+      "f0_median_hz": 144.1,
+      "f0_range_semitones": 12.1,
+      "f0_std_semitones": 4.85,
+      "syllables_per_second": 4.99,
+      "words": 85,
+      "brightness_hz": 579,
+      "loudness_variation_db": 8.7,
+      "description_de": "männlich (geschätzt), Tonlage hoch (~144 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "voice_en": "An adult man with a high-pitched voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+      "sample_lines": [
+        "diesem augenblick erschienen dick und bobs die bisher auf eigene faust in der umgegenden",
+        "wäre mir doch eine interessant zu prüfende frage hob der diener des lords an ob hier das",
+        "die anziehungskraft des ersten sie noch genügend zurückhielt die meisten sternbilder am nördlichen und südlichen himmel erschienen"
+      ],
+      "id": "S3",
+      "share": 0.158,
+      "role_guess": "Hauptfigur (geschätzt)"
+    },
+    {
+      "talk_seconds": 29.2,
+      "turns": 11,
+      "mean_turn_seconds": 2.65,
+      "f0_median_hz": 219.2,
+      "f0_range_semitones": 8.3,
+      "f0_std_semitones": 3.72,
+      "syllables_per_second": 4.15,
+      "words": 74,
+      "brightness_hz": 623,
+      "loudness_variation_db": 9.2,
+      "description_de": "weiblich (geschätzt), Tonlage eher hoch (~219 Hz), ausgewogen, mittleres Tempo, lebendig",
+      "voice_en": "An adult woman with a slightly high voice, balanced timbre, moderate pace delivery, lively. Speaks native German.",
+      "sample_lines": [
+        "meines erachtens würden sich mit notwendigkeit wie nach dem walten eines naturgesetzes",
+        "küßte sie zärtlich wild und flüsterte",
+        "mußtest dem abbate nichts sagen"
+      ],
+      "id": "S4",
+      "share": 0.148,
+      "role_guess": "Hauptfigur (geschätzt)"
+    },
+    {
+      "talk_seconds": 26.8,
+      "turns": 8,
+      "mean_turn_seconds": 3.35,
+      "f0_median_hz": 188.2,
+      "f0_range_semitones": 13.9,
+      "f0_std_semitones": 5.19,
+      "syllables_per_second": 4.11,
+      "words": 73,
+      "brightness_hz": 706,
+      "loudness_variation_db": 8.7,
+      "description_de": "weiblich (geschätzt), Tonlage eher tief (~188 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark",
+      "voice_en": "An adult woman with a fairly low voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+      "sample_lines": [
+        "sollte der vater auch bei der geburt des sohnes nicht gegenwärtig sein",
+        "alles was zu tun und zu besorgen war blieb nicht bloß hoch",
+        "hat ihn geflucht ehe du vom schlaf erwachtest und das bitte"
+      ],
+      "id": "S5",
+      "share": 0.136,
+      "role_guess": "Hauptfigur (geschätzt)"
+    }
+  ],
+  "dialog": {
+    "speech_share": 0.715,
+    "turns": 51,
+    "turns_per_minute": 11.3,
+    "median_gap_between_speakers_s": 1.14,
+    "median_turn_seconds": 4.14,
+    "words_per_minute_overall": 162.5
+  },
+  "recording": {
+    "sample_rate": 48000,
+    "channels": 2,
+    "loudness_lufs": -18.01,
+    "peak_dbfs": -1.0,
+    "bandwidth_hz": 4805,
+    "brightness_hz": 591,
+    "noise_floor_dbfs": -63.1,
+    "noise_flatness": 0.887,
+    "hum_db_over_floor": {
+      "50": -0.3,
+      "60": -0.5
+    },
+    "stereo_correlation": 0.987,
+    "reverb_rt60_estimate_s": 1.47,
+    "reverb_measurements": 5
+  },
+  "non_speech": {
+    "segments": [
+      {
+        "start": 58.15,
+        "end": 59.9,
+        "level_dbfs": -46.0,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 84.17,
+        "end": 90.26,
+        "level_dbfs": -16.1,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 147.14,
+        "end": 148.25,
+        "level_dbfs": -27.6,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 157.42,
+        "end": 159.16,
+        "level_dbfs": -27.4,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 175.43,
+        "end": 181.66,
+        "level_dbfs": -16.3,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 211.72,
+        "end": 212.86,
+        "level_dbfs": -45.9,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      },
+      {
+        "start": 264.36,
+        "end": 270.67,
+        "level_dbfs": -16.4,
+        "kind_guess": "Musik (tonal, geschätzt)"
+      }
+    ],
+    "content_seconds": 24.4,
+    "music_bridges": 3,
+    "music_bridge_mean_seconds": 6.2
+  },
+  "transcript_excerpt": "und wirklich sieht den krieg nur einer der irgendwie keine zeit für ihn hat der soldat vielleicht wenn er daheim bei seinem weibe ruht weiber halten haus der trost der klugen hielt den wein nicht aus der wein der würde verraten es weint das land es trauert der geist nur büromädchen blieb noch verstand in diesem augenblick erschienen dick und bobs die bisher auf eigene faust in der umgegenden nun sollte der vater auch bei der geburt des sohnes nicht gegenwärtig sein ja meines erachtens würden sich mit notwendigkeit wie nach dem walten eines naturgesetzes und alles was zu tun und zu besorgen war blieb nicht bloß hoch er küßte sie zärtlich wild und flüsterte du mußtest dem abbate nichts sagen es wäre mir doch eine interessant zu prüfende frage hob der diener des lords an ob hier das doch er schwieg er fühlte wie ein plan in ihm dumpf erschien da die anziehungskraft des ersten sie noch genügend zurückhielt die meisten sternbilder am nördlichen und südlichen himmel erschienen Mein lieber Casanova, heute endlich befinde ich mich in der Welt. Und du bist wie die großen Geister, du machst uns stolz, bis wir hintaumeln, machst uns stark, bis du uns umwirfst. Freund, Verführer und Herr, denn dein heiliges Sein ist nicht erkannt, nicht gewürdigt. darum laßt uns verehren es wäre ja schmählich wollten wir deshalb verehren weil wir wüßten denn von jeher liebte ein mensch ins hirn dem anderen zu spucken diese lernete mich vor das wohlreden mit der leimstange laufen doch war dieser mangel da",
+  "threshold": 0.7,
+  "speakers_given": null,
+  "seconds": {
+    "diarization": 12.0,
+    "transcription": 112.3,
+    "total": 142.5
+  },
+  "turns": [
+    {
+      "start": 0.7,
+      "end": 4.45,
+      "speaker": "S1"
+    },
+    {
+      "start": 5.27,
+      "end": 6.66,
+      "speaker": "S1"
+    },
+    {
+      "start": 7.67,
+      "end": 8.9,
+      "speaker": "S1"
+    },
+    {
+      "start": 9.69,
+      "end": 11.94,
+      "speaker": "S1"
+    },
+    {
+      "start": 13.75,
+      "end": 18.41,
+      "speaker": "S1"
+    },
+    {
+      "start": 19.03,
+      "end": 27.07,
+      "speaker": "S1"
+    },
+    {
+      "start": 28.57,
+      "end": 33.51,
+      "speaker": "S3"
+    },
+    {
+      "start": 34.42,
+      "end": 38.92,
+      "speaker": "S5"
+    },
+    {
+      "start": 40.98,
+      "end": 46.76,
+      "speaker": "S4"
+    },
+    {
+      "start": 47.58,
+      "end": 51.62,
+      "speaker": "S5"
+    },
+    {
+      "start": 52.7,
+      "end": 55.37,
+      "speaker": "S4"
+    },
+    {
+      "start": 56.18,
+      "end": 58.15,
+      "speaker": "S4"
+    },
+    {
+      "start": 59.9,
+      "end": 65.8,
+      "speaker": "S3"
+    },
+    {
+      "start": 66.97,
+      "end": 67.94,
+      "speaker": "S4"
+    },
+    {
+      "start": 68.89,
+      "end": 71.88,
+      "speaker": "S4"
+    },
+    {
+      "start": 72.28,
+      "end": 78.63,
+      "speaker": "S3"
+    },
+    {
+      "start": 79.77,
+      "end": 81.27,
+      "speaker": "S4"
+    },
+    {
+      "start": 82.23,
+      "end": 84.17,
+      "speaker": "S4"
+    },
+    {
+      "start": 90.26,
+      "end": 98.54,
+      "speaker": "S1"
+    },
+    {
+      "start": 99.29,
+      "end": 102.76,
+      "speaker": "S1"
+    },
+    {
+      "start": 103.83,
+      "end": 108.1,
+      "speaker": "S1"
+    },
+    {
+      "start": 110.1,
+      "end": 116.1,
+      "speaker": "S1"
+    },
+    {
+      "start": 117.46,
+      "end": 121.77,
+      "speaker": "S1"
+    },
+    {
+      "start": 123.38,
+      "end": 129.31,
+      "speaker": "S2"
+    },
+    {
+      "start": 130.58,
+      "end": 135.5,
+      "speaker": "S5"
+    },
+    {
+      "start": 136.22,
+      "end": 140.15,
+      "speaker": "S4"
+    },
+    {
+      "start": 141.05,
+      "end": 147.14,
+      "speaker": "S2"
+    },
+    {
+      "start": 148.25,
+      "end": 153.03,
+      "speaker": "S5"
+    },
+    {
+      "start": 153.88,
+      "end": 157.42,
+      "speaker": "S2"
+    },
+    {
+      "start": 159.16,
+      "end": 160.62,
+      "speaker": "S4"
+    },
+    {
+      "start": 161.56,
+      "end": 163.02,
+      "speaker": "S4"
+    },
+    {
+      "start": 163.93,
+      "end": 169.93,
+      "speaker": "S2"
+    },
+    {
+      "start": 170.94,
+      "end": 175.43,
+      "speaker": "S4"
+    },
+    {
+      "start": 183.13,
+      "end": 186.06,
+      "speaker": "S1"
+    },
+    {
+      "start": 186.78,
+      "end": 188.28,
+      "speaker": "S1"
+    },
+    {
+      "start": 189.14,
+      "end": 193.64,
+      "speaker": "S1"
+    },
+    {
+      "start": 195.06,
+      "end": 199.34,
+      "speaker": "S1"
+    },
+    {
+      "start": 200.31,
+      "end": 205.31,
+      "speaker": "S1"
+    },
+    {
+      "start": 206.3,
+      "end": 211.49,
+      "speaker": "S1"
+    },
+    {
+      "start": 212.86,
+      "end": 217.8,
+      "speaker": "S2"
+    },
+    {
+      "start": 218.74,
+      "end": 221.32,
+      "speaker": "S3"
+    },
+    {
+      "start": 222.36,
+      "end": 223.53,
+      "speaker": "S3"
+    },
+    {
+      "start": 225.11,
+      "end": 228.49,
+      "speaker": "S2"
+    },
+    {
+      "start": 229.66,
+      "end": 232.52,
+      "speaker": "S5"
+    },
+    {
+      "start": 233.37,
+      "end": 234.87,
+      "speaker": "S5"
+    },
+    {
+      "start": 235.83,
+      "end": 239.98,
+      "speaker": "S2"
+    },
+    {
+      "start": 241.27,
+      "end": 245.77,
+      "speaker": "S3"
+    },
+    {
+      "start": 246.39,
+      "end": 249.06,
+      "speaker": "S5"
+    },
+    {
+      "start": 249.69,
+      "end": 251.19,
+      "speaker": "S5"
+    },
+    {
+      "start": 252.12,
+      "end": 257.92,
+      "speaker": "S3"
+    },
+    {
+      "start": 259.16,
+      "end": 264.36,
+      "speaker": "S2"
+    }
+  ],
+  "evaluation": {
+    "speakers_true": 5,
+    "speakers_found": 5,
+    "der": 0.185,
+    "missed": 0.178,
+    "false_alarm": 0.007,
+    "confusion": 0.0
+  },
+  "threshold_sweep": {
+    "0.5": {
+      "speakers_true": 5,
+      "speakers_found": 8,
+      "der": 0.458,
+      "missed": 0.192,
+      "false_alarm": 0.007,
+      "confusion": 0.26
+    },
+    "0.55": {
+      "speakers_true": 5,
+      "speakers_found": 9,
+      "der": 0.504,
+      "missed": 0.192,
+      "false_alarm": 0.007,
+      "confusion": 0.304
+    },
+    "0.6": {
+      "speakers_true": 5,
+      "speakers_found": 7,
+      "der": 0.408,
+      "missed": 0.189,
+      "false_alarm": 0.007,
+      "confusion": 0.213
+    },
+    "0.65": {
+      "speakers_true": 5,
+      "speakers_found": 6,
+      "der": 0.221,
+      "missed": 0.178,
+      "false_alarm": 0.007,
+      "confusion": 0.036
+    },
+    "0.7": {
+      "speakers_true": 5,
+      "speakers_found": 5,
+      "der": 0.185,
+      "missed": 0.178,
+      "false_alarm": 0.007,
+      "confusion": 0.0
+    },
+    "0.75": {
+      "speakers_true": 5,
+      "speakers_found": 5,
+      "der": 0.185,
+      "missed": 0.178,
+      "false_alarm": 0.007,
+      "confusion": 0.0
+    },
+    "0.8": {
+      "speakers_true": 5,
+      "speakers_found": 4,
+      "der": 0.305,
+      "missed": 0.178,
+      "false_alarm": 0.007,
+      "confusion": 0.12
+    }
+  },
+  "known_count_evaluation": {
+    "speakers_true": 5,
+    "speakers_found": 5,
+    "der": 0.185,
+    "missed": 0.178,
+    "false_alarm": 0.007,
+    "confusion": 0.0
+  },
+  "summary_de": "Dauer 4.5 min, Sprachanteil 72 %, 5 Stimmen erkannt (geschätzt).\n- S1 – Erzähler (geschätzt): 36 % Redeanteil, weiblich (geschätzt), Tonlage mittel (~200 Hz), ausgewogen, langsam, sehr lebhaft, ausdrucksstark\n- S2 – Hauptfigur (geschätzt): 20 % Redeanteil, weiblich (geschätzt), Tonlage mittel (~205 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S3 – Hauptfigur (geschätzt): 16 % Redeanteil, männlich (geschätzt), Tonlage hoch (~144 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S4 – Hauptfigur (geschätzt): 15 % Redeanteil, weiblich (geschätzt), Tonlage eher hoch (~219 Hz), ausgewogen, mittleres Tempo, lebendig\n- S5 – Hauptfigur (geschätzt): 14 % Redeanteil, weiblich (geschätzt), Tonlage eher tief (~188 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark\nDialog: 11.3 Sprecherwechsel/min, Pause zwischen Repliken ~1.14 s, Repliken ~4.14 s.\nAufnahme: -18.01 LUFS, Bandbreite bis ~4.8 kHz (begrenzt wie Band/Kassette), Grundrauschen -63.1 dBFS, Nachhall ~1.47 s (geschätzt), Mono\nOhne Sprache: 24.4 s Musik/Geräusche, 3 Musikbrücken (~6.2 s)."
+}

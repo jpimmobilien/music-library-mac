@@ -1,0 +1,492 @@
+{
+  "environment": {
+    "python": "3.12.10",
+    "machine": "arm64",
+    "system": "Darwin",
+    "macos": "26.7.2",
+    "ram_gb": 7.0,
+    "cpu": "Apple M1 (Virtual)",
+    "cores": 3,
+    "mlx": "?",
+    "mlx_audio": "?",
+    "mlx_whisper": "0.4.3",
+    "mlx_device": "Device(gpu, 0)"
+  },
+  "steps": [
+    {
+      "name": "Analysemodelle geladen",
+      "time": "03:20:20",
+      "seconds": 11.3
+    },
+    {
+      "name": "MLS geladen",
+      "time": "03:21:52",
+      "seconds": 91.5,
+      "rows": 1500,
+      "speakers": 15,
+      "info": {
+        "file": "dev-00000-of-00001.parquet",
+        "columns": [
+          "audio",
+          "original_path",
+          "begin_time",
+          "end_time",
+          "transcript",
+          "audio_duration",
+          "speaker_id",
+          "chapter_id",
+          "file",
+          "id"
+        ]
+      }
+    },
+    {
+      "name": "A: MLS-Testhörspiel",
+      "time": "03:24:35",
+      "cast": {
+        "narrator": "9514",
+        "characters": [
+          "13494",
+          "3277",
+          "1593",
+          "3862"
+        ]
+      },
+      "evaluation": {
+        "speakers_true": 5,
+        "speakers_found": 5,
+        "der": 0.185,
+        "missed": 0.178,
+        "false_alarm": 0.007,
+        "confusion": 0.0
+      },
+      "known_count": {
+        "speakers_true": 5,
+        "speakers_found": 5,
+        "der": 0.185,
+        "missed": 0.178,
+        "false_alarm": 0.007,
+        "confusion": 0.0
+      },
+      "sweep": {
+        "0.5": {
+          "speakers_true": 5,
+          "speakers_found": 8,
+          "der": 0.458,
+          "missed": 0.192,
+          "false_alarm": 0.007,
+          "confusion": 0.26
+        },
+        "0.55": {
+          "speakers_true": 5,
+          "speakers_found": 9,
+          "der": 0.504,
+          "missed": 0.192,
+          "false_alarm": 0.007,
+          "confusion": 0.304
+        },
+        "0.6": {
+          "speakers_true": 5,
+          "speakers_found": 7,
+          "der": 0.408,
+          "missed": 0.189,
+          "false_alarm": 0.007,
+          "confusion": 0.213
+        },
+        "0.65": {
+          "speakers_true": 5,
+          "speakers_found": 6,
+          "der": 0.221,
+          "missed": 0.178,
+          "false_alarm": 0.007,
+          "confusion": 0.036
+        },
+        "0.7": {
+          "speakers_true": 5,
+          "speakers_found": 5,
+          "der": 0.185,
+          "missed": 0.178,
+          "false_alarm": 0.007,
+          "confusion": 0.0
+        },
+        "0.75": {
+          "speakers_true": 5,
+          "speakers_found": 5,
+          "der": 0.185,
+          "missed": 0.178,
+          "false_alarm": 0.007,
+          "confusion": 0.0
+        },
+        "0.8": {
+          "speakers_true": 5,
+          "speakers_found": 4,
+          "der": 0.305,
+          "missed": 0.178,
+          "false_alarm": 0.007,
+          "confusion": 0.12
+        }
+      },
+      "seconds": {
+        "diarization": 12.0,
+        "transcription": 112.3,
+        "total": 142.5
+      },
+      "summary": "Dauer 4.5 min, Sprachanteil 72 %, 5 Stimmen erkannt (geschätzt).\n- S1 – Erzähler (geschätzt): 36 % Redeanteil, weiblich (geschätzt), Tonlage mittel (~200 Hz), ausgewogen, langsam, sehr lebhaft, ausdrucksstark\n- S2 – Hauptfigur (geschätzt): 20 % Redeanteil, weiblich (geschätzt), Tonlage mittel (~205 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S3 – Hauptfigur (geschätzt): 16 % Redeanteil, männlich (geschätzt), Tonlage hoch (~144 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S4 – Hauptfigur (geschätzt): 15 % Redeanteil, weiblich (geschätzt), Tonlage eher hoch (~219 Hz), ausgewogen, mittleres Tempo, lebendig\n- S5 – Hauptfigur (geschätzt): 14 % Redeanteil, weiblich (geschätzt), Tonlage eher tief (~188 Hz), ausgewogen, mittleres Tempo, sehr lebhaft, ausdrucksstark\nDialog: 11.3 Sprecherwechsel/min, Pause zwischen Repliken ~1.14 s, Repliken ~4.14 s.\nAufnahme: -18.01 LUFS, Bandbreite bis ~4.8 kHz (begrenzt wie Band/Kassette), Grundrauschen -63.1 dBFS, Nachhall ~1.47 s (geschätzt), Mono\nOhne Sprache: 24.4 s Musik/Geräusche, 3 Musikbrücken (~6.2 s)."
+    },
+    {
+      "name": "B: eigene Produktion",
+      "time": "03:27:42",
+      "evaluation": {
+        "speakers_true": 7,
+        "speakers_found": 4,
+        "der": 0.38,
+        "missed": 0.056,
+        "false_alarm": 0.037,
+        "confusion": 0.287
+      },
+      "known_count": {
+        "speakers_true": 7,
+        "speakers_found": 7,
+        "der": 0.315,
+        "missed": 0.057,
+        "false_alarm": 0.035,
+        "confusion": 0.223
+      },
+      "sweep": {
+        "0.5": {
+          "speakers_true": 7,
+          "speakers_found": 5,
+          "der": 0.275,
+          "missed": 0.056,
+          "false_alarm": 0.035,
+          "confusion": 0.184
+        },
+        "0.55": {
+          "speakers_true": 7,
+          "speakers_found": 5,
+          "der": 0.275,
+          "missed": 0.056,
+          "false_alarm": 0.035,
+          "confusion": 0.184
+        },
+        "0.6": {
+          "speakers_true": 7,
+          "speakers_found": 5,
+          "der": 0.275,
+          "missed": 0.056,
+          "false_alarm": 0.035,
+          "confusion": 0.184
+        },
+        "0.65": {
+          "speakers_true": 7,
+          "speakers_found": 4,
+          "der": 0.38,
+          "missed": 0.056,
+          "false_alarm": 0.037,
+          "confusion": 0.287
+        },
+        "0.7": {
+          "speakers_true": 7,
+          "speakers_found": 4,
+          "der": 0.38,
+          "missed": 0.056,
+          "false_alarm": 0.037,
+          "confusion": 0.287
+        },
+        "0.75": {
+          "speakers_true": 7,
+          "speakers_found": 3,
+          "der": 0.539,
+          "missed": 0.055,
+          "false_alarm": 0.045,
+          "confusion": 0.44
+        },
+        "0.8": {
+          "speakers_true": 7,
+          "speakers_found": 2,
+          "der": 0.689,
+          "missed": 0.053,
+          "false_alarm": 0.051,
+          "confusion": 0.585
+        }
+      },
+      "seconds": {
+        "diarization": 31.9,
+        "transcription": 115.4,
+        "total": 186.5
+      },
+      "summary": "Dauer 8.4 min, Sprachanteil 69 %, 4 Stimmen erkannt (geschätzt).\n- S1 – Erzähler (geschätzt): 33 % Redeanteil, männlich (geschätzt), Tonlage tief (~91 Hz), dunkel, warm, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S2 – Hauptfigur (geschätzt): 36 % Redeanteil, kindlich oder sehr hoch (geschätzt), Tonlage mittel (~281 Hz), hell, klar, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S3 – Hauptfigur (geschätzt): 16 % Redeanteil, weiblich (geschätzt), Tonlage mittel (~200 Hz), hell, klar, mittleres Tempo, sehr lebhaft, ausdrucksstark\n- S4 – Hauptfigur (geschätzt): 15 % Redeanteil, weiblich (geschätzt), Tonlage mittel (~210 Hz), dunkel, warm, mittleres Tempo, sehr lebhaft, ausdrucksstark\nDialog: 10.8 Sprecherwechsel/min, Pause zwischen Repliken ~0.45 s, Repliken ~3.59 s.\nAufnahme: -16.27 LUFS, Bandbreite bis ~5.1 kHz (begrenzt wie Band/Kassette), Grundrauschen -58.8 dBFS, Nachhall ~1.98 s (geschätzt)\nOhne Sprache: 99.6 s Musik/Geräusche, 10 Musikbrücken (~9.4 s)."
+    },
+    {
+      "name": "C Fehler",
+      "time": "03:27:45",
+      "error": "RuntimeError('Woyzeck: HTTP Error 403: Forbidden; Leonce und Lena: HTTP Error 403: Forbidden; Minna von Barnhelm: HTTP Error 403: Forbidden; Nathan der Weise: HTTP Error 403: Forbidden; Der zerbrochne Krug: HTTP Error 403: Forbidden; Emilia Galotti: HTTP Error 403: Forbidden; Kabale und Liebe: HTTP Error 403: Forbidden; Die Räuber: HTTP Error 403: Forbidden; Wilhelm Tell: HTTP Error 403: Forbidden; Maria Stuart: HTTP Error 403: Forbidden; Dantons Tod: HTTP Error 403: Forbidden; Der Biberpelz: HTTP Error 403: Forbidden; Die Weber: HTTP Error 403: Forbidden; Iphigenie auf Tauris: HTTP Error 403: Forbidden; Prinz Friedrich von Homburg: HTTP Error 403: Forbidden; Der Talisman: HTTP Error 403: Forbidden; Einen Jux will er sich machen: HTTP Error 403: Forbidden; Der Verschwender: HTTP Error 403: Forbidden; Die Journalisten: HTTP Error 403: Forbidden; Der eingebildete Kranke: HTTP Error 403: Forbidden')",
+      "trace": "Traceback (most recent call last):\n  File \"/Users/runner/work/music-library-mac/music-library-mac/scripts/hoerspiel/probe_analyze.py\", line 199, in <module>\n    path, meta = librivox_german_drama()\n                 ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/runner/work/music-library-mac/music-library-mac/scripts/hoerspiel/probe_analyze.py\", line 158, in librivox_german_drama\n    raise RuntimeError(\"; \".join(tried)[:2000])\nRuntimeError: Woyzeck: HTTP Error 403: Forbidden; Leonce und Lena: HTTP Error 403: Forbidden; Minna von Barnhelm: HTTP Error 403: Forbidden; Nathan der Weise: HTTP Error 403: Forbidden; Der zerbrochne Krug: HTTP Error 403: Forbidden; Emilia Galotti: HTTP Error 403: Forbidden; Kabale und Liebe: HTTP Error 403: Forbidden; Die Räuber: HTTP Error 403: Forbidden; Wilhelm Tell: HTTP Error 403: Forbidden; Maria Stuart: HTTP Error 403: Forbidden; Dantons Tod: HTTP Error 403: Forbidden; Der Biberpelz: HTTP Error 403: Forbidden; Die Weber: HTTP Error 403: Forbidden; Iphigenie auf Tauris: HTTP Error 403: Forbidden; Prinz Friedrich von Homburg: HTTP Error 403: Forbidden; Der Talisman: HTTP Error 403: Forbidden; Einen Jux will er sich machen: HTTP Error 403: Forbidden; Der Verschwender: HTTP Error 403: Forbidden; Die Journalisten: HTTP Error 403: Forbidden; Der eingebildete Kranke: HTTP Error 403: Forbidden\n"
+    },
+    {
+      "name": "E: Stimmprüfung kalibriert",
+      "time": "03:28:01",
+      "speakers": 14,
+      "pairs_same": 210,
+      "pairs_diff": 182,
+      "same_p5": 0.665,
+      "same_median": 0.836,
+      "diff_median": 0.146,
+      "diff_max": 0.545,
+      "threshold_far_0_1": 0.527,
+      "same_below_threshold": 0.005
+    },
+    {
+      "name": "D: Stimmprofile nachgemessen",
+      "time": "03:43:44",
+      "results": [
+        {
+          "speaker": "S1",
+          "voice_en": "An adult woman with a medium-pitched voice, balanced timbre, slow delivery, very lively and expressive. Speaks native German.",
+          "want": {
+            "f0_median_hz": 200.0,
+            "syllables_per_second": 2.7
+          },
+          "got": {
+            "f0_median_hz": 235.3,
+            "syllables_per_second": 4.5
+          },
+          "seed": 300,
+          "candidates": [
+            {
+              "seed": 300,
+              "f0_median_hz": 235.3,
+              "syllables_per_second": 4.02,
+              "distance": 3.47,
+              "instruct": "An adult woman with a medium-pitched voice, balanced timbre, slow delivery, very lively and expressive. Speaks native German."
+            },
+            {
+              "seed": 8219,
+              "f0_median_hz": 307.7,
+              "syllables_per_second": 3.61,
+              "distance": 7.91,
+              "instruct": "An adult woman with a medium-pitched voice, balanced timbre, slow delivery, very lively and expressive. Speaks native German."
+            },
+            {
+              "seed": 16138,
+              "f0_median_hz": 347.8,
+              "syllables_per_second": 4.19,
+              "distance": 10.32,
+              "instruct": "An adult woman with a medium-pitched voice, balanced timbre, slow delivery, very lively and expressive. Speaks native German."
+            },
+            {
+              "seed": 24057,
+              "f0_median_hz": 242.4,
+              "syllables_per_second": 3.21,
+              "distance": 3.58,
+              "instruct": "An adult woman with a fairly low voice, balanced timbre, slow delivery, very lively and expressive. Speaks native German."
+            },
+            {
+              "seed": 31976,
+              "f0_median_hz": 258.1,
+              "syllables_per_second": 3.87,
+              "distance": 5.0,
+              "instruct": "An adult woman with a fairly low voice, balanced timbre, slow delivery, very lively and expressive. Speaks native German."
+            }
+          ],
+          "f0_error_first_candidate": 2.8,
+          "f0_error_semitones": 2.8
+        },
+        {
+          "speaker": "S2",
+          "voice_en": "An adult woman with a medium-pitched voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+          "want": {
+            "f0_median_hz": 205.1,
+            "syllables_per_second": 4.56
+          },
+          "got": {
+            "f0_median_hz": 173.9,
+            "syllables_per_second": 4.34
+          },
+          "seed": 31977,
+          "candidates": [
+            {
+              "seed": 301,
+              "f0_median_hz": 290.9,
+              "syllables_per_second": 3.67,
+              "distance": 6.5,
+              "instruct": "An adult woman with a medium-pitched voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German."
+            },
+            {
+              "seed": 8220,
+              "f0_median_hz": 372.1,
+              "syllables_per_second": 3.76,
+              "distance": 10.71,
+              "instruct": "An adult woman with a medium-pitched voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German."
+            },
+            {
+              "seed": 16139,
+              "f0_median_hz": 355.6,
+              "syllables_per_second": 4.04,
+              "distance": 9.79,
+              "instruct": "An adult woman with a medium-pitched voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German."
+            },
+            {
+              "seed": 24058,
+              "f0_median_hz": 155.3,
+              "syllables_per_second": 3.45,
+              "distance": 5.37,
+              "instruct": "An adult woman with a deep, low-pitched voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German."
+            },
+            {
+              "seed": 31977,
+              "f0_median_hz": 173.9,
+              "syllables_per_second": 3.76,
+              "distance": 3.26,
+              "instruct": "An adult woman with a deep, low-pitched voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German."
+            }
+          ],
+          "f0_error_first_candidate": 6.1,
+          "f0_error_semitones": -2.9
+        },
+        {
+          "speaker": "S3",
+          "voice_en": "An adult man with a high-pitched voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+          "want": {
+            "f0_median_hz": 144.1,
+            "syllables_per_second": 4.99
+          },
+          "got": {
+            "f0_median_hz": 132.2,
+            "syllables_per_second": 4.58
+          },
+          "seed": 31978,
+          "candidates": [
+            {
+              "seed": 302,
+              "f0_median_hz": 202.5,
+              "syllables_per_second": 3.4,
+              "distance": 6.69,
+              "instruct": "An adult man with a high-pitched voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German."
+            },
+            {
+              "seed": 8221,
+              "f0_median_hz": 222.2,
+              "syllables_per_second": 4.12,
+              "distance": 7.93,
+              "instruct": "An adult man with a high-pitched voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German."
+            },
+            {
+              "seed": 16140,
+              "f0_median_hz": 228.6,
+              "syllables_per_second": 4.13,
+              "distance": 8.42,
+              "instruct": "An adult man with a high-pitched voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German."
+            },
+            {
+              "seed": 24059,
+              "f0_median_hz": 155.3,
+              "syllables_per_second": 3.77,
+              "distance": 1.91,
+              "instruct": "An adult man with a medium-pitched voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German."
+            },
+            {
+              "seed": 31978,
+              "f0_median_hz": 132.2,
+              "syllables_per_second": 4.42,
+              "distance": 1.78,
+              "instruct": "An adult man with a medium-pitched voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German."
+            }
+          ],
+          "f0_error_first_candidate": 5.9,
+          "f0_error_semitones": -1.5
+        },
+        {
+          "speaker": "S4",
+          "voice_en": "An adult woman with a slightly high voice, balanced timbre, moderate pace delivery, lively. Speaks native German.",
+          "want": {
+            "f0_median_hz": 219.2,
+            "syllables_per_second": 4.15
+          },
+          "got": {
+            "f0_median_hz": 235.3,
+            "syllables_per_second": 4.8
+          },
+          "seed": 16141,
+          "candidates": [
+            {
+              "seed": 303,
+              "f0_median_hz": 301.9,
+              "syllables_per_second": 3.96,
+              "distance": 5.64,
+              "instruct": "An adult woman with a slightly high voice, balanced timbre, moderate pace delivery, lively. Speaks native German."
+            },
+            {
+              "seed": 8222,
+              "f0_median_hz": 326.5,
+              "syllables_per_second": 3.63,
+              "distance": 7.16,
+              "instruct": "An adult woman with a slightly high voice, balanced timbre, moderate pace delivery, lively. Speaks native German."
+            },
+            {
+              "seed": 16141,
+              "f0_median_hz": 235.3,
+              "syllables_per_second": 4.59,
+              "distance": 1.45,
+              "instruct": "An adult woman with a slightly high voice, balanced timbre, moderate pace delivery, lively. Speaks native German."
+            }
+          ],
+          "f0_error_first_candidate": 5.5,
+          "f0_error_semitones": 1.2
+        },
+        {
+          "speaker": "S5",
+          "voice_en": "An adult woman with a fairly low voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German.",
+          "want": {
+            "f0_median_hz": 188.2,
+            "syllables_per_second": 4.11
+          },
+          "got": {
+            "f0_median_hz": 190.5,
+            "syllables_per_second": 4.36
+          },
+          "seed": 24061,
+          "candidates": [
+            {
+              "seed": 304,
+              "f0_median_hz": 238.8,
+              "syllables_per_second": 4.28,
+              "distance": 4.21,
+              "instruct": "An adult woman with a fairly low voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German."
+            },
+            {
+              "seed": 8223,
+              "f0_median_hz": 290.9,
+              "syllables_per_second": 3.92,
+              "distance": 7.63,
+              "instruct": "An adult woman with a fairly low voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German."
+            },
+            {
+              "seed": 16142,
+              "f0_median_hz": 313.7,
+              "syllables_per_second": 3.36,
+              "distance": 9.22,
+              "instruct": "An adult woman with a fairly low voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German."
+            },
+            {
+              "seed": 24061,
+              "f0_median_hz": 190.5,
+              "syllables_per_second": 3.82,
+              "distance": 0.36,
+              "instruct": "An adult woman with a very deep, low voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German."
+            },
+            {
+              "seed": 31980,
+              "f0_median_hz": 225.4,
+              "syllables_per_second": 3.02,
+              "distance": 3.67,
+              "instruct": "An adult woman with a very deep, low voice, balanced timbre, moderate pace delivery, very lively and expressive. Speaks native German."
+            }
+          ],
+          "f0_error_first_candidate": 4.1,
+          "f0_error_semitones": 0.2
+        }
+      ]
+    }
+  ]
+}
