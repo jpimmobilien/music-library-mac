@@ -1,5 +1,20 @@
 # Prüfstand – was gebaut und getestet ist (ehrlich)
 
+## Version 2.6.0 (17.11.2026, Build-Lauf 44024825704, Commit `e288ec3`) – KI-Hörbücher & Hörspiele
+
+| Stufe | Ergebnis |
+|---|---|
+| Tests | ✅ 651 Tests, 0 Fehler (10 übersprungen: KI-Ende-zu-Ende-Prüfungen laufen nur im Prüfstand, Zusatzprüfungen wie bisher) auf macOS 26 Apple Silicon und macOS 15 Intel; neu u. a.: Datenmodell der Produktionen, Lektorat, Spurenplan, Sprachen, Stimmziele, Einwilligungsprüfung, Kapitelmarken (MP3/M4A), Zeitleiste, Abbruch-Zustände. Zusätzlich unter Linux 57 Tests der Hörspiel-Logik und 16 Tests des Python-Rechenprozesses |
+| Übersetzen | ✅ Xcode 16 und Xcode 26 |
+| App-Abnahme (echte Modelle, Code der App, `--hoerspiel-e2e`) | ✅ **25 von 25** auf macOS 15.8 und auf macOS 26.7 Apple Silicon (virtuelle M1, 7 GB, kleines Geschichtenmodell Qwen3.5 4B): Einrichtung, Hörspiel mit Lektorat, Stimmen, KI-Geräuschen, −16 LUFS und 3 Kapitelmarken; Replik neu formulieren und neu sprechen; Mehrspur ändern und neu abmischen; Export ganz/Kapitel/Szenen/Einzelspuren; Hörbuch mit **Abbrechen mitten in „Stimmen erzeugen“ und sofortigem Fortsetzen** (5 fertige Zeilen unverändert übernommen); Stimme entwerfen; Referenzanalyse mit Stilprofilen. Zweige `ci-hoerspiel-app-macos-15`, `ci-hoerspiel-app-macos-26`, Details in [KI_HOERSPIEL_MACHBARKEIT.md](KI_HOERSPIEL_MACHBARKEIT.md) |
+| Prüfstand | Sprachausgabe: Qwen3-TTS (Entwurf + Klonen) Whisper-Fehlerrate 1,3 %, Stimme konstant; 10-Minuten-Hörspiel mit KI-Musik (8:23 min); Referenzanalyse echter Sprecher 5/5 ohne Verwechslung; Gemma 4 26B-A4B als GGUF unter Linux mit Lektorat |
+| Vorschaubilder | KI-Hörbücher: Einrichten, Erstellen (Hörspiel/Hörbuch), läuft, Editor, Lektorat, Mehrspur, Stimmenstudio, Referenz, Sounddesign, Produktionen, schmal, Einstellungen – Hell und Dunkel, angesehen; in der Abnahme 164 Ansichten × Hell/Dunkel mit Liquid Glass auf Apple Silicon |
+| DMG | ✅ SHA-256 `6f6f5af659d9c5969daa47d976613b676210578413cd5c1e4de534a5ab6d0004`, `hdiutil verify` gültig, `x86_64 arm64`, Signatur gültig, enthält `Resources/HoerspielEngine` (engine.py, download.py, hs_*.py, requirements.txt mit mlx-audio 0.6.6 – geprüft durch Entpacken der DMG) – keine Modelle, kein Python |
+| Starttest | ✅ macOS 15 Apple Silicon (nativ) und Intel-Code über Rosetta |
+| Abnahme | ✅ Apple Silicon macOS 26: Installation aus der DMG, Version 2.6.0, Aktualisierung 2.5.0 → 2.6.0 → 2.5.0 ohne Befund · Intel macOS 26: ebenso · Rosetta macOS 26: Installation, Start mit Vorschaubildern · Intel macOS 15 (virtuell): Installation ✅, Start scheitert wie bei jeder Version am Metal-Fehler der virtuellen Maschine |
+| Vergleichsmessung 2.5.0 ↔ 2.6.0 | Leerlauf mit Wiedergabe innerhalb der Streuung (Apple Silicon 19,2/24,1 % gegenüber 20,1/21,4 %; Intel 28,5/22,1 % gegenüber 19,0/22,7 %). Großer Player (Vinyl) auf Apple Silicon in beiden Runden etwas höher (34,1/39,6 % gegenüber 31,4/32,7 %), auf Intel Runde 2 gleich (33,0/32,7 %); die alte Version streut dort selbst zwischen 20 und 33 %. Im Code keine Ursache gefunden (KI-Hörbücher rechnen nur, wenn eine Produktion läuft; kein Zeitgeber im Hintergrund) – nicht weiter untersucht |
+| Nicht geprüft | Geschwindigkeit auf dem M5 Pro, Gemma 4 in der App auf 48 GB, Klang (Hörtest), andere Sprachen als Deutsch nur in der Logik, Musik in der App-Abnahme (nur im Prüfstand), Beenden der App mitten in einer Produktion (nur im Test der Daten), Bedienung von Hand, macOS 13/14 |
+
 ## Version 2.5.0 (14.11.2026, Build-Lauf 43562153928, Commit `6711a74`) – KI-Musik
 
 | Stufe | Ergebnis |
