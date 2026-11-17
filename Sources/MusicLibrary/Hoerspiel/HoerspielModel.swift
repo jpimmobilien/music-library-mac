@@ -321,6 +321,9 @@ final class HoerspielModel: ObservableObject {
     // MARK: Daten
 
     func reload() {
+        // Vorschaubilder: Daten kommen aus applyDemo – nicht aus dem (leeren) Ordner überschreiben
+        // (sonst zeigte der Editor „Keine Produktion“ bzw. stürzte über eine verschwundene Produktion ab)
+        guard !demo else { return }
         productions = store.loadProductions()
         voices = store.loadVoices()
         references = store.loadReferences()
