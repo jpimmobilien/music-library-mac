@@ -1,0 +1,28 @@
+2 images written to build/dmg-background.tiff.
+▸ Prüfe DMG …
+Checksumming Protective Master Boot Record (MBR : 0)…
+Protective Master Boot Record (MBR :: verified   CRC32 $DB7C5E37
+Checksumming GPT Header (Primary GPT Header : 1)…
+ GPT Header (Primary GPT Header : 1): verified   CRC32 $C9CC9B5A
+Checksumming GPT Partition Data (Primary GPT Table : 2)…
+GPT Partition Data (Primary GPT Tabl: verified   CRC32 $3C25F9EE
+Checksumming  (Apple_Free : 3)…
+                    (Apple_Free : 3): verified   CRC32 $00000000
+Checksumming disk image (Apple_HFS : 4)…
+          disk image (Apple_HFS : 4): verified   CRC32 $3B7E3F4B
+Checksumming GPT Partition Data (Backup GPT Table : 5)…
+GPT Partition Data (Backup GPT Table: verified   CRC32 $3C25F9EE
+Checksumming GPT Header (Backup GPT Header : 6)…
+  GPT Header (Backup GPT Header : 6): verified   CRC32 $DCE45C7B
+verified   CRC32 $1F61435C
+hdiutil: verify: checksum of "dist/Music Library.dmg" is VALID
+total 3392
+drwxr-xr-x@   7 runner  staff     306 Nov 17 06:26 .
+drwx------@ 196 runner  staff    6272 Nov 17 06:27 ..
+-rw-r--r--    1 runner  staff  923624 Nov 17 06:26 .background.tiff
+-rw-r--r--    1 runner  staff   16388 Nov 17 06:26 .DS_Store
+-rw-r--r--    1 runner  staff  785380 Nov 17 06:26 .VolumeIcon.icns
+drwxr-xr-x    3 runner  staff     102 Nov 17 05:45 Music Library.app
+lrwxr-xr-x    1 runner  staff      13 Nov 17 06:26 Programme -> /Applications
+6f6f5af659d9c5969daa47d976613b676210578413cd5c1e4de534a5ab6d0004  Music Library.dmg
+✓ dist/Music Library.dmg

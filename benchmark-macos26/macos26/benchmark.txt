@@ -1,0 +1,63 @@
+Music Library – Messlauf mit 10000 Titeln
+Version 26.7.2 (Build 25G332) · arm64 · Apple M1 (Virtual)
+Systemeinstellung „Bewegung reduzieren“: an (für die Messung übergangen – Animationen laufen)
+
+Messung                                                     Mittel     p95     Max   (ms bzw. %)
+Index aufbauen (10000 Titel)                                 291.9    291.9    291.9
+Alle Listen berechnen (Hintergrund)                          767.2    767.2    767.2
+Suche berechnen (Hintergrund)                                560.7    663.8    663.8
+Alle Listen nach „Hinzugefügt“ (Hintergrund)                 493.3    493.3    493.3
+Abschnitte „Hinzugefügt“ (Titel + Alben)                       1.8      2.7      2.7
+Abschnitte „Hinzugefügt“ ohne Zwischenspeicher                12.1     13.2     13.2
+Bearbeiten 60 s: Equalizer + Begrenzer                       551.5    551.5    551.5
+Bearbeiten 60 s: Tempo 1,1 + 432 Hz                          787.9    787.9    787.9
+Bearbeiten 60 s: Auto-Tune                                   635.4    635.4    635.4
+Bearbeiten 60 s: Lautheit messen                             137.8    137.8    137.8
+Bereich wechseln                                             422.6    966.4    966.4
+Titel: Ansicht „Raster“ öffnen                               157.1    157.1    157.1
+Titel · Raster: Scrollschritt                                 61.0    118.2    176.4
+Titel: Ansicht „Kompaktes Raster“ öffnen                     627.2    627.2    627.2
+Titel · Kompaktes Raster: Scrollschritt                      127.7    228.6    234.1
+Titel: Ansicht „Liste“ öffnen                                377.9    377.9    377.9
+Titel · Liste: Scrollschritt                                  54.1    106.0    115.2
+Titel: Ansicht „Detailliste“ öffnen                          350.6    350.6    350.6
+Titel · Detailliste: Scrollschritt                            56.5     83.8    102.4
+Titel: Ansicht „Cover Flow“ öffnen                           623.7    623.7    623.7
+Alben: Ansicht „Raster“ öffnen                                 0.3      0.3      0.3
+Alben · Raster: Scrollschritt                                 45.5     76.3    101.7
+Alben: Ansicht „Kompaktes Raster“ öffnen                     282.7    282.7    282.7
+Alben · Kompaktes Raster: Scrollschritt                       87.2    145.5    172.9
+Alben: Ansicht „Liste“ öffnen                                347.1    347.1    347.1
+Alben · Liste: Scrollschritt                                 123.7    241.4    263.3
+Alben: Ansicht „Detailliste“ öffnen                          424.9    424.9    424.9
+Alben · Detailliste: Scrollschritt                            56.0     82.2     95.4
+Alben: Ansicht „Cover Flow“ öffnen                           418.0    418.0    418.0
+Interpreten: Ansicht „Raster“ öffnen                         196.9    196.9    196.9
+Interpreten · Raster: Scrollschritt                           51.1    105.0    115.7
+Interpreten: Ansicht „Kompaktes Raster“ öffnen               582.2    582.2    582.2
+Interpreten · Kompaktes Raster: Scrollschritt                 76.2    125.1    139.1
+Interpreten: Ansicht „Liste“ öffnen                          403.2    403.2    403.2
+Interpreten · Liste: Scrollschritt                            66.4    106.0    116.2
+Interpreten: Ansicht „Detailliste“ öffnen                    284.2    284.2    284.2
+Interpreten · Detailliste: Scrollschritt                      31.9     47.0     48.2
+Interpreten: Ansicht „Cover Flow“ öffnen                     475.7    475.7    475.7
+Genres: Ansicht „Raster“ öffnen                                0.5      0.5      0.5
+Genres · Raster: Scrollschritt                                 0.4      0.7      1.4
+Genres: Ansicht „Kompaktes Raster“ öffnen                    182.1    182.1    182.1
+Genres: Ansicht „Liste“ öffnen                               127.8    127.8    127.8
+Genres: Ansicht „Detailliste“ öffnen                         121.1    121.1    121.1
+Genres · Detailliste: Scrollschritt                            0.3      0.7      1.1
+Genres: Ansicht „Cover Flow“ öffnen                          165.3    165.3    165.3
+Suche tippen (je Taste, Hauptthread)                          25.3    107.0    107.0
+Suche: Ergebnis sichtbar nach letzter Taste                  249.3    249.3    249.3
+Suche: Ergebnis zeichnen (Hauptthread)                         1.4      1.4      1.4
+Player öffnen/schließen (alle Designs)                       375.4    770.7    770.7
+Leerlauf mit Wiedergabe: Verspätung je Bild                   77.6    135.2    136.7
+Leerlauf mit Wiedergabe: Hauptthread belegt [%]               22.8     22.8     22.8
+Leerlauf mit Wiedergabe: Prozess-CPU [%]                      23.4     23.4     23.4
+Großer Player (Vinyl) läuft: Hauptthread belegt [%]           37.8     37.8     37.8
+Großer Player (Vinyl) läuft: Prozess-CPU [%]                  38.5     38.5     38.5
+
+Hinweise:
+- Genres/Kompaktes Raster: keine Scrollfläche gefunden
+- Genres/Liste: keine Scrollfläche gefunden
